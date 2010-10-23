@@ -1,0 +1,1 @@
+<?php echo $this->element('products_admin_edit_form'); ?>

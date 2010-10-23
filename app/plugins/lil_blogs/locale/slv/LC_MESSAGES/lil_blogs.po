@@ -1,0 +1,677 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: LilBlogsPlugin\n"
+"POT-Creation-Date: 2008-10-17 13:18+0200\n"
+"PO-Revision-Date: 2010-09-03 11:31+0730\n"
+"Last-Translator: Miha Nahtigal <mihan@email.si>\n"
+"Language-Team:  <miha.nahtigal@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Slovenian\n"
+"X-Poedit-Country: SLOVENIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
+
+#: \controllers\authors_controller.php:105
+msgid "You've been logged out."
+msgstr "Odjava je uspela"
+
+#: \controllers\authors_controller.php:128
+msgid "A new author has been added."
+msgstr "Avtor je bil dodan."
+
+#: \controllers\authors_controller.php:143
+msgid "Author has been saved."
+msgstr "Avtor je bil shranjen."
+
+#: \controllers\authors_controller.php:146
+#: \controllers\blogs_controller.php:132
+#: \controllers\categories_controller.php:122
+#: \controllers\posts_controller.php:304;343
+msgid "Please verify that the information is correct."
+msgstr "Podatki vsebujejo napake. Ponovno preverite vpisana polja."
+
+#: \controllers\authors_controller.php:162
+msgid "Author has been deleted."
+msgstr "Avtor je bil izbrisan."
+
+#: \controllers\blogs_controller.php:114
+msgid "A new blog has been created."
+msgstr "Blog je bil dodan."
+
+#: \controllers\blogs_controller.php:129
+msgid "Blog has been saved."
+msgstr "Blog je bil shranjen."
+
+#: \controllers\blogs_controller.php:148
+msgid "Blog has been deleted."
+msgstr "Blog je bil izbrisan."
+
+#: \controllers\categories_controller.php:95
+msgid "A new category has been created."
+msgstr "Kategorija je bila dodana."
+
+#: \controllers\categories_controller.php:119
+msgid "Category has been saved."
+msgstr "Kategorija je bila shranjena."
+
+#: \controllers\categories_controller.php:138
+msgid "Category has been deleted."
+msgstr "Kategorija je bila izbrisana."
+
+#: \controllers\comments_controller.php:175
+msgid "Comments on %1$s for %2$s"
+msgstr "Komentarji na %1$s za %2$s"
+
+#: \controllers\comments_controller.php:180
+#: \views\comments\index.ctp:3
+msgid "Comments for"
+msgstr "Komentarji na"
+
+#: \controllers\comments_controller.php:185
+msgid "LilBlogs comments"
+msgstr "Vsi LilBlogs komentarji "
+
+#: \controllers\comments_controller.php:186
+msgid "Coments from every single blog on"
+msgstr "Vsi komentarji na naslovu"
+
+#: \controllers\comments_controller.php:213
+msgid "Comment has been saved."
+msgstr "Komentar je bil shranjen."
+
+#: \controllers\comments_controller.php:230
+msgid "Comment has been deleted"
+msgstr "Komentar je bil izbrisan."
+
+#: \controllers\comments_controller.php:290
+msgid "Action completed."
+msgstr "Operacija uspela"
+
+#: \controllers\comments_controller.php:292
+msgid "No comments or action selected"
+msgstr "Ni izbranih komentarjev ali določene akcije"
+
+#: \controllers\posts_controller.php:174
+msgid "Lilblogs posts"
+msgstr "LilBlogs objave"
+
+#: \controllers\posts_controller.php:175
+msgid "Posts from every single blog on"
+msgstr "Vse objave blogov na naslovu"
+
+#: \controllers\posts_controller.php:237
+msgid "Your comment has been successfully saved."
+msgstr "Komentar je bil shranjen."
+
+#: \controllers\posts_controller.php:239
+msgid "Your comment has gone into moderation."
+msgstr "Za prikaz komentarja bo potrebna potrditev."
+
+#: \controllers\posts_controller.php:246
+msgid "[%1$s] New comment on \"%2$s\""
+msgstr "[%1$s] Nov komentar na \"%2$s\""
+
+#: \controllers\posts_controller.php:257
+msgid "Uh oh, we weren't able to save your comment."
+msgstr "Komentarja ni bilo mogoče shraniti."
+
+#: \controllers\posts_controller.php:301
+msgid "A new post has been created."
+msgstr "Objava je bila dodana."
+
+#: \controllers\posts_controller.php:330
+msgid "Post has been saved."
+msgstr "Objava je bila shranjena."
+
+#: \controllers\posts_controller.php:365
+msgid "Post has been deleted."
+msgstr "Objava je bila izbrisana."
+
+#: \views\authors\admin_add.ctp:2
+msgid "Add an Author"
+msgstr "Dodaj avtorja"
+
+#: \views\authors\admin_add.ctp:7
+#: \views\authors\admin_edit.ctp:8
+#: \views\authors\admin_index.ctp:10
+#: \views\blogs\admin_add.ctp:8
+#: \views\blogs\admin_edit.ctp:9
+#: \views\blogs\admin_index.ctp:12
+#: \views\categories\admin_add.ctp:8
+#: \views\categories\admin_edit.ctp:9
+#: \views\categories\admin_index.ctp:9
+#: \views\posts\admin_index.ctp:9
+msgid "Name"
+msgstr "Naziv"
+
+#: \views\authors\admin_add.ctp:7
+#: \views\authors\admin_edit.ctp:8
+msgid "Name is required."
+msgstr "Naziv je obvezno polje."
+
+#: \views\authors\admin_add.ctp:8
+#: \views\authors\admin_edit.ctp:9
+#: \views\authors\admin_index.ctp:11
+#: \views\comments\admin_edit.ctp:11
+#: \views\posts\view.ctp:108
+msgid "Email"
+msgstr "Email"
+
+#: \views\authors\admin_add.ctp:8
+#: \views\authors\admin_edit.ctp:9
+msgid "Email is required, format must be valid."
+msgstr "Email je obvezno polje, preverja se oblika."
+
+#: \views\authors\admin_add.ctp:9
+#: \views\blogs\admin_add.ctp:13
+#: \views\categories\admin_add.ctp:9
+#: \views\posts\admin_add.ctp:41
+msgid "Create"
+msgstr "Dodaj"
+
+#: \views\authors\admin_edit.ctp:2
+msgid "Edit Author"
+msgstr "Uredi avtorja"
+
+#: \views\authors\admin_edit.ctp:10
+#: \views\blogs\admin_edit.ctp:14
+#: \views\categories\admin_edit.ctp:10
+#: \views\comments\admin_edit.ctp:14
+#: \views\posts\admin_edit.ctp:46
+msgid "Save"
+msgstr "Shrani"
+
+#: \views\authors\admin_index.ctp:2
+#: \views\elements\admin_navigation.ctp:4
+msgid "Authors"
+msgstr "Avtorji"
+
+#: \views\authors\admin_index.ctp:3
+msgid "Create a new Author"
+msgstr "Dodaj avtorja"
+
+#: \views\authors\admin_index.ctp:9
+#: \views\blogs\admin_index.ctp:11
+#: \views\categories\admin_index.ctp:8
+#: \views\comments\admin_index.ctp:31
+#: \views\posts\admin_index.ctp:8
+msgid "ID"
+msgstr "ID"
+
+#: \views\authors\admin_index.ctp:21;21
+#: \views\blogs\admin_index.ctp:30;30
+#: \views\categories\admin_index.ctp:18;18
+#: \views\comments\admin_index.ctp:62;62
+#: \views\elements\admin_sidebar.ctp:16
+#: \views\posts\admin_index.ctp:46;46
+msgid "Edit"
+msgstr "Uredi"
+
+#: \views\authors\admin_index.ctp:22
+#: \views\blogs\admin_index.ctp:31;31
+#: \views\categories\admin_index.ctp:19;19
+#: \views\comments\admin_index.ctp:63;63
+#: \views\posts\admin_index.ctp:47;47
+msgid "Delete"
+msgstr "Briši"
+
+#: \views\authors\admin_index.ctp:22
+#: \views\comments\admin_index.ctp:59
+#: \views\elements\admin_sidebar.ctp:41
+#: \views\posts\admin_index.ctp:54
+#: \views\posts\view.ctp:74
+msgid "Comments"
+msgstr "Komentarji"
+
+#: \views\authors\login.ctp:2
+msgid "Lilblogs Login"
+msgstr "LilBlogs prijava"
+
+#: \views\authors\login.ctp:7
+msgid "Username"
+msgstr "Uporabniško ime"
+
+#: \views\authors\login.ctp:8
+msgid "Password"
+msgstr "Geslo"
+
+#: \views\authors\login.ctp:9
+msgid "Remember me on this computer"
+msgstr "Zapomni si mojo prijavo"
+
+#: \views\authors\login.ctp:10
+msgid "OK"
+msgstr "OK"
+
+#: \views\blogs\admin_add.ctp:2
+msgid "Add a Blog"
+msgstr "Dodaj blog"
+
+#: \views\blogs\admin_add.ctp:3
+#: \views\blogs\admin_edit.ctp:3
+msgid "A blog is a container for posts and is generally maintained by one or a few people."
+msgstr "V blogu so vpisane posamezne objave. Z njimi upravlja eden ali več avtorjev."
+
+#: \views\blogs\admin_add.ctp:8
+#: \views\blogs\admin_edit.ctp:9
+msgid "Blog name is required."
+msgstr "Naziv je obvezno polje."
+
+#: \views\blogs\admin_add.ctp:10
+#: \views\blogs\admin_edit.ctp:11
+msgid "Short name"
+msgstr "Povezava"
+
+#: \views\blogs\admin_add.ctp:10
+#: \views\blogs\admin_edit.ctp:11
+msgid "Short name must only use letters, numbers, underscores or hyphens."
+msgstr "Povezava lahko vsebuje samo črke, številke, _ in -."
+
+#: \views\blogs\admin_add.ctp:12
+#: \views\blogs\admin_edit.ctp:13
+#: \views\blogs\admin_index.ctp:14
+msgid "Description"
+msgstr "Opis"
+
+#: \views\blogs\admin_add.ctp:12
+#: \views\blogs\admin_edit.ctp:13
+msgid "Blog description is required."
+msgstr "Opis je obvezno polje."
+
+#: \views\blogs\admin_edit.ctp:2
+msgid "Edit a Blog"
+msgstr "Uredi blog."
+
+#: \views\blogs\admin_index.ctp:2
+#: \views\elements\admin_navigation.ctp:3
+msgid "Blogs"
+msgstr "Blogi"
+
+#: \views\blogs\admin_index.ctp:4
+msgid "Create a new Blog"
+msgstr "Dodaj blog"
+
+#: \views\blogs\admin_index.ctp:13
+msgid "Short"
+msgstr "Na kratko"
+
+#: \views\blogs\admin_index.ctp:32;32
+msgid "Show Categories"
+msgstr "Seznam kategorij"
+
+#: \views\blogs\admin_index.ctp:33;33
+msgid "Show Posts"
+msgstr "Prikaz objav"
+
+#: \views\blogs\index.ctp:1
+msgid "LilBlogs List"
+msgstr "Seznam blogov"
+
+#: \views\blogs\index.ctp:5
+#: \views\posts\index.ctp:98
+msgid "Read more"
+msgstr "Beri naprej"
+
+#: \views\blogs\view.ctp:1
+msgid "Blog"
+msgstr "Blog"
+
+#: \views\categories\admin_add.ctp:2
+msgid "Add a Category"
+msgstr "Dodaj kategorijo"
+
+#: \views\categories\admin_add.ctp:8
+#: \views\categories\admin_edit.ctp:9
+msgid "Category name is required."
+msgstr "Naziv je obvezno polje."
+
+#: \views\categories\admin_edit.ctp:2
+msgid "Edit Category"
+msgstr "Uredi kategorijo"
+
+#: \views\categories\admin_index.ctp:2
+msgid "Categories for"
+msgstr "Kategorije za"
+
+#: \views\categories\admin_index.ctp:24
+msgid "Create a new Category"
+msgstr "Dodaj kategorijo"
+
+#: \views\comments\admin_edit.ctp:2
+msgid "Edit Comment"
+msgstr "Uredi komentar"
+
+#: \views\comments\admin_edit.ctp:9
+#: \views\comments\admin_index.ctp:32
+#: \views\posts\admin_add.ctp:32
+#: \views\posts\admin_edit.ctp:37
+#: \views\posts\admin_index.ctp:10
+#: \views\posts\view.ctp:107
+msgid "Author"
+msgstr "Avtor"
+
+#: \views\comments\admin_edit.ctp:10
+#: \views\posts\view.ctp:109
+msgid "Url"
+msgstr "Povezava"
+
+#: \views\comments\admin_edit.ctp:12
+#: \views\posts\admin_add.ctp:20
+#: \views\posts\admin_edit.ctp:22
+#: \views\posts\view.ctp:110
+msgid "Body"
+msgstr "Besedilo"
+
+#: \views\comments\admin_edit.ctp:13
+msgid "Spam"
+msgstr "Spam"
+
+#: \views\comments\admin_edit.ctp:13
+msgid "Awaiting Moderation"
+msgstr "Čaka na potrditev"
+
+#: \views\comments\admin_edit.ctp:13
+msgid "Approved"
+msgstr "Potrjeno"
+
+#: \views\comments\admin_index.ctp:54
+msgid "Submitted"
+msgstr "Objavljeno"
+
+#: \views\comments\admin_index.ctp:72
+#: \views\posts\admin_index.ctp:63
+msgid "previous"
+msgstr "nazaj"
+
+#: \views\comments\admin_index.ctp:73
+#: \views\posts\admin_index.ctp:64
+msgid "next"
+msgstr "naprej"
+
+#: \views\comments\admin_index.ctp:75
+#: \views\posts\admin_index.ctp:66
+msgid "Page <b>%page%</b> of <b>%pages%</b>, total <b>%count%</b> records."
+msgstr "Stran <b>%page%</b> od <b>%pages%</b>. Skupaj <b>%count%</b> zapisov."
+
+#: \views\comments\admin_index.ctp:5
+msgid "Comments for %s"
+msgstr "Komentarji na %s"
+
+#: \views\comments\admin_index.ctp:7
+msgid "All Blogs Comments"
+msgstr "Vsi komentarji blogov"
+
+#: \views\comments\admin_index.ctp:12
+msgid "With selected comments:"
+msgstr "Označene komentarje:"
+
+#: \views\comments\admin_index.ctp:13
+msgid "Mark them as spam"
+msgstr "Označi kot spam"
+
+#: \views\comments\admin_index.ctp:13
+msgid "Allow and publish them"
+msgstr "Objavi"
+
+#: \views\comments\admin_index.ctp:13
+msgid "Delete them"
+msgstr "Briši"
+
+#: \views\comments\admin_index.ctp:14
+msgid "Go"
+msgstr "OK"
+
+#: \views\comments\admin_index.ctp:34
+msgid "Comment"
+msgstr "Komentar"
+
+#: \views\comments\admin_index.ctp:35
+msgid "In response to"
+msgstr "Odgovor na"
+
+#: \views\comments\admin_index.ctp:36
+#: \views\posts\admin_add.ctp:35
+#: \views\posts\admin_edit.ctp:40
+#: \views\posts\admin_index.ctp:11
+msgid "Status"
+msgstr "Status"
+
+#: \views\comments\admin_index.ctp:61
+msgid "Junk"
+msgstr "Junk"
+
+#: \views\comments\admin_index.ctp:61
+msgid "Awaiting moderation"
+msgstr "Čaka na potrditev"
+
+#: \views\comments\admin_index.ctp:61
+#: \views\posts\admin_add.ctp:38
+#: \views\posts\admin_edit.ctp:43
+#: \views\posts\admin_index.ctp:44
+msgid "Live"
+msgstr "Objavljeno"
+
+#: \views\comments\index.ctp:5
+msgid "All LilBlogs comments"
+msgstr "Vsi LilBlogs komentarji"
+
+#: \views\comments\index.ctp:15
+#: \views\comments\rss\index.ctp:7
+msgid "Comment on"
+msgstr "Komentiraj"
+
+#: \views\comments\index.ctp:15
+msgid "on"
+msgstr "na"
+
+#: \views\comments\index.ctp:15
+#: \views\comments\rss\index.ctp:7
+msgid "by"
+msgstr "avtor"
+
+#: \views\elements\admin_sidebar.ctp:7
+msgid "Posts"
+msgstr "Objave"
+
+#: \views\elements\admin_sidebar.ctp:23
+msgid "Add New"
+msgstr "Nova"
+
+#: \views\elements\admin_sidebar.ctp:30
+msgid "Edit Categories"
+msgstr "Uredi kategorije"
+
+#: \views\elements\email\text\comment_notification.ctp:3
+msgid "A new comment on the post #%1$s \"%2$s\" has been posted."
+msgstr "Objavljen je bil nov komentar na #%1$s - \"%2$s\""
+
+#: \views\elements\email\text\comment_notification.ctp:6
+msgid "A new comment on the post #%1$s \"%2$s\" is waiting for moderation."
+msgstr "Potrebna je moderacija novega komentarja na #%1$s - \"%2$s\""
+
+#: \views\elements\email\text\comment_notification.ctp:17
+msgid "Author : %1$s"
+msgstr "Avtor : %1$s"
+
+#: \views\elements\email\text\comment_notification.ctp:18
+msgid "E-mail : %1$s"
+msgstr "E-mail : %1$s"
+
+#: \views\elements\email\text\comment_notification.ctp:19
+msgid "Url    : %1$s"
+msgstr "Url    : %1$s"
+
+#: \views\elements\email\text\comment_notification.ctp:20
+msgid "Whois  : http://ws.arin.net/cgi-bin/whois.pl?queryinput=%1$s"
+msgstr "Whois  : http://ws.arin.net/cgi-bin/whois.pl?queryinput=%1$s"
+
+#: \views\elements\email\text\comment_notification.ctp:22
+msgid "Comment:"
+msgstr "Komentar:"
+
+#: \views\elements\email\text\comment_notification.ctp:25
+msgid "Approve it"
+msgstr "Potrdi"
+
+#: \views\elements\email\text\comment_notification.ctp:34
+msgid "Delete it"
+msgstr "Spam"
+
+#: \views\elements\email\text\comment_notification.ctp:42
+msgid "Spam it"
+msgstr "Spam"
+
+#: \views\layouts\blogs_admin.ctp:5
+msgid "Blog Administration"
+msgstr "Administracija bloga"
+
+#: \views\posts\admin_add.ctp:2
+msgid "Add a Post"
+msgstr "Dodaj objavo"
+
+#: \views\posts\admin_add.ctp:9
+#: \views\posts\admin_edit.ctp:11
+msgid "Title"
+msgstr "Naslov"
+
+#: \views\posts\admin_add.ctp:10
+#: \views\posts\admin_edit.ctp:12
+msgid "Post title is required."
+msgstr "Naslov je obvezno polje."
+
+#: \views\posts\admin_add.ctp:15
+#: \views\posts\admin_edit.ctp:17
+msgid "Slug"
+msgstr "Povezava"
+
+#: \views\posts\admin_add.ctp:16
+#: \views\posts\admin_edit.ctp:18
+msgid "Post slug is required and must only use letters, numbers, underscores or hyphens."
+msgstr "Povezava je obvezno polje, vsebuje lahko samo male črke, številke, _ in -."
+
+#: \views\posts\admin_add.ctp:21
+#: \views\posts\admin_edit.ctp:24
+msgid "Body of the post is required."
+msgstr "Besedilo je obvezno polje."
+
+#: \views\posts\admin_add.ctp:24
+#: \views\posts\admin_edit.ctp:28
+msgid "Allow Comments"
+msgstr "Dovoli komentarje"
+
+#: \views\posts\admin_add.ctp:27
+#: \views\posts\admin_edit.ctp:32
+msgid "Category"
+msgstr "Kategorija"
+
+#: \views\posts\admin_add.ctp:29
+#: \views\posts\admin_edit.ctp:34
+msgid "none"
+msgstr "brez"
+
+#: \views\posts\admin_add.ctp:37
+#: \views\posts\admin_edit.ctp:42
+#: \views\posts\admin_index.ctp:44
+msgid "Draft"
+msgstr "Osnutek"
+
+#: \views\posts\admin_edit.ctp:2
+msgid "Edit Post"
+msgstr "Uredi objavo"
+
+#: \views\posts\admin_index.ctp:2
+msgid "Posts for \"%s\""
+msgstr "Objave za \"%s\""
+
+#: \views\posts\admin_index.ctp:12
+msgid "Date"
+msgstr "Datum"
+
+#: \views\posts\index.ctp:3
+msgid "Search Results"
+msgstr "Rezultat iskanja"
+
+#: \views\posts\index.ctp:37
+#: \views\posts\view.ctp:20
+msgid "in"
+msgstr "v"
+
+#: \views\posts\index.ctp:50
+#: \views\posts\view.ctp:33
+msgid "and"
+msgstr "in"
+
+#: \views\posts\index.ctp:25
+#: \views\posts\view.ctp:8
+msgid "Posted %1$s by %2$s"
+msgstr "Objavljeno %1$s. Avtor %2$s"
+
+#: \views\posts\index.ctp:30
+#: \views\posts\view.ctp:13
+msgid "Posted %s"
+msgstr "Datum objave: \"%s\""
+
+#: \views\posts\index.ctp:72
+#: \views\posts\view.ctp:55
+msgid "Edit this post"
+msgstr "Uredi objavo"
+
+#: \views\posts\index.ctp:112
+msgid "Newer"
+msgstr "Novejše"
+
+#: \views\posts\index.ctp:113
+msgid "Older"
+msgstr "Starejše"
+
+#: \views\posts\index.ctp:59
+#: \views\posts\view.ctp:42
+msgid "1 comment"
+msgid_plural "%d comments"
+msgstr[0] "%d komentar"
+msgstr[1] "%d komentarja"
+msgstr[2] "%d komentarji"
+msgstr[3] "%d komentarjev"
+
+#: \views\posts\view.ctp:79
+msgid "No comments yet. Please do add yours."
+msgstr "Komentarjev še ni. Podajte svoje mnenje prvi!"
+
+#: \views\posts\view.ctp:89
+msgid "said"
+msgstr "je zapisal"
+
+#: \views\posts\view.ctp:102
+msgid "Leave a Comment"
+msgstr "Dodaj komentar"
+
+#: \views\posts\view.ctp:107
+msgid "Author is required."
+msgstr "Avtor je obvezno polje."
+
+#: \views\posts\view.ctp:108
+msgid "Email in proper form is required."
+msgstr "Email je obvezno polje, preverja se oblika."
+
+#: \views\posts\view.ctp:110
+msgid "Body is required."
+msgstr "Besedilo je obvezno polje."
+
+#: \views\posts\view.ctp:111
+msgid "Add my comment"
+msgstr "Dodaj moj komentar"
+
+#: \views\posts\view.ctp:113
+msgid "Please be respectful; your comment my be edited or marked as spam, if necessary."
+msgstr "Pozor. Vaš komentar se mogoče ne bo takoj pojavil pod zapisom ampak bo moral počakati na potrditev s strani avtorja objave."
+
+#: \views\posts\view.ctp:118
+msgid "Sorry, comments are closed for this post. If you have any further questions or comments, feel free to contact us."
+msgstr "Komentarji so za trenutno objavo onemogočeni. Za vprašanja in morebitne komentarje se obrnite na avtorja bloga."
+
+#: \views\posts\rss\view.ctp:7
+msgid "Comment from"
+msgstr "Komentar osebe"
+

@@ -1,0 +1,1878 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2010-09-12 04:19+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /app_controller.php:168
+msgid "Invalid id for ProductImage"
+msgstr ""
+
+#: /app_controller.php:173
+msgid "ProductImage status changed"
+msgstr ""
+
+#: /app_controller.php:181
+msgid "The status of ProductImage could not be changed. Please, try again."
+msgstr ""
+
+#: /controllers/blogs_controller.php:15;34;55
+msgid "Invalid blog"
+msgstr ""
+
+#: /controllers/blogs_controller.php:44;61
+msgid "The blog has been saved"
+msgstr ""
+
+#: /controllers/blogs_controller.php:48;64
+msgid "The blog could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/blogs_controller.php:74
+msgid "Invalid id for blog"
+msgstr ""
+
+#: /controllers/blogs_controller.php:79
+msgid "Blog deleted"
+msgstr ""
+
+#: /controllers/blogs_controller.php:83
+msgid "Blog was not deleted"
+msgstr ""
+
+#: /controllers/customers_controller.php:46
+#: /controllers/merchants_controller.php:62
+msgid "Signup"
+msgstr ""
+
+#: /controllers/customers_controller.php:72
+#: /controllers/merchants_controller.php:72
+msgid "You've successfully registered."
+msgstr ""
+
+#: /controllers/customers_controller.php:75
+#: /controllers/merchants_controller.php:75
+msgid "Sorry, the information you've entered is incorrect."
+msgstr ""
+
+#: /controllers/customers_controller.php:90
+msgid "Customer Login"
+msgstr ""
+
+#: /controllers/domains_controller.php:14;36
+msgid "Invalid domain"
+msgstr ""
+
+#: /controllers/domains_controller.php:24;41
+msgid "The domain has been saved"
+msgstr ""
+
+#: /controllers/domains_controller.php:27;44
+msgid "The domain could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/domains_controller.php:56
+msgid "Invalid id for domain"
+msgstr ""
+
+#: /controllers/domains_controller.php:60
+msgid "Domain deleted"
+msgstr ""
+
+#: /controllers/domains_controller.php:63
+msgid "Domain was not deleted"
+msgstr ""
+
+#: /controllers/gift_cards_controller.php:13;37;76;100
+msgid "Invalid gift card"
+msgstr ""
+
+#: /controllers/gift_cards_controller.php:23;42;86;105
+msgid "The gift card has been saved"
+msgstr ""
+
+#: /controllers/gift_cards_controller.php:26;45;89;108
+msgid "The gift card could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/gift_cards_controller.php:59;122
+msgid "Invalid id for gift card"
+msgstr ""
+
+#: /controllers/gift_cards_controller.php:63;126
+msgid "Gift card deleted"
+msgstr ""
+
+#: /controllers/gift_cards_controller.php:66;129
+msgid "Gift card was not deleted"
+msgstr ""
+
+#: /controllers/merchants_controller.php:50
+msgid "Login failed. Invalid email or password or web address."
+msgstr ""
+
+#: /controllers/merchants_controller.php:91
+msgid "Merchant Login"
+msgstr ""
+
+#: /controllers/merchants_controller.php:138
+msgid "Edit %s's profile"
+msgstr ""
+
+#: /controllers/merchants_controller.php:152;203
+msgid "Your profile has been saved"
+msgstr ""
+
+#: /controllers/merchants_controller.php:156;207
+msgid "Your profile could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/merchants_controller.php:184
+msgid "Invalid Merchant"
+msgstr ""
+
+#: /controllers/merchants_controller.php:216
+msgid "Invalid id for Merchant"
+msgstr ""
+
+#: /controllers/merchants_controller.php:220
+msgid "Merchant deleted"
+msgstr ""
+
+#: /controllers/merchants_controller.php:223
+msgid "The Merchant could not be deleted. Please, try again."
+msgstr ""
+
+#: /controllers/orders_controller.php:96;217
+msgid "Invalid Order"
+msgstr ""
+
+#: /controllers/orders_controller.php:104
+msgid "You do not have the permission to view this order"
+msgstr ""
+
+#: /controllers/orders_controller.php:177
+msgid "Address has been saved"
+msgstr ""
+
+#: /controllers/orders_controller.php:182;208;232
+msgid "Order could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/orders_controller.php:184;229
+msgid "Order has been saved"
+msgstr ""
+
+#: /controllers/orders_controller.php:205
+msgid "The Order has been saved"
+msgstr ""
+
+#: /controllers/payments_controller.php:64;83
+msgid "Custom payment has been saved"
+msgstr ""
+
+#: /controllers/payments_controller.php:66;85
+msgid "Custom payment  could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/payments_controller.php:74;93
+msgid "Invalid id"
+msgstr ""
+
+#: /controllers/payments_controller.php:102
+msgid "Custom payment has been removed"
+msgstr ""
+
+#: /controllers/payments_controller.php:104
+msgid "Custom payment  could not be removed. Please, try again."
+msgstr ""
+
+#: /controllers/posts_controller.php:15
+#: /controllers/webpages_controller.php:19;47;73
+msgid "Invalid %s"
+msgstr ""
+
+#: /controllers/posts_controller.php:36;49;73
+msgid "Invalid post"
+msgstr ""
+
+#: /controllers/posts_controller.php:57;80
+msgid "The post has been saved"
+msgstr ""
+
+#: /controllers/posts_controller.php:62;85
+msgid "The post could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/posts_controller.php:100
+msgid "Invalid id for post"
+msgstr ""
+
+#: /controllers/posts_controller.php:105
+msgid "Post deleted"
+msgstr ""
+
+#: /controllers/posts_controller.php:110
+msgid "Post was not deleted"
+msgstr ""
+
+#: /controllers/product_images_controller.php:48;65
+msgid "Image has been saved"
+msgstr ""
+
+#: /controllers/product_images_controller.php:51;68
+msgid "Image could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/product_images_controller.php:98
+msgid "Invalid url"
+msgstr ""
+
+#: /controllers/product_images_controller.php:130;132
+msgid "Invalid id for image"
+msgstr ""
+
+#: /controllers/product_images_controller.php:143
+msgid "Image deleted"
+msgstr ""
+
+#: /controllers/product_images_controller.php:148;150
+msgid "Image was not deleted"
+msgstr ""
+
+#: /controllers/product_images_controller.php:161
+msgid "Invalid id for Image"
+msgstr ""
+
+#: /controllers/product_images_controller.php:166
+msgid "Image status changed"
+msgstr ""
+
+#: /controllers/product_images_controller.php:170
+msgid "The status of Image could not be changed. Please, try again."
+msgstr ""
+
+#: /controllers/products_controller.php:147
+msgid "You need to have products in your cart"
+msgstr ""
+
+#: /controllers/products_controller.php:265;278;439;454;540;562
+msgid "Invalid Product"
+msgstr ""
+
+#: /controllers/products_controller.php:299
+msgid "No such product for this shop"
+msgstr ""
+
+#: /controllers/products_controller.php:354;375;380
+msgid "Product has been saved"
+msgstr ""
+
+#: /controllers/products_controller.php:359;384
+msgid "Product could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/products_controller.php:444
+msgid "Product status changed"
+msgstr ""
+
+#: /controllers/products_controller.php:447
+msgid "The status of Product could not be changed. Please, try again."
+msgstr ""
+
+#: /controllers/products_controller.php:460;551;567
+msgid "The Product has been saved"
+msgstr ""
+
+#: /controllers/products_controller.php:463;554;570
+msgid "The Product could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/products_controller.php:507;520;580;609;642
+msgid "Invalid id for Product"
+msgstr ""
+
+#: /controllers/products_controller.php:511;584
+msgid "Product deleted"
+msgstr ""
+
+#: /controllers/products_controller.php:514;587
+msgid "The Product could not be deleted. Please, try again."
+msgstr ""
+
+#: /controllers/products_controller.php:524
+msgid "Product duplicated"
+msgstr ""
+
+#: /controllers/products_controller.php:527
+msgid "The Product could not be duplicated. Please, try again."
+msgstr ""
+
+#: /controllers/products_controller.php:622
+msgid "Product added to cart"
+msgstr ""
+
+#: /controllers/products_controller.php:625
+msgid "The Product could not be added to cart. Please, try again."
+msgstr ""
+
+#: /controllers/products_controller.php:646
+msgid "Product removed from cart"
+msgstr ""
+
+#: /controllers/products_controller.php:649
+msgid "The Product could not be removed from cart. Please, try again."
+msgstr ""
+
+#: /controllers/saved_themes_controller.php:67;212
+msgid "Invalid saved theme"
+msgstr ""
+
+#: /controllers/saved_themes_controller.php:104;141;155;162;221
+msgid "The saved theme has been saved"
+msgstr ""
+
+#: /controllers/saved_themes_controller.php:112;167;225
+msgid "The saved theme could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/saved_themes_controller.php:251;253;313
+msgid "Invalid id for saved theme"
+msgstr ""
+
+#: /controllers/saved_themes_controller.php:265
+msgid "Saved theme deleted"
+msgstr ""
+
+#: /controllers/saved_themes_controller.php:270;272
+msgid "Saved theme was not deleted"
+msgstr ""
+
+#: /controllers/saved_themes_controller.php:320
+msgid "Theme For Shopfront changed"
+msgstr ""
+
+#: /controllers/saved_themes_controller.php:325
+msgid "Theme For Shopfront NOT changed"
+msgstr ""
+
+#: /controllers/shipping_rates_controller.php:29
+msgid "Invalid shipping rate"
+msgstr ""
+
+#: /controllers/shipping_rates_controller.php:37;90;130
+msgid "The shipping rate has been saved"
+msgstr ""
+
+#: /controllers/shipping_rates_controller.php:40;93;134
+msgid "The shipping rate could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/shipping_rates_controller.php:166
+msgid "Invalid id for shipping rate"
+msgstr ""
+
+#: /controllers/shipping_rates_controller.php:170
+msgid "Shipping rate deleted"
+msgstr ""
+
+#: /controllers/shipping_rates_controller.php:173
+msgid "Shipping rate was not deleted"
+msgstr ""
+
+#: /controllers/shops_controller.php:16
+msgid "The Shop has been saved"
+msgstr ""
+
+#: /controllers/shops_controller.php:19
+msgid "The Shop could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/webpages_controller.php:58;78
+msgid "The %s has been saved"
+msgstr ""
+
+#: /controllers/webpages_controller.php:61;81
+msgid "The %s could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/webpages_controller.php:95
+msgid "Invalid id for %s"
+msgstr ""
+
+#: /controllers/webpages_controller.php:99
+msgid "%s deleted"
+msgstr ""
+
+#: /controllers/webpages_controller.php:102
+msgid "%s was not deleted"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:87
+msgid "Available ACO sync commands:"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:93
+msgid "For help, run the 'help' command.  For help on a specific command, run 'help <command>'"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:124
+msgid "Aco Update Complete"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:167
+msgid "Deleted %s and all children"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:208
+msgid "Created Aco node: %s"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:244
+msgid "Deleted Aco node %s"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:259
+msgid "Usage: cake acl_extras <command>"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:261
+msgid "Commands:"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:265
+msgid "Add new ACOs for new controllers and actions"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:266
+msgid "Create new ACO's for controllers and their actions. Does not remove any nodes from ACO table"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:270
+msgid "Creates new ACO's for missing controllers and actions. Removes orphaned entries in the ACO table."
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:273
+msgid "Verify the tree structure of either your Aco or Aro Trees"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:276
+msgid "Recover a corrupted Tree"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:279
+msgid "Displays this help message, or a message on a specific command."
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:290
+msgid "Command '%s' not found"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:302;322
+msgid "Missing Type"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:308
+msgid "Tree is valid and strong"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:328
+msgid "Tree has been recovered, or tree did not need recovery."
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:330
+msgid "Tree recovery failed."
+msgstr ""
+
+#: /plugins/datasources/models/datasources/array_source.php:99
+msgid "No records found in model."
+msgstr ""
+
+#: /plugins/datasources/models/datasources/xmlrpc_source.php:138
+msgid "Transport error - could not open socket"
+msgstr ""
+
+#: /plugins/datasources/models/datasources/xmlrpc_source.php:141
+msgid "Transport error - HTTP status code was not 200"
+msgstr ""
+
+#: /plugins/datasources/models/datasources/xmlrpc_source.php:186
+msgid "Parse error. Not well formed"
+msgstr ""
+
+#: /plugins/filter/views/helpers/filter.php:26
+msgid "Filter"
+msgstr ""
+
+#: /plugins/filter/views/helpers/filter.php:27
+msgid "Reset"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:77
+msgid "No comments that match your criteria."
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:46
+msgid "All (%d)"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:50
+msgid "Ham (%d)"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:54
+msgid "Spam (%d)"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:58
+msgid "Unclassified (%d)"
+msgstr ""
+
+#: /views/addresses/index.ctp:2
+msgid "Addresses"
+msgstr ""
+
+#: /views/addresses/index.ctp:6
+#: /views/blogs/admin_index.ctp:41
+#: /views/domains/admin_index.ctp:37
+#: /views/elements/product_images_admin_list_by_product_list.ctp:26
+#: /views/gift_cards/admin_index.ctp:57
+#: /views/gift_cards/index.ctp:57
+#: /views/merchants/platform_index.ctp:6
+#: /views/orders/admin_index.ctp:6
+#: /views/orders/index.ctp:6
+#: /views/posts/admin_index.ctp:55
+#: /views/products/admin_index.ctp:12
+#: /views/products/index.ctp:6
+#: /views/products/platform_index.ctp:6
+#: /views/saved_themes/admin_index_original.ctp:47
+#: /views/themed/5_c10/products/index.ctp:4
+#: /views/themed/5_c11/products/index.ctp:4
+#: /views/themed/5_c12/products/index.ctp:4
+#: /views/themed/5_c13/products/index.ctp:4
+#: /views/themed/5_c2/_c2/products/index.ctp:4
+#: /views/themed/5_c3/products/index.ctp:4
+#: /views/themed/5_c4/products/index.ctp:4
+#: /views/themed/5_c5/products/index.ctp:4
+#: /views/themed/5_c6/products/index.ctp:4
+#: /views/themed/5_c7/products/index.ctp:4
+#: /views/themed/5_c8/products/index.ctp:4
+#: /views/themed/default/products/index.ctp:4
+#: /views/themes/admin_index.ctp:41
+#: /views/webpages/admin_index.ctp:43
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr ""
+
+#: /views/addresses/index.ctp:17
+#: /views/blogs/admin_add.ctp:13
+#: /views/blogs/admin_edit.ctp:21
+#: /views/blogs/admin_index.ctp:12;53
+#: /views/blogs/admin_view.ctp:42;67
+#: /views/blogs/view.ctp:42;69
+#: /views/domains/admin_add.ctp:15
+#: /views/domains/admin_edit.ctp:16
+#: /views/domains/admin_index.ctp:10;49
+#: /views/domains/admin_view.ctp:28
+#: /views/elements/product_images_admin_list_by_product_list.ctp:35
+#: /views/gift_cards/add.ctp:29
+#: /views/gift_cards/admin_add.ctp:21
+#: /views/gift_cards/admin_edit.ctp:22
+#: /views/gift_cards/admin_index.ctp:18;69
+#: /views/gift_cards/admin_view.ctp:68
+#: /views/gift_cards/edit.ctp:22
+#: /views/gift_cards/index.ctp:18;69
+#: /views/gift_cards/view.ctp:68
+#: /views/merchants/platform_index.ctp:20
+#: /views/orders/index.ctp:20
+#: /views/posts/admin_add.ctp:20
+#: /views/posts/admin_edit.ctp:28
+#: /views/posts/admin_index.ctp:17;67
+#: /views/posts/admin_view.ctp:67;96
+#: /views/posts/view.ctp:67;96
+#: /views/products/admin_index.ctp:23
+#: /views/products/admin_view.ctp:47
+#: /views/products/index.ctp:20
+#: /views/products/platform_index.ctp:20
+#: /views/products/view_cart.ctp:18
+#: /views/saved_themes/admin_add.ctp:67
+#: /views/saved_themes/admin_edit.ctp:81
+#: /views/saved_themes/admin_index.ctp:25
+#: /views/saved_themes/admin_index_original.ctp:14;59
+#: /views/saved_themes/admin_view.ctp:48
+#: /views/shipping_rates/admin_edit.ctp:94
+#: /views/themes/admin_index.ctp:12;53
+#: /views/themes/admin_settings.ctp:15
+#: /views/webpages/admin_add.ctp:16
+#: /views/webpages/admin_edit.ctp:25
+#: /views/webpages/admin_index.ctp:13;62;95
+#: /views/webpages/admin_view.ctp:49
+#: /views/webpages/view.ctp:53
+msgid "Actions"
+msgstr ""
+
+#: /views/addresses/index.ctp:47
+#: /views/blogs/admin_index.ctp:31
+#: /views/blogs/view.ctp:93
+#: /views/domains/admin_index.ctp:27
+#: /views/gift_cards/admin_index.ctp:47
+#: /views/gift_cards/index.ctp:47
+#: /views/merchants/platform_index.ctp:59
+#: /views/orders/index.ctp:59
+#: /views/posts/admin_index.ctp:45
+#: /views/posts/admin_view.ctp:118
+#: /views/posts/view.ctp:118
+#: /views/products/admin_index.ctp:66
+#: /views/products/index.ctp:59
+#: /views/products/platform_index.ctp:59
+#: /views/products/view_cart.ctp:44
+#: /views/saved_themes/admin_index_original.ctp:37
+#: /views/themes/admin_index.ctp:31
+#: /views/webpages/admin_index.ctp:33;81
+msgid "View"
+msgstr ""
+
+#: /views/addresses/index.ctp:48
+#: /views/blogs/admin_index.ctp:32
+#: /views/blogs/admin_view.ctp:91
+#: /views/blogs/view.ctp:94
+#: /views/domains/admin_index.ctp:28
+#: /views/gift_cards/admin_index.ctp:48
+#: /views/gift_cards/index.ctp:48
+#: /views/merchants/platform_index.ctp:60
+#: /views/orders/index.ctp:60
+#: /views/posts/admin_index.ctp:46
+#: /views/posts/admin_view.ctp:119
+#: /views/posts/view.ctp:119
+#: /views/products/admin_index.ctp:67
+#: /views/products/index.ctp:60
+#: /views/products/platform_index.ctp:60
+#: /views/saved_themes/admin_index_original.ctp:38
+#: /views/themes/admin_index.ctp:32
+#: /views/webpages/admin_index.ctp:34;82
+msgid "Edit"
+msgstr ""
+
+#: /views/addresses/index.ctp:49
+#: /views/blogs/admin_edit.ctp:24
+#: /views/blogs/admin_index.ctp:33
+#: /views/blogs/admin_view.ctp:92
+#: /views/blogs/view.ctp:95
+#: /views/domains/admin_edit.ctp:19
+#: /views/domains/admin_index.ctp:29
+#: /views/elements/product_images_admin_list_by_product_list.ctp:54
+#: /views/gift_cards/admin_edit.ctp:25
+#: /views/gift_cards/admin_index.ctp:49
+#: /views/gift_cards/edit.ctp:25
+#: /views/gift_cards/index.ctp:49
+#: /views/merchants/platform_index.ctp:61
+#: /views/orders/index.ctp:61
+#: /views/posts/admin_edit.ctp:31
+#: /views/posts/admin_index.ctp:47
+#: /views/posts/admin_view.ctp:120
+#: /views/posts/view.ctp:120
+#: /views/products/admin_edit.ctp:20
+#: /views/products/admin_index.ctp:69
+#: /views/products/index.ctp:61
+#: /views/products/platform_edit.ctp:21
+#: /views/products/platform_index.ctp:61
+#: /views/products/view_cart.ctp:45
+#: /views/saved_themes/admin_edit.ctp:83
+#: /views/saved_themes/admin_edit_image.ctp:15
+#: /views/saved_themes/admin_index_original.ctp:39
+#: /views/shipping_rates/admin_edit.ctp:97
+#: /views/shipping_rates/admin_index.ctp:50
+#: /views/shipping_rates/new_shipping_rate.ctp:28
+#: /views/shops/edit.ctp:17
+#: /views/themes/admin_index.ctp:33
+#: /views/webpages/admin_edit.ctp:28
+#: /views/webpages/admin_index.ctp:35;83
+msgid "Delete"
+msgstr ""
+
+#: /views/addresses/index.ctp:49
+#: /views/blogs/admin_edit.ctp:24
+#: /views/blogs/admin_index.ctp:33
+#: /views/blogs/admin_view.ctp:45;92
+#: /views/blogs/view.ctp:45;95
+#: /views/domains/admin_edit.ctp:19
+#: /views/domains/admin_index.ctp:29
+#: /views/domains/admin_view.ctp:31
+#: /views/elements/product_images_admin_list_by_product_list.ctp:54
+#: /views/gift_cards/admin_edit.ctp:25
+#: /views/gift_cards/admin_index.ctp:49
+#: /views/gift_cards/admin_view.ctp:71
+#: /views/gift_cards/edit.ctp:25
+#: /views/gift_cards/index.ctp:49
+#: /views/gift_cards/view.ctp:71
+#: /views/merchants/platform_index.ctp:61
+#: /views/merchants/platform_view.ctp:54
+#: /views/orders/index.ctp:61
+#: /views/orders/view.ctp:54
+#: /views/posts/admin_index.ctp:47
+#: /views/posts/admin_view.ctp:70;120
+#: /views/posts/view.ctp:70;120
+#: /views/products/admin_edit.ctp:20
+#: /views/products/admin_index.ctp:69
+#: /views/products/admin_view.ctp:50
+#: /views/products/index.ctp:61
+#: /views/products/platform_add.ctp:54
+#: /views/products/platform_edit.ctp:21
+#: /views/products/platform_index.ctp:61
+#: /views/products/platform_view.ctp:54
+#: /views/products/view.ctp:158
+#: /views/products/view_cart.ctp:45
+#: /views/saved_themes/admin_edit.ctp:83
+#: /views/saved_themes/admin_index_original.ctp:39
+#: /views/saved_themes/admin_view.ctp:51
+#: /views/shops/edit.ctp:17
+#: /views/themes/admin_index.ctp:33
+#: /views/webpages/admin_edit.ctp:28
+#: /views/webpages/admin_index.ctp:35;83
+#: /views/webpages/admin_view.ctp:52
+#: /views/webpages/view.ctp:56
+msgid "Are you sure you want to delete # %s?"
+msgstr ""
+
+#: /views/addresses/index.ctp:56
+#: /views/blogs/admin_index.ctp:46
+#: /views/domains/admin_index.ctp:42
+#: /views/elements/product_images_admin_list_by_product_list.ctp:61
+#: /views/gift_cards/admin_index.ctp:62
+#: /views/gift_cards/index.ctp:62
+#: /views/merchants/platform_index.ctp:68
+#: /views/orders/admin_index.ctp:74
+#: /views/orders/admin_index_filter.ctp:36
+#: /views/orders/index.ctp:68
+#: /views/posts/admin_index.ctp:60
+#: /views/products/admin_index.ctp:77
+#: /views/products/index.ctp:68
+#: /views/products/platform_index.ctp:68
+#: /views/saved_themes/admin_index_original.ctp:52
+#: /views/themed/5_c10/products/index.ctp:73
+#: /views/themed/5_c11/products/index.ctp:73
+#: /views/themed/5_c12/products/index.ctp:73
+#: /views/themed/5_c13/products/index.ctp:73
+#: /views/themed/5_c2/_c2/products/index.ctp:73
+#: /views/themed/5_c3/products/index.ctp:73
+#: /views/themed/5_c4/products/index.ctp:73
+#: /views/themed/5_c5/products/index.ctp:73
+#: /views/themed/5_c6/products/index.ctp:73
+#: /views/themed/5_c7/products/index.ctp:73
+#: /views/themed/5_c8/products/index.ctp:73
+#: /views/themed/default/products/index.ctp:73
+#: /views/themes/admin_index.ctp:46
+#: /views/webpages/admin_index.ctp:48
+msgid "previous"
+msgstr ""
+
+#: /views/addresses/index.ctp:58
+#: /views/blogs/admin_index.ctp:49
+#: /views/domains/admin_index.ctp:45
+#: /views/elements/product_images_admin_list_by_product_list.ctp:63
+#: /views/gift_cards/admin_index.ctp:65
+#: /views/gift_cards/index.ctp:65
+#: /views/merchants/platform_index.ctp:70
+#: /views/orders/admin_index.ctp:76
+#: /views/orders/admin_index_filter.ctp:38
+#: /views/orders/index.ctp:70
+#: /views/posts/admin_index.ctp:63
+#: /views/products/admin_index.ctp:79
+#: /views/products/index.ctp:70
+#: /views/products/platform_index.ctp:70
+#: /views/saved_themes/admin_index_original.ctp:55
+#: /views/themed/5_c10/products/index.ctp:75
+#: /views/themed/5_c11/products/index.ctp:75
+#: /views/themed/5_c12/products/index.ctp:75
+#: /views/themed/5_c13/products/index.ctp:75
+#: /views/themed/5_c2/_c2/products/index.ctp:75
+#: /views/themed/5_c3/products/index.ctp:75
+#: /views/themed/5_c4/products/index.ctp:75
+#: /views/themed/5_c5/products/index.ctp:75
+#: /views/themed/5_c6/products/index.ctp:75
+#: /views/themed/5_c7/products/index.ctp:75
+#: /views/themed/5_c8/products/index.ctp:75
+#: /views/themed/default/products/index.ctp:75
+#: /views/themes/admin_index.ctp:49
+#: /views/webpages/admin_index.ctp:51
+msgid "next"
+msgstr ""
+
+#: /views/addresses/index.ctp:62
+msgid "New Address"
+msgstr ""
+
+#: /views/blogs/admin_add.ctp:4
+msgid "Admin Add Blog"
+msgstr ""
+
+#: /views/blogs/admin_add.ctp:10
+#: /views/blogs/admin_edit.ctp:18
+#: /views/domains/admin_add.ctp:12
+#: /views/domains/admin_edit.ctp:13
+#: /views/gift_cards/add.ctp:26
+#: /views/gift_cards/admin_add.ctp:18
+#: /views/gift_cards/admin_edit.ctp:19
+#: /views/gift_cards/edit.ctp:19
+#: /views/posts/admin_add.ctp:17
+#: /views/posts/admin_edit.ctp:25
+#: /views/shipping_rates/admin_edit.ctp:83
+#: /views/themes/admin_settings.ctp:12
+#: /views/webpages/admin_add.ctp:13
+#: /views/webpages/admin_edit.ctp:22
+msgid "Submit"
+msgstr ""
+
+#: /views/blogs/admin_add.ctp:16
+#: /views/blogs/admin_edit.ctp:25
+#: /views/blogs/view.ctp:46
+#: /views/posts/admin_index.ctp:70
+#: /views/posts/admin_view.ctp:73
+#: /views/posts/view.ctp:73
+msgid "List Blogs"
+msgstr ""
+
+#: /views/blogs/admin_add.ctp:17
+#: /views/blogs/admin_index.ctp:56
+#: /views/blogs/view.ctp:48
+#: /views/posts/admin_view.ctp:71
+#: /views/posts/view.ctp:71
+msgid "List Posts"
+msgstr ""
+
+#: /views/blogs/admin_add.ctp:18
+#: /views/blogs/admin_edit.ctp:26
+#: /views/blogs/admin_index.ctp:57
+#: /views/blogs/admin_view.ctp:47
+#: /views/blogs/view.ctp:49;104
+#: /views/posts/admin_index.ctp:69
+#: /views/posts/admin_view.ctp:72
+#: /views/posts/view.ctp:72
+msgid "New Post"
+msgstr ""
+
+#: /views/blogs/admin_edit.ctp:4
+msgid "Admin Edit Blog"
+msgstr ""
+
+#: /views/blogs/admin_index.ctp:2
+#: /views/webpages/admin_index.ctp:56
+msgid "Blogs"
+msgstr ""
+
+#: /views/blogs/admin_index.ctp:55
+#: /views/blogs/view.ctp:47
+#: /views/posts/admin_index.ctp:71
+#: /views/posts/admin_view.ctp:74
+#: /views/posts/view.ctp:74
+#: /views/webpages/admin_index.ctp:98
+msgid "New Blog"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:2
+#: /views/blogs/view.ctp:2
+#: /views/posts/admin_view.ctp:9
+#: /views/posts/view.ctp:9
+msgid "Blog"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:4;55
+#: /views/blogs/view.ctp:4;57
+#: /views/domains/admin_view.ctp:4
+#: /views/gift_cards/admin_view.ctp:4
+#: /views/gift_cards/view.ctp:4
+#: /views/merchants/platform_view.ctp:4
+#: /views/orders/view.ctp:4
+#: /views/posts/admin_view.ctp:4;86
+#: /views/posts/view.ctp:4;86
+#: /views/products/admin_view.ctp:4
+#: /views/products/platform_add.ctp:4
+#: /views/products/platform_view.ctp:4
+#: /views/saved_themes/admin_view.ctp:4
+#: /views/webpages/admin_view.ctp:4
+#: /views/webpages/view.ctp:4
+msgid "Id"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:9
+#: /views/blogs/view.ctp:9
+#: /views/orders/admin_view.ctp:4;21;53
+#: /views/saved_themes/admin_view.ctp:9
+#: /views/shipping_rates/admin_edit.ctp:16
+msgid "Name"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:14
+#: /views/blogs/view.ctp:14
+msgid "Short Name"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:19
+#: /views/blogs/view.ctp:19
+#: /views/products/admin_view.ctp:19
+#: /views/products/platform_add.ctp:24
+#: /views/products/platform_view.ctp:24
+#: /views/products/view.ctp:15
+#: /views/saved_themes/admin_view.ctp:14
+msgid "Description"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:24
+#: /views/blogs/view.ctp:24
+#: /views/saved_themes/admin_view.ctp:40
+#: /views/themes/admin_index.ctp:55
+#: /views/themes/admin_settings.ctp:4
+msgid "Theme"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:29;65
+#: /views/blogs/view.ctp:29;67
+#: /views/gift_cards/admin_view.ctp:39
+#: /views/gift_cards/view.ctp:39
+#: /views/posts/admin_view.ctp:54;94
+#: /views/posts/view.ctp:54;94
+#: /views/saved_themes/admin_view.ctp:24
+#: /views/webpages/admin_view.ctp:21
+#: /views/webpages/view.ctp:25
+msgid "Created"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:34;66
+#: /views/blogs/view.ctp:34;68
+#: /views/gift_cards/admin_view.ctp:44
+#: /views/gift_cards/view.ctp:44
+#: /views/posts/admin_view.ctp:59;95
+#: /views/posts/view.ctp:59;95
+#: /views/saved_themes/admin_view.ctp:29
+#: /views/webpages/admin_view.ctp:26
+#: /views/webpages/view.ctp:30
+msgid "Modified"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:44
+#: /views/blogs/view.ctp:44
+msgid "Edit Blog"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:45
+#: /views/blogs/view.ctp:45
+msgid "Delete Blog"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:46
+msgid "Blogs & Pages"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:51
+#: /views/blogs/view.ctp:53
+msgid "Related Posts"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:56
+#: /views/blogs/view.ctp:58
+msgid "Blog Id"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:57
+#: /views/blogs/view.ctp:59
+msgid "Author Id"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:58
+#: /views/blogs/view.ctp:60
+#: /views/merchants/platform_view.ctp:39
+#: /views/orders/view.ctp:44
+#: /views/posts/admin_view.ctp:19;93
+#: /views/posts/view.ctp:19;93
+#: /views/products/admin_view.ctp:39
+#: /views/products/platform_add.ctp:44
+#: /views/products/platform_view.ctp:44
+msgid "Status"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:59
+#: /views/blogs/view.ctp:61
+#: /views/posts/admin_view.ctp:24
+#: /views/posts/view.ctp:24
+#: /views/products/admin_view.ctp:9
+#: /views/products/platform_add.ctp:14
+#: /views/products/platform_view.ctp:14
+#: /views/products/view.ctp:10
+#: /views/webpages/admin_index.ctp:60
+#: /views/webpages/admin_view.ctp:11
+#: /views/webpages/view.ctp:15
+msgid "Title"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:60
+#: /views/blogs/view.ctp:62
+#: /views/posts/admin_view.ctp:29
+#: /views/posts/view.ctp:29
+msgid "Slug"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:61
+#: /views/blogs/view.ctp:63
+#: /views/posts/admin_view.ctp:34;88
+#: /views/posts/view.ctp:34;88
+msgid "Body"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:62
+#: /views/blogs/view.ctp:64
+#: /views/posts/admin_view.ctp:39
+#: /views/posts/view.ctp:39
+msgid "No Comments"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:63
+#: /views/blogs/view.ctp:65
+#: /views/posts/admin_view.ctp:44
+#: /views/posts/view.ctp:44
+msgid "Allow Comments"
+msgstr ""
+
+#: /views/blogs/admin_view.ctp:64
+#: /views/blogs/view.ctp:66
+#: /views/posts/admin_view.ctp:49
+#: /views/posts/view.ctp:49
+msgid "Allow Pingback"
+msgstr ""
+
+#: /views/customers/login.ctp:12
+#: /views/merchants/login.ctp:14
+#: /views/users/login.ctp:8
+msgid "Login"
+msgstr ""
+
+#: /views/domains/admin_add.ctp:4
+#: /views/themes/admin_settings.ctp:4
+msgid "Add %s"
+msgstr ""
+
+#: /views/domains/admin_add.ctp:4
+#: /views/domains/admin_edit.ctp:4
+#: /views/domains/admin_index.ctp:51
+#: /views/domains/admin_view.ctp:2;9;30;31;33
+msgid "Domain"
+msgstr ""
+
+#: /views/domains/admin_add.ctp:18
+#: /views/domains/admin_edit.ctp:20
+#: /views/domains/admin_view.ctp:32
+#: /views/products/admin_add.ctp:55
+#: /views/products/admin_edit.ctp:21
+#: /views/products/admin_view.ctp:51
+#: /views/themes/admin_settings.ctp:18
+msgid "List %s"
+msgstr ""
+
+#: /views/domains/admin_add.ctp:18
+#: /views/domains/admin_edit.ctp:20
+#: /views/domains/admin_index.ctp:2
+#: /views/domains/admin_view.ctp:32
+msgid "Domains"
+msgstr ""
+
+#: /views/domains/admin_edit.ctp:4
+#: /views/domains/admin_view.ctp:30
+#: /views/products/admin_view.ctp:49
+msgid "Edit %s"
+msgstr ""
+
+#: /views/domains/admin_index.ctp:51
+#: /views/domains/admin_view.ctp:33
+#: /views/products/admin_view.ctp:52
+#: /views/themes/admin_index.ctp:55
+msgid "New %s"
+msgstr ""
+
+#: /views/domains/admin_view.ctp:15
+msgid "Primary"
+msgstr ""
+
+#: /views/domains/admin_view.ctp:20
+msgid "Always Redirect Here"
+msgstr ""
+
+#: /views/domains/admin_view.ctp:31
+#: /views/products/admin_view.ctp:50
+msgid "Delete %s"
+msgstr ""
+
+#: /views/elements/checkout_link.ctp:3
+msgid "Checkout"
+msgstr ""
+
+#: /views/elements/display_shipping_range.ctp:9
+msgid "Minimum"
+msgstr ""
+
+#: /views/elements/product_images_add_form.ctp:14
+#: /views/products/admin_add.ctp:19
+msgid "Add Product"
+msgstr ""
+
+#: /views/elements/product_images_add_form_uploadify.ctp:14
+msgid "Images"
+msgstr ""
+
+#: /views/elements/product_images_add_form_uploadify.ctp:53
+#: /views/elements/product_images_ajax_list.ctp:21
+#: /views/elements/themes_ajax_list.ctp:21
+#: /views/posts/admin_edit.ctp:31
+#: /views/saved_themes/admin_edit_image.ctp:18
+msgid "Are you sure you want to delete %s?"
+msgstr ""
+
+#: /views/elements/product_images_admin_list_by_product_list.ctp:3
+msgid "ProductImages"
+msgstr ""
+
+#: /views/elements/product_images_admin_list_by_product_list.ctp:53
+msgid "Cover"
+msgstr ""
+
+#: /views/elements/products_admin_edit_form.ctp:4
+#: /views/products/platform_add.ctp:53
+#: /views/products/platform_edit.ctp:4
+#: /views/products/platform_view.ctp:53
+#: /views/products/view.ctp:157
+msgid "Edit Product"
+msgstr ""
+
+#: /views/gift_cards/add.ctp:10
+msgid "Add Gift Card"
+msgstr ""
+
+#: /views/gift_cards/add.ctp:32
+#: /views/gift_cards/admin_add.ctp:24
+#: /views/gift_cards/admin_edit.ctp:26
+#: /views/gift_cards/admin_view.ctp:72
+#: /views/gift_cards/edit.ctp:26
+#: /views/gift_cards/view.ctp:72
+msgid "List Gift Cards"
+msgstr ""
+
+#: /views/gift_cards/add.ctp:35
+#: /views/gift_cards/admin_add.ctp:27
+#: /views/gift_cards/admin_edit.ctp:29
+#: /views/gift_cards/admin_index.ctp:74
+#: /views/gift_cards/admin_view.ctp:76
+#: /views/gift_cards/edit.ctp:29
+#: /views/gift_cards/index.ctp:74
+#: /views/gift_cards/view.ctp:76
+msgid "List Gift Card Types"
+msgstr ""
+
+#: /views/gift_cards/add.ctp:36
+#: /views/gift_cards/admin_add.ctp:28
+#: /views/gift_cards/admin_edit.ctp:30
+#: /views/gift_cards/admin_index.ctp:75
+#: /views/gift_cards/admin_view.ctp:77
+#: /views/gift_cards/edit.ctp:30
+#: /views/gift_cards/index.ctp:75
+#: /views/gift_cards/view.ctp:77
+msgid "New Gift Card Type"
+msgstr ""
+
+#: /views/gift_cards/add.ctp:37
+#: /views/gift_cards/admin_add.ctp:29
+#: /views/gift_cards/admin_edit.ctp:31
+#: /views/gift_cards/admin_index.ctp:76
+#: /views/gift_cards/admin_view.ctp:78
+#: /views/gift_cards/edit.ctp:31
+#: /views/gift_cards/index.ctp:76
+#: /views/gift_cards/view.ctp:78
+msgid "List Gc Designs"
+msgstr ""
+
+#: /views/gift_cards/add.ctp:38
+#: /views/gift_cards/admin_add.ctp:30
+#: /views/gift_cards/admin_edit.ctp:32
+#: /views/gift_cards/admin_index.ctp:77
+#: /views/gift_cards/admin_view.ctp:79
+#: /views/gift_cards/edit.ctp:32
+#: /views/gift_cards/index.ctp:77
+#: /views/gift_cards/view.ctp:79
+msgid "New Gc Design"
+msgstr ""
+
+#: /views/gift_cards/admin_add.ctp:4
+msgid "Admin Add Gift Card"
+msgstr ""
+
+#: /views/gift_cards/admin_edit.ctp:4
+msgid "Admin Edit Gift Card"
+msgstr ""
+
+#: /views/gift_cards/admin_index.ctp:2
+#: /views/gift_cards/index.ctp:2
+msgid "Gift Cards"
+msgstr ""
+
+#: /views/gift_cards/admin_index.ctp:71
+#: /views/gift_cards/admin_view.ctp:73
+#: /views/gift_cards/index.ctp:71
+#: /views/gift_cards/view.ctp:73
+msgid "New Gift Card"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:2
+#: /views/gift_cards/view.ctp:2
+msgid "Gift Card"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:9
+#: /views/gift_cards/view.ctp:9
+msgid "Recipient"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:14
+#: /views/gift_cards/view.ctp:14
+#: /views/orders/view.ctp:39
+msgid "Amount"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:19
+#: /views/gift_cards/view.ctp:19
+#: /views/products/admin_view.ctp:14
+#: /views/products/platform_add.ctp:19
+#: /views/products/platform_view.ctp:19
+msgid "Code"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:24
+#: /views/gift_cards/view.ctp:24
+msgid "From"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:29
+#: /views/gift_cards/view.ctp:29
+msgid "To"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:34
+#: /views/gift_cards/view.ctp:34
+msgid "Message"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:50
+#: /views/gift_cards/view.ctp:50
+msgid "Delivery"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:55
+#: /views/gift_cards/view.ctp:55
+msgid "Gift Card Type"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:60
+#: /views/gift_cards/view.ctp:60
+msgid "Gc Design"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:70
+#: /views/gift_cards/edit.ctp:4
+#: /views/gift_cards/view.ctp:70
+msgid "Edit Gift Card"
+msgstr ""
+
+#: /views/gift_cards/admin_view.ctp:71
+#: /views/gift_cards/view.ctp:71
+msgid "Delete Gift Card"
+msgstr ""
+
+#: /views/layouts/admin.ctp:25
+#: /views/layouts/default.ctp:25
+#: /views/layouts/overlay-form.ctp:25
+msgid "OMBI60: Open My Business in 60 Seconds:"
+msgstr ""
+
+#: /views/layouts/admin.ctp:51;64
+#: /views/layouts/default.ctp:45;56
+msgid "OMBI60: Open My Business in 60 Seconds"
+msgstr ""
+
+#: /views/layouts/shop.ctp:25
+#: /views/themed/5_c10/layouts/admin.ctp:25
+#: /views/themed/5_c11/layouts/admin.ctp:25
+#: /views/themed/5_c12/layouts/admin.ctp:25
+#: /views/themed/5_c13/layouts/admin.ctp:25
+#: /views/themed/5_c2/_c2/layouts/admin.ctp:25
+#: /views/themed/5_c3/layouts/admin.ctp:25
+#: /views/themed/5_c4/layouts/admin.ctp:25
+#: /views/themed/5_c5/layouts/admin.ctp:25
+#: /views/themed/5_c6/layouts/admin.ctp:25
+#: /views/themed/5_c7/layouts/admin.ctp:25
+#: /views/themed/5_c8/layouts/admin.ctp:25
+#: /views/themed/alt/layouts/admin.ctp:25
+#: /views/themed/blue-white/layouts/admin.ctp:25
+#: /views/themed/blue-white/layouts/default.ctp:25
+#: /views/themed/default/layouts/admin.ctp:25
+#: /views/themed/orange/layouts/admin.ctp:25
+#: /views/themed/orange/layouts/default.ctp:25
+msgid "CakePHP: the rapid development php framework:"
+msgstr ""
+
+#: /views/layouts/shop.ctp:40;51
+#: /views/themed/5_c10/layouts/admin.ctp:39;50
+#: /views/themed/5_c11/layouts/admin.ctp:39;50
+#: /views/themed/5_c12/layouts/admin.ctp:39;50
+#: /views/themed/5_c13/layouts/admin.ctp:39;50
+#: /views/themed/5_c2/_c2/layouts/admin.ctp:39;50
+#: /views/themed/5_c3/layouts/admin.ctp:39;50
+#: /views/themed/5_c4/layouts/admin.ctp:39;50
+#: /views/themed/5_c5/layouts/admin.ctp:39;50
+#: /views/themed/5_c6/layouts/admin.ctp:39;50
+#: /views/themed/5_c7/layouts/admin.ctp:39;50
+#: /views/themed/5_c8/layouts/admin.ctp:39;50
+#: /views/themed/alt/layouts/admin.ctp:39;50
+#: /views/themed/blue-white/layouts/admin.ctp:39;50
+#: /views/themed/blue-white/layouts/default.ctp:64
+#: /views/themed/default/layouts/admin.ctp:39;50
+#: /views/themed/orange/layouts/admin.ctp:39;50
+msgid "CakePHP: the rapid development php framework"
+msgstr ""
+
+#: /views/merchants/admin_index.ctp:7
+#: /views/merchants/platform_index.ctp:2
+msgid "Merchants"
+msgstr ""
+
+#: /views/merchants/edit.ctp:7
+msgid "Profile"
+msgstr ""
+
+#: /views/merchants/platform_edit.ctp:4
+#: /views/merchants/platform_view.ctp:53
+msgid "Edit Merchant"
+msgstr ""
+
+#: /views/merchants/platform_index.ctp:74
+#: /views/merchants/platform_view.ctp:56
+msgid "New Merchant"
+msgstr ""
+
+#: /views/merchants/platform_view.ctp:2
+msgid "Merchant"
+msgstr ""
+
+#: /views/merchants/platform_view.ctp:9
+msgid "Full Name"
+msgstr ""
+
+#: /views/merchants/platform_view.ctp:14
+msgid "Name To Call"
+msgstr ""
+
+#: /views/merchants/platform_view.ctp:19
+#: /views/orders/admin_view.ctp:9
+#: /views/posts/admin_view.ctp:91
+#: /views/posts/view.ctp:91
+msgid "Email"
+msgstr ""
+
+#: /views/merchants/platform_view.ctp:24
+msgid "Password"
+msgstr ""
+
+#: /views/merchants/platform_view.ctp:29
+msgid "Joined On"
+msgstr ""
+
+#: /views/merchants/platform_view.ctp:34
+#: /views/products/admin_view.ctp:34
+#: /views/products/platform_add.ctp:39
+#: /views/products/platform_view.ctp:39
+msgid "Modified On"
+msgstr ""
+
+#: /views/merchants/platform_view.ctp:44
+msgid "Last Login On"
+msgstr ""
+
+#: /views/merchants/platform_view.ctp:54
+msgid "Delete Merchant"
+msgstr ""
+
+#: /views/merchants/platform_view.ctp:55
+msgid "List Merchants"
+msgstr ""
+
+#: /views/orders/add.ctp:4
+#: /views/orders/checkout.ctp:4
+msgid "Add Order"
+msgstr ""
+
+#: /views/orders/add.ctp:20
+#: /views/orders/checkout.ctp:39
+#: /views/orders/view.ctp:55
+msgid "List Orders"
+msgstr ""
+
+#: /views/orders/admin_index.ctp:2
+#: /views/orders/index.ctp:2
+msgid "Orders"
+msgstr ""
+
+#: /views/orders/admin_index.ctp:47
+#: /views/orders/admin_index_filter.ctp:27
+msgid "#"
+msgstr ""
+
+#: /views/orders/admin_view.ctp:2
+msgid "Customer"
+msgstr ""
+
+#: /views/orders/admin_view.ctp:19
+msgid "Delivery Address"
+msgstr ""
+
+#: /views/orders/admin_view.ctp:26;58
+msgid "address"
+msgstr ""
+
+#: /views/orders/admin_view.ctp:31;63
+msgid "region"
+msgstr ""
+
+#: /views/orders/admin_view.ctp:36;68
+msgid "city"
+msgstr ""
+
+#: /views/orders/admin_view.ctp:41;73
+msgid "country"
+msgstr ""
+
+#: /views/orders/admin_view.ctp:51
+msgid "Billing Address"
+msgstr ""
+
+#: /views/orders/index.ctp:74
+#: /views/orders/view.ctp:56
+msgid "New Order"
+msgstr ""
+
+#: /views/orders/view.ctp:2
+msgid "Order"
+msgstr ""
+
+#: /views/orders/view.ctp:9
+#: /views/products/platform_add.ctp:9
+#: /views/products/platform_view.ctp:9
+msgid "Shop Id"
+msgstr ""
+
+#: /views/orders/view.ctp:14
+msgid "Customer Id"
+msgstr ""
+
+#: /views/orders/view.ctp:19
+msgid "Billing Address Id"
+msgstr ""
+
+#: /views/orders/view.ctp:24
+msgid "Delivery Address Id"
+msgstr ""
+
+#: /views/orders/view.ctp:29
+msgid "Order No"
+msgstr ""
+
+#: /views/orders/view.ctp:34
+#: /views/products/admin_view.ctp:29
+#: /views/products/platform_add.ctp:34
+#: /views/products/platform_view.ctp:34
+msgid "Created On"
+msgstr ""
+
+#: /views/orders/view.ctp:53
+msgid "Edit Order"
+msgstr ""
+
+#: /views/orders/view.ctp:54
+msgid "Delete Order"
+msgstr ""
+
+#: /views/payments/admin_index.ctp:8
+msgid "Payment Settings"
+msgstr ""
+
+#: /views/payments/admin_index.ctp:40
+msgid "Turn Off"
+msgstr ""
+
+#: /views/payments/admin_index.ctp:47
+msgid "Are you sure?"
+msgstr ""
+
+#: /views/posts/admin_add.ctp:6
+msgid "Admin Add Post"
+msgstr ""
+
+#: /views/posts/admin_add.ctp:23
+msgid "Cancel"
+msgstr ""
+
+#: /views/posts/admin_edit.ctp:7
+msgid "Admin Edit Post"
+msgstr ""
+
+#: /views/posts/admin_index.ctp:2
+msgid "Posts"
+msgstr ""
+
+#: /views/posts/admin_index.ctp:72
+#: /views/posts/admin_view.ctp:75
+#: /views/posts/view.ctp:75
+msgid "List Authors"
+msgstr ""
+
+#: /views/posts/admin_index.ctp:73
+#: /views/posts/admin_view.ctp:76
+#: /views/posts/view.ctp:76
+msgid "New Author"
+msgstr ""
+
+#: /views/posts/admin_index.ctp:74
+#: /views/posts/admin_view.ctp:77
+#: /views/posts/view.ctp:77
+msgid "List Comments"
+msgstr ""
+
+#: /views/posts/admin_index.ctp:75
+#: /views/posts/admin_view.ctp:78;129
+#: /views/posts/view.ctp:78;129
+msgid "New Comment"
+msgstr ""
+
+#: /views/posts/admin_view.ctp:2
+#: /views/posts/view.ctp:2
+msgid "Post"
+msgstr ""
+
+#: /views/posts/admin_view.ctp:14;89
+#: /views/posts/view.ctp:14;89
+#: /views/saved_themes/admin_view.ctp:19
+msgid "Author"
+msgstr ""
+
+#: /views/posts/admin_view.ctp:69
+#: /views/posts/view.ctp:69
+msgid "Edit Post"
+msgstr ""
+
+#: /views/posts/admin_view.ctp:70
+#: /views/posts/view.ctp:70
+msgid "Delete Post"
+msgstr ""
+
+#: /views/posts/admin_view.ctp:82
+#: /views/posts/view.ctp:82
+msgid "Related Comments"
+msgstr ""
+
+#: /views/posts/admin_view.ctp:87
+#: /views/posts/view.ctp:87
+msgid "Post Id"
+msgstr ""
+
+#: /views/posts/admin_view.ctp:90
+#: /views/posts/view.ctp:90
+msgid "Url"
+msgstr ""
+
+#: /views/posts/admin_view.ctp:92
+#: /views/posts/view.ctp:92
+msgid "Ip"
+msgstr ""
+
+#: /views/product_images/admin_add.ctp:4
+msgid "Add ProductImage"
+msgstr ""
+
+#: /views/product_images/admin_add.ctp:14
+msgid "List ProductImages"
+msgstr ""
+
+#: /views/products/admin_add.ctp:55
+#: /views/products/admin_edit.ctp:21
+#: /views/products/admin_index.ctp:8
+#: /views/products/admin_view.ctp:51
+#: /views/products/index.ctp:2
+#: /views/products/platform_index.ctp:2
+msgid "Products"
+msgstr ""
+
+#: /views/products/admin_index.ctp:19
+#: /views/products/view_cart.ctp:14
+msgid "Photo"
+msgstr ""
+
+#: /views/products/admin_index.ctp:68
+msgid "Duplicate"
+msgstr ""
+
+#: /views/products/admin_index.ctp:83
+#: /views/products/index.ctp:74
+#: /views/products/platform_add.ctp:56
+#: /views/products/platform_index.ctp:74
+#: /views/products/platform_view.ctp:56
+#: /views/products/view.ctp:160
+msgid "New Product"
+msgstr ""
+
+#: /views/products/admin_view.ctp:2;49;50;52
+#: /views/products/platform_add.ctp:2
+#: /views/products/platform_view.ctp:2
+#: /views/products/view.ctp:8
+msgid "Product"
+msgstr ""
+
+#: /views/products/admin_view.ctp:24
+#: /views/products/platform_add.ctp:29
+#: /views/products/platform_view.ctp:29
+#: /views/products/view.ctp:20
+#: /views/shipping_rates/admin_edit.ctp:21
+#: /views/themed/5_c10/products/view_cart.ctp:23
+#: /views/themed/5_c11/products/view_cart.ctp:23
+#: /views/themed/5_c12/products/view_cart.ctp:23
+#: /views/themed/5_c13/products/view_cart.ctp:23
+#: /views/themed/5_c2/_c2/products/view_cart.ctp:23
+#: /views/themed/5_c3/products/view_cart.ctp:23
+#: /views/themed/5_c4/products/view_cart.ctp:23
+#: /views/themed/5_c5/products/view_cart.ctp:23
+#: /views/themed/5_c6/products/view_cart.ctp:23
+#: /views/themed/5_c7/products/view_cart.ctp:23
+#: /views/themed/5_c8/products/view_cart.ctp:23
+#: /views/themed/default/products/view_cart.ctp:23
+msgid "Price"
+msgstr ""
+
+#: /views/products/platform_add.ctp:54
+#: /views/products/platform_view.ctp:54
+#: /views/products/view.ctp:158
+msgid "Delete Product"
+msgstr ""
+
+#: /views/products/platform_add.ctp:55
+#: /views/products/platform_edit.ctp:22
+#: /views/products/platform_view.ctp:55
+#: /views/products/view.ctp:159
+msgid "List Products"
+msgstr ""
+
+#: /views/products/view.ctp:47
+#: /views/products/view_cart.ctp:2
+msgid "Cart"
+msgstr ""
+
+#: /views/products/view_cart.ctp:15
+msgid "title"
+msgstr ""
+
+#: /views/products/view_cart.ctp:16
+msgid "price"
+msgstr ""
+
+#: /views/products/view_cart.ctp:17
+msgid "quantity"
+msgstr ""
+
+#: /views/saved_themes/admin_add.ctp:16
+msgid "Admin Add Saved Theme"
+msgstr ""
+
+#: /views/saved_themes/admin_add.ctp:70
+#: /views/saved_themes/admin_edit.ctp:84
+#: /views/saved_themes/admin_view.ctp:52
+msgid "List Saved Themes"
+msgstr ""
+
+#: /views/saved_themes/admin_add.ctp:73
+#: /views/saved_themes/admin_index.ctp:30
+#: /views/saved_themes/admin_index_original.ctp:64
+#: /views/saved_themes/admin_view.ctp:56
+msgid "List Themes"
+msgstr ""
+
+#: /views/saved_themes/admin_add.ctp:74
+#: /views/saved_themes/admin_index.ctp:31
+#: /views/saved_themes/admin_index_original.ctp:65
+#: /views/saved_themes/admin_view.ctp:57
+msgid "New Theme"
+msgstr ""
+
+#: /views/saved_themes/admin_index.ctp:27
+#: /views/saved_themes/admin_index_original.ctp:61
+#: /views/saved_themes/admin_view.ctp:53
+msgid "New Saved Theme"
+msgstr ""
+
+#: /views/saved_themes/admin_index_original.ctp:2
+msgid "Saved Themes"
+msgstr ""
+
+#: /views/saved_themes/admin_view.ctp:2
+msgid "Saved Theme"
+msgstr ""
+
+#: /views/saved_themes/admin_view.ctp:34
+msgid "Folder Name"
+msgstr ""
+
+#: /views/saved_themes/admin_view.ctp:50
+msgid "Edit Saved Theme"
+msgstr ""
+
+#: /views/saved_themes/admin_view.ctp:51
+msgid "Delete Saved Theme"
+msgstr ""
+
+#: /views/shipping_rates/admin_edit.ctp:11;96
+msgid "Edit Shipping Rate"
+msgstr ""
+
+#: /views/shipping_rates/admin_edit.ctp:26
+msgid "Shipping to "
+msgstr ""
+
+#: /views/shipping_rates/admin_edit.ctp:33
+msgid "Weight Range"
+msgstr ""
+
+#: /views/shipping_rates/admin_edit.ctp:41
+msgid "Price Range"
+msgstr ""
+
+#: /views/shipping_rates/admin_edit.ctp:97
+#: /views/shipping_rates/admin_index.ctp:50
+#: /views/shipping_rates/new_shipping_rate.ctp:28
+msgid "Are you sure you want to delete %s for %s?"
+msgstr ""
+
+#: /views/shipping_rates/admin_index.ctp:5
+msgid "Shipping"
+msgstr ""
+
+#: /views/shops/edit.ctp:4
+msgid "Edit Shop"
+msgstr ""
+
+#: /views/shops/edit.ctp:18
+msgid "List Shops"
+msgstr ""
+
+#: /views/themed/5_c10/products/view_cart.ctp:21
+#: /views/themed/5_c11/products/view_cart.ctp:21
+#: /views/themed/5_c12/products/view_cart.ctp:21
+#: /views/themed/5_c13/products/view_cart.ctp:21
+#: /views/themed/5_c2/_c2/products/view_cart.ctp:21
+#: /views/themed/5_c3/products/view_cart.ctp:21
+#: /views/themed/5_c4/products/view_cart.ctp:21
+#: /views/themed/5_c5/products/view_cart.ctp:21
+#: /views/themed/5_c6/products/view_cart.ctp:21
+#: /views/themed/5_c7/products/view_cart.ctp:21
+#: /views/themed/5_c8/products/view_cart.ctp:21
+#: /views/themed/default/products/view_cart.ctp:21
+msgid "Item"
+msgstr ""
+
+#: /views/themed/5_c10/products/view_cart.ctp:22
+#: /views/themed/5_c11/products/view_cart.ctp:22
+#: /views/themed/5_c12/products/view_cart.ctp:22
+#: /views/themed/5_c13/products/view_cart.ctp:22
+#: /views/themed/5_c2/_c2/products/view_cart.ctp:22
+#: /views/themed/5_c3/products/view_cart.ctp:22
+#: /views/themed/5_c4/products/view_cart.ctp:22
+#: /views/themed/5_c5/products/view_cart.ctp:22
+#: /views/themed/5_c6/products/view_cart.ctp:22
+#: /views/themed/5_c7/products/view_cart.ctp:22
+#: /views/themed/5_c8/products/view_cart.ctp:22
+#: /views/themed/default/products/view_cart.ctp:22
+msgid "Quantity"
+msgstr ""
+
+#: /views/themes/admin_index.ctp:2
+#: /views/themes/admin_settings.ctp:18
+msgid "Themes"
+msgstr ""
+
+#: /views/webpages/admin_add.ctp:4
+msgid "Admin Add Webpage"
+msgstr ""
+
+#: /views/webpages/admin_add.ctp:19
+#: /views/webpages/admin_edit.ctp:29
+#: /views/webpages/admin_view.ctp:53
+#: /views/webpages/view.ctp:57
+msgid "List Webpages"
+msgstr ""
+
+#: /views/webpages/admin_edit.ctp:4
+msgid "Admin Edit Webpage"
+msgstr ""
+
+#: /views/webpages/admin_index.ctp:2
+msgid "Webpages"
+msgstr ""
+
+#: /views/webpages/admin_index.ctp:97
+#: /views/webpages/admin_view.ctp:54
+#: /views/webpages/view.ctp:58
+msgid "New Webpage"
+msgstr ""
+
+#: /views/webpages/admin_view.ctp:2
+#: /views/webpages/view.ctp:2
+msgid "Webpage"
+msgstr ""
+
+#: /views/webpages/admin_view.ctp:16
+#: /views/webpages/view.ctp:20
+msgid "Text"
+msgstr ""
+
+#: /views/webpages/admin_view.ctp:31
+#: /views/webpages/view.ctp:35
+msgid "Meta Title"
+msgstr ""
+
+#: /views/webpages/admin_view.ctp:36
+#: /views/webpages/view.ctp:40
+msgid "Meta Keywords"
+msgstr ""
+
+#: /views/webpages/admin_view.ctp:41
+#: /views/webpages/view.ctp:45
+msgid "Meta Description"
+msgstr ""
+
+#: /views/webpages/admin_view.ctp:51
+#: /views/webpages/view.ctp:55
+msgid "Edit Webpage"
+msgstr ""
+
+#: /views/webpages/admin_view.ctp:52
+#: /views/webpages/view.ctp:56
+msgid "Delete Webpage"
+msgstr ""
+
+#: /views/webpages/view.ctp:9
+msgid "Shop"
+msgstr ""
+
+#: /webroot/test.php:88
+msgid "Debug setting does not allow access to this url."
+msgstr ""
+

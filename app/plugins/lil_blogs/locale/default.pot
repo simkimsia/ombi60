@@ -1,0 +1,682 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  Revision: 100 /lilblogs/plugins/lilblogs\controllers\authors_controller.php
+#  Revision: 93 /lilblogs/plugins/lilblogs\controllers\blogs_controller.php
+#  Revision: 93 /lilblogs/plugins/lilblogs\controllers\categories_controller.php
+#  Revision: 123 /lilblogs/plugins/lilblogs\controllers\posts_controller.php
+#  Revision: 120 /lilblogs/plugins/lilblogs\controllers\comments_controller.php
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2009-06-25 10:21+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: \controllers\authors_controller.php:105
+msgid "You've been logged out."
+msgstr ""
+
+#: \controllers\authors_controller.php:128
+msgid "A new author has been added."
+msgstr ""
+
+#: \controllers\authors_controller.php:143
+msgid "Author has been saved."
+msgstr ""
+
+#: \controllers\authors_controller.php:146
+#: \controllers\blogs_controller.php:132
+#: \controllers\categories_controller.php:122
+#: \controllers\posts_controller.php:304;343
+msgid "Please verify that the information is correct."
+msgstr ""
+
+#: \controllers\authors_controller.php:162
+msgid "Author has been deleted."
+msgstr ""
+
+#: \controllers\blogs_controller.php:114
+msgid "A new blog has been created."
+msgstr ""
+
+#: \controllers\blogs_controller.php:129
+msgid "Blog has been saved."
+msgstr ""
+
+#: \controllers\blogs_controller.php:148
+msgid "Blog has been deleted."
+msgstr ""
+
+#: \controllers\categories_controller.php:95
+msgid "A new category has been created."
+msgstr ""
+
+#: \controllers\categories_controller.php:119
+msgid "Category has been saved."
+msgstr ""
+
+#: \controllers\categories_controller.php:138
+msgid "Category has been deleted."
+msgstr ""
+
+#: \controllers\comments_controller.php:175
+msgid "Comments on %1$s for %2$s"
+msgstr ""
+
+#: \controllers\comments_controller.php:180
+#: \views\comments\index.ctp:3
+msgid "Comments for"
+msgstr ""
+
+#: \controllers\comments_controller.php:185
+msgid "LilBlogs comments"
+msgstr ""
+
+#: \controllers\comments_controller.php:186
+msgid "Coments from every single blog on"
+msgstr ""
+
+#: \controllers\comments_controller.php:213
+msgid "Comment has been saved."
+msgstr ""
+
+#: \controllers\comments_controller.php:230
+msgid "Comment has been deleted"
+msgstr ""
+
+#: \controllers\comments_controller.php:290
+msgid "Action completed."
+msgstr ""
+
+#: \controllers\comments_controller.php:292
+msgid "No comments or action selected"
+msgstr ""
+
+#: \controllers\posts_controller.php:174
+msgid "Lilblogs posts"
+msgstr ""
+
+#: \controllers\posts_controller.php:175
+msgid "Posts from every single blog on"
+msgstr ""
+
+#: \controllers\posts_controller.php:237
+msgid "Your comment has been successfully saved."
+msgstr ""
+
+#: \controllers\posts_controller.php:239
+msgid "Your comment has gone into moderation."
+msgstr ""
+
+#: \controllers\posts_controller.php:246
+msgid "[%1$s] New comment on \"%2$s\""
+msgstr ""
+
+#: \controllers\posts_controller.php:257
+msgid "Uh oh, we weren't able to save your comment."
+msgstr ""
+
+#: \controllers\posts_controller.php:301
+msgid "A new post has been created."
+msgstr ""
+
+#: \controllers\posts_controller.php:330
+msgid "Post has been saved."
+msgstr ""
+
+#: \controllers\posts_controller.php:365
+msgid "Post has been deleted."
+msgstr ""
+
+#: \views\authors\admin_add.ctp:2
+msgid "Add an Author"
+msgstr ""
+
+#: \views\authors\admin_add.ctp:7
+#: \views\authors\admin_edit.ctp:8
+#: \views\authors\admin_index.ctp:10
+#: \views\blogs\admin_add.ctp:8
+#: \views\blogs\admin_edit.ctp:9
+#: \views\blogs\admin_index.ctp:12
+#: \views\categories\admin_add.ctp:8
+#: \views\categories\admin_edit.ctp:9
+#: \views\categories\admin_index.ctp:9
+#: \views\posts\admin_index.ctp:9
+msgid "Name"
+msgstr ""
+
+#: \views\authors\admin_add.ctp:7
+#: \views\authors\admin_edit.ctp:8
+msgid "Name is required."
+msgstr ""
+
+#: \views\authors\admin_add.ctp:8
+#: \views\authors\admin_edit.ctp:9
+#: \views\authors\admin_index.ctp:11
+#: \views\comments\admin_edit.ctp:11
+#: \views\posts\view.ctp:108
+msgid "Email"
+msgstr ""
+
+#: \views\authors\admin_add.ctp:8
+#: \views\authors\admin_edit.ctp:9
+msgid "Email is required, format must be valid."
+msgstr ""
+
+#: \views\authors\admin_add.ctp:9
+#: \views\blogs\admin_add.ctp:13
+#: \views\categories\admin_add.ctp:9
+#: \views\posts\admin_add.ctp:41
+msgid "Create"
+msgstr ""
+
+#: \views\authors\admin_edit.ctp:2
+msgid "Edit Author"
+msgstr ""
+
+#: \views\authors\admin_edit.ctp:10
+#: \views\blogs\admin_edit.ctp:14
+#: \views\categories\admin_edit.ctp:10
+#: \views\comments\admin_edit.ctp:14
+#: \views\posts\admin_edit.ctp:46
+msgid "Save"
+msgstr ""
+
+#: \views\authors\admin_index.ctp:2
+#: \views\elements\admin_navigation.ctp:4
+msgid "Authors"
+msgstr ""
+
+#: \views\authors\admin_index.ctp:3
+msgid "Create a new Author"
+msgstr ""
+
+#: \views\authors\admin_index.ctp:9
+#: \views\blogs\admin_index.ctp:11
+#: \views\categories\admin_index.ctp:8
+#: \views\comments\admin_index.ctp:31
+#: \views\posts\admin_index.ctp:8
+msgid "ID"
+msgstr ""
+
+#: \views\authors\admin_index.ctp:21;21
+#: \views\blogs\admin_index.ctp:30;30
+#: \views\categories\admin_index.ctp:18;18
+#: \views\comments\admin_index.ctp:62;62
+#: \views\elements\admin_sidebar.ctp:16
+#: \views\posts\admin_index.ctp:46;46
+msgid "Edit"
+msgstr ""
+
+#: \views\authors\admin_index.ctp:22
+#: \views\blogs\admin_index.ctp:31;31
+#: \views\categories\admin_index.ctp:19;19
+#: \views\comments\admin_index.ctp:63;63
+#: \views\posts\admin_index.ctp:47;47
+msgid "Delete"
+msgstr ""
+
+#: \views\authors\admin_index.ctp:22
+#: \views\comments\admin_index.ctp:59
+#: \views\elements\admin_sidebar.ctp:41
+#: \views\posts\admin_index.ctp:54
+#: \views\posts\view.ctp:74
+msgid "Comments"
+msgstr ""
+
+#: \views\authors\login.ctp:2
+msgid "Lilblogs Login"
+msgstr ""
+
+#: \views\authors\login.ctp:7
+msgid "Username"
+msgstr ""
+
+#: \views\authors\login.ctp:8
+msgid "Password"
+msgstr ""
+
+#: \views\authors\login.ctp:9
+msgid "Remember me on this computer"
+msgstr ""
+
+#: \views\authors\login.ctp:10
+msgid "OK"
+msgstr ""
+
+#: \views\blogs\admin_add.ctp:2
+msgid "Add a Blog"
+msgstr ""
+
+#: \views\blogs\admin_add.ctp:3
+#: \views\blogs\admin_edit.ctp:3
+msgid "A blog is a container for posts and is generally maintained by one or a few people."
+msgstr ""
+
+#: \views\blogs\admin_add.ctp:8
+#: \views\blogs\admin_edit.ctp:9
+msgid "Blog name is required."
+msgstr ""
+
+#: \views\blogs\admin_add.ctp:10
+#: \views\blogs\admin_edit.ctp:11
+msgid "Short name"
+msgstr ""
+
+#: \views\blogs\admin_add.ctp:10
+#: \views\blogs\admin_edit.ctp:11
+msgid "Short name must only use letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: \views\blogs\admin_add.ctp:12
+#: \views\blogs\admin_edit.ctp:13
+#: \views\blogs\admin_index.ctp:14
+msgid "Description"
+msgstr ""
+
+#: \views\blogs\admin_add.ctp:12
+#: \views\blogs\admin_edit.ctp:13
+msgid "Blog description is required."
+msgstr ""
+
+#: \views\blogs\admin_edit.ctp:2
+msgid "Edit a Blog"
+msgstr ""
+
+#: \views\blogs\admin_index.ctp:2
+#: \views\elements\admin_navigation.ctp:3
+msgid "Blogs"
+msgstr ""
+
+#: \views\blogs\admin_index.ctp:4
+msgid "Create a new Blog"
+msgstr ""
+
+#: \views\blogs\admin_index.ctp:13
+msgid "Short"
+msgstr ""
+
+#: \views\blogs\admin_index.ctp:32;32
+msgid "Show Categories"
+msgstr ""
+
+#: \views\blogs\admin_index.ctp:33;33
+msgid "Show Posts"
+msgstr ""
+
+#: \views\blogs\index.ctp:1
+msgid "LilBlogs List"
+msgstr ""
+
+#: \views\blogs\index.ctp:5
+#: \views\posts\index.ctp:98
+msgid "Read more"
+msgstr ""
+
+#: \views\blogs\view.ctp:1
+msgid "Blog"
+msgstr ""
+
+#: \views\categories\admin_add.ctp:2
+msgid "Add a Category"
+msgstr ""
+
+#: \views\categories\admin_add.ctp:8
+#: \views\categories\admin_edit.ctp:9
+msgid "Category name is required."
+msgstr ""
+
+#: \views\categories\admin_edit.ctp:2
+msgid "Edit Category"
+msgstr ""
+
+#: \views\categories\admin_index.ctp:2
+msgid "Categories for"
+msgstr ""
+
+#: \views\categories\admin_index.ctp:24
+msgid "Create a new Category"
+msgstr ""
+
+#: \views\comments\admin_edit.ctp:2
+msgid "Edit Comment"
+msgstr ""
+
+#: \views\comments\admin_edit.ctp:9
+#: \views\comments\admin_index.ctp:32
+#: \views\posts\admin_add.ctp:32
+#: \views\posts\admin_edit.ctp:37
+#: \views\posts\admin_index.ctp:10
+#: \views\posts\view.ctp:107
+msgid "Author"
+msgstr ""
+
+#: \views\comments\admin_edit.ctp:10
+#: \views\posts\view.ctp:109
+msgid "Url"
+msgstr ""
+
+#: \views\comments\admin_edit.ctp:12
+#: \views\posts\admin_add.ctp:20
+#: \views\posts\admin_edit.ctp:22
+#: \views\posts\view.ctp:110
+msgid "Body"
+msgstr ""
+
+#: \views\comments\admin_edit.ctp:13
+msgid "Spam"
+msgstr ""
+
+#: \views\comments\admin_edit.ctp:13
+msgid "Awaiting Moderation"
+msgstr ""
+
+#: \views\comments\admin_edit.ctp:13
+msgid "Approved"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:54
+msgid "Submitted"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:72
+#: \views\posts\admin_index.ctp:63
+msgid "previous"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:73
+#: \views\posts\admin_index.ctp:64
+msgid "next"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:75
+#: \views\posts\admin_index.ctp:66
+msgid "Page <b>%page%</b> of <b>%pages%</b>, total <b>%count%</b> records."
+msgstr ""
+
+#: \views\comments\admin_index.ctp:5
+msgid "Comments for %s"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:7
+msgid "All Blogs Comments"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:12
+msgid "With selected comments:"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:13
+msgid "Mark them as spam"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:13
+msgid "Allow and publish them"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:13
+msgid "Delete them"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:14
+msgid "Go"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:34
+msgid "Comment"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:35
+msgid "In response to"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:36
+#: \views\posts\admin_add.ctp:35
+#: \views\posts\admin_edit.ctp:40
+#: \views\posts\admin_index.ctp:11
+msgid "Status"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:61
+msgid "Junk"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:61
+msgid "Awaiting moderation"
+msgstr ""
+
+#: \views\comments\admin_index.ctp:61
+#: \views\posts\admin_add.ctp:38
+#: \views\posts\admin_edit.ctp:43
+#: \views\posts\admin_index.ctp:44
+msgid "Live"
+msgstr ""
+
+#: \views\comments\index.ctp:5
+msgid "All LilBlogs comments"
+msgstr ""
+
+#: \views\comments\index.ctp:15
+#: \views\comments\rss\index.ctp:7
+msgid "Comment on"
+msgstr ""
+
+#: \views\comments\index.ctp:15
+msgid "on"
+msgstr ""
+
+#: \views\comments\index.ctp:15
+#: \views\comments\rss\index.ctp:7
+msgid "by"
+msgstr ""
+
+#: \views\elements\admin_sidebar.ctp:7
+msgid "Posts"
+msgstr ""
+
+#: \views\elements\admin_sidebar.ctp:23
+msgid "Add New"
+msgstr ""
+
+#: \views\elements\admin_sidebar.ctp:30
+msgid "Edit Categories"
+msgstr ""
+
+#: \views\elements\email\text\comment_notification.ctp:3
+msgid "A new comment on the post #%1$s \"%2$s\" has been posted."
+msgstr ""
+
+#: \views\elements\email\text\comment_notification.ctp:6
+msgid "A new comment on the post #%1$s \"%2$s\" is waiting for moderation."
+msgstr ""
+
+#: \views\elements\email\text\comment_notification.ctp:17
+msgid "Author : %1$s"
+msgstr ""
+
+#: \views\elements\email\text\comment_notification.ctp:18
+msgid "E-mail : %1$s"
+msgstr ""
+
+#: \views\elements\email\text\comment_notification.ctp:19
+msgid "Url    : %1$s"
+msgstr ""
+
+#: \views\elements\email\text\comment_notification.ctp:20
+msgid "Whois  : http://ws.arin.net/cgi-bin/whois.pl?queryinput=%1$s"
+msgstr ""
+
+#: \views\elements\email\text\comment_notification.ctp:22
+msgid "Comment:"
+msgstr ""
+
+#: \views\elements\email\text\comment_notification.ctp:25
+msgid "Approve it"
+msgstr ""
+
+#: \views\elements\email\text\comment_notification.ctp:34
+msgid "Delete it"
+msgstr ""
+
+#: \views\elements\email\text\comment_notification.ctp:42
+msgid "Spam it"
+msgstr ""
+
+#: \views\layouts\blogs_admin.ctp:5
+msgid "Blog Administration"
+msgstr ""
+
+#: \views\posts\admin_add.ctp:2
+msgid "Add a Post"
+msgstr ""
+
+#: \views\posts\admin_add.ctp:9
+#: \views\posts\admin_edit.ctp:11
+msgid "Title"
+msgstr ""
+
+#: \views\posts\admin_add.ctp:10
+#: \views\posts\admin_edit.ctp:12
+msgid "Post title is required."
+msgstr ""
+
+#: \views\posts\admin_add.ctp:15
+#: \views\posts\admin_edit.ctp:17
+msgid "Slug"
+msgstr ""
+
+#: \views\posts\admin_add.ctp:16
+#: \views\posts\admin_edit.ctp:18
+msgid "Post slug is required and must only use letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: \views\posts\admin_add.ctp:21
+#: \views\posts\admin_edit.ctp:24
+msgid "Body of the post is required."
+msgstr ""
+
+#: \views\posts\admin_add.ctp:24
+#: \views\posts\admin_edit.ctp:28
+msgid "Allow Comments"
+msgstr ""
+
+#: \views\posts\admin_add.ctp:27
+#: \views\posts\admin_edit.ctp:32
+msgid "Category"
+msgstr ""
+
+#: \views\posts\admin_add.ctp:29
+#: \views\posts\admin_edit.ctp:34
+msgid "none"
+msgstr ""
+
+#: \views\posts\admin_add.ctp:37
+#: \views\posts\admin_edit.ctp:42
+#: \views\posts\admin_index.ctp:44
+msgid "Draft"
+msgstr ""
+
+#: \views\posts\admin_edit.ctp:2
+msgid "Edit Post"
+msgstr ""
+
+#: \views\posts\admin_index.ctp:2
+msgid "Posts for \"%s\""
+msgstr ""
+
+#: \views\posts\admin_index.ctp:12
+msgid "Date"
+msgstr ""
+
+#: \views\posts\index.ctp:3
+msgid "Search Results"
+msgstr ""
+
+#: \views\posts\index.ctp:37
+#: \views\posts\view.ctp:20
+msgid "in"
+msgstr ""
+
+#: \views\posts\index.ctp:50
+#: \views\posts\view.ctp:33
+msgid "and"
+msgstr ""
+
+#: \views\posts\index.ctp:25
+#: \views\posts\view.ctp:8
+msgid "Posted %1$s by %2$s"
+msgstr ""
+
+#: \views\posts\index.ctp:30
+#: \views\posts\view.ctp:13
+msgid "Posted %s"
+msgstr ""
+
+#: \views\posts\index.ctp:72
+#: \views\posts\view.ctp:55
+msgid "Edit this post"
+msgstr ""
+
+#: \views\posts\index.ctp:112
+msgid "Newer"
+msgstr ""
+
+#: \views\posts\index.ctp:113
+msgid "Older"
+msgstr ""
+
+#: \views\posts\index.ctp:59
+#: \views\posts\view.ctp:42
+msgid "1 comment"
+msgid_plural "%d comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: \views\posts\view.ctp:79
+msgid "No comments yet. Please do add yours."
+msgstr ""
+
+#: \views\posts\view.ctp:89
+msgid "said"
+msgstr ""
+
+#: \views\posts\view.ctp:102
+msgid "Leave a Comment"
+msgstr ""
+
+#: \views\posts\view.ctp:107
+msgid "Author is required."
+msgstr ""
+
+#: \views\posts\view.ctp:108
+msgid "Email in proper form is required."
+msgstr ""
+
+#: \views\posts\view.ctp:110
+msgid "Body is required."
+msgstr ""
+
+#: \views\posts\view.ctp:111
+msgid "Add my comment"
+msgstr ""
+
+#: \views\posts\view.ctp:113
+msgid "Please be respectful; your comment my be edited or marked as spam, if necessary."
+msgstr ""
+
+#: \views\posts\view.ctp:118
+msgid "Sorry, comments are closed for this post. If you have any further questions or comments, feel free to contact us."
+msgstr ""
+
+#: \views\posts\rss\view.ctp:7
+msgid "Comment from"
+msgstr ""
+

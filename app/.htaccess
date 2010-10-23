@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine on
+   RewriteRule    ^$ webroot/    [L]
+   RewriteRule    (.*) webroot/$1 [L]
+</IfModule>
+
+# this is to gzip the components
+<IfModule mod_deflate.c>
+	<Files *.css>
+	SetOutputFilter DEFLATE
+	</Files>
+
+	<Files *.js>
+	SetOutputFilter DEFLATE
+	</Files>
+
+	<Files *.txt>
+	SetOutputFilter DEFLATE
+	</Files>
+</IfModule>
+
