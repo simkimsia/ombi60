@@ -45,6 +45,8 @@ task :staging do
   # servers (which is the default), you can specify the actual location
   # via the :deploy_to variable:
   set :deploy_to, "/var/www/ombi60.biz"
+  set :config_files_folder, "staging"
+  after("deploy:restart", :copy_config_files)
   #after('restore_staging_database')
 end
 
@@ -85,5 +87,15 @@ end
 namespace :restore_staging_database do
   task :default do
     run " . #{shared_path}/restore_staging_database"
+  end
+end
+
+namespace :copy_config_files do
+  desc <<-DESC
+    config files for staging is copied
+  DESC
+  task :default do
+    run "cp /home/deploy/#{config_files_folder}/database.php #{current_path}/app/config/"
+    run "cp /home/deploy/#{config_files_folder}/bootstrap.local.php #{current_path}/app/config/"
   end
 end
