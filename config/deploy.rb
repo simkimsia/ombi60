@@ -47,7 +47,8 @@ task :staging do
   set :deploy_to, "/var/www/ombi60.biz"
   set :config_files_folder, "staging"
   after("deploy:restart", :copy_config_files)
-  #after('restore_staging_database')
+  after("deploy:restart", :restore_staging_database)
+  
 end
 
 # more applicable for rails app
@@ -86,7 +87,8 @@ end
 
 namespace :restore_staging_database do
   task :default do
-    run " . #{shared_path}/restore_staging_database"
+    run "cp /home/deploy/#{config_files_folder}/restore_staging_database #{current_path}/docs/database/"
+    run ". #{current_path}/docs/database/restore_staging_database"
   end
 end
 
