@@ -3,10 +3,10 @@
 	<fieldset>
  		<legend><?php printf(__('Add %s', true), __('Domain', true)); ?></legend>
 	<?php
-		echo $this->Form->input('domain');
-		echo $this->Form->input('shop_id');
-		echo $this->Form->input('primary');
-		echo $this->Form->input('always_redirect_here');
+		echo 'http://' . $this->Form->input('domain');
+		echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=>$shopId));
+		echo $this->Form->input('primary', array('type'=>'hidden', 'value'=>false));
+		echo $this->Form->input('always_redirect_here', array('type'=>'hidden', 'value'=>false));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>

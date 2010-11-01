@@ -96,7 +96,7 @@
 					<li>
 						<a href="#">Preferences</a>
 						<ul class="subnav">  
-							<li><a href="/admin/domains">Domains</a></li>  
+							<li><?php echo $this->Html->link('Domains', '/admin/domains'); ?></li>  
 							<li><a href="#">Sub Nav Link</a></li>  
 						</ul>
 					</li>

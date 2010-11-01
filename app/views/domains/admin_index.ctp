@@ -24,7 +24,7 @@
 		<td><?php echo $domain['Domain']['primary'] ? 'YES' : 'NO'; ?>&nbsp;</td>
 		<td><?php echo $domain['Domain']['always_redirect_here'] ? 'YES' : 'NO'; ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $domain['Domain']['id'])); ?>
+			
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $domain['Domain']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $domain['Domain']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $domain['Domain']['id'])); ?>
 		</td>

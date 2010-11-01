@@ -2,6 +2,13 @@
 class DomainsController extends AppController {
 
 	var $name = 'Domains';
+	
+	function beforeFilter() {
+
+		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
+		parent::beforeFilter();
+	
+	}
 
 	function admin_index() {
 		$this->Domain->recursive = 0;
@@ -19,6 +26,9 @@ class DomainsController extends AppController {
 
 	function admin_add() {
 		if (!empty($this->data)) {
+			
+			$this->data['Domain']['domain'] = 'http://' . $this->data['Domain']['domain'];
+			
 			$this->Domain->create();
 			if ($this->Domain->save($this->data)) {
 				$this->Session->setFlash(__('The domain has been saved', true), 'default', array('class'=>'flash_success'));
@@ -27,8 +37,8 @@ class DomainsController extends AppController {
 				$this->Session->setFlash(__('The domain could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
 			}
 		}
-		$shops = $this->Domain->Shop->find('list');
-		$this->set(compact('shops'));
+		$shopId = Shop::get('Shop.id');
+		$this->set(compact('shopId'));
 	}
 
 	function admin_edit($id = null) {
