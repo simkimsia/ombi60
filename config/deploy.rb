@@ -104,10 +104,10 @@ end
 
 namespace :alter_config do
   task :no_debug do
-    run ". #{current_path}/app/config/no_debug #{current_path}/app/config/bootstrap.local.php"
+    run ". #{current_path}/app/config/no_debug"
   end
   task :full_debug do
-    run ". #{current_path}/app/config/full_debug #{current_path}/app/config/bootstrap.local.php"
+    run ". #{current_path}/app/config/full_debug"
   end
   
 end
