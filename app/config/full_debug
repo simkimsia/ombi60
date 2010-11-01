@@ -1,2 +1,2 @@
 #!/bin/sh
-sed -i "s_Configure::write('debug', 0);_Configure::write('debug', 2);_g" bootstrap.local.php 
+sed -i "s_Configure::write('debug', 0);_Configure::write('debug', 2);_g" "$1"

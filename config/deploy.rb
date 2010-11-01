@@ -104,13 +104,10 @@ end
 
 namespace :alter_config do
   task :no_debug do
-    run "sed -i 's_Configure::write('\''debug'\'', 2);_Configure::write('\''debug'\'', 0);_g' #{current_path}/app/config/bootstrap.local.php"
+    run ". #{current_path}/app/config/no_debug #{current_path}/app/config/bootstrap.local.php"
   end
   task :full_debug do
-    run "sed -i 's_Configure::write('\''debug'\'', 0);_Configure::write('\''debug'\'', 2);_g' #{current_path}/app/config/bootstrap.local.php"
-  end
-  task :remove do
-    run "rm #{current_path}/app/config/bootstrap.local.php"
+    run ". #{current_path}/app/config/full_debug #{current_path}/app/config/bootstrap.local.php"
   end
   
 end
