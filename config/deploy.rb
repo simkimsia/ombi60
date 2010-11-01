@@ -109,5 +109,10 @@ namespace :alter_config do
   task :full_debug do
     run ". #{current_path}/app/config/full_debug"
   end
-  
+  task :allow_all do
+    run ". #{current_path}/app/config/allow_all"
+  end
+  task :allow_none do
+    run ". #{current_path}/app/config/allow_none"
+  end
 end
