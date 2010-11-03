@@ -80,10 +80,10 @@ namespace :clear_cache do
   DESC
   task :default do
     # Remove absolutely everything from TMP
-    run "rm -rf #{shared_path}/tmp/*"
+    run "rm -rf #{current_path}/app/tmp/*"
  
     # Create TMP folders
-    run "mkdir -p #{shared_path}/tmp/{cache/{models,persistent,views},sessions,logs,tests}"
+    run "mkdir -p #{current_path}/app/tmp/{cache/{models,persistent,views},sessions,logs,tests}"
   end
 end
 
