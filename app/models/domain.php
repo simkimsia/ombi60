@@ -18,5 +18,42 @@ class Domain extends AppModel {
 		),
 
 	);
+	
+	function make_this_primary($id = null, $shopId = null) {
+		$this->log('enter model');
+		if (!$id) {
+			if (!$this->id) {
+				return false;
+			}
+			$id = $this->id;
+		}
+		
+		if (!$shopId) {
+			$data = $this->read(null, $id);
+			$shopId = $data['Domain']['shop_id'];
+		}
+		
+		$result = $this->updateAll(
+			// fields to change
+			 array('Domain.primary' => true),
+			 // conditions
+			 array('Domain.id' => $id,
+			       'Domain.shop_id' => $shopId)
+			 );
+		
+		if ($result) {
+			$result = $this->updateAll(
+			// fields to change
+			 array('Domain.primary' => intval(false)),
+			 // conditions
+			 array('Domain.id != ' => $id,
+			       'Domain.shop_id' => $shopId)
+			 );
+			
+		}
+		
+		return $result;
+	}
+	
 }
 ?>

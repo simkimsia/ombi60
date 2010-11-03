@@ -255,6 +255,19 @@
                         array('pass'=>array('based'),
                               'based'=> 'price-based-shipping|weight-based-shipping',
                              ));
+        
+        /**
+         * admin domains
+         * */
+        Router::connect('/admin/domains/make_primary/:id-:shopId',
+                        array('controller' => 'domains',
+                              'action' => 'make_this_primary',
+                              'admin'=>true,
+                              ),
+                        array('pass' =>array('id', 'shopId'),
+                              'id' => '[0-9]+',
+                              'shopId' => '[0-9]+',
+                        ));
     
     
         /**

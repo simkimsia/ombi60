@@ -13,6 +13,10 @@ class UsersController extends AppController {
 		if ($this->action == 'platform_login') {
 			$this->Auth->loginRedirect = '/platform/users';
 		}
+		
+		if ($this->action == 'initDB') {
+			$this->Auth->allow('initDB');
+		}
 
 	}
 
@@ -82,15 +86,16 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_add_by_product');
 
 		$this->Acl->allow($group, 'controllers/Merchants/admin_index');
-		$this->Acl->allow($group, 'controllers/Merchants/edit');
-		$this->Acl->allow($group, 'controllers/Merchants/logout');
-		$this->Acl->allow($group, 'controllers/Merchants/login');
+		$this->Acl->allow($group, 'controllers/Merchants/admin_edit');
+		$this->Acl->allow($group, 'controllers/Merchants/admin_logout');
+		$this->Acl->allow($group, 'controllers/Merchants/admin_login');
 
 		$this->Acl->allow($group, 'controllers/Domains/admin_add');
 		$this->Acl->allow($group, 'controllers/Domains/admin_edit');
 		$this->Acl->allow($group, 'controllers/Domains/admin_delete');
 		$this->Acl->allow($group, 'controllers/Domains/admin_view');
 		$this->Acl->allow($group, 'controllers/Domains/admin_index');
+		$this->Acl->allow($group, 'controllers/Domains/admin_make_this_primary');
 
 		$this->Acl->allow($group, 'controllers/Shops/edit');
 		

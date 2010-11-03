@@ -214,7 +214,7 @@ class Shop extends AppModel {
 	 * Given a url seek out the corresponding shop
 	 * Returns boolean false if no such shop
 	 * */
-	function getByDomain($url, $primary = true) {
+	function getByDomain($url) {
 		
 		// Hackish code, please change in future
 		// -- Andrew
@@ -234,7 +234,7 @@ class Shop extends AppModel {
 				      'first',
 				      array(
 					   'link' => array('Domain', 'Theme'),
-					   'conditions' => array('Domain.domain'=>$url, 'Domain.primary' => $primary),
+					   'conditions' => array('Domain.domain'=>$url),
 					   'fields' => array('Shop.*', 'Domain.domain', 'Domain.id', 'Theme.name'),
 					   ));
 

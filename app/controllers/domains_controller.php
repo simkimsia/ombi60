@@ -40,6 +40,23 @@ class DomainsController extends AppController {
 		$shopId = Shop::get('Shop.id');
 		$this->set(compact('shopId'));
 	}
+	
+	function admin_make_this_primary($id = false, $shopId = false) {
+		
+		$this->log('enter');
+		if (!$id OR !$shopId) {
+			$this->Session->setFlash(__('Invalid id for domain', true));
+			$this->redirect(array('action' => 'index'));
+		}
+
+		if ($this->Domain->make_this_primary($id, $shopId)) {
+			$this->Session->setFlash(__('Domain now primary', true));
+
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash(__('This domain could not be primary. Please, try again.', true));
+		$this->redirect(array('action' => 'index'));
+	}
 
 	function admin_edit($id = null) {
 		if (!$id && empty($this->data)) {

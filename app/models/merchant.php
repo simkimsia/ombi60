@@ -73,6 +73,8 @@ class Merchant extends AppModel {
 		$domainData['Domain']['domain']  = $data['Shop']['web_address'];
 		$domainData['Domain']['primary'] = true;
 		$domainData['Domain']['shop_id'] = $this->Shop->id;
+		// must make this domain to be undeletable
+		$domainData['Domain']['allow_delete'] = false;
 
 		$domain->save($domainData);
 

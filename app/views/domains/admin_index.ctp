@@ -25,8 +25,20 @@
 		<td><?php echo $domain['Domain']['always_redirect_here'] ? 'YES' : 'NO'; ?>&nbsp;</td>
 		<td class="actions">
 			
-			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $domain['Domain']['id'])); ?>
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $domain['Domain']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $domain['Domain']['id'])); ?>
+			<?php
+				if (!$domain['Domain']['primary']) {
+					echo $this->Html->link(__('Make this primary domain', true), array('action' => 'make_this_primary',
+													   'controller' => 'domains',
+													   'admin' => true,
+													   'id' => $domain['Domain']['id'],
+													   'shopId' => $domain['Domain']['shop_id']));
+				}
+			?>
+			<?php
+				if ($domain['Domain']['allow_delete']) {
+					echo $this->Html->link(__('Delete', true), array('action' => 'delete', $domain['Domain']['id']));
+				}
+			?>
 		</td>
 	</tr>
 <?php endforeach; ?>
