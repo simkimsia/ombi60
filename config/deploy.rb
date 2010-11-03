@@ -48,6 +48,8 @@ task :staging do
   set :config_files_folder, "staging"
   after("deploy:restart", :copy_config_files)
   after("deploy:restart", :restore_staging_database)
+  after("deploy:restart", "alter_config:no_debug")
+  after("deploy:restart", "alter_config:allow_none")
   
 end
 
