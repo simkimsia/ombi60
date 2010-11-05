@@ -12,6 +12,8 @@ class DomainsController extends AppController {
 
 	function admin_index() {
 		$this->Domain->recursive = 0;
+		$mainUrl = Shop::get('Shop.web_address');
+		$this->set('mainUrl', $mainUrl);
 		$this->set('domains', $this->paginate('Domain', array(
 								      'Domain.shop_id ' => User::get('Merchant.shop_id')) ));
 	}

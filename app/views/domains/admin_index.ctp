@@ -13,15 +13,8 @@
 	<?php
 	$i = 0;
 	
-	function getAddrByHost($host, $timeout = 3) {
-		$host = str_replace('http://', '', $host);
-		
-		$query = `nslookup -timeout=$timeout -retry=1 $host`;
-		if(preg_match('/\nAddress: (.*)\n/', $query, $matches))
-		   return trim($matches[1]);
-		return $host;
-	}
-	
+	// get the ip address of main url of shop
+	$mainIP = getAddrByHost($mainUrl);
 	
 	foreach ($domains as $domain):
 		$class = null;
@@ -35,7 +28,7 @@
 		
 		<td><?php echo $domain['Domain']['primary'] ? 'YES' : 'NO'; ?>&nbsp;</td>
 		<td><?php echo $domain['Domain']['always_redirect_here'] ? 'YES' : 'NO'; ?>&nbsp;</td>
-		<td><?php echo getAddrByHost($domain['Domain']['domain']); ?>&nbsp;</td>
+		<td><?php echo (getAddrByHost($domain['Domain']['domain']) == $mainIP) ? 'YES' : 'NO'; ?>&nbsp;</td>
 		<td class="actions">
 			
 			<?php
@@ -48,7 +41,7 @@
 				}
 			?>
 			<?php
-				if ($domain['Domain']['allow_delete']) {
+				if ($domain['Domain']['domain'] == $mainUrl) {
 					echo $this->Html->link(__('Delete', true), array('action' => 'delete', $domain['Domain']['id']));
 				}
 			?>
