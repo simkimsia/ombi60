@@ -83,7 +83,19 @@ namespace :clear_cache do
     run "rm -rf #{current_path}/app/tmp/*"
  
     # Create TMP folders
-    run "mkdir -p #{current_path}/app/tmp/{cache/{models,persistent,views},sessions,logs,tests}"
+    run "mkdir -p #{current_path}/app/tmp/cache"
+    run "mkdir -p #{current_path}/app/tmp/cache/models"
+    run "mkdir -p #{current_path}/app/tmp/cache/persistent"
+    run "mkdir -p #{current_path}/app/tmp/cache/views"
+    
+    run "mkdir -p #{current_path}/app/tmp/sessions"
+    run "mkdir -p #{current_path}/app/tmp/logs"
+    run "mkdir -p #{current_path}/app/tmp/tests"
+    
+    
+    # set the permissions
+    run "chmod 775 -R #{current_path}/app/tmp"
+    
   end
 end
 
