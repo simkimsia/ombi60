@@ -5,9 +5,8 @@
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('domain');?></th>
 			
-			<th><?php echo $this->Paginator->sort('primary');?></th>
-			<th><?php echo $this->Paginator->sort('always_redirect_here');?></th>
-			<th><?php echo $this->Paginator->sort('status');?></th>
+			<!-- <th><?php //echo $this->Paginator->sort('always_redirect_here');?></th> -->
+			<th><?php echo $this->Paginator->sort('Working');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -26,8 +25,7 @@
 		<td><?php echo $domain['Domain']['id']; ?>&nbsp;</td>
 		<td><?php echo $domain['Domain']['domain']; ?>&nbsp;</td>
 		
-		<td><?php echo $domain['Domain']['primary'] ? 'YES' : 'NO'; ?>&nbsp;</td>
-		<td><?php echo $domain['Domain']['always_redirect_here'] ? 'YES' : 'NO'; ?>&nbsp;</td>
+		<!-- <td><?php //echo $domain['Domain']['always_redirect_here'] ? 'YES' : 'NO'; ?>&nbsp;</td> -->
 		<td><?php echo (getAddrByHost($domain['Domain']['domain']) == $mainIP) ? 'YES' : 'NO'; ?>&nbsp;</td>
 		<td class="actions">
 			
