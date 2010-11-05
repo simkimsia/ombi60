@@ -19,6 +19,15 @@ class Domain extends AppModel {
 
 	);
 	
+	var $validate = array(
+			      'title' => array(
+					'isUnique' => array(
+						'rule' => 'isUnique',
+						'message' => 'This domain is already used',
+					
+							),)
+			     );
+	
 	function make_this_primary($id = null, $shopId = null) {
 		$this->log('enter model');
 		if (!$id) {
