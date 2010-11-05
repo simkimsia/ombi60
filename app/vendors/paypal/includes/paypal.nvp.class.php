@@ -36,7 +36,7 @@
 	All Responses include the actual PayPal fields themselves as well as an ERRORS array, a REQUESTDATA array, and raw request/response data.  
 	An ORDERITEMS array is also returned where applicable.
 */
-
+require_once 'KLogger.php';
 
 class PayPal
 {
@@ -798,6 +798,7 @@ class PayPal
 	
 	} // End function DoCapture()
 	
+	
 	function DoAuthorization($DataArray)
 	{
 		
@@ -1440,9 +1441,11 @@ class PayPal
 				$ShippingOptionsNVP .= '&' . strtoupper($CurrentOptionVar) . $n . '=' . urlencode($CurrentOptionVal);
 			$n++;	
 		}
-		
+		$log = new KLogger ( TMP . DS . "logs" . DS . "log.txt" , KLogger::DEBUG );
 		$NVPRequest = $this -> NVPCredentials . $SECFieldsNVP . $SurveyChoicesNVP . $ShippingOptionsNVP . $BillingAgreementsNVP . $PaymentsNVP;
+		//$log->LogDebug('API request:' . $NVPRequest);
 		$NVPResponse = $this -> CURLRequest($NVPRequest);
+		//$log->LogDebug('API response:' . $NVPResponse);
 		$NVPRequestArray = $this -> NVPToArray($NVPRequest);
 		$NVPResponseArray = $this -> NVPToArray($NVPResponse);
 		
