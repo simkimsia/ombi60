@@ -7,6 +7,7 @@
 			
 			<th><?php echo $this->Paginator->sort('primary');?></th>
 			<th><?php echo $this->Paginator->sort('always_redirect_here');?></th>
+			<th><?php echo $this->Paginator->sort('status');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -23,6 +24,7 @@
 		
 		<td><?php echo $domain['Domain']['primary'] ? 'YES' : 'NO'; ?>&nbsp;</td>
 		<td><?php echo $domain['Domain']['always_redirect_here'] ? 'YES' : 'NO'; ?>&nbsp;</td>
+		<td><?php echo gethostbyname($domain['Domain']['domain']); ?>&nbsp;</td>
 		<td class="actions">
 			
 			<?php
