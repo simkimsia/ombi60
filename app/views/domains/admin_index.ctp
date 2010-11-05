@@ -12,6 +12,17 @@
 	</tr>
 	<?php
 	$i = 0;
+	
+	function getAddrByHost($host, $timeout = 3) {
+		$host = str_replace('http://', '', $host);
+		
+		$query = `nslookup -timeout=$timeout -retry=1 $host`;
+		if(preg_match('/\nAddress: (.*)\n/', $query, $matches))
+		   return trim($matches[1]);
+		return $host;
+	}
+	
+	
 	foreach ($domains as $domain):
 		$class = null;
 		if ($i++ % 2 == 0) {
@@ -24,7 +35,7 @@
 		
 		<td><?php echo $domain['Domain']['primary'] ? 'YES' : 'NO'; ?>&nbsp;</td>
 		<td><?php echo $domain['Domain']['always_redirect_here'] ? 'YES' : 'NO'; ?>&nbsp;</td>
-		<td><?php echo gethostbyname($domain['Domain']['domain']); ?>&nbsp;</td>
+		<td><?php echo getAddrByHost($domain['Domain']['domain']); ?>&nbsp;</td>
 		<td class="actions">
 			
 			<?php
