@@ -58,9 +58,7 @@ ul.topnav {
 	padding: 0 20px;
 	margin: 0;
 	float: right;
-	background: #222;
 	font-size: 1.2em;
-	background: url("../img/admin/topnav_bg.gif") repeat-x;
 }
 ul.topnav li {
 	background:url("../img/admin/arrow2.png") no-repeat scroll right 19px;
