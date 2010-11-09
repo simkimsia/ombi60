@@ -127,7 +127,7 @@ ul, li {
 	-moz-border-radius:10px;
 	border-radius:10px;
 	border:1px #999999 solid;
-	background-image:url('searchBG.png');
+	/*background-image:url('searchBG.png');*/
 	background-repeat:no-repeat;
 	padding-left:22px;
 	padding-right:10px;

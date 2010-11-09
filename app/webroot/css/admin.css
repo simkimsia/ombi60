@@ -52,64 +52,90 @@ td.new-rate input {
  * this is for the dropdown menu effect in admin
  * see this http://www.noupe.com/tutorial/drop-down-menu-jquery-css.html
 **/
+.govern{display: none;} 
 ul.topnav {
 	list-style: none;
 	padding: 0 20px;
 	margin: 0;
 	float: right;
-
 	background: #222;
 	font-size: 1.2em;
-	background: url(topnav_bg.gif) repeat-x;
+	background: url("../img/admin/topnav_bg.gif") repeat-x;
 }
 ul.topnav li {
+	background:url("../img/admin/arrow2.png") no-repeat scroll right 19px;
 	float: left;
 	margin: 0;
 	padding: 0 15px 0 0;
 	position: relative; /*--Declare X and Y axis base for sub navigation--*/
 }
 ul.topnav li a{
-	padding: 10px 5px;
+	padding: 0 0 0 9px;
 	color: #fff;
 	display: block;
 	text-decoration: none;
 	float: left;
 }
-ul.topnav li a:hover{
-	background: url(topnav_hover.gif) no-repeat center top;
+
+ul.topnav li a strong {
+	padding: 12px 25px 10px 10px;
+	color: #fff;
+	display: block;
+	text-decoration: none;
+	float: left;
 }
+ul.topnav li a:hover, ul.topnav li.active a{
+	background: url("../img/admin/topnav_left.png") no-repeat left bottom;
+	color:#363636;
+	text-shadow:0 1px 0 #FFF;
+}
+ul.topnav li a:hover strong, ul.topnav li.active a strong{background: url("../img/admin/topnav_right.png") no-repeat right bottom;color:#363636;text-shadow:0 1px 0 #FFF;}
+
+
 ul.topnav li span { /*--Drop down trigger styles--*/
 	width: 17px;
-	height: 35px;
+	height: 40px;
 	float: left;
-	background: url(subnav_btn.gif) no-repeat center top;
+	background: url("../img/admin/arrow.png") no-repeat left center ;
 }
-ul.topnav li span.subhover {background-position: center bottom; cursor: pointer;} /*--Hover effect for trigger--*/
-ul.topnav li ul.subnav {
+ul.topnav li span.subhover {background: url("../img/admin/topnav_hover.png") no-repeat right bottom ; cursor: pointer;} /*--Hover effect for trigger--*/
+ul.topnav li ul#subnav {
 	list-style: none;
 	position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
-	left: 0; top: 35px;
-	background: #000;
+	left: 2px;*left: 0px;
+	top: 41px;
+	background: #ccc;
 	margin: 0; padding: 0;
-	display: none;
 	float: left;
 	width: 170px;
 }
-ul.topnav li ul.subnav li{
+ul.topnav li.first ul#subnav{ right:5px; left:auto;}
+ul.topnav li ul#subnav li{
 	margin: 0; padding: 0;
-	border-top: 1px solid #252525; /*--Create bevel effect--*/
-	border-bottom: 1px solid #444; /*--Create bevel effect--*/
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
 	clear: both;
 	width: 170px;
 }
-html ul.topnav li ul.subnav li a {
-	float: left;
-	width: 145px;
-	background: #333 url(dropdown_linkbg.gif) no-repeat 10px center;
-	padding-left: 20px;
+html ul.topnav li ul#subnav li a {
+	background:url("../img/admin/subnav.png") repeat-x scroll;
+	float:left;
+	height:42px;
+	line-height:42px;
+	padding-left:0;
+	width:170px;
 }
-html ul.topnav li ul.subnav li a:hover { /*--Hover effect for subnav links--*/
-	background: #222 url(dropdown_linkbg.gif) no-repeat 10px center;
+html ul.topnav li ul#subnav li a:hover { /*--Hover effect for subnav links--*/
+	background:#95a8c1;
+	color:#fff;
+	text-shadow:#000 0px 1px 0px;
 }
+ul#subnav li a {
+	color:#363636;
+	text-shadow: #fff 0px 1px 0px;
+	font-weight:normal;
+}
+
 /** end of dropdown menu **/
+
 
