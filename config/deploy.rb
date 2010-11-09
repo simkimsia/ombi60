@@ -50,6 +50,7 @@ task :staging do
   after("deploy:restart", :restore_staging_database)
   after("deploy:restart", "alter_config:no_debug")
   after("deploy:restart", "alter_config:allow_none")
+  after("deploy:restart", :clear_cache)
   
 end
 
