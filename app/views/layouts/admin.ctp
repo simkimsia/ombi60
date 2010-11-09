@@ -92,10 +92,16 @@
 			</div>
 			<div id="barright">
 				<ul class="topnav">
-					<li><?php echo $this->Html->link('Themes', '/admin/saved_themes'); ?></li>
-					<li>
-						<a href="#">Preferences</a>
-						<ul class="subnav">  
+					<li class="PY_slide">
+						<a href="#"><strong>Themes</strong></a>
+						<ul id="subnav" class="govern">  
+							
+							<li><a href="#">Sub Nav Link</a></li>  
+						</ul>
+					</li>
+					<li class="PY_slide">
+						<a href="#"><strong>Preferences</strong></a>
+						<ul id="subnav" class="govern">  
 							<li><?php echo $this->Html->link('Domains', '/admin/domains'); ?></li>  
 							<li><a href="#">Sub Nav Link</a></li>  
 						</ul>
@@ -109,6 +115,8 @@
 		<div id="content">
 
 			<?php echo $this->Session->flash(); ?>
+			
+			<?php echo $this->element('admin_scripts'); ?>
 
 			<?php echo $content_for_layout; ?>
 
@@ -125,31 +133,21 @@
 		</div>
 	</div>
 	
-	<script type="text/javascript">
-	
-	$(document).ready(function(){
-	
-		$("ul.subnav").parent().append("<span></span>"); //Only shows drop down trigger when js is enabled (Adds empty span tag after ul.subnav*)
-	
-		$("ul.topnav li span").click(function() { //When trigger is clicked...
-	
-			//Following events are applied to the subnav itself (moving subnav up and down)
-			$(this).parent().find("ul.subnav").slideDown('fast').show(); //Drop down the subnav on click
-	
-			$(this).parent().hover(function() {
-			}, function(){
-				$(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
-			});
-	
-			//Following events are applied to the trigger (Hover events for the trigger)
-			}).hover(function() {
-				$(this).addClass("subhover"); //On hover over, add class "subhover"
-			}, function(){	//On Hover Out
-				$(this).removeClass("subhover"); //On hover out, remove class "subhover"
-		});
-	
-	});
-	</script>
+	<script type="text/javascript"> 
+        $(document).ready(function() {  
+            $("a").click(function() {  
+             $(".govern").not($(this).next(".govern")).slideUp("fast");
+               $(this).next(".govern").slideToggle("fast");
+          });
+		  $(".topnav .PY_slide").eq(0).addClass("first");
+		  $(".topnav .PY_slide").click(function(){
+			$(this).toggleClass("active");
+			$(this).siblings(".PY_slide").removeClass("active");
+			});  
+       });  
+	   
+	   
+     </script> 
 	<?php //echo $this->element('sql_dump'); ?>
 </body>
 </html>
