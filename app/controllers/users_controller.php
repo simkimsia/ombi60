@@ -75,6 +75,9 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Products/admin_delete');
 		$this->Acl->allow($group, 'controllers/Products/admin_view');
 		$this->Acl->allow($group, 'controllers/Products/admin_index');
+		$this->Acl->allow($group, 'controllers/Products/admin_upload');
+		$this->Acl->allow($group, 'controllers/Products/admin_duplicate');
+		$this->Acl->allow($group, 'controllers/Products/admin_toggle');
 
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_add');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_edit');
@@ -84,6 +87,8 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_list_by_product');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_make_this_cover');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_add_by_product');
+		$this->Acl->allow($group, 'controllers/ProductImages/admin_list_by_product');
+		$this->Acl->allow($group, 'controllers/ProductImages/admin_uploadify');
 
 		$this->Acl->allow($group, 'controllers/Merchants/admin_index');
 		$this->Acl->allow($group, 'controllers/Merchants/admin_edit');

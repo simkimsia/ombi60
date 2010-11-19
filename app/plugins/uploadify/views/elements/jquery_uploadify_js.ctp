@@ -11,7 +11,9 @@ $(document).ready(function() {
 	$(buttonId).uploadify({
 		'uploader'       : '<?php echo Router::url('/uploadify/scripts/uploadify.swf'); ?>',
 		<?php if(isset($uploadifySettings['script'])) { ?>
-		'script'         : '<?php echo $uploadifySettings['script']; ?>',
+		'script'         : '<?php
+				$currentSess = '?sess='.$this->Session->id();
+				echo $uploadifySettings['script'] . $currentSess ; ?>',
                 <?php } ?>
                 
                 <?php if(isset($uploadifySettings['cancelImg'])) { ?>

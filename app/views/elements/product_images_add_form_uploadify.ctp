@@ -43,7 +43,8 @@
 	<div id="dummyTrashLinkDiv" style="display:none;">
 		<?php
 			$trashPic = $this->Html->image('trash.gif');
-			
+			// before changing this code, please double check against the bindNewClick js function below.
+			// that will append in the ajax call for those dynamically generated images.
 			echo $this->Ajax->link($trashPic,
 						     array('controller' => 'product_images', 'action' => 'delete', 'id'=>0, 'product_id'=>$product_id),
 						     array('id'=>'dummy',
@@ -87,7 +88,7 @@
 		
 		var deleteLink = $('div#dummyTrashLinkDiv').html();
 		deleteLink = deleteLink.replace('fakefilename', filename);
-		deleteLink = deleteLink.replace('dummy', id+'_'+filename);
+		deleteLink = deleteLink.replace('dummy', id+'_elt');
 		deleteLink = deleteLink.replace('0-' + product_id,  id + '-' + product_id);
 		
 		var featureLink = '';
@@ -104,6 +105,35 @@
 		
 		return deleteLink + featureLink;
 		
+	}
+	
+	function bindNewCallback(id, filename) {
+	
+		
+		postUrl = "<?php echo Router::url(array('controller' => 'product_images', 'action' => 'delete', 'id'=>0, 'product_id'=>$product_id)); ?>";
+		postUrl = postUrl.replace('0-' + product_id,  id + '-' + product_id);
+		
+		id = '#' + id+'_elt';
+
+		$(id).bind('click', function() {
+			if (confirm('Are you sure you want to delete '+filename+'?')) {
+				$.ajax({
+				    async: true,
+				    type: 'post',
+				    beforeSend: function(request) {
+					$('#busy-indicator').show();
+				    },
+				    complete: function(request, json) {
+					afterDelete(request.responseText);
+					$('#busy-indicator').hide()
+				    },
+				    url: postUrl
+				});
+			} else {
+				return false;
+			}
+		});
+
 	}
 	
 	function handlesUploadifyComplete(event, queueID, fileObj, response, data) {
@@ -133,6 +163,7 @@
 		
 		$('#product_images-list').append(imageItem);
 	
+		bindNewCallback(imageID, imageName);
 		
 		return true;
 	}

@@ -45,6 +45,13 @@ class ProductsController extends AppController {
 
 	function beforeFilter() {
 
+		// this is to allow admin_upload to work with Session component
+		if($this->action=='admin_upload'){
+                        $this->Session->id($this->params['url']['sess']);
+			$this->Session->start();
+        }
+
+
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		
@@ -187,8 +194,6 @@ class ProductsController extends AppController {
 				'Payments' => $postFields['payments']
 				);
 		
-		//$this->log('i hope this is where the order total is screwedup');
-		//$this->log($PayPalRequest);
 		
 		$PayPalResult = $PayPal->SetExpressCheckout($PayPalRequest);
 		//$this->log('direct result');
