@@ -96,7 +96,7 @@
 						<a href="#"><strong>Themes</strong></a>
 						<ul id="subnav" class="govern">  
 							
-							<li><a href="#">Sub Nav Link</a></li>  
+							<li><?php echo $this->Html->link('Your themes', '/admin/saved_themes'); ?></li>  
 						</ul>
 					</li>
 					<li class="PY_slide">
@@ -124,11 +124,11 @@
 
 		</div>
 		<div id="footer">
-			<?php echo $this->Html->link(
+			<?php /*echo $this->Html->link(
 					$this->Html->image('cake.power.gif', array('alt'=> __('OMBI60: Open My Business in 60 Seconds', true), 'border' => '0')),
 					'http://www.cakephp.org/',
 					array('target' => '_blank', 'escape' => false)
-				);
+				);*/
 			?>
 		</div>
 	</div>
