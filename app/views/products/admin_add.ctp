@@ -78,7 +78,7 @@
 			var contents = $.parseJSON(json_object.contents);
 			
 			var script = '<?php echo $uploadifySettings['script']; ?>';
-			$('#fileInput').uploadifySettings('script', script + '/' + contents.id);
+			$('#fileInput').uploadifySettings('script', script + '/' + contents.id + '<?php echo "?sess=".$this->Session->id();?>');
 			newAltId = contents.id;
 			
 			

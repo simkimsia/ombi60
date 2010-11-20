@@ -46,7 +46,7 @@ class ProductsController extends AppController {
 	function beforeFilter() {
 
 		// this is to allow admin_upload to work with Session component
-		if($this->action=='admin_upload'){
+		if($this->action=='admin_upload') {
                         $this->Session->id($this->params['url']['sess']);
 			$this->Session->start();
         }
@@ -420,6 +420,7 @@ class ProductsController extends AppController {
 		// When there is NO images, just a normal POST will create the Product
 		// When there ARE images, this will be activated at the very last step to redirect back to the index page
 		} else if ($this->RequestHandler->isPost()) {
+
 			$uploadifyUsed = ($this->data['Product']['alt_id'] > 0);
 					
 			if ($uploadifyUsed) {
