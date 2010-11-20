@@ -16,9 +16,11 @@ class ProductImage extends AppModel {
 		'MeioDuplicate.MeioDuplicate' => array(
 			'filename' => array(
 				'thumbsizes' => array(
-					'small'  => array('width'=>60, 'height'=>60),
-					'large'  => array('width'=>800, 'height'=>400),
-					'shop'  => array('width'=>265, 'height'=>265)
+					'icon'  => array('width'=>32, 'height'=>32),
+					'thumb'  => array('width'=>50, 'height'=>50),
+					'small'  => array('width'=>100, 'height'=>100),
+					'medium'  => array('width'=>240, 'height'=>240),
+					'large'  => array('width'=>480, 'height'=>480),
 				),
 				'dir' => 'uploads{DS}products',
 				'default' => 'default.jpg', /*  if the field is left blank,
