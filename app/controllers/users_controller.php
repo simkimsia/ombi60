@@ -122,6 +122,13 @@ class UsersController extends AppController {
 		//$this->Acl->allow($group, 'controllers/Orders/admin_index');
 		
 		$this->Acl->allow($group, 'controllers/Themes/admin_settings');
+		
+		// for blogs and pages
+		$this->Acl->allow($group, 'controllers/Webpages/admin_add');
+		$this->Acl->allow($group, 'controllers/Webpages/admin_edit');
+		$this->Acl->allow($group, 'controllers/Webpages/admin_delete');
+		$this->Acl->allow($group, 'controllers/Webpages/admin_view');
+		$this->Acl->allow($group, 'controllers/Webpages/admin_index');
 	}
 
 	private function setCustomerPermissions($group) {
