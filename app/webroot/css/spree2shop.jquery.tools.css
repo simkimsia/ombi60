@@ -123,6 +123,7 @@ a.browse {
 	margin:40px 15px;
 	cursor:pointer;
 	font-size:1px;
+	border-bottom:0;
 }
 
 /* right */
