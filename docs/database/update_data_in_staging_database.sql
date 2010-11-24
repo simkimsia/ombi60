@@ -6,4 +6,4 @@ WHERE `domain` = 'http://shop4.ombi60.biz';
 
 UPDATE `domains`
 SET `primary`=0
-WHERE `domain` = 'http://localhost';
+WHERE `domain` = 'http://ombi60.localhost';

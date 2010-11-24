@@ -29,7 +29,7 @@
 										
 					<div class="contentitem">
 						<div class="scroll">
-							<div class="pictureframe pics">
+							<div class="pics">
 								<?php
 	
 									foreach($product['ProductImages'] as $key => $image){
@@ -42,7 +42,7 @@
 						
 						
 						<!-- HTML structures -->
-
+						<div class="minimg">
 
 						<?php
 							$limit = 5;
@@ -55,9 +55,9 @@
 					
 							echo '<!-- "previous page" action -->';
 						
-							if ($leftRightButtonsNeeded){
+							//if ($leftRightButtonsNeeded){
 								echo '<a class="prevNav browse left"></a>';	
-							}
+							//}
 							
 							$style = '';
 							if ($shortenScrollableLength) {
@@ -65,6 +65,8 @@
 								$expectedLengthOfScrollableDiv = $count * 150 - ($offset * 18);
 								$style = 'style="width:' . $expectedLengthOfScrollableDiv . 'px"';
 							}
+							
+							$style='style="width:300px"';
 							
 							if ($hideScrollable) {
 								$style = 'style="display:none"';
@@ -107,14 +109,14 @@
 						</div>
 					
 						<?php
-							if ($leftRightButtonsNeeded) {
+							//if ($leftRightButtonsNeeded) {
 								echo '<!-- "next page" action -->';
 								echo '<a class="nextNav browse right"></a>';	
-							}
+							//}
 							
 						?>
 
-						
+						</div>
 						
 						<div class="itempayment">
 							<div class="instock">Always in stock.</div>

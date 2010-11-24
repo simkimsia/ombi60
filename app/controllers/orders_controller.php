@@ -469,7 +469,7 @@ class OrdersController extends AppController {
 		$shops_payment_module_id = $this->Order->Shop->getPayPalShopsPaymentModuleId($shop_id);
 		
 		if (Configure::read('debug') > 0) {
-			$link = 'http://localhost/wp';
+			$link = 'http://ombi60.localhost';
 		} else {
 			$link = $this->Order->Shop->Domain->field('domain', array('shop_id' => $shop_id,
 										  'primary' => true));

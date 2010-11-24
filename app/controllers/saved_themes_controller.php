@@ -1,4 +1,7 @@
 <?php
+/** 
+ * @property SavedTheme $SavedTheme 
+ */
 class SavedThemesController extends AppController {
 
 	var $name = 'SavedThemes';
