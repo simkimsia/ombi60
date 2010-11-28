@@ -1,0 +1,254 @@
+#<VirtualHost *:80>
+#        ServerAdmin aaa@gmail.com
+#
+#        #this handles sitename.leaguelogix.com
+#        ServerName ombi60.com
+#        ServerAlias www.ombi60.com ombi60.com
+#
+#                Options -Indexes FollowSymLinks
+#
+#        UseCanonicalName Off
+#        DocumentRoot /var/www/ombi60.com/current/html
+#
+#        <Directory />
+#                Options FollowSymLinks
+#                AllowOverride None
+#        </Directory>
+#        <Directory /var/www/ombi60.com/current/html>
+#
+#                Options Indexes FollowSymLinks MultiViews
+#                AllowOverride All
+#                Order allow,deny
+#                allow from all
+#
+#                RewriteEngine On
+#                RewriteBase /
+#
+#                RewriteCond %{REQUEST_FILENAME} !-d
+#                RewriteCond %{REQUEST_FILENAME} !-f
+#                RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+#
+#                <Files sitemap.xml>
+#                        RewriteEngine Off
+#                </Files>
+#
+#      </Directory>
+#
+#        ErrorLog /var/log/apache2/error.log
+#
+#        # Possible values include: debug, info, notice, warn, error, crit,
+#        # alert, emerg.
+#        LogLevel warn
+#
+#        CustomLog /var/log/apache2/access.log combined
+#OA
+#    Alias /doc/ "/usr/share/doc/"
+#    <Directory "/usr/share/doc/">
+#        Options Indexes MultiViews FollowSymLinks
+#        AllowOverride None
+#        Order deny,allow
+#        Deny from all
+#        Allow from 127.0.0.0/255.0.0.0 ::1/128
+#    </Directory>
+#
+#
+#</VirtualHost>
+#
+#
+#<VirtualHost *:80>
+#        ServerAdmin aaa@gmail.com
+#
+#        #this handles sitename.leaguelogix.com
+#        ServerName *.ombi60.com
+#        ServerAlias *.ombi60.com
+#
+#                Options -Indexes FollowSymLinks
+#
+#        UseCanonicalName Off
+#        DocumentRoot /var/www/ombi60.com/current/app/webroot
+#
+#        <Directory />
+#                Options FollowSymLinks
+#                AllowOverride None
+#        </Directory>
+#        <Directory /var/www/ombi60.com/current/app/webroot>
+#
+#                Options Indexes FollowSymLinks MultiViews
+#                AllowOverride All
+#                Order allow,deny
+#                allow from all
+#
+#                RewriteEngine On
+#                RewriteBase /
+#
+#                RewriteCond %{REQUEST_FILENAME} !-d
+#                RewriteCond %{REQUEST_FILENAME} !-f
+#                RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+#
+#		<Files sitemap.xml>
+#                        RewriteEngine Off
+#                </Files>
+#
+#
+#      </Directory>
+#
+#        ErrorLog /var/log/apache2/error.log
+#
+#        # Possible values include: debug, info, notice, warn, error, crit,
+#        # alert, emerg.
+#        LogLevel warn
+#
+#        CustomLog /var/log/apache2/access.log combined
+#OA
+#    Alias /doc/ "/usr/share/doc/"
+#    <Directory "/usr/share/doc/">
+#        Options Indexes MultiViews FollowSymLinks
+#        AllowOverride None
+#        Order deny,allow
+#        Deny from all
+#        Allow from 127.0.0.0/255.0.0.0 ::1/128
+#    </Directory>
+#
+#
+#</VirtualHost>
+
+<VirtualHost *:80>
+	ServerAdmin aaa@gmail.com
+
+	#this handles sitename.leaguelogix.com 
+	ServerName *.ombi60.biz
+	ServerAlias *.ombi60.biz
+
+		Options -Indexes FollowSymLinks 
+
+	UseCanonicalName Off 
+	DocumentRoot /var/www/ombi60.biz/current/app/webroot
+
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /var/www/ombi60.biz/current/app/webroot>
+
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride All
+		Order allow,deny
+		allow from all
+
+		RewriteEngine On
+		RewriteBase /
+
+		RewriteCond %{REQUEST_FILENAME} !-d
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+		<Files sitemap.xml> 
+                        RewriteEngine Off 
+                </Files>
+
+	</Directory>
+
+	ErrorLog /var/log/apache2/error.log
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel warn
+
+	CustomLog /var/log/apache2/access.log combined
+
+    Alias /doc/ "/usr/share/doc/"
+    <Directory "/usr/share/doc/">
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+
+
+</VirtualHost>
+
+<VirtualHost *:80>
+        ServerAdmin aaa@gmail.com
+
+        #this handles sitename.leaguelogix.com
+        ServerName bug.thecopyninja.com
+        ServerAlias bug.thecopyninja.com
+
+                Options -Indexes FollowSymLinks
+
+        UseCanonicalName Off
+        DocumentRoot /var/www/thecopyninja/checklist/current/app/webroot
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/thecopyninja/checklist/current/app/webroot>
+
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+
+                RewriteEngine On
+                RewriteBase /
+
+                RewriteCond %{REQUEST_FILENAME} !-d
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+                <Files sitemap.xml>
+                        RewriteEngine Off
+                </Files>
+
+        </Directory>
+
+	ErrorLog /var/log/apache2/error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog /var/log/apache2/access.log combined
+
+    Alias /doc/ "/usr/share/doc/"
+    <Directory "/usr/share/doc/">
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+
+
+
+</VirtualHost>
+
+<VirtualHost *:80>
+        ServerAdmin aaa@gmail.com
+
+        #this handles sitename.leaguelogix.com
+        ServerName thecopyninja.com
+        ServerAlias *.thecopyninja.com
+
+                Options -Indexes FollowSymLinks
+
+        UseCanonicalName Off
+        DocumentRoot /var/www/thecopyninja
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/thecopyninja>
+
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+
+
+        </Directory>
+</VirtualHost>
+

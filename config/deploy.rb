@@ -36,6 +36,12 @@ task :production do
   # servers (which is the default), you can specify the actual location
   # via the :deploy_to variable:
   set :deploy_to, "/var/www/ombi60.com"
+  set :config_files_folder, "production"
+  after("deploy:restart", :copy_config_files)
+  #after("deploy:restart", :restore_staging_database)
+  after("deploy:restart", "alter_config:no_debug")
+  after("deploy:restart", "alter_config:allow_none")
+  after("deploy:restart", :clear_cache)
 end
 
 
