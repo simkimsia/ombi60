@@ -69,6 +69,23 @@ class MerchantsController extends AppController {
 			$this->data['User']['password_confirm'] = $this->Auth->password($this->data['User']['password_confirm']);
 
 			if ($this->Merchant->signupNewAccount($this->data)) {
+				
+				// since Merchant successfully registered we now redirect to paypal
+				// the original html code is
+				//<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+				//<input type="hidden" name="cmd" value="_s-xclick">
+				//<input type="hidden" name="hosted_button_id" value="ZSAA7KX47SLXY">
+				//<input type="image" src="https://www.paypal.com/en_GB/SG/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
+				//<img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+				//</form>
+				//App::import('Core', 'HttpSocket');
+				//$HttpSocket = new HttpSocket();
+				//$results = $HttpSocket->post('https://www.paypal.com/cgi-bin/webscr',
+				//			     array('cmd' => 's-xclick',
+				//				   'hosted_button_id' => 'ZSAA7KX47SLXY'));
+				
+				// then we check for confirmation of results before displaying success or failure
+				
 				$this->Session->setFlash(__('You\'ve successfully registered.',true));
 
 			} else {
