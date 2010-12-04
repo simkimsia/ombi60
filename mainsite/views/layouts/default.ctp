@@ -3,9 +3,9 @@
 <head>
 <title>Welcome to OMBI60!</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="/git/ombi60_on_git/mainsite/css/style.css" rel="stylesheet" type="text/css" />
-<link href="/git/ombi60_on_git/mainsite/css/layout.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/git/ombi60_on_git/mainsite/js/imagepreloader.js"></script>
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/layout.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/imagepreloader.js"></script>
 <script type="text/javascript">
 	preloadImages([
 		'images/link-left-bg-hover.png', 
@@ -15,13 +15,13 @@
 </script>
 </head>
 <!--[if lt IE 7]>
-   <script type="text/javascript" src="/git/ombi60_on_git/mainsite/js/ie_png.js"></script>
+   <script type="text/javascript" src="../js/ie_png.js"></script>
    <script type="text/javascript">
        ie_png.fix('.png, .main-box-left, .main-box-right, .main-box-top-tail, .main-box-top-right, .main-box-top-left, .main-box-bottom, .main-box-bottom-right, .main-box-bottom-left, .link, .policy strong');
    </script>
 <![endif]-->
 <!--[if IE]>
-	<link rel="stylesheet" type="text/css" href="/git/ombi60_on_git/mainsite/css/style-ie.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style-ie.css" />
 <![endif]-->
 <body id="page1">
 <?php echo $this->element('head');?>

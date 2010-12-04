@@ -54,9 +54,9 @@
 											<div class="wrapper" style="padding:20px 0 30px 0;border-bottom:1px dotted #CDCDCD;">
 												<table border="0" class="col-1">
 														<tr><td><div class="features"><a href="#"><img src="../images/laptop.jpg" /> <strong>Best Ideas</strong></a><br /><p>Wenean nonummy hendrerit mauris hasellus porta. Fusce suscipit varius mi</p></div></td>
-														<td><div class="features"><a href="#"><img src="../img/chart.jpg" /> <strong>Full Statistics</strong></a><br /><p>Wenean nonummy hendrerit mauris hasellus porta. Fusce suscipit varius mi</p></div></td>
-														<td><div class="features"><a href="#"><img src="../img/suitcase.jpg" /> <strong>Best Solutions</strong></a><br /><p>Wenean nonummy hendrerit mauris hasellus porta. Fusce suscipit varius mi</p></div></td>
-														<td><div class="features"><a href="#"><img src="../img/phone.jpg" /> <strong>24/7 Support</strong></a><br /><p>Wenean nonummy hendrerit mauris hasellus porta. Fusce suscipit varius mi</p></div></td></tr>
+														<td><div class="features"><a href="#"><img src="../images/chart.jpg" /> <strong>Full Statistics</strong></a><br /><p>Wenean nonummy hendrerit mauris hasellus porta. Fusce suscipit varius mi</p></div></td>
+														<td><div class="features"><a href="#"><img src="../images/suitcase.jpg" /> <strong>Best Solutions</strong></a><br /><p>Wenean nonummy hendrerit mauris hasellus porta. Fusce suscipit varius mi</p></div></td>
+														<td><div class="features"><a href="#"><img src="../images/phone.jpg" /> <strong>24/7 Support</strong></a><br /><p>Wenean nonummy hendrerit mauris hasellus porta. Fusce suscipit varius mi</p></div></td></tr>
 												</table>
 											</div>
 											<!--features end-->
