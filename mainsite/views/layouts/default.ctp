@@ -15,13 +15,13 @@
 </script>
 </head>
 <!--[if lt IE 7]>
-   <script type="text/javascript" src="/git/ombi60_on_git/mainsite/js/ie_png.js"></script>
+   <script type="text/javascript" src="../js/ie_png.js"></script>
    <script type="text/javascript">
        ie_png.fix('.png, .main-box-left, .main-box-right, .main-box-top-tail, .main-box-top-right, .main-box-top-left, .main-box-bottom, .main-box-bottom-right, .main-box-bottom-left, .link, .policy strong');
    </script>
 <![endif]-->
 <!--[if IE]>
-	<link rel="stylesheet" type="text/css" href="/git/ombi60_on_git/mainsite/css/style-ie.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style-ie.css" />
 <![endif]-->
 <body id="page1">
 <?php echo $this->element('head');?>
