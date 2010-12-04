@@ -3,9 +3,9 @@
 <head>
 <title>Welcome to OMBI60!</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="/git/ombi60_on_git/mainsite/css/style.css" rel="stylesheet" type="text/css" />
-<link href="/git/ombi60_on_git/mainsite/css/layout.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/git/ombi60_on_git/mainsite/js/imagepreloader.js"></script>
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/layout.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/imagepreloader.js"></script>
 <script type="text/javascript">
 	preloadImages([
 		'images/link-left-bg-hover.png', 
