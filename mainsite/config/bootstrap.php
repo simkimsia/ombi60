@@ -51,6 +51,12 @@
 
 /**
  *
+ *  Production Mode
+ **/
+Configure::write('debug', 0);
+
+/**
+ *
  * bootstrap.local.php file can override certain settings for local development purposes
  **/
 if (file_exists(dirname(__FILE__) . '/bootstrap.local.php')) {
@@ -60,11 +66,7 @@ if (file_exists(dirname(__FILE__) . '/bootstrap.local.php')) {
 
 define('DEFAULT_LANGUAGE', 'eng');
 
-/**
- *
- *  Production Mode
- **/
-Configure::write('debug', 0);
+
 
 /**
  * dependent on database having a groups table and the id for

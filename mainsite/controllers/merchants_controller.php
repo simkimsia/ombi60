@@ -1,7 +1,10 @@
 <?php
+App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
 class MerchantsController extends AppController {
 
 	var $name = 'Merchants';
+	
+	var $components = array('Paypal.Paypal');
 
 	var $helpers = array('Javascript', 'Ajax');
 
@@ -40,7 +43,7 @@ class MerchantsController extends AppController {
 		 **/
 
 		// allow non users to access register and login actions only.
-		$this->Auth->allow('register', 'login', 'logout');
+		$this->Auth->allow('register', 'login', 'logout', 'confirm');
 		//$this->Auth->allow('*');
 
 		// need to set this as false so that extra logic can be done in the action login
@@ -86,6 +89,9 @@ class MerchantsController extends AppController {
 				
 				// then we check for confirmation of results before displaying success or failure
 				
+				$PaypalResult = $this->prepareSEC();
+				$this->redirect($PaypalResult['PayPalResult']['REDIRECTURL']);
+				
 				$this->Session->setFlash(__('You\'ve successfully registered.',true));
 
 			} else {
@@ -101,6 +107,18 @@ class MerchantsController extends AppController {
 
 		$this->set('errors', $this->Merchant->getAllValidationErrors());
 
+	}
+	
+	function confirm() {
+		// do nothing for time being.
+		// by right this is to confirm payment for signups
+		
+	}
+	
+	function complete() {
+		// do nothing for time being.
+		// by right this is to complete payment for shop
+		// more for cancel url in paypal 
 	}
 
 	function admin_login() {
@@ -244,6 +262,65 @@ class MerchantsController extends AppController {
 	/**
 	 * End of Platform functions
 	 **/
+	
+	
+	/**
+	 * require uuid, cancelURL, Payments, shopId inside $postFields for checkoutOption
+	 * */
+	
+	private function prepareSEC() {
+		
+		
+		// we need to prepare the paypalexpresscheckout portion
+		$PayPalConfig = array('Sandbox' => Configure::read('paypal.sandbox'),
+				      'APIUsername' => Configure::read('paypal.api.username'),
+				      'APIPassword' => Configure::read('paypal.api.password'),
+				      'APISignature' => Configure::read('paypal.api.signature'));
+		
+		
+		$PayPal = new PayPal($PayPalConfig);
+		
+		// return url refers to the page where the user sees shop page after paypal payment
+		
+		$returnURL = Router::url(array('controller'=>'merchants',
+				       'action'=>'confirm',), true);
+		
+		// we need to add this so that we can close the loop over whether this payment was successfully charged.
+		$returnURL .= '?paypal';
+		
+		$cancelURL = Router::url(array('controller'=>'merchants',
+				       'action'=>'confirm',), true);
+		
+		// we need to add this so that we can close the loop over whether this payment was successfully charged.
+		$cancelURL .= '?paypal';
+		
+		$SECFields = $this->Paypal->buildSECFields(array('returnurl'=>$returnURL,
+								 'cancelurl'=>$cancelURL));
+		
+		// we want to set the button to confirm in PAYPAL checkout page
+		$SECFields['skipdetails'] = '1';
+		
+		
+		// now we build the payment
+		$Payments = array();
+		$Payment = $this->Paypal->buildPayment();
+		array_push($Payments, $Payment);
+		
+		// now we build the recurring billing agreement
+		$BillingAgreements = array();
+		$billingAgreement = $this->Paypal->buildBillingAgreement(array('l_billingagreementdescription' => 'OMBI60: Subscription'));
+		array_push($BillingAgreements, $billingAgreement);
+		
+		$PayPalRequest = array(
+				'SECFields' => $SECFields, 
+				'BillingAgreements' => $BillingAgreements, 
+				'Payments' => $Payments,
+				);
+		
+		$PayPalResult = $PayPal->SetExpressCheckout($PayPalRequest);
+		
+		return $PayPalResult;
+	}
 
 }
 ?>

@@ -1,0 +1,156 @@
+<VirtualHost *:80>
+        ServerAdmin aaa@gmail.com
+
+        #this handles sitename.leaguelogix.com
+        ServerName localhost
+        ServerAlias mainsite.localhost
+
+                Options -Indexes FollowSymLinks
+
+        UseCanonicalName Off
+        DocumentRoot /var/www/wp/mainsite/webroot
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/wp/mainsite/webroot>
+
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+
+                RewriteEngine On
+                RewriteBase /
+
+                RewriteCond %{REQUEST_FILENAME} !-d
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+                <Files sitemap.xml>
+                        RewriteEngine Off
+                </Files>
+
+      </Directory>
+
+        ErrorLog /var/log/apache2/error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog /var/log/apache2/access.log combined
+
+    Alias /doc/ "/usr/share/doc/"
+    <Directory "/usr/share/doc/">
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+
+
+</VirtualHost>
+
+
+<VirtualHost *:80>
+        ServerAdmin aaa@gmail.com
+
+        #this handles sitename.leaguelogix.com
+        ServerName localhost
+        ServerAlias ombi60.localhost
+
+                Options -Indexes FollowSymLinks
+
+        UseCanonicalName Off
+        DocumentRoot /var/www/wp/app/webroot
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/wp/app/webroot>
+
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+
+                RewriteEngine On
+                RewriteBase /
+
+                RewriteCond %{REQUEST_FILENAME} !-d
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+		<Files sitemap.xml>
+                        RewriteEngine Off
+                </Files>
+
+
+      </Directory>
+
+        ErrorLog /var/log/apache2/error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog /var/log/apache2/access.log combined
+
+    Alias /doc/ "/usr/share/doc/"
+    <Directory "/usr/share/doc/">
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+
+
+</VirtualHost>
+
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+
+        DocumentRoot /var/www
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
+        </Directory>
+
+        ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+        <Directory "/usr/lib/cgi-bin">
+                AllowOverride None
+                Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+                Order allow,deny
+                Allow from all
+        </Directory>
+
+        ErrorLog /var/log/apache2/error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog /var/log/apache2/access.log combined
+
+    Alias /doc/ "/usr/share/doc/"
+    <Directory "/usr/share/doc/">
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+
+</VirtualHost>
+
