@@ -76,6 +76,7 @@ class Merchant extends AppModel {
 		
 
 		$domain->save($domainData);
+		
 
 		// now we create the dummy default product for this shop.
 		$this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);

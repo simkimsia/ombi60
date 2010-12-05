@@ -15,7 +15,28 @@
 											<tr class="plan-name"><td class="plan-details"></td><td></td><td></td><td class="plan-standard">STANDARD</td><td></td></tr>
 											<tr class="plan-name"><td class="plan-details"></td><td class="plan-starter">STARTER</td><td class="plan-basic">BASIC</td><td class="standard-price" rowspan="2"><div class="tagline">best buy!</div><br />$99<sup>90</sup><div class="month">/month</div></td><td class="plan-business">BUSINESS</td></tr>
 											<tr class="plan-price"><td></td><td class="starter-price">$19<sup>90</sup><div class="month">/month</div></td><td class="basic-price">$39<sup>90</sup><div class="month">/month</div></td><td class="business-price">$399<sup>90</sup><div class="month">/month</div></td></tr>
-											<tr><td></td><td class="starter-price-signup"><div class="signup"><a href="#">Sign Up</a></div></td><td class="basic-price-signup"><div class="signup"><a href="#">Sign Up</a></div></td><td class="standard-price-signup"><div class="standard-signup"><a href="#">Sign Up</a></div></td><td class="business-price-signup"><div class="signup"><a href="#">Sign Up</a></div></td></tr>
+											<tr><td></td>
+												<td class="starter-price-signup">
+													<div class="signup">
+														<a href="/signup/starter">Sign Up</a>
+													</div>
+												</td>
+												<td class="basic-price-signup">
+													<div class="signup">
+														<a href="/signup/basic">Sign Up</a>
+													</div>
+												</td>
+												<td class="standard-price-signup">
+													<div class="standard-signup">
+														<a href="#">Sign Up</a>
+													</div>
+												</td>
+												<td class="business-price-signup">
+													<div class="signup">
+														<a href="#">Sign Up</a>
+													</div>
+												</td>
+											</tr>
 											<tr><td class="plan-details1">Set up fee</td><td class="starter1">Waived</td><td class="basic1">Waived</td><td class="standard1">Waived</td><td class="business1">Waived</td></tr>
 											<tr><td class="plan-details2">Transaction Fee</td><td class="starter2">2.0%</td><td class="basic2">1.0%</td><td class="standard2">1.0%</td><td class="business2">0.5%</td></tr>
 											<tr><td class="plan-details1">Max Products</td><td class="starter1">100</td><td class="basic1">2000</td><td class="standard1">10,000</td><td class="business1">50,000</td></tr>

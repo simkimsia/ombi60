@@ -32,4 +32,9 @@
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
         
-        Router::connect('/signup', array('controller' => 'merchants', 'action' => 'register'));
+        Router::connect('/signup/:plan',
+                        array('controller' => 'merchants',
+                              'action' => 'register'),
+                        array('pass' => array('plan'),
+                              'plan' => '[0-9a-zA-Z]+'
+                              ));

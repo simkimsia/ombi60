@@ -53,9 +53,10 @@ class Merchant extends AppModel {
 		$result = $this->saveAll($data, array('validate'=>'first'));
 
 		if ($result) {
-			$this->afterSignUpNewAccount($data);
+			return $this->afterSignUpNewAccount($data);
 			
 		}
+		
 		return $result;
 
 	}
@@ -74,8 +75,21 @@ class Merchant extends AppModel {
 		$domainData['Domain']['domain']  = $data['Shop']['web_address'];
 		$domainData['Domain']['primary'] = true;
 		$domainData['Domain']['shop_id'] = $this->Shop->id;
-		
+		$domain->create();
 		$domain->save($domainData);
+		
+		// we need to create invoice entries
+		$invoice = $this->Shop->Invoice;
+
+		$invoiceData = array();
+
+		$invoiceData['Invoice']['title']  = $data['Invoice']['title'];
+		$invoiceData['Invoice']['description'] = $data['Invoice']['description'];
+		$invoiceData['Invoice']['shop_id'] = $this->Shop->id;
+		$invoice->create();
+		$invoiceData = $invoice->save($invoiceData);
+		
+		
 		
 		// now we create the dummy default product for this shop.
 		$this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);
@@ -93,6 +107,12 @@ class Merchant extends AppModel {
 		}
 		
 		$this->Shop->ShopsPaymentModule->saveAll($data['ShopsPaymentModule']);
+		
+		if ($invoice->id > 0) {
+			$invoiceData['Invoice']['id'] = $invoice->id;
+			return $invoiceData;	
+		}
+		return false;
 	
 	}
 	

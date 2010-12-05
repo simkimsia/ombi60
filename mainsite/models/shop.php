@@ -33,6 +33,19 @@ class Shop extends AppModel {
 	);
 
 	var $hasMany = array(
+		'Invoice' => array(
+			'className' => 'Invoice',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
 
 		'Customer' => array(
 			'className' => 'Customer',

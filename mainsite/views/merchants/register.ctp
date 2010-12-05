@@ -6,7 +6,8 @@
 
 <?php
 	echo $this->element('errors', array('errors' => $errors));
-	echo $this->Form->create('Merchant', array('action' => 'register'));
+	echo $this->Form->create('Merchant', array('url'=>array('controller'=>'merchants',
+								'action' => 'register','plan'=>$plan)));
 	echo $this->Form->input('Shop.name', array('label'=>'Shop name'));
 	echo $this->Form->input('Shop.web_address', array('value'=>'', 'type'=>'hidden') );
 	echo 'http://' . $this->Form->input('Shop.subdomain', array('label'=>'Web Address')) . '.myspree2shop.com' ;
@@ -15,6 +16,7 @@
 	echo $this->Form->input('User.email');
 	echo $this->Form->input('User.password');
 	echo $this->Form->input('User.password_confirm', array('type' => 'password'));
+	
 		
 	echo '<div id="cartpaypal">';
 	// we will use the name to identify the button.

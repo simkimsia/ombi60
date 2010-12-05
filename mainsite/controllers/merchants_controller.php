@@ -60,23 +60,28 @@ class MerchantsController extends AppController {
 	/**
 	 * Merchants to register a Merchant account
 	 **/
-	function register() {
+	function register($plan = null) {
 
 		$this->set('title_for_layout', __('Signup',true));
-
+		
+		if ($plan == null) {
+			$this->redirect('/pages/pricing-signup');
+		}
 
 		if ($this->RequestHandler->isPost()) {
 
 			// hash the confirm password field so that the comparison can be done successfully
 			// password is automatically hashed by the Auth component
 			$this->data['User']['password_confirm'] = $this->Auth->password($this->data['User']['password_confirm']);
+			
+			$this->data['Invoice']['title'] = $plan;
+			$this->data['Invoice']['description'] = 'Initial signup';
 
-			if ($this->Merchant->signupNewAccount($this->data)) {
-				
+			if ($result = $this->Merchant->signupNewAccount($this->data)) {
 				
 				// so now we go to paypal
 				if ($this->params['form']['submit'] == 'paypalExpressCheckout') {
-					$PaypalResult = $this->prepareSEC();
+					$PaypalResult = $this->prepareSEC($result['Invoice']['id']);
 					
 					if (isset($PaypalResult['REDIRECTURL']))
 						$this->redirect($PaypalResult['REDIRECTURL']);
@@ -96,6 +101,7 @@ class MerchantsController extends AppController {
 
 
 		$this->set('errors', $this->Merchant->getAllValidationErrors());
+		$this->set('plan', 	$plan);
 
 	}
 	
@@ -258,7 +264,7 @@ class MerchantsController extends AppController {
 	 * require uuid, cancelURL, Payments, shopId inside $postFields for checkoutOption
 	 * */
 	
-	private function prepareSEC() {
+	private function prepareSEC($invnum = '') {
 		
 		// we need to prepare the paypalexpresscheckout portion
 		$PayPalConfig = array('Sandbox' => Configure::read('paypal.sandbox'),
@@ -293,7 +299,7 @@ class MerchantsController extends AppController {
 		
 		// now we build the payment
 		$Payments = array();
-		$Payment = $this->Paypal->buildPayment();
+		$Payment = $this->Paypal->buildPayment(array('invnum'=>$invnum));
 		array_push($Payments, $Payment);
 		
 		// now we build the recurring billing agreement
