@@ -43,7 +43,7 @@ class MerchantsController extends AppController {
 		 **/
 
 		// allow non users to access register and login actions only.
-		$this->Auth->allow('register', 'login', 'logout', 'confirm');
+		$this->Auth->allow('register', 'login', 'logout', 'confirm', 'complete', 'sec');
 		//$this->Auth->allow('*');
 
 		// need to set this as false so that extra logic can be done in the action login
@@ -73,24 +73,14 @@ class MerchantsController extends AppController {
 
 			if ($this->Merchant->signupNewAccount($this->data)) {
 				
-				// since Merchant successfully registered we now redirect to paypal
-				// the original html code is
-				//<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-				//<input type="hidden" name="cmd" value="_s-xclick">
-				//<input type="hidden" name="hosted_button_id" value="ZSAA7KX47SLXY">
-				//<input type="image" src="https://www.paypal.com/en_GB/SG/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
-				//<img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-				//</form>
-				//App::import('Core', 'HttpSocket');
-				//$HttpSocket = new HttpSocket();
-				//$results = $HttpSocket->post('https://www.paypal.com/cgi-bin/webscr',
-				//			     array('cmd' => 's-xclick',
-				//				   'hosted_button_id' => 'ZSAA7KX47SLXY'));
 				
-				// then we check for confirmation of results before displaying success or failure
-				
-				$PaypalResult = $this->prepareSEC();
-				$this->redirect($PaypalResult['PayPalResult']['REDIRECTURL']);
+				// so now we go to paypal
+				if ($this->params['form']['submit'] == 'paypalExpressCheckout') {
+					$PaypalResult = $this->prepareSEC();
+					
+					if (isset($PaypalResult['REDIRECTURL']))
+						$this->redirect($PaypalResult['REDIRECTURL']);
+				}
 				
 				$this->Session->setFlash(__('You\'ve successfully registered.',true));
 
@@ -270,15 +260,15 @@ class MerchantsController extends AppController {
 	
 	private function prepareSEC() {
 		
-		
 		// we need to prepare the paypalexpresscheckout portion
 		$PayPalConfig = array('Sandbox' => Configure::read('paypal.sandbox'),
 				      'APIUsername' => Configure::read('paypal.api.username'),
 				      'APIPassword' => Configure::read('paypal.api.password'),
 				      'APISignature' => Configure::read('paypal.api.signature'));
 		
-		
 		$PayPal = new PayPal($PayPalConfig);
+		
+		
 		
 		// return url refers to the page where the user sees shop page after paypal payment
 		
@@ -298,7 +288,7 @@ class MerchantsController extends AppController {
 								 'cancelurl'=>$cancelURL));
 		
 		// we want to set the button to confirm in PAYPAL checkout page
-		$SECFields['skipdetails'] = '1';
+		//$SECFields['skipdetails'] = '1';
 		
 		
 		// now we build the payment
@@ -307,10 +297,12 @@ class MerchantsController extends AppController {
 		array_push($Payments, $Payment);
 		
 		// now we build the recurring billing agreement
+		
 		$BillingAgreements = array();
 		$billingAgreement = $this->Paypal->buildBillingAgreement(array('l_billingagreementdescription' => 'OMBI60: Subscription'));
+
 		array_push($BillingAgreements, $billingAgreement);
-		
+
 		$PayPalRequest = array(
 				'SECFields' => $SECFields, 
 				'BillingAgreements' => $BillingAgreements, 
@@ -320,6 +312,12 @@ class MerchantsController extends AppController {
 		$PayPalResult = $PayPal->SetExpressCheckout($PayPalRequest);
 		
 		return $PayPalResult;
+	}
+	
+	private function sec() {
+		
+		$PayPalResult = $this->prepareSEC();
+		$this->set(compact('PayPalResult'));
 	}
 
 }

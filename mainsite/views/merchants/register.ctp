@@ -15,8 +15,16 @@
 	echo $this->Form->input('User.email');
 	echo $this->Form->input('User.password');
 	echo $this->Form->input('User.password_confirm', array('type' => 'password'));
-	echo $this->Form->submit();
+		
+	echo '<div id="cartpaypal">';
+	// we will use the name to identify the button.
+	// $this->params['form']['submit']
+	echo '<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif" name="submit" value="paypalExpressCheckout" alt="Make payments with PayPal - it\'s fast, free and secure!">';
+	echo '</div>';
+				
+	
 	echo $this->Form->end();
+	
 ?>
 
 <script type="text/javascript">

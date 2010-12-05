@@ -29,7 +29,7 @@ class Domain extends AppModel {
 			     );
 	
 	function make_this_primary($id = null, $shopId = null) {
-		$this->log('enter model');
+		
 		if (!$id) {
 			if (!$this->id) {
 				return false;

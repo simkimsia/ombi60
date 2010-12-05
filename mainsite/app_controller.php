@@ -91,76 +91,22 @@ class AppController extends Controller {
 
         
 	
-	// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
-	App::import('Model', 'Shop');
-	$currentShop = $this->Session->read('CurrentShop');
-
-	if(empty($currentShop) OR $currentShop['Domain']['domain'] != FULL_BASE_URL) {
-	    $this->loadModel('Shop');
-	    $currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
-	    $this->Session->write('CurrentShop', $currentShop);
-	}
-        Shop::store($currentShop);
+	
+	
 	
 	/** setup cookies
 	 * */
 	
-	$shopId = Shop::get('Shop.id');
-	$this->Cookie->name = Shop::get('Shop.name');
+	
+	$this->Cookie->name = 'OMBI60';
 	$this->Cookie->time = '365 days';
-	$this->Cookie->key  = 'qwRVVJ@#$%2#7435' . $shopId;
+	$this->Cookie->key  = 'qwRVVJ@#$%2#7435_ombi60' ;
 	
-	$userIdInCookie = null;
 	
-	if(!isset($this->params['admin'])) { 
-	
-		$userIdInCookie = $this->Cookie->read('User.id');
-		
-		if (!$userIdInCookie) {
-			App::import('Model', 'CasualSurfer');
-			$this->loadModel('CasualSurfer');
-			
-			$randomPassword = $this->Auth->password($this->RandomString->generate());
-			$randomEmail = $this->RandomString->generate() . '@ombi60.com';
-			$userIdInCookie = $this->CasualSurfer->createNew($randomEmail, $randomPassword);
-			
-			$this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
-		}
-		$this->log($userIdInCookie);
-	}
 	/**
 	 *end Cookies
 	 **/
 	
-	App::import('Model', 'User');
-	$userAuth = $this->Session->check('Auth.User');
-	if (!$userAuth && $userIdInCookie != null) {
-		$this->loadModel('User');
-		User::store($this->User->read(null, $userIdInCookie ));
-		
-	} else {
-		$userAuth = $this->Session->read('Auth');
-		User::store($userAuth);	
-	}
-	
-	$locale_name = User::get('Language.locale_name');
-	
-	if (!$this->Session->check('Config.language')) {
-	
-		if (!$locale_name ||  !isset($locale_name) || empty($locale_name)) {
-			$this->Session->write('Config.language', DEFAULT_LANGUAGE);
-			
-		} else {
-			$this->Session->write('Config.language', $locale_name);
-			
-		}
-	} else {
-		$currentLang =$this->Session->read('Config.language');
-		if (!empty($locale_name) && $locale_name != $currentLang) {
-			$this->Session->write('Config.language', $locale_name);
-			
-		} 
-	}
 	
     }
     

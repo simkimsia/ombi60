@@ -54,6 +54,7 @@ class Merchant extends AppModel {
 
 		if ($result) {
 			$this->afterSignUpNewAccount($data);
+			
 		}
 		return $result;
 
@@ -74,9 +75,8 @@ class Merchant extends AppModel {
 		$domainData['Domain']['primary'] = true;
 		$domainData['Domain']['shop_id'] = $this->Shop->id;
 		
-
 		$domain->save($domainData);
-
+		
 		// now we create the dummy default product for this shop.
 		$this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);
 		

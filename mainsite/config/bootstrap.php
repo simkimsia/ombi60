@@ -55,6 +55,14 @@
  **/
 Configure::write('debug', 0);
 
+
+/**
+ * load the config file of the paypal plugin
+ **/
+
+Configure::load('Paypal.config');
+
+
 /**
  *
  * bootstrap.local.php file can override certain settings for local development purposes
@@ -80,3 +88,56 @@ define('EDITORS', 2);
 define('MERCHANTS', 3);
 define('CUSTOMERS', 4);
 define('CASUAL', 5);
+
+
+/**
+ * default dummy product
+ * the original copy of the product that is duplicated whenever a new shop is created.
+ * the id 1 should be occupied by this default product in products table with a shop_id of 0
+ * an image of this product should be stored in product_images table as well at id 1.
+ **/
+define('DEFAULT_PRODUCT_ID', 1);
+
+/**
+ * UPLOADS url constants
+ **/
+define('UPLOADS_URL', 'uploads/');
+define('UP_ONE_DIR_LEVEL', '../');
+
+
+define('PRODUCT_IMAGES_URL', UPLOADS_URL . 'products/');
+define('PRODUCT_IMAGES_THUMB_URL', PRODUCT_IMAGES_URL . 'thumb/');
+define('PRODUCT_IMAGES_THUMB_SMALL_URL', PRODUCT_IMAGES_THUMB_URL . 'small/');
+define('PRODUCT_IMAGES_THUMB_MEDIUM_URL', PRODUCT_IMAGES_THUMB_URL . 'medium/');
+define('PRODUCT_IMAGES_THUMB_LARGE_URL', PRODUCT_IMAGES_THUMB_URL . 'large/');
+define('PRODUCT_IMAGES_THUMB_THUMB_URL', PRODUCT_IMAGES_THUMB_URL . 'thumb/');
+define('PRODUCT_IMAGES_THUMB_ICON_URL', PRODUCT_IMAGES_THUMB_URL . 'icon/');
+
+/**
+ * UPLOADS directory constants
+ **/
+define('UPLOADS_DIR', 'uploads' );
+// we need to point this to the app folder so this will be different from the usual
+//define('UPLOADS_PATH', ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . UPLOADS_DIR . DS);
+define('UPLOADS_PATH', ROOT . DS . 'app' . DS . WEBROOT_DIR . DS . UPLOADS_DIR . DS);
+define('PRODUCTS_DIR', 'products' );
+define('THUMB_DIR', 'thumb' );
+define('SMALL_DIR', 'small');
+define('LARGE_DIR', 'large');
+define('MEDIUM_DIR', 'medium');
+define('ICON_DIR', 'icon');
+
+// for pointing back to app folder www_root
+define('APP_WWW_ROOT', ROOT . DS . 'app' . DS . WEBROOT_DIR . DS);
+define('ORI_WWW_ROOT', ROOT . DS . 'mainsite' . DS . WEBROOT_DIR . DS);
+
+// these will be different as well
+define('PRODUCT_IMAGES_PATH', UPLOADS_PATH. PRODUCTS_DIR . DS);
+define('PRODUCT_IMAGES_THUMB_PATH', UPLOADS_PATH . PRODUCTS_DIR . DS . THUMB_DIR . DS);
+
+
+define('PRODUCT_IMAGES_THUMB_SMALL_PATH', PRODUCT_IMAGES_THUMB_PATH . SMALL_DIR . DS);
+define('PRODUCT_IMAGES_THUMB_LARGE_PATH', PRODUCT_IMAGES_THUMB_PATH . LARGE_DIR . DS);
+define('PRODUCT_IMAGES_THUMB_MEDIUM_PATH', PRODUCT_IMAGES_THUMB_PATH . MEDIUM_DIR . DS);
+define('PRODUCT_IMAGES_THUMB_ICON_PATH', PRODUCT_IMAGES_THUMB_PATH . ICON_DIR . DS);
+define('PRODUCT_IMAGES_THUMB_THUMB_PATH', PRODUCT_IMAGES_THUMB_PATH . THUMB_DIR . DS);

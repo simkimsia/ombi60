@@ -64,40 +64,7 @@ class PagesController extends AppController {
 
 		$this->Auth->allow('display');
 
-		// retrieve the theme name to view pages with
-		$shopId = Shop::get('Shop.id');
 		
-		// first check the Cache
-		$currentShop = Cache::read('Shop'.$shopId);
-	
-		// check if Cache is empty by checking the theme used
-		if (empty($currentShop) ||
-		    empty($currentShop['Theme']['name']) ||
-		    empty($currentShop['FeaturedSavedTheme']['name'])) {
-			
-			// since cache does not have this, we shall go to database to retrieve
-			
-			$this->loadModel('Shop');
-			
-			$this->Shop->recursive = -1;
-			$this->Shop->Behaviors->attach('Containable');
-			
-			$shop = $this->Shop->find('first', array('conditions'=>array('Shop.id'=>$shopId),
-								 'contain'=>array('Theme', 'FeaturedSavedTheme')));
-			
-			// now we write to Cache
-			Cache::write('Shop'.$shopId, $shop);
-			// once again we read from Cache.
-			$currentShop = Cache::read('Shop'.$shopId);
-		}
-		
-		if (empty($currentShop['FeaturedSavedTheme']['folder_name'])) {
-			$this->theme = !empty($currentShop['Theme']['name']) ? $currentShop['Theme']['name'] : 'blue-white';
-			//$this->theme = !empty($currentShop['Theme']['name']) ? $currentShop['Theme']['name'] : '5-default';
-			
-		} else {
-			$this->theme = $currentShop['FeaturedSavedTheme']['folder_name'];
-		}
 		
 		
 		
