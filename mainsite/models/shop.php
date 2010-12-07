@@ -183,14 +183,7 @@ class Shop extends AppModel {
 	);
 
 	var $belongsTo = array(
-		'Theme' => array(
-			'className' => 'Theme',
-			'foreignKey' => 'theme_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
+		
 		'FeaturedSavedTheme' => array(
 			'className' => 'SavedTheme',
 			'foreignKey' => 'saved_theme_id',
@@ -340,7 +333,7 @@ class Shop extends AppModel {
 		$this->Behaviors->attach('Containable');
 			
 		$shop = $this->find('first', array('conditions'=>array('Shop.id'=>$this->id),
-							'contain'=>array('Theme', 'FeaturedSavedTheme')));
+							'contain'=>array('FeaturedSavedTheme')));
 		
 
 		Cache::write('Shop'.$this->id, $shop);

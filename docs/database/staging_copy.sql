@@ -189,13 +189,7 @@ CREATE TABLE `cart_items` (
   `previous_price` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `previous_currency` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_product_cart_id` (`cart_id`,`product_id`),
-  KEY `product` (`product_id`),
-  KEY `ci_to_cart` (`cart_id`),
-  KEY `ci_to_product` (`product_id`),
-  KEY `cart` (`cart_id`),
-  CONSTRAINT `ci_to_cart` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `ci_to_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `unique_product_cart_id` (`cart_id`,`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=326 DEFAULT CHARSET=utf8;
 
 /*Data for the table `cart_items` */
@@ -220,9 +214,7 @@ CREATE TABLE `carts` (
   `shipped_amount` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `shipped_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `FK_carts` (`shop_id`),
-  CONSTRAINT `FK_carts` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=314 DEFAULT CHARSET=utf8;
 
 /*Data for the table `carts` */
@@ -342,11 +334,7 @@ CREATE TABLE `customers` (
   `identity_code` varchar(255) DEFAULT NULL,
   `shop_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `shop` (`shop_id`),
-  KEY `user` (`user_id`),
-  CONSTRAINT `shop` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 /*Data for the table `customers` */
@@ -364,9 +352,7 @@ CREATE TABLE `domains` (
   `primary` tinyint(1) NOT NULL DEFAULT '0',
   `always_redirect_here` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UniqueDomain` (`domain`),
-  KEY `domain_to_shop` (`shop_id`),
-  CONSTRAINT `domain_to_shop` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `UniqueDomain` (`domain`)
 ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 /*Data for the table `domains` */
@@ -485,11 +471,7 @@ CREATE TABLE `merchants` (
   `owner` tinyint(1) NOT NULL DEFAULT '0',
   `shop_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `merchant_to_shop` (`shop_id`),
-  KEY `merchant_to_user` (`user_id`),
-  CONSTRAINT `merchant_to_shop` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `merchant_to_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 /*Data for the table `merchants` */
@@ -555,12 +537,7 @@ CREATE TABLE `order_line_items` (
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
   `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `order_id` (`order_id`,`product_id`),
-  KEY `oli_to_order` (`order_id`),
-  KEY `oli_to_product` (`product_id`),
-  CONSTRAINT `oli_to_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `oli_to_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8;
 
 /*Data for the table `order_line_items` */
@@ -591,15 +568,7 @@ CREATE TABLE `orders` (
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
   `total_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `order_to_billing_address` (`billing_address_id`),
-  KEY `order_to_customer` (`customer_id`),
-  KEY `order_to_delivery_address` (`delivery_address_id`),
-  KEY `order_to_shop` (`shop_id`),
-  CONSTRAINT `order_to_billing_address` FOREIGN KEY (`billing_address_id`) REFERENCES `addresses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `order_to_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `order_to_delivery_address` FOREIGN KEY (`delivery_address_id`) REFERENCES `addresses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `order_to_shop` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8;
 
 /*Data for the table `orders` */
@@ -747,9 +716,7 @@ CREATE TABLE `product_images` (
   `dir` varchar(255) DEFAULT NULL,
   `mimetype` varchar(255) DEFAULT NULL,
   `filesize` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`),
-  CONSTRAINT `product_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `product_images` */
@@ -774,9 +741,7 @@ CREATE TABLE `products` (
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
   `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `FK_products` (`shop_id`),
-  CONSTRAINT `FK_products` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `products` */
@@ -868,9 +833,7 @@ CREATE TABLE `shops` (
   `modified` datetime DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `saved_theme_id` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `shop_to_theme` (`theme_id`),
-  CONSTRAINT `FK_shops_themes` FOREIGN KEY (`theme_id`) REFERENCES `themes` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shops` */
@@ -962,9 +925,7 @@ CREATE TABLE `users` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `language_id` int(5) DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `FK_users` (`group_id`),
-  CONSTRAINT `FK_users` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=186 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
@@ -1021,11 +982,7 @@ CREATE TABLE `wishlists` (
   `customer_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `customer_id` (`customer_id`,`product_id`),
-  KEY `customer_fk` (`customer_id`),
-  KEY `product` (`product_id`),
-  CONSTRAINT `customer_fk` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `customer_id` (`customer_id`,`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `wishlists` */

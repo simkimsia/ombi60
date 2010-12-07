@@ -170,14 +170,7 @@ class Shop extends AppModel {
 	);
 
 	var $belongsTo = array(
-		'Theme' => array(
-			'className' => 'Theme',
-			'foreignKey' => 'theme_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
+		
 		'FeaturedSavedTheme' => array(
 			'className' => 'SavedTheme',
 			'foreignKey' => 'saved_theme_id',

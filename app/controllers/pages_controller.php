@@ -72,7 +72,6 @@ class PagesController extends AppController {
 	
 		// check if Cache is empty by checking the theme used
 		if (empty($currentShop) ||
-		    empty($currentShop['Theme']['name']) ||
 		    empty($currentShop['FeaturedSavedTheme']['name'])) {
 			
 			// since cache does not have this, we shall go to database to retrieve
@@ -83,7 +82,7 @@ class PagesController extends AppController {
 			$this->Shop->Behaviors->attach('Containable');
 			
 			$shop = $this->Shop->find('first', array('conditions'=>array('Shop.id'=>$shopId),
-								 'contain'=>array('Theme', 'FeaturedSavedTheme')));
+								 'contain'=>array('FeaturedSavedTheme')));
 			
 			// now we write to Cache
 			Cache::write('Shop'.$shopId, $shop);
@@ -91,13 +90,8 @@ class PagesController extends AppController {
 			$currentShop = Cache::read('Shop'.$shopId);
 		}
 		
-		if (empty($currentShop['FeaturedSavedTheme']['folder_name'])) {
-			$this->theme = !empty($currentShop['Theme']['name']) ? $currentShop['Theme']['name'] : 'blue-white';
-			//$this->theme = !empty($currentShop['Theme']['name']) ? $currentShop['Theme']['name'] : '5-default';
-			
-		} else {
-			$this->theme = $currentShop['FeaturedSavedTheme']['folder_name'];
-		}
+		$this->theme = !empty($currentShop['FeaturedSavedTheme']['folder_name']) ? $currentShop['FeaturedSavedTheme']['folder_name'] : 'blue-white';
+		
 		
 		
 		

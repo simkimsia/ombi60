@@ -48,7 +48,6 @@ class ThemeComponent extends Object {
 		
 			// check if Cache is empty by checking the theme used
 			if (empty($currentShop) ||
-			    empty($currentShop['Theme']['name']) ||
 			    empty($currentShop['FeaturedSavedTheme']['name'])) {
 		
 				// since cache does not have this, we shall go to database to retrieve
@@ -59,7 +58,7 @@ class ThemeComponent extends Object {
 				$controller->Shop->Behaviors->attach('Containable');
 				
 				$shop = $controller->Shop->find('first', array('conditions'=>array('Shop.id'=>$shopId),
-									 'contain'=>array('Theme', 'FeaturedSavedTheme')));
+									 'contain'=>array( 'FeaturedSavedTheme')));
 				
 		
 				// now we write to Cache
@@ -68,14 +67,8 @@ class ThemeComponent extends Object {
 				$currentShop = Cache::read('Shop'.$shopId);
 			}
 			
-			if (empty($currentShop['FeaturedSavedTheme']['folder_name'])) {
-				$controller->theme = !empty($currentShop['Theme']['name']) ? $currentShop['Theme']['name'] : 'blue-white';
-				
-			} else {
-				$controller->theme = $currentShop['FeaturedSavedTheme']['folder_name'];
-			}
+			$controller->theme = !empty($currentShop['FeaturedSavedTheme']['folder_name']) ? $currentShop['FeaturedSavedTheme']['folder_name'] : 'blue-white';
 			
-			//$controller->theme = '5-default';
 		}
 	
 	
