@@ -221,14 +221,14 @@ class Shop extends AppModel {
 
 		$this->Domain->Behaviors->attach('Linkable.Linkable');
 		$this->Behaviors->attach('Linkable.Linkable');
-		$this->Theme->Behaviors->attach('Linkable.Linkable');
+		
 
 		$result = $this->find(
 				      'first',
 				      array(
-					   'link' => array('Domain', 'Theme'),
+					   'link' => array('Domain'),
 					   'conditions' => array('Domain.domain'=>$url),
-					   'fields' => array('Shop.*', 'Domain.domain', 'Domain.id', 'Theme.name'),
+					   'fields' => array('Shop.*', 'Domain.domain', 'Domain.id'),
 					   ));
 
 		if (!empty($result)) {
