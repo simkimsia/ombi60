@@ -7,6 +7,8 @@ class SavedTheme extends AppModel {
 	
 	var $folderPath = '';
 	
+	var $sourceFolderName = '';
+	
 	var $failedUploadedImages = array();
 	
 	var $successUploadedImages = array();
@@ -128,22 +130,68 @@ class SavedTheme extends AppModel {
 	
 	function beforeValidate() {
 		// now we need to set the values for fields like author, folder_name, shop_id
-		$this->data['SavedTheme']['author'] = User::get('User.full_name');
+		if (!isset($this->data['SavedTheme']['author'])) {
+			$this->data['SavedTheme']['author'] = User::get('User.full_name');	
+		}
 		
-		$this->data['SavedTheme']['folder_name'] = (!empty($this->data['SavedTheme']['name'])) ? User::get('User.id') . '_' . $this->data['SavedTheme']['name'] : '';
-
-		$this->data['SavedTheme']['shop_id'] = Shop::get('Shop.id');
+		if (!isset($this->data['SavedTheme']['folder_name'])) {
+			$this->data['SavedTheme']['folder_name'] = (!empty($this->data['SavedTheme']['name'])) ? User::get('User.id') . '_' . $this->data['SavedTheme']['name'] : '';	
+		}
+		
+		if(!isset($this->data['SavedTheme']['shop_id'])) {
+			$this->data['SavedTheme']['shop_id'] = Shop::get('Shop.id');
+		}
 		
 		if (isset($this->data['SavedTheme']['original_name'])) {
 			$this->data['SavedTheme']['original_folder_name'] = User::get('User.id') . '_' . $this->data['SavedTheme']['original_name'];
-			
 		}
+	}
+	
+	
+	/**
+	 * $options array requires theme_id, shop_id, author, user_id,
+	 * */
+	function saveThemeAtSignUp($options = array()) {
+		$theme = ClassRegistry::init('Theme');
+		
+		$themeData = $theme->read(null, $options['theme_id']);
+		
+		$data['SavedTheme']['name'] = $themeData['Theme']['name'];
+		$data['SavedTheme']['description'] = $themeData['Theme']['description'];
+		$data['SavedTheme']['author'] = $options['author'];
+		$data['SavedTheme']['folder_name'] = $options['user_id'] . '_' . $themeData['Theme']['name'];
+		$data['SavedTheme']['shop_id'] = $options['shop_id'];
+		$data['SavedTheme']['theme_id'] = $options['theme_id'];
+		$data['SavedTheme']['featured'] = true;
+		
+		// to prevent the beforesave function from working
+		$data['SavedTheme']['skipCssCheck'] = true;
+		$data['SavedTheme']['signup'] = true;
+		
+		
+		// set the sourceFolderName, later we need it for copying over.
+		$this->sourceFolderName = $themeData['Theme']['folder_name'];
+		
+		$result = $this->save($data);
+		
+		
+		
+		return $result;
 	}
 	
 	// this is called AFTER the SUCCESS of beforeSave in the ThemeFolder behavior
 	function beforeSave() {
 		
 		$success = false;
+		
+		if (isset($this->data['SavedTheme']['signup'])) {
+			if ($this->data['SavedTheme']['signup'] &&
+			    $this->existFolder($this->sourceFolderName)) {
+				
+				$this->copyTheme($this->sourceFolderName);
+				
+			}
+		}
 		
 		
 		// mainly for update save

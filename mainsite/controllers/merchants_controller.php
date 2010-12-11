@@ -118,7 +118,7 @@ class MerchantsController extends AppController {
 			$token = $this->Session->read('Subscription.Paypal.TOKEN');
 			$ppResult = $this->getECD($token);
 			
-			$this->log($this->prepareCRPP($token));
+			$this->prepareCRPP($token);
 			
 			
 		}

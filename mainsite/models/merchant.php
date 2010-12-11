@@ -2,6 +2,8 @@
 class Merchant extends AppModel {
 
 	var $name = 'Merchant';
+	
+	
 
 	var $belongsTo = array(
 		'Shop' => array(
@@ -48,6 +50,7 @@ class Merchant extends AppModel {
 
 	function signupNewAccount($data = NULL) {
 		$data['User']['group_id'] = MERCHANTS;
+		
 		// now to create the domain entry
 
 		$result = $this->saveAll($data, array('validate'=>'first'));
@@ -67,6 +70,7 @@ class Merchant extends AppModel {
 	}
 	
 	private function afterSignupNewAccount($data) {
+		
 		// we need to create domain entries
 		$domain = $this->Shop->Domain;
 
@@ -99,14 +103,24 @@ class Merchant extends AppModel {
 		$paymentModule->recursive = -1;
 		$paymentModules = $paymentModule->find('all', array('fields'=>'id'));
 		$result = Set::extract('/PaymentModule/id', $paymentModules);
-		$data = array('ShopsPaymentModule'=>array());
+		$paymentData = array('ShopsPaymentModule'=>array());
 		
 		foreach($result as $key => $value) {
-			$data['ShopsPaymentModule'][$key]['shop_id'] = $this->Shop->id;
-			$data['ShopsPaymentModule'][$key]['payment_module_id'] = $value;
+			$paymentData['ShopsPaymentModule'][$key]['shop_id'] = $this->Shop->id;
+			$paymentData['ShopsPaymentModule'][$key]['payment_module_id'] = $value;
 		}
 		
-		$this->Shop->ShopsPaymentModule->saveAll($data['ShopsPaymentModule']);
+		$this->Shop->ShopsPaymentModule->saveAll($paymentData['ShopsPaymentModule']);
+		
+		// now we set up the theme
+		$savedTheme = ClassRegistry::init('SavedTheme');
+		
+		$options = array('theme_id' => $data['Merchant']['theme_id'],
+				 'shop_id' => $this->Shop->id,
+				 'author' => $data['User']['full_name'],
+				 'user_id' => $this->User->id);
+		
+		$savedTheme->saveThemeAtSignUp($options);
 		
 		if ($invoice->id > 0) {
 			$invoiceData['Invoice']['id'] = $invoice->id;

@@ -37,7 +37,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 		if (!isset($this->settings[$Model->alias])) {
 			$this->settings[$Model->alias] = array(
 				'chmod' => 0775,
-				'themePath' => VIEWS . 'themed' . DS,
+				'themePath' => ROOT . DS . 'app' . DS . 'views' . DS . 'themed' . DS, // must point to the app folder
 				'folderNameField' => 'name',
 				'defaultFolderName' => 'default'
 			);
@@ -73,7 +73,8 @@ class ThemeFolderBehavior extends ModelBehavior {
 		$success = $this->createFolder($model, null);
 		
 		if ($success) {
-			$success = $this->copyBaseTheme($model);
+			//$success = $this->copyBaseTheme($model);
+			//$success = $this->copyTheme($model);
 		}
 		
 		return $success;
@@ -88,6 +89,20 @@ class ThemeFolderBehavior extends ModelBehavior {
 		
 		$options = array('to'=> $this->themePath . $newFolderName,
 				 'from'=>$defaultThemeFolder,
+				 'chmod'=>$chmod);
+		return $dir->copy($options);
+		
+	}
+	
+	function copyTheme(&$model, $theme_folder_name) {
+		
+		$dir = new Folder();
+		$newFolderName = $model->data[$model->alias][$this->folderNameField];
+		$chmod = $this->settings[$model->alias]['chmod'];
+		$sourceThemeFolder = $this->themePath . $theme_folder_name;
+		
+		$options = array('to'=> $this->themePath . $newFolderName,
+				 'from'=>$sourceThemeFolder,
 				 'chmod'=>$chmod);
 		return $dir->copy($options);
 		

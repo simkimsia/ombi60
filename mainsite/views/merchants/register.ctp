@@ -62,6 +62,7 @@
 		
 		// first hide all the images in panes initially
 		$('div.panes').children().hide();
+		// display the initial value for theme
 		$('#img_' + $('#MerchantThemeId').val()).show();
 		
 		$('#MerchantThemeId').change(function() { 

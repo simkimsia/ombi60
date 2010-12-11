@@ -371,6 +371,8 @@ class Shop extends AppModel {
 		return false;
 	}
 	
+	
+	
 	function getAllMerchantUsersInList($id = false, $fields=array(), $sort = true) {
 		if (!$id) {
 			return false;
