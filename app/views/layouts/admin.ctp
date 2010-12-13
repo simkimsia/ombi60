@@ -54,7 +54,7 @@
 			<div id="headerright">
 				<ul>
 				<li><input name="Search" type="text" /></li>
-				<li class="specialli"><?php echo $this->Html->link('Account', '/admin/profile/edit'); ?> | <?php echo $this->Html->link('Logout', '/admin/logout'); ?></li>
+				<li class="specialli"><?php echo $this->Html->link('Account', '/admin/account'); ?> | <?php echo $this->Html->link('Logout', '/admin/logout'); ?></li>
 				</ul>
 			</div>
 		</div>
