@@ -45,7 +45,7 @@ class DomainsController extends AppController {
 	
 	function admin_make_this_primary($id = false, $shopId = false) {
 		
-		$this->log('enter');
+		
 		if (!$id OR !$shopId) {
 			$this->Session->setFlash(__('Invalid id for domain', true));
 			$this->redirect(array('action' => 'index'));

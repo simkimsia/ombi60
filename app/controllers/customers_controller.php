@@ -107,7 +107,7 @@ class CustomersController extends AppController {
 			
 			if ($this->RequestHandler->isGet()) {
 				// if come from orders/checkout we kill the Auth
-				$this->log('get statement');
+				
 				$this->logoutFunction();	
 			} else if ($this->RequestHandler->isPost()) {
 				if(isset($this->params['form']['loginBtn'])) {
@@ -144,7 +144,7 @@ class CustomersController extends AppController {
 	
 		// successfully login
 		if ($this->Auth->user()) {
-			$this->log($this->Auth->user());
+			
 			// retrieve current id from Cookie
 			$userIdInCookie = $this->Cookie->read('User.id');
 			// take current cart of Casual Surfer and dump them for logged in Customer

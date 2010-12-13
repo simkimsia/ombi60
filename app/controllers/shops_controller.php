@@ -29,7 +29,7 @@ class ShopsController extends AppController {
 			$profile = $this->Shop->RecurringPaymentProfile->find('first', array('conditions'=>array('shop_id'=>$shopId)));
 			
 			$result = false;
-			$this->log($profile);
+			
 			
 			if (isset($profile['RecurringPaymentProfile']['gateway_reference_id'])) {
 				
