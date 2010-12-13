@@ -34,7 +34,19 @@ class Shop extends AppModel {
 
 	var $hasMany = array(
 		
-		
+		'RecurringPaymentProfile' => array(
+			'className' => 'RecurringPaymentProfile',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
 
 		'Customer' => array(
 			'className' => 'Customer',
