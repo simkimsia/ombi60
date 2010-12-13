@@ -39,12 +39,15 @@
 
 
         // account links
+
+        Router::connect('/admin', array('admin' => true, 'controller' => 'merchants', 'action' => 'index'));
+        
+        
         Router::connect('/admin/account', array('admin' => true, 'controller' => 'shops', 'action' => 'account'));
 
 	Router::connect('/admin/account/cancel', array('admin' => true,'controller' => 'shops', 'action' => 'cancelaccount'));
 	
 
-        Router::connect('/admin', array('admin' => true, 'controller' => 'merchants', 'action' => 'index'));
 
 	Router::connect('/admin/login', array('admin' => true,'controller' => 'merchants', 'action' => 'login'));
 

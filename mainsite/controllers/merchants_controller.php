@@ -85,6 +85,7 @@ class MerchantsController extends AppController {
 					
 					$this->Session->write('Subscription.Paypal.TOKEN', $PaypalResult['TOKEN']);
 					
+					$this->Session->write('NewShopID', $this->Merchant->Shop->id);
 					if (isset($PaypalResult['REDIRECTURL']))
 						$this->redirect($PaypalResult['REDIRECTURL']);
 				}
@@ -118,8 +119,23 @@ class MerchantsController extends AppController {
 			$token = $this->Session->read('Subscription.Paypal.TOKEN');
 			$ppResult = $this->getECD($token);
 			
-			$this->prepareCRPP($token);
+			$invoiceID = $this->params['url']['inv'];
+			$shopid = $this->Session->read('NewShopID');
 			
+			$options=array('PROFILEREFERENCE'=>$invoiceID);
+			$crppResult = $this->prepareCRPP($token, $options);
+			
+			if (isset($crppResult['ACK']) && strtoupper($crppResult['ACK']) == 'SUCCESS') {
+				$this->Merchant->Shop->RecurringPaymentProfile->create();
+				$data = array('RecurringPaymentProfile' =>
+					      array(
+						'gateway'=>'paypal',
+						'method'=>'express checkout',
+						'shop_id' => $shopid,
+						'gateway_reference_id' => $crppResult['PROFILEID']));
+				
+				$this->Merchant->Shop->RecurringPaymentProfile->save($data);
+			}
 			
 		}
 	}
@@ -313,6 +329,10 @@ class MerchantsController extends AppController {
 		// we need to add this so that we can close the loop over whether this payment was successfully charged.
 		$returnURL .= '?paypal';
 		
+		if (!empty($invnum)) {
+			$returnURL .= '&inv='.$invnum;
+		}
+		
 		$cancelURL = Router::url(array('controller'=>'merchants',
 				       'action'=>'confirm',), true);
 		
@@ -360,7 +380,7 @@ class MerchantsController extends AppController {
 		$PayPal = new PayPal($PayPalConfig);
 		
 		/*$invnum = $options['']*/
-		$invnum = '12345';
+		$invnum = $options['PROFILEREFERENCE'];
 		$fullname = 'Tester Testerson';
 		$desc = 'OMBI60: Subscription';
 		$currencyCode = 'SGD';

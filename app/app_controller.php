@@ -89,7 +89,7 @@ class AppController extends Controller {
          * end of Acl
          * */
 
-        
+     
 	
 	// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
 	App::import('Model', 'Shop');
@@ -169,7 +169,7 @@ class AppController extends Controller {
 	$denied = $currentShop['Shop']['deny_access'];
 	
 	if ($denied) {
-	    $this->cakeError('error404');
+	    //$this->cakeError('error404');
 	}
 	
     }
