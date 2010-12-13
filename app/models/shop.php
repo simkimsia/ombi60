@@ -33,6 +33,8 @@ class Shop extends AppModel {
 	);
 
 	var $hasMany = array(
+		
+		
 
 		'Customer' => array(
 			'className' => 'Customer',
@@ -217,7 +219,7 @@ class Shop extends AppModel {
 		
 		$this->recursive         = -1;
 		$this->Domain->recursive = -1;
-		$this->Theme->recursive  = -1;
+		
 
 		$this->Domain->Behaviors->attach('Linkable.Linkable');
 		$this->Behaviors->attach('Linkable.Linkable');
@@ -320,7 +322,7 @@ class Shop extends AppModel {
 		$this->Behaviors->attach('Containable');
 			
 		$shop = $this->find('first', array('conditions'=>array('Shop.id'=>$this->id),
-							'contain'=>array('Theme', 'FeaturedSavedTheme')));
+							'contain'=>array('FeaturedSavedTheme')));
 		
 
 		Cache::write('Shop'.$this->id, $shop);

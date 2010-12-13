@@ -162,6 +162,16 @@ class AppController extends Controller {
 		} 
 	}
 	
+	/** check if shop is cancelled
+	 **/
+	
+	
+	$denied = $currentShop['Shop']['deny_access'];
+	
+	if ($denied) {
+	    $this->cakeError('error404');
+	}
+	
     }
     
     protected function createCasualInCookie() {

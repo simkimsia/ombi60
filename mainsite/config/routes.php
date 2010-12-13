@@ -32,6 +32,8 @@
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
         
+        Router::connect('/account/cancel/success', array('controller' => 'pages', 'action' => 'display', 'successful_cancellation'));
+        
         Router::connect('/signup/:plan',
                         array('controller' => 'merchants',
                               'action' => 'register'),

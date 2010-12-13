@@ -63,6 +63,8 @@ class UsersController extends AppController {
 		//allow users to only add and edit on posts and widgets
 		$group->id = 4;
 		$this->setCustomerPermissions($group);
+		
+		echo "all done";    exit;
 
 	}
 
@@ -112,6 +114,8 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_edit_css');
 
 		$this->Acl->allow($group, 'controllers/Shops/edit');
+		$this->Acl->allow($group, 'controllers/Shops/admin_account');
+		$this->Acl->allow($group, 'controllers/Shops/admin_cancelaccount');
 		
 		$this->Acl->allow($group, 'controllers/Payments/admin_index');
 		$this->Acl->allow($group, 'controllers/Payments/admin_update_settings');
