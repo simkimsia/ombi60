@@ -174,6 +174,10 @@ class SavedTheme extends AppModel {
 		
 		$result = $this->save($data);
 		
+		if ($result) {
+			$this->Shop->id = $options['shop_id'];
+			$this->Shop->saveField('saved_theme_id', $this->id);
+		}
 		
 		
 		return $result;
