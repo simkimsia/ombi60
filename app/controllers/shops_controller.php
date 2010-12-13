@@ -1,11 +1,12 @@
 <?php
+App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
 class ShopsController extends AppController {
 
 	var $name = 'Shops';
 
-	var $helpers = array('Html', 'Form', 'Session');
+	//var $helpers = array('Html', 'Form', 'Session');
 
-	var $components = array('Session');
+	var $components = array('Paypal.Paypal');
 
 	
 
