@@ -35,9 +35,9 @@ class ShopsController extends AppController {
 				
 				$result = $this->cancelSubscription($profile['RecurringPaymentProfile']['gateway_reference_id']);
 				if (isset($result['ACK']) && strtoupper($result['ACK']) == 'SUCCESS') {
-					$this->log('enter');
+					
 					$profile['RecurringPaymentProfile']['status'] = 'cancel';
-					$this->log($this->Shop->RecurringPaymentProfile->save($profile));
+					
 				}
 			}
 			

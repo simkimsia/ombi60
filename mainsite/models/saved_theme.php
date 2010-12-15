@@ -159,7 +159,10 @@ class SavedTheme extends AppModel {
 		$data['SavedTheme']['name'] = $themeData['Theme']['name'];
 		$data['SavedTheme']['description'] = $themeData['Theme']['description'];
 		$data['SavedTheme']['author'] = $options['author'];
-		$data['SavedTheme']['folder_name'] = $options['user_id'] . '_' . $themeData['Theme']['name'];
+		//$data['SavedTheme']['folder_name'] = $options['user_id'] . '_' . $themeData['Theme']['name'];
+		
+		// we are now going to save just 1 theme per shop like Shopify so all are called shop_id_cover e.g., 5_cover
+		$data['SavedTheme']['folder_name'] = $options['shop_id'] . '_cover';
 		$data['SavedTheme']['shop_id'] = $options['shop_id'];
 		$data['SavedTheme']['theme_id'] = $options['theme_id'];
 		$data['SavedTheme']['featured'] = true;
@@ -171,6 +174,7 @@ class SavedTheme extends AppModel {
 		
 		// set the sourceFolderName, later we need it for copying over.
 		$this->sourceFolderName = $themeData['Theme']['folder_name'];
+		
 		
 		$result = $this->save($data);
 		
@@ -191,6 +195,7 @@ class SavedTheme extends AppModel {
 		if (isset($this->data['SavedTheme']['signup'])) {
 			if ($this->data['SavedTheme']['signup'] &&
 			    $this->existFolder($this->sourceFolderName)) {
+				
 				
 				$this->copyTheme($this->sourceFolderName);
 				
