@@ -85,6 +85,36 @@ class SavedThemesController extends AppController {
 		
 		return $data;
 	}
+	
+	function admin_switch() {
+		
+		$savedThemeId = Shop::get('Shop.saved_theme_id');
+		
+		if (!empty($this->data)) {
+			// switch the theme
+			if ($this->data['SavedTheme']['original_theme_id']!=$this->data['SavedTheme']['theme_id']) {
+				$this->SavedTheme->id = $savedThemeId;
+				$result = $this->SavedTheme->switchTheme($this->data);
+				if ($result) {
+					$this->Session->setFlash(__('Theme has been saved', true), 'default', array('class'=>'flash_success'));
+					// change Session or cache to reflect new theme
+				} else {
+					$this->Session->setFlash(__('Theme could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				}
+			}
+		} else {
+			$this->data = $this->SavedTheme->read(null, $savedThemeId);
+		}
+		
+		
+		$theme = ClassRegistry::init('Theme');
+		$themes = $theme->find('list', array('conditions'=>array('price'=>'0')));
+		
+		$theme_id = $this->SavedTheme->field('SavedTheme.theme_id', array('SavedTheme.id'=>$savedThemeId));
+		
+		
+		$this->set(compact('themes', 'theme_id', 'savedThemeId'));
+	}
 
 	function admin_add() {
 		

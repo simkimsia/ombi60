@@ -127,6 +127,13 @@ class SavedTheme extends AppModel {
 	}
 	
 	function beforeValidate() {
+		if (isset($this->data['SavedTheme']['switch'])) {
+				
+			return true;
+
+		}
+
+		
 		// now we need to set the values for fields like author, folder_name, shop_id
 		$this->data['SavedTheme']['author'] = User::get('User.full_name');
 		
@@ -144,6 +151,12 @@ class SavedTheme extends AppModel {
 	function beforeSave() {
 		
 		$success = false;
+		
+		if (isset($this->data['SavedTheme']['switch'])) {
+				
+			return true;
+
+		}
 		
 		
 		// mainly for update save
@@ -420,6 +433,35 @@ class SavedTheme extends AppModel {
 			$this->feature($newId);
 		}
 		return true;
+	}
+	
+	function switchTheme($data) {
+		
+		$theme = ClassRegistry::init('Theme');
+		
+		$themeData = $theme->read(null, $data['SavedTheme']['theme_id']);
+		
+		// set the sourceFolderName, later we need it for copying over.
+		$this->sourceFolderName = $themeData['Theme']['folder_name'];
+		
+		// to prevent the beforesave function from working
+		$data['SavedTheme']['skipCssCheck'] = true;
+		$data['SavedTheme']['switch'] = true;
+		
+		$this->data = $data;
+		
+		
+		$this->deleteFolder($data['SavedTheme']['folder_name']);
+		$this->createFolder(0775, $data['SavedTheme']['folder_name']);
+		
+		$result = $this->copyTheme($this->sourceFolderName);
+		if ($result) {
+			$this->log('successfully copied');
+			$this->save($data);
+		} 
+		return $result;
+		
+		//return $this->copyTheme($this->sourceFolderName);
 	}
 	
 	function feature($id = null) {

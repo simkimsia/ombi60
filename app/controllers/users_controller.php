@@ -112,6 +112,8 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_edit_image');
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_delete_image');
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_edit_css');
+		$this->Acl->allow($group, 'controllers/SavedThemes/admin_switch');
+		
 
 		$this->Acl->allow($group, 'controllers/Shops/edit');
 		$this->Acl->allow($group, 'controllers/Shops/admin_account');

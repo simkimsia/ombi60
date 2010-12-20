@@ -79,6 +79,23 @@ class ThemeFolderBehavior extends ModelBehavior {
 		return $success;
 	}
 	
+	function copyTheme(&$model, $theme_folder_name) {
+		
+		$dir = new Folder();
+		$newFolderName = $model->data[$model->alias][$this->folderNameField];
+		$chmod = 0775;
+		$sourceThemeFolder = $this->themePath . $theme_folder_name;
+		
+		$options = array('to'=> $this->themePath . $newFolderName,
+				 'from'=>$sourceThemeFolder,
+				 'chmod'=>$chmod);
+		
+		$this->log($options);
+		
+		return $dir->copy($options);
+		
+	}
+	
 	private function copyBaseTheme(&$model) {
 		
 		$dir = new Folder();
@@ -93,7 +110,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 		
 	}
 	
-	private function createFolder(&$model, $chmod = null) {
+	function createFolder(&$model, $chmod = null, $themeName = '') {
 		if ($chmod == null) {
 			$chmod = $this->settings[$model->alias]['chmod'];
 		}
@@ -102,17 +119,28 @@ class ThemeFolderBehavior extends ModelBehavior {
 		$success = false;
 		$dir = new Folder();
 		
-		$success = $dir->create($path . $model->data[$model->alias][$this->folderNameField],$chmod);
+		if ($themeName != '') {
+			$themeName = $model->data[$model->alias][$this->folderNameField];
+		}
+		
+		$success = $dir->create($path . $themeName,$chmod);
 		
 		return $success;
 	}
 	
-	function deleteFolder(&$model) {
+	function deleteFolder(&$model, $themeName = '') {
+		
 		$path = $this->settings[$model->alias]['themePath'];
 		$success = false;
 		$dir = new Folder();
 		
-		$success = $dir->delete($path . $model->data[$model->alias][$this->folderNameField]);
+		if ($themeName != '') {
+			$themeName = $model->data[$model->alias][$this->folderNameField];
+		}
+		
+		$this->log($path. $themeName);
+		
+		$success = $dir->delete($path . $themeName);
 		
 		return $success;
 	}
