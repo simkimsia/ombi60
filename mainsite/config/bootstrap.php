@@ -64,6 +64,14 @@ Configure::load('Paypal.config');
 
 
 /**
+ * Subscription system to be used
+ * */
+define('PAYPALEXPRESSCHECKOUT', 'paypalec');
+define('PAYDOLLAR', 'paydollar');
+Configure::write('SubscriptionUsed', PAYDOLLAR);
+
+
+/**
  *
  * bootstrap.local.php file can override certain settings for local development purposes
  **/

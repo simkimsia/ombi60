@@ -1,12 +1,15 @@
 <?php
 App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
+App::import('Vendor', 'PayDollar', array('file'=>'paydollar'.DS.'includes'.DS.'paydollar.nvp.class.php'));
 class MerchantsController extends AppController {
 
 	var $name = 'Merchants';
 	
-	var $components = array('Paypal.Paypal');
+	var $components = array('Paypal.Paypal',
+				'Paydollar.Paydollar');
 
-	var $helpers = array('Javascript', 'Ajax');
+	var $helpers = array('Javascript',
+			     'Ajax');
 
 	function beforeFilter() {
 
@@ -88,6 +91,10 @@ class MerchantsController extends AppController {
 					$this->Session->write('NewShopID', $this->Merchant->Shop->id);
 					if (isset($PaypalResult['REDIRECTURL']))
 						$this->redirect($PaypalResult['REDIRECTURL']);
+
+				// or we go to paydollar						
+				} else if ($this->params['form']['submit'] == 'paydollar') {
+					$PaydollarResult = $this->runAddSchPay();
 				}
 				
 				$this->Session->setFlash(__('You\'ve successfully registered.',true));
@@ -307,6 +314,45 @@ class MerchantsController extends AppController {
 		
 		return $PayPal->GetExpressCheckoutDetails($token);
 		
+	}
+	
+	private function runAddSchPay($data) {
+		$PayDollarConfig = array('Sandbox' => Configure::read('paydollar.sandbox'),
+                         'APIMerchantID' => Configure::read('paypal.api.merchantid'),
+                         'APILoginID' => Configure::read('paypal.api.merchantid'),
+                         'APIPassword' => Configure::read('paypal.api.password'),
+                         'UrlEncodeStringValues' => true);
+		
+		$PayDollar = new PayDollar($PayDollarConfig);
+		
+		// we shall give merchants 30 day free trial
+		$firstBillingCycleStartDate = date('Y-m-d', strtotime("+30 days"));
+		// we will charge merchants every month but at the end of the billing cycle
+		$firstBillingCycleEndDate = date("Y-m-d", strtotime($firstBillingCycleStartDate)) . " +1 month";
+		
+
+		$this->Paydollar->buildASPFields(array('sDay' => date('d', strtotime($firstBillingCycleEndDate)), // Required, start day of month
+							'sMonth' => date('m', strtotime($firstBillingCycleEndDate)), // Required, start month
+							'sYear' => date('Y', strtotime($firstBillingCycleEndDate)), // Required, start year
+							'eDay' => date('d', strtotime($firstBillingCycleEndDate)), // Required, start day of month
+							'eMonth' => date('m', strtotime($data['Paydollar']['ccExpiry'])) - 1, // Required, start month
+							'eYear' => date('Y', strtotime($data['Paydollar']['ccExpiry'])), // Required, start year
+							'orderRef' => 'test', // Required, invoice number reference Text(35)
+							
+							'amount' => '19.90',  // Required, total amount to be charged Number(12,2)
+							'name' => 'OMBI60: BASIC plan', // Required , name of schedule payment
+							'email' => 'tester@gmail.com', // Required, email of schedule payment
+							'orderAcct' => '4918914107195005', // order acct of schedule payment
+							'pMethod' => 'VISA',  // Required, refers to card. possible values are (VISA, Master, Diners, JCB, AMEX)
+							'epMonth' => '07',  // Required, expiry of card month must be leading zero Number(2)
+							'epYear' => '2015', 	// Required, expiry of card year must be in YYYY format Number(4)
+							'holderName' => 'Tester Testerson', // Required full name of card holder
+							//'mSchPayId' => '', // Master Schedule Id of anotherSchedulePay record. If this parameteris provided, the following informationwill be retrieved from previous record,pMethod,orderAcct,holderName,epMonth,epYear
+							//'payRef' => '', // Payment reference of anothertransaction record. If this parameter isprovided, the following information willbe retrieved from previous record,pMethod, orderAcct, holderName, epMonth, epYear
+							'status' => 'Active', // status of schedule payment (Active, Suspend)
+							'nSch' => '1', // number of Sch type
+							'schType' => 'Month', // The schedule type of schedulepayment (e.g. Day,Month,Year)
+							'payType' => 'N',));
 	}
 	
 	private function prepareSEC($invnum = '') {

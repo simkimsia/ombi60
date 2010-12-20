@@ -6,8 +6,8 @@ if($sandbox)
 {
 	// Sandbox Credentials
 	$paydollar_api_merchantid = '12101198';
-	$paydollar_api_loginid = 'admin';
-	$paydollar_api_password = '5tr0ng35t';
+	$paydollar_api_loginid = 'apilogin';
+	$paydollar_api_password = 'apipass4321';
 }
 else
 {	// Production Credentials

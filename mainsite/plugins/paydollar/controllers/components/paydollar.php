@@ -78,5 +78,14 @@ class PaydollarComponent extends Object {
                 return array_merge($DPFields, $options);
         }
         
+        function buildDSPFields($options = array()) {
+                $DSPFields = array(
+                    'mSchPayId' => '10553', // Required, the master schedule payment id
+                    
+		);
+                
+                return array_merge($DSPFields, $options);
+        }
+        
 }
 ?>

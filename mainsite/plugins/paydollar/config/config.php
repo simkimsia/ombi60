@@ -132,8 +132,8 @@ Configure::write('paydollar.sandbox',true);
 if(Configure::read('paydollar.sandbox')) {
 	// Sandbox Credentials
 	$paydollar_api_merchantid = '12101198';
-	$paydollar_api_loginid = 'admin';
-	$paydollar_api_password = '5tr0ng35t';
+	$paydollar_api_loginid = 'apilogin';
+	$paydollar_api_password = 'apipass4321';
 }
 else
 {	// Production Credentials
@@ -144,8 +144,8 @@ else
 
 Configure::write('paydollar.api.username', $paydollar_api_username);
 Configure::write('paydollar.api.password', $paydollar_api_password);
-Configure::write('paydollar.api.signature', $paydollar_api_signature);
-Configure::write('paydollar.api.subject', $paydollar_api_subject);
+Configure::write('paydollar.api.merchantid', $paydollar_api_merchantid);
+
 
 
 ?>

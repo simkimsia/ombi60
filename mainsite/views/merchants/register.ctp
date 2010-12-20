@@ -32,12 +32,37 @@
 	
 	echo $this->Form->input('User.password_confirm', array('type' => 'password'));
 	
+	$subscription = Configure::read('SubscriptionUsed');
+	if ($subscription == PAYPALEXPRESSCHECKOUT) {
+		echo '<div id="cartpaypal">';
+		// we will use the name to identify the button.
+		// $this->params['form']['submit']
+		echo '<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif" name="submit" value="paypalExpressCheckout" alt="Make payments with PayPal - it\'s fast, free and secure!">';
+		echo '</div>';	
+	} else if ($subscription == PAYDOLLAR) {
+		echo '<div id="cartpaydollar">';
+		// we will use the name to identify the button.
+		// $this->params['form']['submit']
+		echo $this->Form->input('Paydollar.ccName', array('label' => 'Name on Credit Card'));
+		echo $this->Form->input('Paydollar.ccNumber', array('label' => 'Credit Card Number'));
 		
-	echo '<div id="cartpaypal">';
-	// we will use the name to identify the button.
-	// $this->params['form']['submit']
-	echo '<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif" name="submit" value="paypalExpressCheckout" alt="Make payments with PayPal - it\'s fast, free and secure!">';
-	echo '</div>';
+		
+		echo $this->Form->input('Paydollar.ccType', array('options'=>array('VISA'=>'VISA',
+										   'Master'=>'Mastercard',
+										   'Diners'=>'Diners',
+										   'JCB'=>'JCB',
+										   'AMEX'=>'American Express')));
+		echo $this->Form->input('Paydollar.ccExpiry', array('label' => 'Expiry',
+								     'type'=>'date',
+								     'dateFormat' => 'MY',
+								     'minYear' => date('Y'),
+								     'maxYear' => date('Y') + 10 ));
+		
+		echo $this->Form->input('Paydollar.cvv', array('label'=>'CVV2 code'));
+		echo '</div>';
+		echo $this->Form->submit('Submit', array('value'=>'paydollar'));
+	}
+	
 				
 	
 	echo $this->Form->end();
