@@ -90,7 +90,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 				 'from'=>$sourceThemeFolder,
 				 'chmod'=>$chmod);
 		
-		$this->log($options);
+		
 		
 		return $dir->copy($options);
 		
@@ -137,8 +137,6 @@ class ThemeFolderBehavior extends ModelBehavior {
 		if ($themeName != '') {
 			$themeName = $model->data[$model->alias][$this->folderNameField];
 		}
-		
-		$this->log($path. $themeName);
 		
 		$success = $dir->delete($path . $themeName);
 		

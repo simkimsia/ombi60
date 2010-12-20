@@ -456,12 +456,10 @@ class SavedTheme extends AppModel {
 		
 		$result = $this->copyTheme($this->sourceFolderName);
 		if ($result) {
-			$this->log('successfully copied');
+			
 			$this->save($data);
 		} 
 		return $result;
-		
-		//return $this->copyTheme($this->sourceFolderName);
 	}
 	
 	function feature($id = null) {
