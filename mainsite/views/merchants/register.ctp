@@ -17,7 +17,7 @@
 	
 	echo $this->Form->input('User.email');
 	
-	echo $this->Form->input('theme_id');
+	echo $this->Form->input('Merchant.theme_id');
 	
 	echo '<div class="panes">';
 	foreach($themes as $id=>$foldername) {
@@ -58,9 +58,11 @@
 								     'minYear' => date('Y'),
 								     'maxYear' => date('Y') + 10 ));
 		
-		echo $this->Form->input('Paydollar.cvv', array('label'=>'CVV2 code'));
+		echo $this->Form->input('Pay.method', array('type'=>'hidden',
+							    'value'=>'paydollar'));
+		
 		echo '</div>';
-		echo $this->Form->submit('Submit', array('value'=>'paydollar'));
+		echo $this->Form->submit('Submit', array('name'=>'submit'));
 	}
 	
 				

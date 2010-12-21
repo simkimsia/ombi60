@@ -55,7 +55,21 @@ class PaydollarComponent extends Object {
                     'remark' => '', // optional 
 
 		    );
-                return array_merge($ASPFields, $options);
+                
+                $ASPFields = array_merge($ASPFields, $options);
+                
+                // need to remove empty string values. apparently Paydollar does not accept empty params in AddSchPay
+                if($ASPFields['mSchPayId'] == '') {
+                        unset($ASPFields['mSchPayId']);
+                }
+                if($ASPFields['payRef'] == '') {
+                        unset($ASPFields['payRef']);
+                }
+                if($ASPFields['remark'] == '') {
+                        unset($ASPFields['remark']);
+                }
+                
+                return $ASPFields;
         }
         
         function buildDPFields($options = array()) {

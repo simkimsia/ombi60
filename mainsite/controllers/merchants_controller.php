@@ -70,6 +70,7 @@ class MerchantsController extends AppController {
 		if ($plan == null) {
 			$this->redirect('/pages/pricing-signup');
 		}
+		
 
 		if ($this->RequestHandler->isPost()) {
 
@@ -79,8 +80,17 @@ class MerchantsController extends AppController {
 			
 			$this->data['Invoice']['title'] = $plan;
 			$this->data['Invoice']['description'] = 'Initial signup';
+			
+			/* get price of subscription plan */
+			$this->Merchant->Shop->Invoice->SubscriptionPlan->id = $plan;
+			$this->data['Invoice']['price'] = $this->Merchant->Shop->Invoice->SubscriptionPlan->field('price');
+			
 
 			if ($result = $this->Merchant->signupNewAccount($this->data)) {
+				
+				$this->data['Invoice']['id'] = $result['Invoice']['id'];
+				// we need to write this into session.
+				$this->Session->write('NewShopID', $this->Merchant->Shop->id);
 				
 				// so now we go to paypal
 				if ($this->params['form']['submit'] == 'paypalExpressCheckout') {
@@ -88,16 +98,24 @@ class MerchantsController extends AppController {
 					
 					$this->Session->write('Subscription.Paypal.TOKEN', $PaypalResult['TOKEN']);
 					
-					$this->Session->write('NewShopID', $this->Merchant->Shop->id);
+					
 					if (isset($PaypalResult['REDIRECTURL']))
 						$this->redirect($PaypalResult['REDIRECTURL']);
 
 				// or we go to paydollar						
-				} else if ($this->params['form']['submit'] == 'paydollar') {
-					$PaydollarResult = $this->runAddSchPay();
+				} else if ($this->data['Pay']['method'] == 'paydollar') {
+					$PaydollarResult = $this->runAddSchPay($this->data);
+					
+					// means success						
+					if($PaydollarResult['resultCode'] == 0) {
+						$this->Session->write('PaydollarResult', $PaydollarResult);
+						$this->redirect('/merchants/confirm?paydollar&inv='.$result['Invoice']['id']);
+					} else {
+						$this->Session->setFlash(__('Your credit card was not accepted by Paydollar. Please try again.', true), 'default', array('class'=>'flash_failure'));
+					}
 				}
 				
-				$this->Session->setFlash(__('You\'ve successfully registered.',true));
+				
 
 			} else {
 				$this->Session->setFlash(__('Sorry, the information you\'ve entered is incorrect.',true));
@@ -145,6 +163,27 @@ class MerchantsController extends AppController {
 			}
 			
 		}
+		
+		if(isset($this->params['url']['paydollar'])) {
+			
+			$invoiceID = $this->params['url']['inv'];
+			$shopid = $this->Session->read('NewShopID');
+			$mSchPayId = $this->Session->read('PaydollarResult.mSchPayId');
+			
+			$this->Merchant->Shop->RecurringPaymentProfile->create();
+			$data = array('RecurringPaymentProfile' =>
+					      array(
+						'gateway'=>'paydollar',
+						'method'=>'AddSchPay API',
+						'shop_id' => $shopid,
+						'gateway_reference_id' => $mSchPayId));
+				
+			$this->Merchant->Shop->RecurringPaymentProfile->save($data);
+			
+		}
+		
+		$this->Session->delete('NewShopID');
+		$this->Session->delete('PaydollarResult');
 	}
 	
 	function complete() {
@@ -318,9 +357,9 @@ class MerchantsController extends AppController {
 	
 	private function runAddSchPay($data) {
 		$PayDollarConfig = array('Sandbox' => Configure::read('paydollar.sandbox'),
-                         'APIMerchantID' => Configure::read('paypal.api.merchantid'),
-                         'APILoginID' => Configure::read('paypal.api.merchantid'),
-                         'APIPassword' => Configure::read('paypal.api.password'),
+                         'APIMerchantID' => Configure::read('paydollar.api.merchantid'),
+                         'APILoginID' => Configure::read('paydollar.api.loginid'),
+                         'APIPassword' => Configure::read('paydollar.api.password'),
                          'UrlEncodeStringValues' => true);
 		
 		$PayDollar = new PayDollar($PayDollarConfig);
@@ -330,29 +369,39 @@ class MerchantsController extends AppController {
 		// we will charge merchants every month but at the end of the billing cycle
 		$firstBillingCycleEndDate = date("Y-m-d", strtotime($firstBillingCycleStartDate)) . " +1 month";
 		
+		// split card expiry into month and year
+		
+		$expiryMonth = $data['Paydollar']['ccExpiry']['month'];
+		$expiryYear = $data['Paydollar']['ccExpiry']['year'];
 
-		$this->Paydollar->buildASPFields(array('sDay' => date('d', strtotime($firstBillingCycleEndDate)), // Required, start day of month
+		$ASPFields = $this->Paydollar->buildASPFields(array('sDay' => date('d', strtotime($firstBillingCycleEndDate)), // Required, start day of month
 							'sMonth' => date('m', strtotime($firstBillingCycleEndDate)), // Required, start month
 							'sYear' => date('Y', strtotime($firstBillingCycleEndDate)), // Required, start year
 							'eDay' => date('d', strtotime($firstBillingCycleEndDate)), // Required, start day of month
-							'eMonth' => date('m', strtotime($data['Paydollar']['ccExpiry'])) - 1, // Required, start month
-							'eYear' => date('Y', strtotime($data['Paydollar']['ccExpiry'])), // Required, start year
-							'orderRef' => 'test', // Required, invoice number reference Text(35)
+							'eMonth' => $expiryMonth - 1, // Required, start month
+							'eYear' => $expiryYear, // Required, start year
+							'orderRef' => $data['Invoice']['id'], // Required, invoice number reference Text(35)
 							
-							'amount' => '19.90',  // Required, total amount to be charged Number(12,2)
-							'name' => 'OMBI60: BASIC plan', // Required , name of schedule payment
-							'email' => 'tester@gmail.com', // Required, email of schedule payment
-							'orderAcct' => '4918914107195005', // order acct of schedule payment
-							'pMethod' => 'VISA',  // Required, refers to card. possible values are (VISA, Master, Diners, JCB, AMEX)
-							'epMonth' => '07',  // Required, expiry of card month must be leading zero Number(2)
-							'epYear' => '2015', 	// Required, expiry of card year must be in YYYY format Number(4)
-							'holderName' => 'Tester Testerson', // Required full name of card holder
-							//'mSchPayId' => '', // Master Schedule Id of anotherSchedulePay record. If this parameteris provided, the following informationwill be retrieved from previous record,pMethod,orderAcct,holderName,epMonth,epYear
-							//'payRef' => '', // Payment reference of anothertransaction record. If this parameter isprovided, the following information willbe retrieved from previous record,pMethod, orderAcct, holderName, epMonth, epYear
+							'amount' => $data['Invoice']['price'],  // Required, total amount to be charged Number(12,2)
+							'name' => strtoupper('OMBI60: '. $data['Invoice']['title'] . ' plan'), // Required , name of schedule payment
+							'email' => $data['User']['email'], // Required, email of schedule payment
+							'orderAcct' => $data['Paydollar']['ccNumber'], // order acct of schedule payment
+							'pMethod' => $data['Paydollar']['ccType'],  // Required, refers to card. possible values are (VISA, Master, Diners, JCB, AMEX)
+							'epMonth' => $expiryMonth,  // Required, expiry of card month must be leading zero Number(2)
+							'epYear' => $expiryYear, 	// Required, expiry of card year must be in YYYY format Number(4)
+							'holderName' => $data['Paydollar']['ccName'], // Required full name of card holder
+							
 							'status' => 'Active', // status of schedule payment (Active, Suspend)
 							'nSch' => '1', // number of Sch type
 							'schType' => 'Month', // The schedule type of schedulepayment (e.g. Day,Month,Year)
 							'payType' => 'N',));
+		
+		$PayDollarRequestData = array('ASPFields' => $ASPFields,);
+
+
+		return $PayDollar->AddSchPay($PayDollarRequestData);
+		
+		
 	}
 	
 	private function prepareSEC($invnum = '') {

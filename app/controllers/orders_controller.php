@@ -391,7 +391,7 @@ class OrdersController extends AppController {
 		
 		// if at this point in time, we get a $result == false, it means something went wrong prior.
 		if (!$result) {
-			$this->Session->setFlash(__('The Order could not be saved. Please, try again.', true));
+			$this->Session->setFlash(__('The Order could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
 			
 		} else {
 		
@@ -437,10 +437,10 @@ class OrdersController extends AppController {
 						      'hash' => $orderHash,
 						      'shop_id' => $shopId));
 				
-				$this->Session->setFlash(__('The Order has been saved', true));
+				$this->Session->setFlash(__('The Order has been saved', true), 'default', array('class'=>'flash_success'));
 				
 			} else {
-				$this->Session->setFlash(__('The Order could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Order could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
 			}
 			
 		}
@@ -647,7 +647,7 @@ class OrdersController extends AppController {
 			
 			if ($this->Order->savePaymentAndShipment($this->data)) {
 				
-				$this->Session->setFlash(__('Order has been saved', true));
+				$this->Session->setFlash(__('Order has been saved', true), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'success',
 						      'controller' => 'orders',
 						      'shop_id' => $shop_id));

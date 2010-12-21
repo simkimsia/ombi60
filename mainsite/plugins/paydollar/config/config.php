@@ -142,7 +142,7 @@ else
 	$paydollar_api_password = '';
 }
 
-Configure::write('paydollar.api.username', $paydollar_api_username);
+Configure::write('paydollar.api.loginid', $paydollar_api_loginid);
 Configure::write('paydollar.api.password', $paydollar_api_password);
 Configure::write('paydollar.api.merchantid', $paydollar_api_merchantid);
 

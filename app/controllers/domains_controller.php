@@ -47,16 +47,16 @@ class DomainsController extends AppController {
 		
 		
 		if (!$id OR !$shopId) {
-			$this->Session->setFlash(__('Invalid id for domain', true));
+			$this->Session->setFlash(__('Invalid id for domain', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 
 		if ($this->Domain->make_this_primary($id, $shopId)) {
-			$this->Session->setFlash(__('Domain now primary', true));
+			$this->Session->setFlash(__('Domain now primary', true), 'default', array('class'=>'flash_failure'));
 
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('This domain could not be primary. Please, try again.', true));
+		$this->Session->setFlash(__('This domain could not be primary. Please, try again.', true), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('action' => 'index'));
 	}
 

@@ -11,6 +11,13 @@ class Invoice extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'SubscriptionPlan' => array(
+			'className' => 'SubscriptionPlan',
+			'foreignKey' => 'title',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 	

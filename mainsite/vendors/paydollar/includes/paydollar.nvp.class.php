@@ -639,10 +639,15 @@ class PayDollar
 	
 		$Errors = array();
 		
-		if ($DataArray['successcode'] != 0) {
+		// this is for directPay
+		if (isset($DataArray['successcode']) &&  $DataArray['successcode']!= 0) {
 			$Errors[] = $DataArray['errMsg'];
 		}
 		
+		// this is for everything else
+		if (isset($DataArray['resultCode']) &&  $DataArray['resultCode']!= 0) {
+			$Errors[] = $DataArray['errMsg'];
+		}		
 		return $Errors;
 		
 	} // End function GetErrors()
