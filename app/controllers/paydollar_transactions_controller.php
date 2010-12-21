@@ -38,8 +38,6 @@ class PaydollarTransactionsController extends AppController {
 			// collect the fields from the POST params
 			$DFFields = $PayDollar->ConvertPOSTToDataFeed($_POST);
 			
-			$this->log($DFFields);
-			
 			$data = array('PaydollarTransaction' => array());
 			
 			
