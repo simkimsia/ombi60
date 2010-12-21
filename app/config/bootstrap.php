@@ -166,10 +166,11 @@ Configure::write('Payment.PayPal', 2);
 
 
 /**
- * load the config file of the paypal plugin
+ * load the config file of the paypal + paydollar plugin
  **/
 
 Configure::load('Paypal.config');
+Configure::load('Paydollar.config');
 
 
 /**

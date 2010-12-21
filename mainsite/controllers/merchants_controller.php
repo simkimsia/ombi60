@@ -398,9 +398,7 @@ class MerchantsController extends AppController {
 		
 		$PayDollarRequestData = array('ASPFields' => $ASPFields,);
 
-
 		return $PayDollar->AddSchPay($PayDollarRequestData);
-		
 		
 	}
 	

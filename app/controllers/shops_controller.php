@@ -1,12 +1,14 @@
 <?php
 App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
+App::import('Vendor', 'PayDollar', array('file'=>'paydollar'.DS.'includes'.DS.'paydollar.nvp.class.php'));
 class ShopsController extends AppController {
 
 	var $name = 'Shops';
 
 	//var $helpers = array('Html', 'Form', 'Session');
 
-	var $components = array('Paypal.Paypal');
+	var $components = array('Paypal.Paypal',
+				'Paydollar.Paydollar');
 
 	
 
@@ -26,24 +28,39 @@ class ShopsController extends AppController {
 			$this->Shop->id = $shopId;
 			
 			$this->Shop->RecurringPaymentProfile->recursive = -1;
-			$profile = $this->Shop->RecurringPaymentProfile->find('first', array('conditions'=>array('shop_id'=>$shopId)));
+			$profile = $this->Shop->RecurringPaymentProfile->find('first', array('conditions'=>array('shop_id'=>$shopId,
+														 'status'=>'active')));
 			
 			$result = false;
 			
 			
 			if (isset($profile['RecurringPaymentProfile']['gateway_reference_id'])) {
 				
-				$result = $this->cancelSubscription($profile['RecurringPaymentProfile']['gateway_reference_id']);
-				if (isset($result['ACK']) && strtoupper($result['ACK']) == 'SUCCESS') {
-					
-					$profile['RecurringPaymentProfile']['status'] = 'cancel';
-					
+				if ($profile['RecurringPaymentProfile']['gateway'] == 'paypal') {
+					$result = $this->cancelPaypalSubscription($profile['RecurringPaymentProfile']['gateway_reference_id']);
+					if (isset($result['ACK']) && strtoupper($result['ACK']) == 'SUCCESS') {
+						
+						$profile['RecurringPaymentProfile']['status'] = 'cancel';
+						
+					}	
+				} else if ($profile['RecurringPaymentProfile']['gateway'] == 'paydollar') {
+					$result = $this->runDeleteSchPay($profile['RecurringPaymentProfile']['gateway_reference_id']);
+					if (isset($result['resultCode']) && $result['resultCode'] == 0) {
+						
+						$profile['RecurringPaymentProfile']['status'] = 'cancel';
+						
+					}
 				}
+				
+				// now need to reflect the status of the recurring payment profile
+				$this->Shop->RecurringPaymentProfile->save($profile);
+				
 			}
 			
 			if ($result) {
 				// we need to change the deny_access value to true in database
-				$result = $this->Shop->saveField('deny_access', true);	
+				$result = $this->Shop->saveField('deny_access', true);
+				
 			}
 			
 			
@@ -74,13 +91,11 @@ class ShopsController extends AppController {
 		} else {
 			// display form
 			
-			
 		}
 
 	}
 	
-	private function cancelSubscription($ProfileID) {
-		
+	private function cancelPaypalSubscription($ProfileID) {
 		
 		// we need to prepare the paypalexpresscheckout portion
 		$PayPalConfig = array('Sandbox' => Configure::read('paypal.sandbox'),
@@ -102,6 +117,25 @@ class ShopsController extends AppController {
 		return $PayPal->ManageRecurringPaymentsProfileStatus($PayPalRequestData);
 
 	}
+	
+	private function runDeleteSchPay($mSchPayId) {
+		
+		$PayDollarConfig = array('Sandbox' => Configure::read('paydollar.sandbox'),
+                         'APIMerchantID' => Configure::read('paydollar.api.merchantid'),
+                         'APILoginID' => Configure::read('paydollar.api.loginid'),
+                         'APIPassword' => Configure::read('paydollar.api.password'),
+                         'UrlEncodeStringValues' => true);
+		
+		$PayDollar = new PayDollar($PayDollarConfig);
+		
+		$DSPFields = array('mSchPayId' => $mSchPayId);
+		
+		$PayDollarRequestData = array('DSPFields' => $DSPFields,);
+		
+		return $PayDollar->DeleteSchPay($PayDollarRequestData);
+		
+	}
+	
 
 }
 ?>
