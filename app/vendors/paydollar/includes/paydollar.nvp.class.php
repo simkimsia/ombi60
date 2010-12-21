@@ -796,6 +796,7 @@ class PayDollar
 		$DataArray['Ref'] = isset($GETArray['Ref']) ? $GETArray['Ref'] : '';
 		$DataArray['PayRef'] = isset($GETArray['PayRef']) ? $GETArray['PayRef'] : '';
 		$DataArray['Amt'] = isset($GETArray['Amt']) ? $GETArray['Amt'] : '';
+		$DataArray['Cur'] = isset($GETArray['Cur']) ? $GETArray['Cur'] : '';
 		$DataArray['mpsAmt'] = isset($GETArray['mpsAmt']) ? $GETArray['mpsAmt'] : '';
 		$DataArray['mpsCur'] = isset($GETArray['mpsCur']) ? $GETArray['mpsCur'] : '';
 		$DataArray['mpsForeignAmt'] = isset($GETArray['mpsForeignAmt']) ? $GETArray['mpsForeignAmt'] : '';
