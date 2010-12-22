@@ -14,7 +14,7 @@
 	<ul>
 
 		<li><?php echo $this->Html->link(__('List Blogs', true), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(__('List Posts', true), array('controller' => 'posts', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Post', true), array('controller' => 'posts', 'action' => 'add')); ?> </li>
+		
+		
 	</ul>
 </div>

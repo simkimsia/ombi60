@@ -98,62 +98,166 @@ class Merchant extends AppModel {
 		// now we create the dummy default product for this shop.
 		$this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);
 		
-		// now we need to populate the shops_payment_modules with available payment modules
-		// may not need to do this.
-		/*
-		$paymentModule = $this->Shop->ShopsPaymentModule->PaymentModule;
-		$paymentModule->recursive = -1;
-		$paymentModules = $paymentModule->find('all', array('fields'=>'id'));
-		$result = Set::extract('/PaymentModule/id', $paymentModules);
-		$paymentData = array('ShopsPaymentModule'=>array());
+		// now we need to populate the shipping rates
 		
-		foreach($result as $key => $value) {
-			$paymentData['ShopsPaymentModule'][$key]['shop_id'] = $this->Shop->id;
-			$paymentData['ShopsPaymentModule'][$key]['payment_module_id'] = $value;
-		}
-		
-		$this->Shop->ShopsPaymentModule->saveAll($paymentData['ShopsPaymentModule']);
-		
+		$shippedCountriesArray = array('native_country' => 192,
+					       'rest_of_world' => 0);
 		
 		$shippedToCountry = ClassRegistry::init('ShippedToCountry');
-		// native country setup
-		$shippingData = array('ShippedToCountry'=>array(),
-				      'ShippingRate'=>array());
 		
-		$shippingData['ShippedToCountry']['shop_id'] = $this->Shop->id;
-		$shippingData['ShippedToCountry']['country_id'] = 192;
-		$shippingData['ShippingRate'] = array(array('name'=>'Standard Shipping',
-						    'price'=>10,
-						    'description'=>'From 10kg to 20kg'),
-					      array('name'=>'Heavy Duty Shipping',
-						    'price'=>25,
-						    'description'=>'From 20kg to 50kg'));
-		
-		$result = $shippedToCountry->saveAll($shippingData);
-		if ($result) {
-			$weight = ClassRegistry::init('WeightBasedRate');
-			$weight 
-		}
-		
-		
-		// rest of the world country setup
-		$shippingData = array('ShippedToCountry'=>array(),
-				      'ShippingRate'=>array());
-		
-		$shippingData['ShippedToCountry']['shop_id'] = $this->Shop->id;
-		$shippingData['ShippedToCountry']['country_id'] = 0;
-		$shippingData['ShippingRate'] = array(array('name'=>'Standard Shipping',
-						    'price'=>10,
-						    'description'=>'From 10kg to 20kg'),
-					      array('name'=>'Heavy Duty Shipping',
-						    'price'=>25,
-						    'description'=>'From 20kg to 50kg'));
-		
-		$result = $shippedToCountry->saveAll($shippingData);
-		if ($result) {
+		foreach ($shippedCountriesArray as $countryID) {
+			
+			$shippedData = array();	
+			$shippedData['ShippedToCountry']['country_id'] = $countryID;
+			$shippedData['ShippedToCountry']['shop_id'] = $this->Shop->id;
+			
+			$shippedToCountry->create();
+			$result = $shippedToCountry->save($shippedData);
+			
+			if ($result) {
+				// standard weight
+				$shippedData = array();
+				$shippedData['WeightBasedRate']['min_weight'] = 10;
+				$shippedData['WeightBasedRate']['max_weight'] = 20;
+				$shippedData['ShippingRate']['price'] = 10;
+				$shippedData['ShippingRate']['shipped_to_country_id'] = $shippedToCountry->id;
+				$shippedData['ShippingRate']['name'] = 'Standard Shipping';
+				
+				$shippedToCountry->ShippingRate->create();
+				$shippedToCountry->ShippingRate->saveAll($shippedData);
+				
+				// heavy duty
+				$shippedData = array();
+				$shippedData['WeightBasedRate']['min_weight'] = 20;
+				$shippedData['WeightBasedRate']['max_weight'] = 50;
+				$shippedData['ShippingRate']['price'] = 25;
+				$shippedData['ShippingRate']['shipped_to_country_id'] = $shippedToCountry->id;
+				$shippedData['ShippingRate']['name'] = 'Heavy Duty';
+				
+				$shippedToCountry->ShippingRate->create();
+				$shippedToCountry->ShippingRate->saveAll($shippedData);
+				
+			}
 			
 		}
-		*/
+		
+		// now we set up the blog
+		$blog = ClassRegistry::init('Blog');
+		
+		$blogData = array('Blog'=>array('name'=>$data['Shop']['name'],
+						'shop_id'=>$this->Shop->id));
+		
+		$blog->create();
+		$blog->save($blogData);
+		
+		// now we set up the first post announcing open for business!
+		$post = ClassRegistry::init('Post');
+		
+		$postData = array('Post'=>array('title'=>'Open for business!',
+						'body'=>'We are OPEN for business!!',
+						'author_id'=>$this->User->id,
+						'blog_id'=>$blog->id));
+		
+		$post->create();
+		$post->save($postData);
+		
+		// now we set up the shopfront page and other pages
+		$webpage = ClassRegistry::init('Webpage');
+		
+		$pageData = array('Webpage'=>array('title'=>'Welcome',
+						'text'=>'<div class="item">
+		
+<table class="itemTable" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="itemLeftCell">
+					Lorem ipsum dolor sit amet, consectetur 
+					adipiscing elit. <a href="#">Sed semper est sed</a> eros sodales 
+					in lacinia dolor egestas. Integer seper imperdiet enim eu 
+					convallis. Suspendisse nec orci tellus. Aenean consectetur 
+					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a 
+					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna 
+					quam. Etiam ac risus magna, nec pretium diam. <a href="#">
+					Phasellus euismod</a> 
+					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi 
+					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. 
+					Praesent aliquet sem sit amet massa scelerisque vitae semper 
+					purus varius. Pellentesque habitant morbi tristique senectus et 
+					netus et malesuada fames ac turpis egestas.
+				</td>
+<td class="itemRightCell">
+					<img src="user_generated_content/images/Jellyfish.jpg" alt="Picture 1" width="192" height="144" />
+				</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="itemAlt">
+		
+<table class="itemTable" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="itemLeftCell">
+					Proin mauris tortor, ultricies 
+					interdum posuere eu, placerat vitae orci. Duis non laoreet 
+					libero. Suspendisse aliquam congue metus non elementum. Cras 
+					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci 
+					tortor. Suspendisse potenti. Nulla luctus interdum massa in 
+					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel 
+					orci. <a href="#">Nullam sollicitudin</a> nibh ac dolor tempor 
+					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class 
+					aptent taciti sociosqu ad litora torquent per conubia nostra, 
+					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing 
+					ultrices. Nunc eros lectus, bibendum eu consequat id, 
+					<a href="#">cursus non quam</a>. Nam vel dolor dolor. 
+					Pellentesque ante tortor, mattis auctor condimentum ut, 
+					convallis a dui. Mauris scelerisque dapibus libero, vitae 
+					facilisis tellus mattis a. Pellentesque metus nulla, tristique 
+					at venenatis et, egestas a diam.
+				</td>
+<td class="itemRightCell">
+					<img src="user_generated_content/images/Koala.jpg" alt="Picture 2" width="192" height="144" />
+				</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="item">
+		
+<table class="itemTable" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="itemLeftCell">
+					Nulla auctor sapien lorem. Ut vitae 
+					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam 
+					eu magna tempus eleifend. Donec interdum interdum lacus eget 
+					iaculis. Nulla facilisi. Phasellus <a href="#">eget lacus auctor</a> 
+					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt 
+					pellentesque, orci lorem vestibulum elit, ac tristique justo 
+					magna at ante. <a href="#">Lorem ipsum</a> dolor sit amet, 
+					consectetur adipiscing elit. Curabitur rutrum interdum tempus. 
+					Nunc et sapien eros, et ultrices elit. <a href="#">Maecenas in 
+					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut 
+					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui 
+					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus 
+					fringilla sit amet. Vivamus faucibus nisl a enim lacinia 
+					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae 
+					orci ut nibh tristique laoreet.
+				</td>
+<td class="itemRightCell">
+					<img src="user_generated_content/images/Hydrangeas.jpg" alt="Picture 3" width="192" height="144" />
+				</td>
+</tr>
+</tbody>
+</table>
+</div>',
+						'shop_id'=>$this->Shop->id,
+						'author'=>$this->User->id,
+						'handle'=>'shopfront'));
+		
+		$webpage->create();
+		$webpage->save($pageData);
+		
 		
 		// now we set up the theme
 		$savedTheme = ClassRegistry::init('SavedTheme');

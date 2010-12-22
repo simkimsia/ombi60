@@ -63,5 +63,18 @@ class PriceBasedRate extends AppModel {
 		}
 		return false;
 	}
+	
+	function afterSave($created) {
+		if (isset($this->data[$this->alias])) {
+			$message = '';
+			if (isset($this->data['PriceBasedRate']['min_price']) && !empty($this->data['PriceBasedRate']['max_price'])) {
+				$message = 'From $' . $this->data['PriceBasedRate']['min_price'] . ' to $' . $this->data['PriceBasedRate']['max_price'];
+			} else if (isset($this->data['PriceBasedRate']['min_price'])) {
+				$message = 'From $' . $this->data['PriceBasedRate']['min_price'] . ' and above';
+			}
+			$this->ShippingRate->id = $this->data['PriceBasedRate']['shipping_rate_id'];
+			$this->ShippingRate->saveField('description', $message);
+		}
+	}
 }
 ?>

@@ -61,5 +61,18 @@ class WeightBasedRate extends AppModel {
 		}
 		return false;
 	}
+	
+	function afterSave($created) {
+		if (isset($this->data[$this->alias])) {
+			$message = '';
+			if (isset($this->data['WeightBasedRate']['min_weight']) && !empty($this->data['WeightBasedRate']['max_weight'])) {
+				$message = 'From ' . $this->data['WeightBasedRate']['min_weight'] . 'kg to ' . $this->data['WeightBasedRate']['max_weight'] . 'kg';
+			} else if (isset($this->data['WeightBasedRate']['min_weight'])) {
+				$message = 'From ' . $this->data['WeightBasedRate']['min_weight'] . 'kg and above';
+			}
+			$this->ShippingRate->id = $this->data['WeightBasedRate']['shipping_rate_id'];
+			$this->ShippingRate->saveField('description', $message);
+		}
+	}
 }
 ?>
