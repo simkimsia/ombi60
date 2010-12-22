@@ -17,6 +17,19 @@ UPDATE domains SET shop_id = 1 WHERE id = 1;
 DELETE FROM aros WHERE id >= 5;
 ALTER TABLE aros AUTO_INCREMENT = 5;
 
+DELETE FROM `weight_based_rates` WHERE id >= 3;
+ALTER TABLE `weight_based_rates` AUTO_INCREMENT = 3;
+
+DELETE FROM `shipping_rates` WHERE id >= 3;
+ALTER TABLE `shipping_rates` AUTO_INCREMENT = 3;
+
+DELETE FROM `shipped_to_countries` WHERE id >= 3;
+ALTER TABLE `shipped_to_countries` AUTO_INCREMENT = 3;
+
+DELETE FROM `webpages` WHERE id >= 2;
+ALTER TABLE `webpages` AUTO_INCREMENT = 2;
+
+
 
 TRUNCATE TABLE merchants;
 TRUNCATE TABLE users;
@@ -32,6 +45,10 @@ TRUNCATE TABLE `paydollar_transactions`;
 TRUNCATE TABLE `blogs`;
 TRUNCATE TABLE `posts`;
 TRUNCATE TABLE `comments`;
+TRUNCATE TABLE `price_based_rates`;
+TRUNCATE TABLE `custom_payment_modules`;
+TRUNCATE TABLE `shops_payment_modules`;
+TRUNCATE TABLE `payments`;
 
 INSERT INTO aros (model, foreign_key, alias, lft, rght) VALUES 
 ('Group', 1, 'administrators', 1, 2),

@@ -7,6 +7,11 @@ class PaymentsController extends AppController {
 
 	var $components = array('Session');
 	
+	function beforeFilter() {
+		parent::beforeFilter();
+		
+	}
+	
 	function admin_index() {
 		
 		$paymentModuleInShop = $this->Payment->ShopsPaymentModule;

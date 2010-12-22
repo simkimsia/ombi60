@@ -7,7 +7,7 @@
 <div class="products index">
 <h2><?php __('Payment Settings');?></h2>
 
-	<dl id="custom_payment_gateway" style="padding: 0px 10px 0pt; margin-bottom: 0pt; border-top: 1px solid rgb(221, 221, 221);">
+	<div id="custom_payment_gateway" style="padding: 0px 10px 0pt; margin-bottom: 0pt; border-top: 1px solid rgb(221, 221, 221);">
 
 	
 	<?php
@@ -19,19 +19,21 @@
 	$ibPresent = false;
 	
 	if ($count > 0) {
-		echo '<dd class="payment">';
-		echo '<dl>';
+		echo '<div class="payment">';
+		echo '<div>';
 	}
 	
 	foreach($customPaymentModules as $key => $paymentModule):
-	
-		$codPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Cash On Delivery');
-		$moPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Money Order');
-		$ibPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Internet Banking Transfer');
+		if (!$codPresent)
+			$codPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Cash On Delivery');
+		if (!$moPresent)
+			$moPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Money Order');
+		if (!$ibPresent)
+			$ibPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Internet Banking Transfer');
 	
 		$id = $paymentModule['CustomPaymentModule']['shop_payment_module_id'];
 	
-		echo '<dd id="activate-custom-'.$id.'" style="padding-top: 10px;" class="payment">';
+		echo '<div id="activate-custom-'.$id.'" style="padding-top: 10px;" class="payment">';
 		
 		echo 'Using method:<strong>' . $paymentModule['CustomPaymentModule']['name'] . '</strong>';
 		
@@ -49,9 +51,11 @@
 		
 		
 		
-		echo '</dd>';
+		echo '</div>';
 		
-		echo '<dd class="payment" style="display:none;border-top:1px solid rgb(221, 221, 221);padding-bottom:10px;" id="form-edit-custom-'.$paymentModule['CustomPaymentModule']['shop_payment_module_id'].'">';
+		$spmID = $paymentModule['CustomPaymentModule']['shop_payment_module_id'];
+		
+		echo '<div class="payment" style="display:none;border-top:1px solid rgb(221, 221, 221);padding-bottom:10px;" id="form-edit-custom-'.$spmID.'">';
 		
 		echo $this->Form->create('CustomPaymentModule', array('url'=>array('controller' => 'payments',
 								      'action' => 'edit_custom_payment',
@@ -59,13 +63,13 @@
 									$paymentModule['CustomPaymentModule']['id']
 									)));
 	
-		echo $this->Form->input('name', array('value'=>$paymentModule['CustomPaymentModule']['name']));
+		echo $this->Form->input('name', array('value'=>$paymentModule['CustomPaymentModule']['name'], 'id'=>'EditCustomPaymentModuleName'.$spmID));
 		echo $this->Form->input('instructions', array('type'=>'textarea', 'value'=> $paymentModule['CustomPaymentModule']['instructions']));
 		echo $this->Form->submit('Save');
 		echo '<a href="#" onclick="toggleEditForm('.$id.');return false;">Cancel</a>';
 		echo $this->Form->end();
 		
-		echo '</dd>';
+		echo '</div>';
 	
 	?>
 	
@@ -73,8 +77,8 @@
 	
 	<?php endforeach;
 	if ($count > 0) {
-		echo '</dd>';
-		echo '</dl>';
+		echo '</div>';
+		echo '</div>';
 	}
 	
 	?>
@@ -82,7 +86,7 @@
 	
 
 	<?php
-	echo '<dt>';
+	echo '<div>';
 	echo '<select id="customPaymentSelect" >
 			<option value="">Select a custom payment mode to add</option>
 			<option value="">------</option>';
@@ -93,9 +97,9 @@
 	echo '		<option value="">------</option>
 			<option value="custom">Create new custom payment mode</option>
 		</select>';
-	echo '</dt>';
+	echo '</div>';
 	
-	echo '<dd id="customForm" style="display:none">';
+	echo '<div id="customForm" style="display:none">';
 	echo $this->Form->create('CustomPaymentModule', array('url'=>array('controller' => 'payments',
 							      'action' => 'add_custom_payment',
 							   'admin' => true)));
@@ -104,7 +108,7 @@
 	echo $this->Form->input('instructions', array('type'=>'textarea'));
 	
 	echo $this->Form->end('Turn On');
-	echo '</dd>';
+	echo '</div>';
 	
 	
 	?>
@@ -112,7 +116,7 @@
 
 	
 
-	</dl>
+	</div>	
 </div>
 
 
@@ -142,6 +146,7 @@
 				$('#CustomPaymentModuleName').attr('value', 'Enter custom payment mode name');
 				$('#CustomPaymentModuleName').select();	
 			} else {
+				
 				$('#CustomPaymentModuleName').attr('value', valueOfSelect);
 				$('#CustomPaymentModuleInstructions').focus();	
 			}

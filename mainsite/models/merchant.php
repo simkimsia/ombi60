@@ -99,6 +99,8 @@ class Merchant extends AppModel {
 		$this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);
 		
 		// now we need to populate the shops_payment_modules with available payment modules
+		// may not need to do this.
+		/*
 		$paymentModule = $this->Shop->ShopsPaymentModule->PaymentModule;
 		$paymentModule->recursive = -1;
 		$paymentModules = $paymentModule->find('all', array('fields'=>'id'));
@@ -111,6 +113,47 @@ class Merchant extends AppModel {
 		}
 		
 		$this->Shop->ShopsPaymentModule->saveAll($paymentData['ShopsPaymentModule']);
+		
+		
+		$shippedToCountry = ClassRegistry::init('ShippedToCountry');
+		// native country setup
+		$shippingData = array('ShippedToCountry'=>array(),
+				      'ShippingRate'=>array());
+		
+		$shippingData['ShippedToCountry']['shop_id'] = $this->Shop->id;
+		$shippingData['ShippedToCountry']['country_id'] = 192;
+		$shippingData['ShippingRate'] = array(array('name'=>'Standard Shipping',
+						    'price'=>10,
+						    'description'=>'From 10kg to 20kg'),
+					      array('name'=>'Heavy Duty Shipping',
+						    'price'=>25,
+						    'description'=>'From 20kg to 50kg'));
+		
+		$result = $shippedToCountry->saveAll($shippingData);
+		if ($result) {
+			$weight = ClassRegistry::init('WeightBasedRate');
+			$weight 
+		}
+		
+		
+		// rest of the world country setup
+		$shippingData = array('ShippedToCountry'=>array(),
+				      'ShippingRate'=>array());
+		
+		$shippingData['ShippedToCountry']['shop_id'] = $this->Shop->id;
+		$shippingData['ShippedToCountry']['country_id'] = 0;
+		$shippingData['ShippingRate'] = array(array('name'=>'Standard Shipping',
+						    'price'=>10,
+						    'description'=>'From 10kg to 20kg'),
+					      array('name'=>'Heavy Duty Shipping',
+						    'price'=>25,
+						    'description'=>'From 20kg to 50kg'));
+		
+		$result = $shippedToCountry->saveAll($shippingData);
+		if ($result) {
+			
+		}
+		*/
 		
 		// now we set up the theme
 		$savedTheme = ClassRegistry::init('SavedTheme');
