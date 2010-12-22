@@ -29,6 +29,9 @@ TRUNCATE TABLE `acos`;
 TRUNCATE TABLE `cancellations`;
 TRUNCATE TABLE `saved_themes`;
 TRUNCATE TABLE `paydollar_transactions`;
+TRUNCATE TABLE `blogs`;
+TRUNCATE TABLE `posts`;
+TRUNCATE TABLE `comments`;
 
 INSERT INTO aros (model, foreign_key, alias, lft, rght) VALUES 
 ('Group', 1, 'administrators', 1, 2),

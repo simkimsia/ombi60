@@ -1,0 +1,14 @@
+Merchant Id = 12101198  
+Currency = SGD
+
+MasterCard       - 5422882800700007, Exp date: 07, 2015, CVC2: 123
+VISA Card         - 4918914107195005, Exp date: 07, 2015, CVV2: 123
+
+APILogin ID: apilogin
+APIPassword: apipass4321
+
+backend login
+admin
+5tr0ng35t
+
+ 

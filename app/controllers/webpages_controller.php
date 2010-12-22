@@ -7,7 +7,7 @@ class WebpagesController extends AppController {
 	
 	var $view = 'Theme';
 	
-	var $helpers = array('Session');
+	var $helpers = array('TinyMce.TinyMce');
 
 	function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.

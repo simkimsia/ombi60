@@ -3,6 +3,17 @@
 	<fieldset>
  		<legend><?php __('Admin Edit Webpage'); ?></legend>
 	<?php
+	
+	$this->TinyMce->editor(array(
+			'theme' => 'advanced',
+			'mode' => 'textareas',
+			'plugins' => ' table',
+			'theme_advanced_buttons1' => 'bold,italic,underline,undo,redo,link,unlink,forecolor,styleselect,removeformat,cleanup,code,table,fontselect,fontsizeselect',
+			'theme_advanced_buttons2' => '',
+			'remove_linebreaks' => false,
+			'extended_valid_elements' => 'textarea[cols|rows|disabled|name|readonly|class]'));
+	
+	
 		echo $this->Form->input('id');
 		
 		

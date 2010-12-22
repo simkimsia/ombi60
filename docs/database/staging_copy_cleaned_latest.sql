@@ -25,11 +25,9 @@ CREATE TABLE `acos` (
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `acos` */
-
-insert  into `acos`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,NULL,NULL,'controllers',1,454),(2,1,NULL,NULL,'Pages',2,7),(3,2,NULL,NULL,'display',3,4),(4,2,NULL,NULL,'admin_change_active_status',5,6),(5,1,NULL,NULL,'Orders',8,31),(6,5,NULL,NULL,'paypal',9,10),(7,5,NULL,NULL,'index',11,12),(8,5,NULL,NULL,'admin_index',13,14),(9,5,NULL,NULL,'admin_view',15,16),(10,5,NULL,NULL,'view',17,18),(11,5,NULL,NULL,'add',19,20),(12,5,NULL,NULL,'checkout',21,22),(13,5,NULL,NULL,'success',23,24),(14,5,NULL,NULL,'updatePrices',25,26),(15,5,NULL,NULL,'pay',27,28),(16,5,NULL,NULL,'admin_change_active_status',29,30),(17,1,NULL,NULL,'Payments',32,45),(18,17,NULL,NULL,'admin_index',33,34),(19,17,NULL,NULL,'admin_update_settings',35,36),(20,17,NULL,NULL,'admin_add_custom_payment',37,38),(21,17,NULL,NULL,'admin_edit_custom_payment',39,40),(22,17,NULL,NULL,'admin_delete_custom_payment',41,42),(23,17,NULL,NULL,'admin_change_active_status',43,44),(24,1,NULL,NULL,'Users',46,65),(25,24,NULL,NULL,'parentNode',47,48),(26,24,NULL,NULL,'initDB',49,50),(27,24,NULL,NULL,'login',51,52),(28,24,NULL,NULL,'logout',53,54),(29,24,NULL,NULL,'platform_login',55,56),(30,24,NULL,NULL,'platform_logout',57,58),(31,24,NULL,NULL,'platform_index',59,60),(32,24,NULL,NULL,'afterSave',61,62),(33,24,NULL,NULL,'admin_change_active_status',63,64),(34,1,NULL,NULL,'ProductImages',66,81),(35,34,NULL,NULL,'admin_add',67,68),(36,34,NULL,NULL,'admin_add_by_product',69,70),(37,34,NULL,NULL,'admin_uploadify',71,72),(38,34,NULL,NULL,'admin_list_by_product',73,74),(39,34,NULL,NULL,'admin_delete',75,76),(40,34,NULL,NULL,'admin_make_this_cover',77,78),(41,34,NULL,NULL,'admin_change_active_status',79,80),(42,1,NULL,NULL,'Carts',82,93),(43,42,NULL,NULL,'index',83,84),(44,42,NULL,NULL,'view',85,86),(45,42,NULL,NULL,'edit',87,88),(46,42,NULL,NULL,'delete',89,90),(47,42,NULL,NULL,'admin_change_active_status',91,92),(48,1,NULL,NULL,'Blogs',94,109),(49,48,NULL,NULL,'view',95,96),(50,48,NULL,NULL,'admin_index',97,98),(51,48,NULL,NULL,'admin_view',99,100),(52,48,NULL,NULL,'admin_add',101,102),(53,48,NULL,NULL,'admin_edit',103,104),(54,48,NULL,NULL,'admin_delete',105,106),(55,48,NULL,NULL,'admin_change_active_status',107,108),(56,1,NULL,NULL,'Addresses',110,115),(57,56,NULL,NULL,'index',111,112),(58,56,NULL,NULL,'admin_change_active_status',113,114),(59,1,NULL,NULL,'Webpages',116,131),(60,59,NULL,NULL,'view',117,118),(61,59,NULL,NULL,'admin_index',119,120),(62,59,NULL,NULL,'admin_view',121,122),(63,59,NULL,NULL,'admin_add',123,124),(64,59,NULL,NULL,'admin_edit',125,126),(65,59,NULL,NULL,'admin_delete',127,128),(66,59,NULL,NULL,'admin_change_active_status',129,130),(67,1,NULL,NULL,'Merchants',132,153),(68,67,NULL,NULL,'register',133,134),(69,67,NULL,NULL,'admin_login',135,136),(70,67,NULL,NULL,'admin_logout',137,138),(71,67,NULL,NULL,'admin_index',139,140),(72,67,NULL,NULL,'admin_edit',141,142),(73,67,NULL,NULL,'platform_index',143,144),(74,67,NULL,NULL,'platform_view',145,146),(75,67,NULL,NULL,'platform_edit',147,148),(76,67,NULL,NULL,'platform_delete',149,150),(77,67,NULL,NULL,'admin_change_active_status',151,152),(78,1,NULL,NULL,'Themes',154,159),(79,78,NULL,NULL,'admin_index',155,156),(80,78,NULL,NULL,'admin_change_active_status',157,158),(81,1,NULL,NULL,'Customers',160,169),(82,81,NULL,NULL,'register',161,162),(83,81,NULL,NULL,'login',163,164),(84,81,NULL,NULL,'logout',165,166),(85,81,NULL,NULL,'admin_change_active_status',167,168),(86,1,NULL,NULL,'SavedThemes',170,195),(87,86,NULL,NULL,'admin_index',171,172),(88,86,NULL,NULL,'admin_view',173,174),(89,86,NULL,NULL,'admin_switch',175,176),(90,86,NULL,NULL,'admin_add',177,178),(91,86,NULL,NULL,'admin_upload',179,180),(92,86,NULL,NULL,'admin_edit',181,182),(93,86,NULL,NULL,'admin_delete',183,184),(94,86,NULL,NULL,'admin_edit_image',185,186),(95,86,NULL,NULL,'admin_feature',187,188),(96,86,NULL,NULL,'admin_delete_image',189,190),(97,86,NULL,NULL,'admin_edit_css',191,192),(98,86,NULL,NULL,'admin_change_active_status',193,194),(99,1,NULL,NULL,'Shops',196,203),(100,99,NULL,NULL,'admin_account',197,198),(101,99,NULL,NULL,'admin_cancelaccount',199,200),(102,99,NULL,NULL,'admin_change_active_status',201,202),(103,1,NULL,NULL,'ShippingRates',204,217),(104,103,NULL,NULL,'admin_index',205,206),(105,103,NULL,NULL,'admin_edit',207,208),(106,103,NULL,NULL,'admin_add_price_based',209,210),(107,103,NULL,NULL,'admin_add_weight_based',211,212),(108,103,NULL,NULL,'admin_delete',213,214),(109,103,NULL,NULL,'admin_change_active_status',215,216),(110,1,NULL,NULL,'Groups',218,223),(111,110,NULL,NULL,'parentNode',219,220),(112,110,NULL,NULL,'admin_change_active_status',221,222),(113,1,NULL,NULL,'Domains',224,239),(114,113,NULL,NULL,'admin_index',225,226),(115,113,NULL,NULL,'admin_view',227,228),(116,113,NULL,NULL,'admin_add',229,230),(117,113,NULL,NULL,'admin_make_this_primary',231,232),(118,113,NULL,NULL,'admin_edit',233,234),(119,113,NULL,NULL,'admin_delete',235,236),(120,113,NULL,NULL,'admin_change_active_status',237,238),(121,1,NULL,NULL,'Products',240,283),(122,121,NULL,NULL,'checkout',241,242),(123,121,NULL,NULL,'view_cart',243,244),(124,121,NULL,NULL,'admin_index',245,246),(125,121,NULL,NULL,'admin_view',247,248),(126,121,NULL,NULL,'view',249,250),(127,121,NULL,NULL,'index',251,252),(128,121,NULL,NULL,'admin_add',253,254),(129,121,NULL,NULL,'admin_upload',255,256),(130,121,NULL,NULL,'admin_toggle',257,258),(131,121,NULL,NULL,'admin_edit',259,260),(132,121,NULL,NULL,'admin_delete',261,262),(133,121,NULL,NULL,'admin_duplicate',263,264),(134,121,NULL,NULL,'platform_index',265,266),(135,121,NULL,NULL,'platform_view',267,268),(136,121,NULL,NULL,'platform_add',269,270),(137,121,NULL,NULL,'platform_edit',271,272),(138,121,NULL,NULL,'platform_delete',273,274),(139,121,NULL,NULL,'edit_quantities_in_cart',275,276),(140,121,NULL,NULL,'add_to_cart',277,278),(141,121,NULL,NULL,'delete_from_cart',279,280),(142,121,NULL,NULL,'admin_change_active_status',281,282),(143,1,NULL,NULL,'Posts',284,297),(144,143,NULL,NULL,'view',285,286),(145,143,NULL,NULL,'admin_view',287,288),(146,143,NULL,NULL,'admin_add',289,290),(147,143,NULL,NULL,'admin_edit',291,292),(148,143,NULL,NULL,'admin_delete',293,294),(149,143,NULL,NULL,'admin_change_active_status',295,296),(150,1,NULL,NULL,'GiftCards',298,321),(151,150,NULL,NULL,'index',299,300),(152,150,NULL,NULL,'view',301,302),(153,150,NULL,NULL,'add',303,304),(154,150,NULL,NULL,'edit',305,306),(155,150,NULL,NULL,'delete',307,308),(156,150,NULL,NULL,'admin_index',309,310),(157,150,NULL,NULL,'admin_view',311,312),(158,150,NULL,NULL,'admin_add',313,314),(159,150,NULL,NULL,'admin_edit',315,316),(160,150,NULL,NULL,'admin_delete',317,318),(161,150,NULL,NULL,'admin_change_active_status',319,320),(162,1,NULL,NULL,'MeioUpload',322,323),(163,1,NULL,NULL,'Copyable',324,325),(164,1,NULL,NULL,'CodeCheck',326,327),(165,1,NULL,NULL,'MeioDuplicate',328,329),(166,1,NULL,NULL,'Recaptcha',330,331),(167,1,NULL,NULL,'ThemeFolder',332,333),(168,1,NULL,NULL,'Datasources',334,335),(169,1,NULL,NULL,'LilBlogs',336,423),(170,169,NULL,NULL,'Authors',337,356),(171,170,NULL,NULL,'login',338,339),(172,170,NULL,NULL,'logout',340,341),(173,170,NULL,NULL,'admin_index',342,343),(174,170,NULL,NULL,'admin_add',344,345),(175,170,NULL,NULL,'admin_edit',346,347),(176,170,NULL,NULL,'admin_delete',348,349),(177,170,NULL,NULL,'parseUrl',350,351),(178,170,NULL,NULL,'error404',352,353),(179,170,NULL,NULL,'admin_change_active_status',354,355),(180,169,NULL,NULL,'Comments',357,376),(181,180,NULL,NULL,'index',358,359),(182,180,NULL,NULL,'admin_edit',360,361),(183,180,NULL,NULL,'admin_delete',362,363),(184,180,NULL,NULL,'admin_index',364,365),(185,180,NULL,NULL,'admin_quick',366,367),(186,180,NULL,NULL,'admin_categorize',368,369),(187,180,NULL,NULL,'parseUrl',370,371),(188,180,NULL,NULL,'error404',372,373),(189,180,NULL,NULL,'admin_change_active_status',374,375),(190,169,NULL,NULL,'Blogs',377,392),(191,190,NULL,NULL,'view',378,379),(192,190,NULL,NULL,'admin_index',380,381),(193,190,NULL,NULL,'admin_view',382,383),(194,190,NULL,NULL,'admin_add',384,385),(195,190,NULL,NULL,'admin_edit',386,387),(196,190,NULL,NULL,'admin_delete',388,389),(197,190,NULL,NULL,'admin_change_active_status',390,391),(198,169,NULL,NULL,'Categories',393,408),(199,198,NULL,NULL,'admin_index',394,395),(200,198,NULL,NULL,'admin_add',396,397),(201,198,NULL,NULL,'admin_edit',398,399),(202,198,NULL,NULL,'admin_delete',400,401),(203,198,NULL,NULL,'parseUrl',402,403),(204,198,NULL,NULL,'error404',404,405),(205,198,NULL,NULL,'admin_change_active_status',406,407),(206,169,NULL,NULL,'Posts',409,422),(207,206,NULL,NULL,'view',410,411),(208,206,NULL,NULL,'admin_view',412,413),(209,206,NULL,NULL,'admin_add',414,415),(210,206,NULL,NULL,'admin_edit',416,417),(211,206,NULL,NULL,'admin_delete',418,419),(212,206,NULL,NULL,'admin_change_active_status',420,421),(213,1,NULL,NULL,'AclExtras',424,425),(214,1,NULL,NULL,'Filter',426,427),(215,1,NULL,NULL,'Rest',428,429),(216,1,NULL,NULL,'JamienayZendLucene',430,431),(217,1,NULL,NULL,'Paypal',432,433),(218,1,NULL,NULL,'RandomString',434,435),(219,1,NULL,NULL,'ClearCache',436,437),(220,1,NULL,NULL,'Uploadify',438,439),(221,1,NULL,NULL,'Paydollar',440,441),(222,1,NULL,NULL,'Linkable',442,443),(223,1,NULL,NULL,'DebugKit',444,453),(224,223,NULL,NULL,'ToolbarAccess',445,452),(225,224,NULL,NULL,'history_state',446,447),(226,224,NULL,NULL,'sql_explain',448,449),(227,224,NULL,NULL,'admin_change_active_status',450,451);
 
 /*Table structure for table `addresses` */
 
@@ -63,11 +61,11 @@ CREATE TABLE `aros` (
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `aros` */
 
-insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,6),(4,NULL,'Group',4,'customers',7,8),(5,NULL,'Group',5,'casual',9,12),(6,5,'User',1,NULL,10,11);
+insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,6),(4,NULL,'Group',4,'customers',7,8),(5,NULL,'Group',5,'casual',9,10);
 
 /*Table structure for table `aros_acos` */
 
@@ -88,46 +86,9 @@ CREATE TABLE `aros_acos` (
   KEY `to_aro` (`aro_id`),
   CONSTRAINT `to_aco` FOREIGN KEY (`aco_id`) REFERENCES `acos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `to_aro` FOREIGN KEY (`aro_id`) REFERENCES `aros` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `aros_acos` */
-
-insert  into `aros_acos`(`id`,`aro_id`,`aco_id`,`_create`,`_read`,`_update`,`_delete`) values (1,1,1,'1','1','1','1'),(2,2,3,'1','1','1','1'),(3,2,1,'-1','-1','-1','-1'),(4,2,121,'1','1','1','1'),(5,2,99,'1','1','1','1'),(6,2,24,'1','1','1','1'),(7,2,113,'1','1','1','1'),(8,2,78,'1','1','1','1'),(9,3,1,'-1','-1','-1','-1'),(10,3,3,'1','1','1','1'),(11,3,128,'1','1','1','1'),(12,3,131,'1','1','1','1'),(13,3,132,'1','1','1','1'),(14,3,125,'1','1','1','1'),(15,3,124,'1','1','1','1'),(16,3,129,'1','1','1','1'),(17,3,133,'1','1','1','1'),(18,3,130,'1','1','1','1'),(19,3,35,'1','1','1','1'),(20,3,39,'1','1','1','1'),(21,3,38,'1','1','1','1'),(22,3,40,'1','1','1','1'),(23,3,36,'1','1','1','1'),(24,3,37,'1','1','1','1'),(25,3,71,'1','1','1','1'),(26,3,72,'1','1','1','1'),(27,3,70,'1','1','1','1'),(28,3,69,'1','1','1','1'),(29,3,116,'1','1','1','1'),(30,3,118,'1','1','1','1'),(31,3,119,'1','1','1','1'),(32,3,115,'1','1','1','1'),(33,3,114,'1','1','1','1'),(34,3,117,'1','1','1','1'),(35,3,87,'1','1','1','1'),(36,3,92,'1','1','1','1'),(37,3,90,'1','1','1','1'),(38,3,93,'1','1','1','1'),(39,3,95,'1','1','1','1'),(40,3,94,'1','1','1','1'),(41,3,96,'1','1','1','1'),(42,3,97,'1','1','1','1'),(43,3,89,'1','1','1','1'),(44,3,100,'1','1','1','1'),(45,3,101,'1','1','1','1'),(46,3,18,'1','1','1','1'),(47,3,19,'1','1','1','1'),(48,3,8,'1','1','1','1'),(49,3,9,'1','1','1','1'),(50,3,63,'1','1','1','1'),(51,3,64,'1','1','1','1'),(52,3,65,'1','1','1','1'),(53,3,62,'1','1','1','1'),(54,3,61,'1','1','1','1'),(55,4,1,'-1','-1','-1','-1'),(56,4,3,'1','1','1','1'),(57,4,28,'1','1','1','1'),(58,4,27,'1','1','1','1'),(59,4,84,'1','1','1','1'),(60,4,83,'1','1','1','1');
-
-/*Table structure for table `authors` */
-
-DROP TABLE IF EXISTS `authors`;
-
-CREATE TABLE `authors` (
-  `id` int(4) unsigned NOT NULL AUTO_INCREMENT,
-  `admin` tinyint(1) NOT NULL DEFAULT '0',
-  `name` varchar(100) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `passwd` varchar(50) NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
-/*Data for the table `authors` */
-
-insert  into `authors`(`id`,`admin`,`name`,`email`,`username`,`passwd`,`created`,`modified`) values (1,1,'Administrator','','admin','78e8f77082028fa96a619aa568aa3ca88a72ec8e','2010-08-18 11:38:04','2010-08-18 11:38:04');
-
-/*Table structure for table `authors_blogs` */
-
-DROP TABLE IF EXISTS `authors_blogs`;
-
-CREATE TABLE `authors_blogs` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `author_id` int(10) DEFAULT NULL,
-  `blog_id` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
-/*Data for the table `authors_blogs` */
-
-insert  into `authors_blogs`(`id`,`author_id`,`blog_id`) values (1,1,1);
 
 /*Table structure for table `blogs` */
 
@@ -160,7 +121,7 @@ CREATE TABLE `cake_sessions` (
 
 /*Data for the table `cake_sessions` */
 
-insert  into `cake_sessions`(`id`,`data`,`expires`) values ('5dk00td101ngg166itbcm79m36','Config|a:3:{s:9:\"userAgent\";s:0:\"\";s:4:\"time\";i:1292941598;s:7:\"timeout\";i:100;}',1292941598),('nra71u163r1eoo6g6ki8pe2mh1','Config|a:3:{s:9:\"userAgent\";s:0:\"\";s:4:\"time\";i:1292941629;s:7:\"timeout\";i:100;}',1292941629),('1adv28avkjf37krrlv4qncjqj2','Config|a:3:{s:9:\"userAgent\";s:0:\"\";s:4:\"time\";i:1292941690;s:7:\"timeout\";i:100;}',1292941691),('fg7g601let6cnunu03aqgnvbm1','Config|a:3:{s:9:\"userAgent\";s:0:\"\";s:4:\"time\";i:1292941866;s:7:\"timeout\";i:100;}',1292941866),('ev4muq2teha8tqn3jm7r78ms66','Config|a:3:{s:9:\"userAgent\";s:0:\"\";s:4:\"time\";i:1292942032;s:7:\"timeout\";i:100;}',1292942032),('s9i8eeoq1nfvrise3tutk4qqc7','Config|a:3:{s:9:\"userAgent\";s:0:\"\";s:4:\"time\";i:1292942093;s:7:\"timeout\";i:100;}',1292942093),('tuqvish29oj5219q91tki52hl4','Config|a:3:{s:9:\"userAgent\";s:0:\"\";s:4:\"time\";i:1292942132;s:7:\"timeout\";i:100;}',1292942133),('dect5h15in9i8uf86ru2fcqp97','Config|a:3:{s:9:\"userAgent\";s:0:\"\";s:4:\"time\";i:1292942416;s:7:\"timeout\";i:100;}',1292942416),('0o2eaba8qira7258c3q6vnv9v6','Config|a:3:{s:9:\"userAgent\";s:0:\"\";s:4:\"time\";i:1292942488;s:7:\"timeout\";i:100;}',1292942488),('57dgh9iki94muqsbsq6mhp17i1','Config|a:3:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1292936189;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"c134108a4d0a627bedee6fd422ebd7e6339c35b9\";s:7:\"expires\";i:1292930188;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1292936189),('fkpjg09l341nb6ngn3gg531e44','Config|a:3:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1292936250;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"f3c3edccc0b69155fc24cbff2950ded5fba1e381\";s:7:\"expires\";i:1292930250;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1292936251),('iq5i9gvhgkrvssnaqc5ah1aa92','Config|a:4:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1292947585;s:7:\"timeout\";i:300;s:8:\"language\";s:3:\"eng\";}CurrentShop|b:0;_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"47531870d16cf2c9aa48d849e38046697a4f168d\";s:7:\"expires\";i:1292929585;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1292947585),('bcmb5v3pb5qfcgl2qmufpplsq2','Config|a:4:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1292959208;s:7:\"timeout\";i:300;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:1:\"a\";s:11:\"web_address\";s:25:\"http://a.myspree2shop.com\";s:7:\"created\";N;s:8:\"modified\";N;s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"0\";s:11:\"deny_access\";s:1:\"0\";}s:6:\"Domain\";a:5:{s:6:\"domain\";s:23:\"http://ombi60.localhost\";s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"1\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"21c957c675acbd61ee8aabbc3bee2527ac678ad0\";s:7:\"expires\";i:1292941208;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1292959208),('c15i0p99irhu8e0987dcmp0f23','Config|a:3:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1292935167;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"de57fd6b53bdb0ce6f540668b69ca710a416be28\";s:7:\"expires\";i:1292929167;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1292935167),('8mjaogfuf6mr2uniqs3i15jbv2','Config|a:4:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1292960248;s:7:\"timeout\";i:300;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:11:\"web_address\";s:31:\"http://shop001.myspree2shop.com\";s:7:\"created\";s:19:\"2010-12-21 17:19:23\";s:8:\"modified\";s:19:\"2010-12-21 17:19:24\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:2:\"13\";s:11:\"deny_access\";b:1;}s:6:\"Domain\";a:5:{s:6:\"domain\";s:23:\"http://ombi60.localhost\";s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"74543fcf30ab3a529400f83ecf2a1901a67873e1\";s:7:\"expires\";i:1292942248;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";Message|a:0:{}Auth|a:4:{s:4:\"User\";a:10:{s:2:\"id\";s:1:\"4\";s:5:\"email\";s:17:\"owner@shop001.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:3:\"amy\";s:12:\"name_to_call\";s:13:\"amy westerman\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2010-12-21 17:19:23\";s:8:\"modified\";s:19:\"2010-12-21 17:19:23\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"user_id\";s:1:\"4\";}s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:11:\"web_address\";s:31:\"http://shop001.myspree2shop.com\";s:7:\"created\";s:19:\"2010-12-21 17:19:23\";s:8:\"modified\";s:19:\"2010-12-21 17:19:24\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:2:\"13\";s:11:\"deny_access\";s:1:\"0\";}s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}}',1292960249),('va4u5c3rh819r7f7fejhhfhid5','Config|a:3:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1292935390;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"71431406173cacf2f41e0b0532c7f5b8666045f5\";s:7:\"expires\";i:1292929389;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1292935390),('30rb7cjvd05lp38a1tgj64epi6','Config|a:3:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1292935696;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"9c7909e3c7d2b0281944998678a858091926e11e\";s:7:\"expires\";i:1292929695;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1292935696),('r9vm2ftsmuchikjqqp6dtc26b2','Config|a:3:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1292935915;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"dc1a12ece309a3cc66cfdece1a4d07ec98bf5363\";s:7:\"expires\";i:1292929914;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1292935916),('ri254thijltfhoagsr1igrpsh4','Config|a:3:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1292936118;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"cd5f6b4731b4f38657c8516f127f2c92a639e8dc\";s:7:\"expires\";i:1292930117;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1292936118),('ltvauvae1onqmfqvvsfu68jf85','Config|a:4:{s:9:\"userAgent\";s:32:\"d44d3ad92fc64f25864865e2b87ade5e\";s:4:\"time\";i:1292960767;s:7:\"timeout\";i:300;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:1:\"a\";s:11:\"web_address\";s:25:\"http://a.myspree2shop.com\";s:7:\"created\";N;s:8:\"modified\";N;s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"0\";s:11:\"deny_access\";s:1:\"0\";}s:6:\"Domain\";a:5:{s:6:\"domain\";s:23:\"http://ombi60.localhost\";s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"1\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"4911586ffc4018a3b36234dddd54694d422b754f\";s:7:\"expires\";i:1292942768;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1292960782);
+insert  into `cake_sessions`(`id`,`data`,`expires`) values ('731noh6vjunvg34he9mvlartv4','Config|a:3:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1292994259;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"844aaedb7407c479d6b6ed3c71f173d092a5ac35\";s:7:\"expires\";i:1292988260;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1292994260),('98jpavnpalmo1hh2q3fklpaci0','Config|a:4:{s:9:\"userAgent\";s:32:\"d44d3ad92fc64f25864865e2b87ade5e\";s:4:\"time\";i:1293018299;s:7:\"timeout\";i:300;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:11:\"web_address\";s:31:\"http://shop001.myspree2shop.com\";s:7:\"created\";s:19:\"2010-12-22 09:44:08\";s:8:\"modified\";s:19:\"2010-12-22 09:44:09\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";}s:6:\"Domain\";a:5:{s:6:\"domain\";s:23:\"http://ombi60.localhost\";s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"d9e993ff1c1e0f52c3f92b4d3fb1222d22b9c0e9\";s:7:\"expires\";i:1293000300;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1293018300),('8oifiv5b3mot14t75i9ns48vk6','Config|a:4:{s:9:\"userAgent\";s:32:\"d44d3ad92fc64f25864865e2b87ade5e\";s:4:\"time\";i:1293018574;s:7:\"timeout\";i:300;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:11:\"web_address\";s:31:\"http://shop001.myspree2shop.com\";s:7:\"created\";s:19:\"2010-12-22 09:44:08\";s:8:\"modified\";s:19:\"2010-12-22 09:44:09\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";}s:6:\"Domain\";a:5:{s:6:\"domain\";s:23:\"http://ombi60.localhost\";s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"7e8e72e36bc3884aac6faee4fc4b99f49089fc12\";s:7:\"expires\";i:1293000574;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1293018579),('5a226asaggghtuss004qkl72f7','Config|a:4:{s:9:\"userAgent\";s:32:\"2a5e3a8072a2519c280f8cbfc37ab635\";s:4:\"time\";i:1293020159;s:7:\"timeout\";i:300;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:11:\"web_address\";s:31:\"http://shop001.myspree2shop.com\";s:7:\"created\";s:19:\"2010-12-22 09:44:08\";s:8:\"modified\";s:19:\"2010-12-22 09:44:09\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";}s:6:\"Domain\";a:5:{s:6:\"domain\";s:23:\"http://ombi60.localhost\";s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";}}Message|a:1:{s:4:\"auth\";a:3:{s:7:\"message\";s:47:\"You are not authorized to access that location.\";s:7:\"element\";s:7:\"default\";s:6:\"params\";a:0:{}}}Auth|a:4:{s:4:\"User\";a:10:{s:2:\"id\";s:1:\"1\";s:5:\"email\";s:17:\"owner@shop001.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:13:\"barry  fuller\";s:12:\"name_to_call\";s:5:\"barry\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2010-12-22 09:44:08\";s:8:\"modified\";s:19:\"2010-12-22 09:44:08\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"user_id\";s:1:\"1\";}s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:11:\"web_address\";s:31:\"http://shop001.myspree2shop.com\";s:7:\"created\";s:19:\"2010-12-22 09:44:08\";s:8:\"modified\";s:19:\"2010-12-22 09:44:09\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";}s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"bcb47d40f9a309026b535251e4cd625ab1e4c0ac\";s:7:\"expires\";i:1293002160;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1293020160);
 
 /*Table structure for table `cancellations` */
 
@@ -237,39 +198,9 @@ CREATE TABLE `casual_surfers` (
   PRIMARY KEY (`id`),
   KEY `shop` (`shop_id`),
   KEY `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `casual_surfers` */
-
-insert  into `casual_surfers`(`id`,`shop_id`,`user_id`) values (1,1,1);
-
-/*Table structure for table `categories` */
-
-DROP TABLE IF EXISTS `categories`;
-
-CREATE TABLE `categories` (
-  `id` int(4) unsigned NOT NULL AUTO_INCREMENT,
-  `blog_id` int(4) DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/*Data for the table `categories` */
-
-/*Table structure for table `categories_posts` */
-
-DROP TABLE IF EXISTS `categories_posts`;
-
-CREATE TABLE `categories_posts` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `category_id` int(4) DEFAULT NULL,
-  `post_id` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/*Data for the table `categories_posts` */
 
 /*Table structure for table `comments` */
 
@@ -476,49 +407,6 @@ CREATE TABLE `merchants` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `merchants` */
-
-/*Table structure for table `nb_categories` */
-
-DROP TABLE IF EXISTS `nb_categories`;
-
-CREATE TABLE `nb_categories` (
-  `id` varchar(100) NOT NULL,
-  `probability` double NOT NULL DEFAULT '0',
-  `word_count` int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/*Data for the table `nb_categories` */
-
-insert  into `nb_categories`(`id`,`probability`,`word_count`) values ('spam',0.5,0),('ham',0.5,0);
-
-/*Table structure for table `nb_references` */
-
-DROP TABLE IF EXISTS `nb_references`;
-
-CREATE TABLE `nb_references` (
-  `id` varchar(100) NOT NULL,
-  `category_id` varchar(100) NOT NULL,
-  `content` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `category_id` (`category_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/*Data for the table `nb_references` */
-
-/*Table structure for table `nb_wordfreqs` */
-
-DROP TABLE IF EXISTS `nb_wordfreqs`;
-
-CREATE TABLE `nb_wordfreqs` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `word` varchar(100) NOT NULL,
-  `category_id` varchar(100) NOT NULL DEFAULT '',
-  `count` int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/*Data for the table `nb_wordfreqs` */
 
 /*Table structure for table `order_line_items` */
 
@@ -877,11 +765,11 @@ CREATE TABLE `shops_payment_modules` (
   `active` tinyint(1) unsigned DEFAULT '1',
   `display_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shops_payment_modules` */
 
-insert  into `shops_payment_modules`(`id`,`shop_id`,`payment_module_id`,`default`,`active`,`display_name`) values (1,5,1,0,1,'Cash On Delivery'),(2,5,1,0,1,'Money Order'),(3,5,2,0,1,'Paypal'),(136,2,1,0,1,''),(137,2,2,0,1,''),(138,2,3,0,1,''),(139,2,4,0,1,''),(140,3,1,0,1,''),(141,3,2,0,1,''),(142,3,3,0,1,''),(143,3,4,0,1,''),(144,4,1,0,1,''),(145,4,2,0,1,''),(146,4,3,0,1,''),(147,4,4,0,1,''),(148,5,1,0,1,''),(149,5,2,0,1,''),(150,5,3,0,1,''),(151,5,4,0,1,''),(152,6,1,0,1,''),(153,6,2,0,1,''),(154,6,3,0,1,''),(155,6,4,0,1,''),(156,7,1,0,1,''),(157,7,2,0,1,''),(158,7,3,0,1,''),(159,7,4,0,1,''),(160,8,1,0,1,''),(161,8,2,0,1,''),(162,8,3,0,1,''),(163,8,4,0,1,''),(164,9,1,0,1,''),(165,9,2,0,1,''),(166,9,3,0,1,''),(167,9,4,0,1,''),(168,2,1,0,1,''),(169,2,2,0,1,''),(170,2,3,0,1,''),(171,2,4,0,1,''),(172,3,1,0,1,''),(173,3,2,0,1,''),(174,3,3,0,1,''),(175,3,4,0,1,''),(176,4,1,0,1,''),(177,4,2,0,1,''),(178,4,3,0,1,''),(179,4,4,0,1,''),(180,5,1,0,1,''),(181,5,2,0,1,''),(182,5,3,0,1,''),(183,5,4,0,1,''),(184,6,1,0,1,''),(185,6,2,0,1,''),(186,6,3,0,1,''),(187,6,4,0,1,''),(188,7,1,0,1,''),(189,7,2,0,1,''),(190,7,3,0,1,''),(191,7,4,0,1,''),(192,8,1,0,1,''),(193,8,2,0,1,''),(194,8,3,0,1,''),(195,8,4,0,1,''),(196,9,1,0,1,''),(197,9,2,0,1,''),(198,9,3,0,1,''),(199,9,4,0,1,''),(200,10,1,0,1,''),(201,10,2,0,1,''),(202,10,3,0,1,''),(203,10,4,0,1,''),(204,11,1,0,1,''),(205,11,2,0,1,''),(206,11,3,0,1,''),(207,11,4,0,1,''),(208,12,1,0,1,''),(209,12,2,0,1,''),(210,12,3,0,1,''),(211,12,4,0,1,''),(212,13,1,0,1,''),(213,13,2,0,1,''),(214,13,3,0,1,''),(215,13,4,0,1,''),(216,14,1,0,1,''),(217,14,2,0,1,''),(218,14,3,0,1,''),(219,14,4,0,1,''),(220,2,1,0,1,''),(221,2,2,0,1,''),(222,2,3,0,1,''),(223,2,4,0,1,'');
+insert  into `shops_payment_modules`(`id`,`shop_id`,`payment_module_id`,`default`,`active`,`display_name`) values (1,5,1,0,1,'Cash On Delivery'),(2,5,1,0,1,'Money Order'),(3,5,2,0,1,'Paypal'),(136,2,1,0,1,''),(137,2,2,0,1,''),(138,2,3,0,1,''),(139,2,4,0,1,''),(140,3,1,0,1,''),(141,3,2,0,1,''),(142,3,3,0,1,''),(143,3,4,0,1,''),(144,4,1,0,1,''),(145,4,2,0,1,''),(146,4,3,0,1,''),(147,4,4,0,1,''),(148,5,1,0,1,''),(149,5,2,0,1,''),(150,5,3,0,1,''),(151,5,4,0,1,''),(152,6,1,0,1,''),(153,6,2,0,1,''),(154,6,3,0,1,''),(155,6,4,0,1,''),(156,7,1,0,1,''),(157,7,2,0,1,''),(158,7,3,0,1,''),(159,7,4,0,1,''),(160,8,1,0,1,''),(161,8,2,0,1,''),(162,8,3,0,1,''),(163,8,4,0,1,''),(164,9,1,0,1,''),(165,9,2,0,1,''),(166,9,3,0,1,''),(167,9,4,0,1,''),(168,2,1,0,1,''),(169,2,2,0,1,''),(170,2,3,0,1,''),(171,2,4,0,1,''),(172,3,1,0,1,''),(173,3,2,0,1,''),(174,3,3,0,1,''),(175,3,4,0,1,''),(176,4,1,0,1,''),(177,4,2,0,1,''),(178,4,3,0,1,''),(179,4,4,0,1,''),(180,5,1,0,1,''),(181,5,2,0,1,''),(182,5,3,0,1,''),(183,5,4,0,1,''),(184,6,1,0,1,''),(185,6,2,0,1,''),(186,6,3,0,1,''),(187,6,4,0,1,''),(188,7,1,0,1,''),(189,7,2,0,1,''),(190,7,3,0,1,''),(191,7,4,0,1,''),(192,8,1,0,1,''),(193,8,2,0,1,''),(194,8,3,0,1,''),(195,8,4,0,1,''),(196,9,1,0,1,''),(197,9,2,0,1,''),(198,9,3,0,1,''),(199,9,4,0,1,''),(200,10,1,0,1,''),(201,10,2,0,1,''),(202,10,3,0,1,''),(203,10,4,0,1,''),(204,11,1,0,1,''),(205,11,2,0,1,''),(206,11,3,0,1,''),(207,11,4,0,1,''),(208,12,1,0,1,''),(209,12,2,0,1,''),(210,12,3,0,1,''),(211,12,4,0,1,''),(212,13,1,0,1,''),(213,13,2,0,1,''),(214,13,3,0,1,''),(215,13,4,0,1,''),(216,14,1,0,1,''),(217,14,2,0,1,''),(218,14,3,0,1,''),(219,14,4,0,1,''),(220,2,1,0,1,''),(221,2,2,0,1,''),(222,2,3,0,1,''),(223,2,4,0,1,''),(224,2,1,0,1,''),(225,2,2,0,1,''),(226,2,3,0,1,''),(227,2,4,0,1,'');
 
 /*Table structure for table `site_transfers` */
 
@@ -952,11 +840,9 @@ CREATE TABLE `users` (
   `modified` datetime DEFAULT NULL,
   `language_id` int(5) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
-
-insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'ul1fwrd7@ombi60.com','0e8b63f8fc534a1ec1d82fa6a565384e72ab88ce',5,'casual','casual',NULL,1,'2010-12-21 09:46:07','2010-12-21 09:46:07',1);
 
 /*Table structure for table `webpages` */
 
@@ -977,11 +863,11 @@ CREATE TABLE `webpages` (
   `handle` varchar(150) DEFAULT NULL,
   `visible` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `webpages` */
 
-insert  into `webpages`(`id`,`shop_id`,`title`,`text`,`created`,`modified`,`meta_title`,`meta_keywords`,`meta_description`,`author`,`real_author`,`handle`,`visible`) values (1,5,'welcome','	<div class=\"item\">\r\n		<table cellpadding=\"0\" cellspacing=\"0\" class=\"itemTable\">\r\n			<tr>\r\n				<td class=\"itemLeftCell\">\r\n					Lorem ipsum dolor sit amet, consectetur \r\n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \r\n					in lacinia dolor egestas. Integer semper imperdiet enim eu \r\n					convallis. Suspendisse nec orci tellus. Aenean consectetur \r\n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \r\n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \r\n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\r\n					Phasellus euismod</a> \r\n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \r\n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \r\n					Praesent aliquet sem sit amet massa scelerisque vitae semper \r\n					purus varius. Pellentesque habitant morbi tristique senectus et \r\n					netus et malesuada fames ac turpis egestas.\r\n				</td>\r\n				<td class=\"itemRightCell\">\r\n					<img alt=\"Picture 1\" src=\"user_generated_content/images/Jellyfish.jpg\" width=\"192\" height=\"144\" />\r\n				</td>\r\n			</tr>\r\n		</table>\r\n	</div>\r\n	\r\n	<div class=\"itemAlt\">\r\n		<table cellpadding=\"0\" cellspacing=\"0\" class=\"itemTable\">\r\n			<tr>\r\n				<td class=\"itemLeftCell\">\r\n					Proin mauris tortor, ultricies \r\n					interdum posuere eu, placerat vitae orci. Duis non laoreet \r\n					libero. Suspendisse aliquam congue metus non elementum. Cras \r\n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \r\n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \r\n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \r\n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \r\n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \r\n					aptent taciti sociosqu ad litora torquent per conubia nostra, \r\n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \r\n					ultrices. Nunc eros lectus, bibendum eu consequat id, \r\n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \r\n					Pellentesque ante tortor, mattis auctor condimentum ut, \r\n					convallis a dui. Mauris scelerisque dapibus libero, vitae \r\n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \r\n					at venenatis et, egestas a diam.\r\n				</td>\r\n				<td class=\"itemRightCell\">\r\n					<img alt=\"Picture 2\" src=\"user_generated_content/images/Koala.jpg\" width=\"192\" height=\"144\" />\r\n				</td>\r\n			</tr>\r\n		</table>\r\n	</div>\r\n	\r\n	<div class=\"item\">\r\n		<table cellpadding=\"0\" cellspacing=\"0\" class=\"itemTable\">\r\n			<tr>\r\n				<td class=\"itemLeftCell\">\r\n					Nulla auctor sapien lorem. Ut vitae \r\n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \r\n					eu magna tempus eleifend. Donec interdum interdum lacus eget \r\n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \r\n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \r\n					pellentesque, orci lorem vestibulum elit, ac tristique justo \r\n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \r\n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \r\n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \r\n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \r\n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \r\n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \r\n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \r\n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \r\n					orci ut nibh tristique laoreet.\r\n				</td>\r\n				<td class=\"itemRightCell\">\r\n					<img alt=\"Picture 3\" src=\"user_generated_content/images/Hydrangeas.jpg\" width=\"192\" height=\"144\" />\r\n				</td>\r\n			</tr>\r\n		</table>\r\n	</div>','2010-09-01 11:38:15','2010-09-16 09:35:28',NULL,NULL,NULL,4,NULL,'shopfront',1),(2,5,'yabba dabba doo','test test','2010-09-05 05:10:11','2010-09-05 05:10:11',NULL,NULL,NULL,5,NULL,'yabba-dabba-doo',1);
+insert  into `webpages`(`id`,`shop_id`,`title`,`text`,`created`,`modified`,`meta_title`,`meta_keywords`,`meta_description`,`author`,`real_author`,`handle`,`visible`) values (1,5,'welcome','<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Lorem ipsum dolor sit amet, consectetur \r\n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \r\n					in lacinia dolor egestas. Integer seper imperdiet enim eu \r\n					convallis. Suspendisse nec orci tellus. Aenean consectetur \r\n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \r\n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \r\n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\r\n					Phasellus euismod</a> \r\n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \r\n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \r\n					Praesent aliquet sem sit amet massa scelerisque vitae semper \r\n					purus varius. Pellentesque habitant morbi tristique senectus et \r\n					netus et malesuada fames ac turpis egestas.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"itemAlt\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Proin mauris tortor, ultricies \r\n					interdum posuere eu, placerat vitae orci. Duis non laoreet \r\n					libero. Suspendisse aliquam congue metus non elementum. Cras \r\n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \r\n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \r\n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \r\n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \r\n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \r\n					aptent taciti sociosqu ad litora torquent per conubia nostra, \r\n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \r\n					ultrices. Nunc eros lectus, bibendum eu consequat id, \r\n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \r\n					Pellentesque ante tortor, mattis auctor condimentum ut, \r\n					convallis a dui. Mauris scelerisque dapibus libero, vitae \r\n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \r\n					at venenatis et, egestas a diam.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Nulla auctor sapien lorem. Ut vitae \r\n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \r\n					eu magna tempus eleifend. Donec interdum interdum lacus eget \r\n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \r\n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \r\n					pellentesque, orci lorem vestibulum elit, ac tristique justo \r\n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \r\n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \r\n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \r\n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \r\n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \r\n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \r\n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \r\n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \r\n					orci ut nibh tristique laoreet.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','2010-09-01 11:38:15','2010-12-22 02:15:17',NULL,NULL,NULL,1,NULL,'shopfront',1),(2,5,'yabba dabba doo','test test','2010-09-05 05:10:11','2010-09-05 05:10:11',NULL,NULL,NULL,5,NULL,'yabba-dabba-doo',1),(3,2,'welcome2','<p><span style=\"font-family: \'arial black\', \'avant garde\'; font-size: large; color: #ff9900;\"><strong>seper</strong></span></p>','2010-12-22 02:15:55','2010-12-22 02:15:55',NULL,NULL,NULL,1,NULL,'welcome2',1);
 
 /*Table structure for table `weight_based_rates` */
 

@@ -6,6 +6,7 @@ class BlogsController extends AppController {
 	function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
+		$this->Auth->allow('view');
 	}
 
 	

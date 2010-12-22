@@ -124,8 +124,7 @@ class UsersController extends AppController {
 		
 		$this->Acl->allow($group, 'controllers/Orders/admin_index');
 		$this->Acl->allow($group, 'controllers/Orders/admin_view');
-		//$this->Acl->allow($group, 'controllers/Orders/admin_index');
-		//$this->Acl->allow($group, 'controllers/Orders/admin_index');
+		
 		
 		$this->Acl->allow($group, 'controllers/Themes/admin_settings');
 		
@@ -135,6 +134,20 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Webpages/admin_delete');
 		$this->Acl->allow($group, 'controllers/Webpages/admin_view');
 		$this->Acl->allow($group, 'controllers/Webpages/admin_index');
+		
+		$this->Acl->allow($group, 'controllers/Blogs/admin_add');
+		$this->Acl->allow($group, 'controllers/Blogs/admin_edit');
+		$this->Acl->allow($group, 'controllers/Blogs/admin_delete');
+		$this->Acl->allow($group, 'controllers/Blogs/admin_view');
+		$this->Acl->allow($group, 'controllers/Blogs/admin_index');
+		
+		$this->Acl->allow($group, 'controllers/Posts/admin_add');
+		$this->Acl->allow($group, 'controllers/Posts/admin_edit');
+		$this->Acl->allow($group, 'controllers/Posts/admin_delete');
+		$this->Acl->allow($group, 'controllers/Posts/admin_view');
+		
+		
+		
 	}
 
 	private function setCustomerPermissions($group) {
