@@ -100,9 +100,6 @@ class MerchantsController extends AppController {
 				}
 			}
 			
-			$this->log($this->data['Shop']);
-			
-
 			if ($result = $this->Merchant->signupNewAccount($this->data)) {
 				
 				$this->data['Invoice']['id'] = $result['Invoice']['id'];

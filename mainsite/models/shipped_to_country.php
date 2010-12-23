@@ -25,7 +25,7 @@ class ShippedToCountry extends AppModel {
 		'ShippingRate' => array(
 			'className' => 'ShippingRate',
 			'foreignKey' => 'shipped_to_country_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',

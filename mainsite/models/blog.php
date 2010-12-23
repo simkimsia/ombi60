@@ -8,7 +8,7 @@ class Blog extends AppModel {
 		'Post' => array(
 			'className' => 'Post',
 			'foreignKey' => 'blog_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',

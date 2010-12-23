@@ -496,6 +496,22 @@ class SavedTheme extends AppModel {
 		return $result;
 	}
 	
+	function folderOrFileExists ($filename, $parent_folder, $sort = true, $exceptions = false, $full_path = false) {		
+		$dir = new Folder();
+		$dir->cd($parent_folder);
+		
+		$files = $dir->read($sort, $exceptions, $full_path);
+		
+		$flag = false;
+		foreach($files as $key => $array) {
+			$flag = in_array($filename, $array);
+			if ($flag) {
+				break;
+			}
+		}
+		
+		return $flag;
+	}
 	
 }
 ?>

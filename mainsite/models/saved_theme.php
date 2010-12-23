@@ -178,9 +178,15 @@ class SavedTheme extends AppModel {
 		
 		$result = $this->save($data);
 		
-		if ($result) {
+		
+		$folderOk =  $this->folderOrFileExists($data['SavedTheme']['folder_name'], ROOT . DS . 'app' . DS . 'views' . DS . 'themed');
+		
+		
+		if ($result && $folderOk) {
 			$this->Shop->id = $options['shop_id'];
 			$this->Shop->saveField('saved_theme_id', $this->id);
+		} else {
+			return false;
 		}
 		
 		
@@ -512,6 +518,24 @@ class SavedTheme extends AppModel {
 		
 		return $result;
 	}
+	
+	function folderOrFileExists ($filename, $parent_folder, $sort = true, $exceptions = false, $full_path = false) {		
+		$dir = new Folder();
+		$dir->cd($parent_folder);
+		
+		$files = $dir->read($sort, $exceptions, $full_path);
+		
+		$flag = false;
+		foreach($files as $key => $array) {
+			$flag = in_array($filename, $array);
+			if ($flag) {
+				break;
+			}
+		}
+		
+		return $flag;
+	}
+	
 	
 	
 }

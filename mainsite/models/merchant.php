@@ -63,6 +63,9 @@ class Merchant extends AppModel {
 		return $result;
 
 	}
+	
+	
+	
 
 	function updateProfile($data = NULL) {
 		$data['User']['group_id'] = MERCHANTS;
@@ -80,7 +83,12 @@ class Merchant extends AppModel {
 		$domainData['Domain']['primary'] = true;
 		$domainData['Domain']['shop_id'] = $this->Shop->id;
 		$domain->create();
-		$domain->save($domainData);
+		$result = $domain->save($domainData);
+		
+		if (!$result) {
+			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			return false;
+		}
 		
 		// we need to create invoice entries
 		$invoice = $this->Shop->Invoice;
@@ -93,10 +101,18 @@ class Merchant extends AppModel {
 		$invoice->create();
 		$invoiceData = $invoice->save($invoiceData);
 		
-		
+		if (!$invoiceData) {
+			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			return false;
+		}
 		
 		// now we create the dummy default product for this shop.
-		$this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);
+		$result = $this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);
+		
+		if (!$result) {
+			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			return false;
+		}
 		
 		// now we need to populate the shipping rates
 		
@@ -137,6 +153,9 @@ class Merchant extends AppModel {
 				$shippedToCountry->ShippingRate->create();
 				$shippedToCountry->ShippingRate->saveAll($shippedData);
 				
+			} else {
+				$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+				return false;
 			}
 			
 		}
@@ -148,7 +167,12 @@ class Merchant extends AppModel {
 						'shop_id'=>$this->Shop->id));
 		
 		$blog->create();
-		$blog->save($blogData);
+		$result = $blog->save($blogData);
+		
+		if (!$result) {
+			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			return false;
+		}
 		
 		// now we set up the first post announcing open for business!
 		$post = ClassRegistry::init('Post');
@@ -159,7 +183,12 @@ class Merchant extends AppModel {
 						'blog_id'=>$blog->id));
 		
 		$post->create();
-		$post->save($postData);
+		$result = $post->save($postData);
+		
+		if (!$result) {
+			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			return false;
+		}
 		
 		// now we set up the shopfront page and other pages
 		$webpage = ClassRegistry::init('Webpage');
@@ -256,8 +285,12 @@ class Merchant extends AppModel {
 						'handle'=>'shopfront'));
 		
 		$webpage->create();
-		$webpage->save($pageData);
+		$result = $webpage->save($pageData);
 		
+		if (!$result) {
+			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			return false;
+		}
 		
 		// now we set up the theme
 		$savedTheme = ClassRegistry::init('SavedTheme');
@@ -267,14 +300,57 @@ class Merchant extends AppModel {
 				 'author' => $data['User']['full_name'],
 				 'user_id' => $this->User->id);
 		
-		$savedTheme->saveThemeAtSignUp($options);
+		$result = $savedTheme->saveThemeAtSignUp($options);
+		
+		if (!$result) {
+			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			return false;
+		}
+		
 		
 		if ($invoice->id > 0) {
 			$invoiceData['Invoice']['id'] = $invoice->id;
 			return $invoiceData;	
 		}
+		
+		
 		return false;
 	
+	}
+	
+	function deleteAllAssociatedData($shopId, $userId) {
+		//delete merchants
+		$this->deleteAll(array('user_id'=>$userId, 'shop_id' =>$shopId));
+		
+		// delete product + product_images
+		$this->Shop->Product->deleteAll(array('shop_id'=>$shopId));
+		
+		// delete domain
+		$this->Shop->Domain->deleteAll(array('shop_id'=>$shopId));
+		
+		// delete all invoices
+		$this->Shop->Invoice->deleteAll(array('shop_id'=>$shopId));
+		
+		// delete all shippedToCountry
+		$this->Shop->ShippedToCountry->deleteAll(array('shop_id'=>$shopId));
+		
+		// delete all blogs and posts
+		$this->Shop->Blog->deleteAll(array('shop_id'=>$shopId));
+		
+		// delete all webpages
+		$this->Shop->Webpage->deleteAll(array('shop_id'=>$shopId));
+		
+		// delete all saved themes
+		$this->Shop->FeaturedSavedTheme->deleteAll(array('FeaturedSavedTheme.shop_id'=>$shopId));
+		
+		$folder = new Folder();
+		$folder->delete(ROOT . DS . 'app' . DS . 'views' . DS . 'themed' . DS . $shopId . '_cover');
+		
+		
+		// delete the shop itself
+		$this->Shop->delete($shopId);
+		
+		
 	}
 	
 	function retrieveShopUserLanguageByUserId($id = false) {

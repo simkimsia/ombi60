@@ -39,16 +39,18 @@ class WebpagesController extends AppController {
 	function admin_index() {
 		$this->Webpage->recursive = 0;
 		
-		$this->set('webpages', $this->paginate());
+		$shopid = Shop::get('Shop.id');
+		$this->paginate = array('conditions'=>array('Webpage.shop_id'=>$shopid));
+		$webpages = $this->paginate();
 		
 		$blogModel = $this->Webpage->Shop->Blog;
 		$blogModel->Behaviors->attach('Containable');
 		
-		$blogs = $blogModel->find('all', array('conditions'=>array('Blog.shop_id'=>Shop::get('Shop.id')),
+		$blogs = $blogModel->find('all', array('conditions'=>array('Blog.shop_id'=>$shopid),
 						       'contain'=>array('Post'=>array('limit'=>3,
 										   'order'=>'Post.modified DESC'))));
 		
-		$this->set(compact('blogs'));
+		$this->set(compact('blogs', 'webpages'));
 	}
 
 	function admin_view($id = null) {
