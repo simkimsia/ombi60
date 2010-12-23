@@ -8,13 +8,14 @@
                 Options -Indexes FollowSymLinks
 
         UseCanonicalName Off
-        DocumentRoot /var/www/ombi60.com/current/mainsite/webroot
+        #DocumentRoot /var/www/ombi60.com/current/mainsite/webroot
+	DocumentRoot /var/www/ombi60.com/current/html
 
         <Directory />
                 Options FollowSymLinks
                 AllowOverride None
         </Directory>
-        <Directory /var/www/ombi60.com/current/mainsite/webroot>
+        <Directory /var/www/ombi60.com/current/html>
 
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride All

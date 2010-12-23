@@ -103,6 +103,25 @@ namespace :clear_cache do
     # set the permissions
     run "chmod 775 -R #{current_path}/app/tmp"
     
+    # do the same for mainsite
+    # Remove absolutely everything from TMP
+    run "rm -rf #{current_path}/mainsite/tmp/*"
+ 
+    # Create TMP folders
+    run "mkdir -p #{current_path}/mainsite/tmp"
+    run "mkdir -p #{current_path}/mainsite/tmp/cache"
+    run "mkdir -p #{current_path}/mainsite/tmp/cache/models"
+    run "mkdir -p #{current_path}/mainsite/tmp/cache/persistent"
+    run "mkdir -p #{current_path}/mainsite/tmp/cache/views"
+    
+    run "mkdir -p #{current_path}/mainsite/tmp/sessions"
+    run "mkdir -p #{current_path}/mainsite/tmp/logs"
+    run "mkdir -p #{current_path}/mainsite/tmp/tests"
+    
+    
+    # set the permissions
+    run "chmod 775 -R #{current_path}/mainsite/tmp"
+    
   end
 end
 
@@ -120,6 +139,8 @@ namespace :copy_config_files do
   task :default do
     run "cp /home/deploy/#{config_files_folder}/database.php #{current_path}/app/config/"
     run "cp /home/deploy/#{config_files_folder}/bootstrap.local.php #{current_path}/app/config/"
+    run "cp /home/deploy/#{config_files_folder}/database.php #{current_path}/mainsite/config/"
+    run "cp /home/deploy/#{config_files_folder}/bootstrap.local.php #{current_path}/mainsite/config/"
   end
 end
 

@@ -85,6 +85,19 @@ class MerchantsController extends AppController {
 			$this->Merchant->Shop->Invoice->SubscriptionPlan->id = $plan;
 			$this->data['Invoice']['price'] = $this->Merchant->Shop->Invoice->SubscriptionPlan->field('price');
 			
+			
+			/* replace the domain properly */
+			if (isset($this->data['Shop']['WebAddress'])) {
+				if (strpos(FULL_BASE_URL, '.com')) {
+					$this->data['Shop']['WebAddress'] = 'http://' + $this->data['Shop']['Subdomain'] + '.ombi60.com';
+				}
+				else if (strpos(FULL_BASE_URL, '.biz')) {
+					$this->data['Shop']['WebAddress'] = 'http://' + $this->data['Shop']['Subdomain'] + '.ombi60.biz';
+				}
+				else if (strpos(FULL_BASE_URL, '.localhost')) {
+					$this->data['Shop']['WebAddress'] = 'http://' + $this->data['Shop']['Subdomain'] + '.ombi60.localhost';
+				}
+			}
 
 			if ($result = $this->Merchant->signupNewAccount($this->data)) {
 				
