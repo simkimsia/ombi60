@@ -96,14 +96,15 @@
 						<a href="#"><strong>Themes</strong></a>
 						<ul id="subnav" class="govern">  
 							
-							<li><?php echo $this->Html->link('Your themes', '/admin/saved_themes'); ?></li>  
+							<li><?php echo $this->Html->link('Your themes', '/admin/saved_themes/switch'); ?></li>  
 						</ul>
 					</li>
 					<li class="PY_slide">
 						<a href="#"><strong>Preferences</strong></a>
 						<ul id="subnav" class="govern">  
 							<li><?php echo $this->Html->link('Domains', '/admin/domains'); ?></li>  
-							<li><a href="#">Sub Nav Link</a></li>  
+							<li><?php echo $this->Html->link('Payments', '/admin/payments'); ?></li>
+							<li><?php echo $this->Html->link('Shipping', '/admin/shipping'); ?></li>  
 						</ul>
 					</li>
 				</ul>
