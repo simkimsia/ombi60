@@ -87,17 +87,17 @@ class MerchantsController extends AppController {
 			
 			
 			/* replace the domain properly */
-			if (isset($this->data['Shop']['WebAddress'])) {
+			if (isset($this->data['Shop']['web_address'])) {
 				$this->log($this->data);
 				$this->log(FULL_BASE_URL);
 				if (strpos(FULL_BASE_URL, '.com') > 0) {
-					$this->data['Shop']['WebAddress'] = 'http://' + $this->data['Shop']['Subdomain'] + '.ombi60.com';
+					$this->data['Shop']['web_address'] = 'http://' + $this->data['Shop']['subdomain'] + '.ombi60.com';
 				}
 				else if (strpos(FULL_BASE_URL, '.biz') > 0) {
-					$this->data['Shop']['WebAddress'] = 'http://' + $this->data['Shop']['Subdomain'] + '.ombi60.biz';
+					$this->data['Shop']['web_address'] = 'http://' + $this->data['Shop']['subdomain'] + '.ombi60.biz';
 				}
 				else if (strpos(FULL_BASE_URL, '.localhost') > 0) {
-					$this->data['Shop']['WebAddress'] = 'http://' + $this->data['Shop']['Subdomain'] + '.ombi60.localhost';
+					$this->data['Shop']['web_address'] = 'http://' + $this->data['Shop']['subdomain'] + '.ombi60.localhost';
 				}
 			}
 

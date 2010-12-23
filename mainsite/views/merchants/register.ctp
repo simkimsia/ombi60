@@ -74,7 +74,7 @@
 <script type="text/javascript">
 
 	function getFullDomain(subdomain){
-		return 'http://' + subdomain + '.myspree2shop.com';
+		return 'http://' + subdomain + '.ombi60.biz';
 	}
 
 	$(document).ready(function() {
