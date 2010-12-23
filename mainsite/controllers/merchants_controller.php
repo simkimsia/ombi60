@@ -85,12 +85,10 @@ class MerchantsController extends AppController {
 			$this->Merchant->Shop->Invoice->SubscriptionPlan->id = $plan;
 			$this->data['Invoice']['price'] = $this->Merchant->Shop->Invoice->SubscriptionPlan->field('price');
 			
-			$this->log($this->data['Shop']);
 			
-			/* replace the domain properly 
 			if (isset($this->data['Shop']['web_address'])) {
-				$this->log($this->data);
-				$this->log(FULL_BASE_URL);
+				
+				
 				if (strpos(FULL_BASE_URL, '.com') > 0) {
 					$this->data['Shop']['web_address'] = 'http://' . $this->data['Shop']['subdomain'] . '.ombi60.com';
 				}
@@ -101,7 +99,9 @@ class MerchantsController extends AppController {
 					$this->data['Shop']['web_address'] = 'http://' . $this->data['Shop']['subdomain'] . '.ombi60.localhost';
 				}
 			}
-			*/
+			
+			$this->log($this->data['Shop']);
+			
 
 			if ($result = $this->Merchant->signupNewAccount($this->data)) {
 				

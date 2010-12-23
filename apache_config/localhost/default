@@ -161,7 +161,7 @@
 
         #this handles sitename.leaguelogix.com
         ServerName localhost
-        ServerAlias ombi60.localhost
+        ServerAlias *.ombi60.localhost
 
                 Options -Indexes FollowSymLinks
 

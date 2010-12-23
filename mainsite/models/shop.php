@@ -211,6 +211,16 @@ class Shop extends AppModel {
 		),
 	);
 	
+	function beforeValidate() {
+		
+		// for localhost we will NOT validate for url
+		if(strpos(FULL_BASE_URL, '.localhost')) {
+			unset($this->validate['web_address']['url']);
+		}
+		
+		return true;
+	}
+	
 	
 
 	/**
@@ -231,6 +241,8 @@ class Shop extends AppModel {
 		}
 		return TRUE;
 	}
+	
+	
 
 	/**
 	 *
