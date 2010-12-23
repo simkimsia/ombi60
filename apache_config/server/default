@@ -8,13 +8,13 @@
                 Options -Indexes FollowSymLinks
 
         UseCanonicalName Off
-        DocumentRoot /var/www/ombi60.com/current/html
+        DocumentRoot /var/www/ombi60.com/current/mainsite/webroot
 
         <Directory />
                 Options FollowSymLinks
                 AllowOverride None
         </Directory>
-        <Directory /var/www/ombi60.com/current/html>
+        <Directory /var/www/ombi60.com/current/mainsite/webroot>
 
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride All
@@ -122,13 +122,13 @@
                 Options -Indexes FollowSymLinks
 
         UseCanonicalName Off
-        DocumentRoot /var/www/ombi60.biz/current/html
+        DocumentRoot /var/www/ombi60.biz/current/mainsite/webroot
 
         <Directory />
                 Options FollowSymLinks
                 AllowOverride None
         </Directory>
-        <Directory /var/www/ombi60.biz/current/html>
+        <Directory /var/www/ombi60.biz/current/mainsite/webroot>
 
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride All
