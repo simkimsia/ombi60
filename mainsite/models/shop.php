@@ -13,10 +13,12 @@ class Shop extends AppModel {
 				'rule' => 'notEmpty',
 				'message' => 'Your web address is required.'
 			),
+			/* temporarily disabled this validation rule 
 			'url' => array(
 				'rule' => 'url',
 				'message' => 'Web address format should be: http://example.myspree2shop.com OR http://example.com.'
 			),
+			*/
 
 		),
 		'subdomain' => array(
