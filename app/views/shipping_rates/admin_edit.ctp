@@ -47,7 +47,7 @@
 		<?php } ?>
 	</dl>
 		
-	<span id="editForm" style="display:none">
+	<div id="editForm" style="display:none">
 	<?php
 		$id = $this->data['ShippingRate']['id'];
 		echo $this->Form->input('ShippingRate.name');
@@ -84,7 +84,7 @@
 	
 	?>
 	
-	</span>
+	</div>
 	</fieldset>
 <?php echo $this->Form->end();?>
 </div>
@@ -99,6 +99,9 @@
 	</ul>
 </div>
 <script>
+
+	
+
 	function toggleEditForm() {
 		$('#editForm').toggle();
 		$('#details').toggle();

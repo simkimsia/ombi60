@@ -1,0 +1,3 @@
+never never use flash uploadify with debug kit turned on at same time.
+
+just turn debug = 0 for debug kit

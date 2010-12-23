@@ -129,8 +129,8 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/ShippingRates/admin_index');
 		$this->Acl->allow($group, 'controllers/ShippingRates/admin_add_price_based');
 		$this->Acl->allow($group, 'controllers/ShippingRates/admin_add_weight_based');
-		$this->Acl->allow($group, 'controllers/Payments/admin_edit');
-		$this->Acl->allow($group, 'controllers/Payments/admin_delete');
+		$this->Acl->allow($group, 'controllers/ShippingRates/admin_edit');
+		$this->Acl->allow($group, 'controllers/ShippingRates/admin_delete');
 		
 		$this->Acl->allow($group, 'controllers/Orders/admin_index');
 		$this->Acl->allow($group, 'controllers/Orders/admin_view');

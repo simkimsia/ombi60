@@ -44,12 +44,18 @@ class ProductsController extends AppController {
 	var $view = 'Theme';
 
 	function beforeFilter() {
+		
+		
+		// for uploadify to work, we must ensure that debug set to zero in admin_add and admin_edit
+		
 
 		// this is to allow admin_upload to work with Session component
-		if($this->action=='admin_upload') {
+		if ($this->action=='admin_upload') {
+			
                         $this->Session->id($this->params['url']['sess']);
 			$this->Session->start();
-        }
+			
+		}
 
 
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
@@ -406,13 +412,11 @@ class ProductsController extends AppController {
 				$successJSON = true;
 				$contents = array('id' => $this->Product->id);
 				
-				
 			} else {
 				$this->Session->setFlash(__('Product could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
 				$contents = array('reason' => $this->Product->validationErrors);
 				
 			}
-			
 			$this->set(compact('contents', 'successJSON'));
 			$this->render('json/response');
 			
@@ -462,7 +466,7 @@ class ProductsController extends AppController {
 		$this->layout = 'json';
 		$successJSON = false;
 		$contents = array();
-	
+		
 	
 		if ($id == null) {
 			echo "0";

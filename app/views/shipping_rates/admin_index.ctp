@@ -36,7 +36,7 @@
 		if ($shippingRate['WeightBasedRate']['id'] > 0) {
 			$based = 'weight-based-shipping';
 		}
-			echo $this->Html->link($shippingRate['ShippingRate']['name'], array('action' => 'edit', 'based'=>$based, $shippingRate['ShippingRate']['id'])); ?>
+			echo $this->Html->link($shippingRate['ShippingRate']['name'], array('action' => 'edit', 'based'=>$based, 'id'=>$shippingRate['ShippingRate']['id'])); ?>
 		&nbsp;</td>
 		<td><?php echo $this->element('display_shipping_range', array('shippingRate'=>$shippingRate)); ?>&nbsp;</td>
 		<td><?php echo $shippingRate['ShippingRate']['price']; ?>&nbsp;</td>

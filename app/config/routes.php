@@ -249,19 +249,20 @@
                               'country_id'=> '[0-9]+'));
     
         
-        Router::connect('/admin/shipping/delete/*',
+        Router::connect('/admin/shipping/delete/:id',
                         array('controller' => 'shipping_rates',
                               'action' => 'delete',
                               'admin'=>true,
                               ));
         
-        Router::connect('/admin/:based/*',
+        Router::connect('/admin/:based/:id',
                         array('controller' => 'shipping_rates',
                               'action' => 'edit',
                               'admin'=>true,
                               ),
-                        array('pass'=>array('based'),
+                        array('pass'=>array('based', 'id'),
                               'based'=> 'price-based-shipping|weight-based-shipping',
+                              'id' => '[0-9]+',
                              ));
         
         /**
