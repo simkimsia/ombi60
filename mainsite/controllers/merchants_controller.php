@@ -119,7 +119,7 @@ class MerchantsController extends AppController {
 				// or we go to paydollar						
 				} else if ($this->data['Pay']['method'] == 'paydollar') {
 					$PaydollarResult = $this->runAddSchPay($this->data);
-					
+					//$this->log($PaydollarResult);
 					// means success						
 					if($PaydollarResult['resultCode'] == 0) {
 						$this->Session->write('PaydollarResult', $PaydollarResult);
@@ -140,7 +140,7 @@ class MerchantsController extends AppController {
 			$this->data['User']['password']         = NULL;
 
 		}
-
+		
 		$theme = ClassRegistry::init('Theme');
 		$this->set('themes', $theme->find('list', array('conditions'=>array('price'=>'0'))));
 		$this->set('errors', $this->Merchant->getAllValidationErrors());
