@@ -104,7 +104,7 @@
 						<ul id="subnav" class="govern">  
 							<li><?php echo $this->Html->link('Domains', '/admin/domains'); ?></li>  
 							<li><?php echo $this->Html->link('Payments', '/admin/payments'); ?></li>
-							<li><?php echo $this->Html->link('Shipping', '/admin/shipping'); ?></li>  
+							<li><?php echo $this->Html->link('Shipping', '/admin/shipping_rates'); ?></li>  
 						</ul>
 					</li>
 				</ul>
