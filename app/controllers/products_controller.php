@@ -681,6 +681,7 @@ class ProductsController extends AppController {
 			$qty = 	$this->data['Product']['quantity'];
 		}
 		
+		
 		if($this->addToCart($id, $qty)) {
 			$this->Session->setFlash(__('Product added to cart', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'view', $id));
@@ -690,18 +691,9 @@ class ProductsController extends AppController {
 	}
 	
 	private function addToCart($id = null, $quantity = 1) {
+		
 		return $this->Product->CartItem->Cart->addProductForCustomer(User::get('User.id'), array($id=>$quantity));
 		
-		/*
-		$shop_id = Shop::get('Shop.id');
-		$productCartInSession = 'Shop.' . $shop_id . '.cart.' . $id;
-		$exists = $this->Session->check($productCartInSession);
-		$currentQty = 0;
-		if ($exists) {
-			$currentQty = $this->Session->read($productCartInSession);
-		}
-		return $this->Session->write($productCartInSession, $currentQty + $quantity);
-		*/
 	}
 	
 	function delete_from_cart($id = null) {

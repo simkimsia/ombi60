@@ -1068,7 +1068,6 @@ class MeioUploadBehavior extends ModelBehavior {
                     // we need to change this for app's WWW_ROOT instead of mainsite's!!
                         $dir = WWW_ROOT . $dir;
 		}
-                $this->log($dir);
 		$folder = new Folder();
 
 		if (!$folder->cd($dir)) {

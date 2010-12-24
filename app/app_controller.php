@@ -112,11 +112,36 @@ class AppController extends Controller {
 	
 	$userIdInCookie = null;
 	
+	App::import('Model', 'User');
+	$this->loadModel('User');
+	
 	if(!isset($this->params['admin'])) { 
 	
 		$userIdInCookie = $this->Cookie->read('User.id');
 		
-		if (!$userIdInCookie) {
+		$userIdInCookieIsLegit = false;
+		
+		// need to ensure this userid is legit customer or casual surfer
+		if ($userIdInCookie > 0) {
+			
+			$userArray = $this->User->find('first', array('conditions'=>array('User.id'=>$userIdInCookie,
+									     'OR' => array('User.group_id'=>CUSTOMERS,
+											   'User.group_id'=>CASUAL)
+									     ),
+								      'fields'=>array('User.id')
+							));
+			
+			$this->log($userArray);
+			
+			$userIdInCookieIsLegit = is_array($userArray);
+			if ($userIdInCookieIsLegit) {
+				$userIdInCookie = $userArray['User']['id'];
+			} else {
+				$userIdInCookie = false;
+			}
+		}
+		
+		if (!$userIdInCookieIsLegit) {
 			App::import('Model', 'CasualSurfer');
 			$this->loadModel('CasualSurfer');
 			
@@ -126,22 +151,45 @@ class AppController extends Controller {
 			
 			$this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
 		}
-		$this->log($userIdInCookie);
+		
+		//$this->log('user' . $userIdInCookie);
 	}
 	/**
 	 *end Cookies
 	 **/
 	
-	App::import('Model', 'User');
+	
 	$userAuth = $this->Session->check('Auth.User');
-	if (!$userAuth && $userIdInCookie != null) {
-		$this->loadModel('User');
-		User::store($this->User->read(null, $userIdInCookie ));
+	
+	// if admin User Auth more important
+	if(isset($this->params['admin'])) {
+		if ($userAuth) {
+			$userAuth = $this->Session->read('Auth');
+			User::store($userAuth);	
+		}
+		// else shd prompt for login inside admin
 		
+	// if not in admin pages
 	} else {
-		$userAuth = $this->Session->read('Auth');
-		User::store($userAuth);	
+		// we need to allow userIdInCookie to be more important
+		if (!$userAuth && $userIdInCookie != null) {
+			
+			User::store($this->User->read(null, $userIdInCookie ));
+			
+		} else {
+			// crucial if statement that will override User::store with userIdInCookie
+			// taking precedence
+			if ($userAuth['User']['id'] != $userIdInCookie) {
+				User::store($this->User->read(null, $userIdInCookie ));
+			} else {
+				// since userAuth same as userIdInCookie so we reuse userAuth
+				$userAuth = $this->Session->read('Auth');
+				User::store($userAuth);	
+			}
+		}
+		
 	}
+	
 	
 	$locale_name = User::get('Language.locale_name');
 	
