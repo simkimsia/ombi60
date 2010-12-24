@@ -852,15 +852,11 @@ class MeioUploadBehavior extends ModelBehavior {
                 
 		// Creating thumbnail
 		if ($phpThumb->GenerateThumbnail()) {
-                $this->log('succeeds');
                 
 			if (!$phpThumb->RenderToFile($target)) {
-                            $this->log('fails');
-                            $this->log($phpThumb->debugmessages);
 				$this->_addError('Could not render image to: '.$target);
-			} else {
-                            $this->log($phpThumb->debugmessages);    
-                        }
+				//$this->log($phpThumb->debugmessages); just in case
+			} 
                         
                         
 		}
@@ -1070,8 +1066,9 @@ class MeioUploadBehavior extends ModelBehavior {
 	function _createFolders($dir, $thumbsizes) {
 		if ($dir[0] !== '/') {
                     // we need to change this for app's WWW_ROOT instead of mainsite's!!
-			$dir = WWW_ROOT . $dir;
+                        $dir = WWW_ROOT . $dir;
 		}
+                $this->log($dir);
 		$folder = new Folder();
 
 		if (!$folder->cd($dir)) {

@@ -45,13 +45,19 @@ class CleanThemedShell extends Shell {
                 $path = ROOT . DS . 'app' . DS . 'webroot' . DS. 'uploads' . DS . 'products' . DS;
        
                 $productImageFolder = new Folder($path);
-                $arrayOfProductImages = $productImageFolder->find('^default-.*');
+                //$arrayOfProductImages = $productImageFolder->find('^default-.*');
+                $arrayOfProductImages = $productImageFolder->find('.*');
                 
                 foreach($arrayOfProductImages as $fileName) {
-                        $file = new File($path . $fileName);
-                        $file->delete();
-                        $this->out($fileName . ' deleted');
+                        // we delete everything except default.jpg
+                        if ($fileName != 'default.jpg') {
+                                $file = new File($path . $fileName);
+                                $file->delete();
+                                $this->out($fileName . ' deleted');        
+                        }
                 }
+                
+                
                 
                 $this->out('now deleting the thumbs in APP');
                 $arrayOfThumbs = array('thumb',
@@ -65,14 +71,18 @@ class CleanThemedShell extends Shell {
                 foreach ($arrayOfThumbs as $folderName) {
                         $newPath = $path . $folderName;
                         $productImageFolder = new Folder($newPath);
-                        $arrayOfProductImages = $productImageFolder->find('^default-.*');
+                        //$arrayOfProductImages = $productImageFolder->find('^default-.*');
+                        $arrayOfProductImages = $productImageFolder->find('.*');
                         
                         $this->out('now deleting the thumbs in ' . $folderName);
                         
                         foreach($arrayOfProductImages as $fileName) {
-                                $file = new File($newPath . DS . $fileName);
-                                $file->delete();
-                                $this->out($fileName . ' deleted');
+                                // we delete everything except default.jpg
+                                if ($fileName != 'default.jpg') {
+                                        $file = new File($newPath . DS . $fileName);
+                                        $file->delete();
+                                        $this->out($fileName . ' deleted');
+                                }
                         }
                         
                 }

@@ -108,7 +108,7 @@ CREATE TABLE `blogs` (
   `modified` datetime NOT NULL,
   `shop_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `blogs` */
 
@@ -140,7 +140,7 @@ CREATE TABLE `cancellations` (
   `modified` datetime DEFAULT NULL,
   `user_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `cancellations` */
 
@@ -223,7 +223,7 @@ CREATE TABLE `comments` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `post_id` (`post_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `comments` */
 
@@ -243,7 +243,7 @@ CREATE TABLE `countries` (
   UNIQUE KEY `unique_name` (`name`),
   UNIQUE KEY `unique_printable_name` (`printable_name`),
   UNIQUE KEY `unique_iso3` (`iso3`)
-) ENGINE=MyISAM AUTO_INCREMENT=240 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=240 DEFAULT CHARSET=utf8;
 
 /*Data for the table `countries` */
 
@@ -259,7 +259,7 @@ CREATE TABLE `custom_payment_modules` (
   `name` varchar(100) DEFAULT NULL,
   `instructions` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `custom_payment_modules` */
 
@@ -307,7 +307,7 @@ CREATE TABLE `gc_designs` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `gc_designs` */
 
@@ -319,7 +319,7 @@ CREATE TABLE `gift_card_types` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
   `type` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `gift_card_types` */
 
@@ -344,7 +344,7 @@ CREATE TABLE `gift_cards` (
   `gift_card_type_id` int(3) NOT NULL DEFAULT '1',
   `gc_design_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `gift_cards` */
 
@@ -377,7 +377,7 @@ CREATE TABLE `invoices` (
   `payment_number` varchar(255) DEFAULT NULL,
   `payer_user` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `invoices` */
 
@@ -503,7 +503,7 @@ CREATE TABLE `paydollar_transactions` (
   `cardissuingcountry` varchar(5) DEFAULT '',
   `securehash` varchar(50) DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Data for the table `paydollar_transactions` */
 
@@ -583,7 +583,7 @@ CREATE TABLE `posts` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `posts` */
 
@@ -597,7 +597,7 @@ CREATE TABLE `price_based_rates` (
   `max_price` decimal(10,3) DEFAULT NULL,
   `shipping_rate_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `price_based_rates` */
 
@@ -661,7 +661,7 @@ CREATE TABLE `recurring_payment_profiles` (
   `modified` datetime DEFAULT NULL,
   `status` varchar(50) DEFAULT 'active',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `recurring_payment_profiles` */
 
@@ -712,7 +712,7 @@ CREATE TABLE `shipped_to_countries` (
   `country_id` int(5) DEFAULT '0',
   `shop_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shipped_to_countries` */
 
@@ -729,7 +729,7 @@ CREATE TABLE `shipping_rates` (
   `shipped_to_country_id` int(11) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shipping_rates` */
 
@@ -795,7 +795,7 @@ CREATE TABLE `subscription_plans` (
   `currency_code` varchar(10) DEFAULT NULL,
   `price` decimal(7,2) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `subscription_plans` */
 
@@ -879,7 +879,7 @@ CREATE TABLE `weight_based_rates` (
   `max_weight` decimal(10,4) unsigned DEFAULT NULL,
   `shipping_rate_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `weight_based_rates` */
 
