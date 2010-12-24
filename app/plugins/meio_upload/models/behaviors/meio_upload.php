@@ -807,6 +807,7 @@ class MeioUploadBehavior extends ModelBehavior {
  * @return void
  */
 	function _createThumbnail(&$model, $source, $target, $fieldName, $params = array()) {
+
 		$params = array_merge(
 			array(
 				'thumbWidth' => 150,
@@ -823,7 +824,7 @@ class MeioUploadBehavior extends ModelBehavior {
 		// Configuring thumbnail settings
 		$phpThumb = new phpthumb;
 		$phpThumb->setSourceFilename($source);
-
+                
 		if ($params['maxDimension'] == 'w') {
 			$phpThumb->w = $params['thumbWidth'];
 		} else if ($params['maxDimension'] == 'h') {
@@ -848,12 +849,22 @@ class MeioUploadBehavior extends ModelBehavior {
 
 		// Setting whether to die upon error
 		$phpThumb->config_error_die_on_error = true;
+                
 		// Creating thumbnail
 		if ($phpThumb->GenerateThumbnail()) {
+                $this->log('succeeds');
+                
 			if (!$phpThumb->RenderToFile($target)) {
+                            $this->log('fails');
+                            $this->log($phpThumb->debugmessages);
 				$this->_addError('Could not render image to: '.$target);
-			}
+			} else {
+                            $this->log($phpThumb->debugmessages);    
+                        }
+                        
+                        
 		}
+                
 	}
 
 /**
@@ -1058,6 +1069,7 @@ class MeioUploadBehavior extends ModelBehavior {
  **/
 	function _createFolders($dir, $thumbsizes) {
 		if ($dir[0] !== '/') {
+                    // we need to change this for app's WWW_ROOT instead of mainsite's!!
 			$dir = WWW_ROOT . $dir;
 		}
 		$folder = new Folder();
