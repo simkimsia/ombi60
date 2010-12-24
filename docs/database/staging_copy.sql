@@ -376,6 +376,7 @@ CREATE TABLE `invoices` (
   `description` text,
   `payment_number` varchar(255) DEFAULT NULL,
   `payer_user` int(11) unsigned DEFAULT NULL,
+  `reference` varchar(35) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -799,7 +800,7 @@ CREATE TABLE `subscription_plans` (
 
 /*Data for the table `subscription_plans` */
 
-insert  into `subscription_plans`(`id`,`currency_code`,`price`) values ('starter','SGD','19.90'),('basic','SGD','39.90'),('standard','SGD','99.90'),('business','SGD','399.90');
+insert  into `subscription_plans`(`id`,`currency_code`,`price`) values ('basic','SGD','39.90'),('business','SGD','399.90'),('standard','SGD','99.90'),('starter','SGD','19.90');
 
 /*Table structure for table `themes` */
 

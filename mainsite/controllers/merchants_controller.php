@@ -102,7 +102,8 @@ class MerchantsController extends AppController {
 			
 			if ($result = $this->Merchant->signupNewAccount($this->data)) {
 				
-				$this->data['Invoice']['id'] = $result['Invoice']['id'];
+				$this->data['Invoice']['reference'] = $result['Invoice']['reference'];
+				
 				// we need to write this into session.
 				$this->Session->write('NewShopID', $this->Merchant->Shop->id);
 				
@@ -123,7 +124,7 @@ class MerchantsController extends AppController {
 					// means success						
 					if($PaydollarResult['resultCode'] == 0) {
 						$this->Session->write('PaydollarResult', $PaydollarResult);
-						$this->redirect('/merchants/confirm?paydollar&inv='.$result['Invoice']['id']);
+						$this->redirect('/merchants/confirm?paydollar&inv='.$result['Invoice']['reference']);
 					} else {
 						$this->Session->setFlash(__('Your credit card was not accepted by Paydollar. Please try again.', true), 'default', array('class'=>'flash_failure'));
 					}
@@ -394,7 +395,7 @@ class MerchantsController extends AppController {
 							'eDay' => date('d', strtotime($firstBillingCycleEndDate)), // Required, start day of month
 							'eMonth' => $expiryMonth - 1, // Required, start month
 							'eYear' => $expiryYear, // Required, start year
-							'orderRef' => $data['Invoice']['id'], // Required, invoice number reference Text(35)
+							'orderRef' => $data['Invoice']['reference'], // Required, invoice number reference Text(35)
 							
 							'amount' => $data['Invoice']['price'],  // Required, total amount to be charged Number(12,2)
 							'name' => strtoupper('OMBI60: '. $data['Invoice']['title'] . ' plan'), // Required , name of schedule payment

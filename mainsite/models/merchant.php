@@ -305,7 +305,9 @@ class Merchant extends AppModel {
 		
 		
 		if ($invoice->id > 0) {
-			$invoiceData['Invoice']['id'] = $invoice->id;
+			// now we need to generate a unique reference number for the created invoice
+			$invoiceData = $invoice->updateReference($invoice->id, $invoiceData);
+			
 			return $invoiceData;	
 		}
 		

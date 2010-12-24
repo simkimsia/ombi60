@@ -1,4 +1,4 @@
-Progress (Make it work!)
+Progress (Ship it!)
 =======================
 1) cart checkout for COD payment for anonymous customers
 
