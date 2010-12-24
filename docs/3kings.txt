@@ -1,0 +1,24 @@
+Progress (Make it work!)
+=======================
+1) cart checkout for COD payment for anonymous customers
+
+Refinement (Make it better!!)
+==============================
+1) 404 url for non-existent subdomains
+- must work for both admin and shopfront
+
+2) move addSchPay code to transaction registration
+
+3) Product->duplicate atomic adjustable to work with transactions. May 
+need to alter copyable plugin. I am not sure.
+
+Productivity (Make life easier!!!)
+===================================
+1) phpunit tests for models
+
+2) Selenium tests for integration testing
+
+3) 1 button reset for staging platform and paydollar test account.
+
+
+

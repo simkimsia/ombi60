@@ -51,29 +51,21 @@ class Merchant extends AppModel {
 	function signupNewAccount($data = NULL) {
 		$data['User']['group_id'] = MERCHANTS;
 		
-		// now to create the domain entry
+		// now to start the transaction
+		
+		$datasource = $this->getDataSource();
+		
+		$datasource->begin($this);
 
-		$result = $this->saveAll($data, array('validate'=>'first'));
+		$result = $this->saveAll($data, array('validate'=>'first',
+						      'atomic'=>false));
 
-		if ($result) {
-			return $this->afterSignUpNewAccount($data);
-			
+		if (!$result) {
+			$datasource->rollback($this);
+			return false;
 		}
-		
-		return $result;
 
-	}
-	
-	
-	
 
-	function updateProfile($data = NULL) {
-		$data['User']['group_id'] = MERCHANTS;
-		return $this->saveAll($data, array('validate'=>'first'));
-	}
-	
-	private function afterSignupNewAccount($data) {
-		
 		// we need to create domain entries
 		$domain = $this->Shop->Domain;
 
@@ -86,7 +78,7 @@ class Merchant extends AppModel {
 		$result = $domain->save($domainData);
 		
 		if (!$result) {
-			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			$datasource->rollback($this);
 			return false;
 		}
 		
@@ -102,15 +94,7 @@ class Merchant extends AppModel {
 		$invoiceData = $invoice->save($invoiceData);
 		
 		if (!$invoiceData) {
-			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
-			return false;
-		}
-		
-		// now we create the dummy default product for this shop.
-		$result = $this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);
-		
-		if (!$result) {
-			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			$datasource->rollback($this);
 			return false;
 		}
 		
@@ -140,7 +124,7 @@ class Merchant extends AppModel {
 				$shippedData['ShippingRate']['name'] = 'Standard Shipping';
 				
 				$shippedToCountry->ShippingRate->create();
-				$shippedToCountry->ShippingRate->saveAll($shippedData);
+				$shippedToCountry->ShippingRate->saveAll($shippedData, array('atomic'=>false));
 				
 				// heavy duty
 				$shippedData = array();
@@ -151,10 +135,10 @@ class Merchant extends AppModel {
 				$shippedData['ShippingRate']['name'] = 'Heavy Duty';
 				
 				$shippedToCountry->ShippingRate->create();
-				$shippedToCountry->ShippingRate->saveAll($shippedData);
+				$shippedToCountry->ShippingRate->saveAll($shippedData, array('atomic'=>false));
 				
 			} else {
-				$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+				$datasource->rollback($this);
 				return false;
 			}
 			
@@ -170,7 +154,7 @@ class Merchant extends AppModel {
 		$result = $blog->save($blogData);
 		
 		if (!$result) {
-			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			$datasource->rollback($this);
 			return false;
 		}
 		
@@ -186,7 +170,7 @@ class Merchant extends AppModel {
 		$result = $post->save($postData);
 		
 		if (!$result) {
-			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			$datasource->rollback($this);
 			return false;
 		}
 		
@@ -288,7 +272,7 @@ class Merchant extends AppModel {
 		$result = $webpage->save($pageData);
 		
 		if (!$result) {
-			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			$datasource->rollback($this);
 			return false;
 		}
 		
@@ -303,9 +287,21 @@ class Merchant extends AppModel {
 		$result = $savedTheme->saveThemeAtSignUp($options);
 		
 		if (!$result) {
-			$this->deleteAllAssociatedData($this->Shop->id, $this->User->id);
+			$datasource->rollback($this);
+			
+			$folder = new Folder();
+			$folder->delete(ROOT . DS . 'app' . DS . 'views' . DS . 'themed' . DS . $this->Shop->id . '_cover');
+		
+			
 			return false;
+		} else {
+			$datasource->commit($this);
 		}
+		
+		
+		// since copyable does not allow non-atomic transaction so we put this outside the transaction.
+		// now we create the dummy default product for this shop.
+		$result = $this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);
 		
 		
 		if ($invoice->id > 0) {
@@ -313,44 +309,16 @@ class Merchant extends AppModel {
 			return $invoiceData;	
 		}
 		
-		
-		return false;
-	
+		return false;		
+
 	}
 	
-	function deleteAllAssociatedData($shopId, $userId) {
-		//delete merchants
-		$this->deleteAll(array('user_id'=>$userId, 'shop_id' =>$shopId));
-		
-		// delete product + product_images
-		$this->Shop->Product->deleteAll(array('shop_id'=>$shopId));
-		
-		// delete domain
-		$this->Shop->Domain->deleteAll(array('shop_id'=>$shopId));
-		
-		// delete all invoices
-		$this->Shop->Invoice->deleteAll(array('shop_id'=>$shopId));
-		
-		// delete all shippedToCountry
-		$this->Shop->ShippedToCountry->deleteAll(array('shop_id'=>$shopId));
-		
-		// delete all blogs and posts
-		$this->Shop->Blog->deleteAll(array('shop_id'=>$shopId));
-		
-		// delete all webpages
-		$this->Shop->Webpage->deleteAll(array('shop_id'=>$shopId));
-		
-		// delete all saved themes
-		$this->Shop->FeaturedSavedTheme->deleteAll(array('FeaturedSavedTheme.shop_id'=>$shopId));
-		
-		$folder = new Folder();
-		$folder->delete(ROOT . DS . 'app' . DS . 'views' . DS . 'themed' . DS . $shopId . '_cover');
-		
-		
-		// delete the shop itself
-		$this->Shop->delete($shopId);
-		
-		
+	
+	
+
+	function updateProfile($data = NULL) {
+		$data['User']['group_id'] = MERCHANTS;
+		return $this->saveAll($data, array('validate'=>'first'));
 	}
 	
 	function retrieveShopUserLanguageByUserId($id = false) {
