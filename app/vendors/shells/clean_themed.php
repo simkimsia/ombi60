@@ -48,9 +48,13 @@ class CleanThemedShell extends Shell {
                 //$arrayOfProductImages = $productImageFolder->find('^default-.*');
                 $arrayOfProductImages = $productImageFolder->find('.*');
                 
+                $arrayAllowedFiles = array('default.jpg',
+                                           'empty',
+                                           '.gitignore');
+                
                 foreach($arrayOfProductImages as $fileName) {
                         // we delete everything except default.jpg
-                        if ($fileName != 'default.jpg') {
+                        if (!in_array($fileName, $arrayAllowedFiles)) {
                                 $file = new File($path . $fileName);
                                 $file->delete();
                                 $this->out($fileName . ' deleted');        
@@ -78,7 +82,7 @@ class CleanThemedShell extends Shell {
                         
                         foreach($arrayOfProductImages as $fileName) {
                                 // we delete everything except default.jpg
-                                if ($fileName != 'default.jpg') {
+                                if (!in_array($fileName, $arrayAllowedFiles)) {
                                         $file = new File($newPath . DS . $fileName);
                                         $file->delete();
                                         $this->out($fileName . ' deleted');
