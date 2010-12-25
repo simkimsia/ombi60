@@ -30,7 +30,13 @@ class OrdersController extends AppController {
 					'whitelist' => array(),
 					'useSession'=>true,
 					'complicatedRelation' => array('Customer'=>'User'),
-					));
+					),
+				'Theme' => array('actions'=>array('checkout',
+								  'success',
+								  'pay',
+								  'checkout_step_1')),
+				
+				);
 	
 	var $view = 'Theme';
 	
