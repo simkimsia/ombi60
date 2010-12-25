@@ -1,6 +1,7 @@
 Progress (Ship it!)
 =======================
 1) cart checkout for COD payment for anonymous customers
+2) SSL secure orders checkout page
 
 Refinement (Make it better!!)
 ==============================

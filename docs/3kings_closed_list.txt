@@ -1,0 +1,17 @@
+Progress (Ship it!)
+=======================
+1) SSL secure orders checkout page
+
+Refinement (Make it better!!)
+==============================
+1) 404 url for non-existent subdomains
+- must work for both admin and shopfront
+
+Productivity (Make life easier!!!)
+===================================
+1) 1 Selenium test for admin login
+
+
+
+
+

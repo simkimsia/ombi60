@@ -1,15 +1,34 @@
+git ignore
+==========
+
+can have multiple git ignore files
+if we want to ignore all BUT a few exceptions
+we need to first do ignore all
+
+*
+followed by other lines of
+!foo.html
+
+so put together they mean ignore all but !foo.html
+
+for folders we need to put slash infront
+/foldername
+
 flash upload
+============
 never never use flash uploadify with debug kit turned on at same time.
 just turn debug = 0 for debug kit
 
 
 phpthumb + capistrano
+=====================
 apparently, because of the symlink for current folder, 
 phpthumb will not work. so we must set var $config_allow_src_above_docroot = true;
 
 http://stackoverflow.com/questions/4523602/phpthumb-works-in-development-machine-ubuntu-not-on-server-ubuntu
 
 transactions
+============
 if we use saveAll for transactions, we need to set atomic = false
 transactions will not restore auto increment!!
 
