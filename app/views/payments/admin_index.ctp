@@ -54,16 +54,18 @@
 		echo '</div>';
 		
 		$spmID = $paymentModule['CustomPaymentModule']['shop_payment_module_id'];
+		$cpmID = $paymentModule['CustomPaymentModule']['id'];
 		
 		echo '<div class="payment" style="display:none;border-top:1px solid rgb(221, 221, 221);padding-bottom:10px;" id="form-edit-custom-'.$spmID.'">';
 		
 		echo $this->Form->create('CustomPaymentModule', array('url'=>array('controller' => 'payments',
 								      'action' => 'edit_custom_payment',
 								      'admin' => true,
-									$paymentModule['CustomPaymentModule']['id']
+									$cpmID
 									)));
 	
 		echo $this->Form->input('name', array('value'=>$paymentModule['CustomPaymentModule']['name'], 'id'=>'EditCustomPaymentModuleName'.$spmID));
+		echo $this->Form->input('CustomPaymentModule.shop_payment_module_id', array('value'=>$spmID, 'type'=>'hidden'));
 		echo $this->Form->input('instructions', array('type'=>'textarea', 'value'=> $paymentModule['CustomPaymentModule']['instructions']));
 		echo $this->Form->submit('Save');
 		echo '<a href="#" onclick="toggleEditForm('.$id.');return false;">Cancel</a>';

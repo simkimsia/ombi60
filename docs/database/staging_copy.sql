@@ -258,7 +258,8 @@ CREATE TABLE `custom_payment_modules` (
   `shop_payment_module_id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `instructions` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_spm` (`shop_payment_module_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `custom_payment_modules` */

@@ -32,5 +32,13 @@ transactions
 if we use saveAll for transactions, we need to set atomic = false
 transactions will not restore auto increment!!
 
+saveAll
+======
+
+when we want to do edit for both parent and child data AT SAME TIME,
+
+we need to set $parentModel->id = $parent_id;
+we need to set $data['Parent']['id'] = $parent_id;
+we need to set $data['Child']['id'] = $child_id;
 
 

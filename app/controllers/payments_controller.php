@@ -25,7 +25,7 @@ class PaymentsController extends AppController {
 			$paymentModuleInShop->recursive = -1;
 	
 			$shopsPaymentModules = $paymentModuleInShop->find('all',
-									  array('conditions' => array('shop_id'=>$currentShopId),
+									  array('conditions' => array('ShopsPaymentModule.shop_id'=>$currentShopId),
 										'link' => array('PaymentModule'),
 										'fields'=>array('ShopsPaymentModule.*, PaymentModule.name')));
 			
@@ -83,9 +83,16 @@ class PaymentsController extends AppController {
 		$paymentModuleInShop = $this->Payment->ShopsPaymentModule;
 		$paymentModule = $paymentModuleInShop->PaymentModule;
 		$customPaymentModuleInShop = $paymentModuleInShop->CustomPaymentModule;
-		$customPaymentModuleInShop->id = $id;
 		
-		if ($customPaymentModuleInShop->save($this->data)) {
+		// set up the parent id for edit data for both parent and child at same time
+		$paymentModuleInShop->id = $this->data['CustomPaymentModule']['shop_payment_module_id'];
+		// set up the child id for edit data for both parent and child at same time
+		$this->data['CustomPaymentModule']['id'] = $id;
+		// set up the parent id for edit data for both parent and child at same time
+		$this->data['ShopsPaymentModule']['id'] = $this->data['CustomPaymentModule']['shop_payment_module_id'];
+		$this->data['ShopsPaymentModule']['display_name'] = $this->data['CustomPaymentModule']['name'];
+		
+		if ($paymentModuleInShop->saveAll($this->data)) {
 			$this->Session->setFlash(__('Custom payment has been saved', true), 'default', array('class'=>'flash_success'));
 		} else {
 			$this->Session->setFlash(__('Custom payment  could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));

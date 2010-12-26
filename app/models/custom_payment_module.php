@@ -13,5 +13,17 @@ class CustomPaymentModule extends AppModel {
 			'order' => ''
 		)
 	);
+	
+	var $validate = array(
+		'shop_payment_module_id' => array(
+			'isUnique' => array(
+				'rule' => 'isUnique',
+				'message' => '1 Payment module id for 1 Custom Payment module id',
+				
+			),
+			
+		),
+		
+	);
 }
 ?>
