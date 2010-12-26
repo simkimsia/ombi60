@@ -55,6 +55,7 @@ class PaymentsController extends AppController {
 		
 		$this->data['ShopsPaymentModule']['payment_module_id'] = CUSTOM_PAYMENT_MODULE;
 		$this->data['ShopsPaymentModule']['shop_id'] = Shop::get('Shop.id');
+		$this->data['ShopsPaymentModule']['display_name'] = $this->data['CustomPaymentModule']['name'];
 		
 		$paymentModuleInShop = $this->Payment->ShopsPaymentModule;
 		$paymentModule = $paymentModuleInShop->PaymentModule;
