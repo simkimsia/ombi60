@@ -325,7 +325,7 @@ class Cart extends AppModel {
 		}
 		
 		
-		$this->sqlUpdatePriceWeightCurrencyShippingStats($this->data['Cart']['id']);
+		$this->sqlUpdatePriceWeightCurrencyShippingStats($this->id);
            
 
 	}

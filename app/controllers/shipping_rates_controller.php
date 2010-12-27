@@ -5,7 +5,7 @@ class ShippingRatesController extends AppController {
 	
 	
 	
-	var $helpers = array('Ajax', 'Javascript');
+	var $helpers = array('Ajax', 'Javascript', 'Number');
 
 	
 	function admin_index() {
@@ -20,6 +20,7 @@ class ShippingRatesController extends AppController {
 									'link'=>array('ShippingRate'=>array('PriceBasedRate', 'WeightBasedRate'), 'Country'),
 									
 									));
+		
 		
 		$this->set(compact('shippingRates'));
 	}
@@ -83,6 +84,7 @@ class ShippingRatesController extends AppController {
 	
 	function admin_add_price_based($country_id) {
 		$result = true;
+		
 		if (!empty($this->data) && is_numeric($country_id)) {
 			$this->ShippingRate->create();
 			
