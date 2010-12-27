@@ -296,7 +296,33 @@ class Order extends AppModel {
 		$actualPaymentData = array(0=>$data['Payment']);
 		$data['Payment']  = $actualPaymentData;
 		
-		return $this->saveAll($data);
+		// need to set Order past_checkout_point to be true to conclude the order
+		$data['Order']['past_checkout_point'] = true;
+		
+		$dataSource = $this->getDataSource();
+		
+		$dataSource->begin($this);
+		
+		$result = $this->saveAll($data, array('atomic'=>false));
+		
+		if (!$result) {
+			$dataSource->rollback($this);
+			return false;
+		}
+		
+		// need to set Cart past_checkout_point to true to ensure cart is emptied
+		$cartData = array('Cart' => $data['Cart']);
+		$cartData['Cart']['past_checkout_point'] = true;
+		$result = $this->Cart->save($cartData, array('validate'=>false));
+		
+		if (!$result) {
+			$dataSource->rollback($this);
+			return false;
+		} else {
+			$dataSource->commit($this);
+			return true;
+		}
+		
 	}
 	
 	function updatePrices($id = false, $cartData = array()) {

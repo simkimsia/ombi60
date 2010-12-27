@@ -44,6 +44,10 @@
 		}
 		echo $this->Form->input('Payment.order_id', array('type'=>'hidden',
 								  'value' => $order['Order']['id']));
+		
+		// need to set the cart id for the past_checkout_point to work
+		echo $this->Form->input('Cart.id', array('type'=>'hidden',
+								  'value' => $order['Order']['cart_id']));
 	
                 
 		

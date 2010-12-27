@@ -131,8 +131,6 @@ class AppController extends Controller {
 								      'fields'=>array('User.id')
 							));
 			
-			$this->log($userArray);
-			
 			$userIdInCookieIsLegit = is_array($userArray);
 			if ($userIdInCookieIsLegit) {
 				$userIdInCookie = $userArray['User']['id'];

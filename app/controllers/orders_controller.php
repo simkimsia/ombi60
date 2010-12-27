@@ -593,12 +593,12 @@ class OrdersController extends AppController {
 				$defaultPayment = key($shopsPaymentModules);
 			}
 			
+			$this->Order->recursive = -1;
 			$order          = $this->Order->findByHash($hash);
+			
 			
 			// here we will buildPayment and buildItem for paypal
 			
-			
-		
 			$this->set(compact('order', 'shopsPaymentModules', 'shippingRates',
 					   'hash', 'shop_id', 'displayPaymentMode', 'displayShipment',
 					   'totalAmount', 'totalAmountWithShipping',

@@ -102,11 +102,7 @@
 	<?php echo $this->Form->submit();?>
 <?php echo $this->Form->end();?>
 </div>
-<div class="actions">
-	<ul>
-		<li><?php echo $this->Html->link(__('List Orders', true), array('action' => 'index'));?></li>
-	</ul>
-</div>
+
 
 <script type="text/javascript">
     $(document).ready(function(){
