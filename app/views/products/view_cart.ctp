@@ -25,6 +25,7 @@
 			</tr>
 			<?php
 				$i = 0;
+				$paymentAmount = 0;
 				
 				foreach ($products as $product):
 					$class = null;
@@ -64,6 +65,9 @@
 									     array('value'=>$product['id'],
 										   'type'=>'hidden',
 										   ) );
+						
+						// calculate subtotal
+						$paymentAmount += $product['product_price'] * number_format($product['product_quantity'],1);
 					?>
 				</td>
 				<td class="cartprice"><?php echo $product['product_price']; ?></td>
@@ -71,6 +75,7 @@
 			</tr>
 			
 			<?php endforeach; ?>
+			<?php $paymentAmount = number_format($paymentAmount, 2); ?>
 			
 			<tr id="amounttotal">
 				<td class="cartitemimg">
