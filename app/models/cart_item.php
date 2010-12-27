@@ -96,6 +96,37 @@ class CartItem extends AppModel {
 		return $results;
 	}
 	
+	function refreshCart($data) {
+		
+		// anticipating
+		//Array
+		//(
+		//        [CartItem] => Array
+		//    (
+		//        [2] => Array
+		//            (
+		//                [product_quantity] => 1
+		//                [id] => 2
+		//            )
+		//	  [3] => Array
+		//            (
+		//                [product_quantity] => 2
+		//                [id] => 3
+		//            )
+		//
+		//    )
+		//
+		//
+		//)
+		
+		if(!isset($data['CartItem'])) {
+			return false;
+		}
+		
+		return $this->saveAll($data['CartItem']);
+
+	}
+	
 	
 
 }

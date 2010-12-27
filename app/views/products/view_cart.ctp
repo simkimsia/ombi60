@@ -54,15 +54,22 @@
 				<td class="cartquantity">
 					
 					<?php
-						echo $this->Form->text('Product.' . $product['product_id'] . '.quantity',
+						echo $this->Form->text('CartItem.' . $product['id'] . '.product_quantity',
 									     array('value'=>$product['product_quantity'],
 										   'maxlength'=>3,
-										   'class'=>'textbox') );
+										   'class'=>'textbox',
+										   ) );
+						
+						echo $this->Form->input('CartItem.' . $product['id'] . '.id',
+									     array('value'=>$product['id'],
+										   'type'=>'hidden',
+										   ) );
 					?>
 				</td>
 				<td class="cartprice"><?php echo $product['product_price']; ?></td>
 				<td class="cartremove"><a href="#"><span class="removeitem">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a></td>
 			</tr>
+			
 			<?php endforeach; ?>
 			
 			<tr id="amounttotal">
@@ -82,6 +89,7 @@
 		<div id="checkout">
 			<div id="cartupdate">
 			<?php
+					
 					echo $this->Form->submit('Refresh Cart', array('name'=>'btnRefresh',
 											'id'=>'cartbutton'));
 					echo $this->Form->end();

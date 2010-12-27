@@ -35,10 +35,38 @@ transactions will not restore auto increment!!
 saveAll
 ======
 
-when we want to do edit for both parent and child data AT SAME TIME,
+**when we want to do edit for both parent and child data AT SAME TIME,
 
 we need to set $parentModel->id = $parent_id;
 we need to set $data['Parent']['id'] = $parent_id;
 we need to set $data['Child']['id'] = $child_id;
+
+**when we want to mass update existing entries,
+
+we need to set individual entries id like this
+        Array
+	(
+            [CartItem] => Array
+            (
+                   [2] => Array
+                    (
+                       [product_quantity] => 1
+                        [id] => 2
+                   )
+		
+                    [3] => Array
+                  (
+                       [product_quantity] => 2
+                       [id] => 3
+                  )
+		
+	    )
+		
+	)
+
+and we need to use $this->CartItem->saveAll($this->data['CartItem'])
+
+for new entries, we can simply use $this->CartItem->saveAll($this->data)
+
 
 

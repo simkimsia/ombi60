@@ -654,15 +654,9 @@ class ProductsController extends AppController {
 	function edit_quantities_in_cart() {
 		$shop_id = Shop::get('Shop.id');
 		
-		foreach ($this->data['Product'] as $product_id => $qtyField){
-			$productCartInSession = 'Shop.' . $shop_id . '.cart.' . $product_id;
-			$qty = $qtyField['quantity'];
-			if (is_numeric($qty) AND $qty > 0) {
-				$this->Session->write($productCartInSession, $qty);	
-			} else {
-				$this->Session->delete($productCartInSession);
-			}
-		}
+		$this->log($this->data);
+		
+		$this->Product->CartItem->refreshCart($this->data);
 		
 		$this->redirect(array('action'=>'view_cart'));
 	}
