@@ -57,12 +57,13 @@
         
         Router::connect('/cart/view', array('controller' => 'products', 'action' => 'view_cart'));
         
-        Router::connect('/cart/delete/:product_id',
+        Router::connect('/cart/delete/:cart_id-:id',
                         array('controller' => 'products',
                               'action' => 'delete_from_cart'
                               ),
-                        array('pass' => array('product_id'),
-                              'product_id' => '[0-9]+'
+                        array('pass' => array('id', 'cart_id'),
+                              'id' => '[0-9]+',
+                              'cart_id' => '[0-9]+'
                               ));
         
         Router::connect('/cart/add/:product_id',

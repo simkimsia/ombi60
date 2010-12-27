@@ -222,7 +222,7 @@ class AppController extends Controller {
 		$cart = ClassRegistry::init('Cart');
 		$cartItemsCount = $cart->getCartItemsCountByCustomerId(User::get('User.id'));
 		$this->set('cartItemsCount', $cartItemsCount);
-		$this->log('get count');
+		
 	    }
 	    
 	}

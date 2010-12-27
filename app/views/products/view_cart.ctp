@@ -71,7 +71,12 @@
 					?>
 				</td>
 				<td class="cartprice"><?php echo $product['product_price']; ?></td>
-				<td class="cartremove"><a href="#"><span class="removeitem">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a></td>
+				<td class="cartremove">
+					<?php echo $this->Html->link('R', array('controller'=>'products',
+										'action'=>'delete_from_cart',
+										'id' => $product['id'],
+										'cart_id'=>$product['cart_id'])); ?>
+					<a href="#"><span class="removeitem">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a></td>
 			</tr>
 			
 			<?php endforeach; ?>
