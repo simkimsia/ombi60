@@ -2,6 +2,8 @@
 class CartItem extends AppModel {
 
 	var $name = 'CartItem';
+	
+	var $displayField = 'product_title';
 
 	var $belongsTo = array(
 		'Cart' => array(
@@ -44,14 +46,14 @@ class CartItem extends AppModel {
 			$previousCurrency = $previousPrices['CartItem']['previous_currency'];
 			
 			// are they different?
-			if (($currentPrice != $previousPrice) OR
-			    ($currentCurrency != $previousCurrency)) {
-				
-				// then we populate the previous_price, previous_currency fields
-				$data['CartItem']['previous_price'] = $previousPrices['CartItem']['product_price'];
-				$data['CartItem']['previous_currency'] = $previousPrices['CartItem']['currency'];
-				
-			}
+			//if (($currentPrice != $previousPrice) OR
+			//    ($currentCurrency != $previousCurrency)) {
+			//	
+			//	// then we populate the previous_price, previous_currency fields
+			//	$data['CartItem']['previous_price'] = $previousPrices['CartItem']['product_price'];
+			//	$data['CartItem']['previous_currency'] = $previousPrices['CartItem']['currency'];
+			//	
+			//}
 			
 		} else {
 			// newly created item hence previous prices same as current prices
@@ -67,31 +69,33 @@ class CartItem extends AppModel {
 	}
 	
 	function afterFind($results, $primary) {
-		
-		foreach ($results as $key => $val) {
-			if (isset($val['CartItem']['product_price'])) {
-				$results[$key]['CartItem']['product_price'] = number_format($results[$key]['CartItem']['product_price'], 2);
-			} else {
-				foreach ($val['CartItem'] as $key1=>$val1) {
-					if (isset($val1['product_price'])) {
-						$results[$key]['CartItem'][$key1]['product_price'] = number_format($results[$key]['CartItem'][$key1]['product_price'], 2);
+		if (is_array($results)) {
+			foreach ($results as $key => $val) {
+				if (isset($val['CartItem']['product_price'])) {
+					$results[$key]['CartItem']['product_price'] = number_format($results[$key]['CartItem']['product_price'], 2);
+				} else {
+					foreach ($val['CartItem'] as $key1=>$val1) {
+						if (isset($val1['product_price'])) {
+							$results[$key]['CartItem'][$key1]['product_price'] = number_format($results[$key]['CartItem'][$key1]['product_price'], 2);
+						}
 					}
+					
 				}
 				
-			}
-			
-			if (isset($val['CartItem']['previous_price'])) {
-				$results[$key]['CartItem']['previous_price'] = number_format($results[$key]['CartItem']['previous_price'], 2);
-			} else {
-				foreach ($val['CartItem'] as $key1=>$val1) {
-					if (isset($val1['previous_price'])) {
-						$results[$key]['CartItem'][$key1]['previous_price'] = number_format($results[$key]['CartItem'][$key1]['previous_price'], 2);
+				if (isset($val['CartItem']['previous_price'])) {
+					$results[$key]['CartItem']['previous_price'] = number_format($results[$key]['CartItem']['previous_price'], 2);
+				} else {
+					foreach ($val['CartItem'] as $key1=>$val1) {
+						if (isset($val1['previous_price'])) {
+							$results[$key]['CartItem'][$key1]['previous_price'] = number_format($results[$key]['CartItem'][$key1]['previous_price'], 2);
+						}
 					}
+					
 				}
 				
-			}
-			
+			}	
 		}
+		
 		
 		return $results;
 	}
@@ -126,6 +130,25 @@ class CartItem extends AppModel {
 		return $this->saveAll($data['CartItem']);
 
 	}
+	
+	function updatePricesAndWeights($product_id, $newPrice, $newCurrency, $newWeight, $newWeightUnit) {
+		
+		// first we get all the affected cart_items
+		$items = $this->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
+								      'CartItem.product_id'=>$product_id),
+						  'fields'=>array('CartItem.id')
+					 ));
+		
+		$cartItemIdArray = Set::extract('{n}.CartItem.id', $items);
+		
+		return $this->updateAll(array('CartItem.product_price' => $newPrice,
+				       'CartItem.currency' => "'" . $newCurrency . "'",
+				       'CartItem.product_weight' => $newWeight,
+				       'CartItem.weight_unit' => "'" . $newWeightUnit . "'"),
+				 array('CartItem.product_id'=>$product_id,
+				       'CartItem.id'=>$cartItemIdArray));
+	}
+	
 	
 	
 

@@ -205,6 +205,8 @@ class Product extends AppModel {
         }
 	
 	function afterSave($created) {
+		
+		/** set up the product image **/
 		$conditions = array(
 			      'conditions' => array('OR' =>
 							array (
@@ -226,6 +228,20 @@ class Product extends AppModel {
 			
 			$this->ProductImage->make_this_cover($topImage[0]['ProductImage']['id'], $this->id);
 		}
+		/** end of product images **/
+		
+		
+		/** update cart_items weight and price **/
+		if (!$created) {
+			$this->CartItem->updatePricesAndWeights($this->id, $this->data['Product']['price'],
+								'SGD',
+								$this->data['Product']['weight'],
+								'kg');
+		}
+		
+		
+		/** end of cart_items weight and price **/
+		
 	}
 
 }

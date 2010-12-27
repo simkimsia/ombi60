@@ -3,6 +3,8 @@ class OrderLineItem extends AppModel {
 
 	var $name = 'OrderLineItem';
 
+	var $displayField = 'product_title';
+
 	var $belongsTo = array(
 		'Order' => array(
 			'className' => 'Order',

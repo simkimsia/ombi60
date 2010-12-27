@@ -68,5 +68,8 @@ and we need to use $this->CartItem->saveAll($this->data['CartItem'])
 
 for new entries, we can simply use $this->CartItem->saveAll($this->data)
 
-
+updateAll
+=========
+NEED to include "'". $newvalue ."'" in the fields params for varchar.
+this is because fields params allow literal SQL queries added
 

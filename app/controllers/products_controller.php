@@ -654,8 +654,6 @@ class ProductsController extends AppController {
 	function edit_quantities_in_cart() {
 		$shop_id = Shop::get('Shop.id');
 		
-		$this->log($this->data);
-		
 		$this->Product->CartItem->refreshCart($this->data);
 		
 		$this->redirect(array('action'=>'view_cart'));
