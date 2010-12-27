@@ -9,6 +9,7 @@
 					$count = count($products);
 					
 					if ($count > 0) {
+						
 						echo $this->Form->create('Product', array('action' => 'edit_quantities_in_cart' ));	
 						echo $this->Form->submit('Refresh Cart', array('name'=>'btnRefresh',
 											       'id'=>'cartbutton'));
@@ -99,6 +100,8 @@
 		<div id="checkout">
 			<div id="cartupdate">
 			<?php
+					echo $this->Form->input('Cart.id', array('type'=>'hidden',
+										'value'=>$cart_id));
 					
 					echo $this->Form->submit('Refresh Cart', array('name'=>'btnRefresh',
 											'id'=>'cartbutton'));

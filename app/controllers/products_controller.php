@@ -289,7 +289,8 @@ class ProductsController extends AppController {
 		}
 		
 		$this->Session->write('Shop.' . $shop_id . '.paymentAmount', $paymentAmount);
-		$this->set(compact('products', 'paypalExpressOn', 'paymentAmount'));
+		$cart_id = $productsInCart['Cart']['id'];
+		$this->set(compact('products', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
 		
 	}
 
@@ -652,9 +653,39 @@ class ProductsController extends AppController {
 	}
 	
 	function edit_quantities_in_cart() {
-		$shop_id = Shop::get('Shop.id');
-		
-		$this->Product->CartItem->refreshCart($this->data);
+		if (!empty($this->data)) {
+			// for verifying purposes
+			$cartId = $this->data['Cart']['id'];
+			$userId = User::get('User.id');
+			$validCartItems = $this->Product->CartItem->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
+												 'Cart.user_id'=>$userId,
+												 'Cart.id'=>$cartId),
+							  'fields'=>array('CartItem.id')
+						 ));
+			
+			// because $validCartItems is not in a good format to test for value
+			$cartItemIdArray = Set::extract('{n}.CartItem.id', $validCartItems);
+			$cartItemIdArrayFromData = Set::extract('CartItem.{n}.id', $this->data);
+			
+			$intersect = array_intersect($cartItemIdArray, $cartItemIdArrayFromData);
+			
+			foreach($this->data['CartItem'] as $key=>$value) {
+				
+				if (in_array($key, $intersect)) {
+					if (is_numeric($value['product_quantity']) &&  $value['product_quantity'] == 0) {
+						$this->deleteFromCart($key, $cartId);
+					} else if (is_numeric($value['product_quantity']) &&  $value['product_quantity'] > 0){
+						// do nothing
+					} else {
+						unset($this->data['CartItem'][$key]);
+					}
+				} else {
+					unset($this->data['CartItem'][$key]);
+				}
+			}
+			
+			$this->Product->CartItem->refreshCart($this->data);	
+		}
 		
 		$this->redirect(array('action'=>'view_cart'));
 	}
