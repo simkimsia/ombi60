@@ -25,7 +25,7 @@
 		<div id="cataloguewrapper">
 			<div class="categorywrapper">
 			<div class="categorytop"></div>
-				<div class="contentcategory">Item 2</div>
+				<div class="contentcategory"><?php echo $product['Product']['title']; ?></div>
 										
 					<div class="contentitem">
 						<div class="scroll">
@@ -141,25 +141,8 @@
 						</div>
 						
 
-						<div class="detaileddescription">Proin mauris tortor, 
-							ultricies interdum posuere eu, placerat vitae orci. 
-							Duis non laoreet libero. Suspendisse aliquam congue 
-							metus non elementum. Cras quis bibendum lorem. 
-							Quisque cursus aliquam mattis. Sed id orci tortor. 
-							Suspendisse potenti. Nulla luctus interdum massa in 
-							malesuada. Fusce mi magna, gravida a pretium quis, 
-							ultrices vel orci. <a href="#">Nullam sollicitudin</a> 
-							nibh ac dolor tempor porttitor. Curabitur id lacus 
-							vitae ipsum rhoncus varius. Class aptent taciti 
-							sociosqu ad litora torquent per conubia nostra, per 
-							inceptos himenaeos. Nunc pharetra eros et dui 
-							adipiscing ultrices. Nunc eros lectus, bibendum eu 
-							consequat id, <a href="#">cursus non quam</a>. Nam 
-							vel dolor dolor. Pellentesque ante tortor, mattis 
-							auctor condimentum ut, convallis a dui. Mauris 
-							scelerisque dapibus libero, vitae facilisis tellus 
-							mattis a. Pellentesque metus nulla, tristique at 
-							venenatis et, egestas a diam.
+						<div class="detaileddescription">
+							<?php echo $product['Product']['description']; ?>
 						</div>
 					</div>
 					
