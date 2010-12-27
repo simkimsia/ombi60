@@ -38,12 +38,12 @@ class CartItem extends AppModel {
 							    'previous_price',
 							    'previous_currency'),$this->data['CartItem']['id']);
 			
-			
-			
-			$currentPrice = number_format($data['CartItem']['product_price'], 4);
-			$currentCurrency = $data['CartItem']['currency'];
-			$previousPrice = number_format($previousPrices['CartItem']['previous_price'], 4);
-			$previousCurrency = $previousPrices['CartItem']['previous_currency'];
+			//$this->log($data);
+			//
+			//$currentPrice = number_format($data['CartItem']['product_price'], 4);
+			//$currentCurrency = $data['CartItem']['currency'];
+			//$previousPrice = number_format($previousPrices['CartItem']['previous_price'], 4);
+			//$previousCurrency = $previousPrices['CartItem']['previous_currency'];
 			
 			// are they different?
 			//if (($currentPrice != $previousPrice) OR
