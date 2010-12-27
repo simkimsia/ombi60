@@ -75,7 +75,7 @@
 						      'controller' => 'products'
 					));
 				?>
-				<div id="cartbadge">3</div>
+				<div id="cartbadge"><?php echo $cartItemsCount; ?></div>
 			</li>			
 		</ul>
 	</div>

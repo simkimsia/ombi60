@@ -428,6 +428,21 @@ class Cart extends AppModel {
 		
 	}
 	
+	function getCartItemsCountByCustomerId($user_id = false) {
+		if (!$user_id) {
+			return false;
+		}
+		
+		$this->Behaviors->attach('Linkable.Linkable');
+		
+		return $this->CartItem->find('count', array('conditions'=>
+						   array('Cart.user_id'=>$user_id,
+							 'Cart.past_checkout_point'=>false),
+						   'link' => array('Cart'),
+						   
+						   ));
+	}
+	
 	function getLiveCartByCustomerId($user_id = false, $cartItemIdAsKey = false, $viewCart = false) {
 		if (!$user_id) {
 			return false;

@@ -216,6 +216,15 @@ class AppController extends Controller {
 	
 	if ($denied) {
 	    //$this->cakeError('error404');
+	} else {
+	
+	    if(!isset($this->params['admin'])) {
+		$cart = ClassRegistry::init('Cart');
+		$cartItemsCount = $cart->getCartItemsCountByCustomerId(User::get('User.id'));
+		$this->set('cartItemsCount', $cartItemsCount);
+		$this->log('get count');
+	    }
+	    
 	}
 	
     }

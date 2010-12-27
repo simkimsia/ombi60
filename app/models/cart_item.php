@@ -70,10 +70,12 @@ class CartItem extends AppModel {
 	
 	function afterFind($results, $primary) {
 		if (is_array($results)) {
+			
+			
 			foreach ($results as $key => $val) {
 				if (isset($val['CartItem']['product_price'])) {
 					$results[$key]['CartItem']['product_price'] = number_format($results[$key]['CartItem']['product_price'], 2);
-				} else {
+				} else if (isset($val['CartItem'])){
 					foreach ($val['CartItem'] as $key1=>$val1) {
 						if (isset($val1['product_price'])) {
 							$results[$key]['CartItem'][$key1]['product_price'] = number_format($results[$key]['CartItem'][$key1]['product_price'], 2);
@@ -84,7 +86,7 @@ class CartItem extends AppModel {
 				
 				if (isset($val['CartItem']['previous_price'])) {
 					$results[$key]['CartItem']['previous_price'] = number_format($results[$key]['CartItem']['previous_price'], 2);
-				} else {
+				} else if (isset($val['CartItem'])) {
 					foreach ($val['CartItem'] as $key1=>$val1) {
 						if (isset($val1['previous_price'])) {
 							$results[$key]['CartItem'][$key1]['previous_price'] = number_format($results[$key]['CartItem'][$key1]['previous_price'], 2);
