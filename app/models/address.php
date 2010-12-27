@@ -11,6 +11,13 @@ class Address extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
+		'Country' => array(
+			'className' => 'Country',
+			'foreignKey' => 'country',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 	);
 	
 	var $hasMany = array(

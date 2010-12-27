@@ -78,7 +78,8 @@
 		echo $this->Form->input('BillingAddress.0.city');
 		echo $this->Form->input('BillingAddress.0.region');
 		echo $this->Form->input('BillingAddress.0.zip_code');
-		echo $this->Form->input('BillingAddress.0.country');
+		echo $this->Form->input('BillingAddress.0.country', array('type' => 'select',
+									  'options' => $countries));
                 echo $this->Form->input('BillingAddress.0.type', array('type'=>'hidden',
                                                                      'value'=>BILLING));
                 
@@ -91,7 +92,8 @@
 		echo $this->Form->input('DeliveryAddress.0.city');
 		echo $this->Form->input('DeliveryAddress.0.region');
 		echo $this->Form->input('DeliveryAddress.0.zip_code');
-		echo $this->Form->input('DeliveryAddress.0.country');
+		echo $this->Form->input('DeliveryAddress.0.country', array('type' => 'select',
+									  'options' => $countries));
                 echo $this->Form->input('DeliveryAddress.0.type', array('type'=>'hidden',
                                                                      'value'=>BILLING));
 		

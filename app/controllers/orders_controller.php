@@ -200,7 +200,10 @@ class OrdersController extends AppController {
 		$this->Session->write('Shop.' . $shopId . '.checkoutRedirectPass', false);
 		
 		
-		if ($this->RequestHandler->isGet()){
+		if ($this->RequestHandler->isGet()) {
+			
+			// set up the countries in the form.
+			$this->set('countries', $this->Order->BillingAddress->Country->find('list'));
 			
 			if ($comingFromPayPalSite) {
 				// execute the GetExpressCheckoutDetails API
@@ -507,7 +510,6 @@ class OrdersController extends AppController {
 		
 		$this->layout = 'json';
 		
-		
 		// validate for cart_id, order_id, shipping_rate_id
 		if (!array_key_exists('cart_id', $this->params['form']) ||
 		    !array_key_exists('order_id', $this->params['form']) ||
@@ -548,11 +550,28 @@ class OrdersController extends AppController {
 			$PayPalRequest = $confirmPage['PayPalRequest'];
 			$sessionHash = $confirmPage['hash'];
 			
+			// set the delivery country as default 0
+			$country = 0;
+			
 			// need this to filter the right shipping settings
-			$totalAmount = $confirmPage['amount'];
-			$shippedAmt = $confirmPage['shipped_amount'];
-			$shippedWeight = $confirmPage['shipped_weight'];
-			$displayShipment = $confirmPage['shipping_required'];
+			// for Paypal Express Checkout.
+			if (!empty($PayPalRequest)) {
+				$totalAmount = $confirmPage['amount'];
+				$shippedAmt = $confirmPage['shipped_amount'];
+				$shippedWeight = $confirmPage['shipped_weight'];
+				$displayShipment = $confirmPage['shipping_required'];
+			
+			// for the other payment modules
+			} else {
+				$order = $this->Order->findByHash($hash);
+				$totalAmount = $order['Order']['amount'];
+				$shippedAmt = $order['Order']['shipped_amount'];
+				$shippedWeight = $order['Order']['shipped_weight'];
+				$displayShipment = ($order['Order']['shipped_weight'] > 0);
+				
+				$country = $order['DeliveryAddress']['country'];
+			}
+			
 			
 			// assumed originally same
 			$totalAmountWithShipping = $totalAmount;
@@ -568,14 +587,13 @@ class OrdersController extends AppController {
 			$defaultShipment = '';
 			if ($displayShipment) {
 				
-				$shippingRatesResultSet = $this->getShipmentOptions($shippedAmt, $shippedWeight, $shop_id);
+				$shippingRatesResultSet = $this->getShipmentOptions($shippedAmt, $shippedWeight, $shop_id, $country);
 				$shippingRates = $shippingRatesResultSet['display'];
 				$defaultShipment = key($shippingRates);
 				$shippingFee = $shippingRatesResultSet['price'][$defaultShipment];
 				
 				$totalAmountWithShipping = $totalAmount + $shippingFee;
 			}
-			
 			
 			$displayPaymentMode = true;
 			$defaultPayment = '';
@@ -664,7 +682,7 @@ class OrdersController extends AppController {
 	}
 	
 	
-	private function getShipmentOptions ($shippedAmt, $shippedWeight, $shop_id) {
+	private function getShipmentOptions ($shippedAmt, $shippedWeight, $shop_id, $country) {
 			$shippingRate 	         = $this->Order->Shop->ShippedToCountry->ShippingRate;
 			$shippingRate->recursive = -1;
 			$shippingRate->Behaviors->attach('Linkable.Linkable');
@@ -672,8 +690,30 @@ class OrdersController extends AppController {
 			$shippingRate->PriceBasedRate->Behaviors->attach('Linkable.Linkable');
 			$shippingRate->WeightBasedRate->Behaviors->attach('Linkable.Linkable');
 			
-			$conditionsForPrice = array('AND' => array(array('ShippedToCountry.shop_id'=>$shop_id),
+			// get the suitable ShippedToCountry based on shop_id and country_id
+			$this->Order->Shop->ShippedToCountry->recursive = -1;
+			$shippedToCountries = $this->Order->Shop->ShippedToCountry->find('all', array('conditions'=>array('ShippedToCountry.shop_id'=>$shop_id)));
+			
+			$countries = Set::extract('/ShippedToCountry[country_id='.$country.']/id', $shippedToCountries);
+			
+			// initialize as zero which means no such thing
+			$shippedToCountryId = 0;
+			
+			// now we look for rest of the world shipping setting
+			if (empty($countries)) {
+				$countries = Set::extract('/ShippedToCountry[country_id=0]/id', $shippedToCountries);
+			}
+			
+			// either YEA!! they do ship to this country specifically or they do ship to this country via country 0
+			$shippedToCountryId = $countries[0];
+			
+			$conditionsForPrice = array('AND' => array(array('ShippedToCountry.id'=>$shippedToCountryId),
 								   array('PriceBasedRate.min_price <=' =>$shippedAmt),
+								   array('OR' => array(
+											array('ShippedToCountry.country_id' =>0),
+											array('ShippedToCountry.country_id' =>$country)
+										)
+									),
 								   array('OR' => array(
 											array('PriceBasedRate.max_price >=' =>$shippedAmt),
 											array('PriceBasedRate.max_price ' => null)
@@ -682,8 +722,13 @@ class OrdersController extends AppController {
 								)
 						);
 			
-			$conditionsForWeight = array('AND' => array(array('ShippedToCountry.shop_id'=>$shop_id),
+			$conditionsForWeight = array('AND' => array(array('ShippedToCountry.id'=>$shippedToCountryId),
 								   array('WeightBasedRate.min_weight <=' =>$shippedWeight),
+								   array('OR' => array(
+											array('ShippedToCountry.country_id' =>0),
+											array('ShippedToCountry.country_id' =>$country)
+										)
+									),
 								   array('OR' => array(
 											array('WeightBasedRate.max_weight >=' =>$shippedWeight),
 											array('WeightBasedRate.max_weight ' => null)

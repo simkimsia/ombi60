@@ -2,6 +2,7 @@ Progress (Ship it!)
 =======================
 1) cart checkout for COD payment for anonymous customers
 2) SSL secure orders checkout page
+3) backup database and folders via sdk
 
 Refinement (Make it better!!)
 ==============================
@@ -12,6 +13,9 @@ Refinement (Make it better!!)
 
 3) Product->duplicate atomic adjustable to work with transactions. May 
 need to alter copyable plugin. I am not sure.
+
+4) need to display message for do not deliver to this country.
+5) need to filter out the countries in checkout.ctp for orders
 
 Productivity (Make life easier!!!)
 ===================================

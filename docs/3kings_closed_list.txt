@@ -1,6 +1,6 @@
 Progress (Ship it!)
 =======================
-1) SSL secure orders checkout page
+1) orders checkout page
 
 Refinement (Make it better!!)
 ==============================
