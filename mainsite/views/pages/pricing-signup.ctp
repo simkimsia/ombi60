@@ -28,12 +28,12 @@
 												</td>
 												<td class="standard-price-signup">
 													<div class="standard-signup">
-														<a href="#">Sign Up</a>
+														<a href="/signup/standard">Sign Up</a>
 													</div>
 												</td>
 												<td class="business-price-signup">
 													<div class="signup">
-														<a href="#">Sign Up</a>
+														<a href="/signup/business">Sign Up</a>
 													</div>
 												</td>
 											</tr>
@@ -54,7 +54,28 @@
 											<tr><td class="plan-details1">Marketing</td><td class="starter1"></td><td class="basic1"></td><td class="standard1">Y</td><td class="business1">Y</td></tr>
 											<tr><td class="plan-details2">Gift certificates</td><td class="starter2"></td><td class="basic2"></td><td class="standard2">Y</td><td class="business2">Y</td></tr>
 											<tr><td class="plan-details1">Clients Preferences Analysis</td><td class="starter1"></td><td class="basic1"></td><td class="standard1">Y</td><td class="business1">Y</td></tr>
-											<tr><td class="plan-details"></td><td><br /><div class="signup"><a href="#">Sign Up</a></div></td><td><br /><div class="signup"><a href="#">Sign Up</a></div></td><td><br /><div class="standard-signup"><a href="#">Sign Up</a></div></td><td><br /><div class="signup"><a href="#">Sign Up</a></div></td></tr>
+											<tr>
+												<td class="plan-details"></td><td><br />
+													<div class="signup">
+														<a href="/signup/starter">Sign Up</a>
+													</div>
+												</td>
+												<td><br />
+													<div class="signup">
+														<a href="/signup/basic">Sign Up</a>
+													</div>
+												</td>
+												<td><br />
+													<div class="standard-signup">
+														<a href="/signup/standard">Sign Up</a>
+													</div>
+												</td>
+												<td><br />
+													<div class="signup">
+														<a href="/signup/business">Sign Up</a>
+													</div>
+												</td>
+											</tr>
 										</table></center>
 									</div>
 								</div>

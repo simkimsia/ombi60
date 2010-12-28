@@ -22,7 +22,7 @@
 	<ul>
 
 		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Blog.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('Blog.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Blogs', true), array('controller'=>'webpages','action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('Blogs & Pages', true), array('controller'=>'webpages','action' => 'index')); ?> </li>
 		
 	</ul>
 </div>

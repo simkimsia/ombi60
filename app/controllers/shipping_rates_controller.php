@@ -72,7 +72,7 @@ class ShippingRatesController extends AppController {
 		
 		$this->ShippingRate->recursive = 0;
 		
-		$this->ShippingRate->ShippedToCountry->Behaviors->attach('Linkable.Linkable');
+		$this->ShippingRate->Behaviors->attach('Linkable.Linkable');
 		
 		return $this->ShippingRate->find('first', array('conditions'=>array('ShippingRate.id'=>$this->ShippingRate->id),
 									'order'=>array('ShippedToCountry.country_id ASC'),
