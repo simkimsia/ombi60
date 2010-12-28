@@ -13,8 +13,6 @@ class WebpagesController extends AppController {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		$this->Auth->allow('view', 'shopfront');
-		$this->log('test');
-		$this->log($this->Auth->user());
 	}
 
 	

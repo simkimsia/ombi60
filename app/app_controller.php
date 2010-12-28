@@ -193,7 +193,6 @@ class AppController extends Controller {
 		}
 		
 	}
-	$this->log($this->Session->read('Auth.User'));
 	
 	$locale_name = User::get('Language.locale_name');
 	
