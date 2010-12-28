@@ -2,64 +2,6 @@
         ServerAdmin aaa@gmail.com
 
         #this handles sitename.leaguelogix.com
-        ServerName ombi60.com
-        ServerAlias www.ombi60.com ombi60.com
-
-                Options -Indexes FollowSymLinks
-
-        UseCanonicalName Off
-        #DocumentRoot /var/www/ombi60.com/current/mainsite/webroot
-	DocumentRoot /var/www/ombi60.com/current/html
-
-        <Directory />
-                Options FollowSymLinks
-                AllowOverride None
-        </Directory>
-        <Directory /var/www/ombi60.com/current/html>
-
-                Options Indexes FollowSymLinks MultiViews
-                AllowOverride All
-                Order allow,deny
-                allow from all
-
-                RewriteEngine On
-                RewriteBase /
-
-                RewriteCond %{REQUEST_FILENAME} !-d
-                RewriteCond %{REQUEST_FILENAME} !-f
-                RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
-
-                <Files sitemap.xml>
-                        RewriteEngine Off
-                </Files>
-
-      </Directory>
-
-        ErrorLog /var/log/apache2/error.log
-
-        # Possible values include: debug, info, notice, warn, error, crit,
-        # alert, emerg.
-        LogLevel warn
-
-        CustomLog /var/log/apache2/access.log combined
-
-    Alias /doc/ "/usr/share/doc/"
-    <Directory "/usr/share/doc/">
-        Options Indexes MultiViews FollowSymLinks
-        AllowOverride None
-        Order deny,allow
-        Deny from all
-        Allow from 127.0.0.0/255.0.0.0 ::1/128
-    </Directory>
-
-
-</VirtualHost>
-
-
-<VirtualHost *:80>
-        ServerAdmin aaa@gmail.com
-
-        #this handles sitename.leaguelogix.com
         ServerName *.ombi60.com
         ServerAlias *.ombi60.com
 
@@ -90,6 +32,64 @@
                         RewriteEngine Off
                 </Files>
 
+
+      </Directory>
+
+        ErrorLog /var/log/apache2/error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog /var/log/apache2/access.log combined
+
+    Alias /doc/ "/usr/share/doc/"
+    <Directory "/usr/share/doc/">
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+
+
+</VirtualHost>
+
+
+<VirtualHost *:80>
+        ServerAdmin aaa@gmail.com
+
+        #this handles sitename.leaguelogix.com
+        ServerName www.openmybusinessin60seconds.com
+        ServerAlias www.openmybusinessin60seconds.com
+
+                Options -Indexes FollowSymLinks
+
+        UseCanonicalName Off
+        DocumentRoot /var/www/ombi60.com/current/mainsite/webroot
+	#DocumentRoot /var/www/ombi60.com/current/html
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/ombi60.com/current/mainsite/webroot>
+
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+
+                RewriteEngine On
+                RewriteBase /
+
+                RewriteCond %{REQUEST_FILENAME} !-d
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+                <Files sitemap.xml>
+                        RewriteEngine Off
+                </Files>
 
       </Directory>
 

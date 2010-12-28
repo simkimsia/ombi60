@@ -30,22 +30,35 @@ ssh_options[:forward_agent] = true
 ssh_options[:keys] = %w( /home/kei/Dropbox/amazon\ aws/ombi60_key.pem )
 
 
-# setting for production environment
-task :production do
+# setting for production environment and clearing production database
+task :prd_clear_db do
   # If you aren't deploying to /u/apps/#{application} on the target
   # servers (which is the default), you can specify the actual location
   # via the :deploy_to variable:
   set :deploy_to, "/var/www/ombi60.com"
   set :config_files_folder, "production"
   after("deploy:restart", :copy_config_files)
-  #after("deploy:restart", :restore_staging_database)
+  after("deploy:restart", :restore_prd_database)
+  after("deploy:restart", "alter_config:no_debug")
+  after("deploy:restart", "alter_config:allow_none")
+  after("deploy:restart", :clear_cache)
+end
+
+task :prd_files_only do
+  # If you aren't deploying to /u/apps/#{application} on the target
+  # servers (which is the default), you can specify the actual location
+  # via the :deploy_to variable:
+  set :deploy_to, "/var/www/ombi60.com"
+  set :config_files_folder, "production"
+  after("deploy:restart", :copy_config_files)
+  # after("deploy:restart", :restore_prd_database)
   after("deploy:restart", "alter_config:no_debug")
   after("deploy:restart", "alter_config:allow_none")
   after("deploy:restart", :clear_cache)
 end
 
 
-# setting for production environment
+# setting for staging environment
 task :staging do
   # If you aren't deploying to /u/apps/#{application} on the target
   # servers (which is the default), you can specify the actual location
@@ -129,6 +142,13 @@ namespace :restore_staging_database do
   task :default do
     run "cp /home/deploy/#{config_files_folder}/restore_staging_database #{current_path}/docs/database/"
     run ". #{current_path}/docs/database/restore_staging_database"
+  end
+end
+
+namespace :restore_prd_database do
+  task :default do
+    run "cp /home/deploy/#{config_files_folder}/restore_prd_database #{current_path}/docs/database/"
+    run ". #{current_path}/docs/database/restore_prd_database"
   end
 end
 
