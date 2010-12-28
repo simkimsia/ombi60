@@ -80,16 +80,37 @@ class DomainsController extends AppController {
 		$this->set(compact('shops'));
 	}
 
-	function admin_delete($id = null) {
+	function admin_delete($id = false) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for domain', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Domain->delete($id)) {
-			$this->Session->setFlash(__('Domain deleted', true), 'default', array('class'=>'flash_success'));
-			$this->redirect(array('action'=>'index'));
+		
+		$userId = User::get('User.id');
+		$shopId = Shop::get('Shop.id');
+		$this->Domain->Shop->Merchant->Behaviors->attach('Linkable.Linkable');
+		
+		$merchantAllowed = $this->Domain->Shop->Merchant->find('count',
+								       array('conditions' =>
+									     array('Merchant.user_id' => $userId,
+										   'Merchant.shop_id' => $shopId,
+										   'Domain.id'=>$id,
+										   'Domain.shop_web_address' => false),
+									     'link' =>
+									     array('Shop' => array('Domain'))
+									     ));
+		
+		
+		if ($merchantAllowed) {
+			if ($this->Domain->delete($id)) {
+				$this->Session->setFlash(__('Domain deleted', true), 'default', array('class'=>'flash_success'));
+				$this->redirect(array('action'=>'index'));
+			}
+			$this->Session->setFlash(__('Domain was not deleted', true), 'default', array('class'=>'flash_failure'));
+		} else {
+			$this->Session->setFlash(__('You are not authorized to delete this domain', true), 'default', array('class'=>'flash_failure'));
 		}
-		$this->Session->setFlash(__('Domain was not deleted', true), 'default', array('class'=>'flash_failure'));
+		
 		$this->redirect(array('action' => 'index'));
 	}
 	

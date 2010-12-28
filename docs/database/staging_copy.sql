@@ -288,13 +288,14 @@ CREATE TABLE `domains` (
   `shop_id` int(11) NOT NULL,
   `primary` tinyint(1) NOT NULL DEFAULT '0',
   `always_redirect_here` tinyint(1) NOT NULL DEFAULT '0',
+  `shop_web_address` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UniqueDomain` (`domain`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `domains` */
 
-insert  into `domains`(`id`,`domain`,`shop_id`,`primary`,`always_redirect_here`) values (1,'http://ombi60.localhost',1,1,0);
+insert  into `domains`(`id`,`domain`,`shop_id`,`primary`,`always_redirect_here`,`shop_web_address`) values (1,'http://ombi60.localhost',1,1,0,0);
 
 /*Table structure for table `gc_designs` */
 

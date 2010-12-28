@@ -74,6 +74,7 @@ class Merchant extends AppModel {
 		$domainData['Domain']['domain']  = $data['Shop']['web_address'];
 		$domainData['Domain']['primary'] = true;
 		$domainData['Domain']['shop_id'] = $this->Shop->id;
+		$domainData['Domain']['shop_web_address'] = true;
 		$domain->create();
 		$result = $domain->save($domainData);
 		

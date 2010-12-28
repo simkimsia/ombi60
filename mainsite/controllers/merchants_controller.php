@@ -65,11 +65,26 @@ class MerchantsController extends AppController {
 	 **/
 	function register($plan = null) {
 
-		$this->set('title_for_layout', __('Signup',true));
-		
 		if ($plan == null) {
 			$this->redirect('/pages/pricing-signup');
 		}
+		
+		$this->set('title_for_layout', __('Signup',true));
+		
+		// first we determine the domains
+		$productionDomain = (strpos(FULL_BASE_URL, '.com') > 0);
+		$stagingDomain = (strpos(FULL_BASE_URL, '.biz') > 0);
+		$localhostDomain = (strpos(FULL_BASE_URL, '.localhost') > 0);
+		
+		// now we set the main domain.
+		$mainDomain = '.ombi60.biz';
+		if ($productionDomain) {
+			$mainDomain = '.ombi60.com';
+		} else if ($localhostDomain) {
+			$mainDomain = '.ombi60.localhost';
+		}
+		
+		$this->set('mainDomain', $mainDomain);
 		
 
 		if ($this->RequestHandler->isPost()) {
@@ -88,16 +103,8 @@ class MerchantsController extends AppController {
 			
 			if (isset($this->data['Shop']['web_address'])) {
 				
+				$this->data['Shop']['web_address'] = 'http://' . $this->data['Shop']['subdomain'] . $mainDomain;
 				
-				if (strpos(FULL_BASE_URL, '.com') > 0) {
-					$this->data['Shop']['web_address'] = 'http://' . $this->data['Shop']['subdomain'] . '.ombi60.com';
-				}
-				else if (strpos(FULL_BASE_URL, '.biz') > 0) {
-					$this->data['Shop']['web_address'] = 'http://' . $this->data['Shop']['subdomain'] . '.ombi60.biz';
-				}
-				else if (strpos(FULL_BASE_URL, '.localhost') > 0) {
-					$this->data['Shop']['web_address'] = 'http://' . $this->data['Shop']['subdomain'] . '.ombi60.localhost';
-				}
 			}
 			
 			if ($result = $this->Merchant->signupNewAccount($this->data)) {
