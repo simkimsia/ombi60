@@ -39,7 +39,7 @@
 				}
 			?>
 			<?php
-				if ($domain['Domain']['domain'] != $mainUrl OR $domain['Domain']['shop_web_address']) {
+				if ($domain['Domain']['domain'] != $mainUrl OR !$domain['Domain']['shop_web_address']) {
 					echo $this->Html->link(__('Delete', true), array('action' => 'delete', $domain['Domain']['id']));
 				}
 			?>
