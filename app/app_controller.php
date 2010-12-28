@@ -100,6 +100,12 @@ class AppController extends Controller {
 	    $currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
 	    $this->Session->write('CurrentShop', $currentShop);
 	}
+	
+	if (!$currentShop) {
+	    $this->cakeError('noSuchDomain', array('url'=>FULL_BASE_URL));
+	}
+	
+	
         Shop::store($currentShop);
 	
 	/** setup cookies
@@ -215,7 +221,7 @@ class AppController extends Controller {
 	$denied = $currentShop['Shop']['deny_access'];
 	
 	if ($denied) {
-	    //$this->cakeError('error404');
+	    $this->cakeError('noSuchDomain');
 	} else {
 	
 	    if(!isset($this->params['admin'])) {

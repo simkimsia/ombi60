@@ -222,13 +222,6 @@ class Shop extends AppModel {
 	 * Returns boolean false if no such shop
 	 * */
 	function getByDomain($url) {
-		
-		// Hackish code, please change in future
-		// -- Andrew
-		$testdomain = '.test.myspree2shop.com';
-		$realdomain = '.myspree2shop.com';
-		$url = str_replace($testdomain, $realdomain, $url);
-		
 		$this->recursive         = -1;
 		$this->Domain->recursive = -1;
 		
