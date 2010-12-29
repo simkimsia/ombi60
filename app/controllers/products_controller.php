@@ -87,10 +87,9 @@ class ProductsController extends AppController {
 			$this->checkoutLink = Router::url('/', true);
 		}
 		
-	
-		
 		if (($this->action == 'admin_index')
 		    OR ($this->action == 'admin_add')
+		    OR ($this->action == 'checkout')
 		    ) {
 			$this->Security->validatePost = false;
 		}
