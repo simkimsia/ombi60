@@ -26,7 +26,19 @@
 <!--<link href="style_default/style.css" type="text/css" media="screen" rel="stylesheet" />-->
 <!-- Alternative Style -->
 <!--<link href="style_alternative/style.css" type="text/css" media="screen" rel="stylesheet" />-->
-<title>[Service Name] - Home</title>
+<title>
+	<?php
+		if (!empty($shopName_for_layout)) {
+			echo $shopName_for_layout;
+		}
+		if (!empty($shopName_for_layout) && !empty($title_for_layout)) {
+			echo ' - ';
+		}
+		if (!empty($title_for_layout)) {
+			echo $title_for_layout;
+		}
+	?>
+</title>
 	<?php
 		echo $this->Html->meta('icon');
 

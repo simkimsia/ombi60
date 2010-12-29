@@ -18,6 +18,7 @@ class WebpagesController extends AppController {
 	
 
 	function view($handle = false) {
+		
 		if (!$handle) {
 			$this->Session->setFlash(__('Invalid webpage', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -32,6 +33,8 @@ class WebpagesController extends AppController {
 		if ($handle == 'shopfront') {
 			$this->set('classForContainer', 'homepage');
 		}
+		
+		$this->set('title_for_layout', $webpage['Webpage']['title']);
 		
 	}
 

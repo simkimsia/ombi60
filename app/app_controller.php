@@ -112,9 +112,16 @@ class AppController extends Controller {
 	 * */
 	
 	$shopId = Shop::get('Shop.id');
-	$this->Cookie->name = Shop::get('Shop.name');
+	$shopName = Shop::get('Shop.name');
+	$this->Cookie->name = $shopName;
 	$this->Cookie->time = '365 days';
 	$this->Cookie->key  = 'qwRVVJ@#$%2#7435' . $shopId;
+	
+	
+	/**
+	 * setup the shopName_for_layout
+	 **/
+	$this->set('shopName_for_layout', $shopName);
 	
 	$userIdInCookie = null;
 	
