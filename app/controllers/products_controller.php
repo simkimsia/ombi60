@@ -81,11 +81,7 @@ class ProductsController extends AppController {
 		$this->Security->disabledFields[] = $image->name . '.' . $image->defaultNameForImage;
 		
 		
-		if (strpos(FULL_BASE_URL, 'localhost') == -1){
-			$this->checkoutLink = Configure::read('currentCheckoutLink');	
-		} else {
-			$this->checkoutLink = Router::url('/', true);
-		}
+		$this->checkoutLink = Router::url('/', true);
 		
 		if (($this->action == 'admin_index')
 		    OR ($this->action == 'admin_add')
