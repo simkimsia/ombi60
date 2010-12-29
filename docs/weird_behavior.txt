@@ -73,3 +73,10 @@ updateAll
 NEED to include "'". $newvalue ."'" in the fields params for varchar.
 this is because fields params allow literal SQL queries added
 
+Auth
+====
+
+since Auth.allowAll can override any Auth settings, always check for this first
+if Auth is not working as expected. including git-ignored files like bootstrap.local.php
+
+
