@@ -75,7 +75,7 @@
 						      'controller' => 'products'
 					));
 				?>
-				<div id="cartbadge"><?php if ($cartItemsCount > 0) {echo $cartItemsCount;} ?></div>
+				<div id="cartbadge"><?php if (isset($cartItemsCount) && $cartItemsCount > 0) {echo $cartItemsCount;} ?></div>
 			</li>			
 		</ul>
 	</div>

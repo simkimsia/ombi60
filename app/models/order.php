@@ -129,7 +129,7 @@ class Order extends AppModel {
 		$data['Order']['currency'] = $cartData['Cart']['currency'];
 		
 		
-		if ($data['Order']['amount'] > 0 AND !empty($data['OrderLineItem'])) {
+		if ($data['Order']['amount'] >= 0 AND !empty($data['OrderLineItem'])) {
 			return $data;
 		}
 		return false;

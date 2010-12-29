@@ -590,7 +590,7 @@ class OrdersController extends AppController {
 				$shippingRatesResultSet = $this->getShipmentOptions($shippedAmt, $shippedWeight, $shop_id, $country);
 				$shippingRates = $shippingRatesResultSet['display'];
 				$defaultShipment = key($shippingRates);
-				$shippingFee = $shippingRatesResultSet['price'][$defaultShipment];
+				$shippingFee = (isset($shippingRatesResultSet['price'][$defaultShipment])) ? $shippingRatesResultSet['price'][$defaultShipment] : 0;
 				
 				$totalAmountWithShipping = $totalAmount + $shippingFee;
 			}
