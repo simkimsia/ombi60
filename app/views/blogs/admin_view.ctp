@@ -11,9 +11,13 @@
 			<?php echo $blog['Blog']['name']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Short Name'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Link'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['short_name']; ?>
+			<?php
+				$link = Router::url('/blogs/', true) . $blog['Blog']['short_name'];
+				echo $this->Html->link($link,
+						       $link,
+						       array('target'=>'_blank')); ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Description'); ?></dt>

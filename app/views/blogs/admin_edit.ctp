@@ -5,7 +5,7 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('name');
-		echo $this->Form->input('short_name');
+		
 		
 		$label = $this->Form->label('handle', 'Permalink/handle');
 		$textbox = $this->Form->text('Blog.short_name');
