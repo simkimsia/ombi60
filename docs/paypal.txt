@@ -1,0 +1,13 @@
+LIVE
+Credential	API Signature
+API Username	admin_api1.ombi60.com
+API Password	S3Y4KW9LENXQ64NK
+Signature	AFcWxV21C7fd0v3bYYYRCpSSRl31ABlIrc8fS80kiIMGBlUzayC8SqR2
+Request Date	30 Dec 2010 15:59 SST
+
+Sandbox
+Credential	API Signature
+API Username	merch_1277746388_biz_api1.gmail.com
+API Password	1277746393
+Signature	AHExNCgTOAf6I0jS8V77WYVPl78nAUalMl21CFNLpKr4giwMI6dr5DKE
+
