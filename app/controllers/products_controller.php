@@ -130,8 +130,11 @@ class ProductsController extends AppController {
 				$postFields['uuid'] = $this->transferSession();
 				$PPRedirectURL = '';
 				
+				// 1 final check in database on whether paypal option is turned on
+				$paypalExpressOn = $this->Product->Shop->getPaypalExpressOn($shopId);
 				
-				if ($paypal AND isset($cart['Cart']['hash'])) {
+				
+				if ($paypal AND $paypalExpressOn AND isset($cart['Cart']['hash'])) {
 					$PayPalResult = $this->prepareSEC($postFields, $cart['Cart']['hash']);
 					//$this->log('productspreparesec');
 					//$this->log($PayPalResult);

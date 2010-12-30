@@ -343,8 +343,10 @@ class Shop extends AppModel {
 										'shop_id'=>$shopId,
 										'payment_module_id'=>PAYPAL_PAYMENT_MODULE,
 										'active'=>true)));
+			if (isset($paymentModule['ShopsPaymentModule']['display_name'])) {
+				return (strpos($paymentModule['ShopsPaymentModule']['display_name'], 'Express Checkout') > 0);
+			}
 			
-			return (!empty($paymentModule));
 		}
 		return false;
 		
