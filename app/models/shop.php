@@ -367,6 +367,28 @@ class Shop extends AppModel {
 		return false;
 	}
 	
+	function getAccountEmailPaypal($shopId = 0) {
+		if ($shopId > 0) {
+			$this->ShopsPaymentModule->recursive = -1;
+			$this->ShopsPaymentModule->Behaviors->attach('Linkable.Linkable');
+			$paymentModule = $this->ShopsPaymentModule->find('first',
+							array('conditions'=>array(
+										'ShopsPaymentModule.shop_id'=>$shopId,
+										'ShopsPaymentModule.payment_module_id'=>PAYPAL_PAYMENT_MODULE,
+										'ShopsPaymentModule.active'=>true),
+							      'link'=>array('PaypalPaymentModule'),
+							      'fields'=>array('PaypalPaymentModule.account_email')));
+			
+			if (isset($paymentModule['PaypalPaymentModule']['account_email'])) {
+				return $paymentModule['PaypalPaymentModule']['account_email'];
+			}
+			
+			return '';
+			
+		}
+		return '';
+	}
+	
 	function getAllMerchantUsersInList($id = false, $fields=array(), $sort = true) {
 		if (!$id) {
 			return false;

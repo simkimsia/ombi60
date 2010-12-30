@@ -163,11 +163,14 @@ class ProductsController extends AppController {
 	private function prepareSEC($postFields, $hash) {
 		
 		
+		$accountEmail = $this->Product->Shop->getAccountEmailPaypal($postFields['shopId']);
+		
 		// we need to prepare the paypalexpresscheckout portion
 		$PayPalConfig = array('Sandbox' => Configure::read('paypal.sandbox'),
 				      'APIUsername' => Configure::read('paypal.api.username'),
 				      'APIPassword' => Configure::read('paypal.api.password'),
-				      'APISignature' => Configure::read('paypal.api.signature'));
+				      'APISignature' => Configure::read('paypal.api.signature'),
+				      'APISubject' => $accountEmail);
 		
 		
 		$PayPal = new PayPal($PayPalConfig);
