@@ -125,6 +125,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Payments/admin_edit_custom_payment');
 		$this->Acl->allow($group, 'controllers/Payments/admin_delete_custom_payment');
 		$this->Acl->allow($group, 'controllers/Payments/admin_add_paypal_payment');
+		$this->Acl->allow($group, 'controllers/Payments/admin_edit_paypal_payment');
 		
 		
 		$this->Acl->allow($group, 'controllers/ShippingRates/admin_index');

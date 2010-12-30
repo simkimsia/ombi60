@@ -35,9 +35,15 @@ class PaymentsController extends AppController {
 										'link' => array('CustomPaymentModule'),
 										'fields'=>array('CustomPaymentModule.*')));
 			
+			$paypalPaymentModule = $paymentModuleInShop->find('first',
+									  array('conditions' => array('ShopsPaymentModule.shop_id' => $currentShopId,
+												      'ShopsPaymentModule.payment_module_id' => PAYPAL_PAYMENT_MODULE),
+										'link' => array('PaypalPaymentModule'),
+										'fields'=>array('PaypalPaymentModule.*')));
 			
 			
-			$this->set(compact('shopsPaymentModules', 'customPaymentModules'));			
+			
+			$this->set(compact('shopsPaymentModules', 'customPaymentModules', 'paypalPaymentModule'));			
 		}
 		
 	}
@@ -90,6 +96,27 @@ class PaymentsController extends AppController {
 		
 		
 		if ($paymentModuleInShop->saveAll($this->data)) {
+			$this->Session->setFlash(__('Custom payment has been saved', true), 'default', array('class'=>'flash_success'));
+		} else {
+			$this->Session->setFlash(__('Custom payment  could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+		}
+		
+		$this->redirect(array('action'=>'index'));
+	}
+	
+	function admin_edit_paypal_payment($id = false) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid id', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('action' => 'index'));
+		}
+		
+		
+		$paymentModuleInShop = $this->Payment->ShopsPaymentModule;
+		$paymentModule = $paymentModuleInShop->PaymentModule;
+		$paypalPaymentModuleInShop = $paymentModuleInShop->PaypalPaymentModule;
+		
+		$paypalPaymentModuleInShop->id = $id;
+		if ($paypalPaymentModuleInShop->save($this->data)) {
 			$this->Session->setFlash(__('Custom payment has been saved', true), 'default', array('class'=>'flash_success'));
 		} else {
 			$this->Session->setFlash(__('Custom payment  could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
