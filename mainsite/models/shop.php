@@ -376,7 +376,7 @@ class Shop extends AppModel {
 			$paymentModule = $this->ShopsPaymentModule->find('first',
 							array('conditions'=>array(
 										'shop_id'=>$shopId,
-										'payment_module_id'=>PAYPAL_EXPRESS,
+										'payment_module_id'=>PAYPAL_PAYMENT_MODULE,
 										'active'=>true)));
 			
 			return (!empty($paymentModule));

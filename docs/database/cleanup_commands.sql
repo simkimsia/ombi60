@@ -47,6 +47,7 @@ TRUNCATE TABLE `posts`;
 TRUNCATE TABLE `comments`;
 TRUNCATE TABLE `price_based_rates`;
 TRUNCATE TABLE `custom_payment_modules`;
+TRUNCATE TABLE `paypal_payment_modules`;
 TRUNCATE TABLE `shops_payment_modules`;
 TRUNCATE TABLE `payments`;
 TRUNCATE TABLE cart_items;

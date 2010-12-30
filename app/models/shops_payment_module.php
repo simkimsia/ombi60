@@ -33,6 +33,14 @@ class ShopsPaymentModule extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
+		'PaypalPaymentModule' => array(
+			'className' => 'PaypalPaymentModule',
+			'foreignKey' => 'shop_payment_module_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 	);
 	
 	var $hasMany = array(

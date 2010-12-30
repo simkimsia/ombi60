@@ -51,6 +51,31 @@ class PaymentsController extends AppController {
 		}
 	}
 	
+	function admin_add_paypal_payment() {
+		
+		// attach the word paypal infront
+		$this->data['PaypalPaymentModule']['name'] = 'Paypal ' . $this->data['PaypalPaymentModule']['name'];
+		
+		$this->data['ShopsPaymentModule']['payment_module_id'] = PAYPAL_PAYMENT_MODULE;
+		$this->data['ShopsPaymentModule']['shop_id'] = Shop::get('Shop.id');
+		$this->data['ShopsPaymentModule']['display_name'] = $this->data['PaypalPaymentModule']['name'];
+		
+		$paymentModuleInShop = $this->Payment->ShopsPaymentModule;
+		$paymentModule = $paymentModuleInShop->PaymentModule;
+		
+		$paymentModule->create();
+		$paymentModuleInShop->create();
+		
+		
+		if ($paymentModuleInShop->saveAll($this->data)) {
+			$this->Session->setFlash(__('Paypal payment has been activated', true), 'default', array('class'=>'flash_success'));
+		} else {
+			$this->Session->setFlash(__('Paypal payment could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+		}
+		
+		$this->redirect(array('action'=>'index'));
+	}
+	
 	function admin_add_custom_payment() {
 		
 		$this->data['ShopsPaymentModule']['payment_module_id'] = CUSTOM_PAYMENT_MODULE;

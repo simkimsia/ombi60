@@ -140,7 +140,7 @@ define('PAYMENT_ABANDONED', 0);
 /**
  * Payment module id
  **/
-define('PAYPAL_EXPRESS', 2);
+define('PAYPAL_PAYMENT_MODULE', 2);
 define('CUSTOM_PAYMENT_MODULE', 1);
 
 /**

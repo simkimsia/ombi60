@@ -8,7 +8,7 @@ class UsersController extends AppController {
 	var $belongsTo = array('Group');
 
 	function beforeFilter() {
-		parent::beforeFilter();
+		//parent::beforeFilter();
 
 		if ($this->action == 'platform_login') {
 			$this->Auth->loginRedirect = '/platform/users';
@@ -124,6 +124,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Payments/admin_add_custom_payment');
 		$this->Acl->allow($group, 'controllers/Payments/admin_edit_custom_payment');
 		$this->Acl->allow($group, 'controllers/Payments/admin_delete_custom_payment');
+		$this->Acl->allow($group, 'controllers/Payments/admin_add_paypal_payment');
 		
 		
 		$this->Acl->allow($group, 'controllers/ShippingRates/admin_index');

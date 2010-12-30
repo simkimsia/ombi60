@@ -7,6 +7,43 @@
 <div class="products index">
 <h2><?php __('Payment Settings');?></h2>
 
+	<?php
+	
+	
+	
+	echo $this->Form->create('PaypalPaymentModule', array('url'=>array('controller' => 'payments',
+							      'action' => 'add_paypal_payment',
+							   'admin' => true)));
+	
+	echo '<div>';
+	
+	$paypalOptions = array(''=>'I do not use Paypal',
+			       'Website Payments Standard' => 'Paypal Website Payments Standard',
+			       'Express Checkout' => 'Paypal Express Checkout');
+	echo $this->Form->input('PaypalPaymentModule.name', array('options'=>$paypalOptions,
+								  'id'=>'paypalPaymentSelect',
+								  'label' => false));
+	
+	echo '</div>';
+	
+	
+	echo '<div id="paypalForm" style="display:none">';
+	echo $this->Form->input('account_email');
+	
+	echo '	<div id="paypalWPSDescription" style="display:none">
+	Please provide your PayPal Website Payments Standard account credentials.  Sign up for a PayPal account now<br />PayPal: Proven to increase sales. According to Jupiter Research, 23% of online shoppers like to pay with PayPal.* If you offer your visitors the choice to pay with PayPal, they may be more likely to buy.<br /> *September 2007 Jupiter Research study of payment preferences online. See a demo of Paypal Website Payments Standard
+		</div>';
+	echo '	<div id="paypalECDescription" style="display:none">
+	Please provide your PayPal Express Checkout account credentials.  Sign up for a PayPal account nowYou must have a PayPal business account and you must grant Shopify third-party API Access in your PayPal profile:Navigate to the Give Third-Party API Permission PageEnter scott_api1.jadedpixel.com as the API Partner Username.Check all of the boxes: Direct Payment, Express Checkout, Reporting and Backoffice APIs, Authorization and Settlement APIs, and click Submit.On the following screen click the Give Permission button.Click the Edit button to edit the permissions and check ManagePendingTransactionStatus. Click Submit.PayPal: Proven to increase sales. According to Jupiter Research, 23% of online shoppers like to pay with PayPal.* If you offer your visitors the choice to pay with PayPal, they may be more likely to buy.* September 2007 Jupiter Research study of payment preferences online.See a demo of Paypal Express Checkout
+		</div>';
+		
+	echo $this->Form->submit('Turn On');
+	echo '</div>';
+	echo $this->Form->end();
+	
+	?>
+
+
 	<div id="custom_payment_gateway" style="padding: 0px 10px 0pt; margin-bottom: 0pt; border-top: 1px solid rgb(221, 221, 221);">
 
 	
@@ -115,6 +152,8 @@
 	
 	?>
 
+	
+
 
 	
 
@@ -154,6 +193,35 @@
 			}
 		} else {
 			$('#customForm').hide();
+		}
+		
+		
+	});
+	
+	
+	$('#paypalPaymentSelect').change(function () {
+		
+		var valueOfSelect = $('#paypalPaymentSelect').val();
+		
+		
+		if (valueOfSelect != '') {
+			$('#paypalForm').show();
+			innerHtml = '';
+			if (valueOfSelect == 'Website Payments Standard') {
+				$('#paypalWPSDescription').show();
+				$('#paypalECDescription').hide();
+			} else if (valueOfSelect == 'Express Checkout') {
+				$('#paypalECDescription').show();
+				$('#paypalWPSDescription').hide();
+			} else {
+				$('#paypalECDescription').hide();
+				$('#paypalWPSDescription').hide();
+			}
+			
+			$('#PaypalPaymentModuleName').focus();	
+			
+		} else {
+			$('#paypalForm').hide();
 		}
 		
 		
