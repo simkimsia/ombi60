@@ -16,6 +16,13 @@ need to alter copyable plugin. I am not sure.
 
 4) need to display message for do not deliver to this country.
 5) need to filter out the countries in checkout.ctp for orders
+6) fix the maxamt for paypal express checkout < 10k USD
+7) pay action in orders_controller
+
+// need to compare $order with confirmPage
+// if same for both paypal at checkout point and payment point
+
+8) 
 
 Productivity (Make life easier!!!)
 ===================================

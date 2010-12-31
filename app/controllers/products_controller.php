@@ -191,7 +191,7 @@ class ProductsController extends AppController {
 		
 		$SECFields = $this->Paypal->buildSECFields(array('returnurl'=>$returnURL,
 								 'cancelurl'=>$postFields['cancelURL'],
-								 'maxamt'=>number_format($postFields['payments'][0]['amt'] + 100, 2)));
+								 'maxamt'=>number_format($postFields['payments'][0]['amt'] + 1000, 2, '.', '')));
 		
 		
 		
@@ -203,8 +203,12 @@ class ProductsController extends AppController {
 		
 		
 		$PayPalResult = $PayPal->SetExpressCheckout($PayPalRequest);
-		//$this->log('direct result');
-		//$this->log($PayPalResult);
+		if ($PayPalResult['ACK'] == 'Failure') {
+			// may need to do a redirect to the normal checkout
+			$this->log('direct result in products_controller.php line 207');
+			$this->log($PayPalResult);	
+		}
+		
 		// update the token inside sitetransfer
 		$siteTransfer = ClassRegistry::init('SiteTransfer');
 		$siteTransfer->id =  $postFields['uuid'];

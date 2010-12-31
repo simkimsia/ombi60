@@ -52,6 +52,10 @@ class ShippingRate extends AppModel {
 				'rule' => array('comparison', '>=', 0),
 				'message' => 'Shipping price should be at least $0.00'
 			),
+			'max999' => array(
+				'rule' => array('comparison', '<=', 999.99),
+				'message' => 'Shipping price should be at most $999.99'
+			),
 		),
 	);
 	

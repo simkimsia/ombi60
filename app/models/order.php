@@ -283,8 +283,12 @@ class Order extends AppModel {
 		
 		// check for Shipment
 		if (array_key_exists('Shipment', $data)) {
+			if (array_key_exists('ShippingRate', $data)) {
+				$rate = array('ShippingRate' => $data['ShippingRate']);
+			} else {
+				$rate = $this->Shop->ShippedToCountry->ShippingRate->read(null, $data['Shipment']['shipping_rate_id']);	
+			}
 			
-			$rate = $this->Shop->ShippedToCountry->ShippingRate->read(null, $data['Shipment']['shipping_rate_id']);
 			$data['Shipment']['name'] = $rate['ShippingRate']['name'];
 			$data['Shipment']['description'] = $rate['ShippingRate']['description'];
 			$data['Shipment']['price'] = $rate['ShippingRate']['price'];

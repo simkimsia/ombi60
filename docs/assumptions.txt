@@ -1,0 +1,18 @@
+currency
+=======
+assume singapore dollars first
+
+metrics
+=======
+assume kg
+
+maxamt in paypal express checkout
+=================================
+assume + 1000
+
+shipping rate
+=============
+assume 999.99 as max price
+
+paypal express checkout maxamt cannot exceed USD 10k in the first place.
+need to disable the paypal checkout accordingly and calculate the maxamt accordingly as well

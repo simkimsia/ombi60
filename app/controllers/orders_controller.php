@@ -464,7 +464,7 @@ class OrdersController extends AppController {
 		}
 	}
 	
-	private function executeDECD($PayPalRequest, $shopId) {
+	private function executeDECP($PayPalRequest, $shopId) {
 		
 		$accountEmail = $this->Order->Shop->getAccountEmailPaypal($shopId);
 		
@@ -479,6 +479,8 @@ class OrdersController extends AppController {
 		$PayPalResult = $PayPal->DoExpressCheckoutPayment($PayPalRequest);
 			
 		$this->Session->write('Shop.'.$shopId.'.PayPalResult', $PayPalResult);
+		
+		return $PayPalResult;
 	}
 	
 	
@@ -507,7 +509,7 @@ class OrdersController extends AppController {
 			// call the DECD to complete the transaction
 			if (!empty($PayPalRequestSet)) {
 				
-				$this->executeDECD($PayPalRequestSet['PayPalRequest'], $shop_id);
+				$this->executeDECP($PayPalRequestSet['PayPalRequest'], $shop_id);
 				
 				// now set the payment to complete
 				$this->Order->Payment->completeByTransaction($shops_payment_module_id, $tokenValue);
@@ -658,8 +660,150 @@ class OrdersController extends AppController {
 			
 			$forPayPalAtCheckout = (($sessionHash == $hash) AND ($PayPalRequest != false));
 			
+			// get the price of shipping rate selected
+			/** at this point the $this->data is this
+			 *(
+				[_Token] => Array
+				    (
+					[key] => fd397ad1c7ab7347d42bcc69de87b98653b086c4
+					[fields] => 3f361938f55f4c2c8300753a089555d58ffff616%3An%3A4%3A%7Bv%3A0%3Bf%3A7%3A%22Pneg.vq%22%3Bv%3A1%3Bf%3A16%3A%22Cnlzrag.beqre_vq%22%3Bv%3A2%3Bf%3A31%3A%22Cnlzrag.fubcf_cnlzrag_zbqhyr_vq%22%3Bv%3A3%3Bf%3A17%3A%22Fuvczrag.beqre_vq%22%3B%7D
+				    )
+			    
+				[Shipment] => Array
+				    (
+					[shipping_rate_id] => 4
+					[order_id] => 3
+				    )
+			    
+				[Payment] => Array
+				    (
+					[shops_payment_module_id] => 2
+					[order_id] => 3
+				    )
+			    
+				[Cart] => Array
+				    (
+					[id] => 7
+				    )
+			    
+			    )
+			    **/
+			$shippingRateId = 0;
+			$rate = false;
+			if (isset($this->data['Shipment']['shipping_rate_id'])) {
+				$shippingRateId = $this->data['Shipment']['shipping_rate_id'];
+			}
+			
+			if ($shippingRateId > 0) {
+				$rate = $this->Order->Shop->ShippedToCountry->ShippingRate->read(null, $this->data['Shipment']['shipping_rate_id']);
+				
+			} 
+			
+			if (isset($rate['ShippingRate'])) {
+				$this->data['ShippingRate'] = $rate['ShippingRate'];
+			}
+			
 			if ($forPayPalAtCheckout) {
-				$this->executeDECD($PayPalRequest, $shop_id);
+				
+				// attach the shipping amt into the paypal payment shipping_amt
+				
+				
+				/**
+				 * at this point the $PayPalRequest is like this
+				 * (
+					[DECPFields] => Array
+					    (
+						[token] => EC-2F26074817330823D
+						[payerid] => L3LUD63MGMMP4
+						[returnfmfdetails] => 1
+						[giftmessage] => 
+						[giftreceiptenable] => 
+						[giftwrapname] => 
+						[giftwrapamount] => 
+						[buyermarketingemail] => 
+						[surveyquestion] => 
+						[surveychoiceselected] => 
+						[allowedpaymentmethod] => 
+						[buttonsource] => 
+					    )
+				    
+					[Payments] => Array
+					    (
+						[0] => Array
+						    (
+							[amt] => 40.00
+							[currencycode] => SGD
+							[itemamt] => 40.00
+							[shippingamt] => 0.00
+							[insuranceoptionoffered] => 
+							[handlingamt] => 
+							[taxamt] => 0.00
+							[desc] => This is a test order.
+							[custom] => 
+							[invnum] => 
+							[notifyurl] => 
+							[shiptoname] => 
+							[shiptostreet] => 
+							[shiptostreet2] => 
+							[shiptocity] => 
+							[shiptostate] => 
+							[shiptozip] => 
+							[shiptocountry] => 
+							[shiptophonenum] => 
+							[notetext] => This is a test note before ever having left the web site.
+							[allowedpaymentmethod] => 
+							[paymentaction] => Sale
+							[paymentrequestid] => 
+							[sellerpaypalaccountid] => 
+							[order_items] => Array
+							    (
+								[0] => Array
+								    (
+									[name] => product1
+									[desc] => Widget 123
+									[amt] => 10.00
+									[number] => 3
+									[qty] => 4
+									[taxamt] => 
+									[itemurl] => http://www.angelleye.com/products/123.php
+									[itemweightvalue] => 
+									[itemweightunit] => 
+									[itemheightvalue] => 
+									[itemheightunit] => 
+									[itemwidthvalue] => 
+									[itemwidthunit] => 
+									[itemlengthvalue] => 
+									[itemlengthunit] => 
+									[ebayitemnumber] => 
+									[ebayitemauctiontxnid] => 
+									[ebayitemorderid] => 
+									[ebayitemcartid] => 
+								    )
+				    
+							    )
+				    
+						    )
+				    
+					    )
+				    
+				    )
+
+				 * **/
+				
+				$shippingAmt = 0.00;
+				
+				if (isset($rate['ShippingRate']['price'])) {
+					$shippingAmt = number_format($rate['ShippingRate']['price'],2,'.','');	
+				}
+				
+				$subtotalAmt = $PayPalRequest['Payments'][0]['itemamt'];
+				$totalAmt = $subtotalAmt + $shippingAmt; 
+				$PayPalRequest['Payments'][0]['shippingamt'] = $shippingAmt;
+				$PayPalRequest['Payments'][0]['amt'] = $totalAmt;
+				//$this->log($PayPalRequest);
+				$result = $this->executeDECP($PayPalRequest, $shop_id);
+				//$this->log('DECP results');
+				//$this->log($result);
 			}
 			
 			// for payment option point
@@ -824,7 +968,8 @@ class OrdersController extends AppController {
 		
 		$SECFields = $this->Paypal->buildSECFields(array('returnurl'=>$returnURL,
 								 'cancelurl'=>$postFields['cancelURL'],
-								 'maxamt'=>$postFields['payments'][0]['amt'] * 1.2));
+								 'maxamt'=>number_format($postFields['payments'][0]['amt'] + 1000, 2, '.', '')));
+								 
 		
 		// we want to set the button to confirm in PAYPAL checkout page
 		$SECFields['skipdetails'] = '1';
