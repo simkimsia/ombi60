@@ -697,7 +697,7 @@ class PayPal
 							'SHIPTOCITY' => isset($DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOCITY']) ? $DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOCITY'] : '', 
 							'SHIPTOSTATE' => isset($DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOSTATE']) ? $DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOSTATE'] : '', 
 							'SHIPTOZIP' => isset($DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOZIP']) ? $DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOZIP'] : '', 
-							'SHIPTOCOUNTRY' => isset($DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOCOUNTRY']) ? $DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOCOUNTRY'] : '', 
+							'SHIPTOCOUNTRYCODE' => isset($DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOCOUNTRYCODE']) ? $DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOCOUNTRYCODE'] : '', 
 							'SHIPTOPHONENUM' => isset($DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOPHONENUM']) ? $DataArray['PAYMENTREQUEST_' . $n . '_SHIPTOPHONENUM'] : '', 
 							'ADDRESSSTATUS' => isset($DataArray['PAYMENTREQUEST_' . $n . '_ADDRESSSTATUS']) ? $DataArray['PAYMENTREQUEST_' . $n . '_ADDRESSSTATUS'] : '', 
 							'AMT' => isset($DataArray['PAYMENTREQUEST_' . $n . '_AMT']) ? $DataArray['PAYMENTREQUEST_' . $n . '_AMT'] : '', 
@@ -1300,7 +1300,7 @@ class PayPal
 						'shiptocity' => '', 					// Required if shipping is included.  Name of city.  40 char max.
 						'shiptostate' => '', 					// Required if shipping is included.  Name of state or province.  40 char max.
 						'shiptozip' => '', 						// Required if shipping is included.  Postal code of shipping address.  20 char max.
-						'shiptocountry' => '', 					// Required if shipping is included.  Country code of shipping address.  2 char max.
+						'shiptocountrycode' => '', 					// Required if shipping is included.  Country code of shipping address.  2 char max.
 						'shiptophonenum' => '',  				// Phone number for shipping address.  20 char max.
 						'notetext' => '', 						// Note to the merchant.  255 char max.  
 						'allowedpaymentmethod' => '', 			// The payment method type.  Specify the value InstantPaymentOnly.
@@ -1583,7 +1583,7 @@ class PayPal
 						'shiptocity' => '', 					// Required if shipping is included.  Name of city.  40 char max.
 						'shiptostate' => '', 					// Required if shipping is included.  Name of state or province.  40 char max.
 						'shiptozip' => '', 						// Required if shipping is included.  Postal code of shipping address.  20 char max.
-						'shiptocountry' => '', 					// Required if shipping is included.  Country code of shipping address.  2 char max.
+						'shiptocountrycode' => '', 					// Required if shipping is included.  Country code of shipping address.  2 char max.
 						'shiptophonenum' => '',  				// Phone number for shipping address.  20 char max.
 						'notetext' => '', 						// Note to the merchant.  255 char max.  
 						'allowedpaymentmethod' => '', 			// The payment method type.  Specify the value InstantPaymentOnly.

@@ -503,13 +503,23 @@ class OrdersController extends AppController {
 		if ($paypal) {
 			// call the GECD
 			$PayPalRequestSet = $this->executeGECD($shop_id);
+			if ($PayPalRequestSet['GECD']['ACK'] == 'Failure') {
+				$this->log('after executeGECD in line 506');
+				$this->log($PayPalRequestSet);	
+			}
+			
 			$tokenValue = $this->params['url']['token'];
 			
 			
-			// call the DECD to complete the transaction
+			// call the DECP to complete the transaction
 			if (!empty($PayPalRequestSet)) {
 				
-				$this->executeDECP($PayPalRequestSet['PayPalRequest'], $shop_id);
+				$result = $this->executeDECP($PayPalRequestSet['PayPalRequest'], $shop_id);
+				if ($result['ACK'] == 'Failure') {
+					$this->log('after executeDECP in line 515');
+					$this->log($result);	
+				}
+				
 				
 				// now set the payment to complete
 				$this->Order->Payment->completeByTransaction($shops_payment_module_id, $tokenValue);
@@ -820,15 +830,54 @@ class OrdersController extends AppController {
 					       'shop_id'=>$shop_id,
 					       'hash'=>$hash,
 					       'action'=>'pay',), true);
-				// execute SEC
 				
+				
+				// prepare Shipping Fee
+				$shippingAmt = 0.00;
+				
+				if (isset($rate['ShippingRate']['price'])) {
+					$shippingAmt = number_format($rate['ShippingRate']['price'],2,'.','');	
+				}
+				
+				$subtotalAmt = $Payments[0]['itemamt'];
+				$totalAmt = $subtotalAmt + $shippingAmt; 
+				$Payments[0]['shippingamt'] = $shippingAmt;
+				$Payments[0]['amt'] = $totalAmt;
+				
+				// set shipping addresses
+				// get delivery address by order id
+				$this->Order->DeliveryAddress->recursive = -1;
+				$this->Order->DeliveryAddress->Behaviors->attach('Linkable.Linkable');
+				$deliveryAddress = $this->Order->DeliveryAddress->find('first', array('conditions'=>array('Order.id'=>$this->Order->id,
+												       'DeliveryAddress.type'=>DELIVERY),
+												      'fields'=>array('DeliveryAddress.*', 'Country.iso'),
+												      'link'=>array('Order', 'Country')));
+				
+				
+				$Payments[0]['shiptoname'] = $deliveryAddress['DeliveryAddress']['full_name'];
+				$Payments[0]['shiptostreet'] = substr($deliveryAddress['DeliveryAddress']['address'], 0, 100);
+				if (strlen($deliveryAddress['DeliveryAddress']['address']) > 100) {
+					$Payments[0]['shiptostreet2'] = substr($deliveryAddress['DeliveryAddress']['address'], 100, 100);	
+				}
+				$Payments[0]['shiptocity'] = substr($deliveryAddress['DeliveryAddress']['city'], 0, 40);
+				$Payments[0]['shiptostate'] = substr($deliveryAddress['DeliveryAddress']['region'], 0, 40);
+				$Payments[0]['shiptozip'] = substr($deliveryAddress['DeliveryAddress']['zip_code'], 0, 20);
+				$Payments[0]['shiptocountrycode'] = substr($deliveryAddress['Country']['iso'], 0, 2);
+							
+				
+				// execute SEC
 				$PayPalResult = $this->prepareSEC(array('payments'=>$Payments,
 							//'uuid'=>,
 							'shopId'=>$shop_id,
-							'cancelURL'=>  FULL_BASE_URL . $this->referer()),
+							'cancelURL'=>  FULL_BASE_URL . $this->referer(),
+							// we do not want to display the shipping address 
+							'noshipping'=> 1,),
 						  $hash);
-				//$this->log('orderspreparesec');
-				//$this->log($PayPalResult);
+				if ($PayPalResult['ACK'] == 'Failure') {
+					$this->log('orderspreparesec in 867');
+					$this->log($PayPalResult);	
+				}
+				
 				// assign unique paypal transaction id to the payment
 				$this->data['Payment']['transaction_id_from_gateway'] = $PayPalResult['TOKEN'];
 				
@@ -968,6 +1017,7 @@ class OrdersController extends AppController {
 		
 		$SECFields = $this->Paypal->buildSECFields(array('returnurl'=>$returnURL,
 								 'cancelurl'=>$postFields['cancelURL'],
+								 'noshipping'=>isset($postFields['noshipping']) ? $postFields['noshipping'] : '',
 								 'maxamt'=>number_format($postFields['payments'][0]['amt'] + 1000, 2, '.', '')));
 								 
 		
@@ -990,6 +1040,7 @@ class OrdersController extends AppController {
 		
 		// for the paymentOption, to pass between orders/pay and orders/success
 		$this->Session->write('Shop.'.$postFields['shopId'].'.PayPalResult', $PayPalResult);
+		
 		$this->Session->write('Shop.'.$postFields['shopId'].'.Payments', $postFields['payments']);
 		
 		/* does not work for some mysterious reason cannot pass sessions between this action and orders/checkout

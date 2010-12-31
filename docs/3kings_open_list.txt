@@ -1,6 +1,6 @@
 Progress (Ship it!)
 =======================
-1) cart checkout for COD payment for anonymous customers
+
 2) SSL secure orders checkout page
 3) backup database and folders via sdk
 
@@ -22,7 +22,10 @@ need to alter copyable plugin. I am not sure.
 // need to compare $order with confirmPage
 // if same for both paypal at checkout point and payment point
 
-8) 
+8) all the GECD, SEC, DECP are lacking in error handling
+9) include contact phone number and contact email in order table
+10) use the contact email in order table for the optional email field for SEC paypal
+
 
 Productivity (Make life easier!!!)
 ===================================
