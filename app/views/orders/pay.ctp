@@ -30,7 +30,7 @@
 		if ($displayShipment) {
 			echo $this->Form->input('Shipment.shipping_rate_id', array('type'=>'radio', 'value'=>$defaultShipment));
 			echo $this->Form->input('Shipment.order_id', array('type'=>'hidden',
-									  'value' => $order['Order']['id']));
+									  'value' => $orderData['Order']['id']));
 		}
 	
 		if ($displayPaymentMode){
@@ -43,11 +43,11 @@
 								  'value' => $payPalShopsPaymentModuleId));
 		}
 		echo $this->Form->input('Payment.order_id', array('type'=>'hidden',
-								  'value' => $order['Order']['id']));
+								  'value' => $orderData['Order']['id']));
 		
 		// need to set the cart id for the past_checkout_point to work
 		echo $this->Form->input('Cart.id', array('type'=>'hidden',
-								  'value' => $order['Order']['cart_id']));
+								  'value' => $orderData['Order']['cart_id']));
 	
                 
 		
@@ -59,8 +59,8 @@
 
 <script type="text/javascript">
 
- var orderId = '<?php echo $order['Order']['id']; ?>';
- var cartId = '<?php echo $order['Order']['cart_id']; ?>';
+ var orderId = '<?php echo $orderData['Order']['id']; ?>';
+ var cartId = '<?php echo $orderData['Order']['cart_id']; ?>';
  var shipRateId = '';
 
     $(document).ready(function(){

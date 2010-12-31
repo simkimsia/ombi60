@@ -353,17 +353,20 @@ class Shop extends AppModel {
 	}
 	
 	function getPayPalShopsPaymentModuleId($shopId = 0) {
-		if ($shopId == 0) {
-			$shopId = $this->id;
-		}
-		
 		if ($shopId > 0) {
-			$id = $this->ShopsPaymentModule->field('id', array('shop_id'=>$shopId,
-								     'payment_module_id'=>Configure::read('Payment.PayPal')));
-							       
-			return $id;
+			$this->ShopsPaymentModule->recursive = -1;
+			$paymentModule = $this->ShopsPaymentModule->find('first',
+							array('conditions'=>array(
+										'shop_id'=>$shopId,
+										'payment_module_id'=>PAYPAL_PAYMENT_MODULE,
+										'active'=>true)));
+			if (isset($paymentModule['ShopsPaymentModule']['display_name'])) {
+				if (strpos($paymentModule['ShopsPaymentModule']['display_name'], 'Express Checkout') > 0) {
+					return $paymentModule['ShopsPaymentModule']['id'];
+				}
+			}
+			
 		}
-		
 		return false;
 	}
 	

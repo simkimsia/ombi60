@@ -210,11 +210,12 @@ class OrdersController extends AppController {
 				$PayPalRequestSet = $this->executeGECD($shopId);
 				if (!empty($PayPalRequestSet)) {
 					// first we need to extract the shipping address et al
-					$this->extractShippingDetails($shopId, $hash, $PayPalRequestSet);
+					$countryId = $this->extractShippingDetails($shopId, $hash, $PayPalRequestSet);
 					// redirection will take place within this function if successful
 					$options = array('customer_id'=>$customerId,
 							 'shop_id'=>$shopId,
-							 'hash'=>$hash);
+							 'hash'=>$hash,
+							 'country_id' => $countryId);
 					$this->syncAddressCustomerOrder($options, $PayPalRequestSet['PayPalRequest']);	
 				}
 				
@@ -276,14 +277,13 @@ class OrdersController extends AppController {
 	}
 	
 	// currently just assumed unlogged in user
+	// returns the country id where the shipping goes to
 	private function extractShippingDetails($shopId, $hash, $PayPalResultSet = array()) {
 		$GECDFields = $PayPalResultSet['GECDResult'];
 		
 		$validCustomer = ($this->Auth->user()) &&
 				 (User::get('User.group_id') == CUSTOMERS) &&
 				 (User::get('Customer.id') > 0);
-				
-		
 		
 		// only for invalid customers, do we set the customer_id to 0
 		if ($validCustomer) {
@@ -300,15 +300,24 @@ class OrdersController extends AppController {
 		
 		$this->data['Cart']['hash'] = $hash;
 		
+		$country = ClassRegistry::init('Country');
+		$country->recursive = -1;
+		// because paypal returns the 2 letter iso format for countries
+		$deliveredCountry = $country->findByIso($GECDFields['SHIPTOCOUNTRYCODE']);
+		$countryId = 0;
+		if (isset($deliveredCountry['Country']['id'])) {
+			$countryId = $deliveredCountry['Country']['id'];
+		}
+		
 		$this->data['BillingAddress'][0]['full_name'] = $GECDFields['SHIPTONAME'];
 		$this->data['BillingAddress'][0]['address'] = $GECDFields['SHIPTOSTREET'];
 		$this->data['BillingAddress'][0]['city']    = $GECDFields['SHIPTOCITY'];
 		$this->data['BillingAddress'][0]['region'] = isset($GECDFields['SHIPTOSTATE']) ? $GECDFields['SHIPTOSTATE'] : '';
 		$this->data['BillingAddress'][0]['zip_code'] = $GECDFields['SHIPTOZIP'];
-		$this->data['BillingAddress'][0]['country'] = $GECDFields['SHIPTOCOUNTRYCODE'];
+		$this->data['BillingAddress'][0]['country'] = $countryId;
 		$this->data['BillingAddress'][0]['type'] = BILLING;
 		
-		return true;
+		return $countryId;
 	}
 	
 	private function syncAddressCustomerOrder($options = array(), $PayPalRequest = false) {
@@ -456,10 +465,15 @@ class OrdersController extends AppController {
 	}
 	
 	private function executeDECD($PayPalRequest, $shopId) {
+		
+		$accountEmail = $this->Order->Shop->getAccountEmailPaypal($shopId);
+		
 		$PayPalConfig = array('Sandbox' => Configure::read('paypal.sandbox'),
 				      'APIUsername' => Configure::read('paypal.api.username'),
 				      'APIPassword' => Configure::read('paypal.api.password'),
-				      'APISignature' => Configure::read('paypal.api.signature'));
+				      'APISignature' => Configure::read('paypal.api.signature'),
+				      'APISubject' => $accountEmail);
+		
 		$PayPal = new PayPal($PayPalConfig);
 		
 		$PayPalResult = $PayPal->DoExpressCheckoutPayment($PayPalRequest);
@@ -553,17 +567,30 @@ class OrdersController extends AppController {
 			// set the delivery country as default 0
 			$country = 0;
 			
+			$order = $this->Order->findByHash($hash);
+			
+			
 			// need this to filter the right shipping settings
 			// for Paypal Express Checkout.
 			if (!empty($PayPalRequest)) {
+				
+				// need to compare $order with confirmPage
+				// if same for both paypal at checkout point and payment point
+				// then remove this code block and use order directly.
+				// $this->log('paypal in pay');
+				// $this->log($order);
+				// $this->log($confirmPage);
+				
 				$totalAmount = $confirmPage['amount'];
 				$shippedAmt = $confirmPage['shipped_amount'];
 				$shippedWeight = $confirmPage['shipped_weight'];
 				$displayShipment = $confirmPage['shipping_required'];
+				
+				$country = $order['DeliveryAddress']['country'];
 			
 			// for the other payment modules
 			} else {
-				$order = $this->Order->findByHash($hash);
+				
 				$totalAmount = $order['Order']['amount'];
 				$shippedAmt = $order['Order']['shipped_amount'];
 				$shippedWeight = $order['Order']['shipped_weight'];
@@ -611,13 +638,13 @@ class OrdersController extends AppController {
 				$defaultPayment = key($shopsPaymentModules);
 			}
 			
-			$this->Order->recursive = -1;
-			$order          = $this->Order->findByHash($hash);
+			
+			$orderData          = array('Order'=>$order['Order']);
 			
 			
 			// here we will buildPayment and buildItem for paypal
 			
-			$this->set(compact('order', 'shopsPaymentModules', 'shippingRates',
+			$this->set(compact('orderData', 'shopsPaymentModules', 'shippingRates',
 					   'hash', 'shop_id', 'displayPaymentMode', 'displayShipment',
 					   'totalAmount', 'totalAmountWithShipping',
 					   'defaultShipment', 'defaultPayment', 'payPalShopsPaymentModuleId'));
@@ -770,12 +797,14 @@ class OrdersController extends AppController {
 	
 	private function prepareSEC($postFields, $hash) {
 		
+		$accountEmail = $this->Order->Shop->getAccountEmailPaypal($postFields['shopId']);
 		
 		// we need to prepare the paypalexpresscheckout portion
 		$PayPalConfig = array('Sandbox' => Configure::read('paypal.sandbox'),
 				      'APIUsername' => Configure::read('paypal.api.username'),
 				      'APIPassword' => Configure::read('paypal.api.password'),
-				      'APISignature' => Configure::read('paypal.api.signature'));
+				      'APISignature' => Configure::read('paypal.api.signature'),
+				      'APISubject' => $accountEmail);
 		
 		
 		$PayPal = new PayPal($PayPalConfig);
@@ -827,12 +856,16 @@ class OrdersController extends AppController {
 	
 	private function executeGECD($shopId) {
 			
+		$accountEmail = $this->Order->Shop->getAccountEmailPaypal($shopId);
+			
 		$Payments = $this->Session->read('Shop.'.$shopId.'.Payments');
 		
 		$PayPalConfig = array('Sandbox' => Configure::read('paypal.sandbox'),
 				      'APIUsername' => Configure::read('paypal.api.username'),
 				      'APIPassword' => Configure::read('paypal.api.password'),
-				      'APISignature' => Configure::read('paypal.api.signature'));
+				      'APISignature' => Configure::read('paypal.api.signature'),
+				      'APISubject' => $accountEmail);
+		
 		$PayPal = new PayPal($PayPalConfig);
 		
 		$tokenValue = $this->Session->read('Shop.'.$shopId.'.PayPalResult.TOKEN');
