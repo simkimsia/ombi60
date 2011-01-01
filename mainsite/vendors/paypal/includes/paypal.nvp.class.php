@@ -66,7 +66,7 @@ class PayPal
 		$this -> BetaSandbox = isset($DataArray['BetaSandbox']) ? $DataArray['BetaSandbox'] : false;
 		$this -> APIVersion = isset($DataArray['APIVersion']) ? $DataArray['APIVersion'] : '63.0';
 		$this -> APIMode = isset($DataArray['APIMode']) ? $DataArray['APIMode'] : 'Signature';
-		$this -> APIButtonSource = isset($DataArray['ButtonSource']) ? $DataArray['ButtonSource'] : 'AngellEYE_PaymentsPro_PHP_Class';
+		$this -> APIButtonSource = isset($DataArray['ButtonSource']) ? $DataArray['ButtonSource'] : 'OMBI60_FOR_MAINSITE';
 		$this -> PathToCertKeyPEM = '/path/to/cert/pem.txt';
 		$this -> SSL = $_SERVER['SERVER_PORT'] == '443' ? true : false;
 		$this -> APISubject = isset($DataArray['APISubject']) ? $DataArray['APISubject'] : '';

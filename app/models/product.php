@@ -75,6 +75,27 @@ class Product extends AppModel {
 					
 							),)
 			     );
+	
+	
+	/**
+	 * will return the product url based on id
+	 * otherwise return the shop url
+	 * **/
+	function getProductUrl($id = false) {
+		
+		if (!$id) {
+			$id = $this->id;
+		}
+		
+		if (is_numeric($id) && ($id > 0)) {
+			return Router::url(array('controller'=>'products',
+					  'action'=>'view',
+					  $id), true);
+		}
+		
+		return FULL_BASE_URL;
+		
+	}
 
 	function createProductDetails($data = NULL) {
 

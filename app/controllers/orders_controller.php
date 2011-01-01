@@ -715,7 +715,7 @@ class OrdersController extends AppController {
 			
 			if ($forPayPalAtCheckout) {
 				
-				// attach the shipping amt into the paypal payment shipping_amt
+				
 				
 				
 				/**
@@ -799,7 +799,7 @@ class OrdersController extends AppController {
 				    )
 
 				 * **/
-				
+				// attach the shipping amt into the paypal payment shipping_amt
 				$shippingAmt = 0.00;
 				
 				if (isset($rate['ShippingRate']['price'])) {
@@ -810,6 +810,13 @@ class OrdersController extends AppController {
 				$totalAmt = $subtotalAmt + $shippingAmt; 
 				$PayPalRequest['Payments'][0]['shippingamt'] = $shippingAmt;
 				$PayPalRequest['Payments'][0]['amt'] = $totalAmt;
+				
+				// now set the invnum for PPEC from Checkout Point.
+				if (isset($this->data['Order']['order_no'])) {
+					$PayPalRequest['Payments'][0]['invnum'] = substr($this->data['Order']['order_no'], 0, 127);
+				}
+				
+				
 				//$this->log($PayPalRequest);
 				$result = $this->executeDECP($PayPalRequest, $shop_id);
 				//$this->log('DECP results');
@@ -864,17 +871,23 @@ class OrdersController extends AppController {
 				$Payments[0]['shiptozip'] = substr($deliveryAddress['DeliveryAddress']['zip_code'], 0, 20);
 				$Payments[0]['shiptocountrycode'] = substr($deliveryAddress['Country']['iso'], 0, 2);
 							
+				// now set the invnum for PPEC from Payment Point.
+				if (isset($this->data['Order']['order_no'])) {
+					$Payments[0]['invnum'] = substr($this->data['Order']['order_no'], 0, 127);
+				}
+				
 				
 				// execute SEC
 				$PayPalResult = $this->prepareSEC(array('payments'=>$Payments,
 							//'uuid'=>,
 							'shopId'=>$shop_id,
 							'cancelURL'=>  FULL_BASE_URL . $this->referer(),
-							// we do not want to display the shipping address 
-							'noshipping'=> 1,),
+							// we want to override the shipping address from our side
+							'addroverride'=> 1,
+							),
 						  $hash);
 				if ($PayPalResult['ACK'] == 'Failure') {
-					$this->log('orderspreparesec in 867');
+					$this->log('orderspreparesec in 889');
 					$this->log($PayPalResult);	
 				}
 				
@@ -1017,7 +1030,7 @@ class OrdersController extends AppController {
 		
 		$SECFields = $this->Paypal->buildSECFields(array('returnurl'=>$returnURL,
 								 'cancelurl'=>$postFields['cancelURL'],
-								 'noshipping'=>isset($postFields['noshipping']) ? $postFields['noshipping'] : '',
+								 'addroverride'=>isset($postFields['addroverride']) ? $postFields['addroverride'] : '',
 								 'maxamt'=>number_format($postFields['payments'][0]['amt'] + 1000, 2, '.', '')));
 								 
 		

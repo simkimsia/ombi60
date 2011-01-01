@@ -264,13 +264,19 @@ class ProductsController extends AppController {
 			foreach($products as $cart_id => $product) {
 				// total the amount
 				$paymentAmount += $product['product_price'] * number_format($product['product_quantity'],1);
+				
+				// build the item url
+				$itemUrl = $this->Product->getProductUrl($product['product_id']);
 			
 				// build the item
 				$item = $this->Paypal->buildItem(array(
 							       'amt'=>$product['product_price'],
 							       'name'=>$product['product_title'],
 							       'qty'=>$product['product_quantity'],
-							       'number'=>$product['product_id']));
+							       'number'=>$product['product_id'],
+							       'itemurl'=>$itemUrl,
+							       'itemweightvalue'=>$product['weight'],
+							       'itemweightunit'=>$product['weight_unit']));
 				
 				array_push($PaymentOrderItems, $item);
 				

@@ -50,7 +50,10 @@
 								  'value' => $orderData['Order']['cart_id']));
 	
                 
-		
+		// set the hidden value of order_no so that it can be used to send invnum to paypal express checkout
+		// in pay action isPost() code block
+		echo $this->Form->input('Order.order_no', array('type'=>'hidden',
+								'value'=>$orderData['Order']['order_no']));
 		
 	?>
 	</fieldset>
