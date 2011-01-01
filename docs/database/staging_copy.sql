@@ -548,9 +548,13 @@ DROP TABLE IF EXISTS `paypal_payers`;
 
 CREATE TABLE `paypal_payers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `payer_id` varchar(255) DEFAULT NULL,
+  `payerid` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `payerstatus` varchar(10) NOT NULL,
+  `countrycode` varchar(2) NOT NULL,
+  `business` varchar(127) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `paypal_payers` */
 
@@ -567,6 +571,19 @@ CREATE TABLE `paypal_payers_customers` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Data for the table `paypal_payers_customers` */
+
+/*Table structure for table `paypal_payers_payments` */
+
+DROP TABLE IF EXISTS `paypal_payers_payments`;
+
+CREATE TABLE `paypal_payers_payments` (
+  `id` char(36) NOT NULL,
+  `paypal_payer_id` int(11) NOT NULL,
+  `payment_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `paypal_payers_payments` */
 
 /*Table structure for table `paypal_payment_modules` */
 

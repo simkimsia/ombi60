@@ -55,6 +55,18 @@
 		echo $this->Form->input('Order.order_no', array('type'=>'hidden',
 								'value'=>$orderData['Order']['order_no']));
 		
+		
+		// set the hidden value of contact_email so that it can be used to send email to paypal express checkout
+		// in pay action isPost() code block
+		echo $this->Form->input('Order.contact_email', array('type'=>'hidden',
+								     'value'=>$orderData['Order']['contact_email']));
+		
+		$this->log($paypal_payer_id);
+		if (!empty($paypal_payer_id) && is_numeric($paypal_payer_id) ) {
+			echo $this->Form->input('PaypalPayersPayment.paypal_payer_id', array('type'=>'hidden',
+											     'value'=>$paypal_payer_id));
+		}
+		
 	?>
 	</fieldset>
 <?php echo $this->Form->end('Submit');?>

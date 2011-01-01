@@ -206,17 +206,29 @@ class OrdersController extends AppController {
 			$this->set('countries', $this->Order->BillingAddress->Country->find('list'));
 			
 			if ($comingFromPayPalSite) {
-				// execute the GetExpressCheckoutDetails API
+				// execute the GetExpressCheckoutDetails API for PPEC at Checkout Point
 				$PayPalRequestSet = $this->executeGECD($shopId);
+				
+				// if executeGECD is successful
 				if (!empty($PayPalRequestSet)) {
-					// first we need to extract the shipping address et al
-					$countryId = $this->extractShippingDetails($shopId, $hash, $PayPalRequestSet);
-					// redirection will take place within this function if successful
-					$options = array('customer_id'=>$customerId,
-							 'shop_id'=>$shopId,
-							 'hash'=>$hash,
-							 'country_id' => $countryId);
-					$this->syncAddressCustomerOrder($options, $PayPalRequestSet['PayPalRequest']);	
+										
+					if (strtoupper($PayPalRequestSet['GECDResult']['ACK']) == 'SUCCESS') {
+						// extract payerid, payeremail, payername, other info to update paypal_payers
+						$paypalPayer = $this->Order->Payment->PaypalPayersPayment->PaypalPayer->saveAfterGECD($PayPalRequestSet['GECDResult']);
+						
+						// first we need to extract the shipping address et al
+						$countryId = $this->extractShippingDetails($shopId, $hash, $PayPalRequestSet);
+						
+						// redirection will take place within this function if successful
+						$options = array('customer_id'=>$customerId,
+								 'shop_id'=>$shopId,
+								 'hash'=>$hash,
+								 'country_id' => $countryId,
+								 'paypal_payer_id' => (isset($paypalPayer['PaypalPayer']['id'])) ? $paypalPayer['PaypalPayer']['id'] : '');
+						
+						$this->syncAddressCustomerOrder($options, $PayPalRequestSet['PayPalRequest']);		
+					}
+					
 				}
 				
 			} else {
@@ -325,6 +337,12 @@ class OrdersController extends AppController {
 		$customerId = $options['customer_id'];
 		$shopId = $options['shop_id'];
 		$hash = $options['hash'];
+		// fix the paypal_payer_id for PPEC from Checkout Point
+		$paypalPayerId = '';
+		if (isset($options['paypal_payer_id'])) {
+			$paypalPayerId = $options['paypal_payer_id'];	
+		}
+		
 		$delivery_address_id = isset($options['delivery_address_id']) ? $options['delivery_address_id'] : 0;
 		
 		$result = true;
@@ -338,6 +356,7 @@ class OrdersController extends AppController {
 		} else {
 			// check database for existing customer
 			$customerId = $this->Order->Customer->getExistingByShopIdAndEmail($this->data);
+			
 		}
 		
 		// use existing delivery address
@@ -423,15 +442,19 @@ class OrdersController extends AppController {
 			// store the addresses id
 			$orderDetails['billing_address_id']  = $billingAddressId;
 			$orderDetails['delivery_address_id'] = $deliveryAddressId;
+			
+			// we fix the contact email on the order based on the email supplied in the form.
+			$orderDetails['contact_email'] = (isset($this->data['User']['email'])) ? $this->data['User']['email'] : '';
 				
 			// now we get the cart data again
 			$cartData = $cart->findByHash($hash);
 			
 			$orderDetails['amount'] = $cartData['Cart']['amount'];
-				
+			
 			// convert the cart data to savable order data
 			$data = $this->Order->convertCart($cartData, $orderDetails);
 			
+			// now we save the order for the very first time!
 			$resultSet = 	$this->Order->saveForCheckoutStep1($data);
 			
 			if (is_array($resultSet) AND $resultSet['result']) {
@@ -448,7 +471,8 @@ class OrdersController extends AppController {
 												'amount'=>$orderDetails['amount'],
 												'shipped_amount'=>$data['Order']['shipped_amount'],
 												'shipped_weight'=>$data['Order']['shipped_weight'],
-												'shipping_required'=>$data['Order']['shipping_required']));
+												'shipping_required'=>$data['Order']['shipping_required'],
+												'paypal_payer_id' => $paypalPayerId));
 				
 				$this->redirect(array('action' => 'pay',
 						      'controller' => 'orders',
@@ -575,6 +599,9 @@ class OrdersController extends AppController {
 			
 			$PayPalRequest = $confirmPage['PayPalRequest'];
 			$sessionHash = $confirmPage['hash'];
+			
+			// retrieve the paypal_payer_id and place it inside the ctp
+			$this->set('paypal_payer_id', $confirmPage['paypal_payer_id']);
 			
 			// set the delivery country as default 0
 			$country = 0;
@@ -715,9 +742,6 @@ class OrdersController extends AppController {
 			
 			if ($forPayPalAtCheckout) {
 				
-				
-				
-				
 				/**
 				 * at this point the $PayPalRequest is like this
 				 * (
@@ -811,11 +835,10 @@ class OrdersController extends AppController {
 				$PayPalRequest['Payments'][0]['shippingamt'] = $shippingAmt;
 				$PayPalRequest['Payments'][0]['amt'] = $totalAmt;
 				
-				// now set the invnum for PPEC from Checkout Point.
+				// now set the invnum for PPEC from Checkout Point
 				if (isset($this->data['Order']['order_no'])) {
 					$PayPalRequest['Payments'][0]['invnum'] = substr($this->data['Order']['order_no'], 0, 127);
 				}
-				
 				
 				//$this->log($PayPalRequest);
 				$result = $this->executeDECP($PayPalRequest, $shop_id);
@@ -824,7 +847,7 @@ class OrdersController extends AppController {
 			}
 			
 			// for payment option point
-			$payment = $this->data['Payment']['shops_payment_module_id'];
+			$payment 	 = $this->data['Payment']['shops_payment_module_id'];
 			$this->Order->id = $this->data['Payment']['order_id'];
 			
 			if ($payment == $payPalShopsPaymentModuleId && !$forPayPalAtCheckout) {
@@ -876,15 +899,21 @@ class OrdersController extends AppController {
 					$Payments[0]['invnum'] = substr($this->data['Order']['order_no'], 0, 127);
 				}
 				
+				$options = array('payments'=>$Payments,
+						//'uuid'=>,
+						'shopId'=>$shop_id,
+						'cancelURL'=>  FULL_BASE_URL . $this->referer(),
+						// we want to override the shipping address from our side
+						'addroverride'=> 1,
+						);
+				
+				// now set the email for PPEC from Payment Point
+				if (isset($this->data['Order']['contact_email'])) {
+					$options['email'] = substr($this->data['Order']['contact_email'], 0, 127);
+				}
 				
 				// execute SEC
-				$PayPalResult = $this->prepareSEC(array('payments'=>$Payments,
-							//'uuid'=>,
-							'shopId'=>$shop_id,
-							'cancelURL'=>  FULL_BASE_URL . $this->referer(),
-							// we want to override the shipping address from our side
-							'addroverride'=> 1,
-							),
+				$PayPalResult = $this->prepareSEC($options,
 						  $hash);
 				if ($PayPalResult['ACK'] == 'Failure') {
 					$this->log('orderspreparesec in 889');
@@ -1031,6 +1060,7 @@ class OrdersController extends AppController {
 		$SECFields = $this->Paypal->buildSECFields(array('returnurl'=>$returnURL,
 								 'cancelurl'=>$postFields['cancelURL'],
 								 'addroverride'=>isset($postFields['addroverride']) ? $postFields['addroverride'] : '',
+								 'email'=>isset($postFields['email']) ? $postFields['email'] : '',
 								 'maxamt'=>number_format($postFields['payments'][0]['amt'] + 1000, 2, '.', '')));
 								 
 		

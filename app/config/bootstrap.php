@@ -137,6 +137,16 @@ define('PAYMENT_PENDING', 3);
 define('PAYMENT_PAID', 2);
 define('PAYMENT_ABANDONED', 0);
 
+
+/**
+ * ORDERS status
+ **/
+define('ORDER_CREATED', 0); // when order is created, it means that the checkout button is pressed
+define('ORDER_OPENED', 1); // when order is opened, it means that the payment has been initiated
+define('ORDER_IN_PROCESS', 2); // when order is between opened and closed
+define('ORDER_CLOSED', 3); // when order is closed
+
+
 /**
  * Payment module id
  **/

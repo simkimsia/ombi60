@@ -20,6 +20,22 @@ class Payment extends AppModel {
 		)
 	);
 	
+	var $hasOne = array(
+		'PaypalPayersPayment' => array(
+			'className' => 'PaypalPayersPayment',
+			'foreignKey' => 'payment_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+	
 	
 	var $validate = array(
 		'transaction_id_from_gateway' => array(

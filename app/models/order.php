@@ -94,7 +94,8 @@ class Order extends AppModel {
 					'billing_address_id' => 0,
 					'delivery_address_id' => 0,
 					'amount' => 0,
-					'order_no' => '');
+					'order_no' => '',
+					'contact_email' => '');
 		
 		$options = array_merge($defaultOptions, $options);
 		if (!is_array($cartData) OR empty($cartData)) {
@@ -115,7 +116,8 @@ class Order extends AppModel {
 						'billing_address_id' => $options['billing_address_id'],
 						'delivery_address_id' => $options['delivery_address_id'],
 						'order_no' => $options['order_no'],
-						'cart_id' => $cartData['Cart']['id']
+						'cart_id' => $cartData['Cart']['id'],
+						'contact_email' => $options['contact_email'],
 						),
 			      'OrderLineItem' => $cartData['CartItem']);
 		
@@ -312,6 +314,20 @@ class Order extends AppModel {
 		if (!$result) {
 			$dataSource->rollback($this);
 			return false;
+		}
+		
+		// because Paypal_Payers_Payment not a direct associated with Order so we need to save it separately
+		if (isset($data['PaypalPayersPayment'])) {
+			$pppData = array('PaypalPayersPayment' => $data['PaypalPayersPayment']);
+			$pppData['PaypalPayersPayment']['payment_id'] = $this->Payment->id;
+			
+			$result = $this->Payment->PaypalPayersPayment->save($pppData);
+			
+			if (!$result) {
+				$dataSource->rollback($this);
+				return false;
+			}
+			
 		}
 		
 		// need to set Cart past_checkout_point to true to ensure cart is emptied

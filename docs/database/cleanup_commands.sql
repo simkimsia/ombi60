@@ -49,11 +49,15 @@ TRUNCATE TABLE `price_based_rates`;
 TRUNCATE TABLE `custom_payment_modules`;
 TRUNCATE TABLE `paypal_payment_modules`;
 TRUNCATE TABLE `shops_payment_modules`;
+TRUNCATE TABLE `paypal_payers_payments`;
+TRUNCATE TABLE `paypal_payers`;
 TRUNCATE TABLE `payments`;
 TRUNCATE TABLE cart_items;
 TRUNCATE TABLE carts;
 TRUNCATE TABLE order_line_items;
 TRUNCATE TABLE orders;
+
+
 
 
 INSERT INTO aros (model, foreign_key, alias, lft, rght) VALUES 
