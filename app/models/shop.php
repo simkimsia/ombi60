@@ -352,6 +352,24 @@ class Shop extends AppModel {
 		
 	}
 	
+	
+	/**
+	 * check if the current base is the same as the shop's main domain
+	 **/
+	function isCurrentBaseThisDomain($mainUrl) {
+                $baseHost = '';
+                if (strpos(FULL_BASE_URL, 'http://') == 0) {
+			$this->log('test' . FULL_BASE_URL);
+                    $baseHost = str_replace('http://', '', FULL_BASE_URL);    
+                } else if (strpos(FULL_BASE_URL, 'https://') == 0) {
+			$this->log('https' . FULL_BASE_URL);
+                    $baseHost = str_replace('https://', '', FULL_BASE_URL);    
+                }
+                
+                return (strpos($mainUrl, $baseHost) >= 0);
+                
+	}
+	
 	function getPayPalShopsPaymentModuleId($shopId = 0) {
 		if ($shopId > 0) {
 			$this->ShopsPaymentModule->recursive = -1;

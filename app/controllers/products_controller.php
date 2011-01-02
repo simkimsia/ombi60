@@ -258,7 +258,6 @@ class ProductsController extends AppController {
 		$prepareSessionForPaypal = !empty($productsInCart) && $paypalExpressOn;
 		
 		if ($prepareSessionForPaypal) {
-			
 		
 			// loop thru the cart inside Session
 			foreach($products as $cart_id => $product) {
@@ -303,6 +302,14 @@ class ProductsController extends AppController {
 		$cart_id = $productsInCart['Cart']['id'];
 		$this->set(compact('products', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
 		
+		$sessionString = '';
+		$mainUrl = Shop::get('Shop.web_address');
+		// now we are going to pass the session into the database for the crossover for checkout
+		if (!$this->Product->Shop->isCurrentBaseThisDomain($mainUrl)) {
+			$sessionString = '?ss='.$this->transferSession();
+		}
+		
+		$this->set('sessionString', $sessionString);
 	}
 
 	function admin_index() {

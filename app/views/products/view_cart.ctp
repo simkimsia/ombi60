@@ -113,6 +113,7 @@
 			<?php
 				if ($count > 0) {
 					$actionLink = Shop::get('web_address') . Router::url(array('controller'=>'products', 'action'=>'checkout'));
+					$actionLink .= $sessionString;
 					echo $this->Form->create('Product', array('url'=>$actionLink ));
 					echo '<div id="cartcheckout">';
 					echo $this->Form->submit('Checkout', array('name'=>'checkoutBtn', 'value'=>'proceed', 'id'=>'cartbutton'));
