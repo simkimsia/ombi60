@@ -89,6 +89,18 @@ class ProductsController extends AppController {
 		    ) {
 			$this->Security->validatePost = false;
 		}
+		
+		if(($this->action == 'checkout') AND (!empty($this->params['url']['ss']))) {
+			
+			$uuid = $this->params['url']['ss'];
+			$siteTransfer = ClassRegistry::init('SiteTransfer');
+			$data = $siteTransfer->findById($uuid);
+			$this->Session->id($data['SiteTransfer']['sess_id']);
+			
+			// if session read write fails for paymentoption then need to re-evaluate this.
+			$siteTransfer->delete($uuid);
+			
+		}
 
 	}
 	

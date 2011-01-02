@@ -358,15 +358,15 @@ class Shop extends AppModel {
 	 **/
 	function isCurrentBaseThisDomain($mainUrl) {
                 $baseHost = '';
-                if (strpos(FULL_BASE_URL, 'http://') == 0) {
-			$this->log('test' . FULL_BASE_URL);
+                if (strpos(FULL_BASE_URL, 'http://') === 0) {
+			
                     $baseHost = str_replace('http://', '', FULL_BASE_URL);    
-                } else if (strpos(FULL_BASE_URL, 'https://') == 0) {
-			$this->log('https' . FULL_BASE_URL);
+                } else if (strpos(FULL_BASE_URL, 'https://') === 0) {
+			
                     $baseHost = str_replace('https://', '', FULL_BASE_URL);    
                 }
                 
-                return (strpos($mainUrl, $baseHost) >= 0);
+                return (strpos($mainUrl, $baseHost) !== false);
                 
 	}
 	
