@@ -307,14 +307,12 @@ class Order extends AppModel {
 		// need to set Order past_checkout_point to be true to conclude the order
 		$data['Order']['past_checkout_point'] = true;
 		
-		$this->log($data);
-		
 		$dataSource = $this->getDataSource();
 		
 		$dataSource->begin($this);
 		
 		$result = $this->saveAll($data, array('atomic'=>false));
-		$this->log($result);
+		
 		if (!$result) {
 			$dataSource->rollback($this);
 			return false;

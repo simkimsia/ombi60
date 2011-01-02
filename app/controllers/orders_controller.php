@@ -874,8 +874,7 @@ class OrdersController extends AppController {
 				
 				$result = $this->executeDECP($PayPalRequest, $shop_id);
 				
-				$this->log('DECP results');
-				$this->log($result);
+				
 				
 				if ($result['ACK'] == 'Success') {
 					
@@ -884,6 +883,8 @@ class OrdersController extends AppController {
 				} else if ($result['ACK'] == 'Failure') {
 					
 					$paymentStatus = PAYMENT_PENDING;
+					$this->log('DECP results line 886');
+					$this->log($result);
 					
 				}
 			}
