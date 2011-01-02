@@ -458,6 +458,7 @@ CREATE TABLE `orders` (
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
   `total_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `contact_email` varchar(255) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

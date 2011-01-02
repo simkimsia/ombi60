@@ -525,19 +525,22 @@ class OrdersController extends AppController {
 		}
 		
 		if ($paypal) {
-			// call the GECD
+			// call the GECD for PPEC at Payment point
 			$PayPalRequestSet = $this->executeGECD($shop_id);
-			if ($PayPalRequestSet['GECD']['ACK'] == 'Failure') {
+			if ($PayPalRequestSet['GECDResult']['ACK'] == 'Failure') {
 				$this->log('after executeGECD in line 506');
 				$this->log($PayPalRequestSet);	
 			}
 			
-			$tokenValue = $this->params['url']['token'];
-			
-			
-			// call the DECP to complete the transaction
-			if (!empty($PayPalRequestSet)) {
+			// if executeGECD is successful
+			else if (strtoupper($PayPalRequestSet['GECDResult']['ACK']) == 'SUCCESS') {
+				// extract payerid, payeremail, payername, other info to update paypal_payers
+				$paypalPayer = $this->Order->Payment->PaypalPayersPayment->PaypalPayer->saveAfterGECD($PayPalRequestSet['GECDResult']);
 				
+				$tokenValue = $this->params['url']['token'];
+				
+				
+				// call the DECP to complete the transaction for PPEC at Payment point
 				$result = $this->executeDECP($PayPalRequestSet['PayPalRequest'], $shop_id);
 				if ($result['ACK'] == 'Failure') {
 					$this->log('after executeDECP in line 515');
@@ -545,9 +548,25 @@ class OrdersController extends AppController {
 				}
 				
 				
-				// now set the payment to complete
-				$this->Order->Payment->completeByTransaction($shops_payment_module_id, $tokenValue);
+				// now set the payment to complete by finding it and then saving
+				// we do 2 step because we also need the payment id to do a save for
+				// paypalpayerspayment table
+				$this->Order->Payment->recursive = -1;
+				$payment = $this->Order->Payment->find('first', array('conditions' => array('transaction_id_from_gateway' => $tokenValue,
+													    'shops_payment_module_id' => $shops_payment_module_id)));
+				
+				if ($payment) {
+					// this is for setting the payment as complete
+					$payment['Payment']['completed'] = true;
+					// this is for creating the paypalpayerspayment record
+					$payment['PaypalPayersPayment']['paypal_payer_id'] = $paypalPayer['PaypalPayer']['id'];
+					
+					$this->Order->Payment->saveAll($payment);
+				}
+				//$this->Order->Payment->completeByTransaction($shops_payment_module_id, $tokenValue);
+				
 			}
+			
 		}
 		$this->set('link', $link);
 	}
