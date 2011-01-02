@@ -61,7 +61,7 @@
 		echo $this->Form->input('Order.contact_email', array('type'=>'hidden',
 								     'value'=>$orderData['Order']['contact_email']));
 		
-		$this->log($paypal_payer_id);
+		
 		if (!empty($paypal_payer_id) && is_numeric($paypal_payer_id) ) {
 			echo $this->Form->input('PaypalPayersPayment.paypal_payer_id', array('type'=>'hidden',
 											     'value'=>$paypal_payer_id));

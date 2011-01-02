@@ -521,6 +521,10 @@ class OrdersController extends AppController {
 		$tokenValueOn = isset($this->params['url']['token']);
 		$shops_payment_module_id = $this->Order->Shop->getPayPalShopsPaymentModuleId($shop_id);
 		
+		/** this is for PPEC at Payment pt ONLY **/
+		$orderId = $this->Session->read('Shop.'.$shop_id. '.PaypalEC.Order.id');
+		
+		
 		if (Configure::read('debug') > 0) {
 			$link = 'http://ombi60.localhost';
 		} else {
@@ -548,26 +552,50 @@ class OrdersController extends AppController {
 				$result = $this->executeDECP($PayPalRequestSet['PayPalRequest'], $shop_id);
 				if ($result['ACK'] == 'Failure') {
 					$this->log('after executeDECP in line 515');
-					$this->log($result);	
-				}
-				
-				
-				// now set the payment to complete by finding it and then saving
-				// we do 2 step because we also need the payment id to do a save for
-				// paypalpayerspayment table
-				$this->Order->Payment->recursive = -1;
-				$payment = $this->Order->Payment->find('first', array('conditions' => array('transaction_id_from_gateway' => $tokenValue,
-													    'shops_payment_module_id' => $shops_payment_module_id)));
-				
-				if ($payment) {
-					// this is for setting the payment as complete
-					$payment['Payment']['completed'] = true;
-					// this is for creating the paypalpayerspayment record
-					$payment['PaypalPayersPayment']['paypal_payer_id'] = $paypalPayer['PaypalPayer']['id'];
+					$this->log($result);
 					
-					$this->Order->Payment->saveAll($payment);
+					// display failure page
+					// 
+					// $this->redirect('failed');
+					// exit;
+				} else {
+					// now set the payment to complete by finding it and then saving
+					// we do 2 step because we also need the payment id to do a save for
+					// paypalpayerspayment table
+					$this->Order->Payment->recursive = -1;
+					
+					
+					$payment = $this->Order->Payment->find('first', array('conditions' => array('token_from_gateway' => $tokenValue,
+														    'shops_payment_module_id' => $shops_payment_module_id,
+														    'order_id' => $orderId)));
+					
+					if ($payment) {
+						// this is for setting the transaction id
+						$payment['Payment']['transaction_id_from_gateway'] = $result['PAYMENTS'][0]['TRANSACTIONID'];
+						
+						
+						// this is for setting the status
+						$payment['Payment']['status'] = PAYMENT_PAID;
+						$orderData = array('Order' => array('payment_status' => PAYMENT_PAID,
+										    'id' => $payment['Payment']['order_id']));
+						
+						$payment['Order'] = $orderData['Order'];
+						
+						// this is for creating the paypalpayerspayment record
+						$payment['PaypalPayersPayment']['paypal_payer_id'] = $paypalPayer['PaypalPayer']['id'];
+						
+						
+						$result = $this->Order->Payment->saveAll($payment);
+						
+						if ($result) {
+							$this->Session->delete('Shop.' .$shop_id. '.PaypalEC.Order.id', $this->Order->id);
+						}
+						
+						
+					}	
 				}
-				//$this->Order->Payment->completeByTransaction($shops_payment_module_id, $tokenValue);
+				
+				
 				
 			}
 			
@@ -879,15 +907,15 @@ class OrdersController extends AppController {
 				
 				$result = $this->executeDECP($PayPalRequest, $shop_id);
 				
-				
-				
 				if ($result['ACK'] == 'Success') {
 					
 					$paymentStatus = PAYMENT_PAID;
+					$this->data['Payment']['transaction_id_from_gateway'] = $result['PAYMENTS'][0]['TRANSACTIONID'];
+					$this->data['Payment']['gateway_name'] = 'Paypal Express Checkout at Checkout';
 					
 				} else if ($result['ACK'] == 'Failure') {
 					
-					$paymentStatus = PAYMENT_PENDING;
+					$paymentStatus = PAYMENT_INITIATED;
 					$this->log('DECP results line 886');
 					$this->log($result);
 					
@@ -965,23 +993,31 @@ class OrdersController extends AppController {
 				if ($PayPalResult['ACK'] == 'Failure') {
 					$this->log('orderspreparesec in 889');
 					$this->log($PayPalResult);
-					$paymentStatus = PAYMENT_PENDING;
+					
 				} else if ($PayPalResult['ACK'] == 'Success') {
-					$paymentStatus = PAYMENT_PAID;
+					$paymentStatus = PAYMENT_PENDING;
 				} 
 				
 				// assign unique paypal transaction id to the payment
-				$this->data['Payment']['transaction_id_from_gateway'] = $PayPalResult['TOKEN'];
+				$this->data['Payment']['token_from_gateway'] = $PayPalResult['TOKEN'];
+				$this->data['Payment']['gateway_name']       = 'Paypal Express Checkout at Payment';
 				
 				
 				$this->data['Order']['status'] = $orderStatus;
 				$this->data['Payment']['status'] =  $paymentStatus;
 				
+				
 				// save payment and shipment data as incomplete for payment
-				$this->Order->savePaymentAndShipment($this->data);
+				$result = $this->Order->savePaymentAndShipment($this->data);
+				
+				if ($result) {
+					// we need to write in the order id that is processed by paypalec at payment point
+					$this->Session->write('Shop.' .$shop_id. '.PaypalEC.Order.id', $this->Order->id);
+					
+				}
 				
 				// redirect to PPREDIRECTURL
-				$this->redirect($PayPalResult['REDIRECTURL']);
+				$this->redirect($PayPalResult['REDIRECTURL']);	
 				
 			// this one clearly is for NON paypal modules	
 			} else {

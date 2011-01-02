@@ -162,7 +162,7 @@ class Order extends AppModel {
 		
 		/**
 		 * to prevent editing of orders past the checkout point
-		 **/
+		 
 		$id = 0;
 		if (isset($this->data[$this->alias]['id'])) {
 			$id = $this->data[$this->alias]['id'];	
@@ -172,7 +172,7 @@ class Order extends AppModel {
 			return !($this->field('past_checkout_point', array('id'=>$id)));
 			
 		}
-		
+		**/
 		return true;
 	}
 	

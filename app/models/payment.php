@@ -38,25 +38,31 @@ class Payment extends AppModel {
 	
 	
 	var $validate = array(
-		'transaction_id_from_gateway' => array(
-			'uniqueTransaction' => array(
-				'rule' => array('uniqueTransaction'),
-				'message' => 'An existing transaction id for this gateway has occurred already',
+		/*
+		'token_from_gateway' => array(
+			'uniqueToken' => array(
+				'rule' => array('uniqueToken'),
+				'message' => 'An existing live TOKEN for this gateway has occurred already',
 			),
 
 		),
+		*/
 	
 	);
 	
-	function uniqueTransaction($check) {
+	function uniqueToken($check) {
 		
-		$transaction_idIsOn = isset($this->data[$this->alias]['transaction_id_from_gateway']);
-		if ($transaction_idIsOn) {
-			$transaction_id = $this->data[$this->alias]['transaction_id_from_gateway'];
+		$transaction_idIsOn = isset($this->data[$this->alias]['token_from_gateway']);
+		$gatewayOn = isset($this->data[$this->alias]['gateway_name']);
+		if ($transaction_idIsOn && $gatewayOn) {
+			$token = $this->data[$this->alias]['token_from_gateway'];
+			$gateway = $this->data[$this->alias]['gateway_name'];
 			$shopsModuleId = $this->data[$this->alias]['shops_payment_module_id'];
 			if (!empty($transaction_id)) {
 				$this->recursive = -1;
-				$payment = $this->find('first', array('conditions'=>array('transaction_id_from_gateway'=>$transaction_id,
+				$payment = $this->find('first', array('conditions'=>array('token_from_gateway'=>$token,
+											  'gateway_name' => $gateway,
+											  'status' => PAYMENT_PENDING,
 											  'shops_payment_module_id'=>$shopsModuleId)));
 				
 				if (!$payment) {
