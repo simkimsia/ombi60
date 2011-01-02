@@ -767,6 +767,11 @@ class OrdersController extends AppController {
 				$this->data['ShippingRate'] = $rate['ShippingRate'];
 			}
 			
+			
+			// for payment option point
+			$payment 	 = $this->data['Payment']['shops_payment_module_id'];
+			$this->Order->id = $this->data['Payment']['order_id'];
+			
 			if ($forPayPalAtCheckout) {
 				
 				/**
@@ -887,13 +892,8 @@ class OrdersController extends AppController {
 					$this->log($result);
 					
 				}
-			}
-			
-			// for payment option point
-			$payment 	 = $this->data['Payment']['shops_payment_module_id'];
-			$this->Order->id = $this->data['Payment']['order_id'];
-			
-			if ($payment == $payPalShopsPaymentModuleId && !$forPayPalAtCheckout) {
+				
+			} else if ($payment == $payPalShopsPaymentModuleId && !$forPayPalAtCheckout) {
 				// read Payments from session
 				$Payments = $this->Session->read('Shop.' .$shop_id. '.Payments');
 				
@@ -983,8 +983,15 @@ class OrdersController extends AppController {
 				// redirect to PPREDIRECTURL
 				$this->redirect($PayPalResult['REDIRECTURL']);
 				
+			// this one clearly is for NON paypal modules	
+			} else {
+				$orderStatus = ORDER_OPENED;
+				$paymentStatus = PAYMENT_PENDING;
 			}
 			
+			
+			// all payment modes will reach this part except for
+			// PPEC at Payment Point
 			$this->data['Order']['status'] = $orderStatus;
 			$this->data['Payment']['status'] =  $paymentStatus;
 			
