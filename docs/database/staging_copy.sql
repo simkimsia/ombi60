@@ -542,6 +542,17 @@ CREATE TABLE `payments` (
   `transaction_id_from_gateway` varchar(255) DEFAULT NULL,
   `status` tinyint(2) unsigned NOT NULL DEFAULT '0',
   `token_from_gateway` varchar(255) DEFAULT '''''',
+  `ordertime_from_gateway` varchar(200) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `currencycode_from_gateway` varchar(3) DEFAULT NULL,
+  `feeamt_from_gateway` decimal(9,2) DEFAULT NULL,
+  `settleamt_from_gateway` decimal(10,2) DEFAULT NULL,
+  `taxamt_from_gateway` decimal(9,2) DEFAULT NULL,
+  `exchangerate_from_gateway` decimal(17,7) DEFAULT NULL,
+  `paymentstatus_from_gateway` varchar(30) DEFAULT NULL,
+  `pendingreason_from_gateway` varchar(50) DEFAULT NULL,
+  `reasoncode_from_gateway` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

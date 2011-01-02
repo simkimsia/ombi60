@@ -570,8 +570,18 @@ class OrdersController extends AppController {
 														    'order_id' => $orderId)));
 					
 					if ($payment) {
-						// this is for setting the transaction id
+						// this is for setting the transaction id and other Paypal related info
 						$payment['Payment']['transaction_id_from_gateway'] = $result['PAYMENTS'][0]['TRANSACTIONID'];
+						$payment['Payment']['ordertime_from_gateway'] = $result['PAYMENTS'][0]['ORDERTIME'];
+						$payment['Payment']['currencycode_from_gateway'] = $result['PAYMENTS'][0]['CURRENCYCODE'];
+						$payment['Payment']['feeamt_from_gateway'] = $result['PAYMENTS'][0]['FEEAMT'];
+						$payment['Payment']['settleamt_from_gateway'] = $result['PAYMENTS'][0]['SETTLEAMT'];
+						$payment['Payment']['taxamt_from_gateway'] = $result['PAYMENTS'][0]['TAXAMT'];
+						$payment['Payment']['exchangerate_from_gateway'] = $result['PAYMENTS'][0]['EXCHANGERATE'];
+						$payment['Payment']['paymentstatus_from_gateway'] = $result['PAYMENTS'][0]['PAYMENTSTATUS'];
+						$payment['Payment']['pendingreason_from_gateway'] = $result['PAYMENTS'][0]['PENDINGREASON'];
+						$payment['Payment']['reasoncode_from_gateway'] = $result['PAYMENTS'][0]['REASONCODE'];
+						
 						
 						
 						// this is for setting the status
@@ -912,6 +922,16 @@ class OrdersController extends AppController {
 					$paymentStatus = PAYMENT_PAID;
 					$this->data['Payment']['transaction_id_from_gateway'] = $result['PAYMENTS'][0]['TRANSACTIONID'];
 					$this->data['Payment']['gateway_name'] = 'Paypal Express Checkout at Checkout';
+					$this->data['Payment']['token_from_gateway'] = $result['TOKEN'];
+					$this->data['Payment']['ordertime_from_gateway'] = $result['PAYMENTS'][0]['ORDERTIME'];
+					$this->data['Payment']['currencycode_from_gateway'] = $result['PAYMENTS'][0]['CURRENCYCODE'];
+					$this->data['Payment']['feeamt_from_gateway'] = $result['PAYMENTS'][0]['FEEAMT'];
+					$this->data['Payment']['settleamt_from_gateway'] = $result['PAYMENTS'][0]['SETTLEAMT'];
+					$this->data['Payment']['taxamt_from_gateway'] = $result['PAYMENTS'][0]['TAXAMT'];
+					$this->data['Payment']['exchangerate_from_gateway'] = $result['PAYMENTS'][0]['EXCHANGERATE'];
+					$this->data['Payment']['paymentstatus_from_gateway'] = $result['PAYMENTS'][0]['PAYMENTSTATUS'];
+					$this->data['Payment']['pendingreason_from_gateway'] = $result['PAYMENTS'][0]['PENDINGREASON'];
+					$this->data['Payment']['reasoncode_from_gateway'] = $result['PAYMENTS'][0]['REASONCODE'];
 					
 				} else if ($result['ACK'] == 'Failure') {
 					
