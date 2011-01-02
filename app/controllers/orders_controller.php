@@ -500,6 +500,13 @@ class OrdersController extends AppController {
 		
 		$PayPal = new PayPal($PayPalConfig);
 		
+		/** because in sandbox testing, we are likely to use back the same invoiceID
+		 * so we need to add in datetime for sandbox testing
+		 **/
+		if (Configure::read('paypal.sandbox')) {
+			$PayPalRequest['Payments'][0]['invnum'] = date('Ymd-Hi') . '-' . $PayPalRequest['Payments'][0]['invnum'];
+		}
+		
 		$PayPalResult = $PayPal->DoExpressCheckoutPayment($PayPalRequest);
 			
 		$this->Session->write('Shop.'.$shopId.'.PayPalResult', $PayPalResult);
@@ -508,9 +515,6 @@ class OrdersController extends AppController {
 	}
 	
 	
-
-
-
 	function success($shop_id = null) {
 		
 		$paypal = isset($this->params['url']['paypal']);
@@ -708,6 +712,10 @@ class OrdersController extends AppController {
 					   'defaultShipment', 'defaultPayment', 'payPalShopsPaymentModuleId'));
 			
 		} else if ($this->RequestHandler->isPost()) {
+			
+			$orderStatus = ORDER_OPENED;
+			$paymentStatus = PAYMENT_INITIATED;
+			
 			// for entry checkout point		
 			$confirmPage = $this->Session->read('Shop.' .$shop_id. '.confirmPage');
 			
@@ -860,9 +868,24 @@ class OrdersController extends AppController {
 				}
 				
 				//$this->log($PayPalRequest);
+				
+				$orderStatus = ORDER_OPENED;
+				$paymentStatus = PAYMENT_INITIATED;
+				
 				$result = $this->executeDECP($PayPalRequest, $shop_id);
-				//$this->log('DECP results');
-				//$this->log($result);
+				
+				$this->log('DECP results');
+				$this->log($result);
+				
+				if ($result['ACK'] == 'Success') {
+					
+					$paymentStatus = PAYMENT_PAID;
+					
+				} else if ($result['ACK'] == 'Failure') {
+					
+					$paymentStatus = PAYMENT_PENDING;
+					
+				}
 			}
 			
 			// for payment option point
@@ -931,16 +954,27 @@ class OrdersController extends AppController {
 					$options['email'] = substr($this->data['Order']['contact_email'], 0, 127);
 				}
 				
+				$orderStatus = ORDER_OPENED;
+				$paymentStatus = PAYMENT_INITIATED;
+				
 				// execute SEC
 				$PayPalResult = $this->prepareSEC($options,
 						  $hash);
+				
 				if ($PayPalResult['ACK'] == 'Failure') {
 					$this->log('orderspreparesec in 889');
-					$this->log($PayPalResult);	
-				}
+					$this->log($PayPalResult);
+					$paymentStatus = PAYMENT_PENDING;
+				} else if ($PayPalResult['ACK'] == 'Success') {
+					$paymentStatus = PAYMENT_PAID;
+				} 
 				
 				// assign unique paypal transaction id to the payment
 				$this->data['Payment']['transaction_id_from_gateway'] = $PayPalResult['TOKEN'];
+				
+				
+				$this->data['Order']['status'] = $orderStatus;
+				$this->data['Payment']['status'] =  $paymentStatus;
 				
 				// save payment and shipment data as incomplete for payment
 				$this->Order->savePaymentAndShipment($this->data);
@@ -949,6 +983,9 @@ class OrdersController extends AppController {
 				$this->redirect($PayPalResult['REDIRECTURL']);
 				
 			}
+			
+			$this->data['Order']['status'] = $orderStatus;
+			$this->data['Payment']['status'] =  $paymentStatus;
 			
 			if ($this->Order->savePaymentAndShipment($this->data)) {
 				
@@ -1047,6 +1084,8 @@ class OrdersController extends AppController {
 	
 	/**
 	 * require uuid, cancelURL, Payments, shopId inside $postFields for checkoutOption
+	 *
+	 * this prepareSEC is for PPEC at payment point
 	 * */
 	
 	private function prepareSEC($postFields, $hash) {
@@ -1084,6 +1123,7 @@ class OrdersController extends AppController {
 								 
 		
 		// we want to set the button to confirm in PAYPAL checkout page
+		// this is for Payment point
 		$SECFields['skipdetails'] = '1';
 		
 		$PayPalRequest = array(
@@ -1091,6 +1131,15 @@ class OrdersController extends AppController {
 				'SurveyChoices' => $this->Paypal->buildSurveyChoices(), 
 				'Payments' => $postFields['payments']
 				);
+		
+		
+		/** because in sandbox testing, we are likely to use back the same invoiceID
+		 * so we need to add in datetime for sandbox testing
+		 **/
+		if (Configure::read('paypal.sandbox')) {
+			$PayPalRequest['Payments'][0]['invnum'] = date('Ymd-Hi') . '-' . $PayPalRequest['Payments'][0]['invnum'];
+		}
+		
 		
 		$PayPalResult = $PayPal->SetExpressCheckout($PayPalRequest);
 		

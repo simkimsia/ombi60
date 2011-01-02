@@ -275,7 +275,7 @@ class ProductsController extends AppController {
 							       'qty'=>$product['product_quantity'],
 							       'number'=>$product['product_id'],
 							       'itemurl'=>$itemUrl,
-							       'itemweightvalue'=>$product['weight'],
+							       'itemweightvalue'=>$product['product_weight'],
 							       'itemweightunit'=>$product['weight_unit']));
 				
 				array_push($PaymentOrderItems, $item);

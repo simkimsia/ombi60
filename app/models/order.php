@@ -281,7 +281,9 @@ class Order extends AppModel {
 		// we need to convert the $data to this format array('Payment'=>array(array('payment_module_id'=>3),)) etc
 		
 		// set the Order pk
-		$data['Order'] = array('id'=>$this->id);
+		$data['Order'] = array('id'     => $this->id,
+				       'status' => $data['Order']['status'],
+				       'payment_status' => $data['Payment']['status'],);
 		
 		// check for Shipment
 		if (array_key_exists('Shipment', $data)) {
@@ -305,12 +307,14 @@ class Order extends AppModel {
 		// need to set Order past_checkout_point to be true to conclude the order
 		$data['Order']['past_checkout_point'] = true;
 		
+		$this->log($data);
+		
 		$dataSource = $this->getDataSource();
 		
 		$dataSource->begin($this);
 		
 		$result = $this->saveAll($data, array('atomic'=>false));
-		
+		$this->log($result);
 		if (!$result) {
 			$dataSource->rollback($this);
 			return false;

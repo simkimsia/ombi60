@@ -1,0 +1,1 @@
+ALTER TABLE  `payments` ADD  `status` TINYINT( 2 ) UNSIGNED NOT NULL DEFAULT  '0';

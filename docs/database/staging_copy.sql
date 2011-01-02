@@ -538,6 +538,7 @@ CREATE TABLE `payments` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `transaction_id_from_gateway` varchar(255) DEFAULT NULL,
   `payment_email` varchar(255) DEFAULT NULL,
+  `status` tinyint(2) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

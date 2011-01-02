@@ -79,4 +79,10 @@ Auth
 since Auth.allowAll can override any Auth settings, always check for this first
 if Auth is not working as expected. including git-ignored files like bootstrap.local.php
 
+MySQL and tinyint(1)
+====================
+
+if use tinyint(1), cake auto assumes its boolean.
+MUST USE     tinyint(2) to store numbers more than just 0 and 1.
+
 

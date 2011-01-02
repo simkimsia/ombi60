@@ -136,6 +136,7 @@ define('PAYMENT_AUTHORIZED', 1);
 define('PAYMENT_PENDING', 3);
 define('PAYMENT_PAID', 2);
 define('PAYMENT_ABANDONED', 0);
+define('PAYMENT_INITIATED', 4);
 
 
 /**
