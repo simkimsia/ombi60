@@ -1,107 +1,106 @@
-<div class="blogs view">
-<h2><?php  __('Blog');?></h2>
-	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['name']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Short Name'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['short_name']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Description'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['description']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Theme'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['theme']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Created'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['created']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modified'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['modified']; ?>
-			&nbsp;
-		</dd>
-	</dl>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('Edit Blog', true), array('action' => 'edit', $blog['Blog']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('Delete Blog', true), array('action' => 'delete', $blog['Blog']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $blog['Blog']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Blogs', true), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Blog', true), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Posts', true), array('controller' => 'posts', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Post', true), array('controller' => 'posts', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
-<div class="related">
-	<h3><?php __('Related Posts');?></h3>
-	<?php if (!empty($blog['Post'])):?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php __('Id'); ?></th>
-		<th><?php __('Blog Id'); ?></th>
-		<th><?php __('Author Id'); ?></th>
-		<th><?php __('Status'); ?></th>
-		<th><?php __('Title'); ?></th>
-		<th><?php __('Slug'); ?></th>
-		<th><?php __('Body'); ?></th>
-		<th><?php __('No Comments'); ?></th>
-		<th><?php __('Allow Comments'); ?></th>
-		<th><?php __('Allow Pingback'); ?></th>
-		<th><?php __('Created'); ?></th>
-		<th><?php __('Modified'); ?></th>
-		<th class="actions"><?php __('Actions');?></th>
-	</tr>
-	<?php
-		$i = 0;
-		foreach ($blog['Post'] as $post):
-			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
-			}
-		?>
-		<tr<?php echo $class;?>>
-			<td><?php echo $post['id'];?></td>
-			<td><?php echo $post['blog_id'];?></td>
-			<td><?php echo $post['author_id'];?></td>
-			<td><?php echo $post['status'];?></td>
-			<td><?php echo $post['title'];?></td>
-			<td><?php echo $post['slug'];?></td>
-			<td><?php echo $post['body'];?></td>
-			<td><?php echo $post['no_comments'];?></td>
-			<td><?php echo $post['allow_comments'];?></td>
-			<td><?php echo $post['allow_pingback'];?></td>
-			<td><?php echo $post['created'];?></td>
-			<td><?php echo $post['modified'];?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View', true), array('controller' => 'posts', 'action' => 'view', $post['id'])); ?>
-				<?php echo $this->Html->link(__('Edit', true), array('controller' => 'posts', 'action' => 'edit', $post['id'])); ?>
-				<?php echo $this->Html->link(__('Delete', true), array('controller' => 'posts', 'action' => 'delete', $post['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $post['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
-
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Post', true), array('controller' => 'posts', 'action' => 'add'));?> </li>
-		</ul>
-	</div>
-</div>
+<?php
+	echo $this->Html->script('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
+	echo $this->Html->script('jquery/jquery.tools-1.2.ui-full.min');
+?>
+	
+	<div id="cataloguetop"></div>
+	<div id="cataloguebody">
+		
+		<div id="sidebar">
+			<div class="barcategory" id="selectedbarcategory">Blog Title</div>
+				<div class="baritem">Blog Post Title 1</div>
+				<div class="baritem"><a href="blog2.html">Blog Post Title 2</a></div>
+				<div class="baritem"><a href="blog3.html">Blog Post Title 3</a></div>
+				<div class="baritem"><a href="blog4.html">Blog Post Title 4</a></div>
+				<div class="baritem"><a href="blog5.html">Blog Post Title 5</a></div>
+		</div>
+		<div id="cataloguewrapper">
+			<div class="categorywrapper">
+			<div class="categorytop"></div>
+				<div class="contentcategory">
+					<div class="blogtitle">Blog Post Title 1</div>
+					<div class="blogdatetime">16 Jul 2010 13:54</div>
+				</div>
+					<div class="contentitem">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+						Aenean at magna mollis tortor fermentum tristique eu 
+						eget nunc. Nam vel lectus ut lacus porta posuere nec id 
+						nisi. Pellentesque pellentesque sem eu erat eleifend 
+						lacinia. Sed ante erat, pellentesque quis aliquet vitae, 
+						hendrerit a tortor. Lorem ipsum dolor sit amet, 
+						consectetur adipiscing elit. Praesent semper ultrices 
+						ipsum non dictum. Curabitur venenatis suscipit tortor, 
+						eget volutpat mauris ullamcorper faucibus. Duis rutrum, 
+						nulla ac malesuada elementum, arcu justo bibendum nulla, 
+						ac laoreet tellus eros id felis. Nunc malesuada 
+						venenatis laoreet. Sed ullamcorper viverra mauris sit 
+						amet pulvinar. Proin imperdiet, lorem ac aliquam 
+						dignissim, lacus justo vulputate nunc, nec molestie 
+						purus turpis quis elit. Duis sit amet est felis. Cras 
+						sed posuere quam. Maecenas pharetra enim eu sapien 
+						mollis eget sagittis dui luctus. Nullam feugiat mi ac 
+						felis dignissim in tincidunt ante ultrices. Nam massa 
+						augue, mollis in pulvinar vel, pretium vel elit. Donec 
+						eget erat vitae ipsum egestas rhoncus. <br />
+						<br />
+						Sed sit amet lectus at felis cursus vehicula at quis 
+						mauris. Vestibulum ac ipsum a diam pellentesque laoreet. 
+						Duis sed ligula nisi. Suspendisse ultrices felis vel mi 
+						scelerisque mollis. Duis ligula leo, pretium vitae 
+						ultricies sed, interdum nec tellus. Etiam egestas ligula 
+						eu eros pulvinar posuere. Maecenas nibh diam, ornare 
+						eget gravida mollis, aliquet nec urna. Duis iaculis 
+						pulvinar diam, et convallis mi pellentesque a. In 
+						ultrices, nisi eget feugiat vestibulum, lectus libero 
+						dignissim nisi, non vestibulum tortor elit id ipsum. 
+						Donec molestie consequat justo sagittis ullamcorper. 
+						Fusce ornare lectus sit amet lorem gravida adipiscing. 
+						Curabitur ut eros arcu, eu ornare leo. Pellentesque orci 
+						mi, venenatis ac consectetur id, eleifend eu neque. 
+						Etiam fermentum metus et quam tristique elementum. Donec 
+						vitae magna lacus, vel posuere mi. Duis commodo est a 
+						diam sagittis et egestas turpis ornare. Praesent lacinia 
+						varius quam, sed rutrum felis fermentum ut. Vestibulum 
+						mattis porttitor dui eget lobortis. Sed condimentum 
+						viverra nulla, et vulputate felis consectetur eget. Ut 
+						dictum posuere nulla eget consequat. <br />
+						<br />
+						Nunc sit amet bibendum dui. Integer pharetra convallis 
+						tortor, ut dignissim odio tincidunt vel. Aliquam erat 
+						volutpat. Vestibulum accumsan congue quam sit amet 
+						auctor. Mauris vel magna non odio gravida suscipit quis 
+						ac massa. Nunc in sodales leo. Nulla facilisi. Praesent 
+						dapibus vestibulum eleifend. Duis in tellus magna. 
+						Vivamus tristique risus at orci rutrum a ultricies felis 
+						tristique. Donec mattis placerat orci a dapibus.
+					</div>
+					<div class="blogcommentcount">
+						3 Comments
+					</div>
+					<div class="blogcomment">This is the first comment.</div>
+					<div class="blogcomment">This is the second comment.</div>
+					<div class="blogcomment">This is the third comment.</div>
+				</div>
+				
+				<div class="categorybottom">
+				
+					
+				
+					<table cellpadding="0" cellspacing="0">
+						<tr>
+							<td id="selected">1</td>
+							<td><a href="blog2.html">2</a></td>
+							<td><a href="blog3.html">3</a></td>
+							<td><a href="blog4.html">4</a></td>
+							<td><a href="blog5.html">5</a></td>
+						</tr>
+					</table>
+				
+					
+				
+				</div>
+				
+			</div>
+			
+		</div>
+		<div id="cataloguebottom"></div>
