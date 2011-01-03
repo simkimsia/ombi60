@@ -139,6 +139,7 @@ class AppController extends Controller {
 		if ($userIdInSession > 0) {
 		    $userIdInCookie = $userIdInSession;
 		    $this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
+		    $this->log('the user id here ' . $userIdInCookie);
 		    $this->Session->delete('User.id');
 		    
 		} else {
