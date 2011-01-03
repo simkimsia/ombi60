@@ -11,3 +11,20 @@ API Username	merch_1277746388_biz_api1.gmail.com
 API Password	1277746393
 Signature	AHExNCgTOAf6I0jS8V77WYVPl78nAUalMl21CFNLpKr4giwMI6dr5DKE
 
+
+sandbox tp.simone@gmail.com
+
+owner@shop001.com
+merchant
+
+cust_spore@gmail.com
+customer
+
+sandbox developer@ombi60.com
+d3v31234
+
+owner@shop123.com
+merchant
+
+shopper_sg@gmail.com
+customer
