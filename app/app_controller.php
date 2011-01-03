@@ -128,9 +128,22 @@ class AppController extends Controller {
 	App::import('Model', 'User');
 	$this->loadModel('User');
 	
-	if(!isset($this->params['admin'])) { 
-	
-		$userIdInCookie = $this->Cookie->read('User.id');
+	if(!isset($this->params['admin'])) {
+		
+		$userIdInSession = $this->Session->read('User.id');
+		$this->log('what ever is the session over here' . $this->Session->read('User'));
+		/**
+		 * need to overwrite the Cookie User id
+		 * from session for products checkout
+		 **/
+		if ($userIdInSession > 0) {
+		    $userIdInCookie = $userIdInSession;
+		    $this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
+		    
+		} else {
+		    $userIdInCookie = $this->Cookie->read('User.id');    
+		}
+		
 		
 		$userIdInCookieIsLegit = false;
 		

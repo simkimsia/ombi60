@@ -56,6 +56,22 @@ class ProductsController extends AppController {
 			$this->Session->start();
 			
 		}
+		
+		// this is to override the cookie user id for products checkout for
+		// crossing custom domains
+		if(($this->action == 'checkout') AND (!empty($this->params['url']['ss']))) {
+			
+			$uuid = $this->params['url']['ss'];
+			$siteTransfer = ClassRegistry::init('SiteTransfer');
+			$data = $siteTransfer->findById($uuid);
+			$this->Session->id($data['SiteTransfer']['sess_id']);
+			
+			// if session read write fails for paymentoption then need to re-evaluate this.
+			$siteTransfer->delete($uuid);
+			
+			
+			
+		}
 
 
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
@@ -90,17 +106,7 @@ class ProductsController extends AppController {
 			$this->Security->validatePost = false;
 		}
 		
-		if(($this->action == 'checkout') AND (!empty($this->params['url']['ss']))) {
-			
-			$uuid = $this->params['url']['ss'];
-			$siteTransfer = ClassRegistry::init('SiteTransfer');
-			$data = $siteTransfer->findById($uuid);
-			$this->Session->id($data['SiteTransfer']['sess_id']);
-			
-			// if session read write fails for paymentoption then need to re-evaluate this.
-			$siteTransfer->delete($uuid);
-			
-		}
+		
 
 	}
 	
@@ -318,6 +324,9 @@ class ProductsController extends AppController {
 		$mainUrl = Shop::get('Shop.web_address');
 		// now we are going to pass the session into the database for the crossover for checkout
 		if (!$this->Product->Shop->isCurrentBaseThisDomain($mainUrl)) {
+			// test if we need to send User id over
+			$this->Session->write('User.id', User::get('User.id'));
+			$this->log('new user id in session write ' . $this->Session->read('User.id'));
 			$sessionString = '?ss='.$this->transferSession();
 		}
 		
