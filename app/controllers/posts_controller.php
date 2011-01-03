@@ -3,13 +3,17 @@ class PostsController extends AppController {
 
 	var $name = 'Posts';
 	
-	var $helpers = array('TinyMce.TinyMce');
+	var $helpers = array('TinyMce.TinyMce', 'Text');
+	
+	var $view = 'Theme';
+	
+	var $components = array('Theme' => array('actions'=>array('index')),);
 
 	function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		
-		$this->Auth->allow('view');
+		$this->Auth->allow('view', 'index');
 	}
 
 
@@ -31,6 +35,33 @@ class PostsController extends AppController {
 		$this->set(compact('post'));
 		
 		
+	}
+	
+	function index($slug = false) {
+		
+		if (!$slug) {
+			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect('/');
+		}
+		$this->Post->Blog->recursive = -1;
+		$blog = $this->Post->Blog->find('first', array('conditions'=>array('Blog.short_name'=>$slug,
+						    				   'Blog.shop_id'=>Shop::get('Shop.id'))));
+		
+		if (!$blog) {
+			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect('/');
+		}
+		
+		$this->paginate = array('conditions'=>array('Post.blog_id'=>$blog['Blog']['id']),
+					'fields' => array('Post.id',
+							  'Post.blog_id','Post.author_id',
+							  'Post.author_id', 'Post.status',
+							  'Post.title', 'Post.slug',
+							  'Post.body', 'Post.created'));
+		
+		$posts = $this->paginate();
+		
+		$this->set('posts', $posts);
 	}
 	
 	

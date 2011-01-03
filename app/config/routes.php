@@ -221,8 +221,8 @@
                               ));
         
         Router::connect('/blogs/:short_name',
-                        array('controller' => 'blogs',
-                              'action' => 'view'),
+                        array('controller' => 'posts',
+                              'action' => 'index'),
                         array('pass' => array('short_name'),
                               'short_name' => '[a-zA-Z0-9\-_]+'
                               ));

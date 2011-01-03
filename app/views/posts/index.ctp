@@ -26,7 +26,10 @@
 				
 				
 					<div class="contentitem">
-						<?php echo $this->Text->truncate($post['Post']['body']); ?>
+						<?php echo
+                                                $body = $this->Text->stripLinks($post['Post']['body']);
+                                                echo $this->Text->truncate($body);
+                                                ?>
 						
 					</div>
 					<!--

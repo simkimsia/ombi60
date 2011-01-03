@@ -24,6 +24,11 @@ class BlogsController extends AppController {
 		$blog = $this->Blog->find('first', array('conditions'=>array('short_name'=>$slug,
 									'shop_id'=>Shop::get('Shop.id'))));
 		
+		if (!$blog) {
+			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect('/');
+		}
+		
 		$this->set(compact('blog'));
 	}
 
