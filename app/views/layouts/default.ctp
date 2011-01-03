@@ -75,9 +75,8 @@
 			<li id="blog">
 				<?php
 					echo $this->Html->link(__('Blog', true),
-						array('action' => 'view',
-						      'controller' => 'blogs'
-					));
+						'/blogs/'.$shopName_for_layout
+					);
 				?>
 			</li>
 			<li id="cart">
