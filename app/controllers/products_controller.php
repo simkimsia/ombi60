@@ -322,7 +322,11 @@ class ProductsController extends AppController {
 		
 		$sessionString = '';
 		$mainUrl = Shop::get('Shop.web_address');
+		
+		$this->log('user id in view_cart ' . User::get('User.id'));
+		
 		// now we are going to pass the session into the database for the crossover for checkout
+		
 		if (!$this->Product->Shop->isCurrentBaseThisDomain($mainUrl)) {
 			// test if we need to send User id over
 			$this->Session->write('User.id', User::get('User.id'));
