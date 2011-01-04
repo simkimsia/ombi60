@@ -131,6 +131,7 @@ class MerchantsController extends AppController {
 					// means success						
 					if($PaydollarResult['resultCode'] == 0) {
 						$this->Session->write('PaydollarResult', $PaydollarResult);
+						
 						$this->redirect('/merchants/confirm?paydollar&inv='.$result['Invoice']['reference']);
 					} else {
 						$this->Session->setFlash(__('Your credit card was not accepted by Paydollar. Please try again.', true), 'default', array('class'=>'flash_failure'));
@@ -160,6 +161,7 @@ class MerchantsController extends AppController {
 		// do nothing for time being.
 		// by right this is to confirm payment for signups
 		
+		$domain = array();
 		
 		// must come from paypal express checkout
 		if(isset($this->params['url']['paypal'])) {
@@ -172,6 +174,7 @@ class MerchantsController extends AppController {
 			$options=array('PROFILEREFERENCE'=>$invoiceID);
 			$crppResult = $this->prepareCRPP($token, $options);
 			
+			
 			if (isset($crppResult['ACK']) && strtoupper($crppResult['ACK']) == 'SUCCESS') {
 				$this->Merchant->Shop->RecurringPaymentProfile->create();
 				$data = array('RecurringPaymentProfile' =>
@@ -182,7 +185,14 @@ class MerchantsController extends AppController {
 						'gateway_reference_id' => $crppResult['PROFILEID']));
 				
 				$this->Merchant->Shop->RecurringPaymentProfile->save($data);
+				
+				
+				
+				
 			}
+			
+			
+			
 			
 		}
 		
@@ -202,7 +212,14 @@ class MerchantsController extends AppController {
 				
 			$this->Merchant->Shop->RecurringPaymentProfile->save($data);
 			
+			// retrieve the url
+			$this->Merchant->Shop->recursive = -1;
+			$domain = $this->Merchant->Shop->read(array('Shop.web_address'), $shopid);
+			
+			
 		}
+		
+		$this->set('domain', $domain);
 		
 		$this->Session->delete('NewShopID');
 		$this->Session->delete('PaydollarResult');

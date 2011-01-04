@@ -70,7 +70,11 @@ class UsersController extends AppController {
 
 	private function setMerchantPermissions($group) {
 		$this->Acl->deny($group, 'controllers');
+		
+		$this->log('=============start to set permissions for merchants=============');
+		
 		// allow for products
+		$this->log('products');
 		$this->Acl->allow($group, 'controllers/Pages/display');
 		$this->Acl->allow($group, 'controllers/Products/admin_add');
 		$this->Acl->allow($group, 'controllers/Products/admin_edit');
@@ -80,23 +84,31 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Products/admin_upload');
 		$this->Acl->allow($group, 'controllers/Products/admin_duplicate');
 		$this->Acl->allow($group, 'controllers/Products/admin_toggle');
+		
+		// navigation
+		$this->log('navi');
+		$this->Acl->allow($group, 'controllers/Links/admin_index');
+		$this->Acl->allow($group, 'controllers/Links/admin_add');
+		$this->Acl->allow($group, 'controllers/Links/admin_edit');
+		$this->Acl->allow($group, 'controllers/Links/admin_delete');
 
+
+		$this->log('product_images');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_add');
-		$this->Acl->allow($group, 'controllers/ProductImages/admin_edit');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_delete');
-		$this->Acl->allow($group, 'controllers/ProductImages/admin_view');
-		$this->Acl->allow($group, 'controllers/ProductImages/admin_index');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_list_by_product');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_make_this_cover');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_add_by_product');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_list_by_product');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_uploadify');
 
+		$this->log('merchants');
 		$this->Acl->allow($group, 'controllers/Merchants/admin_index');
 		$this->Acl->allow($group, 'controllers/Merchants/admin_edit');
 		$this->Acl->allow($group, 'controllers/Merchants/admin_logout');
 		$this->Acl->allow($group, 'controllers/Merchants/admin_login');
 
+		$this->log('domains');
 		$this->Acl->allow($group, 'controllers/Domains/admin_add');
 		$this->Acl->allow($group, 'controllers/Domains/admin_edit');
 		$this->Acl->allow($group, 'controllers/Domains/admin_delete');
@@ -104,6 +116,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Domains/admin_index');
 		$this->Acl->allow($group, 'controllers/Domains/admin_make_this_primary');
 		
+		$this->log('savedthemes');
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_index');
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_edit');
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_add');
@@ -114,51 +127,55 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_edit_css');
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_switch');
 		
-
-		$this->Acl->allow($group, 'controllers/Shops/edit');
+		$this->log('shops');
 		$this->Acl->allow($group, 'controllers/Shops/admin_account');
 		$this->Acl->allow($group, 'controllers/Shops/admin_cancelaccount');
 		
+		$this->log('payments');
 		$this->Acl->allow($group, 'controllers/Payments/admin_index');
 		$this->Acl->allow($group, 'controllers/Payments/admin_update_settings');
 		$this->Acl->allow($group, 'controllers/Payments/admin_add_custom_payment');
 		$this->Acl->allow($group, 'controllers/Payments/admin_edit_custom_payment');
 		$this->Acl->allow($group, 'controllers/Payments/admin_delete_custom_payment');
 		$this->Acl->allow($group, 'controllers/Payments/admin_add_paypal_payment');
-		$this->Acl->allow($group, 'controllers/Payments/admin_edit_paypal_payment');
+		$this->Acl->allow($group, 'controllers/Payments/admin_edit_paypal_payment');		
 		
-		
+		$this->log('shippingrates');
 		$this->Acl->allow($group, 'controllers/ShippingRates/admin_index');
 		$this->Acl->allow($group, 'controllers/ShippingRates/admin_add_price_based');
 		$this->Acl->allow($group, 'controllers/ShippingRates/admin_add_weight_based');
 		$this->Acl->allow($group, 'controllers/ShippingRates/admin_edit');
 		$this->Acl->allow($group, 'controllers/ShippingRates/admin_delete');
 		
+		$this->log('orders');
 		$this->Acl->allow($group, 'controllers/Orders/admin_index');
 		$this->Acl->allow($group, 'controllers/Orders/admin_view');
 		
-		
-		$this->Acl->allow($group, 'controllers/Themes/admin_settings');
+		$this->log('themes');
+		$this->Acl->allow($group, 'controllers/Themes/admin_index');
 		
 		// for blogs and pages
+		$this->log('pages');
 		$this->Acl->allow($group, 'controllers/Webpages/admin_add');
 		$this->Acl->allow($group, 'controllers/Webpages/admin_edit');
 		$this->Acl->allow($group, 'controllers/Webpages/admin_delete');
 		$this->Acl->allow($group, 'controllers/Webpages/admin_view');
 		$this->Acl->allow($group, 'controllers/Webpages/admin_index');
 		
+		$this->log('blogs');
 		$this->Acl->allow($group, 'controllers/Blogs/admin_add');
 		$this->Acl->allow($group, 'controllers/Blogs/admin_edit');
 		$this->Acl->allow($group, 'controllers/Blogs/admin_delete');
 		$this->Acl->allow($group, 'controllers/Blogs/admin_view');
 		$this->Acl->allow($group, 'controllers/Blogs/admin_index');
 		
+		$this->log('posts');
 		$this->Acl->allow($group, 'controllers/Posts/admin_add');
 		$this->Acl->allow($group, 'controllers/Posts/admin_edit');
 		$this->Acl->allow($group, 'controllers/Posts/admin_delete');
 		$this->Acl->allow($group, 'controllers/Posts/admin_view');
 		
-		
+		$this->log('=============end of setting permissions for merchants=============');
 		
 	}
 
@@ -167,13 +184,7 @@ class UsersController extends AppController {
 		// allow for products
 
 		$this->Acl->allow($group, 'controllers/Pages/display');
-		$this->Acl->allow($group, 'controllers/Users/edit');
-		$this->Acl->allow($group, 'controllers/Users/logout');
-		$this->Acl->allow($group, 'controllers/Users/login');
-
-		$this->Acl->allow($group, 'controllers/Customers/edit');
-		$this->Acl->allow($group, 'controllers/Customers/logout');
-		$this->Acl->allow($group, 'controllers/Customers/login');
+		
 	}
 
 	/**
