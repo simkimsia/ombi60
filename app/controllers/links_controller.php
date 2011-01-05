@@ -3,6 +3,8 @@ class LinksController extends AppController {
 
 	var $name = 'Links';
 	
+	var $helpers = array('Ajax');
+	
 	function beforeFilter() {
 		parent::beforeFilter();
 		
@@ -19,6 +21,7 @@ class LinksController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('link', $this->Link->read(null, $id));
+		
 	}
 
 	function add() {
@@ -79,6 +82,27 @@ class LinksController extends AppController {
 							   'contain' => array('Link')));
 		
 		$this->set('lists', $lists);
+		
+		// now we set the blogs, products, pages belonging to this shop
+		$blog = ClassRegistry::init('Blog');
+		$blog->recursive = -1;
+		$blogs = $blog->find('all', array('conditions' => array('Blog.shop_id'=>$shopId),
+						  'fields'     => array('Blog.id', 'Blog.short_name')));
+		
+		$product = ClassRegistry::init('Product');
+		$product->recursive = -1;
+		$products = $product->find('all', array('conditions'=>array('Product.shop_id'=>$shopId),
+							'fields'     => array('Product.id','Product.title')));
+		
+		$page = ClassRegistry::init('Webpage');
+		$page->recursive = -1;
+		$pages = $page->find('all', array('conditions'=>array('Webpage.shop_id'=>$shopId),
+						  'fields'     => array('Webpage.handle','Webpage.title')));
+		
+		
+		$this->set(compact('blogs', 'products', 'pages'));
+		
+		
 	}
 
 	function admin_view($id = null) {

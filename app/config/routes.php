@@ -37,6 +37,9 @@
  */
         //Router::connect('*.myspree2shop.com/', array('controller' => 'pages', 'action' => 'display', 'shopfront'));
 
+        // webpages links
+        Router::connect('/pages/*', array('controller' => 'webpages', 'action' => 'view'));
+
 
         // account links
 

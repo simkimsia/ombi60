@@ -36,7 +36,12 @@
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $link['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $link['id'])); ?>
 		</td>
 	</tr>
-<?php endforeach; ?>
+	<?php endforeach; ?>
+	<?php
+	
+		echo '<tr id="new-link-'. $link['link_list_id'] .'"><td><a href="#" onclick="showLinkForm('.$link['link_list_id'].');return false;">Add Link</a>&nbsp;</td></tr>';
+		echo $this->element('add_link_form', array('linkListId'=>$link['link_list_id']));
+	?>
 	</table>
 <?php endforeach; ?>
 	<p>
@@ -50,3 +55,89 @@
 		<li><?php echo $this->Html->link(__('New Link List', true), array('controller' => 'link_lists', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
+
+<?php
+	# blog array;
+	# "pass" php array to JS array:
+	echo "<script>\n";
+	echo "var blogs = new Object();\n";
+	
+	
+	foreach($blogs as $key => $value) {
+		$js_key = $value['Blog']['short_name'];
+		echo "blogs['$js_key'] = '$js_key';\n";
+	}
+	
+	echo "var products = new Object();\n";
+	foreach($products as $key => $value) {
+		$js_key = $value['Product']['id'];
+		$js_value = $value['Product']['title'];
+		echo "products['$js_key'] = '$js_value';\n";
+	}
+	
+	echo "var pages = new Object();\n";
+	foreach($pages as $key => $value) {
+		$js_key = $value['Webpage']['handle'];
+		$js_value = $value['Webpage']['title'];
+		echo "pages['$js_key'] = '$js_value';\n";
+	}
+	# .....rest of JavaScript.....
+	echo "</script>\n";
+?>
+
+<script>
+
+	function afterAddLink(id, response) {
+		var addRateRow = '#new-link-'+id;
+		var json_object = $.parseJSON(response);
+		
+		if (json_object.success) {
+			$(addRateRow).before(json_object.contents);
+		} else {
+			$.each($.parseJSON(json_object.contents), function(key, value) {
+				$('#flashMessage').text(value);
+			});
+		}
+	}
+	
+	
+	function showLinkForm(id) {
+		
+		var linkForm = '#link-form-'+id;
+		
+		$(linkForm).show();
+		
+	}
+	
+	$(document).ready(function (){
+		resetLinkAction();
+		$('#LinkModel').change(function(){
+			resetLinkAction();
+		});
+	});
+	
+	function resetLinkAction() {
+			var selectedText = $("#LinkModel option:selected").text();
+			var actionsArray = new Object();
+			
+			if (selectedText == 'Blog') {
+				
+				actionsArray = blogs;
+				
+			} else if (selectedText == 'Product') {
+				actionsArray = products;
+			} else if (selectedText == 'Page') {
+				actionsArray = pages;
+			}
+			$innerHtml = '';
+			for(keyArray in actionsArray) {
+				
+				$innerHtml += '<option value="' + keyArray + '">' + actionsArray[keyArray] + '</option>';	
+			}
+			$('#LinkAction').html($innerHtml);
+	}
+	
+	
+	
+	
+</script>
