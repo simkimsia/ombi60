@@ -4,44 +4,123 @@
 	<?php
 	foreach ($lists as $list):
 	
-	echo $list['LinkList']['name'];
+	
+	$listName = $list['LinkList']['name'];
+	$listId = $list['LinkList']['id'];
+	
+	
 	
 	?>
 	
 	<table cellpadding="0" cellspacing="0">
+	
+	
+		
 	<tr>
-			
+		<?php
+		echo '
+		<table id="display-list-'.$listId.'">';
+		
+		
+		echo '
+			<tr >
+				<td>
+					'.$listName.'
+				</td>
+				<td>
+					<a href="#" onclick="editListForm('.$listId.');return false;">Edit link list</a>
+				</td>
+			</tr>';
+		?>
+		
+		<tr>	
 			<th><?php echo 'Name';?></th>
 			<th><?php echo 'Route';?></th>
 			
-			<th class="actions"><?php __('Actions');?></th>
-	</tr>
-	<?php
-	$i = 0;
-	foreach ($list['Link'] as $link):
-		$class = null;
-		if ($i++ % 2 == 0) {
-			$class = ' class="altrow"';
-		}
-	?>
-	<tr<?php echo $class;?>>
+		</tr>
+		<?php
+		$i = 0;
+		foreach ($list['Link'] as $link):
+			$class = null;
+			if ($i++ % 2 == 0) {
+				$class = ' class="altrow"';
+			}
+		?>
+		<tr<?php echo $class;?>>
+			
+			<td><?php echo $link['name']; ?>&nbsp;</td>
+			<td><?php echo $this->Html->link($link['route'],
+							 $link['route']); ?>&nbsp;</td>
+			
+			
+		</tr>
+		<?php endforeach; ?>
+		<?php
 		
-		<td><?php echo $link['name']; ?>&nbsp;</td>
-		<td><?php echo $this->Html->link($link['route'],
-						 $link['route']); ?>&nbsp;</td>
-		
-		<td class="actions">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $link['id'])); ?>
-			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $link['id'])); ?>
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $link['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $link['id'])); ?>
-		</td>
-	</tr>
-	<?php endforeach; ?>
-	<?php
+			echo '<tr id="new-link-'. $listId .'"><td><a href="#" onclick="showLinkForm('.$listId.');return false;">Add Link</a>&nbsp;</td></tr>';
+			echo $this->element('add_link_form', array('linkListId'=>$listId));
+		?>
+		</table>
 	
-		echo '<tr id="new-link-'. $link['link_list_id'] .'"><td><a href="#" onclick="showLinkForm('.$link['link_list_id'].');return false;">Add Link</a>&nbsp;</td></tr>';
-		echo $this->element('add_link_form', array('linkListId'=>$link['link_list_id']));
-	?>
+		<?php
+		echo '<table id="edit-list-'.$listId.'" style="display:none">';
+		?>
+		<tr>
+			<?php echo "<td>$listName</td>"; ?>
+		</tr>
+		<?php
+		echo $this->Form->create('LinkList', array('url'=>array('action'=>'edit',$listId)));
+		echo '
+		<tr>	
+			<td>';
+		
+		echo $this->Form->input('LinkList.name', array('value'=>$listName));
+		
+				
+		echo '
+			</td>
+		</tr>';
+		
+		echo '
+		<tr>
+			<th>Name Of Link</th>
+			<th>Links to</th>
+			<th></th>
+		</tr>
+		';
+		
+		$i = 0;
+		foreach ($list['Link'] as $link):
+			$class = null;
+			if ($i++ % 2 == 0) {
+				$class = ' class="altrow"';
+			}
+		?>
+		<tr<?php echo $class;?>>
+			
+			<td><?php echo $this->Form->input('Link.'.$i.'.name', array('value'=>$link['name'])); ?>&nbsp;</td>
+			<td><?php echo $this->Html->link($link['route'],
+							 $link['route']); ?>&nbsp;</td>
+			
+			<td class="actions">
+				<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $link['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $link['id'])); ?>
+			</td>
+		</tr>
+		<?php endforeach;
+		
+		echo '
+		<tr>
+			<td>';
+		echo $this->Form->submit('Save changes');
+		echo '&nbsp;or&nbsp;';
+		echo '<a href="#" onclick="cancelEditListForm('.$listId.')">Cancel</a>';
+		echo '
+			</td>
+		</tr>';
+		echo $this->Form->end();
+		?>
+		</table>
+	</tr>
 	</table>
 <?php endforeach; ?>
 	<p>
@@ -107,6 +186,22 @@
 		
 		$(linkForm).show();
 		
+	}
+	
+	function editListForm(id) {
+		var displayListTable = '#display-list-' + id;
+		var editListForm = '#edit-list-' + id;
+		
+		$(displayListTable).hide();
+		$(editListForm).show();
+	}
+	
+	function cancelEditListForm(id) {
+		var displayListTable = '#display-list-' + id;
+		var editListForm = '#edit-list-' + id;
+		
+		$(displayListTable).show();
+		$(editListForm).hide();
 	}
 	
 	$(document).ready(function (){
