@@ -99,8 +99,30 @@
 		<tr<?php echo $class;?>>
 			
 			<td><?php echo $this->Form->input('Link.'.$i.'.name', array('value'=>$link['name'])); ?>&nbsp;</td>
-			<td><?php echo $this->Html->link($link['route'],
-							 $link['route']); ?>&nbsp;</td>
+			<?php
+				$modelOptions = array('/blogs/'=>'Blog',
+						      '/products/view/'=>'Product',
+						      '/pages/'=>'Page',);
+			
+			?>
+			<td>
+				<?php echo $this->Form->input('Link.'.$i.'.model', array('type'=>'select',
+										'options' => $modelOptions,
+										'selected' => '/blogs/',
+										'div'=>false,
+										'label'=>false,
+										'style'=>'width:100%;'));
+				
+				$options = array();
+				echo $this->Form->input('Link.'.$i.'.action', array('type'=>'select',
+									    'options' => $options,
+									    'div'=>false,
+									    'label'=>false,
+									    'style'=>'width:100%;'));
+				
+				?>
+			&nbsp;
+			</td>
 			
 			<td class="actions">
 				<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $link['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $link['id'])); ?>
