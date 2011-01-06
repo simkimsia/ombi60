@@ -115,17 +115,46 @@ class LinksController extends AppController {
 	}
 
 	function admin_add() {
+		$result = false;
 		if (!empty($this->data)) {
+			$this->data['Link']['route'] = $this->data['Link']['model'] . $this->data['Link']['action'];
 			$this->Link->create();
 			if ($this->Link->save($this->data)) {
 				$this->Session->setFlash(__('The link has been saved', true));
-				$this->redirect(array('action' => 'index'));
+				$result = true;
 			} else {
 				$this->Session->setFlash(__('The link could not be saved. Please, try again.', true));
 			}
 		}
-		$linkLists = $this->Link->LinkList->find('list');
-		$this->set(compact('linkLists'));
+		
+		if ($this->params['isAjax']) {
+				
+			$this->layout = 'json';
+			if ($result) {
+				$link = $this->fetchCurrent();
+				$successJSON  = true;
+				$this->set(compact('link', 'successJSON'));
+				$this->render('new_link');
+			} else {
+				$errors = $this->Link->validationErrors;
+				$successJSON  = false;
+				
+				$this->set(compact('successJSON', 'errors'));
+				$this->render('json/error');
+			}
+				
+		} else {
+			$this->redirect(array('action' => 'index'));
+		}
+		
+	}
+	
+	private function fetchCurrent() {
+		
+		$this->Link->recursive = -1;
+		
+		return $this->Link->read(null, $this->Link->id);
+		
 	}
 
 	function admin_edit($id = null) {
