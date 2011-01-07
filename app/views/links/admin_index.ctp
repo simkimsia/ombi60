@@ -35,6 +35,7 @@
 	
 	$listName = $list['LinkList']['name'];
 	$listId = $list['LinkList']['id'];
+	$linkCount = $list['LinkList']['link_count'];
 	
 	
 	
@@ -86,7 +87,7 @@
 		<?php
 		
 			echo '<tr id="new-link-'. $listId .'"><td><a href="#" onclick="showLinkForm('.$listId.');return false;">Add Link</a>&nbsp;</td></tr>';
-			echo $this->element('add_link_form', array('linkListId'=>$listId));
+			echo $this->element('add_link_form', array('linkListId'=>$listId, 'linkCount' => $linkCount));
 		?>
 		</table>
 	
@@ -118,14 +119,12 @@
 		</tr>
 		';
 		
-		$i = 0;
+		
 		foreach ($list['Link'] as $link):
-			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
-			}
+			$i = $link['order'];
+			
 		?>
-		<tr<?php echo $class;?>>
+		<tr>
 			
 			<td>
 				<?php echo $this->Form->input('Link.'.$i.'.name', array('value'=>$link['name'])); ?>&nbsp;
@@ -176,7 +175,7 @@
 		<?php endforeach;
 		
 		echo '
-		<tr>
+		<tr id="new-edit-link-'. $listId .'">
 			<td>';
 		echo $this->Form->submit('Save changes');
 		echo '&nbsp;or&nbsp;';
@@ -235,10 +234,13 @@
 
 	function afterAddLink(id, response) {
 		var addRateRow = '#new-link-'+id;
+		var editLinkRow = '#new-edit-link-'+id;
 		var json_object = $.parseJSON(response);
 		
 		if (json_object.success) {
-			$(addRateRow).before(json_object.contents);
+			var newLinkArray = json_object.contents.split('&copy;');
+			$(addRateRow).before(newLinkArray[0]);
+			$(editLinkRow).before(newLinkArray[1]);
 		} else {
 			$.each($.parseJSON(json_object.contents), function(key, value) {
 				$('#flashMessage').text(value);

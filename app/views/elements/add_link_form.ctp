@@ -33,10 +33,10 @@
         
         echo '<tr><td>';
         echo '<div class="submit">';
-        echo $this->Form->input('Link.link_list_id', array('type'=>'hidden','value'=>$linkListId));
+        echo $this->Form->input('Link.link_list_id', array('type'=>'hidden','value'=>$linkListId));        
         echo $this->Ajax->submit('Add Link', array('url'=>array('action'=>'add'),
-                                                       'complete' => "afterAddLink($linkListId, request.responseText);",
-                                                       'div'=>false));
+                                                'complete' => "afterAddLink($linkListId, request.responseText);",
+                                                'div'=>false));
         
         echo '&nbsp;or&nbsp;<a href="#" onclick="$(\'#link-form-'.$linkListId.'\').hide();return false;">Cancel</a>';
         echo '</div>';

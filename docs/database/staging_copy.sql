@@ -412,12 +412,13 @@ CREATE TABLE `link_lists` (
   `shop_id` int(11) unsigned DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   `deletable` tinyint(1) unsigned DEFAULT '0',
+  `link_count` int(3) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `link_lists` */
 
-insert  into `link_lists`(`id`,`shop_id`,`name`,`deletable`) values (1,3,'Main Menu',0),(2,3,'Footer',0);
+insert  into `link_lists`(`id`,`shop_id`,`name`,`deletable`,`link_count`) values (1,2,'Main Menu',0,1),(2,2,'Footer1',0,2);
 
 /*Table structure for table `links` */
 
@@ -430,12 +431,13 @@ CREATE TABLE `links` (
   `link_list_id` int(11) unsigned DEFAULT NULL,
   `model` varchar(100) DEFAULT NULL,
   `action` varchar(100) DEFAULT NULL,
+  `order` int(2) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `links` */
 
-insert  into `links`(`id`,`name`,`route`,`link_list_id`,`model`,`action`) values ('4d269dfa-6e60-4040-9722-1b841507707a','blog','/blogs/shop001',1,'/blogs/','shop001'),('4d269dfa-0a58-49c6-bbb1-1b841507707a','welcome','/pages/shopfront',1,'/pages/','shopfront'),('4d269eca-f134-47fa-b6c1-1d901507707a','new blog','/blogs/newblog',1,'/blogs/','newblog');
+insert  into `links`(`id`,`name`,`route`,`link_list_id`,`model`,`action`,`order`) values ('4d269dfa-6e60-4040-9722-1b841507707a','blog','/blogs/shop001',1,'/blogs/','shop001',0),('4d2703ab-423c-4467-b286-10611507707a','test1','/blogs/shop001',2,'/blogs/','shop001',0),('4d270410-a730-4008-810e-15f01507707a','test','/blogs/shop001',2,'/blogs/','shop001',1);
 
 /*Table structure for table `merchants` */
 

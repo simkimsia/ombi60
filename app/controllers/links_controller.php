@@ -8,6 +8,9 @@ class LinksController extends AppController {
 	function beforeFilter() {
 		parent::beforeFilter();
 		
+		if ($this->action == 'admin_edit') {
+			$this->Security->validatePost = false;
+		}
 	}
 
 	function index() {
@@ -104,20 +107,69 @@ class LinksController extends AppController {
 		
 		
 	}
-
-	function admin_view($id = null) {
-		
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid link', true));
-			$this->redirect(array('action' => 'index'));
+	
+	private function convertBlogOptions($blogs) {
+		$array = array();
+		foreach($blogs as $blog) {
+			$array[$blog['Blog']['short_name']] = $blog['Blog']['short_name'];
 		}
-		$this->set('link', $this->Link->read(null, $id));
+		return $array;
+	}
+	
+	private function convertProductOptions($products) {
+		$array = array();
+		foreach($products as $product) {
+			$array[$product['Product']['id']] = $product['Product']['title'];
+		}
+		return $array;
+	}
+	
+	private function convertPageOptions($pages) {
+		$array = array();
+		foreach($pages as $page) {
+			$array[$page['Webpage']['handle']] = $page['Webpage']['title'];
+		}
+		return $array;
+	}
+	
+	private function populateActionForNewLink($link) {
+		
+		$shopId = Shop::get('Shop.id');
+		$model = $link['Link']['model'];
+		
+		if (strpos($model, 'blog') !== false) {
+			// now we set the blogs, products, pages belonging to this shop
+			$blog = ClassRegistry::init('Blog');
+			$blog->recursive = -1;
+			$blogs = $blog->find('all', array('conditions' => array('Blog.shop_id'=>$shopId),
+							  'fields'     => array('Blog.id', 'Blog.short_name')));
+			
+			return $this->convertBlogOptions($blogs);
+			
+		} else if (strpos($model, 'product') !== false) {
+			$product = ClassRegistry::init('Product');
+			$product->recursive = -1;
+			$products = $product->find('all', array('conditions'=>array('Product.shop_id'=>$shopId),
+								'fields'     => array('Product.id','Product.title')));
+			return $this->convertProductOptions($products);
+			
+		} else if (strpos($model, 'page') !== false) {
+			
+			$page = ClassRegistry::init('Webpage');
+			$page->recursive = -1;
+			$pages = $page->find('all', array('conditions'=>array('Webpage.shop_id'=>$shopId),
+							  'fields'     => array('Webpage.handle','Webpage.title')));
+			
+			return $this->convertPageOptions($pages);
+		}
+	
+		return false;
+		
 	}
 
 	function admin_add() {
 		$result = false;
 		if (!empty($this->data)) {
-			
 			$this->Link->create();
 			if ($this->Link->save($this->data)) {
 				$this->Session->setFlash(__('The link has been saved', true));
@@ -132,8 +184,10 @@ class LinksController extends AppController {
 			$this->layout = 'json';
 			if ($result) {
 				$link = $this->fetchCurrent();
+				$actionOptions = $this->populateActionForNewLink($link);
+				
 				$successJSON  = true;
-				$this->set(compact('link', 'successJSON'));
+				$this->set(compact('link', 'actionOptions', 'successJSON'));
 				$this->render('new_link');
 			} else {
 				$errors = $this->Link->validationErrors;
@@ -167,6 +221,9 @@ class LinksController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->data)) {
+			
+			$this->log($this->data);
+			
 			if ($this->Link->LinkList->saveAll($this->data)) {
 				$this->Session->setFlash(__('The link has been saved', true));
 				$this->redirect(array('action' => 'index'));
