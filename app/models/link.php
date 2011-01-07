@@ -13,5 +13,9 @@ class Link extends AppModel {
 			'order' => ''
 		)
 	);
+	
+	function beforeValidate() {
+		$this->data['Link']['route'] = $this->data['Link']['model'] . $this->data['Link']['action'];
+	}
 }
 ?>

@@ -1,3 +1,31 @@
+<?php
+
+	function convertBlogOptions($blogs) {
+		$array = array();
+		foreach($blogs as $blog) {
+			$array[$blog['Blog']['short_name']] = $blog['Blog']['short_name'];
+		}
+		return $array;
+	}
+	
+	function convertProductOptions($products) {
+		$array = array();
+		foreach($products as $product) {
+			$array[$product['Product']['id']] = $product['Product']['title'];
+		}
+		return $array;
+	}
+	
+	function convertPageOptions($pages) {
+		$array = array();
+		foreach($pages as $page) {
+			$array[$page['Webpage']['handle']] = $page['Webpage']['title'];
+		}
+		return $array;
+	}
+	
+	
+?>
 <div class="links index">
 	<h2><?php __('Links');?></h2>
 	
@@ -69,7 +97,8 @@
 			<?php echo "<td>$listName</td>"; ?>
 		</tr>
 		<?php
-		echo $this->Form->create('LinkList', array('url'=>array('action'=>'edit',$listId)));
+		echo $this->Form->create('Link', array('url'=>array('action'=>'edit',$listId)));
+		echo $this->Form->input('LinkList.id', array('type'=>'hidden', 'value'=>$listId));
 		echo '
 		<tr>	
 			<td>';
@@ -98,7 +127,11 @@
 		?>
 		<tr<?php echo $class;?>>
 			
-			<td><?php echo $this->Form->input('Link.'.$i.'.name', array('value'=>$link['name'])); ?>&nbsp;</td>
+			<td>
+				<?php echo $this->Form->input('Link.'.$i.'.name', array('value'=>$link['name'])); ?>&nbsp;
+				<?php echo $this->Form->input('Link.'.$i.'.id', array('type'=>'hidden',
+										      'value'=>$link['id'])); ?>
+			</td>
 			<?php
 				$modelOptions = array('/blogs/'=>'Blog',
 						      '/products/view/'=>'Product',
@@ -108,14 +141,26 @@
 			<td>
 				<?php echo $this->Form->input('Link.'.$i.'.model', array('type'=>'select',
 										'options' => $modelOptions,
-										'selected' => '/blogs/',
+										'selected' => $link['model'],
 										'div'=>false,
 										'label'=>false,
-										'style'=>'width:100%;'));
+										'style'=>'width:100%;',
+										'onchange'=>'resetLinkAction(\''.$i.'\', \''.$link['model'].'\', \''.$link['action'].'\')'));
 				
 				$options = array();
+				if (strpos($link['model'], 'blog') !== false) {
+					$options = convertBlogOptions($blogs);
+				} else if (strpos($link['model'], 'product') !== false) {
+					$options = convertProductOptions($products);
+				} else if (strpos($link['model'], 'page') !== false) {
+					$options = convertPageOptions($pages);
+				}
+				
+				
+				
 				echo $this->Form->input('Link.'.$i.'.action', array('type'=>'select',
 									    'options' => $options,
+									    'selected' => $link['action'],
 									    'div'=>false,
 									    'label'=>false,
 									    'style'=>'width:100%;'));
@@ -233,25 +278,39 @@
 		});
 	});
 	
-	function resetLinkAction() {
-			var selectedText = $("#LinkModel option:selected").text();
-			var actionsArray = new Object();
+	function resetLinkAction(linkId, presetModelValue, presetActionValue) {
+		
+		linkId            = typeof(linkId) != 'undefined' ? linkId : '';
+		presetActionValue = typeof(presetActionValue) != 'undefined' ? presetActionValue : '';
+		presetModelValue  = typeof(presetModelValue) != 'undefined' ? presetModelValue : '';
+  
+  
+		var thisLinkModel  = "#Link" + linkId + "Model";
+		var thisLinkAction = "#Link" + linkId + "Action";
+		
+		var selectedText = $(thisLinkModel + " option:selected").text();
+		var actionsArray = new Object();
+		
+		if (selectedText == 'Blog') {
+			actionsArray = blogs;
+		} else if (selectedText == 'Product') {
+			actionsArray = products;
+		} else if (selectedText == 'Page') {
+			actionsArray = pages;
+		}
+		
+		var selectedValue = $(thisLinkModel).val();
+		
+		$innerHtml = '';
+		for(keyArray in actionsArray) {
+			var selected = '';
 			
-			if (selectedText == 'Blog') {
-				
-				actionsArray = blogs;
-				
-			} else if (selectedText == 'Product') {
-				actionsArray = products;
-			} else if (selectedText == 'Page') {
-				actionsArray = pages;
+			if ((selectedValue == presetModelValue) && (keyArray == presetActionValue)) {
+				selected = 'selected';
 			}
-			$innerHtml = '';
-			for(keyArray in actionsArray) {
-				
-				$innerHtml += '<option value="' + keyArray + '">' + actionsArray[keyArray] + '</option>';	
-			}
-			$('#LinkAction').html($innerHtml);
+			$innerHtml += '<option value="' + keyArray + '" '+selected+'>' + actionsArray[keyArray] + '</option>';	
+		}
+		$(thisLinkAction).html($innerHtml);
 	}
 	
 	

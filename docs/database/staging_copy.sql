@@ -397,7 +397,7 @@ CREATE TABLE `languages` (
   `name` varchar(50) NOT NULL,
   `locale_name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `languages` */
 
@@ -413,11 +413,11 @@ CREATE TABLE `link_lists` (
   `name` varchar(100) DEFAULT NULL,
   `deletable` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `link_lists` */
 
-insert  into `link_lists`(`id`,`shop_id`,`name`,`deletable`) values (1,2,'Main Menu',0),(2,2,'Footer',0);
+insert  into `link_lists`(`id`,`shop_id`,`name`,`deletable`) values (1,3,'Main Menu',0),(2,3,'Footer',0);
 
 /*Table structure for table `links` */
 
@@ -428,12 +428,14 @@ CREATE TABLE `links` (
   `name` varchar(100) DEFAULT NULL,
   `route` varchar(255) DEFAULT NULL,
   `link_list_id` int(11) unsigned DEFAULT NULL,
+  `model` varchar(100) DEFAULT NULL,
+  `action` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `links` */
 
-insert  into `links`(`id`,`name`,`route`,`link_list_id`) values ('4d23251b-1ab0-4a81-89d7-10601507707a','name','/',1),('4d2326d7-65f8-4c21-9f4b-117b1507707a','shopfront','/webpages/welcome',1),('4d23277f-5478-4e9c-a056-117b1507707a','welcome','/webpages/welcome',2);
+insert  into `links`(`id`,`name`,`route`,`link_list_id`,`model`,`action`) values ('4d269dfa-6e60-4040-9722-1b841507707a','blog','/blogs/shop001',1,'/blogs/','shop001'),('4d269dfa-0a58-49c6-bbb1-1b841507707a','welcome','/pages/shopfront',1,'/pages/','shopfront'),('4d269eca-f134-47fa-b6c1-1d901507707a','new blog','/blogs/newblog',1,'/blogs/','newblog');
 
 /*Table structure for table `merchants` */
 

@@ -117,7 +117,7 @@ class LinksController extends AppController {
 	function admin_add() {
 		$result = false;
 		if (!empty($this->data)) {
-			$this->data['Link']['route'] = $this->data['Link']['model'] . $this->data['Link']['action'];
+			
 			$this->Link->create();
 			if ($this->Link->save($this->data)) {
 				$this->Session->setFlash(__('The link has been saved', true));
@@ -157,13 +157,17 @@ class LinksController extends AppController {
 		
 	}
 
+	/** the $id here is referring to the linklistid, and not the linkid.
+	 *
+	 * we need to saveAll for the entire list rather than individual links
+	 * */
 	function admin_edit($id = null) {
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid link', true));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->data)) {
-			if ($this->Link->save($this->data)) {
+			if ($this->Link->LinkList->saveAll($this->data)) {
 				$this->Session->setFlash(__('The link has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
