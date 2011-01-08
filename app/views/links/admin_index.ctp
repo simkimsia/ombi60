@@ -75,7 +75,7 @@
 				$class = ' class="altrow"';
 			}
 		?>
-		<tr<?php echo $class;?>>
+		<tr<?php echo $class;?> id="display-row-<?php echo $link['id']; ?>">
 			
 			<td><?php echo $link['name']; ?>&nbsp;</td>
 			<td><?php echo $this->Html->link($link['route'],
@@ -92,14 +92,15 @@
 		</table>
 	
 		<?php
+		echo $this->Form->create('Link', array('url'=>array('action'=>'edit',$listId)));
+		echo $this->Form->input('LinkList.id', array('type'=>'hidden', 'value'=>$listId));
 		echo '<table id="edit-list-'.$listId.'" style="display:none">';
 		?>
 		<tr>
 			<?php echo "<td>$listName</td>"; ?>
 		</tr>
 		<?php
-		echo $this->Form->create('Link', array('url'=>array('action'=>'edit',$listId)));
-		echo $this->Form->input('LinkList.id', array('type'=>'hidden', 'value'=>$listId));
+		
 		echo '
 		<tr>	
 			<td>';
@@ -122,14 +123,15 @@
 		
 		foreach ($list['Link'] as $link):
 			$i = $link['order'];
+			$linkId = $link['id'];
 			
 		?>
-		<tr>
+		<tr id="edit-row-<?php echo $linkId; ?>">
 			
 			<td>
 				<?php echo $this->Form->input('Link.'.$i.'.name', array('value'=>$link['name'])); ?>&nbsp;
 				<?php echo $this->Form->input('Link.'.$i.'.id', array('type'=>'hidden',
-										      'value'=>$link['id'])); ?>
+										      'value'=>$linkId)); ?>
 			</td>
 			<?php
 				$modelOptions = array('/blogs/'=>'Blog',
@@ -169,7 +171,12 @@
 			</td>
 			
 			<td class="actions">
-				<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $link['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $link['id'])); ?>
+				<?php echo $this->Ajax->link(__('Delete', true),
+							     array('action' => 'delete', $linkId),
+							     array('confirm'=> sprintf(__('Are you sure you want to delete this link?', true)),
+								   'complete' => "afterDeleteLink('$linkId', request.responseText);")
+							     ); ?>
+				
 			</td>
 		</tr>
 		<?php endforeach;
@@ -183,9 +190,10 @@
 		echo '
 			</td>
 		</tr>';
-		echo $this->Form->end();
+		
 		?>
 		</table>
+		<?php echo $this->Form->end(); ?>
 	</tr>
 	</table>
 <?php endforeach; ?>
@@ -246,6 +254,25 @@
 				$('#flashMessage').text(value);
 			});
 		}
+	}
+	
+	function afterDeleteLink(id, response) {
+
+		var displayLinkRow = '#display-row-'+id;
+		var editLinkRow = '#edit-row-'+id;
+		var json_object = $.parseJSON(response);
+		
+		if (json_object.success) {
+			$(displayLinkRow).remove();
+			$(editLinkRow).remove();
+		} else {
+
+			$.each($.parseJSON(json_object.contents), function(key, value) {
+				$('#flashMessage').text(value);
+			});
+		}
+
+		
 	}
 	
 	

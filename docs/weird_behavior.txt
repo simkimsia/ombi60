@@ -85,4 +85,28 @@ MySQL and tinyint(1)
 if use tinyint(1), cake auto assumes its boolean.
 MUST USE     tinyint(2) to store numbers more than just 0 and 1.
 
+Ajax
+====
+
+for link
+<?php echo $this->Ajax->link(__('Delete', true),
+            array('action' => 'delete', $linkId),
+            array('confirm'=> sprintf(__('Are you sure you want to delete this link?', true)),
+                  'complete' => "afterDeleteLink('$linkId', request.responseText);")
+            ); ?>
+            
+    note the double quotes for the complete callback
+    note the single quotes for the variable
+    
+    params is string linktitle, mixed url, array options, string confirmation message
+    
+for submit
+echo $this->Ajax->submit('Add Link', array('url'=>array('action'=>'add'),
+                                        'complete' => "afterAddLink($linkListId, request.responseText);",
+                                        'div'=>false));
+                                        
+    
+    note the double quotes for the complete callback
+    
+    params is string linktitle, array options, where the url is inside the options.
 

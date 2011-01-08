@@ -17,14 +17,14 @@
             // assume max 20 links per link list
 ?>
 	
-        <tr>
+        <tr id="display-row-<?php echo $linkId; ?>">
 		
 		<td><?php echo $linkName; ?>&nbsp;</td>
 		<td><?php echo $this->Html->link($linkRoute,
 						 $linkRoute); ?>&nbsp;</td>
 	    
 	</tr>&copy;
-	<tr>
+	<tr id="edit-row-<?php echo $linkId; ?>">
 			
                 <td>
                         <?php echo $this->Form->input('Link.' . $order . '.name', array('value'=>$linkName));
@@ -60,7 +60,12 @@
                 </td>
                 
                 <td class="actions">
-                        <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $linkId), null, sprintf(__('Are you sure you want to delete # %s?', true), $linkId)); ?>
+                        <?php echo $this->Ajax->link(__('Delete', true),
+							     array('action' => 'delete', $linkId),
+							     array('confirm'=> sprintf(__('Are you sure you want to delete this link?', true)),
+								   'complete' => "afterDeleteLink('$linkId', request.responseText);")
+							     ); ?>
+                        
                 </td>
         </tr>
 <?php

@@ -171,12 +171,7 @@ class LinksController extends AppController {
 		$result = false;
 		if (!empty($this->data)) {
 			$this->Link->create();
-			if ($this->Link->save($this->data)) {
-				$this->Session->setFlash(__('The link has been saved', true));
-				$result = true;
-			} else {
-				$this->Session->setFlash(__('The link could not be saved. Please, try again.', true));
-			}
+			$result = $this->Link->save($this->data);
 		}
 		
 		if ($this->params['isAjax']) {
@@ -198,6 +193,11 @@ class LinksController extends AppController {
 			}
 				
 		} else {
+			if ($result) {
+				$this->Session->setFlash(__('The link has been saved', true));
+			} else {
+				$this->Session->setFlash(__('The link could not be saved. Please, try again.', true));
+			}
 			$this->redirect(array('action' => 'index'));
 		}
 		
@@ -222,8 +222,6 @@ class LinksController extends AppController {
 		}
 		if (!empty($this->data)) {
 			
-			$this->log($this->data);
-			
 			if ($this->Link->LinkList->saveAll($this->data)) {
 				$this->Session->setFlash(__('The link has been saved', true));
 				$this->redirect(array('action' => 'index'));
@@ -243,12 +241,37 @@ class LinksController extends AppController {
 			$this->Session->setFlash(__('Invalid id for link', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Link->delete($id)) {
-			$this->Session->setFlash(__('Link deleted', true));
-			$this->redirect(array('action'=>'index'));
+		
+		$result = $this->Link->delete($id);
+		
+		if ($this->params['isAjax']) {
+				
+			$this->layout = 'json';
+			if ($result) {
+				
+				$successJSON  = true;
+				$this->set(compact('successJSON'));
+				$this->render('../json/empty');
+			} else {
+				
+				$errors = $this->Link->validationErrors;
+				$successJSON  = false;
+				
+				$this->set(compact('successJSON', 'errors'));
+				$this->render('../json/error');
+			}
+				
+		} else {
+			
+			if($result) {
+				$this->Session->setFlash(__('Successfully delete', true));
+			} else {
+				$this->Session->setFlash(__('Unable to delete', true));
+			}
+			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Link was not deleted', true));
-		$this->redirect(array('action' => 'index'));
+		
+		
 	}
 }
 ?>
