@@ -110,7 +110,7 @@ class ShippingRatesController extends AppController {
 					$successJSON  = false;
 					
 					$this->set(compact('successJSON', 'errors'));
-					$this->render('json/error');
+					$this->render('../json/error');
 				}
 				
 				
@@ -150,7 +150,7 @@ class ShippingRatesController extends AppController {
 					$successJSON  = false;
 					
 					$this->set(compact('successJSON', 'errors'));
-					$this->render('json/error');
+					$this->render('../json/error');
 				}
 				
 				
