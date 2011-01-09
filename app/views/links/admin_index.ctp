@@ -1,5 +1,7 @@
 <?php
 
+	echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js');
+	
 	function convertBlogOptions($blogs) {
 		$array = array();
 		foreach($blogs as $blog) {
@@ -53,7 +55,7 @@
 	<tr>
 		<?php
 		echo '
-		<table id="display-list-'.$listId.'">';
+		<table id="display_list_'.$listId.'">';
 		
 		
 		echo '
@@ -74,14 +76,14 @@
 		</tr>
 		<tr>
 			<td>
-				<ul class="sortable" id="display-links-sortable-<?php echo $listId; ?>">
+				<ul class="sortable" id="display_links_sortable_<?php echo $listId; ?>">
 		<?php
 		$i = 0;
 		foreach ($list['Link'] as $link):
 			
 			
 		?>
-		<li class="ui-state-default" id="display-row-<?php echo $link['id']; ?>">
+		<li class="ui-state-default" id="display_row_<?php echo $link['id']; ?>">
 			
 			<span><?php echo $link['name']; ?>&nbsp;</span>
 			<span><?php echo $this->Html->link($link['route'],
@@ -95,8 +97,8 @@
 				</td>
 			</tr>
 		<?php
-			echo $this->Ajax->sortable('display-links-sortable-'.$listId);
-			echo '<tr id="new-link-'. $listId .'"><td><a href="#" onclick="showLinkForm('.$listId.');return false;">Add Link</a>&nbsp;</td></tr>';
+			echo $this->Ajax->sortable('display_links_sortable_'.$listId);
+			echo '<tr id="new_link_'. $listId .'"><td><a href="#" onclick="showLinkForm('.$listId.');return false;">Add Link</a>&nbsp;</td></tr>';
 			echo $this->element('add_link_form', array('linkListId'=>$listId, 'linkCount' => $linkCount));
 		?>
 				
@@ -105,7 +107,7 @@
 		<?php
 		echo $this->Form->create('Link', array('url'=>array('action'=>'edit',$listId)));
 		echo $this->Form->input('LinkList.id', array('type'=>'hidden', 'value'=>$listId));
-		echo '<table id="edit-list-'.$listId.'" style="display:none">';
+		echo '<table id="edit_list_'.$listId.'" style="display:none">';
 		?>
 		<tr>
 			<?php echo "<td>$listName</td>"; ?>
@@ -137,7 +139,7 @@
 			$linkId = $link['id'];
 			
 		?>
-		<tr id="edit-row-<?php echo $linkId; ?>">
+		<tr id="edit_row_<?php echo $linkId; ?>">
 			
 			<td>
 				<?php echo $this->Form->input('Link.'.$i.'.name', array('value'=>$link['name'])); ?>&nbsp;
@@ -193,7 +195,7 @@
 		<?php endforeach;
 		
 		echo '
-		<tr id="new-edit-link-'. $listId .'">
+		<tr id="new_edit_link_'. $listId .'">
 			<td>';
 		echo $this->Form->submit('Save changes');
 		echo '&nbsp;or&nbsp;';
@@ -252,8 +254,8 @@
 <script>
 
 	function afterAddLink(id, response) {
-		var displayLinkListUL = "#display-links-sortable-" + id;
-		var editLinkRow = '#new-edit-link-'+id;
+		var displayLinkListUL = "#display_links_sortable_" + id;
+		var editLinkRow = '#new_edit_link_'+id;
 		var json_object = $.parseJSON(response);
 		
 		if (json_object.success) {
@@ -269,8 +271,8 @@
 	
 	function afterDeleteLink(id, response) {
 
-		var displayLinkRow = '#display-row-'+id;
-		var editLinkRow = '#edit-row-'+id;
+		var displayLinkRow = '#display_row_'+id;
+		var editLinkRow = '#edit_row_'+id;
 		var json_object = $.parseJSON(response);
 		
 		if (json_object.success) {
@@ -296,16 +298,16 @@
 	}
 	
 	function editListForm(id) {
-		var displayListTable = '#display-list-' + id;
-		var editListForm = '#edit-list-' + id;
+		var displayListTable = '#display_list_' + id;
+		var editListForm = '#edit_list_' + id;
 		
 		$(displayListTable).hide();
 		$(editListForm).show();
 	}
 	
 	function cancelEditListForm(id) {
-		var displayListTable = '#display-list-' + id;
-		var editListForm = '#edit-list-' + id;
+		var displayListTable = '#display_list_' + id;
+		var editListForm = '#edit_list_' + id;
 		
 		$(displayListTable).show();
 		$(editListForm).hide();

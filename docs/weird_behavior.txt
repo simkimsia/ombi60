@@ -109,4 +109,10 @@ echo $this->Ajax->submit('Add Link', array('url'=>array('action'=>'add'),
     note the double quotes for the complete callback
     
     params is string linktitle, array options, where the url is inside the options.
+    
+HTML and naming of ids and classes
+==================================
+never ever use dashes inside the names of id or classes
+always use underscores. because sometimes these are used
+by jQuery and javascript dash means minus.
 

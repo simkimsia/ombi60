@@ -17,14 +17,14 @@
             // assume max 20 links per link list
 ?>
 	
-        <li id="display-row-<?php echo $linkId; ?>">
+        <li id="display_row_<?php echo $linkId; ?>">
 		
 		<span><?php echo $linkName; ?>&nbsp;</span>
 		<span><?php echo $this->Html->link($linkRoute,
 						 $linkRoute); ?>&nbsp;</span>
 	    
 	</li>&copy;
-	<tr id="edit-row-<?php echo $linkId; ?>">
+	<tr id="edit_row_<?php echo $linkId; ?>">
 			
                 <td>
                         <?php echo $this->Form->input('Link.' . $order . '.name', array('value'=>$linkName));

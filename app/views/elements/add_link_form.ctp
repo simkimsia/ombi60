@@ -1,7 +1,7 @@
 <?php
         echo '<tr id="link-form-'.$linkListId.'" style="display:none;"><td colspan="4">';
         echo $this->Form->create('Link', array('url'=>array('action'=>'add')));
-        echo '<table class="new-link-table">';
+        echo '<table class="new_link_table">';
         
         echo '<tr><td class="new-link link-name">';
         echo $this->Form->input('Link.name', array('div'=>false,
