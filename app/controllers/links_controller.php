@@ -3,7 +3,7 @@ class LinksController extends AppController {
 
 	var $name = 'Links';
 	
-	var $helpers = array('Ajax');
+	var $helpers = array('Javascript', 'Ajax');
 	
 	function beforeFilter() {
 		parent::beforeFilter();

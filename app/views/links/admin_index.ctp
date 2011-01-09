@@ -41,6 +41,11 @@
 	
 	?>
 	
+	<style type="text/css">
+		.sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+        	.sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px;}
+        </style>
+	
 	<table cellpadding="0" cellspacing="0">
 	
 	
@@ -67,28 +72,34 @@
 			<th><?php echo 'Route';?></th>
 			
 		</tr>
+		<tr>
+			<td>
+				<ul class="sortable" id="display-links-sortable-<?php echo $listId; ?>">
 		<?php
 		$i = 0;
 		foreach ($list['Link'] as $link):
-			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
-			}
+			
+			
 		?>
-		<tr<?php echo $class;?> id="display-row-<?php echo $link['id']; ?>">
+		<li class="ui-state-default" id="display-row-<?php echo $link['id']; ?>">
 			
-			<td><?php echo $link['name']; ?>&nbsp;</td>
-			<td><?php echo $this->Html->link($link['route'],
-							 $link['route']); ?>&nbsp;</td>
+			<span><?php echo $link['name']; ?>&nbsp;</span>
+			<span><?php echo $this->Html->link($link['route'],
+							   $link['route']); ?>
+			</span>
 			
-			
-		</tr>
+		</li>
 		<?php endforeach; ?>
+					</ul>
+					
+				</td>
+			</tr>
 		<?php
-		
+			echo $this->Ajax->sortable('display-links-sortable-'.$listId);
 			echo '<tr id="new-link-'. $listId .'"><td><a href="#" onclick="showLinkForm('.$listId.');return false;">Add Link</a>&nbsp;</td></tr>';
 			echo $this->element('add_link_form', array('linkListId'=>$listId, 'linkCount' => $linkCount));
 		?>
+				
 		</table>
 	
 		<?php
@@ -241,13 +252,13 @@
 <script>
 
 	function afterAddLink(id, response) {
-		var addRateRow = '#new-link-'+id;
+		var displayLinkListUL = "#display-links-sortable-" + id;
 		var editLinkRow = '#new-edit-link-'+id;
 		var json_object = $.parseJSON(response);
 		
 		if (json_object.success) {
 			var newLinkArray = json_object.contents.split('&copy;');
-			$(addRateRow).before(newLinkArray[0]);
+			$(displayLinkListUL).append(newLinkArray[0]);
 			$(editLinkRow).before(newLinkArray[1]);
 		} else {
 			$.each($.parseJSON(json_object.contents), function(key, value) {

@@ -17,13 +17,13 @@
             // assume max 20 links per link list
 ?>
 	
-        <tr id="display-row-<?php echo $linkId; ?>">
+        <li id="display-row-<?php echo $linkId; ?>">
 		
-		<td><?php echo $linkName; ?>&nbsp;</td>
-		<td><?php echo $this->Html->link($linkRoute,
-						 $linkRoute); ?>&nbsp;</td>
+		<span><?php echo $linkName; ?>&nbsp;</span>
+		<span><?php echo $this->Html->link($linkRoute,
+						 $linkRoute); ?>&nbsp;</span>
 	    
-	</tr>&copy;
+	</li>&copy;
 	<tr id="edit-row-<?php echo $linkId; ?>">
 			
                 <td>
