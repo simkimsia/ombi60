@@ -116,3 +116,12 @@ never ever use dashes inside the names of id or classes
 always use underscores. because sometimes these are used
 by jQuery and javascript dash means minus.
 
+jquery sortable serialize
+=========================
+if sortable is used, and you need to send back the order
+do not use uuid as id because sortable serialize use dash as delimiter
+
+
+use cakephp.bee jquery ajax helper and use update=>js_function()
+
+to post back. see admin/links for more info.

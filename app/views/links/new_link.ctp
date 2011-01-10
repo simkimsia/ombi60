@@ -17,7 +17,7 @@
             // assume max 20 links per link list
 ?>
 	
-        <li id="display_row_<?php echo $linkId; ?>">
+        <li id="displayrow_<?php echo $linkId; ?>">
 		
 		<span><?php echo $linkName; ?>&nbsp;</span>
 		<span><?php echo $this->Html->link($linkRoute,

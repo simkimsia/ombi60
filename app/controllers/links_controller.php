@@ -7,10 +7,7 @@ class LinksController extends AppController {
 	
 	function beforeFilter() {
 		parent::beforeFilter();
-		
-		if ($this->action == 'admin_edit') {
-			$this->Security->validatePost = false;
-		}
+	
 	}
 
 	function index() {
@@ -81,8 +78,9 @@ class LinksController extends AppController {
 		$this->Link->LinkList->recursive = -1;
 		$this->Link->LinkList->Behaviors->attach('Containable');
 		$lists = $this->Link->LinkList->find('all',
-						     array('conditions'=>array('LinkList.shop_id'=>$shopId),
-							   'contain' => array('Link')));
+						     array('conditions' => array('LinkList.shop_id'=>$shopId),
+							   'contain'    => array('Link'=>array('order' => array('Link.order ASC'))),
+							  ));
 		
 		$this->set('lists', $lists);
 		
@@ -106,6 +104,52 @@ class LinksController extends AppController {
 		$this->set(compact('blogs', 'products', 'pages'));
 		
 		
+	}
+	
+	/**
+	 * there is no need to disable security
+	 * because we are not using data to transmit the POST data
+	 * */
+	function admin_order($listId) {
+		
+		if ($this->params['isAjax']) {
+				
+			// the $_POST data is expected to be 2011-01-10 11:07:36 Error: Array
+			//(
+			//    [displayrow] => Array
+			//        (
+			//            [0] => 3
+			//            [1] => 1
+			//            [2] => 2
+			//        )
+			//
+			//)
+			
+			$result = $this->Link->saveOrder($_POST['displayrow'], $listId);
+			
+			
+			$this->layout = 'json';
+			if ($result) {
+				
+				$successJSON  = true;
+				$this->set(compact('successJSON'));
+				$this->render('../json/empty');
+			} else {
+				$errors = $this->Link->validationErrors;
+				$successJSON  = false;
+				
+				$this->set(compact('successJSON', 'errors'));
+				$this->render('../json/error');
+			}
+				
+		} else {
+			if ($result) {
+				$this->Session->setFlash(__('The link has been saved', true));
+			} else {
+				$this->Session->setFlash(__('The link could not be saved. Please, try again.', true));
+			}
+			$this->redirect(array('action' => 'index'));
+		}
 	}
 	
 	private function convertBlogOptions($blogs) {

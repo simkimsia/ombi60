@@ -91,6 +91,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Links/admin_add');
 		$this->Acl->allow($group, 'controllers/Links/admin_edit');
 		$this->Acl->allow($group, 'controllers/Links/admin_delete');
+		$this->Acl->allow($group, 'controllers/Links/admin_order');
 
 
 		$this->log('product_images');

@@ -53,9 +53,10 @@ TRUNCATE TABLE `paypal_payers_payments`;
 TRUNCATE TABLE `paypal_payers`;
 TRUNCATE TABLE `payments`;
 TRUNCATE TABLE cart_items;
-TRUNCATE TABLE carts;
+TRUNCATE TABLE carts;aros_acos
 TRUNCATE TABLE order_line_items;
 TRUNCATE TABLE orders;
+TRUNCATE TABLE `links`;
 
 
 

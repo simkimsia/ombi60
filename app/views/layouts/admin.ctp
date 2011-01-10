@@ -67,7 +67,7 @@
 					$productsSelected = '';
 					$blogsPagesSelected = '';
 					$marketingSelected = '';
-					
+					$navigationSelected = '';
 					
 					switch($this->params['controller']) {
 						case 'orders' :
@@ -79,7 +79,9 @@
 						case 'webpages' :
 							$blogsPagesSelected = ' class=selected ';
 							break;
-						
+						case 'links' :
+							$navigationSelected = ' class=selected';
+							break;
 					}
 				?>
 				<ul >
@@ -87,7 +89,7 @@
 					<li <?php echo $ordersSelected; ?>><?php echo $this->Html->link('Orders', '/admin/orders'); ?></li>
 					<li <?php echo $productsSelected; ?>><?php echo $this->Html->link('Products', '/admin/products'); ?></li>
 					<li <?php echo $blogsPagesSelected; ?>><?php echo $this->Html->link('Blogs & Pages', '/admin/webpages'); ?></li>
-					<!-- <li <?php //echo $marketingSelected; ?>><a href="#">Marketing</a></li> -->
+					<li <?php echo $navigationSelected; ?>><?php echo $this->Html->link('Navigation', '/admin/links'); ?></li> 
 				</ul>
 			</div>
 			<div id="barright">

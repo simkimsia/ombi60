@@ -83,7 +83,7 @@
 			
 			
 		?>
-		<li class="ui-state-default" id="display_row_<?php echo $link['id']; ?>">
+		<li class="ui-state-default" id="displayrow_<?php echo $link['id']; ?>">
 			
 			<span><?php echo $link['name']; ?>&nbsp;</span>
 			<span><?php echo $this->Html->link($link['route'],
@@ -97,7 +97,8 @@
 				</td>
 			</tr>
 		<?php
-			echo $this->Ajax->sortable('display_links_sortable_'.$listId);
+			$displayLinksSortable = 'display_links_sortable_'.$listId;
+			echo $this->Ajax->sortable($displayLinksSortable, array('update'=>"writeupdate('$displayLinksSortable')"));
 			echo '<tr id="new_link_'. $listId .'"><td><a href="#" onclick="showLinkForm('.$listId.');return false;">Add Link</a>&nbsp;</td></tr>';
 			echo $this->element('add_link_form', array('linkListId'=>$listId, 'linkCount' => $linkCount));
 		?>
@@ -271,7 +272,7 @@
 	
 	function afterDeleteLink(id, response) {
 
-		var displayLinkRow = '#display_row_'+id;
+		var displayLinkRow = '#displayrow_'+id;
 		var editLinkRow = '#edit_row_'+id;
 		var json_object = $.parseJSON(response);
 		
@@ -355,7 +356,24 @@
 		$(thisLinkAction).html($innerHtml);
 	}
 	
-	
+	function writeupdate(sortableId) {
+		// append the # sign
+		sortableId = "#" + sortableId;
+		
+		var sortableListArray = sortableId.split('_');
+		var listId = sortableListArray.pop();
+		
+		//var id_array = $(sortableId).sortable("serialize", {key:'data[Link][displayrow]'});
+		var id_array = $(sortableId).sortable("serialize");
+		
+		$.ajax({
+			type: 'POST',
+			url: '/admin/links/order/' + listId,
+			data: id_array,
+		});
+			
+		
+	}
 	
 	
 </script>
