@@ -159,6 +159,9 @@ class Merchant extends AppModel {
 			return false;
 		}
 		
+		// store the new blog data into variable called $shopBlog
+		$shopBlog = $result;
+		
 		// now we set up the first post announcing open for business!
 		$post = ClassRegistry::init('Post');
 		
@@ -277,6 +280,45 @@ class Merchant extends AppModel {
 			return false;
 		}
 		
+		// now we set up the links
+		
+		$this->Shop->LinkList->create();
+		$linkListData = array(
+			'LinkList' => array(
+				'shop_id' => $this->Shop->id,
+				'name'    => 'Main Menu',
+				'handle'  => 'main-menu'),
+			'Link'     => array(
+				array('name'	=> 'Home',
+				      'route'	=> '/',
+				      'order'	=> '0'),
+				array('name'	=> 'About Us',
+				      'route'	=> '/pages/about-us',
+				      'model'	=> '/pages/',
+				      'action'	=> 'about-us',
+				      'order'	=> '1'),
+				array('name'	=> 'Catalogue',
+				      'route'	=> '/products/',
+				      'model'	=> '/products/',
+				      'action'	=> '',
+				      'order'	=> '2'),
+				array('name'	=> 'Blog',
+				      'model'	=> '/blogs/',
+				      'action'	=> $shopBlog['Blog']['short_name'],
+				      'order'	=> '3'),
+				array('name'	=> 'Cart',
+				      'route'	=> '/cart/view',
+				      'order'	=> '4')
+				));
+		
+		$result = $this->Shop->LinkList->saveAll($linkListData);
+		
+		if (!$result) {
+			$datasource->rollback($this);
+			return false;
+		}
+		
+		
 		// now we set up the theme
 		$savedTheme = ClassRegistry::init('SavedTheme');
 		
@@ -286,6 +328,8 @@ class Merchant extends AppModel {
 				 'user_id' => $this->User->id);
 		
 		$result = $savedTheme->saveThemeAtSignUp($options);
+		
+		
 		
 		if (!$result) {
 			$datasource->rollback($this);

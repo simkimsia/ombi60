@@ -197,6 +197,20 @@ class Shop extends AppModel {
 			'counterQuery' => ''
 		),
 		
+		'LinkList' => array(
+			'className' => 'LinkList',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		
 	);
 
 	var $belongsTo = array(
