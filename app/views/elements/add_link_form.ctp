@@ -9,9 +9,15 @@
         echo '</td>';
         
         echo '<td class="new-link link-route">';
-        $modelOptions = array('/blogs/'=>'Blog',
-                              '/products/view/'=>'Product',
-                              '/pages/'=>'Page',);
+        $modelOptions = array(
+                '/blogs/'               =>'Blog',
+		'/cart/view'	        =>'Cart',
+		'/products/'	        =>'Catalogue',
+                '/products/view/'       =>'Product',
+		'/pages/'	        =>'Page',
+		'/'		        =>'Shop Frontpage',
+	);
+        
         echo $this->Form->label('Links to');
         echo $this->Form->input('Link.model', array('type'=>'select',
                                                     'options' => $modelOptions,

@@ -16,6 +16,7 @@ class Link extends AppModel {
 	);
 	
 	function beforeValidate() {
+		
 		if (isset($this->data['Link']['model']) && isset($this->data['Link']['action'])) {
 			$this->data['Link']['route'] = $this->data['Link']['model'] . $this->data['Link']['action'];	
 		}
@@ -77,11 +78,34 @@ class Link extends AppModel {
 			$newlyInsertedData['Link'][] = array('id'=>$id,
 							     'order'=>$order);
 		}
+		
+		
 	
 		// because we update existing entries
 		// so we need to directly use 1 level below Link
 		return $this->saveAll($newlyInsertedData['Link'], array('validate'=>false));
 		
+	}
+	
+	// before any saveAll for LinkList or Link
+	// we want to 
+	function beforeSaveAll($data) {
+		
+		if (isset($data['Link'])) {
+			foreach($data['Link'] as $key=>$link) {
+				if (isset($link['model']) && isset($link['action'])) {
+					$data['Link'][$key]['route'] = $link['model'] . $link['action'];
+				}
+			}
+		}
+		
+		return $data;
+		
+	}
+	
+	function saveAll($data = null, $options = array()) {
+		$data = $this->beforeSaveAll($data);
+		return parent::saveAll($data, $options);
 	}
 }
 ?>

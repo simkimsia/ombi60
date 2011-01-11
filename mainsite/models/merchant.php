@@ -299,8 +299,6 @@ class Merchant extends AppModel {
 				      'order'	=> '1'),
 				array('name'	=> 'Catalogue',
 				      'route'	=> '/products/',
-				      'model'	=> '/products/',
-				      'action'	=> '',
 				      'order'	=> '2'),
 				array('name'	=> 'Blog',
 				      'model'	=> '/blogs/',

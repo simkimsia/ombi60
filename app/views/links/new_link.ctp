@@ -33,9 +33,14 @@
                                                                               'value'=>$linkId)); ?>
                 </td>
                 <?php
-                        $modelOptions = array('/blogs/'=>'Blog',
-                                              '/products/view/'=>'Product',
-                                              '/pages/'=>'Page',);
+                        $modelOptions = array(
+                                '/blogs/'               =>'Blog',
+                                '/cart/view'	        =>'Cart',
+                                '/products/'	        =>'Catalogue',
+                                '/products/view/'       =>'Product',
+                                '/pages/'	        =>'Page',
+                                '/'		        =>'Shop Frontpage',
+                        );
                         
                 ?>
                 <td>
@@ -47,13 +52,18 @@
                                                                                         'style'=>'width:100%;',
                                                                                         'onchange'=>'resetLinkAction(\''.$order.'\', \''.$linkModel.'\', \''.$linkAction.'\')'));
                         
-                        
+                        if ($actionNeeded) {
+				$displayVisible = '';
+                        } else {
+                                $displayVisible = 'display:none;';
+                        }
+                                
                         echo $this->Form->input('Link.' . $order . '.action', array('type'=>'select',
                                                                                     'options' => $actionOptions,
                                                                                     'selected' => $linkAction,
                                                                                     'div'=>false,
                                                                                     'label'=>false,
-                                                                                    'style'=>'width:100%;'));
+                                                                                    'style'=>'width:100%;'.$displayVisible));
                         
                         ?>
                 &nbsp;

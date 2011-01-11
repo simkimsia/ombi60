@@ -10,6 +10,14 @@
 		return $array;
 	}
 	
+	
+	function convertEmptyOptions() {
+		$array = array();
+		$array[''] = '';
+		
+		return $array;
+	}
+	
 	function convertProductOptions($products) {
 		$array = array();
 		foreach($products as $product) {
@@ -148,23 +156,36 @@
 										      'value'=>$linkId)); ?>
 			</td>
 			<?php
-				$modelOptions = array('/blogs/'=>'Blog',
-						      '/products/view/'=>'Product',
-						      '/pages/'=>'Page',);
+				$modelOptions = array('/blogs/'		=>'Blog',
+						      '/cart/view'	=>'Cart',
+						      '/products/'	=>'Catalogue',
+						      '/products/view/' =>'Product',
+						      '/pages/'		=>'Page',
+						      '/'		=>'Shop Frontpage',
+						      );
 			
 			?>
 			<td>
-				<?php echo $this->Form->input('Link.'.$i.'.model', array('type'=>'select',
-										'options' => $modelOptions,
-										'selected' => $link['model'],
-										'div'=>false,
-										'label'=>false,
-										'style'=>'width:100%;',
-										'onchange'=>'resetLinkAction(\''.$i.'\', \''.$link['model'].'\', \''.$link['action'].'\')'));
+				<?php
+				
+				echo $this->Form->input('Link.'.$i.'.model',
+					array('type'=>'select',
+					      'options' => $modelOptions,
+					      'selected' => $link['model'],
+					      'div'=>false,
+					      'label'=>false,
+					      'style'=>'width:100%;',
+					      'onchange'=>'resetLinkAction(\''.$i.'\', \''.$link['model'].'\', \''.$link['action'].'\')'));
 				
 				$options = array();
+				$actionNeeded = true;
 				if (strpos($link['model'], 'blog') !== false) {
 					$options = convertBlogOptions($blogs);
+				} else if (($link['model'] === '/products/') ||
+					   ($link['model'] === '/') ||
+					   ($link['model'] === '/cart/view') ) {
+					$actionNeeded = false;
+					$options = convertEmptyOptions();
 				} else if (strpos($link['model'], 'product') !== false) {
 					$options = convertProductOptions($products);
 				} else if (strpos($link['model'], 'page') !== false) {
@@ -172,13 +193,20 @@
 				}
 				
 				
+				if ($actionNeeded) {
+					$displayVisible = '';
+				} else {
+					$displayVisible = 'display:none;';
+				}
 				
-				echo $this->Form->input('Link.'.$i.'.action', array('type'=>'select',
-									    'options' => $options,
-									    'selected' => $link['action'],
-									    'div'=>false,
-									    'label'=>false,
-									    'style'=>'width:100%;'));
+				echo $this->Form->input('Link.'.$i.'.action', array(
+						'type'=>'select',
+						'options' => $options,
+						'selected' => $link['action'],
+						'div'=>false,
+						'label'=>false,
+						'style'=>'width:100%;'.$displayVisible));
+				
 				
 				?>
 			&nbsp;
@@ -334,26 +362,41 @@
 		var selectedText = $(thisLinkModel + " option:selected").text();
 		var actionsArray = new Object();
 		
+		var actionNeeded = true;
+		
 		if (selectedText == 'Blog') {
 			actionsArray = blogs;
 		} else if (selectedText == 'Product') {
 			actionsArray = products;
 		} else if (selectedText == 'Page') {
 			actionsArray = pages;
+		} else if ((selectedText == 'Shop Frontpage') ||
+			   (selectedText == 'Cart') ||
+			   (selectedText == 'Catalogue') ) {
+			actionNeeded = false;
 		}
 		
 		var selectedValue = $(thisLinkModel).val();
 		
-		$innerHtml = '';
-		for(keyArray in actionsArray) {
-			var selected = '';
-			
-			if ((selectedValue == presetModelValue) && (keyArray == presetActionValue)) {
-				selected = 'selected';
+		if (actionNeeded) {
+			$innerHtml = '';
+			for(keyArray in actionsArray) {
+				var selected = '';
+				
+				if ((selectedValue == presetModelValue) && (keyArray == presetActionValue)) {
+					selected = 'selected';
+				}
+				$innerHtml += '<option value="' + keyArray + '" '+selected+'>' + actionsArray[keyArray] + '</option>';	
 			}
-			$innerHtml += '<option value="' + keyArray + '" '+selected+'>' + actionsArray[keyArray] + '</option>';	
+			$(thisLinkAction).html($innerHtml);
+			$(thisLinkAction).show();
+		} else {
+			$innerHtml = '<option value="" selected></option>';
+			$(thisLinkAction).html($innerHtml);
+			$(thisLinkAction).hide();
+			
 		}
-		$(thisLinkAction).html($innerHtml);
+		
 	}
 	
 	function writeupdate(sortableId) {

@@ -29,6 +29,11 @@ class LinkList extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+	function saveAll($data = null, $options = array()) {
+		$data = $this->Link->beforeSaveAll($data);
+		return parent::saveAll($data, $options);
+	}
 
 }
 ?>

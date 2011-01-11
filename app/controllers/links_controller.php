@@ -7,6 +7,10 @@ class LinksController extends AppController {
 	
 	function beforeFilter() {
 		parent::beforeFilter();
+		
+		if ($this->action== 'admin_edit') {
+			$this->Security->validatePost = false;
+		}
 	
 	}
 
@@ -152,6 +156,13 @@ class LinksController extends AppController {
 		}
 	}
 	
+	private function convertEmptyOptions() {
+		$array = array();
+		$array[''] = '';
+		
+		return $array;
+	}
+	
 	private function convertBlogOptions($blogs) {
 		$array = array();
 		foreach($blogs as $blog) {
@@ -179,7 +190,8 @@ class LinksController extends AppController {
 	private function populateActionForNewLink($link) {
 		
 		$shopId = Shop::get('Shop.id');
-		$model = $link['Link']['model'];
+		$model  = $link['Link']['model'];
+		$actions = array();
 		
 		if (strpos($model, 'blog') !== false) {
 			// now we set the blogs, products, pages belonging to this shop
@@ -188,14 +200,34 @@ class LinksController extends AppController {
 			$blogs = $blog->find('all', array('conditions' => array('Blog.shop_id'=>$shopId),
 							  'fields'     => array('Blog.id', 'Blog.short_name')));
 			
-			return $this->convertBlogOptions($blogs);
+			$actions = array(
+				'options'	=> $this->convertBlogOptions($blogs),
+				'actionNeeded'	=> true);
+			
+			return $actions;
+			
+		} else if  (($model === '/products/') ||
+			    ($model === '/') ||
+			    ($model === '/cart/view') ) {
+			
+			$actions = array(
+				'options'	=> $this->convertEmptyOptions(),
+				'actionNeeded'	=> false);
+			
+			return $actions;
 			
 		} else if (strpos($model, 'product') !== false) {
 			$product = ClassRegistry::init('Product');
 			$product->recursive = -1;
 			$products = $product->find('all', array('conditions'=>array('Product.shop_id'=>$shopId),
 								'fields'     => array('Product.id','Product.title')));
-			return $this->convertProductOptions($products);
+			
+			
+			$actions = array(
+				'options'	=> $this->convertProductOptions($products),
+				'actionNeeded'	=> true);
+			
+			return $actions;
 			
 		} else if (strpos($model, 'page') !== false) {
 			
@@ -204,7 +236,12 @@ class LinksController extends AppController {
 			$pages = $page->find('all', array('conditions'=>array('Webpage.shop_id'=>$shopId),
 							  'fields'     => array('Webpage.handle','Webpage.title')));
 			
-			return $this->convertPageOptions($pages);
+			
+			$actions = array(
+				'options'	=> $this->convertPageOptions($pages),
+				'actionNeeded'	=> true);
+			
+			return $actions;
 		}
 	
 		return false;
@@ -222,11 +259,12 @@ class LinksController extends AppController {
 				
 			$this->layout = 'json';
 			if ($result) {
-				$link = $this->fetchCurrent();
-				$actionOptions = $this->populateActionForNewLink($link);
-				
-				$successJSON  = true;
-				$this->set(compact('link', 'actionOptions', 'successJSON'));
+				$link 	       = $this->fetchCurrent();
+				$actionResult  = $this->populateActionForNewLink($link);
+				$actionOptions = isset($actionResult['options']) ? $actionResult['options'] : false;
+				$actionNeeded  = isset($actionResult['actionNeeded']) ? $actionResult['actionNeeded'] : false;
+				$successJSON   = true;
+				$this->set(compact('link', 'actionOptions', 'successJSON', 'actionNeeded'));
 				$this->render('new_link');
 			} else {
 				$errors = $this->Link->validationErrors;
@@ -265,7 +303,6 @@ class LinksController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->data)) {
-			
 			if ($this->Link->LinkList->saveAll($this->data)) {
 				$this->Session->setFlash(__('The link has been saved', true));
 				$this->redirect(array('action' => 'index'));

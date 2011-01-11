@@ -64,6 +64,8 @@
 		<ul id="menuItems">
 			
 			<?php
+			
+			// there is a class called selectedMenuItem. to be added later 
 			if (isset($mainMenu['Link']) && is_array($mainMenu['Link'])) {
 				$count = 0;
 				foreach($mainMenu['Link'] as $key=>$link) {
@@ -74,6 +76,19 @@
 					$menuLink = '
 			<li '.$class.'>';
 					$menuLink .= $this->Html->link($link['name'], $link['route']);
+					
+					// cater for the badge in cart
+					if (strpos($link['route'],'/cart/view') !== false) {
+						$menuLink .= '<div id="cartbadge">';
+						
+						// the cart items count
+						if (isset($cartItemsCount) && $cartItemsCount > 0) {
+							$menuLink .= $cartItemsCount;
+						}
+						
+						$menuLink .= '</div>';
+					}
+					
 					$menuLink .= '</li>';
 					
 					echo $menuLink;
@@ -85,41 +100,7 @@
 			
 			
 			?>
-			<!--
-			<li id="home" class="selectedMenuItem"><span>Home</span></li>
-			<li id="about"><a href="about.html"><span>About Us</span></a></li>
-			<li id="catalogue">
-				<?php
-					
-					/*
-					echo $this->Html->link(__('Catalogue', true),
-						array('action' => 'index',
-						      'controller' => 'products'
-					));
-					*/
-				?>	
-			</li>
-			<li id="blog">
-				<?php
-				/*
-					echo $this->Html->link(__('Blog', true),
-						'/blogs/'.$shopName_for_layout
-					);
-				*/
-				?>
-			</li>
-	-->
-			<li id="cart">
-				<?php
-					/*
-					 echo $this->Html->link(__('Cart', true),
-						array('action' => 'view_cart',
-						      'controller' => 'products'
-					));
-					*/
-				?>
-				<div id="cartbadge"><?php //if (isset($cartItemsCount) && $cartItemsCount > 0) {echo $cartItemsCount;} ?></div>
-			</li>			
+			
 		</ul>
 	</div>
 	

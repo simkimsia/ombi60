@@ -430,11 +430,11 @@ CREATE TABLE `links` (
   `name` varchar(100) DEFAULT NULL,
   `route` varchar(255) DEFAULT NULL,
   `link_list_id` int(11) unsigned DEFAULT NULL,
-  `model` varchar(100) DEFAULT NULL,
-  `action` varchar(100) DEFAULT NULL,
+  `model` varchar(100) DEFAULT '',
+  `action` varchar(100) DEFAULT '',
   `order` int(2) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `links` */
 
