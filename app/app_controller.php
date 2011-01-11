@@ -179,6 +179,36 @@ class AppController extends Controller {
 		}
 		
 		//$this->log('user' . $userIdInCookie);
+		
+		
+		// fetch the main menu of the shop
+		$this->loadModel('LinkList');
+		$this->LinkList->recursive = -1;
+		
+		$this->LinkList->Behaviors->attach('Containable');
+		$mainMenu = $this->LinkList->find('first', array(
+		    'conditions' => array(
+			'LinkList.shop_id' => $shopId,
+			'LinkList.handle' => 'main-menu'
+		    ),
+		    'contain' => array('Link'),
+		    'fields' => array('LinkList.id'),
+		));
+		/*
+		$mainMenu = $this->LinkList->find('first', array('conditions'=>array('LinkList.shop_id'=>$shopId,
+									     'LinkList.handle' =>'main-menu'),
+							 'contain'   =>array('Link'=>array('fields'=>array('Link.id',
+													   'Link.name',
+													     'Link.route',
+													     'Link.model',
+													     'Link.action',
+													     'Link.order'),
+											     'order'=>array('Link.order ASC'))),
+							 'fields'    =>array('LinkList.id',)
+							 ));
+		*/
+		$this->set('mainMenu', $mainMenu);
+		
 	}
 	/**
 	 *end Cookies

@@ -413,12 +413,13 @@ CREATE TABLE `link_lists` (
   `name` varchar(100) DEFAULT NULL,
   `deletable` tinyint(1) unsigned DEFAULT '0',
   `link_count` int(3) unsigned DEFAULT '0',
+  `handle` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `link_lists` */
 
-insert  into `link_lists`(`id`,`shop_id`,`name`,`deletable`,`link_count`) values (1,2,'Main Menu',0,1),(2,2,'Footer1',0,2);
+insert  into `link_lists`(`id`,`shop_id`,`name`,`deletable`,`link_count`,`handle`) values (1,2,'Main Menu',0,2,'main-menu'),(2,2,'Footer1',0,2,NULL);
 
 /*Table structure for table `links` */
 

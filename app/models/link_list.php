@@ -21,7 +21,7 @@ class LinkList extends AppModel {
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
+			'order' => 'Link.order ASC',
 			'limit' => '',
 			'offset' => '',
 			'exclusive' => '',

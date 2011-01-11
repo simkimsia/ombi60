@@ -163,6 +163,11 @@ input{
 	width:120px;
 	height:40px;
 	margin-top:3px;
+	
+	/* divider */
+	background-image:url('../img/menuSeparator.png');
+	background-repeat:no-repeat;
+	background-position:right;
 }
 
 #menuItems li span{
@@ -188,7 +193,7 @@ input{
 	line-height:43px;
 }
 
-#menuItems li#home{
+#menuItems li.home{
 	background-image:url('../img/menuSeparatorHome.png');
 	background-repeat:no-repeat;
 }
