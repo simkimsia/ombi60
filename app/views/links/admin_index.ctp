@@ -162,6 +162,7 @@
 						      '/products/view/' =>'Product',
 						      '/pages/'		=>'Page',
 						      '/'		=>'Shop Frontpage',
+						      'web'		=>'Web Address',
 						      );
 			
 			?>
@@ -177,26 +178,39 @@
 					      'style'=>'width:100%;',
 					      'onchange'=>'resetLinkAction(\''.$i.'\', \''.$link['model'].'\', \''.$link['action'].'\')'));
 				
-				$options = array();
-				$actionNeeded = true;
+				$options       = array();
+				$actionNeeded  = true;
+				$textBoxNeeded = false;
+				
 				if (strpos($link['model'], 'blog') !== false) {
 					$options = convertBlogOptions($blogs);
 				} else if (($link['model'] === '/products/') ||
 					   ($link['model'] === '/') ||
 					   ($link['model'] === '/cart/view') ) {
 					$actionNeeded = false;
-					$options = convertEmptyOptions();
+					$options      = convertEmptyOptions();
 				} else if (strpos($link['model'], 'product') !== false) {
 					$options = convertProductOptions($products);
 				} else if (strpos($link['model'], 'page') !== false) {
 					$options = convertPageOptions($pages);
+				} else if ($link['model'] === 'web') {
+					$actionNeeded  = false;
+					$textBoxNeeded = true;
 				}
 				
 				
 				if ($actionNeeded) {
 					$displayVisible = '';
+					
 				} else {
 					$displayVisible = 'display:none;';
+					
+				}
+				
+				if ($textBoxNeeded) {
+					$textBoxVisible = '';
+				} else {
+					$textBoxVisible = 'display:none;';
 				}
 				
 				echo $this->Form->input('Link.'.$i.'.action', array(
@@ -206,6 +220,12 @@
 						'div'=>false,
 						'label'=>false,
 						'style'=>'width:100%;'.$displayVisible));
+				
+				echo $this->Form->input('Link.'.$i.'.action1', array(
+						'value' => $link['action'],
+						'div'=>false,
+						'label'=>false,
+						'style'=>'width:100%;'.$textBoxVisible));
 				
 				
 				?>
@@ -358,11 +378,13 @@
   
 		var thisLinkModel  = "#Link" + linkId + "Model";
 		var thisLinkAction = "#Link" + linkId + "Action";
+		var thisLinkAction1 = "#Link" + linkId + "Action1";
 		
 		var selectedText = $(thisLinkModel + " option:selected").text();
 		var actionsArray = new Object();
 		
 		var actionNeeded = true;
+		var textBoxNeeded = false;
 		
 		if (selectedText == 'Blog') {
 			actionsArray = blogs;
@@ -374,6 +396,9 @@
 			   (selectedText == 'Cart') ||
 			   (selectedText == 'Catalogue') ) {
 			actionNeeded = false;
+		} else if (selectedText == 'Web Address') {
+			actionNeeded = false;
+			textBoxNeeded = true;
 		}
 		
 		var selectedValue = $(thisLinkModel).val();
@@ -394,7 +419,12 @@
 			$innerHtml = '<option value="" selected></option>';
 			$(thisLinkAction).html($innerHtml);
 			$(thisLinkAction).hide();
-			
+		}
+		
+		if (textBoxNeeded) {
+			$(thisLinkAction1).show();
+		} else {
+			$(thisLinkAction1).hide();
 		}
 		
 	}

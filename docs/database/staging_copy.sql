@@ -415,11 +415,9 @@ CREATE TABLE `link_lists` (
   `link_count` int(3) unsigned DEFAULT '0',
   `handle` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `link_lists` */
-
-insert  into `link_lists`(`id`,`shop_id`,`name`,`deletable`,`link_count`,`handle`) values (1,2,'Main Menu',0,2,'main-menu'),(2,2,'Footer1',0,2,NULL);
 
 /*Table structure for table `links` */
 
@@ -434,7 +432,7 @@ CREATE TABLE `links` (
   `action` varchar(100) DEFAULT '',
   `order` int(2) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `links` */
 

@@ -17,8 +17,19 @@ class Link extends AppModel {
 	
 	function beforeValidate() {
 		
-		if (isset($this->data['Link']['model']) && isset($this->data['Link']['action'])) {
-			$this->data['Link']['route'] = $this->data['Link']['model'] . $this->data['Link']['action'];	
+		if (isset($this->data['Link']['model']) &&
+		    isset($this->data['Link']['action']) &&
+		    isset($this->data['Link']['action1'])) {
+			
+			if ($this->data['Link']['model'] === 'web') {
+				$this->data['Link']['action1'] = $this->convertLink($this->data['Link']['action1']);
+				$this->data['Link']['action']  = $this->data['Link']['action1'];
+				$this->data['Link']['route'] = $this->data['Link']['action1'];	
+				
+			} else {
+				$this->data['Link']['route'] = $this->data['Link']['model'] . $this->data['Link']['action'];		
+			}
+			
 		}
 		
 		
@@ -31,7 +42,14 @@ class Link extends AppModel {
 		
 	}
 	
-	
+	function convertLink($url) {
+		$url = strtolower($url);
+		if (strpos($url, 'http') === false) {
+			return 'http://' . $url;
+		}
+		
+		return $url;
+	}
 	
 	/**
 	 * reorder the links in the list
@@ -93,8 +111,18 @@ class Link extends AppModel {
 		
 		if (isset($data['Link'])) {
 			foreach($data['Link'] as $key=>$link) {
-				if (isset($link['model']) && isset($link['action'])) {
-					$data['Link'][$key]['route'] = $link['model'] . $link['action'];
+				if (isset($link['model']) &&
+				    isset($link['action']) &&
+				    isset($link['action1']) ) {
+					
+					if ($data['Link'][$key]['model'] === 'web') {
+						$link['action1']             = $this->convertLink($link['action1']);
+						$link['action']              = $link['action1'];
+						$data['Link'][$key]['route'] = $link['action1'];
+					} else {
+						$data['Link'][$key]['route'] = $link['model'] . $link['action'];
+					}
+					
 				}
 			}
 		}

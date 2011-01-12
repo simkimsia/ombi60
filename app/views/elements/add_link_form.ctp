@@ -16,22 +16,30 @@
                 '/products/view/'       =>'Product',
 		'/pages/'	        =>'Page',
 		'/'		        =>'Shop Frontpage',
+                'web'                   =>'Web Address',
 	);
         
         echo $this->Form->label('Links to');
-        echo $this->Form->input('Link.model', array('type'=>'select',
-                                                    'options' => $modelOptions,
-                                                    'selected' => '/blogs/',
-                                                    'div'=>false,
-                                                    'label'=>false,
-                                                    'style'=>'width:100%;'));
+        echo $this->Form->input('Link.model', array(
+                'type'=>'select',
+                'options' => $modelOptions,
+                'selected' => '/blogs/',
+                'div'=>false,
+                'label'=>false,
+                'style'=>'width:100%;'));
         
         $options = array();
-        echo $this->Form->input('Link.action', array('type'=>'select',
-                                                    'options' => $options,
-                                                    'div'=>false,
-                                                    'label'=>false,
-                                                    'style'=>'width:100%;'));
+        echo $this->Form->input('Link.action', array(
+                'type'=>'select',
+                'options' => $options,
+                'div'=>false,
+                'label'=>false,
+                'style'=>'width:100%;'));
+        
+        echo $this->Form->input('Link.action1', array(
+                'div'=>false,
+                'label'=>false,
+                'style'=>'width:100%;display:none;'));
         
         echo '</td>';
         

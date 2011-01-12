@@ -193,6 +193,7 @@ class LinksController extends AppController {
 		$model  = $link['Link']['model'];
 		$actions = array();
 		
+		
 		if (strpos($model, 'blog') !== false) {
 			// now we set the blogs, products, pages belonging to this shop
 			$blog = ClassRegistry::init('Blog');
@@ -202,7 +203,8 @@ class LinksController extends AppController {
 			
 			$actions = array(
 				'options'	=> $this->convertBlogOptions($blogs),
-				'actionNeeded'	=> true);
+				'actionNeeded'	=> true,
+				'textBoxNeeded'	=> false);
 			
 			return $actions;
 			
@@ -212,7 +214,17 @@ class LinksController extends AppController {
 			
 			$actions = array(
 				'options'	=> $this->convertEmptyOptions(),
-				'actionNeeded'	=> false);
+				'actionNeeded'	=> false,
+				'textBoxNeeded'	=> false);
+			
+			return $actions;
+		
+		} else if (($model === 'web')) {
+			
+			$actions = array(
+				'options'	=> $this->convertEmptyOptions(),
+				'actionNeeded'	=> false,
+				'textBoxNeeded'	=> true);
 			
 			return $actions;
 			
@@ -225,7 +237,8 @@ class LinksController extends AppController {
 			
 			$actions = array(
 				'options'	=> $this->convertProductOptions($products),
-				'actionNeeded'	=> true);
+				'actionNeeded'	=> true,
+				'textBoxNeeded'	=> false);
 			
 			return $actions;
 			
@@ -239,7 +252,8 @@ class LinksController extends AppController {
 			
 			$actions = array(
 				'options'	=> $this->convertPageOptions($pages),
-				'actionNeeded'	=> true);
+				'actionNeeded'	=> true,
+				'textBoxNeeded'	=> false);
 			
 			return $actions;
 		}
@@ -263,8 +277,15 @@ class LinksController extends AppController {
 				$actionResult  = $this->populateActionForNewLink($link);
 				$actionOptions = isset($actionResult['options']) ? $actionResult['options'] : false;
 				$actionNeeded  = isset($actionResult['actionNeeded']) ? $actionResult['actionNeeded'] : false;
+				$textBoxNeeded = isset($actionResult['textBoxNeeded']) ? $actionResult['textBoxNeeded'] : false;
 				$successJSON   = true;
-				$this->set(compact('link', 'actionOptions', 'successJSON', 'actionNeeded'));
+				
+				$this->set(compact('link',
+						   'actionOptions',
+						   'successJSON',
+						   'actionNeeded',
+						   'textBoxNeeded'));
+				
 				$this->render('new_link');
 			} else {
 				$errors = $this->Link->validationErrors;

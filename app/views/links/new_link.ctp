@@ -40,6 +40,7 @@
                                 '/products/view/'       =>'Product',
                                 '/pages/'	        =>'Page',
                                 '/'		        =>'Shop Frontpage',
+                                'web'                   =>'Web Address',
                         );
                         
                 ?>
@@ -57,6 +58,12 @@
                         } else {
                                 $displayVisible = 'display:none;';
                         }
+                        
+                        if ($textBoxNeeded) {
+                                $textBoxVisible = '';
+                        } else {
+                                $textBoxVisible = 'display:none;';
+                        }
                                 
                         echo $this->Form->input('Link.' . $order . '.action', array('type'=>'select',
                                                                                     'options' => $actionOptions,
@@ -64,6 +71,12 @@
                                                                                     'div'=>false,
                                                                                     'label'=>false,
                                                                                     'style'=>'width:100%;'.$displayVisible));
+                        
+                        echo $this->Form->input('Link.'.$order.'.action1', array(
+						'value' => $linkAction,
+						'div'=>false,
+						'label'=>false,
+						'style'=>'width:100%;'.$textBoxVisible));
                         
                         ?>
                 &nbsp;

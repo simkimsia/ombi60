@@ -291,6 +291,7 @@ class Merchant extends AppModel {
 			'Link'     => array(
 				array('name'	=> 'Home',
 				      'route'	=> '/',
+				      'model'	=> '/',
 				      'order'	=> '0'),
 				array('name'	=> 'About Us',
 				      'route'	=> '/pages/about-us',
@@ -299,6 +300,7 @@ class Merchant extends AppModel {
 				      'order'	=> '1'),
 				array('name'	=> 'Catalogue',
 				      'route'	=> '/products/',
+				      'model'	=> '/products/',
 				      'order'	=> '2'),
 				array('name'	=> 'Blog',
 				      'model'	=> '/blogs/',
@@ -306,6 +308,7 @@ class Merchant extends AppModel {
 				      'order'	=> '3'),
 				array('name'	=> 'Cart',
 				      'route'	=> '/cart/view',
+				      'model'	=> '/cart/view',
 				      'order'	=> '4')
 				));
 		
