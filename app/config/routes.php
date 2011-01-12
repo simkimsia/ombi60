@@ -253,11 +253,11 @@
                               'country_id'=> '[0-9]+'));
     
         
-        Router::connect('/admin/shipping/delete/:id',
+        Router::connect('/admin/shipping/delete/*',
                         array('controller' => 'shipping_rates',
                               'action' => 'delete',
-                              'admin'=>true,
-                              ));
+                              'admin'=>true,)
+                        );
         
         Router::connect('/admin/:based/:id',
                         array('controller' => 'shipping_rates',
@@ -335,6 +335,19 @@
                         array('pass' => array('shop_id'),
                               'shop_id' => '[0-9]+')
                         );
+        
+        /** webpages for blogs and pages
+         * */
+        Router::connect('/admin/pages',
+                        array('controller' => 'webpages',
+                              'admin'      => true,
+                              'action'     => 'index',
+                              ));
+        
+        Router::connect('/admin/pages/:action/*',
+                        array('controller' => 'webpages',
+                              'admin'      => true,
+                              ));
         
 
 

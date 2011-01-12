@@ -181,8 +181,8 @@ class Merchant extends AppModel {
 		// now we set up the shopfront page and other pages
 		$webpage = ClassRegistry::init('Webpage');
 		
-		$pageData = array('Webpage'=>array('title'=>'Welcome',
-						'text'=>'<div class="item">
+		$homePage = array('title'=>'Welcome',
+				  'text'=>'<div class="item">
 		
 <table class="itemTable" cellspacing="0" cellpadding="0">
 <tbody>
@@ -270,10 +270,32 @@ class Merchant extends AppModel {
 </div>',
 						'shop_id'=>$this->Shop->id,
 						'author'=>$this->User->id,
-						'handle'=>'shopfront'));
+						'handle'=>'shopfront');
+		
+		$aboutUsPage = array('title'=>'About Us',
+				     'text'=>'<p>The <strong>About Us</strong> page is important.</p>
+				     <p>Customers visit About Us page when they are new to your online shop. They want to establish a level of trust in your business.  Since trust is crucial when selling online, it’s a good idea to provide a fair amount of information about yourself and your business.  Here are a few things you should touch on:</p>
+<ul>
+	
+  <li>Who you are</li>
+	
+  <li>Why you are selling these items</li>
+	
+  <li>Where your business is located</li>
+	
+  <li>How long you have been in business</li>
+	
+  <li>Who are the people on your team</li>
+</ul>
+<p>Go to the <a href="/admin/pages">Blogs &amp; Pages</a> in administration menu.</p>',
+						'shop_id'=>$this->Shop->id,
+						'author'=>$this->User->id,
+						'handle'=>'about-us');
+		
+		$pageData = array('Webpage'=>array($homePage, $aboutUsPage));
 		
 		$webpage->create();
-		$result = $webpage->save($pageData);
+		$result = $webpage->saveAll($pageData['Webpage']);
 		
 		if (!$result) {
 			$datasource->rollback($this);
@@ -303,6 +325,7 @@ class Merchant extends AppModel {
 				      'model'	=> '/products/',
 				      'order'	=> '2'),
 				array('name'	=> 'Blog',
+				      'route'	=> '/blogs/' . $shopBlog['Blog']['short_name'],
 				      'model'	=> '/blogs/',
 				      'action'	=> $shopBlog['Blog']['short_name'],
 				      'order'	=> '3'),
