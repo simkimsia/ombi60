@@ -7,7 +7,12 @@ class PostsController extends AppController {
 	
 	var $view = 'Theme';
 	
-	var $components = array('Theme' => array('actions'=>array('index')),);
+	var $components = array(
+				'Theme' => array(
+					'actions'=>array(
+						'index',
+						'view',)
+				));
 
 	function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
@@ -26,25 +31,28 @@ class PostsController extends AppController {
 		
 		$this->Post->Behaviors->attach('Linkable.Linkable');
 		
-		$post = $this->Post->find('first', array('conditions'=>array('Blog.short_name'=>$short_name,
+		$post = $this->Post->find('first', array('conditions'=>array(
+									'Blog.short_name'=>$short_name,
 									'Post.id'=>$id,
 									'Blog.shop_id'=>Shop::get('Shop.id')),
 							 'link'=>array('Blog', 'User'),
-							 'fields'=>array('Post.*')));
+							 'fields'=>array('Post.*',
+									 'Blog.name',
+									 'Blog.short_name')));
 		
 		$this->set(compact('post'));
 		
 		
 	}
 	
-	function index($slug = false) {
+	function index($short_name = false) {
 		
-		if (!$slug) {
+		if (!$short_name) {
 			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect('/');
 		}
 		$this->Post->Blog->recursive = -1;
-		$blog = $this->Post->Blog->find('first', array('conditions'=>array('Blog.short_name'=>$slug,
+		$blog = $this->Post->Blog->find('first', array('conditions'=>array('Blog.short_name' => $short_name,
 						    				   'Blog.shop_id'=>Shop::get('Shop.id'))));
 		
 		if (!$blog) {
@@ -61,7 +69,7 @@ class PostsController extends AppController {
 		
 		$posts = $this->paginate();
 		
-		$this->set('posts', $posts);
+		$this->set(compact('posts', 'blog'));
 	}
 	
 	

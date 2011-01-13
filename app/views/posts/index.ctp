@@ -7,12 +7,8 @@
 	<div id="cataloguebody">
 		
 		<div id="sidebar">
-			<div class="barcategory" id="selectedbarcategory">Blog Title</div>
-				<div class="baritem">Blog Post Title 1</div>
-				<div class="baritem"><a href="blog2.html">Blog Post Title 2</a></div>
-				<div class="baritem"><a href="blog3.html">Blog Post Title 3</a></div>
-				<div class="baritem"><a href="blog4.html">Blog Post Title 4</a></div>
-				<div class="baritem"><a href="blog5.html">Blog Post Title 5</a></div>
+			<div class="barcategory" id="selectedbarcategory"><?php echo $blog['Blog']['name']; ?></div>
+				
 		</div>
 		<div id="cataloguewrapper">
 			<div class="categorywrapper">
@@ -20,15 +16,20 @@
 			
 			<?php foreach($posts as $post): ?>
 				<div class="contentcategory">
-					<div class="blogtitle"><?php echo $post['Post']['title']; ?></div>
+					<div class="blogtitle"><?php echo $this->Html->link($post['Post']['title'],
+											    array(
+												'action'=>'view',
+												'short_name'=>$blog['Blog']['short_name'],
+												'id'=>$post['Post']['id'],
+												'slug'=>$post['Post']['slug'])); ?></div>
 					<div class="blogdatetime"><?php echo $post['Post']['created']; ?></div>
 				</div>
 				
 				
 					<div class="contentitem">
-						<?php echo
+						<?php 
                                                 $body = $this->Text->stripLinks($post['Post']['body']);
-                                                echo $this->Text->truncate($body);
+                                                echo trim($this->Text->truncate($body));
                                                 ?>
 						
 					</div>
