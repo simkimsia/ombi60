@@ -61,6 +61,7 @@ class PostsController extends AppController {
 		}
 		
 		$this->paginate = array('conditions'=>array('Post.blog_id'=>$blog['Blog']['id']),
+					'order' => array('Post.created DESC'),
 					'fields' => array('Post.id',
 							  'Post.blog_id','Post.author_id',
 							  'Post.author_id', 'Post.status',

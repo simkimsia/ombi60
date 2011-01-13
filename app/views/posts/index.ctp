@@ -61,7 +61,17 @@
 						</tr>
 					</table>
 	-->			
+					<?php
 					
+					echo $this->Paginator->numbers();
+					
+					
+					/*
+					echo $this->Paginator->counter();
+					echo $paginator->prev('<< Newer ', null, null, array('class' => 'disabled'));
+					echo $paginator->next(' Older >>', null, null, array('class' => 'disabled'));
+					*/
+					?>
 				
 				</div>
 				
