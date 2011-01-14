@@ -750,7 +750,7 @@ class ProductsController extends AppController {
 		
 		if($this->addToCart($id, $qty)) {
 			$this->Session->setFlash(__('Product added to cart', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'view', $id));
+			$this->redirect(array('action' => 'view_cart'));
 		}
 		$this->Session->setFlash(__('The Product could not be added to cart. Please, try again.', true), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('action' => 'index'));
