@@ -8,7 +8,11 @@
 
 					$count = count($products);
 					
-					if ($count > 0) {
+					if ($count == 0) {
+						echo 'You have not selected any products. You should view our products ' . $this->Html->link('here', array('action' => 'index',));
+					}
+					
+					else if ($count > 0) {
 						
 						echo $this->Form->create('Product', array('action' => 'edit_quantities_in_cart' ));	
 						echo $this->Form->submit('Refresh Cart', array('name'=>'btnRefresh',

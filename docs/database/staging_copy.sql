@@ -429,7 +429,7 @@ CREATE TABLE `links` (
   `route` varchar(255) DEFAULT NULL,
   `link_list_id` int(11) unsigned DEFAULT NULL,
   `model` varchar(100) DEFAULT '',
-  `action` varchar(100) DEFAULT '',
+  `action` varchar(155) DEFAULT '',
   `order` int(2) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -780,12 +780,12 @@ CREATE TABLE `shipments` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `price` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `description` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `shipments` */
-
-insert  into `shipments`(`id`,`order_id`,`completed`,`name`,`price`,`description`) values (1,117,0,'International Shipping','10.0000','From 10kg to 20kg'),(2,146,0,'test2','0.0000','From $2 to $20'),(3,150,0,'Heavy Duty Shipping','25.0000','From 20kg to 50kg'),(5,157,0,'Heavy Duty Shipping','25.0000','From 20kg to 50kg'),(6,1,0,'Standard Shipping','10.0000','From 10kg to 20kg'),(7,2,0,'Standard Shipping','10.0000','From 10kg to 20kg');
 
 /*Table structure for table `shipped_to_countries` */
 

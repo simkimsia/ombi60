@@ -6,7 +6,8 @@ class ProductsController extends AppController {
 
 	var $name = 'Products';
 
-	var $helpers = array('Javascript', 'Ajax');
+	var $helpers = array('Javascript', 'Ajax',
+			     'TinyMce.TinyMce', 'Text');
 	
 	var $components = array(
 				'Paypal.Paypal',
@@ -796,9 +797,11 @@ class ProductsController extends AppController {
 		if (in_array($id, $cartItemIdArray)) {
 			$result = $this->Product->CartItem->delete($id);
 			if (count($cartItemIdArray) == 1 && $result) {
-				$this->Product->CartItem->Cart->delete($cartId);
+				return $this->Product->CartItem->Cart->delete($cartId);
 			}
 		}
+		
+		return false;
 		
 	}
 	
