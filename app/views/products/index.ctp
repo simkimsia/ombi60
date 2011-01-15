@@ -1,3 +1,8 @@
+<?php
+	echo $this->Html->script('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
+	
+?>
+
 	<div id="cataloguetop"></div>
 	<div id="cataloguebody">
 		
@@ -25,12 +30,38 @@
 			echo $this->Paginator->counter(array(
 			'format' => __('Showing %start% - %end% of %count% items', true)
 			));
-		?></div><div id="sortby">Sort By: 
-					<select name="SortBy">
-				<option>Sort By Option 1</option>
-				<option>Sort By Option 2</option>
-				<option>Sort By Option 3</option>
-			</select></div></div>
+		?></div>
+					
+		<?php
+		
+			
+			$sort = isset($this->params['named']['sort']) ? $this->params['named']['sort'] : 'created';
+			$order = isset($this->params['named']['direction']) ? $this->params['named']['direction'] : 'desc';
+			
+			
+			$optionSelected = 'created';
+			
+			
+			
+			if ($sort == 'price' && $order == 'asc') {
+				$optionSelected = 'price';
+			}
+			
+			if ($sort == 'price' && $order == 'desc') {
+				$optionSelected = 'price-';
+			}
+			
+			
+		?>
+					
+		<div id="sortby">Sort By: 
+			<select name="SortBy" id="sortBySelect">
+				<option value="created" <?php if ($optionSelected == 'created') echo ' selected'; ?>>Date: Latest</option>
+				<option value="price" <?php if ($optionSelected == 'price') echo ' selected'; ?>>Price: Low to High</option>
+				<option value="price-" <?php if ($optionSelected == 'price-') echo ' selected'; ?>>Price: High to Low</option>
+			</select>
+		</div>
+	</div>
 				<?php
 					$i = 0;
 					
@@ -112,3 +143,36 @@
 			
 	</div>
 	<div id="cataloguebottom"></div>
+	
+	
+	
+<script type="text/javascript">//<![CDATA[
+
+	var selectSort = $("#sortBySelect");
+	
+	var domainPagePath = '<?php echo Router::url('/products/index/', true); ?>';
+
+	$(document).ready(function (){
+		
+		selectSort.change(function() {
+			
+			var valueOfSelectSort = selectSort.val();
+			
+			if (valueOfSelectSort == 'created') {
+				window.location.href = domainPagePath + "sort:created/direction:desc";
+			}
+			
+			if (valueOfSelectSort == 'price') {
+				window.location.href = domainPagePath + "sort:price/direction:asc";
+			}
+			
+			if (valueOfSelectSort == 'price-') {
+				window.location.href = domainPagePath + "sort:price/direction:desc";
+			}
+		});
+		
+	});
+	
+	
+
+//]]></script>

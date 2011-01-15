@@ -428,6 +428,7 @@ class ProductsController extends AppController {
 						    ),
 			      'link'=>array('ProductImage'),
 			      'fields'=>array('Product.*', 'ProductImage.id', 'ProductImage.filename', 'ProductImage.dir'),
+			      'order'=> array('Product.created DESC')
 			      );
 
 

@@ -90,12 +90,10 @@
 								foreach ($product['ProductImages'] as $key => $image) {
 									
 									echo '<div>';
-									
 					
 									echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $image['ProductImage']['filename'],
 												array('id'=>'small_'.$key));
 					
-									
 									echo '</div>';
 									
 					
