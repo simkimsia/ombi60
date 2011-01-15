@@ -88,16 +88,16 @@
 								
 					
 								foreach ($product['ProductImages'] as $key => $image) {
-									if ($key % $limit == 0) {
-										echo '<div>';
-									}
+									
+									echo '<div>';
+									
 					
 									echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $image['ProductImage']['filename'],
 												array('id'=>'small_'.$key));
 					
-									if (($key % $limit == 4) OR ($key == $count - 1)) {
-										echo '</div>';
-									}
+									
+									echo '</div>';
+									
 					
 								}
 					
