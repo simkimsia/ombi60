@@ -61,7 +61,7 @@
 
         #this handles sitename.leaguelogix.com
         ServerName www.openmybusinessin60seconds.com
-        ServerAlias www.openmybusinessin60seconds.com
+        ServerAlias www.openmybusinessin60seconds.com openmybusinessin60seconds.com
 
                 Options -Indexes FollowSymLinks
 
