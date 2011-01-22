@@ -52,12 +52,11 @@
 							$shortenScrollableLength = ($count > 0 AND $count < $limit);
 							$hideScrollable = ($count == 0);
 						
-					
-							echo '<!-- "previous page" action -->';
-						
-							//if ($leftRightButtonsNeeded){
+							if ($count > 0) {
+								echo '<!-- "previous page" action -->';
 								echo '<a class="prevNav browse left"></a>';	
-							//}
+							}
+							
 							
 							$style = '';
 							if ($shortenScrollableLength) {
@@ -75,43 +74,47 @@
 							
 						?>
 						
-					
-						<!-- root element for scrollable -->
-						<div class="scrollable" <?php  echo $style; ?> >
-					
-						   <!-- root element for the items -->
-						   <div class="items">
-					
-					
-					
-							<?php
-								
-					
-								foreach ($product['ProductImages'] as $key => $image) {
-									
-									echo '<div>';
-					
-									echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $image['ProductImage']['filename'],
-												array('id'=>'small_'.$key));
-					
-									echo '</div>';
-									
-					
-								}
-					
-							?>
-					
-					
-						   </div>
-					
-						</div>
-					
+						
 						<?php
-							//if ($leftRightButtonsNeeded) {
+							
+									     
+							if ($count > 0) {
+								echo '
+							<!-- root element for scrollable -->
+							<div class="scrollable" ' . $style . '  >';
+								echo '
+								<!-- root element for the items -->
+								<div class="items">';
+						
+					
+							}
+						
+					
+							foreach ($product['ProductImages'] as $key => $image) {
+								
+								echo '<div>';
+				
+								echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $image['ProductImage']['filename'],
+											array('id'=>'small_'.$key));
+				
+								echo '</div>';
+									
+					
+							}
+							
+							if ($count > 0) {
+								echo '
+								</div>';
+								
+								echo '
+							</div>';
+							
 								echo '<!-- "next page" action -->';
 								echo '<a class="nextNav browse right"></a>';	
-							//}
-							
+					
+							}
+					
+						
 						?>
 
 						</div>

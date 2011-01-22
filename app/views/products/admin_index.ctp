@@ -46,7 +46,10 @@ foreach ($products as $product):
 	<tr<?php echo $class;?>>
 		
 		<td>
-			<?php echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $product['ProductImage']['filename']); ?>
+			<?php
+			if (isset($product['ProductImage']['filename']))
+			
+				echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $product['ProductImage']['filename']); ?>
 		</td>
 		<td>
 			<?php echo $product['Product']['title']; ?>
