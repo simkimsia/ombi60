@@ -1,9 +1,9 @@
 <VirtualHost *:80>
         ServerAdmin aaa@gmail.com
 
-        #this handles sitename.leaguelogix.com
+        #this handles sitename.ombi60.com
         ServerName *.ombi60.com
-        ServerAlias *.ombi60.com
+        ServerAlias *.ombi60.com ombi60.com
 
                 Options -Indexes FollowSymLinks
 
@@ -59,7 +59,7 @@
 <VirtualHost *:80>
         ServerAdmin aaa@gmail.com
 
-        #this handles sitename.leaguelogix.com
+        #this handles www.openmybusinessin60seconds.com
         ServerName www.openmybusinessin60seconds.com
         ServerAlias www.openmybusinessin60seconds.com openmybusinessin60seconds.com
 
@@ -299,6 +299,33 @@
                 AllowOverride None
         </Directory>
         <Directory /var/www/thecopyninja>
+
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+
+
+        </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+        ServerAdmin aaa@gmail.com
+
+        #this handles sitename.leaguelogix.com
+        ServerName simkimsia.com
+        ServerAlias *.simkimsia.com
+
+                Options -Indexes FollowSymLinks
+
+        UseCanonicalName Off
+        DocumentRoot /var/www/blog
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/blog>
 
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride All
