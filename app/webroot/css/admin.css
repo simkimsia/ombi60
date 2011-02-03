@@ -135,5 +135,35 @@ ul#subnav li a {
 }
 
 /** end of dropdown menu **/
-
-
+/* styles added by Maxim (rhinoda) */
+.td_with_bottom_border{
+    border-bottom-color: #555555;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+}
+.th_without_bottom_border
+{
+border-bottom-width: 0px;
+}
+.table_with_border
+{
+  border: 1px solid black;
+  
+}
+.table_without_bottom_border th
+{
+  border: 0px;
+}
+.table_text_align th,.table_text_align td
+{
+text-align:center;
+}
+.tr_white,.tr_white td
+{
+  border: 0px;  
+  background-color: white !important;
+}
+/*tr.altrow td
+{
+ //background-color: white !important;
+}*/
