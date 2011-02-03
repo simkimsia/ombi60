@@ -5,6 +5,7 @@ App::import('Core', 'HttpSocket');
 class ProductsController extends AppController {
 
 	var $name = 'Products';
+	var $paginate = array('limit' => 10);
 
 	var $helpers = array('Javascript', 'Ajax',
 			     'TinyMce.TinyMce', 'Text');
@@ -341,6 +342,7 @@ class ProductsController extends AppController {
 	function admin_index() {
 			
 		$this->paginate = array(
+		        'limit'=>10,
 			      'conditions' => array('OR' =>
 							array (
 								array('ProductImage.cover'=>true),
