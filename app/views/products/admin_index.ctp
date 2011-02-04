@@ -53,8 +53,8 @@
     </td>
     <td colspan="2" width="300">&nbsp;</td>
     </tr>
-    <tr class="tr_white">
-    <td colspan="2">
+    <tr>
+    <td colspan="2" style="border:0px;">
   <!-- product list -->
     <table  cellpadding="0" cellspacing="0"  class="table_text_align product_list">
 	<tr>
