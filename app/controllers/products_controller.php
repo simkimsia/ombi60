@@ -342,7 +342,7 @@ class ProductsController extends AppController {
 	function admin_index() {
 			
 		$this->paginate = array(
-		        'limit'=>10,
+		        'limit'=>25,
 			      'conditions' => array('OR' =>
 							array (
 								array('ProductImage.cover'=>true),
