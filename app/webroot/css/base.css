@@ -710,3 +710,93 @@ div.code-coverage-results span.result-good {
 
 /* for the ajax pagination indicator */
 #busy-indicator { display:none; }
+
+/* New CSS Code Starts */
+#content .products {
+	border: none;
+	padding: 10px 2%;
+    width:97%;
+    float:center;       
+}
+
+
+.product-add {
+	text-align: center;
+}
+
+.products .top-paging {
+    background: none repeat scroll 0 0 #FFFFFF;
+    clear: both;
+    color: #CCCCCC;
+    width:50%;
+    margin-bottom: 0px;
+    padding:0 0 0 180px;
+}
+
+.products .paginator-top {
+	float: left;
+	width:50%;
+    clear: both;
+    margin-bottom: 0;
+    padding: 0;
+    vertical-align: center;	
+}
+
+.product-status {
+    -moz-border-radius: 8px 8px 8px 8px;
+    background:#e6e49f;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f1f1d4), to(#e6e49f));
+    background: -moz-linear-gradient(top, #f1f1d4, #e6e49f);
+    border: 1px solid #AAAC62;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;    
+    color: #333;
+    font-weight: normal;
+    min-width: 0;
+    padding: 4px 8px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+.bottom-paging {
+	text-align:center;   
+}
+
+.products table tr td {
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding: 6px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.product-search {
+    border: 1px solid #DDDDDD;
+}
+
+.product-search th {
+    bottom-border:0px;
+    border-style:none;
+}
+
+.product-header {
+	width: 30%;
+	color: white;
+}
+
+.products-table {
+	border: 1px solid;
+}
+
+.products-table td, th {
+    border-right: 1px solid black;
+}	
+
+.products-table th {
+    background: #8498B5;
+    color: white;
+}
+
+.products-table th a {
+    color: white;
+}
