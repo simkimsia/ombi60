@@ -336,3 +336,29 @@
         </Directory>
 </VirtualHost>
 
+<VirtualHost *:80>
+        ServerAdmin aaa@gmail.com
+
+        #this handles sitename.leaguelogix.com
+        ServerName onewinwon.com
+        ServerAlias *.onewinwon.com
+
+                Options -Indexes FollowSymLinks
+
+        UseCanonicalName Off
+        DocumentRoot /var/www/one
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/one>
+
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+
+
+        </Directory>
+</VirtualHost>
