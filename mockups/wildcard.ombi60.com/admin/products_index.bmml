@@ -77,7 +77,7 @@
             <text/>
           </controlProperties>
         </control>
-        <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="256" y="1" w="-1" h="-1" measuredW="46" measuredH="25" zOrder="5" locked="false" isInGroup="34">
+        <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="256" y="1" w="-1" h="-1" measuredW="47" measuredH="25" zOrder="5" locked="false" isInGroup="34">
           <controlProperties>
             <text>Status</text>
           </controlProperties>
@@ -109,7 +109,7 @@
         <text>%3C%3C%20previous%2C%20next%20%3E%3E</text>
       </controlProperties>
     </control>
-    <control controlID="38" controlTypeID="com.balsamiq.mockups::DataGrid" x="184" y="462" w="538" h="218" measuredW="231" measuredH="148" zOrder="6" locked="false" isInGroup="-1">
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::DataGrid" x="184" y="462" w="538" h="218" measuredW="230" measuredH="148" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
         <rowHeight>30</rowHeight>
         <selectedIndex>-1</selectedIndex>
