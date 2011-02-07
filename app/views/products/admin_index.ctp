@@ -40,7 +40,7 @@
             ?>
           </p>
         </td>
-        <td>
+        <td colspan="3">
     <div class="paging" style="padding:0px;margin:0px;">
     
 	<?php
@@ -51,7 +51,7 @@
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled')); }?>
 </div>
     </td>
-    <td colspan="2" width="300">&nbsp;</td>
+    <!--td colspan="2" width="300">&nbsp;</td-->
     </tr>
     <tr>
     <td colspan="2" style="border:0px;">
