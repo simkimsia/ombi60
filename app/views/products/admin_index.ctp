@@ -8,17 +8,13 @@
 <br />
 <?php echo $this->Form->create('Product', array('url' => array('controller' => 'products', 'action' => 'index', 'admin' => 'true'), 'id'=>'filters')); ?>
 <table cellpadding="0" cellspacing="0" class="product-search">
-    <tr>
-                
-        <th></th>
+    <tr>                
         <th><?php __('Title')?></th>
         <th><?php __('Price'); ?></th>
         <th><?php __('Status'); ?></th>
         <th></th>
     </tr>
-    <tr>
-                
-        <td>--</td>
+    <tr>                
         <td><?php echo $this->Form->input('Product.title', array('label'=>false)); ?></td>
         <td><?php echo $this->Form->input('Product.price', array('label'=>false)); ?></td>
         <td><?php echo $this->Form->input('Product.status', array('options' => array('1'=>'Published', '0'=>'Hidden'),
@@ -52,10 +48,9 @@ if ($paginator->params['paging']['Product']['pageCount'] > 1) {
 <br/>
 <table cellpadding="0" cellspacing="0" class="products-table">
 	<tr>
-		<th class="photo"><?php __('Photo');?></th>
 		<th class="product-header"><?php echo $paginator->sort(__('Product', true), 'title'); ?></th>
-		<th><?php echo $paginator->sort('status');?></th>
-		<th class="actions"><?php __('Actions');?></th>
+		<th style="text-align: center;"><?php echo $paginator->sort('status');?></th>
+		<th class="actions" style="text-align: center;"><?php __('Actions');?></th>
 	</tr>
 
 <?php
@@ -66,18 +61,19 @@ foreach ($products as $product):
 		$class = ' class="altrow"';
 	}
 ?>
-	<tr<?php echo $class;?>>
-		
+	<tr<?php echo $class;?>>		
 		<td>
-			<?php
-			if (isset($product['ProductImage']['filename']))			
-				echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $product['ProductImage']['filename']); ?>
+		  <span class="photo">
+		    <?php
+            if (isset($product['ProductImage']['filename']))            
+                echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $product['ProductImage']['filename']); ?>
+		  </span>
+		  <span class="product-details">
+            <?php echo $product['Product']['title']; ?> <br>
+            <?php echo '$', $product['Product']['price']; ?>		  
+		  </span>
 		</td>
-		<td>
-			<?php echo $product['Product']['title']; ?> <br>
-			<?php echo '$', $product['Product']['price']; ?>
-		</td>
-		<td align="center">
+		<td align="center" style="text-align: center;">
 		<?php 
 			if (1 == $product['Product']['status']) {
 			    $status = __('Published', true);
@@ -87,7 +83,7 @@ foreach ($products as $product):
 		?>	
 		  <a href="#" class="product-status"><?php echo $status; ?></a>
 		</td>
-		<td class="actions">
+		<td class="actions" style="text-align: center;">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $product['Product']['id'], 'admin' => false)); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $product['Product']['id'])); ?>
 			<?php echo $this->Html->link(__('Duplicate', true), array('action' => 'duplicate', $product['Product']['id'])); ?>

@@ -764,7 +764,6 @@ div.code-coverage-results span.result-good {
 }
 
 .products table tr td {
-    background: none repeat scroll 0 0 #FFFFFF;
     padding: 6px;
     text-align: left;
     vertical-align: middle;
@@ -774,18 +773,24 @@ div.code-coverage-results span.result-good {
     border: 1px solid #DDDDDD;
 }
 
+.products .product-search td {
+    background: none;
+}
+
 .product-search th {
     bottom-border:0px;
     border-style:none;
 }
 
 .product-header {
-	width: 30%;
 	color: white;
+	text-align: center;
 }
 
 .products-table {
 	border: 1px solid;
+	width: 85%;
+	align:center;
 }
 
 .products-table td, th {
@@ -799,4 +804,17 @@ div.code-coverage-results span.result-good {
 
 .products-table th a {
     color: white;
+}
+
+.photo {
+    float: left;
+    width:50%;   
+    text-align: center;
+}
+
+.product-details {
+	float: right;
+	text-align: center;
+	width:50%;
+	vertical-align: middle;
 }
