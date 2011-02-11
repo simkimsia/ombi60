@@ -41,7 +41,7 @@
         <borderStyle>roundedSolid</borderStyle>
       </controlProperties>
     </control>
-    <control controlID="34" controlTypeID="com.balsamiq.mockups::Label" x="213" y="187" w="-1" h="-1" measuredW="44" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Label" x="213" y="187" w="-1" h="-1" measuredW="43" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Order</text>
       </controlProperties>
@@ -131,7 +131,7 @@
       </controlProperties>
     </control>
     <control controlID="66" controlTypeID="com.balsamiq.mockups::Arrow" x="854" y="333" w="207" h="10" measuredW="150" measuredH="100" zOrder="24" locked="false" isInGroup="-1"/>
-    <control controlID="67" controlTypeID="com.balsamiq.mockups::Arrow" x="748" y="497" w="443" h="192" measuredW="150" measuredH="100" zOrder="25" locked="false" isInGroup="-1">
+    <control controlID="67" controlTypeID="com.balsamiq.mockups::Arrow" x="665" y="416" w="443" h="192" measuredW="150" measuredH="100" zOrder="25" locked="false" isInGroup="-1">
       <controlProperties>
         <curvature>-1</curvature>
         <direction>bottom</direction>
