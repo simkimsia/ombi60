@@ -109,8 +109,9 @@
         <text>%3C%3C%20previous%2C%20next%20%3E%3E</text>
       </controlProperties>
     </control>
-    <control controlID="38" controlTypeID="com.balsamiq.mockups::DataGrid" x="184" y="462" w="538" h="218" measuredW="230" measuredH="148" zOrder="6" locked="false" isInGroup="-1">
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::DataGrid" x="184" y="462" w="538" h="218" measuredW="231" measuredH="148" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
+        <borderStyle>none</borderStyle>
         <rowHeight>30</rowHeight>
         <selectedIndex>-1</selectedIndex>
         <text>Product%20%5E%2C%20Status%2C%20Actions%0ATest%20t-shirt%5Cr%2410.00%2C%20%5BPublished%5D%2C%0ADumbbell%5Cr%2415.00%2C%204%2C%20%0AToy%20Car%5Cr%2420.00%2C%2031%2C%20%0A%7B75C%2C%2035C%2C%20110%7D</text>
