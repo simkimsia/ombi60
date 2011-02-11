@@ -136,4 +136,126 @@ ul#subnav li a {
 
 /** end of dropdown menu **/
 
+/* New CSS Code Starts */
+#content .products, #content .orders {
+	border: none;
+	padding: 10px 2%;
+    width:97%;
+    float:center;       
+}
 
+
+.product-add {
+	text-align: center;
+}
+
+.top-paging {
+    background: none repeat scroll 0 0 #FFFFFF;
+    clear: both;
+    color: #CCCCCC;
+    width:50%;
+    margin-bottom: 0px;
+    padding:0 0 0 180px;
+}
+
+.paginator-top {
+	float: left;
+	width:50%;
+    clear: both;
+    margin-bottom: 0;
+    padding: 0;
+    vertical-align: center;	
+}
+
+.product-status {
+    -moz-border-radius: 8px 8px 8px 8px;
+    background:#e6e49f;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f1f1d4), to(#e6e49f));
+    background: -moz-linear-gradient(top, #f1f1d4, #e6e49f);
+    border: 1px solid #AAAC62;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;    
+    color: #333;
+    font-weight: normal;
+    min-width: 0;
+    padding: 4px 8px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+.bottom-paging {
+	text-align:center;   
+}
+
+.products table tr td {
+    padding: 6px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.product-search, .search-filters {
+    border: 1px solid #DDDDDD;
+}
+
+.search-filters th {
+  text-align: center;
+}
+
+.products .product-search td, .search-filters td {
+    background: none;
+}
+
+.product-search th, .search-filters th {
+    bottom-border:0px;
+    border-style:none;
+}
+
+.product-header {
+	color: white;
+	text-align: center;
+}
+
+.products-table, .items-table {
+	border: 1px solid;
+	width: 85%;
+	align:center;
+}
+
+.products-table td, .items-table td, th {
+    border-right: 1px solid black;
+}	
+
+.products-table th, .items-table th {
+    background: #8498B5;
+    color: white;
+}
+
+.products-table th a, .items-table th a {
+    color: white;
+}
+
+.photo {
+    float: left;
+    width:50%;   
+    text-align: center;
+}
+
+.product-details {
+	float: right;
+	text-align: center;
+	width:50%;
+	vertical-align: middle;
+}
+
+.orders-table {
+  width: 100%;
+}
+
+.top-paging span.disabled, .bottom-paging span.disabled {
+	color: #ddd;
+	display: inline;
+}
+.top-paging span.current, .bottom-paging span.current {
+	color: #c73e14;
+}
