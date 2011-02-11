@@ -192,3 +192,18 @@ table.product_list th
 {
   clear:none;
 }
+.product_submit .submit
+{
+  width:200px;
+  clear: none;
+  float: left;
+}
+.product_submit .cancel
+{
+  clear: none;
+  margin-top:16px;
+}
+.product_submit .cancel a
+{
+  margin-left:22px;
+}

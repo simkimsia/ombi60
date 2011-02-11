@@ -6,7 +6,7 @@
 	echo $this->Html->script('/uploadify/js/jquery.uploadify.v2.1.0.min');
 	echo $this->Html->script('/uploadify/js/swfobject');
 	
-	echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify','buttonText'  => 'Add to Queue!'));
+	echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify','buttonText'  => 'Choose File'));
 ?>
 
 <div class="products form products_index">
@@ -38,7 +38,7 @@
 	
 		echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=> User::get('Merchant.shop_id')));
 		echo $this->Form->error('Product.title');
-		echo $this->Form->input('title', array('error' => false));
+		echo $this->Form->input('title', array('error' => false, 'style' => 'width:360px;', 'label'=>'Title', 'between'=>'Examples: 14@ LCD Screen, Maroon Brand X T-shirt <br />'));
 		echo $this->Form->input('description',array('label'=>'<b>Describe this product</b>'));
 		?>
 		</fieldset>
@@ -51,7 +51,9 @@
 		echo $this->Form->input('code', array('label'=>'Unique identifier for easier organisation'));
 		$options=array('1'=>'Published (selected)','0'=>'Hidden');
 		$attributes=array('value' => '1');
+		?><div style="width:300px;"><?
 		echo $this->Form->radio('Visible in Store',$options, $attributes);
+		?></div><?
 		echo $this->Form->input('shipping_required', array('type'=>'checkbox', 'checked'=>'checked', 'value'=>1, 'label'=>'Shipping Address required'));
 		echo $this->Form->input('Product.alt_id', array('type'=>'hidden', 'id'=>'alt_id', 'value'=>0));
 		//echo $this->Form->input('price', array('value'=>'0.00', 'label'=>'Selling Price'));
@@ -83,11 +85,17 @@
 			       'action' => 'add',
 			       'admin' => true,
 			       ),
+		'style' => "width:180px;float:left;",
 		'condition' => "ajaxConditionFunction()",
 		'complete' => "ajaxCompleteFunction(request.responseText)");
    
-
-	echo $this->Ajax->submit('Submit', $options);
+?>
+  
+<div class="product_submit"> <?
+	echo $this->Ajax->submit('Create Product', $options);
+	?> <div class="cancel">&nbsp;or&nbsp;<?
+  echo $this->Html->link(__('Cancel', true), array('controller' => 'products', 'action' => 'index'));
+  ?></div></div><?	
 
 	echo $this->Form->end();
 ?>

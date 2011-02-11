@@ -60,6 +60,7 @@ $(document).ready(function() {
                 <?php } ?>
                 
 		'multi'          : true,
+		'buttonText' : '<?=(($buttonText)?$buttonText:'Browse');?>',
 	});
 });
 </script>
