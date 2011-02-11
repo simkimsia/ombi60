@@ -49,7 +49,7 @@
 		</div>  
     <?
 		echo $this->Form->input('code', array('label'=>'Unique identifier for easier organisation'));
-		$options=array('1'=>'Published (selected)','0'=>'Hidden');
+		$options=array('1'=>'Published','0'=>'Hidden');
 		$attributes=array('value' => '1');
 		?><div style="width:300px;"><?
 		echo $this->Form->radio('Visible in Store',$options, $attributes);
@@ -61,11 +61,11 @@
 		//echo $this->Form->input('weight', array('value'=>'0.0', 'label'=>'Weight'));
 		//echo "kg";
 	?>
-	    <div class="input text clear_none" style="width:200px;float:left;">
+	    <div class="input text clear_none" style="width:170px;float:left;">
         <label for="ProductPrice"><b>Selling Price</b></label>
         <input style="width:100px;" name="data[Product][price]" type="text" value="0.00" maxlength="15" id="ProductPrice" /> SGD
       </div>
-      <div class="input text clear_none" style="width:200px;float:left;">
+      <div class="input text clear_none" style="width:170px;float:left;">
         <label for="ProductWeight"><b>Weight</b></label>
         <input style="width:100px;" name="data[Product][weight]" type="text" value="0.0" maxlength="15" id="ProductWeight" /> kg
       </div>
