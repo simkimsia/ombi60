@@ -167,12 +167,16 @@ text-align:center;
 {
  //background-color: white !important;
 }*/
-div.products
+div.products_index
 {
   float:left;
   border-left:0px;
   padding-left:4%;
   text-align:center;
+}
+div.products_index form 
+{
+  text-align:left;
 }
 table.product_list
 {
@@ -183,4 +187,8 @@ table.product_list
 table.product_list th
 {
   background-color: #F5F5F5;
+}
+.clear_none, .clear_none input
+{
+  clear:none;
 }

@@ -6,17 +6,20 @@
 	echo $this->Html->script('/uploadify/js/jquery.uploadify.v2.1.0.min');
 	echo $this->Html->script('/uploadify/js/swfobject');
 	
-	echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
+	echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify','buttonText'  => 'Add to Queue!'));
 ?>
 
-<div class="products form">
+<div class="products form products_index">
+  <h2><?php __('Add your New Product');?></h2>
+<?php echo $this->Html->link(__('Cancel', true), array('controller' => 'products', 'action' => 'index')); ?>
+  
 
 <?php
 	echo $this->element('errors', array('errors' => $errors));
 	echo $this->Form->create('Product' , array('type'=>'file'));
 ?>
 	<fieldset>
- 		<legend><?php __('Add Product');?></legend>
+ 		<legend><?php __('New Product');?></legend>
 	<?php
 	
 	
@@ -24,24 +27,51 @@
 			'theme' => 'advanced',
 			'mode' => 'textareas',
 			'plugins' => ' table',
-			'theme_advanced_buttons1' => 'bold,italic,underline,undo,redo,link,unlink,forecolor,styleselect,removeformat,cleanup,code,table,fontselect,fontsizeselect',
+			'theme_advanced_buttons1' => 'bold,italic,underline,undo,redo,link,unlink,forecolor,styleselect,removeformat,cleanup,code,table,fontselect,fontsizeselect,code',
 			'theme_advanced_buttons2' => '',
+			'theme_advanced_buttons3_add_before' => "tablecontrols,separator",
+      'theme_advanced_toolbar_location' => 'top',
+      'theme_advanced_toolbar_align' => 'left',
+      'theme_advanced_path_location' => 'bottom', 
 			'remove_linebreaks' => false,
 			'extended_valid_elements' => 'textarea[cols|rows|disabled|name|readonly|class]'));
 	
 		echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=> User::get('Merchant.shop_id')));
 		echo $this->Form->error('Product.title');
 		echo $this->Form->input('title', array('error' => false));
-		echo $this->Form->input('code');
-		echo $this->Form->input('description');
-		echo $this->Form->input('price', array('value'=>'0.00'));
-		echo $this->Form->input('weight', array('value'=>'0.0'));
-		echo $this->Form->input('shipping_required', array('type'=>'checkbox', 'checked'=>'checked', 'value'=>1, 'label'=>'Shipping Address required'));
-		$options=array('1'=>'Enabled','0'=>'Disabled');
+		echo $this->Form->input('description',array('label'=>'<b>Describe this product</b>'));
+		?>
+		</fieldset>
+		<fieldset style="width:44%;float:left;">
+ 		<legend><?php __('Properties');?></legend>
+ 		<div style="margin-bottom:0px;font-size:120%;">
+		  <b>SKU Code (optional)</b>
+		</div>  
+    <?
+		echo $this->Form->input('code', array('label'=>'Unique identifier for easier organisation'));
+		$options=array('1'=>'Published (selected)','0'=>'Hidden');
 		$attributes=array('value' => '1');
-		echo $this->Form->radio('status',$options, $attributes);
+		echo $this->Form->radio('Visible in Store',$options, $attributes);
+		echo $this->Form->input('shipping_required', array('type'=>'checkbox', 'checked'=>'checked', 'value'=>1, 'label'=>'Shipping Address required'));
 		echo $this->Form->input('Product.alt_id', array('type'=>'hidden', 'id'=>'alt_id', 'value'=>0));
+		//echo $this->Form->input('price', array('value'=>'0.00', 'label'=>'Selling Price'));
+		//echo "SGD";
+		//echo $this->Form->input('weight', array('value'=>'0.0', 'label'=>'Weight'));
+		//echo "kg";
 	?>
+	    <div class="input text clear_none" style="width:200px;float:left;">
+        <label for="ProductPrice"><b>Selling Price</b></label>
+        <input style="width:100px;" name="data[Product][price]" type="text" value="0.00" maxlength="15" id="ProductPrice" /> SGD
+      </div>
+      <div class="input text clear_none" style="width:200px;float:left;">
+        <label for="ProductWeight"><b>Weight</b></label>
+        <input style="width:100px;" name="data[Product][weight]" type="text" value="0.0" maxlength="15" id="ProductWeight" /> kg
+      </div>
+		</fieldset>
+	  
+		
+		<fieldset style="width:44%;float:right;">
+ 		<legend><?php __('Product Images');?></legend>
 
 	<input type="file" name="uploadify" id="fileInput" />
 
@@ -63,11 +93,11 @@
 ?>
 
 </div>
-<div class="actions">
+<!--div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Products', true)), array('action' => 'index'));?></li>
 	</ul>
-</div>
+</div-->
 
 <script type="text/javascript" language="javascript">
 	

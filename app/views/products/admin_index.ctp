@@ -1,6 +1,6 @@
 
 
-<div class="products index">
+<div class="products index products_index">
 <h2><?php __('Products');?></h2>
 
 <?php echo $this->Html->link(__('Add New Product', true), array('controller' => 'products', 'action' => 'add')); ?>
