@@ -1,0 +1,168 @@
+<mockup version="1.0" skin="sketch" measuredW="1231" measuredH="940" mockupW="1210" mockupH="930">
+  <controls>
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::ButtonBar" x="182" y="127" w="-1" h="-1" measuredW="434" measuredH="31" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>-1</selectedIndex>
+        <text>Home%2C%20Orders%2C%20Products%2C%20Blogs%20%26%20Pages%2C%20Navigation</text>
+      </controlProperties>
+    </control>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::ButtonBar" x="744" y="128" w="-1" h="-1" measuredW="181" measuredH="31" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>-1</selectedIndex>
+        <text>Preferences%2C%20Themes</text>
+      </controlProperties>
+    </control>
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::LinkBar" x="788" y="96" w="-1" h="-1" measuredW="120" measuredH="25" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Account%2C%20Logout</text>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::Image" x="196" y="82" w="74" h="48" measuredW="219" measuredH="72" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>../../../app/webroot/img/logo.png</src>
+      </controlProperties>
+    </control>
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::SearchBox" x="693" y="95" w="89" h="-1" measuredW="25" measuredH="25" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="158" y="10" w="797" h="875" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20Web%20Page%0Ahttp%3A//shop001.ombi60.com/admin/payments</text>
+      </controlProperties>
+    </control>
+    <control controlID="94" controlTypeID="com.balsamiq.mockups::Canvas" x="186" y="201" w="751" h="435" measuredW="100" measuredH="70" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderColor>15658734</borderColor>
+      </controlProperties>
+    </control>
+    <control controlID="95" controlTypeID="com.balsamiq.mockups::Image" x="201" y="214" w="170" h="89" measuredW="77" measuredH="79" zOrder="7" locked="false" isInGroup="-1"/>
+    <control controlID="96" controlTypeID="com.balsamiq.mockups::Paragraph" x="416" y="212" w="456" h="82" measuredW="200" measuredH="140" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <text>%20%20%20%20%20%20Service%3A%20*PayPal*%0ADescription%3A%20PayPal%20Express%20Checkout%2C%20PayPal%20Website%20Payments%20Standard</text>
+      </controlProperties>
+    </control>
+    <control controlID="97" controlTypeID="com.balsamiq.mockups::Canvas" x="188" y="319" w="746" h="317" measuredW="100" measuredH="70" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0.25</backgroundAlpha>
+        <borderStyle>none</borderStyle>
+        <color>10066329</color>
+      </controlProperties>
+    </control>
+    <control controlID="122" controlTypeID="com.balsamiq.mockups::Label" x="196" y="334" w="-1" h="-1" measuredW="136" measuredH="25" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>PayPal%20Account%20Email</text>
+      </controlProperties>
+    </control>
+    <control controlID="123" controlTypeID="com.balsamiq.mockups::TextInput" x="196" y="360" w="181" h="-1" measuredW="141" measuredH="29" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>owner@shop001.com</text>
+      </controlProperties>
+    </control>
+    <control controlID="126" controlTypeID="com.balsamiq.mockups::TextArea" x="386" y="334" w="522" h="241" measuredW="200" measuredH="140" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <text>Please%20provide%20your%20*%5BPayPal%20Website%20Payments%20Standard%5D*%20account%20credentials.%20%0A%20%0AIf%20you%20do%20not%20have%20a%20PayPal%20account%2C%20%5Bsign%20up%20for%20a%20PayPal%20account%20now%5D.%0A%20%0A*PayPal%3A%20Proven%20to%20increase%20sales.*%20According%20to%20Jupiter%20Research%2C%2023%25%20of%20online%20shoppers%20like%20to%20pay%20with%20PayPal.%5C*%20If%20you%20offer%20your%20visitors%20the%20choice%20to%20pay%20with%20PayPal%2C%20they%20may%20be%20more%20likely%20to%20buy.%0A%20%0A%5C*September%202007%20Jupiter%20Research%20study%20of%20payment%20preferences%20online.%0A%20%0A%5BSee%20a%20demo%5D%20of%20Paypal%20Website%20Payments%20Standard</text>
+      </controlProperties>
+    </control>
+    <control controlID="127" controlTypeID="com.balsamiq.mockups::HRule" x="198" y="588" w="712" h="-1" measuredW="100" measuredH="5" zOrder="16" locked="false" isInGroup="-1"/>
+    <control controlID="134" controlTypeID="__group__" x="203" y="599" w="129" h="28" measuredW="129" measuredH="28" zOrder="17" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Button" x="0" y="0" w="-1" h="-1" measuredW="54" measuredH="28" zOrder="0" locked="false" isInGroup="134">
+          <controlProperties>
+            <text>Save</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="58" y="1" w="18" h="26" measuredW="18" measuredH="25" zOrder="1" locked="false" isInGroup="134">
+          <controlProperties>
+            <text>or</text>
+          </controlProperties>
+        </control>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Link" x="83" y="1" w="-1" h="-1" measuredW="46" measuredH="25" zOrder="2" locked="false" isInGroup="134">
+          <controlProperties>
+            <text>Cancel</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="138" controlTypeID="com.balsamiq.mockups::Canvas" x="190" y="769" w="743" h="70" measuredW="100" measuredH="70" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0.25</backgroundAlpha>
+        <borderStyle>none</borderStyle>
+        <color>10066329</color>
+      </controlProperties>
+    </control>
+    <control controlID="144" controlTypeID="com.balsamiq.mockups::Arrow" x="931" y="747" w="95" h="26" measuredW="150" measuredH="100" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0.25</backgroundAlpha>
+        <curvature>0</curvature>
+        <direction>bottom</direction>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="146" controlTypeID="__group__" x="188" y="658" w="1043" h="282" measuredW="1043" measuredH="282" zOrder="11" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="0" y="0" w="751" h="183" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="146">
+          <controlProperties>
+            <borderColor>15658734</borderColor>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Image" x="14" y="15" w="175" h="89" measuredW="77" measuredH="79" zOrder="1" locked="false" isInGroup="146"/>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Paragraph" x="228" y="15" w="477" h="82" measuredW="200" measuredH="140" zOrder="2" locked="false" isInGroup="146">
+          <controlProperties>
+            <bold>false</bold>
+            <text>%20%20%20%20%20%20Service%3A%20*Custom%20Payment%20Methods*%0ADescription%3A%20Cash%20On%20Delivery%2C%20Money%20Order%2C%20Internet%20Banking%20and%20others</text>
+          </controlProperties>
+        </control>
+        <control controlID="3" controlTypeID="com.balsamiq.mockups::ComboBox" x="15" y="150" w="270" h="-1" measuredW="268" measuredH="132" zOrder="3" locked="false" isInGroup="146">
+          <controlProperties>
+            <text>Select%20a%20custom%20payment%20mode%20to%20add%0A------%0AMoney%20Order%0AInternet%20Banking%0A------%0ACreate%20new%20custom%20payment%20mode</text>
+          </controlProperties>
+        </control>
+        <control controlID="4" controlTypeID="com.balsamiq.mockups::HRule" x="14" y="143" w="712" h="-1" measuredW="100" measuredH="5" zOrder="4" locked="false" isInGroup="146"/>
+        <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="14" y="118" w="-1" h="-1" measuredW="202" measuredH="25" zOrder="5" locked="false" isInGroup="146">
+          <controlProperties>
+            <bold>false</bold>
+            <text>Using%20method%3A%20*Cash%20On%20Delivery*</text>
+          </controlProperties>
+        </control>
+        <control controlID="6" controlTypeID="com.balsamiq.mockups::Link" x="268" y="115" w="-1" h="-1" measuredW="30" measuredH="25" zOrder="6" locked="false" isInGroup="146">
+          <controlProperties>
+            <text>edit</text>
+          </controlProperties>
+        </control>
+        <control controlID="7" controlTypeID="com.balsamiq.mockups::Button" x="645" y="114" w="-1" h="-1" measuredW="83" measuredH="28" zOrder="7" locked="false" isInGroup="146">
+          <controlProperties>
+            <text>Turn%20Off</text>
+          </controlProperties>
+        </control>
+        <control controlID="8" controlTypeID="com.balsamiq.mockups::Alert" x="828" y="18" w="215" h="145" measuredW="200" measuredH="165" zOrder="8" locked="false" isInGroup="146">
+          <controlProperties>
+            <text>Alert%0AAre%20you%20sure%20you%20want%20to%20turn%20off%20this%20payment%20method%3F%0ACancel%2C%20OK</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="147" controlTypeID="com.balsamiq.mockups::StickyNote" x="21" y="540" w="171" h="145" measuredW="109" measuredH="123" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Closes%20this%20edit%20form.%20Goes%20back%20to%20index.%0ASee%20payments_index_filled</text>
+      </controlProperties>
+    </control>
+    <control controlID="148" controlTypeID="com.balsamiq.mockups::Arrow" x="120" y="627" w="200" h="34" measuredW="150" measuredH="100" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0.25</backgroundAlpha>
+        <curvature>-1</curvature>
+        <direction>bottom</direction>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="149" controlTypeID="com.balsamiq.mockups::Label" x="480" y="165" w="158" h="26" measuredW="92" measuredH="34" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>20</size>
+        <text>Payments</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

@@ -1,0 +1,129 @@
+<mockup version="1.0" skin="sketch" measuredW="955" measuredH="632" mockupW="951" mockupH="622">
+  <controls>
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::ButtonBar" x="182" y="127" w="-1" h="-1" measuredW="434" measuredH="31" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>-1</selectedIndex>
+        <text>Home%2C%20Orders%2C%20Products%2C%20Blogs%20%26%20Pages%2C%20Navigation</text>
+      </controlProperties>
+    </control>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::ButtonBar" x="744" y="128" w="-1" h="-1" measuredW="181" measuredH="31" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>-1</selectedIndex>
+        <text>Preferences%2C%20Themes</text>
+      </controlProperties>
+    </control>
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::LinkBar" x="788" y="96" w="-1" h="-1" measuredW="120" measuredH="25" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Account%2C%20Logout</text>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::Image" x="196" y="82" w="74" h="48" measuredW="219" measuredH="72" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>../../../app/webroot/img/logo.png</src>
+      </controlProperties>
+    </control>
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::SearchBox" x="693" y="95" w="89" h="-1" measuredW="25" measuredH="25" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="158" y="10" w="797" h="622" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20Web%20Page%0Ahttp%3A//shop001.ombi60.com/admin/domains</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::Label" x="201" y="216" w="-1" h="-1" measuredW="52" measuredH="25" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Domains</text>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::Label" x="201" y="241" w="572" h="28" measuredW="264" measuredH="23" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <size>12</size>
+        <text>These%20are%20the%20domains%20used%20by%20your%20business.</text>
+      </controlProperties>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::DataGrid" x="186" y="329" w="743" h="114" measuredW="337" measuredH="88" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>none</borderStyle>
+        <rowHeight>30</rowHeight>
+        <selectedIndex>-1</selectedIndex>
+        <text>Domain%20%5E%2C%20Working%3F%2C%20Actions%0Ahttp%3A//%20%5Bshop001.ombi60.com%5D%2C%20YES%2C%20%0Ahttp%3A//%20%5Bwww.blogshopmall.com%5D%2C%20NO%2C%20%0A%7B50L%2C%2010C%2C%2040C%7D</text>
+      </controlProperties>
+    </control>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Button" x="653" y="386" w="-1" h="-1" measuredW="184" measuredH="28" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Make%20this%20primary%20domain</text>
+      </controlProperties>
+    </control>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Button" x="848" y="386" w="-1" h="-1" measuredW="64" measuredH="28" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Delete</text>
+      </controlProperties>
+    </control>
+    <control controlID="79" controlTypeID="com.balsamiq.mockups::Link" x="204" y="260" w="-1" h="-1" measuredW="303" measuredH="25" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <text>Learn%20how%20to%20set%20up%20your%20domain%20for%20OMBI60.com</text>
+      </controlProperties>
+    </control>
+    <control controlID="85" controlTypeID="com.balsamiq.mockups::Canvas" x="186" y="458" w="743" h="96" measuredW="100" measuredH="70" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0.25</backgroundAlpha>
+        <borderStyle>none</borderStyle>
+        <color>10066329</color>
+      </controlProperties>
+    </control>
+    <control controlID="86" controlTypeID="com.balsamiq.mockups::Label" x="194" y="460" w="-1" h="-1" measuredW="158" measuredH="25" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Enter%20your%20domain%20below</text>
+      </controlProperties>
+    </control>
+    <control controlID="87" controlTypeID="com.balsamiq.mockups::Label" x="194" y="484" w="-1" h="-1" measuredW="51" measuredH="25" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <text>http%3A//</text>
+      </controlProperties>
+    </control>
+    <control controlID="88" controlTypeID="com.balsamiq.mockups::TextInput" x="245" y="481" w="294" h="-1" measuredW="79" measuredH="29" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="89" controlTypeID="com.balsamiq.mockups::Button" x="194" y="515" w="-1" h="-1" measuredW="134" measuredH="28" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Claim%20your%20domain</text>
+      </controlProperties>
+    </control>
+    <control controlID="90" controlTypeID="com.balsamiq.mockups::Label" x="331" y="516" w="18" h="26" measuredW="18" measuredH="25" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>or</text>
+      </controlProperties>
+    </control>
+    <control controlID="91" controlTypeID="com.balsamiq.mockups::Link" x="356" y="516" w="-1" h="-1" measuredW="46" measuredH="25" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cancel</text>
+      </controlProperties>
+    </control>
+    <control controlID="92" controlTypeID="com.balsamiq.mockups::StickyNote" x="4" y="452" w="154" h="180" measuredW="109" measuredH="123" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Closes%20the%20add%20form.%0A%20%0AGoes%20back%20to%20domains_index.bmml%20or%20.png</text>
+      </controlProperties>
+    </control>
+    <control controlID="93" controlTypeID="com.balsamiq.mockups::Arrow" x="110" y="541" w="257" h="47" measuredW="150" measuredH="100" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0.25</backgroundAlpha>
+        <curvature>-1</curvature>
+        <direction>bottom</direction>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="94" controlTypeID="com.balsamiq.mockups::Label" x="503" y="165" w="150" h="26" measuredW="81" measuredH="34" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>20</size>
+        <text>Domains</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

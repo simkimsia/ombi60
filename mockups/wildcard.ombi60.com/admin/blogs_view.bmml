@@ -33,8 +33,9 @@
         <text>A%20Web%20Page%0Ahttp%3A//shop001.ombi60.com/admin/blogs/view/23</text>
       </controlProperties>
     </control>
-    <control controlID="33" controlTypeID="com.balsamiq.mockups::Label" x="503" y="167" w="-1" h="-1" measuredW="56" measuredH="25" zOrder="6" locked="false" isInGroup="-1">
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Label" x="504" y="159" w="-1" h="-1" measuredW="86" measuredH="34" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
+        <size>20</size>
         <text>shop001</text>
       </controlProperties>
     </control>

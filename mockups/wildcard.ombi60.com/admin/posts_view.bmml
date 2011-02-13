@@ -30,73 +30,74 @@
     </control>
     <control controlID="32" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="158" y="8" w="797" h="1045" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>A%20Web%20Page%0Ahttp%3A//shop001.ombi60.com/admin/blogs/23/posts/view/64</text>
+        <text>A%20Web%20Page%0Ahttp%3A//shop001.ombi60.com/admin/blogs/23/articles/view/64</text>
       </controlProperties>
     </control>
-    <control controlID="33" controlTypeID="com.balsamiq.mockups::Label" x="503" y="167" w="-1" h="-1" measuredW="67" measuredH="25" zOrder="6" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>First%20Post</text>
-      </controlProperties>
-    </control>
-    <control controlID="34" controlTypeID="com.balsamiq.mockups::LinkBar" x="447" y="184" w="-1" h="-1" measuredW="191" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::LinkBar" x="426" y="192" w="-1" h="-1" measuredW="191" measuredH="25" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Edit%2C%20All%20articles%2C%20Delete</text>
       </controlProperties>
     </control>
-    <control controlID="36" controlTypeID="com.balsamiq.mockups::FieldSet" x="224" y="223" w="663" h="438" measuredW="200" measuredH="170" zOrder="8" locked="false" isInGroup="-1">
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::FieldSet" x="224" y="223" w="663" h="438" measuredW="200" measuredH="170" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="112" controlTypeID="com.balsamiq.mockups::ComboBox" x="241" y="778" w="-1" h="-1" measuredW="89" measuredH="54" zOrder="10" locked="false" isInGroup="-1">
+    <control controlID="112" controlTypeID="com.balsamiq.mockups::ComboBox" x="241" y="778" w="-1" h="-1" measuredW="89" measuredH="54" zOrder="9" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Published%0AHidden</text>
       </controlProperties>
     </control>
-    <control controlID="113" controlTypeID="com.balsamiq.mockups::FieldSet" x="224" y="686" w="663" h="257" measuredW="200" measuredH="170" zOrder="9" locked="false" isInGroup="-1">
+    <control controlID="113" controlTypeID="com.balsamiq.mockups::FieldSet" x="224" y="686" w="663" h="257" measuredW="200" measuredH="170" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Properties</text>
       </controlProperties>
     </control>
-    <control controlID="114" controlTypeID="com.balsamiq.mockups::Label" x="241" y="747" w="-1" h="-1" measuredW="361" measuredH="23" zOrder="11" locked="false" isInGroup="-1">
+    <control controlID="114" controlTypeID="com.balsamiq.mockups::Label" x="241" y="747" w="-1" h="-1" measuredW="361" measuredH="23" zOrder="10" locked="false" isInGroup="-1">
       <controlProperties>
         <bold>false</bold>
         <size>12</size>
         <text>If%20you%20want%20to%20hide%20this%20page%20from%20your%20clients%2C%20choose%20hidden.</text>
       </controlProperties>
     </control>
-    <control controlID="115" controlTypeID="com.balsamiq.mockups::Label" x="239" y="716" w="138" h="26" measuredW="114" measuredH="29" zOrder="12" locked="false" isInGroup="-1">
+    <control controlID="115" controlTypeID="com.balsamiq.mockups::Label" x="239" y="716" w="138" h="26" measuredW="114" measuredH="29" zOrder="11" locked="false" isInGroup="-1">
       <controlProperties>
         <bold>true</bold>
         <size>16</size>
         <text>Page%20Visibility</text>
       </controlProperties>
     </control>
-    <control controlID="116" controlTypeID="com.balsamiq.mockups::ComboBox" x="241" y="874" w="-1" h="-1" measuredW="112" measuredH="54" zOrder="13" locked="false" isInGroup="-1">
+    <control controlID="116" controlTypeID="com.balsamiq.mockups::ComboBox" x="241" y="874" w="-1" h="-1" measuredW="112" measuredH="54" zOrder="12" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Mark%20Jayson%0ATesla%20Testerson</text>
       </controlProperties>
     </control>
-    <control controlID="118" controlTypeID="com.balsamiq.mockups::Label" x="241" y="840" w="138" h="26" measuredW="57" measuredH="29" zOrder="14" locked="false" isInGroup="-1">
+    <control controlID="118" controlTypeID="com.balsamiq.mockups::Label" x="241" y="840" w="138" h="26" measuredW="57" measuredH="29" zOrder="13" locked="false" isInGroup="-1">
       <controlProperties>
         <bold>true</bold>
         <size>16</size>
         <text>Author</text>
       </controlProperties>
     </control>
-    <control controlID="136" controlTypeID="com.balsamiq.mockups::Label" x="258" y="280" w="-1" h="-1" measuredW="260" measuredH="25" zOrder="15" locked="false" isInGroup="-1">
+    <control controlID="136" controlTypeID="com.balsamiq.mockups::Label" x="258" y="280" w="-1" h="-1" measuredW="260" measuredH="25" zOrder="14" locked="false" isInGroup="-1">
       <controlProperties>
         <text>This%20is%20the%20first%20ever%20post%20for%20the%20blog%21%21</text>
       </controlProperties>
     </control>
-    <control controlID="137" controlTypeID="com.balsamiq.mockups::StickyNote" x="983" y="139" w="218" h="153" measuredW="109" measuredH="123" zOrder="16" locked="false" isInGroup="-1">
+    <control controlID="137" controlTypeID="com.balsamiq.mockups::StickyNote" x="983" y="139" w="218" h="153" measuredW="109" measuredH="123" zOrder="15" locked="false" isInGroup="-1">
       <controlProperties>
         <text>the%20cancel%20link%20and%20the%20all%20articles%20link%20should%20point%20back%20to%20the%20original%20blog%20view%20page%0Aie%20blogs/view/23</text>
       </controlProperties>
     </control>
-    <control controlID="138" controlTypeID="com.balsamiq.mockups::Paragraph" x="258" y="315" w="-1" h="-1" measuredW="200" measuredH="140" zOrder="17" locked="false" isInGroup="-1">
+    <control controlID="138" controlTypeID="com.balsamiq.mockups::Paragraph" x="258" y="315" w="-1" h="-1" measuredW="200" measuredH="140" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
         <text>A%20paragraph%20of%20text.%0AA%20_second_%20%5Brow%5D%20of%20*text*.</text>
+      </controlProperties>
+    </control>
+    <control controlID="141" controlTypeID="com.balsamiq.mockups::Title" x="470" y="158" w="-1" h="-1" measuredW="101" measuredH="34" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>20</size>
+        <text>First%20Post</text>
       </controlProperties>
     </control>
   </controls>

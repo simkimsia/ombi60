@@ -98,7 +98,7 @@
 						<a href="#"><strong>Themes</strong></a>
 						<ul id="subnav" class="govern">  
 							
-							<li><?php echo $this->Html->link('Your themes', '/admin/saved_themes/switch'); ?></li>  
+							<li><?php echo $this->Html->link('My themes', '/admin/saved_themes/switch'); ?></li>  
 						</ul>
 					</li>
 					<li class="PY_slide">
@@ -106,7 +106,7 @@
 						<ul id="subnav" class="govern">  
 							<li><?php echo $this->Html->link('Domains', '/admin/domains'); ?></li>  
 							<li><?php echo $this->Html->link('Payments', '/admin/payments'); ?></li>
-							<li><?php echo $this->Html->link('Shipping', '/admin/shipping_rates'); ?></li>  
+							<li><?php echo $this->Html->link('Shipping', '/admin/shipping'); ?></li>  
 						</ul>
 					</li>
 				</ul>
