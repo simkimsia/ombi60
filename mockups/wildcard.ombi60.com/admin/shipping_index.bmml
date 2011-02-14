@@ -37,6 +37,7 @@
         <alternateRowColor>16777215</alternateRowColor>
         <borderStyle>none</borderStyle>
         <text>Rest%20of%20World%2C%2C%2C%0A%5BInternational%20Shipping%5D%2C%200.0kg%20-%2020.0kg%2C%20%2430.00%20SGD%2C%20%0A%7B35L%2C%2035L%2C%2035L%2C%2035R%7D</text>
+        <vLines>false</vLines>
       </controlProperties>
     </control>
     <control controlID="105" controlTypeID="com.balsamiq.mockups::Button" x="860" y="210" w="-1" h="-1" measuredW="64" measuredH="28" zOrder="7" locked="false" isInGroup="-1">
@@ -71,6 +72,7 @@
         <alternateRowColor>16777215</alternateRowColor>
         <borderStyle>none</borderStyle>
         <text>Singapore%2C%2C%2C%0A%5BStandard%20Shipping%5D%2C%200.0kg%20-%2010.0kg%2C%20%2410.00%20SGD%2C%20%0A%5BHeavy%20Duty%5D%2C%2010.0kg%20-%2020.0kg%2C%20%2420.00%20SGD%2C%20%0A%7B35L%2C%2035L%2C%2035L%2C%2035R%7D</text>
+        <vLines>false</vLines>
       </controlProperties>
     </control>
     <control controlID="119" controlTypeID="com.balsamiq.mockups::Button" x="860" y="364" w="-1" h="-1" measuredW="64" measuredH="28" zOrder="12" locked="false" isInGroup="-1">

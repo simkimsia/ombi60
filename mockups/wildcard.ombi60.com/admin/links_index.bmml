@@ -32,36 +32,37 @@
         <text>A%20Web%20Page%0Ahttp%3A//shop001.ombi60.com/admin/links</text>
       </controlProperties>
     </control>
-    <control controlID="33" controlTypeID="com.balsamiq.mockups::Label" x="475" y="166" w="159" h="26" measuredW="157" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Label" x="475" y="166" w="159" h="26" measuredW="159" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Navigation%20%26%20Menu%20Links</text>
       </controlProperties>
     </control>
-    <control controlID="35" controlTypeID="com.balsamiq.mockups::Label" x="201" y="216" w="69" h="25" measuredW="65" measuredH="25" zOrder="8" locked="false" isInGroup="-1">
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::Label" x="201" y="216" w="69" h="25" measuredW="67" measuredH="25" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Link%20Lists</text>
       </controlProperties>
     </control>
-    <control controlID="36" controlTypeID="com.balsamiq.mockups::Label" x="201" y="241" w="572" h="28" measuredW="445" measuredH="23" zOrder="9" locked="false" isInGroup="-1">
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::Label" x="201" y="241" w="572" h="28" measuredW="442" measuredH="23" zOrder="9" locked="false" isInGroup="-1">
       <controlProperties>
         <bold>false</bold>
         <size>12</size>
         <text>There%20are%202%20link%20lists.%20One%20for%20the%20Main%20Menu%20you%20see%20at%20the%20top%20of%20your%20shop.</text>
       </controlProperties>
     </control>
-    <control controlID="37" controlTypeID="com.balsamiq.mockups::Label" x="201" y="263" w="572" h="28" measuredW="324" measuredH="23" zOrder="10" locked="false" isInGroup="-1">
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::Label" x="201" y="263" w="572" h="28" measuredW="317" measuredH="23" zOrder="10" locked="false" isInGroup="-1">
       <controlProperties>
         <bold>false</bold>
         <size>12</size>
         <text>One%20for%20the%20Footer%20you%20see%20at%20the%20bottom%20of%20your%20shop.</text>
       </controlProperties>
     </control>
-    <control controlID="38" controlTypeID="com.balsamiq.mockups::DataGrid" x="186" y="329" w="743" h="218" measuredW="215" measuredH="178" zOrder="11" locked="false" isInGroup="-1">
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::DataGrid" x="186" y="329" w="743" h="218" measuredW="217" measuredH="178" zOrder="11" locked="false" isInGroup="-1">
       <controlProperties>
         <borderStyle>none</borderStyle>
         <rowHeight>30</rowHeight>
         <selectedIndex>-1</selectedIndex>
         <text>Name%20of%20link%2C%20Route%0A%2C%20/%0A%2C%20/pages/about-us%0A%2C%20/products/%0A%2C%20/blogs/shop001%0A%2C%20/cart/view%0A%7B50L%2C%20120L%7D</text>
+        <vLines>false</vLines>
       </controlProperties>
     </control>
     <control controlID="49" controlTypeID="com.balsamiq.mockups::Label" x="186" y="299" w="302" h="26" measuredW="73" measuredH="25" zOrder="16" locked="false" isInGroup="-1">
@@ -127,28 +128,28 @@
         <text>%5BHome%5D</text>
       </controlProperties>
     </control>
-    <control controlID="84" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="387" w="-1" h="-1" measuredW="81" measuredH="25" zOrder="20" locked="false" isInGroup="-1">
+    <control controlID="84" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="387" w="-1" h="-1" measuredW="83" measuredH="25" zOrder="20" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>GearIcon%7Cxsmall</icon>
         <labelPosition>right</labelPosition>
         <text>%5BAbout%20Us%5D</text>
       </controlProperties>
     </control>
-    <control controlID="85" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="417" w="-1" h="-1" measuredW="84" measuredH="25" zOrder="21" locked="false" isInGroup="-1">
+    <control controlID="85" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="417" w="-1" h="-1" measuredW="83" measuredH="25" zOrder="21" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>GearIcon%7Cxsmall</icon>
         <labelPosition>right</labelPosition>
         <text>%5BCatalogue%5D</text>
       </controlProperties>
     </control>
-    <control controlID="86" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="445" w="-1" h="-1" measuredW="49" measuredH="25" zOrder="22" locked="false" isInGroup="-1">
+    <control controlID="86" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="445" w="-1" h="-1" measuredW="50" measuredH="25" zOrder="22" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>GearIcon%7Cxsmall</icon>
         <labelPosition>right</labelPosition>
         <text>%5BBlog%5D</text>
       </controlProperties>
     </control>
-    <control controlID="87" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="476" w="-1" h="-1" measuredW="52" measuredH="25" zOrder="23" locked="false" isInGroup="-1">
+    <control controlID="87" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="476" w="-1" h="-1" measuredW="51" measuredH="25" zOrder="23" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>GearIcon%7Cxsmall</icon>
         <labelPosition>right</labelPosition>
@@ -169,12 +170,13 @@
         <text>%5BAdd%20link%5D</text>
       </controlProperties>
     </control>
-    <control controlID="92" controlTypeID="com.balsamiq.mockups::DataGrid" x="186" y="646" w="743" h="218" measuredW="215" measuredH="88" zOrder="26" locked="false" isInGroup="-1">
+    <control controlID="92" controlTypeID="com.balsamiq.mockups::DataGrid" x="186" y="646" w="743" h="218" measuredW="217" measuredH="88" zOrder="26" locked="false" isInGroup="-1">
       <controlProperties>
         <borderStyle>none</borderStyle>
         <rowHeight>30</rowHeight>
         <selectedIndex>-1</selectedIndex>
         <text>Name%20of%20link%2C%20Route%0A%2C%20/pages/tos%0A%2C%20/pages/about-us%0A%7B50L%2C%20120L%7D</text>
+        <vLines>false</vLines>
       </controlProperties>
     </control>
     <control controlID="93" controlTypeID="com.balsamiq.mockups::Canvas" x="186" y="610" w="743" h="30" measuredW="100" measuredH="70" zOrder="27" locked="false" isInGroup="-1">
@@ -184,7 +186,7 @@
         <color>10066329</color>
       </controlProperties>
     </control>
-    <control controlID="94" controlTypeID="com.balsamiq.mockups::Label" x="186" y="616" w="302" h="26" measuredW="44" measuredH="25" zOrder="28" locked="false" isInGroup="-1">
+    <control controlID="94" controlTypeID="com.balsamiq.mockups::Label" x="186" y="616" w="302" h="26" measuredW="46" measuredH="25" zOrder="28" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Footer</text>
       </controlProperties>
@@ -194,14 +196,14 @@
         <text>Edit%20link%20list</text>
       </controlProperties>
     </control>
-    <control controlID="96" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="671" w="-1" h="-1" measuredW="133" measuredH="25" zOrder="30" locked="false" isInGroup="-1">
+    <control controlID="96" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="671" w="-1" h="-1" measuredW="137" measuredH="25" zOrder="30" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>GearIcon%7Cxsmall</icon>
         <labelPosition>right</labelPosition>
         <text>%5BTerms%20of%20Service%5D</text>
       </controlProperties>
     </control>
-    <control controlID="97" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="704" w="-1" h="-1" measuredW="81" measuredH="25" zOrder="31" locked="false" isInGroup="-1">
+    <control controlID="97" controlTypeID="com.balsamiq.mockups::IconLabel" x="197" y="704" w="-1" h="-1" measuredW="83" measuredH="25" zOrder="31" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>GearIcon%7Cxsmall</icon>
         <labelPosition>right</labelPosition>

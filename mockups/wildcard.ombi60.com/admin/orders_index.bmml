@@ -41,7 +41,7 @@
         <borderStyle>roundedSolid</borderStyle>
       </controlProperties>
     </control>
-    <control controlID="34" controlTypeID="com.balsamiq.mockups::Label" x="213" y="187" w="-1" h="-1" measuredW="43" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Label" x="213" y="187" w="-1" h="-1" measuredW="44" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Order</text>
       </controlProperties>
@@ -108,6 +108,7 @@
         <rowHeight>30</rowHeight>
         <selectedIndex>-1</selectedIndex>
         <text>Order%20%5E%2C%20Date%2C%20Placed%20by%2C%20Payment%20Status%2C%20Fulfillment%20Status%2C%20Amount%0A%5B%231001%5D%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%5Cr%2006%3A19%2C%20Mark%20Twain%2C%20Pending%2C%20Not%20fulfilled%2C%20%2410.00%0A%5B%231002%5D%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%5Cr%2007%3A23%2C%20Jennifer%20Platt%2C%20Paid%2C%20Fulfilled%2C%20%24100.00%0A%5B%231003%5D%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%5Cr%2008%3A55%2C%20Tom%20Hardy%2C%20Paid%2C%20Not%20fulfilled%2C%20%24110.00</text>
+        <vLines>false</vLines>
       </controlProperties>
     </control>
     <control controlID="62" controlTypeID="com.balsamiq.mockups::Label" x="204" y="329" w="-1" h="-1" measuredW="288" measuredH="25" zOrder="20" locked="false" isInGroup="-1">

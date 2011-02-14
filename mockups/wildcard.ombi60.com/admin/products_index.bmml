@@ -77,7 +77,7 @@
             <text/>
           </controlProperties>
         </control>
-        <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="256" y="1" w="-1" h="-1" measuredW="46" measuredH="25" zOrder="5" locked="false" isInGroup="34">
+        <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="256" y="1" w="-1" h="-1" measuredW="47" measuredH="25" zOrder="5" locked="false" isInGroup="34">
           <controlProperties>
             <text>Status</text>
           </controlProperties>
@@ -115,6 +115,7 @@
         <rowHeight>30</rowHeight>
         <selectedIndex>-1</selectedIndex>
         <text>Product%20%5E%2C%20Status%2C%20Actions%0ATest%20t-shirt%5Cr%2410.00%2C%20%5BPublished%5D%2C%0ADumbbell%5Cr%2415.00%2C%204%2C%20%0AToy%20Car%5Cr%2420.00%2C%2031%2C%20%0A%7B75C%2C%2035C%2C%20110%7D</text>
+        <vLines>false</vLines>
       </controlProperties>
     </control>
     <control controlID="39" controlTypeID="com.balsamiq.mockups::Button" x="374" y="493" w="72" h="28" measuredW="81" measuredH="28" zOrder="7" locked="false" isInGroup="-1">

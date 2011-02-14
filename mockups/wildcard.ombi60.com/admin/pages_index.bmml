@@ -61,12 +61,13 @@
         <text>Examples%3A%20%22About%20Us%22%20section%2C%20Warranty%2C%20Terms%20of%20Service</text>
       </controlProperties>
     </control>
-    <control controlID="38" controlTypeID="com.balsamiq.mockups::DataGrid" x="186" y="329" w="743" h="218" measuredW="318" measuredH="88" zOrder="11" locked="false" isInGroup="-1">
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::DataGrid" x="186" y="329" w="743" h="218" measuredW="320" measuredH="88" zOrder="11" locked="false" isInGroup="-1">
       <controlProperties>
         <borderStyle>none</borderStyle>
         <rowHeight>30</rowHeight>
         <selectedIndex>-1</selectedIndex>
         <text>Title%20%5E%2C%20Modified%2C%20Actions%0A%5BWelcome%5D%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%2006%3A19%2C%20%0A%5BAbout%20Us%5D%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%2006%3A19%2C%20%0A%7B100L%2C%2060C%2C%2040C%7D</text>
+        <vLines>false</vLines>
       </controlProperties>
     </control>
     <control controlID="39" controlTypeID="com.balsamiq.mockups::Button" x="791" y="353" w="-1" h="-1" measuredW="50" measuredH="28" zOrder="12" locked="false" isInGroup="-1">
@@ -107,6 +108,7 @@
         <rowHeight>30</rowHeight>
         <selectedIndex>-1</selectedIndex>
         <text>Title%20%5E%2C%20Modified%2C%20Actions%0A%5Bshop001%5D%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%2006%3A19%2C%20%0A%7B100L%2C%2060C%2C%20100C%7D</text>
+        <vLines>false</vLines>
       </controlProperties>
     </control>
     <control controlID="47" controlTypeID="com.balsamiq.mockups::Button" x="793" y="670" w="50" h="28" measuredW="50" measuredH="28" zOrder="19" locked="false" isInGroup="-1">

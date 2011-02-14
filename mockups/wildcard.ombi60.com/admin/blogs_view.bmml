@@ -48,9 +48,11 @@
       <controlProperties>
         <borderStyle>none</borderStyle>
         <hasHeader>true</hasHeader>
+        <hLines>false</hLines>
         <rowHeight>30</rowHeight>
         <selectedIndex>-1</selectedIndex>
         <text>Title%20%5E%2C%20Created%2C%20Modified%2C%20Actions%0A%5BFirst%20Post%5D%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%5Cr%2006%3A19%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%5Cr%2006%3A19%2C%0A%5BOpen%20For%20Business%5D%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%5Cr%2007%3A23%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%5Cr%2007%3A23%2C%0A%5BNew%20Year%20Promotion%5D%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%5Cr%2008%3A55%2C%20Fri%5C%2C%20Feb%204th%202011%5C%2C%5Cr%2008%3A55%2C%0A%7B100L%2C%2050C%2C%2050C%2C%2050C%7D</text>
+        <vLines>false</vLines>
       </controlProperties>
     </control>
     <control controlID="138" controlTypeID="com.balsamiq.mockups::Label" x="224" y="238" w="-1" h="-1" measuredW="295" measuredH="25" zOrder="9" locked="false" isInGroup="-1">
