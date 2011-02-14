@@ -22,6 +22,9 @@ $(document).ready(function() {
                 'cancelImg'      : '<?php echo Router::url('/uploadify/img/cancel.png'); ?>',
                 <?php } ?>
                 
+                <?php if(isset($uploadifySettings['buttonText'])) { ?>
+		'buttonText'      : '<?php echo $uploadifySettings['buttonText']; ?>',
+                <?php } ?>
 		<?php if(isset($uploadifySettings['folder']) && !empty($uploadifySettings['folder'])) { ?>
 		'folder'         : '<?php echo $uploadifySettings['folder']; ?>',
                 <?php } ?>

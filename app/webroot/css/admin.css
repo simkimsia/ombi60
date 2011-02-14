@@ -259,3 +259,45 @@ ul#subnav li a {
 .top-paging span.current, .bottom-paging span.current {
 	color: #c73e14;
 }
+
+span.hint {
+  color: #999999;
+  font-weight: normal;
+}
+
+fieldset.left {
+  display: inline;
+  float: left;
+  width: 45%;
+}
+
+fieldset.right {
+  display: inline;
+  float: right;
+  width: 45%;
+}
+
+label span.small {
+  font-size: 80%;
+}
+
+div.input.left {
+  width: 40%;
+  float: left;
+  display: inline;
+  clear: none;
+}
+div.input.right {
+  width: 40%;
+  float: right;
+  display: inline;
+  clear: none;
+}
+input.noclear {
+  clear: none;
+  width: 60%;
+}
+div.products.form div.submit {
+  display: inline;
+  float: left;
+}
