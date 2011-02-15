@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" measuredW="1273" measuredH="701" mockupW="1117" mockupH="693">
+<mockup version="1.0" skin="sketch" measuredW="1273" measuredH="701" mockupW="1273" mockupH="693">
   <controls>
     <control controlID="26" controlTypeID="__group__" x="156" y="8" w="797" h="693" measuredW="797" measuredH="693" zOrder="0" locked="false" isInGroup="-1">
       <groupChildrenDescriptors>
@@ -141,6 +141,17 @@
     <control controlID="68" controlTypeID="com.balsamiq.mockups::Label" x="511" y="158" w="-1" h="-1" measuredW="50" measuredH="25" zOrder="26" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Orders</text>
+      </controlProperties>
+    </control>
+    <control controlID="69" controlTypeID="com.balsamiq.mockups::StickyNote" x="0" y="354" w="156" h="150" measuredW="109" measuredH="123" zOrder="27" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>links%20go%20to%20overview%20of%20the%20order%0ASee%20orders_view.bmml%20or%0A.png</text>
+      </controlProperties>
+    </control>
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::VCurly" x="0" y="383" w="180" h="92" measuredW="180" measuredH="140" zOrder="28" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>right</direction>
+        <text/>
       </controlProperties>
     </control>
   </controls>
