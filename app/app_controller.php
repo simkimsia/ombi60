@@ -201,7 +201,22 @@ class AppController extends Controller {
 			    'order'=>array('Link.order ASC'))),
 		    'fields'    =>array('LinkList.id',)));
 		
+		$footerMenu = $this->LinkList->find('first', array(
+		    'conditions'=>array('LinkList.shop_id'=>$shopId,
+					'LinkList.handle' =>'footer-menu'),
+		    'contain'   =>array(
+			'Link'=>array(
+			    'fields'=>array('Link.id',
+					    'Link.name',
+					    'Link.route',
+					    'Link.model',
+					    'Link.action',
+					    'Link.order'),
+			    'order'=>array('Link.order ASC'))),
+		    'fields'    =>array('LinkList.id',)));
+		
 		$this->set('mainMenu', $mainMenu);
+		$this->set('footerMenu', $footerMenu);
 		
 	}
 	/**

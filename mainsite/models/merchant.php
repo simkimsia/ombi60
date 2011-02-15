@@ -292,7 +292,28 @@ class Merchant extends AppModel {
 						'author'=>$this->User->id,
 						'handle'=>'about-us');
 		
-		$pageData = array('Webpage'=>array($homePage, $aboutUsPage));
+		$tosPage = array('title'=>'Terms of Service',
+				     'text'=>'<p>The <strong>Terms of Service</strong> page is for you to enter any privacy statements or terms of service you wish to render.</p>
+				     <p>Customers may need to know the limits of their patronage, so here are a few things you should touch on:</p>
+<ul>
+	
+  <li>Who you are</li>
+	
+  <li>What you would consider as acceptable customer behavior</li>
+	
+  <li>Any limits as to whom you can serve or which regions you can serve</li>
+	
+  <li>What legal recourses you would seek if customers abuse your service</li>
+  
+  <li>What rights you reserve as a business owner</li>
+</ul>
+<p>Go to the <a href="/admin/pages">Blogs &amp; Pages</a> in administration menu.</p>',
+						'shop_id'=>$this->Shop->id,
+						'author'=>$this->User->id,
+						'handle'=>'terms-of-service');
+		
+		
+		$pageData = array('Webpage'=>array($homePage, $aboutUsPage, $tosPage));
 		
 		$webpage->create();
 		$result = $webpage->saveAll($pageData['Webpage']);
@@ -333,6 +354,32 @@ class Merchant extends AppModel {
 				      'route'	=> '/cart/view',
 				      'model'	=> '/cart/view',
 				      'order'	=> '4')
+				));
+		
+		$result = $this->Shop->LinkList->saveAll($linkListData);
+		
+		if (!$result) {
+			$datasource->rollback($this);
+			return false;
+		}
+		
+		$this->Shop->LinkList->create();
+		$linkListData = array(
+			'LinkList' => array(
+				'shop_id' => $this->Shop->id,
+				'name'    => 'Footer Menu',
+				'handle'  => 'footer-menu'),
+			'Link'     => array(
+				array('name'	=> 'Terms of Service',
+				      'route'	=> '/pages/terms-of-service',
+				      'model'	=> '/pages/',
+				      'order'	=> '0'),
+				array('name'	=> 'About Us',
+				      'route'	=> '/pages/about-us',
+				      'model'	=> '/pages/',
+				      'action'	=> 'about-us',
+				      'order'	=> '1'),
+				
 				));
 		
 		$result = $this->Shop->LinkList->saveAll($linkListData);

@@ -28,8 +28,11 @@
 <!--<link href="style_alternative/style.css" type="text/css" media="screen" rel="stylesheet" />-->
 <title>
 	<?php
+		$companyName = '';
+		
 		if (!empty($shopName_for_layout)) {
 			echo $shopName_for_layout;
+			$companyName = $shopName_for_layout;
 		}
 		if (!empty($shopName_for_layout) && !empty($title_for_layout)) {
 			echo ' - ';
@@ -114,8 +117,25 @@
 	</span>
 
 	<div id="footer">
-		&copy; Company Name 2010<br />
-		<a href="#">Privacy Statement</a> | <a href="#">Disclaimer</a>
+		Copyright &copy; <?php echo $companyName; ?> <?php echo date('Y'); ?><br />
+		<?php
+			
+			if (isset($footerMenu['Link']) && is_array($footerMenu['Link'])) {
+				$totalFooterLinksCount = count($footerMenu['Link']);
+				$count = 1;
+				foreach($footerMenu['Link'] as $key=>$link) {
+					
+					echo $this->Html->link($link['name'], $link['route']);
+					
+					if ($count < $totalFooterLinksCount) {
+						echo ' | ';
+					}
+					$count ++;
+				}
+			}
+			
+			
+		?>
 	</div>
 </div>
 </body>
