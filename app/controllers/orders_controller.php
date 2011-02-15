@@ -96,6 +96,7 @@ class OrdersController extends AppController {
 		$this->Order->Customer->User->Behaviors->attach('Linkable.Linkable');
 		
 		$this->paginate = array(
+		
 			      'conditions' => array('Order.shop_id' => $shop_id),
 							
 			      'link'=>array(

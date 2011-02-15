@@ -101,11 +101,6 @@
 ?>
 
 </div>
-<!--div class="actions">
-	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Products', true)), array('action' => 'index'));?></li>
-	</ul>
-</div-->
 
 <script type="text/javascript" language="javascript">
 	

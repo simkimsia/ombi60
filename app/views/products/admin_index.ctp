@@ -1,5 +1,3 @@
-
-
 <div class="products index products_index">
 <h2><?php __('Products');?></h2>
 
@@ -43,12 +41,11 @@
         <td colspan="3">
     <div class="paging" style="padding:0px;margin:0px;">
     
-	<?php
-  //if have pagination 
+  <?php //if have pagination 
   if ($paginator->numbers()){ 
-  echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled')); }?>
+    echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'))." | ";
+    if ($paginator->counter(array('format' => __('%pages%', true)))>2) echo $paginator->numbers()." | ";
+    echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled')); }?> 
 </div>
     </td>
     <!--td colspan="2" width="300">&nbsp;</td-->
@@ -111,13 +108,11 @@ foreach ($products as $product):
 
 </table>
     <div class="paging">
-    
-	<?php
-  //if have pagination 
+  <?php //if have pagination 
   if ($paginator->numbers()){ 
-  echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled')); }?>
+    echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'))." | ";
+    if ($paginator->counter(array('format' => __('%pages%', true)))>2) echo $paginator->numbers()." | ";
+    echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled')); }?> 
 </div>
 
 </div>

@@ -184,7 +184,7 @@ table.product_list
   margin-left:40px;
 }
 
-table.product_list th
+table.product_list th, table.order_list th
 {
   background-color: #F5F5F5;
 }
