@@ -1,71 +1,55 @@
-<div class="domains index">
-	<h2><?php __('Domains');?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('domain');?></th>
-			
-			<!-- <th><?php //echo $this->Paginator->sort('always_redirect_here');?></th> -->
-			<th><?php echo $this->Paginator->sort('Working');?></th>
-			<th class="actions"><?php __('Actions');?></th>
-	</tr>
+<div>
+	<h2 class="text_center"><?php __('Domains');?></h2>
+	<div id="domain_intro_text">
+	    <strong>Domains</strong>
+	    <br>
+	    These are the domains used by your business.
+	    <br>
+	    <a href="#">Learn how to setup your domain from OMBI60.com</a>
+	</div>
+	<div id="domain_list_table">
+    	<?php echo $this->render('admin_domain_list', false);?>	
+    </div>
+	
 	<?php
-	$i = 0;
-	
-	// get the ip address of main url of shop
-	$mainIP = getAddrByHost($mainUrl);
-	
-	foreach ($domains as $domain):
-		$class = null;
-		if ($i++ % 2 == 0) {
-			$class = ' class="altrow"';
-		}
+	//echo $this->Paginator->counter(array(
+	//'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+	//));
 	?>
-	<tr<?php echo $class;?>>
-		<td><?php echo $domain['Domain']['id']; ?>&nbsp;</td>
-		<td><?php echo $domain['Domain']['domain']; ?>&nbsp;</td>
-		
-		<!-- <td><?php //echo $domain['Domain']['always_redirect_here'] ? 'YES' : 'NO'; ?>&nbsp;</td> -->
-		<td><?php echo (getAddrByHost($domain['Domain']['domain']) == $mainIP) ? 'YES' : 'NO'; ?>&nbsp;</td>
-		<td class="actions">
-			
-			<?php
-				if (!$domain['Domain']['primary']) {
-					echo $this->Html->link(__('Make this primary domain', true), array('action' => 'make_this_primary',
-													   'controller' => 'domains',
-													   'admin' => true,
-													   'id' => $domain['Domain']['id'],
-													   'shopId' => $domain['Domain']['shop_id']));
-				}
-			?>
-			<?php
-				if ($domain['Domain']['domain'] != $mainUrl OR !$domain['Domain']['shop_web_address']) {
-					echo $this->Html->link(__('Delete', true), array('action' => 'delete', $domain['Domain']['id']));
-				}
-			?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
-	));
-	?>	</p>
 
-	<div class="paging">
+	<!--<div class="paging">
 		<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
 	 | 	<?php echo $this->Paginator->numbers();?>
  |
 		<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+	</div>-->
+	<div class="background_gray">
+    	<?php echo $this->Html->link(sprintf(__('Add a domain that you own', true)), "#", array('onclick' => 'showNewDomainForm();return false;', 'class' => 'link_class', 'id' => 'add_domain',)); ?>
+	<?php
+	echo $this->element('add_domain', array('shopId' => $shopId));
+	?>
 	</div>
 </div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Domain', true)), array('action' => 'add')); ?></li>
-		
-		
-	</ul>
-</div>
+
+<script>
+
+function afterAddDomain(response) {
+	var json_object = $.parseJSON(response);
+	if (json_object.success) {
+	    $('#show_error').hide();
+	    $('#show_error').html();
+		$('#domain_list_table').html(json_object.contents);
+		$('#DomainDomain').val("");
+	} else {
+	    $('#show_error').show();
+	    $('#show_error').html("<span class='redText'>"+json_object.message+"</span>");
+	}
+}
+	
+function showNewDomainForm() {	
+    $('#add_domain').hide();
+    $('#show_error').hide();
+    $('#DomainDomain').val("");
+	$('#add_domain_div').show();
+}
+</script>

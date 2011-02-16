@@ -3,6 +3,8 @@ class DomainsController extends AppController {
 
 	var $name = 'Domains';
 	
+	var $helpers = array('Ajax', 'Javascript', 'Number');
+	
 	function beforeFilter() {
 
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
@@ -14,8 +16,10 @@ class DomainsController extends AppController {
 		$this->Domain->recursive = 0;
 		$mainUrl = Shop::get('Shop.web_address');
 		$this->set('mainUrl', $mainUrl);
+        $shopId = User::get('Merchant.shop_id');
 		$this->set('domains', $this->paginate('Domain', array(
 								      'Domain.shop_id ' => User::get('Merchant.shop_id')) ));
+		$this->set('shopId', $shopId);
 	}
 
 	function admin_view($id = null) {
@@ -27,17 +31,43 @@ class DomainsController extends AppController {
 	}
 
 	function admin_add() {
+	    $result = true;
 		if (!empty($this->data)) {
+		    if (!empty($this->data['Domain']['domain'])) {
+		        $this->data['Domain']['domain'] = 'http://' . $this->data['Domain']['domain'];
 			
-			$this->data['Domain']['domain'] = 'http://' . $this->data['Domain']['domain'];
+			    $this->Domain->create();
+			    if (!$this->Domain->save($this->data)) {
+			        $result = false;
+			    }
+			    if ($this->params['isAjax']) {
 			
-			$this->Domain->create();
-			if ($this->Domain->save($this->data)) {
-				$this->Session->setFlash(__('The domain has been saved', true), 'default', array('class'=>'flash_success'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The domain could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
-			}
+			        $this->layout = 'json';
+			        if ($result) {
+				        $domains = $this->fetchCurrent();
+				        $successJSON  = true;
+				        $this->set(compact('domains', 'successJSON'));
+				
+				        $this->render('admin_domain_list');
+			        } else {
+				        //$errors = $this->Domain->validationErrors;
+				        $response['successJSON'] = false;
+        		        $response['message'] = "This domain already exists.";
+        		        $this->sendJson($response);
+        		        return ;
+			        }
+			
+			
+		        } else {
+			        $this->redirect(array('action' => 'index'));
+		        }
+		    } else {
+		        $response['successJSON'] = false;
+		        $response['message'] = "Please enter domain name.";
+		        $this->sendJson($response);
+		        return ;
+		    }
+			
 		}
 		$shopId = Shop::get('Shop.id');
 		$this->set(compact('shopId'));
@@ -114,5 +144,18 @@ class DomainsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
+	private function fetchCurrent() {
+	
+		$this->Domain->recursive = 0;
+		
+		$mainUrl = Shop::get('Shop.web_address');
+		$this->set('mainUrl', $mainUrl);
+		
+        $shopId = User::get('Merchant.shop_id');
+		
+		return $this->paginate('Domain', array(
+								      'Domain.shop_id ' => User::get('Merchant.shop_id')) );
+		
+	}
 }
 ?>

@@ -223,7 +223,7 @@ ul#subnav li a {
 }
 
 .products-table td, .items-table td, th {
-    border-right: 1px solid black;
+    /*border-right: 1px solid black;*/
 }	
 
 .products-table th, .items-table th {
@@ -300,4 +300,36 @@ input.noclear {
 div.products.form div.submit {
   display: inline;
   float: left;
+}
+
+/**CSS added for domain listing on 15-02-2011*/
+#domain_intro_text{
+    padding:10px 0px 30px;
+    width: 35%;
+}
+
+.text_center{
+    text-align: center;
+}
+
+.link_class{
+    padding: 2px 0px;
+}
+
+.margin_top_15{
+    margin-top: 15px;
+}
+
+.text_field{
+    width: 80%;
+}
+
+.redText{
+   color: red;
+}
+
+.background_gray{
+    background: #F5F5F5; 
+    padding: 20px 10px;
+    border: 1px solid #E4E4E4;
 }
