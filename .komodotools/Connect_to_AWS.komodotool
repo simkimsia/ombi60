@@ -1,0 +1,19 @@
+{
+  "insertOutput": "0", 
+  "keyboard_shortcut": "", 
+  "name": "Connect to AWS", 
+  "parseRegex": "", 
+  "runIn": "no-console", 
+  "operateOnSelection": "0", 
+  "value": [
+    "gnome-terminal -x bash -c \". ~/Dropbox/ubuntu/bash_scripts/connect_to_aws\""
+  ], 
+  "parseOutput": "0", 
+  "version": "1.0.7", 
+  "env": "", 
+  "doNotOpenOutputWindow": "0", 
+  "showParsedOutputList": "0", 
+  "type": "command", 
+  "cwd": "/home/kei/Dropbox/ubuntu/bash_scripts", 
+  "icon": "chrome://famfamfamsilk/skin/icons/lightning_go.png"
+}

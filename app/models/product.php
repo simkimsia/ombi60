@@ -7,7 +7,8 @@ class Product extends AppModel {
 	var $actsAs    = array('Linkable.Linkable',
 			       'Copyable.Copyable' => array(
 					'habtm' => false,
-					'recursive' => false,)
+					'recursive' => false,),
+			       'log.Logable',
 			       );
 	var $recursive = -1;
 	

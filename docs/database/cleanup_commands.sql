@@ -59,6 +59,7 @@ TRUNCATE TABLE order_line_items;
 TRUNCATE TABLE orders;
 TRUNCATE TABLE `links`;
 TRUNCATE TABLE `link_lists`;
+TRUNCATE TABLE `logs`;
 
 
 

@@ -1,0 +1,18 @@
+{
+  "insertOutput": "0", 
+  "keyboard_shortcut": "", 
+  "name": "Clear Logs in WP", 
+  "parseRegex": "", 
+  "operateOnSelection": "0", 
+  "value": [
+    "rm app/tmp/logs/*.log"
+  ], 
+  "parseOutput": "0", 
+  "version": "1.0.7", 
+  "env": "", 
+  "doNotOpenOutputWindow": "0", 
+  "showParsedOutputList": "0", 
+  "type": "command", 
+  "cwd": "/var/www/wp", 
+  "runIn": "command-output-window"
+}

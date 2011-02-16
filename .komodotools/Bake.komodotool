@@ -1,0 +1,19 @@
+{
+  "insertOutput": "0", 
+  "keyboard_shortcut": "", 
+  "name": "Bake", 
+  "parseRegex": "", 
+  "runIn": "new-console", 
+  "operateOnSelection": "0", 
+  "value": [
+    "cake bake"
+  ], 
+  "parseOutput": "0", 
+  "version": "1.0.7", 
+  "env": "", 
+  "doNotOpenOutputWindow": "0", 
+  "showParsedOutputList": "0", 
+  "type": "command", 
+  "cwd": "/var/www/wp/app", 
+  "icon": "file:///home/kei/Dropbox/favicon/cake.icon.png"
+}

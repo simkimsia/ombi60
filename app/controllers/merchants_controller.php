@@ -3,7 +3,10 @@ class MerchantsController extends AppController {
 
 	var $name = 'Merchants';
 
-	var $helpers = array('Javascript', 'Ajax');
+	var $helpers = array('Javascript', 'Ajax',
+			     'Log.Log');
+	
+	
 
 	function beforeFilter() {
 
@@ -121,6 +124,8 @@ class MerchantsController extends AppController {
 	function admin_index() {
 		$this->Merchant->recursive = 0;
 		$this->set('merchants', $this->paginate());
+		$log = ClassRegistry::init('Log.Log');
+		$this->set('logs', $log->find('dashboard'));
 	}
 
 	private function updateSession() {
