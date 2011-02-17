@@ -18,15 +18,19 @@ class Domain extends AppModel {
 		),
 
 	);
-	
+
 	var $validate = array(
-			      'title' => array(
-					'isUnique' => array(
-						'rule' => 'isUnique',
-						'message' => 'This domain is already used',
-					
-							),)
-			     );
+			         'title' => array(
+					             'isUnique' => array(
+                         		                'rule' => 'isUnique',
+		                             		    'message' => 'This domain is already used',
+					                           ),
+							     'notEmpty' => array(
+							                    'rule' => 'notEmpty',
+							                    'message' => 'Please enter domain name.',
+							                   ),
+							    )
+			        );
 	
 	function make_this_primary($id = null, $shopId = null) {
 		

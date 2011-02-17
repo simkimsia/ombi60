@@ -5,15 +5,15 @@ class ConstantHelper extends AppHelper {
         function displayPayment($constantValue) {
                 switch($constantValue) {
                         case PAYMENT_ABANDONED :
-                        return 'abandoned';
+                        return 'Abandoned';
         
                         case PAYMENT_AUTHORIZED :
-                                return 'authorized';
+                                return 'Authorized';
         
                         case PAYMENT_PAID :
-                                return 'paid';
+                                return 'Paid';
                         case PAYMENT_PENDING :
-                                return 'pending';
+                                return 'Pending';
         
                         default :
                                 return '';
@@ -23,13 +23,13 @@ class ConstantHelper extends AppHelper {
         function displayFulfillment($constantValue) {
                 switch($constantValue) {
                         case FULFILLMENT_FULFILLED :
-                                return 'fulfilled';
+                                return 'Fulfilled';
         
                         case FULFILLMENT_NOT_FULFILLED :
-                                return 'not fulfilled';
+                                return 'Not Fulfilled';
         
                         case FULFILLMENT_PARTIAL :
-                                return 'partial';
+                                return 'Partial';
                         default :
                                 return '';
                 }

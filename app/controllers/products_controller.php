@@ -496,6 +496,7 @@ class ProductsController extends AppController {
 		$uploadifySettings = array('browseButtonId' => 'fileInput',
 					   'script' => Router::url('/admin/products/upload', true),
 					   'onAllComplete' => true,
+					   'buttonText' => __('Choose File', true),
 					   );
 		
 		$errors = $this->Product->getAllValidationErrors();
