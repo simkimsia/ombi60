@@ -1,6 +1,6 @@
 <table cellpadding="0" cellspacing="0" class="items-table orders-table">
 <tr>
-		<th><?php echo $this->Paginator->sort('id');?></th>
+		
 		<th><?php echo $this->Paginator->sort('domain');?></th>
 		
 		<!-- <th><?php //echo $this->Paginator->sort('always_redirect_here');?></th> -->
@@ -19,7 +19,7 @@ foreach ($domains as $domain):
 	}
 ?>
 <tr<?php echo $class;?>>
-	<td><?php echo $domain['Domain']['id']; ?>&nbsp;</td>
+	
 	<td><?php echo $domain['Domain']['domain']; ?>&nbsp;</td>
 	
 	<!-- <td><?php //echo $domain['Domain']['always_redirect_here'] ? 'YES' : 'NO'; ?>&nbsp;</td> -->
