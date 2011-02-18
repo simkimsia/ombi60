@@ -9,6 +9,7 @@ class OrderLineItem extends AppModel {
 		'Order' => array(
 			'className' => 'Order',
 			'foreignKey' => 'order_id',
+			'counterCache' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

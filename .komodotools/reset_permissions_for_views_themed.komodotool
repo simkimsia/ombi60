@@ -1,0 +1,18 @@
+{
+  "insertOutput": 0, 
+  "parseRegex": "", 
+  "name": "reset permissions for views/themed", 
+  "keyboard_shortcut": "", 
+  "operateOnSelection": 0, 
+  "value": [
+    "gnome-terminal -e \"bash -c \\\"sudo chmod 777 app/views/themed/* -R; exec bash\\\"\""
+  ], 
+  "parseOutput": 0, 
+  "version": "1.0.7", 
+  "env": "", 
+  "doNotOpenOutputWindow": 0, 
+  "showParsedOutputList": 0, 
+  "type": "command", 
+  "cwd": "/var/www/wp", 
+  "runIn": "command-output-window"
+}

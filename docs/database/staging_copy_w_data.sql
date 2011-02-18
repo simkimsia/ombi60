@@ -29,11 +29,11 @@ CREATE TABLE `acos` (
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8;
 
 /*Data for the table `acos` */
 
-insert  into `acos`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,NULL,NULL,'controllers',1,402),(2,1,NULL,NULL,'Pages',2,7),(3,2,NULL,NULL,'display',3,4),(4,2,NULL,NULL,'admin_change_active_status',5,6),(5,1,NULL,NULL,'PaydollarTransactions',8,13),(6,5,NULL,NULL,'datafeed',9,10),(7,5,NULL,NULL,'admin_change_active_status',11,12),(8,1,NULL,NULL,'Orders',14,37),(9,8,NULL,NULL,'paypal',15,16),(10,8,NULL,NULL,'index',17,18),(11,8,NULL,NULL,'admin_index',19,20),(12,8,NULL,NULL,'admin_view',21,22),(13,8,NULL,NULL,'view',23,24),(14,8,NULL,NULL,'add',25,26),(15,8,NULL,NULL,'checkout',27,28),(16,8,NULL,NULL,'success',29,30),(17,8,NULL,NULL,'updatePrices',31,32),(18,8,NULL,NULL,'pay',33,34),(19,8,NULL,NULL,'admin_change_active_status',35,36),(20,1,NULL,NULL,'Payments',38,55),(21,20,NULL,NULL,'admin_index',39,40),(22,20,NULL,NULL,'admin_update_settings',41,42),(23,20,NULL,NULL,'admin_add_paypal_payment',43,44),(24,20,NULL,NULL,'admin_add_custom_payment',45,46),(25,20,NULL,NULL,'admin_edit_paypal_payment',47,48),(26,20,NULL,NULL,'admin_edit_custom_payment',49,50),(27,20,NULL,NULL,'admin_delete_custom_payment',51,52),(28,20,NULL,NULL,'admin_change_active_status',53,54),(29,1,NULL,NULL,'Users',56,75),(30,29,NULL,NULL,'parentNode',57,58),(31,29,NULL,NULL,'initDB',59,60),(32,29,NULL,NULL,'login',61,62),(33,29,NULL,NULL,'logout',63,64),(34,29,NULL,NULL,'platform_login',65,66),(35,29,NULL,NULL,'platform_logout',67,68),(36,29,NULL,NULL,'platform_index',69,70),(37,29,NULL,NULL,'afterSave',71,72),(38,29,NULL,NULL,'admin_change_active_status',73,74),(39,1,NULL,NULL,'ProductImages',76,91),(40,39,NULL,NULL,'admin_add',77,78),(41,39,NULL,NULL,'admin_add_by_product',79,80),(42,39,NULL,NULL,'admin_uploadify',81,82),(43,39,NULL,NULL,'admin_list_by_product',83,84),(44,39,NULL,NULL,'admin_delete',85,86),(45,39,NULL,NULL,'admin_make_this_cover',87,88),(46,39,NULL,NULL,'admin_change_active_status',89,90),(47,1,NULL,NULL,'Carts',92,103),(48,47,NULL,NULL,'index',93,94),(49,47,NULL,NULL,'view',95,96),(50,47,NULL,NULL,'edit',97,98),(51,47,NULL,NULL,'delete',99,100),(52,47,NULL,NULL,'admin_change_active_status',101,102),(53,1,NULL,NULL,'Blogs',104,119),(54,53,NULL,NULL,'view',105,106),(55,53,NULL,NULL,'admin_index',107,108),(56,53,NULL,NULL,'admin_view',109,110),(57,53,NULL,NULL,'admin_add',111,112),(58,53,NULL,NULL,'admin_edit',113,114),(59,53,NULL,NULL,'admin_delete',115,116),(60,53,NULL,NULL,'admin_change_active_status',117,118),(61,1,NULL,NULL,'Addresses',120,125),(62,61,NULL,NULL,'index',121,122),(63,61,NULL,NULL,'admin_change_active_status',123,124),(64,1,NULL,NULL,'Webpages',126,141),(65,64,NULL,NULL,'view',127,128),(66,64,NULL,NULL,'admin_index',129,130),(67,64,NULL,NULL,'admin_view',131,132),(68,64,NULL,NULL,'admin_add',133,134),(69,64,NULL,NULL,'admin_edit',135,136),(70,64,NULL,NULL,'admin_delete',137,138),(71,64,NULL,NULL,'admin_change_active_status',139,140),(72,1,NULL,NULL,'Merchants',142,163),(73,72,NULL,NULL,'register',143,144),(74,72,NULL,NULL,'admin_login',145,146),(75,72,NULL,NULL,'admin_logout',147,148),(76,72,NULL,NULL,'admin_index',149,150),(77,72,NULL,NULL,'admin_edit',151,152),(78,72,NULL,NULL,'platform_index',153,154),(79,72,NULL,NULL,'platform_view',155,156),(80,72,NULL,NULL,'platform_edit',157,158),(81,72,NULL,NULL,'platform_delete',159,160),(82,72,NULL,NULL,'admin_change_active_status',161,162),(83,1,NULL,NULL,'Themes',164,169),(84,83,NULL,NULL,'admin_index',165,166),(85,83,NULL,NULL,'admin_change_active_status',167,168),(86,1,NULL,NULL,'Customers',170,179),(87,86,NULL,NULL,'register',171,172),(88,86,NULL,NULL,'login',173,174),(89,86,NULL,NULL,'logout',175,176),(90,86,NULL,NULL,'admin_change_active_status',177,178),(91,1,NULL,NULL,'SavedThemes',180,205),(92,91,NULL,NULL,'admin_index',181,182),(93,91,NULL,NULL,'admin_view',183,184),(94,91,NULL,NULL,'admin_switch',185,186),(95,91,NULL,NULL,'admin_add',187,188),(96,91,NULL,NULL,'admin_upload',189,190),(97,91,NULL,NULL,'admin_edit',191,192),(98,91,NULL,NULL,'admin_delete',193,194),(99,91,NULL,NULL,'admin_edit_image',195,196),(100,91,NULL,NULL,'admin_feature',197,198),(101,91,NULL,NULL,'admin_delete_image',199,200),(102,91,NULL,NULL,'admin_edit_css',201,202),(103,91,NULL,NULL,'admin_change_active_status',203,204),(104,1,NULL,NULL,'Shops',206,213),(105,104,NULL,NULL,'admin_account',207,208),(106,104,NULL,NULL,'admin_cancelaccount',209,210),(107,104,NULL,NULL,'admin_change_active_status',211,212),(108,1,NULL,NULL,'ShippingRates',214,227),(109,108,NULL,NULL,'admin_index',215,216),(110,108,NULL,NULL,'admin_edit',217,218),(111,108,NULL,NULL,'admin_add_price_based',219,220),(112,108,NULL,NULL,'admin_add_weight_based',221,222),(113,108,NULL,NULL,'admin_delete',223,224),(114,108,NULL,NULL,'admin_change_active_status',225,226),(115,1,NULL,NULL,'Groups',228,233),(116,115,NULL,NULL,'parentNode',229,230),(117,115,NULL,NULL,'admin_change_active_status',231,232),(118,1,NULL,NULL,'Domains',234,249),(119,118,NULL,NULL,'admin_index',235,236),(120,118,NULL,NULL,'admin_view',237,238),(121,118,NULL,NULL,'admin_add',239,240),(122,118,NULL,NULL,'admin_make_this_primary',241,242),(123,118,NULL,NULL,'admin_edit',243,244),(124,118,NULL,NULL,'admin_delete',245,246),(125,118,NULL,NULL,'admin_change_active_status',247,248),(126,1,NULL,NULL,'Products',250,293),(127,126,NULL,NULL,'checkout',251,252),(128,126,NULL,NULL,'view_cart',253,254),(129,126,NULL,NULL,'admin_index',255,256),(130,126,NULL,NULL,'admin_view',257,258),(131,126,NULL,NULL,'view',259,260),(132,126,NULL,NULL,'index',261,262),(133,126,NULL,NULL,'admin_add',263,264),(134,126,NULL,NULL,'admin_upload',265,266),(135,126,NULL,NULL,'admin_toggle',267,268),(136,126,NULL,NULL,'admin_edit',269,270),(137,126,NULL,NULL,'admin_delete',271,272),(138,126,NULL,NULL,'admin_duplicate',273,274),(139,126,NULL,NULL,'platform_index',275,276),(140,126,NULL,NULL,'platform_view',277,278),(141,126,NULL,NULL,'platform_add',279,280),(142,126,NULL,NULL,'platform_edit',281,282),(143,126,NULL,NULL,'platform_delete',283,284),(144,126,NULL,NULL,'edit_quantities_in_cart',285,286),(145,126,NULL,NULL,'add_to_cart',287,288),(146,126,NULL,NULL,'delete_from_cart',289,290),(147,126,NULL,NULL,'admin_change_active_status',291,292),(148,1,NULL,NULL,'Posts',294,309),(149,148,NULL,NULL,'view',295,296),(150,148,NULL,NULL,'index',297,298),(151,148,NULL,NULL,'admin_view',299,300),(152,148,NULL,NULL,'admin_add',301,302),(153,148,NULL,NULL,'admin_edit',303,304),(154,148,NULL,NULL,'admin_delete',305,306),(155,148,NULL,NULL,'admin_change_active_status',307,308),(156,1,NULL,NULL,'Links',310,333),(157,156,NULL,NULL,'index',311,312),(158,156,NULL,NULL,'view',313,314),(159,156,NULL,NULL,'add',315,316),(160,156,NULL,NULL,'edit',317,318),(161,156,NULL,NULL,'delete',319,320),(162,156,NULL,NULL,'admin_index',321,322),(163,156,NULL,NULL,'admin_order',323,324),(164,156,NULL,NULL,'admin_add',325,326),(165,156,NULL,NULL,'admin_edit',327,328),(166,156,NULL,NULL,'admin_delete',329,330),(167,156,NULL,NULL,'admin_change_active_status',331,332),(168,1,NULL,NULL,'GiftCards',334,357),(169,168,NULL,NULL,'index',335,336),(170,168,NULL,NULL,'view',337,338),(171,168,NULL,NULL,'add',339,340),(172,168,NULL,NULL,'edit',341,342),(173,168,NULL,NULL,'delete',343,344),(174,168,NULL,NULL,'admin_index',345,346),(175,168,NULL,NULL,'admin_view',347,348),(176,168,NULL,NULL,'admin_add',349,350),(177,168,NULL,NULL,'admin_edit',351,352),(178,168,NULL,NULL,'admin_delete',353,354),(179,168,NULL,NULL,'admin_change_active_status',355,356),(180,1,NULL,NULL,'TinyMce',358,359),(181,1,NULL,NULL,'MeioUpload',360,361),(182,1,NULL,NULL,'Copyable',362,363),(183,1,NULL,NULL,'CodeCheck',364,365),(184,1,NULL,NULL,'MeioDuplicate',366,367),(185,1,NULL,NULL,'Recaptcha',368,369),(186,1,NULL,NULL,'ThemeFolder',370,371),(187,1,NULL,NULL,'Datasources',372,373),(188,1,NULL,NULL,'AclExtras',374,375),(189,1,NULL,NULL,'Filter',376,377),(190,1,NULL,NULL,'Rest',378,379),(191,1,NULL,NULL,'Paypal',380,381),(192,1,NULL,NULL,'RandomString',382,383),(193,1,NULL,NULL,'ClearCache',384,385),(194,1,NULL,NULL,'Uploadify',386,387),(195,1,NULL,NULL,'Paydollar',388,389),(196,1,NULL,NULL,'Linkable',390,391),(197,1,NULL,NULL,'DebugKit',392,401),(198,197,NULL,NULL,'ToolbarAccess',393,400),(199,198,NULL,NULL,'history_state',394,395),(200,198,NULL,NULL,'sql_explain',396,397),(201,198,NULL,NULL,'admin_change_active_status',398,399);
+insert  into `acos`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,NULL,NULL,'controllers',1,410),(2,1,NULL,NULL,'Pages',2,7),(3,2,NULL,NULL,'display',3,4),(4,2,NULL,NULL,'admin_change_active_status',5,6),(5,1,NULL,NULL,'Payments',8,25),(6,5,NULL,NULL,'admin_index',9,10),(7,5,NULL,NULL,'admin_update_settings',11,12),(8,5,NULL,NULL,'admin_add_paypal_payment',13,14),(9,5,NULL,NULL,'admin_add_custom_payment',15,16),(10,5,NULL,NULL,'admin_edit_paypal_payment',17,18),(11,5,NULL,NULL,'admin_edit_custom_payment',19,20),(12,5,NULL,NULL,'admin_delete_custom_payment',21,22),(13,5,NULL,NULL,'admin_change_active_status',23,24),(14,1,NULL,NULL,'ShippingRates',26,39),(15,14,NULL,NULL,'admin_index',27,28),(16,14,NULL,NULL,'admin_edit',29,30),(17,14,NULL,NULL,'admin_add_price_based',31,32),(18,14,NULL,NULL,'admin_add_weight_based',33,34),(19,14,NULL,NULL,'admin_delete',35,36),(20,14,NULL,NULL,'admin_change_active_status',37,38),(21,1,NULL,NULL,'PaydollarTransactions',40,45),(22,21,NULL,NULL,'datafeed',41,42),(23,21,NULL,NULL,'admin_change_active_status',43,44),(24,1,NULL,NULL,'SavedThemes',46,71),(25,24,NULL,NULL,'admin_index',47,48),(26,24,NULL,NULL,'admin_view',49,50),(27,24,NULL,NULL,'admin_switch',51,52),(28,24,NULL,NULL,'admin_add',53,54),(29,24,NULL,NULL,'admin_upload',55,56),(30,24,NULL,NULL,'admin_edit',57,58),(31,24,NULL,NULL,'admin_delete',59,60),(32,24,NULL,NULL,'admin_edit_image',61,62),(33,24,NULL,NULL,'admin_feature',63,64),(34,24,NULL,NULL,'admin_delete_image',65,66),(35,24,NULL,NULL,'admin_edit_css',67,68),(36,24,NULL,NULL,'admin_change_active_status',69,70),(37,1,NULL,NULL,'Addresses',72,77),(38,37,NULL,NULL,'index',73,74),(39,37,NULL,NULL,'admin_change_active_status',75,76),(40,1,NULL,NULL,'GiftCards',78,101),(41,40,NULL,NULL,'index',79,80),(42,40,NULL,NULL,'view',81,82),(43,40,NULL,NULL,'add',83,84),(44,40,NULL,NULL,'edit',85,86),(45,40,NULL,NULL,'delete',87,88),(46,40,NULL,NULL,'admin_index',89,90),(47,40,NULL,NULL,'admin_view',91,92),(48,40,NULL,NULL,'admin_add',93,94),(49,40,NULL,NULL,'admin_edit',95,96),(50,40,NULL,NULL,'admin_delete',97,98),(51,40,NULL,NULL,'admin_change_active_status',99,100),(52,1,NULL,NULL,'Products',102,145),(53,52,NULL,NULL,'checkout',103,104),(54,52,NULL,NULL,'view_cart',105,106),(55,52,NULL,NULL,'admin_index',107,108),(56,52,NULL,NULL,'admin_view',109,110),(57,52,NULL,NULL,'view',111,112),(58,52,NULL,NULL,'index',113,114),(59,52,NULL,NULL,'admin_add',115,116),(60,52,NULL,NULL,'admin_upload',117,118),(61,52,NULL,NULL,'admin_toggle',119,120),(62,52,NULL,NULL,'admin_edit',121,122),(63,52,NULL,NULL,'admin_delete',123,124),(64,52,NULL,NULL,'admin_duplicate',125,126),(65,52,NULL,NULL,'platform_index',127,128),(66,52,NULL,NULL,'platform_view',129,130),(67,52,NULL,NULL,'platform_add',131,132),(68,52,NULL,NULL,'platform_edit',133,134),(69,52,NULL,NULL,'platform_delete',135,136),(70,52,NULL,NULL,'edit_quantities_in_cart',137,138),(71,52,NULL,NULL,'add_to_cart',139,140),(72,52,NULL,NULL,'delete_from_cart',141,142),(73,52,NULL,NULL,'admin_change_active_status',143,144),(74,1,NULL,NULL,'Domains',146,161),(75,74,NULL,NULL,'admin_index',147,148),(76,74,NULL,NULL,'admin_view',149,150),(77,74,NULL,NULL,'admin_add',151,152),(78,74,NULL,NULL,'admin_make_this_primary',153,154),(79,74,NULL,NULL,'admin_edit',155,156),(80,74,NULL,NULL,'admin_delete',157,158),(81,74,NULL,NULL,'admin_change_active_status',159,160),(82,1,NULL,NULL,'Shops',162,169),(83,82,NULL,NULL,'admin_account',163,164),(84,82,NULL,NULL,'admin_cancelaccount',165,166),(85,82,NULL,NULL,'admin_change_active_status',167,168),(86,1,NULL,NULL,'Customers',170,179),(87,86,NULL,NULL,'register',171,172),(88,86,NULL,NULL,'login',173,174),(89,86,NULL,NULL,'logout',175,176),(90,86,NULL,NULL,'admin_change_active_status',177,178),(91,1,NULL,NULL,'Links',180,203),(92,91,NULL,NULL,'index',181,182),(93,91,NULL,NULL,'view',183,184),(94,91,NULL,NULL,'add',185,186),(95,91,NULL,NULL,'edit',187,188),(96,91,NULL,NULL,'delete',189,190),(97,91,NULL,NULL,'admin_index',191,192),(98,91,NULL,NULL,'admin_order',193,194),(99,91,NULL,NULL,'admin_add',195,196),(100,91,NULL,NULL,'admin_edit',197,198),(101,91,NULL,NULL,'admin_delete',199,200),(102,91,NULL,NULL,'admin_change_active_status',201,202),(103,1,NULL,NULL,'Groups',204,209),(104,103,NULL,NULL,'parentNode',205,206),(105,103,NULL,NULL,'admin_change_active_status',207,208),(106,1,NULL,NULL,'Blogs',210,225),(107,106,NULL,NULL,'view',211,212),(108,106,NULL,NULL,'admin_index',213,214),(109,106,NULL,NULL,'admin_view',215,216),(110,106,NULL,NULL,'admin_add',217,218),(111,106,NULL,NULL,'admin_edit',219,220),(112,106,NULL,NULL,'admin_delete',221,222),(113,106,NULL,NULL,'admin_change_active_status',223,224),(114,1,NULL,NULL,'ProductImages',226,241),(115,114,NULL,NULL,'admin_add',227,228),(116,114,NULL,NULL,'admin_add_by_product',229,230),(117,114,NULL,NULL,'admin_uploadify',231,232),(118,114,NULL,NULL,'admin_list_by_product',233,234),(119,114,NULL,NULL,'admin_delete',235,236),(120,114,NULL,NULL,'admin_make_this_cover',237,238),(121,114,NULL,NULL,'admin_change_active_status',239,240),(122,1,NULL,NULL,'Carts',242,253),(123,122,NULL,NULL,'index',243,244),(124,122,NULL,NULL,'view',245,246),(125,122,NULL,NULL,'edit',247,248),(126,122,NULL,NULL,'delete',249,250),(127,122,NULL,NULL,'admin_change_active_status',251,252),(128,1,NULL,NULL,'Orders',254,277),(129,128,NULL,NULL,'paypal',255,256),(130,128,NULL,NULL,'index',257,258),(131,128,NULL,NULL,'admin_index',259,260),(132,128,NULL,NULL,'admin_view',261,262),(133,128,NULL,NULL,'view',263,264),(134,128,NULL,NULL,'add',265,266),(135,128,NULL,NULL,'checkout',267,268),(136,128,NULL,NULL,'success',269,270),(137,128,NULL,NULL,'updatePrices',271,272),(138,128,NULL,NULL,'pay',273,274),(139,128,NULL,NULL,'admin_change_active_status',275,276),(140,1,NULL,NULL,'Merchants',278,299),(141,140,NULL,NULL,'register',279,280),(142,140,NULL,NULL,'admin_login',281,282),(143,140,NULL,NULL,'admin_logout',283,284),(144,140,NULL,NULL,'admin_index',285,286),(145,140,NULL,NULL,'admin_edit',287,288),(146,140,NULL,NULL,'platform_index',289,290),(147,140,NULL,NULL,'platform_view',291,292),(148,140,NULL,NULL,'platform_edit',293,294),(149,140,NULL,NULL,'platform_delete',295,296),(150,140,NULL,NULL,'admin_change_active_status',297,298),(151,1,NULL,NULL,'Themes',300,305),(152,151,NULL,NULL,'admin_index',301,302),(153,151,NULL,NULL,'admin_change_active_status',303,304),(154,1,NULL,NULL,'Webpages',306,321),(155,154,NULL,NULL,'view',307,308),(156,154,NULL,NULL,'admin_index',309,310),(157,154,NULL,NULL,'admin_view',311,312),(158,154,NULL,NULL,'admin_add',313,314),(159,154,NULL,NULL,'admin_edit',315,316),(160,154,NULL,NULL,'admin_delete',317,318),(161,154,NULL,NULL,'admin_change_active_status',319,320),(162,1,NULL,NULL,'Users',322,341),(163,162,NULL,NULL,'parentNode',323,324),(164,162,NULL,NULL,'initDB',325,326),(165,162,NULL,NULL,'login',327,328),(166,162,NULL,NULL,'logout',329,330),(167,162,NULL,NULL,'platform_login',331,332),(168,162,NULL,NULL,'platform_logout',333,334),(169,162,NULL,NULL,'platform_index',335,336),(170,162,NULL,NULL,'afterSave',337,338),(171,162,NULL,NULL,'admin_change_active_status',339,340),(172,1,NULL,NULL,'Posts',342,357),(173,172,NULL,NULL,'view',343,344),(174,172,NULL,NULL,'index',345,346),(175,172,NULL,NULL,'admin_view',347,348),(176,172,NULL,NULL,'admin_add',349,350),(177,172,NULL,NULL,'admin_edit',351,352),(178,172,NULL,NULL,'admin_delete',353,354),(179,172,NULL,NULL,'admin_change_active_status',355,356),(180,1,NULL,NULL,'Linkable',358,359),(181,1,NULL,NULL,'ThemeFolder',360,361),(182,1,NULL,NULL,'Paypal',362,363),(183,1,NULL,NULL,'Rest',364,365),(184,1,NULL,NULL,'RandomString',366,367),(185,1,NULL,NULL,'Paydollar',368,369),(186,1,NULL,NULL,'DebugKit',370,379),(187,186,NULL,NULL,'ToolbarAccess',371,378),(188,187,NULL,NULL,'history_state',372,373),(189,187,NULL,NULL,'sql_explain',374,375),(190,187,NULL,NULL,'admin_change_active_status',376,377),(191,1,NULL,NULL,'AclExtras',380,381),(192,1,NULL,NULL,'Filter',382,383),(193,1,NULL,NULL,'ClearCache',384,385),(194,1,NULL,NULL,'Datasources',386,387),(195,1,NULL,NULL,'TinyMce',388,389),(196,1,NULL,NULL,'Uploadify',390,391),(197,1,NULL,NULL,'Recaptcha',392,393),(198,1,NULL,NULL,'Copyable',394,395),(199,1,NULL,NULL,'MeioUpload',396,397),(200,1,NULL,NULL,'Log',398,405),(201,200,NULL,NULL,'Logs',399,404),(202,201,NULL,NULL,'index',400,401),(203,201,NULL,NULL,'admin_change_active_status',402,403),(204,1,NULL,NULL,'CodeCheck',406,407),(205,1,NULL,NULL,'MeioDuplicate',408,409);
 
 /*Table structure for table `addresses` */
 
@@ -50,11 +50,11 @@ CREATE TABLE `addresses` (
   `type` tinyint(2) unsigned NOT NULL DEFAULT '1',
   `full_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `addresses` */
 
-insert  into `addresses`(`id`,`address`,`city`,`region`,`zip_code`,`country`,`customer_id`,`type`,`full_name`) values (1,'asd','asd','asd','asd',192,1,1,'asd'),(2,'asd','asd','asd','asd',192,1,2,'asd'),(3,'asd','asd','asd','asd',192,2,1,'asd'),(4,'asd','asd','asd','asd',192,2,2,'asd'),(5,'asd','asd','asd','asd',1,3,1,'asd'),(6,'asd','asd','asd','asd',1,3,2,'asd');
+insert  into `addresses`(`id`,`address`,`city`,`region`,`zip_code`,`country`,`customer_id`,`type`,`full_name`) values (1,'asd','asd','asd','asd',192,1,1,'asd'),(2,'asd','asd','asd','asd',192,1,2,'asd'),(3,'asd','asd','asd','asd',192,2,1,'asd'),(4,'asd','asd','asd','asd',192,2,2,'asd'),(5,'asd','asd','asd','asd',1,3,1,'asd'),(6,'asd','asd','asd','asd',1,3,2,'asd'),(7,'asd','asd','asd','asd',192,4,1,'asd'),(8,'asd','asd','asd','asd',192,4,2,'asd'),(9,'asd','asd','asd','asd',192,5,1,'asd'),(10,'asd','asd','asd','asd',192,5,2,'asd'),(11,'asd','asd','asd','asd',192,6,1,'asd'),(12,'asd','asd','asd','asd',192,6,2,'asd');
 
 /*Table structure for table `aros` */
 
@@ -73,7 +73,7 @@ CREATE TABLE `aros` (
 
 /*Data for the table `aros` */
 
-insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,10),(4,NULL,'Group',4,'customers',11,14),(5,NULL,'Group',5,'casual',15,20),(6,3,'User',1,NULL,6,7),(7,5,'User',2,NULL,16,17),(8,4,'User',3,NULL,12,13),(9,3,'User',4,NULL,8,9),(10,5,'User',5,NULL,18,19);
+insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,8),(4,NULL,'Group',4,'customers',9,16),(5,NULL,'Group',5,'casual',17,20),(6,3,'User',1,NULL,6,7),(7,5,'User',2,NULL,18,19),(8,4,'User',3,NULL,10,11),(9,4,'User',4,NULL,12,13),(10,4,'User',5,NULL,14,15);
 
 /*Table structure for table `aros_acos` */
 
@@ -98,7 +98,7 @@ CREATE TABLE `aros_acos` (
 
 /*Data for the table `aros_acos` */
 
-insert  into `aros_acos`(`id`,`aro_id`,`aco_id`,`_create`,`_read`,`_update`,`_delete`) values (1,1,1,'1','1','1','1'),(2,2,3,'1','1','1','1'),(3,2,1,'-1','-1','-1','-1'),(4,2,126,'1','1','1','1'),(5,2,104,'1','1','1','1'),(6,2,29,'1','1','1','1'),(7,2,118,'1','1','1','1'),(8,2,83,'1','1','1','1'),(9,3,1,'-1','-1','-1','-1'),(10,3,3,'1','1','1','1'),(11,3,133,'1','1','1','1'),(12,3,136,'1','1','1','1'),(13,3,137,'1','1','1','1'),(14,3,130,'1','1','1','1'),(15,3,129,'1','1','1','1'),(16,3,134,'1','1','1','1'),(17,3,138,'1','1','1','1'),(18,3,135,'1','1','1','1'),(19,3,162,'1','1','1','1'),(20,3,164,'1','1','1','1'),(21,3,165,'1','1','1','1'),(22,3,166,'1','1','1','1'),(23,3,163,'1','1','1','1'),(24,3,40,'1','1','1','1'),(25,3,44,'1','1','1','1'),(26,3,43,'1','1','1','1'),(27,3,45,'1','1','1','1'),(28,3,41,'1','1','1','1'),(29,3,42,'1','1','1','1'),(30,3,76,'1','1','1','1'),(31,3,77,'1','1','1','1'),(32,3,75,'1','1','1','1'),(33,3,74,'1','1','1','1'),(34,3,121,'1','1','1','1'),(35,3,123,'1','1','1','1'),(36,3,124,'1','1','1','1'),(37,3,120,'1','1','1','1'),(38,3,119,'1','1','1','1'),(39,3,122,'1','1','1','1'),(40,3,92,'1','1','1','1'),(41,3,97,'1','1','1','1'),(42,3,95,'1','1','1','1'),(43,3,98,'1','1','1','1'),(44,3,100,'1','1','1','1'),(45,3,99,'1','1','1','1'),(46,3,101,'1','1','1','1'),(47,3,102,'1','1','1','1'),(48,3,94,'1','1','1','1'),(49,3,105,'1','1','1','1'),(50,3,106,'1','1','1','1'),(51,3,21,'1','1','1','1'),(52,3,22,'1','1','1','1'),(53,3,24,'1','1','1','1'),(54,3,26,'1','1','1','1'),(55,3,27,'1','1','1','1'),(56,3,23,'1','1','1','1'),(57,3,25,'1','1','1','1'),(58,3,109,'1','1','1','1'),(59,3,111,'1','1','1','1'),(60,3,112,'1','1','1','1'),(61,3,110,'1','1','1','1'),(62,3,113,'1','1','1','1'),(63,3,11,'1','1','1','1'),(64,3,12,'1','1','1','1'),(65,3,84,'1','1','1','1'),(66,3,68,'1','1','1','1'),(67,3,69,'1','1','1','1'),(68,3,70,'1','1','1','1'),(69,3,67,'1','1','1','1'),(70,3,66,'1','1','1','1'),(71,3,57,'1','1','1','1'),(72,3,58,'1','1','1','1'),(73,3,59,'1','1','1','1'),(74,3,56,'1','1','1','1'),(75,3,55,'1','1','1','1'),(76,3,152,'1','1','1','1'),(77,3,153,'1','1','1','1'),(78,3,154,'1','1','1','1'),(79,3,151,'1','1','1','1'),(80,4,1,'-1','-1','-1','-1'),(81,4,3,'1','1','1','1');
+insert  into `aros_acos`(`id`,`aro_id`,`aco_id`,`_create`,`_read`,`_update`,`_delete`) values (1,1,1,'1','1','1','1'),(2,2,3,'1','1','1','1'),(3,2,1,'-1','-1','-1','-1'),(4,2,52,'1','1','1','1'),(5,2,82,'1','1','1','1'),(6,2,162,'1','1','1','1'),(7,2,74,'1','1','1','1'),(8,2,151,'1','1','1','1'),(9,3,1,'-1','-1','-1','-1'),(10,3,3,'1','1','1','1'),(11,3,59,'1','1','1','1'),(12,3,62,'1','1','1','1'),(13,3,63,'1','1','1','1'),(14,3,56,'1','1','1','1'),(15,3,55,'1','1','1','1'),(16,3,60,'1','1','1','1'),(17,3,64,'1','1','1','1'),(18,3,61,'1','1','1','1'),(19,3,97,'1','1','1','1'),(20,3,99,'1','1','1','1'),(21,3,100,'1','1','1','1'),(22,3,101,'1','1','1','1'),(23,3,98,'1','1','1','1'),(24,3,115,'1','1','1','1'),(25,3,119,'1','1','1','1'),(26,3,118,'1','1','1','1'),(27,3,120,'1','1','1','1'),(28,3,116,'1','1','1','1'),(29,3,117,'1','1','1','1'),(30,3,144,'1','1','1','1'),(31,3,145,'1','1','1','1'),(32,3,143,'1','1','1','1'),(33,3,142,'1','1','1','1'),(34,3,77,'1','1','1','1'),(35,3,79,'1','1','1','1'),(36,3,80,'1','1','1','1'),(37,3,76,'1','1','1','1'),(38,3,75,'1','1','1','1'),(39,3,78,'1','1','1','1'),(40,3,25,'1','1','1','1'),(41,3,30,'1','1','1','1'),(42,3,28,'1','1','1','1'),(43,3,31,'1','1','1','1'),(44,3,33,'1','1','1','1'),(45,3,32,'1','1','1','1'),(46,3,34,'1','1','1','1'),(47,3,35,'1','1','1','1'),(48,3,27,'1','1','1','1'),(49,3,83,'1','1','1','1'),(50,3,84,'1','1','1','1'),(51,3,6,'1','1','1','1'),(52,3,7,'1','1','1','1'),(53,3,9,'1','1','1','1'),(54,3,11,'1','1','1','1'),(55,3,12,'1','1','1','1'),(56,3,8,'1','1','1','1'),(57,3,10,'1','1','1','1'),(58,3,15,'1','1','1','1'),(59,3,17,'1','1','1','1'),(60,3,18,'1','1','1','1'),(61,3,16,'1','1','1','1'),(62,3,19,'1','1','1','1'),(63,3,131,'1','1','1','1'),(64,3,132,'1','1','1','1'),(65,3,152,'1','1','1','1'),(66,3,158,'1','1','1','1'),(67,3,159,'1','1','1','1'),(68,3,160,'1','1','1','1'),(69,3,157,'1','1','1','1'),(70,3,156,'1','1','1','1'),(71,3,110,'1','1','1','1'),(72,3,111,'1','1','1','1'),(73,3,112,'1','1','1','1'),(74,3,109,'1','1','1','1'),(75,3,108,'1','1','1','1'),(76,3,176,'1','1','1','1'),(77,3,177,'1','1','1','1'),(78,3,178,'1','1','1','1'),(79,3,175,'1','1','1','1'),(80,4,1,'-1','-1','-1','-1'),(81,4,3,'1','1','1','1');
 
 /*Table structure for table `blogs` */
 
@@ -114,11 +114,11 @@ CREATE TABLE `blogs` (
   `modified` datetime NOT NULL,
   `shop_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `blogs` */
 
-insert  into `blogs`(`id`,`name`,`short_name`,`description`,`theme`,`created`,`modified`,`shop_id`) values (1,'shop001','shop001',NULL,NULL,'2011-02-03 18:48:16','2011-02-03 18:48:16',2),(2,'shop002','shop002',NULL,NULL,'2011-02-15 16:29:51','2011-02-15 16:29:51',3);
+insert  into `blogs`(`id`,`name`,`short_name`,`description`,`theme`,`created`,`modified`,`shop_id`) values (1,'shop001','shop001',NULL,NULL,'2011-02-18 15:43:48','2011-02-18 15:43:48',2);
 
 /*Table structure for table `cake_sessions` */
 
@@ -133,7 +133,7 @@ CREATE TABLE `cake_sessions` (
 
 /*Data for the table `cake_sessions` */
 
-insert  into `cake_sessions`(`id`,`data`,`expires`) values ('j6gij5tb1ci3arstepm8mh1a11','Config|a:4:{s:9:\"userAgent\";s:32:\"76bb070a367d234bb65415fa08b01467\";s:4:\"time\";i:1297896813;s:7:\"timeout\";i:300;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:11:\"web_address\";s:31:\"http://shop001.ombi60.localhost\";s:7:\"created\";s:19:\"2011-02-03 18:48:16\";s:8:\"modified\";s:19:\"2011-02-03 18:48:16\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}}Message|a:0:{}Auth|a:4:{s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}s:4:\"User\";a:10:{s:2:\"id\";s:1:\"1\";s:5:\"email\";s:17:\"owner@shop001.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:7:\"shop001\";s:12:\"name_to_call\";s:7:\"watever\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2011-02-03 18:48:16\";s:8:\"modified\";s:19:\"2011-02-03 18:48:16\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"user_id\";s:1:\"1\";}s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:11:\"web_address\";s:31:\"http://shop001.ombi60.localhost\";s:7:\"created\";s:19:\"2011-02-03 18:48:16\";s:8:\"modified\";s:19:\"2011-02-03 18:48:16\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";}}_Token|s:212:\"a:5:{s:3:\"key\";s:40:\"bcabad6ad8e2348f4425233f52f5132631218e86\";s:7:\"expires\";i:1297878813;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:1:{i:0;s:21:\"ProductImage.filename\";}}\";Filter|a:1:{s:8:\"products\";a:1:{s:11:\"admin_index\";s:20:\"/Filter.parsed:true/\";}}',1297896813),('ra5fgfso3nvda2rggkd80ol1k2','Config|a:4:{s:9:\"userAgent\";s:32:\"76bb070a367d234bb65415fa08b01467\";s:4:\"time\";i:1297876571;s:7:\"timeout\";i:300;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:11:\"web_address\";s:31:\"http://shop001.ombi60.localhost\";s:7:\"created\";s:19:\"2011-02-03 18:48:16\";s:8:\"modified\";s:19:\"2011-02-03 18:48:16\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"2ef80819466f7fa46c4882a034d6028784ed99aa\";s:7:\"expires\";i:1297858571;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1297878934);
+insert  into `cake_sessions`(`id`,`data`,`expires`) values ('clgkn59p0ilcurjq0uombb0an5','Config|a:3:{s:9:\"userAgent\";s:32:\"76bb070a367d234bb65415fa08b01467\";s:4:\"time\";i:1298027030;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"2b4ee7a5196a7917037ad0697d7275a721302a13\";s:7:\"expires\";i:1298021030;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1298027030),('aievddthe1t84mddinbd6ics61','Config|a:4:{s:9:\"userAgent\";s:32:\"76bb070a367d234bb65415fa08b01467\";s:4:\"time\";i:1298052464;s:7:\"timeout\";i:300;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:11:\"web_address\";s:31:\"http://shop001.ombi60.localhost\";s:7:\"created\";s:19:\"2011-02-18 15:43:48\";s:8:\"modified\";s:19:\"2011-02-18 15:43:49\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}}_Token|s:211:\"a:5:{s:3:\"key\";s:40:\"dd9e86aa7c74e4c20e716735cffb16e87b8a00c7\";s:7:\"expires\";i:1298034464;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:1:{i:0;s:20:\"Order.fixed_delivery\";}}\";Message|a:0:{}Auth|a:4:{s:4:\"User\";a:10:{s:2:\"id\";s:1:\"1\";s:5:\"email\";s:17:\"owner@shop001.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:7:\"shop001\";s:12:\"name_to_call\";s:3:\"asd\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2011-02-18 15:43:48\";s:8:\"modified\";s:19:\"2011-02-18 15:43:48\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"user_id\";s:1:\"1\";}s:4:\"Shop\";a:8:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:11:\"web_address\";s:31:\"http://shop001.ombi60.localhost\";s:7:\"created\";s:19:\"2011-02-18 15:43:48\";s:8:\"modified\";s:19:\"2011-02-18 15:43:49\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";}s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}}Filter|a:2:{s:8:\"products\";a:1:{s:11:\"admin_index\";s:20:\"/Filter.parsed:true/\";}s:6:\"orders\";a:1:{s:11:\"admin_index\";s:20:\"/Filter.parsed:true/\";}}Shop|a:1:{i:2;a:5:{s:13:\"paymentAmount\";d:0;s:8:\"Payments\";N;s:12:\"PayPalResult\";a:1:{s:5:\"TOKEN\";N;}s:20:\"checkoutRedirectPass\";b:0;s:11:\"confirmPage\";a:7:{s:13:\"PayPalRequest\";b:0;s:4:\"hash\";s:40:\"9952bcdc8037dbccb39bd3d8d534ea325989ea54\";s:6:\"amount\";s:7:\"30.0000\";s:14:\"shipped_amount\";s:7:\"30.0000\";s:14:\"shipped_weight\";s:7:\"17.0000\";s:17:\"shipping_required\";b:1;s:15:\"paypal_payer_id\";s:0:\"\";}}}',1298052464);
 
 /*Table structure for table `cancellations` */
 
@@ -172,11 +172,11 @@ CREATE TABLE `cart_items` (
   `previous_currency` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_product_cart_id` (`cart_id`,`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `cart_items` */
 
-insert  into `cart_items`(`id`,`cart_id`,`product_id`,`product_price`,`product_quantity`,`status`,`product_title`,`product_weight`,`currency`,`weight_unit`,`shipping_required`,`previous_price`,`previous_currency`) values (1,1,3,'123.0000',1,1,'title','12.0000','SGD','kg',1,'123.0000','SGD');
+insert  into `cart_items`(`id`,`cart_id`,`product_id`,`product_price`,`product_quantity`,`status`,`product_title`,`product_weight`,`currency`,`weight_unit`,`shipping_required`,`previous_price`,`previous_currency`) values (1,1,2,'10.0000',1,1,'test item','7.0000','SGD','kg',1,'10.0000','SGD'),(2,2,2,'10.0000',3,1,'test item','7.0000','SGD','kg',1,'10.0000','SGD'),(3,2,3,'10.0000',1,1,'asd','5.0000','SGD','kg',1,'10.0000','SGD'),(4,3,2,'10.0000',1,1,'test item','7.0000','SGD','kg',1,'10.0000','SGD'),(5,3,3,'10.0000',2,1,'asd','5.0000','SGD','kg',1,'10.0000','SGD');
 
 /*Table structure for table `carts` */
 
@@ -197,11 +197,11 @@ CREATE TABLE `carts` (
   `shipped_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `carts` */
 
-insert  into `carts`(`id`,`shop_id`,`user_id`,`created`,`amount`,`status`,`hash`,`total_weight`,`currency`,`weight_unit`,`shipped_amount`,`shipped_weight`,`past_checkout_point`) values (1,2,2,'2011-02-04 06:18:45','123.0000',1,'050b6a1a942dd2517247d0f95d9a0cfb1ddb73e0','12.0000','SGD','kg','123.0000','12.0000',1);
+insert  into `carts`(`id`,`shop_id`,`user_id`,`created`,`amount`,`status`,`hash`,`total_weight`,`currency`,`weight_unit`,`shipped_amount`,`shipped_weight`,`past_checkout_point`) values (1,2,2,'2011-02-18 07:47:32','10.0000',1,'ac4994d258f8cbd3f7441d3210e0a91f8327b695','7.0000','SGD','kg','10.0000','7.0000',1),(2,2,2,'2011-02-18 07:48:03','40.0000',1,'bba21efd8f3339782dd37044e280e65075986bc0','26.0000','SGD','kg','40.0000','26.0000',1),(3,2,2,'2011-02-18 08:07:11','30.0000',1,'ef17ae95d99636769d653488f34011287ef1b365','17.0000','SGD','kg','30.0000','17.0000',1);
 
 /*Table structure for table `casual_surfers` */
 
@@ -214,11 +214,11 @@ CREATE TABLE `casual_surfers` (
   PRIMARY KEY (`id`),
   KEY `shop` (`shop_id`),
   KEY `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `casual_surfers` */
 
-insert  into `casual_surfers`(`id`,`shop_id`,`user_id`) values (1,2,2),(2,3,5);
+insert  into `casual_surfers`(`id`,`shop_id`,`user_id`) values (1,2,2);
 
 /*Table structure for table `comments` */
 
@@ -274,11 +274,11 @@ CREATE TABLE `custom_payment_modules` (
   `instructions` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_spm` (`shop_payment_module_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `custom_payment_modules` */
 
-insert  into `custom_payment_modules`(`id`,`shop_payment_module_id`,`name`,`instructions`) values (2,3,'Money Order','test');
+insert  into `custom_payment_modules`(`id`,`shop_payment_module_id`,`name`,`instructions`) values (1,1,'Cash On Delivery','');
 
 /*Table structure for table `customers` */
 
@@ -290,11 +290,11 @@ CREATE TABLE `customers` (
   `shop_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `customers` */
 
-insert  into `customers`(`id`,`identity_code`,`shop_id`,`user_id`) values (1,NULL,3,4),(2,NULL,3,5),(3,NULL,2,3);
+insert  into `customers`(`id`,`identity_code`,`shop_id`,`user_id`) values (1,NULL,3,4),(2,NULL,3,5),(3,NULL,2,3),(4,NULL,2,3),(5,NULL,2,4),(6,NULL,2,5);
 
 /*Table structure for table `domains` */
 
@@ -309,11 +309,11 @@ CREATE TABLE `domains` (
   `shop_web_address` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UniqueDomain` (`domain`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `domains` */
 
-insert  into `domains`(`id`,`domain`,`shop_id`,`primary`,`always_redirect_here`,`shop_web_address`) values (1,'http://ombi60.localhost',1,1,0,0),(2,'http://shop001.ombi60.localhost',2,1,0,1),(3,'http://shop002.ombi60.localhost',3,1,0,1);
+insert  into `domains`(`id`,`domain`,`shop_id`,`primary`,`always_redirect_here`,`shop_web_address`) values (1,'http://ombi60.localhost',1,1,0,0),(2,'http://shop001.ombi60.localhost',2,1,0,1);
 
 /*Table structure for table `gc_designs` */
 
@@ -398,11 +398,11 @@ CREATE TABLE `invoices` (
   `payer_user` int(11) unsigned DEFAULT NULL,
   `reference` varchar(35) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `invoices` */
 
-insert  into `invoices`(`id`,`created`,`title`,`shop_id`,`description`,`payment_number`,`payer_user`,`reference`) values (1,'2011-02-03 18:48:16','starter',2,'Initial signup',NULL,NULL,'2011-02-03-1848-1'),(2,'2011-02-15 16:29:51','starter',3,'Initial signup',NULL,NULL,'2011-02-15-1629-2');
+insert  into `invoices`(`id`,`created`,`title`,`shop_id`,`description`,`payment_number`,`payer_user`,`reference`) values (1,'2011-02-18 15:43:48','starter',2,'Initial signup',NULL,NULL,'2011-02-18-1543-1');
 
 /*Table structure for table `languages` */
 
@@ -431,11 +431,11 @@ CREATE TABLE `link_lists` (
   `link_count` int(3) unsigned DEFAULT '0',
   `handle` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `link_lists` */
 
-insert  into `link_lists`(`id`,`shop_id`,`name`,`deletable`,`link_count`,`handle`) values (1,2,'Main Menu',0,5,'main-menu'),(2,3,'Main Menu',0,5,'main-menu'),(3,3,'Footer Menu',0,2,'footer-menu');
+insert  into `link_lists`(`id`,`shop_id`,`name`,`deletable`,`link_count`,`handle`) values (1,2,'Main Menu',0,5,'main-menu'),(2,2,'Footer Menu',0,2,'footer-menu');
 
 /*Table structure for table `links` */
 
@@ -450,11 +450,11 @@ CREATE TABLE `links` (
   `action` varchar(155) DEFAULT '',
   `order` int(2) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `links` */
 
-insert  into `links`(`id`,`name`,`route`,`link_list_id`,`model`,`action`,`order`) values (1,'Home','/',1,'/','',0),(2,'About Us','/pages/about-us',1,'/pages/','about-us',1),(3,'Catalogue','/products/',1,'/products/','',2),(4,'Blog','/blogs/shop001',1,'/blogs/','shop001',3),(5,'Cart','/cart/view',1,'/cart/view','',4),(6,'Home','/',2,'/','',0),(7,'About Us','/pages/about-us',2,'/pages/','about-us',1),(8,'Catalogue','/products/',2,'/products/','',2),(9,'Blog','/blogs/shop002',2,'/blogs/','shop002',3),(10,'Cart','/cart/view',2,'/cart/view','',4),(11,'Terms of Service','/pages/terms-of-service',3,'/pages/','',1),(12,'About Us','/pages/about-us',3,'/pages/','about-us',0);
+insert  into `links`(`id`,`name`,`route`,`link_list_id`,`model`,`action`,`order`) values (1,'Home','/',1,'/','',0),(2,'About Us','/pages/about-us',1,'/pages/','about-us',1),(3,'Catalogue','/products/',1,'/products/','',2),(4,'Blog','/blogs/shop001',1,'/blogs/','shop001',3),(5,'Cart','/cart/view',1,'/cart/view','',4),(6,'Terms of Service','/pages/terms-of-service',2,'/pages/','',0),(7,'About Us','/pages/about-us',2,'/pages/','about-us',1);
 
 /*Table structure for table `logs` */
 
@@ -471,11 +471,11 @@ CREATE TABLE `logs` (
   `user_id` int(11) NOT NULL,
   `change` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `logs` */
 
-insert  into `logs`(`id`,`title`,`created`,`description`,`model`,`model_id`,`action`,`user_id`,`change`) values (1,'Dummy Product1','2011-02-16 12:52:54','Product \"Dummy Product1\" (2) updated by System.','Product',2,'edit',0,'title');
+insert  into `logs`(`id`,`title`,`created`,`description`,`model`,`model_id`,`action`,`user_id`,`change`) values (1,'test item','2011-02-18 07:47:08','Product \"test item\" (2) updated by System.','Product',2,'edit',0,'title, code, price'),(2,'asd','2011-02-18 07:48:26','Product \"asd\" (3) added by System.','Product',3,'add',0,'shop_id, title, description, status, shipping_required, price, weight, created');
 
 /*Table structure for table `merchants` */
 
@@ -487,11 +487,11 @@ CREATE TABLE `merchants` (
   `shop_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `merchants` */
 
-insert  into `merchants`(`id`,`owner`,`shop_id`,`user_id`) values (1,1,2,1),(2,1,3,4);
+insert  into `merchants`(`id`,`owner`,`shop_id`,`user_id`) values (1,1,2,1);
 
 /*Table structure for table `order_line_items` */
 
@@ -510,11 +510,11 @@ CREATE TABLE `order_line_items` (
   `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `order_line_items` */
 
-insert  into `order_line_items`(`id`,`order_id`,`product_id`,`product_price`,`product_quantity`,`status`,`product_title`,`product_weight`,`currency`,`weight_unit`,`shipping_required`) values (1,1,3,'123.0000',1,1,'title','12.0000','SGD','kg',1);
+insert  into `order_line_items`(`id`,`order_id`,`product_id`,`product_price`,`product_quantity`,`status`,`product_title`,`product_weight`,`currency`,`weight_unit`,`shipping_required`) values (1,1,3,'123.0000',1,1,'title','12.0000','SGD','kg',1),(2,1,2,'10.0000',1,1,'test item','7.0000','SGD','kg',1),(3,2,2,'10.0000',3,1,'test item','7.0000','SGD','kg',1),(4,2,3,'10.0000',1,1,'asd','5.0000','SGD','kg',1),(5,3,2,'10.0000',1,1,'test item','7.0000','SGD','kg',1),(6,3,3,'10.0000',2,1,'asd','5.0000','SGD','kg',1);
 
 /*Table structure for table `orders` */
 
@@ -541,12 +541,13 @@ CREATE TABLE `orders` (
   `total_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `contact_email` varchar(255) DEFAULT '',
+  `order_line_item_count` int(5) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `orders` */
 
-insert  into `orders`(`id`,`shop_id`,`customer_id`,`billing_address_id`,`delivery_address_id`,`order_no`,`created`,`amount`,`status`,`hash`,`cart_id`,`payment_status`,`fulfillment_status`,`shipped_weight`,`shipped_amount`,`weight_unit`,`currency`,`total_weight`,`past_checkout_point`,`contact_email`) values (1,2,3,5,6,'1001','2011-02-04 06:19:04','123.0000',1,'25a5594996cee6f63be9d0cd8e168e292969ba61',1,3,1,'12.0000','123.0000','kg','SGD','12.0000',1,'kimcity@gmail.com');
+insert  into `orders`(`id`,`shop_id`,`customer_id`,`billing_address_id`,`delivery_address_id`,`order_no`,`created`,`amount`,`status`,`hash`,`cart_id`,`payment_status`,`fulfillment_status`,`shipped_weight`,`shipped_amount`,`weight_unit`,`currency`,`total_weight`,`past_checkout_point`,`contact_email`,`order_line_item_count`) values (1,2,4,7,8,'1001','2011-02-18 07:47:47','10.0000',1,'73dcbb9de6f907d76bda13a36674780a3245b97a',1,3,1,'7.0000','10.0000','kg','SGD','7.0000',1,'customer1@abc.com',1),(2,2,5,9,10,'1002','2011-02-18 07:48:51','40.0000',1,'64860a7fe3e8dc4e1b9c8f7036545654013da0c6',2,3,1,'26.0000','40.0000','kg','SGD','26.0000',1,'customer2@abc.com',2),(3,2,6,11,12,'1003','2011-02-18 08:07:32','30.0000',1,'9952bcdc8037dbccb39bd3d8d534ea325989ea54',3,3,1,'17.0000','30.0000','kg','SGD','17.0000',1,'customer3@abc.com',2);
 
 /*Table structure for table `page_types` */
 
@@ -634,11 +635,11 @@ CREATE TABLE `payments` (
   `pendingreason_from_gateway` varchar(50) DEFAULT NULL,
   `reasoncode_from_gateway` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `payments` */
 
-insert  into `payments`(`id`,`shops_payment_module_id`,`order_id`,`gateway_name`,`transaction_id_from_gateway`,`status`,`token_from_gateway`,`ordertime_from_gateway`,`created`,`modified`,`currencycode_from_gateway`,`feeamt_from_gateway`,`settleamt_from_gateway`,`taxamt_from_gateway`,`exchangerate_from_gateway`,`paymentstatus_from_gateway`,`pendingreason_from_gateway`,`reasoncode_from_gateway`) values (1,1,1,'',NULL,3,'\'\'',NULL,'2011-02-04 06:19:08','2011-02-04 06:19:08',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `payments`(`id`,`shops_payment_module_id`,`order_id`,`gateway_name`,`transaction_id_from_gateway`,`status`,`token_from_gateway`,`ordertime_from_gateway`,`created`,`modified`,`currencycode_from_gateway`,`feeamt_from_gateway`,`settleamt_from_gateway`,`taxamt_from_gateway`,`exchangerate_from_gateway`,`paymentstatus_from_gateway`,`pendingreason_from_gateway`,`reasoncode_from_gateway`) values (1,1,2,'',NULL,3,'\'\'',NULL,'2011-02-18 07:48:54','2011-02-18 07:48:54',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,1,3,'',NULL,3,'\'\'',NULL,'2011-02-18 08:07:33','2011-02-18 08:07:33',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `paypal_payers` */
 
@@ -694,11 +695,9 @@ CREATE TABLE `paypal_payment_modules` (
   `account_email` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_spm` (`shop_payment_module_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `paypal_payment_modules` */
-
-insert  into `paypal_payment_modules`(`id`,`shop_payment_module_id`,`name`,`account_email`) values (2,4,'Paypal Website Payments Standard','kimcity@gmail.com');
 
 /*Table structure for table `posts` */
 
@@ -718,11 +717,11 @@ CREATE TABLE `posts` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `posts` */
 
-insert  into `posts`(`id`,`blog_id`,`author_id`,`status`,`title`,`slug`,`body`,`no_comments`,`allow_comments`,`allow_pingback`,`created`,`modified`) values (1,1,1,1,'Open for business!','open-for-business','We are OPEN for business!!',0,1,1,'2011-02-03 18:48:16','2011-02-03 18:48:16'),(2,2,4,1,'Open for business!','open-for-business','We are OPEN for business!!',0,1,1,'2011-02-15 16:29:51','2011-02-15 16:29:51');
+insert  into `posts`(`id`,`blog_id`,`author_id`,`status`,`title`,`slug`,`body`,`no_comments`,`allow_comments`,`allow_pingback`,`created`,`modified`) values (1,1,1,1,'Open for business!','open-for-business','We are OPEN for business!!',0,1,1,'2011-02-18 15:43:48','2011-02-18 15:43:48');
 
 /*Table structure for table `price_based_rates` */
 
@@ -753,11 +752,11 @@ CREATE TABLE `product_images` (
   `mimetype` varchar(255) DEFAULT NULL,
   `filesize` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `product_images` */
 
-insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads\\products','image/jpeg',6103),(2,2,1,'2011-02-03 18:48:17','2011-02-03 18:48:17','default-0.jpg','uploads/products','image/jpeg',6103),(3,4,1,'2011-02-15 07:54:57','2011-02-15 07:54:57','default_0.jpg','uploads/products','image/jpeg',6103),(4,6,1,'2011-02-15 16:29:52','2011-02-15 16:29:52','default-1.jpg','uploads/products','image/jpeg',6103);
+insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads\\products','image/jpeg',6103),(2,2,1,'2011-02-18 15:43:49','2011-02-18 15:43:49','default-0.jpg','uploads/products','image/jpeg',6103);
 
 /*Table structure for table `products` */
 
@@ -778,11 +777,11 @@ CREATE TABLE `products` (
   `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`weight_unit`,`shipping_required`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,'7.0000','SGD','kg',1),(2,2,'Dummy Product1','','','0.0000','2011-02-03 18:48:16','2011-02-16 12:52:53',0,'7.0000','SGD','kg',1),(3,2,'title','123','<p>123</p>','123.0000','2011-02-04 06:18:28','2011-02-04 06:18:28',1,'12.0000','SGD','kg',1),(4,2,'Dummy Product',NULL,NULL,'0.0000','2011-02-15 07:54:55','2011-02-15 07:54:55',1,'7.0000','SGD','kg',1),(5,2,'title','123','<p>123</p>','123.0000','2011-02-15 07:57:53','2011-02-15 07:57:53',1,'12.0000','SGD','kg',1),(6,3,'Dummy Product',NULL,NULL,'0.0000','2011-02-15 16:29:51','2011-02-15 16:29:52',1,'7.0000','SGD','kg',1);
+insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`weight_unit`,`shipping_required`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,'7.0000','SGD','kg',1),(2,2,'test item','11','','10.0000','2011-02-18 15:43:49','2011-02-18 07:47:08',1,'7.0000','SGD','kg',1),(3,2,'asd','','<p>asd</p>','10.0000','2011-02-18 07:48:26','2011-02-18 07:48:26',1,'5.0000','SGD','kg',1);
 
 /*Table structure for table `recurring_payment_profiles` */
 
@@ -798,11 +797,11 @@ CREATE TABLE `recurring_payment_profiles` (
   `modified` datetime DEFAULT NULL,
   `status` varchar(50) DEFAULT 'active',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `recurring_payment_profiles` */
 
-insert  into `recurring_payment_profiles`(`id`,`gateway`,`method`,`shop_id`,`gateway_reference_id`,`created`,`modified`,`status`) values (1,'paydollar','AddSchPay API',2,'10848','2011-02-03 18:48:20','2011-02-03 18:48:20','active'),(2,'paydollar','AddSchPay API',3,'10888','2011-02-15 16:29:55','2011-02-15 16:29:55','active');
+insert  into `recurring_payment_profiles`(`id`,`gateway`,`method`,`shop_id`,`gateway_reference_id`,`created`,`modified`,`status`) values (1,'paydollar','AddSchPay API',2,'10907','2011-02-18 15:43:50','2011-02-18 15:43:50','active');
 
 /*Table structure for table `saved_themes` */
 
@@ -820,11 +819,11 @@ CREATE TABLE `saved_themes` (
   `theme_id` int(11) NOT NULL,
   `featured` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `saved_themes` */
 
-insert  into `saved_themes`(`id`,`name`,`description`,`author`,`created`,`modified`,`folder_name`,`shop_id`,`theme_id`,`featured`) values (1,'default','default','shop001','2011-02-03 18:48:16','2011-02-03 18:48:16','2_cover',2,3,1),(2,'default','default','full name','2011-02-15 16:29:51','2011-02-15 16:29:51','3_cover',3,3,1);
+insert  into `saved_themes`(`id`,`name`,`description`,`author`,`created`,`modified`,`folder_name`,`shop_id`,`theme_id`,`featured`) values (1,'default','default','shop001','2011-02-18 15:43:48','2011-02-18 15:43:48','2_cover',2,3,1);
 
 /*Table structure for table `shipments` */
 
@@ -840,11 +839,11 @@ CREATE TABLE `shipments` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shipments` */
 
-insert  into `shipments`(`id`,`order_id`,`completed`,`name`,`price`,`description`,`created`,`modified`) values (1,1,0,'Standard Shipping','10.0000','From 10kg to 20kg',NULL,NULL);
+insert  into `shipments`(`id`,`order_id`,`completed`,`name`,`price`,`description`,`created`,`modified`) values (1,2,0,'Heavy Duty','25.0000','From 20kg to 50kg','2011-02-18 07:48:54','2011-02-18 07:48:54'),(2,3,0,'Standard Shipping','10.0000','From 10kg to 20kg','2011-02-18 08:07:33','2011-02-18 08:07:33');
 
 /*Table structure for table `shipped_to_countries` */
 
@@ -855,11 +854,11 @@ CREATE TABLE `shipped_to_countries` (
   `country_id` int(5) DEFAULT '0',
   `shop_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shipped_to_countries` */
 
-insert  into `shipped_to_countries`(`id`,`country_id`,`shop_id`) values (1,0,1),(2,192,1),(3,192,2),(4,0,2),(5,192,3),(6,0,3);
+insert  into `shipped_to_countries`(`id`,`country_id`,`shop_id`) values (1,0,1),(2,192,1),(3,192,2),(4,0,2);
 
 /*Table structure for table `shipping_rates` */
 
@@ -872,11 +871,11 @@ CREATE TABLE `shipping_rates` (
   `shipped_to_country_id` int(11) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shipping_rates` */
 
-insert  into `shipping_rates`(`id`,`name`,`price`,`shipped_to_country_id`,`description`) values (1,'Standard Shipping','10.000',2,'From 10kg to 20kg'),(2,'Heavy Duty Shipping','25.000',2,'From 20kg to 50kg'),(3,'Standard Shipping','10.000',3,'From 10kg to 20kg'),(4,'Heavy Duty','25.000',3,'From 20kg to 50kg'),(5,'Standard Shipping','10.000',4,'From 10kg to 20kg'),(6,'Heavy Duty','25.000',4,'From 20kg to 50kg'),(7,'Standard Shipping','10.000',5,'From 10kg to 20kg'),(8,'Heavy Duty','25.000',5,'From 20kg to 50kg'),(9,'Standard Shipping','10.000',6,'From 10kg to 20kg'),(10,'Heavy Duty','25.000',6,'From 20kg to 50kg');
+insert  into `shipping_rates`(`id`,`name`,`price`,`shipped_to_country_id`,`description`) values (1,'Standard Shipping','10.000',2,'From 10kg to 20kg'),(2,'Heavy Duty Shipping','25.000',2,'From 20kg to 50kg'),(3,'Standard Shipping','10.000',3,'From 10kg to 20kg'),(4,'Heavy Duty','25.000',3,'From 20kg to 50kg'),(5,'Standard Shipping','10.000',4,'From 10kg to 20kg'),(6,'Heavy Duty','25.000',4,'From 20kg to 50kg');
 
 /*Table structure for table `shops` */
 
@@ -892,11 +891,11 @@ CREATE TABLE `shops` (
   `saved_theme_id` int(11) DEFAULT '0',
   `deny_access` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shops` */
 
-insert  into `shops`(`id`,`name`,`web_address`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`) values (1,'a','http://a.myspree2shop.com',NULL,NULL,1,0,0),(2,'shop001','http://shop001.ombi60.localhost','2011-02-03 18:48:16','2011-02-03 18:48:16',1,1,0),(3,'shop002','http://shop002.ombi60.localhost','2011-02-15 16:29:51','2011-02-15 16:29:51',1,2,0);
+insert  into `shops`(`id`,`name`,`web_address`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`) values (1,'a','http://a.myspree2shop.com',NULL,NULL,1,0,0),(2,'shop001','http://shop001.ombi60.localhost','2011-02-18 15:43:48','2011-02-18 15:43:49',1,1,0);
 
 /*Table structure for table `shops_payment_modules` */
 
@@ -910,11 +909,11 @@ CREATE TABLE `shops_payment_modules` (
   `active` tinyint(1) unsigned DEFAULT '1',
   `display_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shops_payment_modules` */
 
-insert  into `shops_payment_modules`(`id`,`shop_id`,`payment_module_id`,`default`,`active`,`display_name`) values (3,2,1,0,1,'Money Order'),(4,2,2,0,1,'Paypal Website Payments Standard');
+insert  into `shops_payment_modules`(`id`,`shop_id`,`payment_module_id`,`default`,`active`,`display_name`) values (1,2,1,0,1,'Cash On Delivery');
 
 /*Table structure for table `site_transfers` */
 
@@ -989,7 +988,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'owner@shop001.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'shop001','watever',NULL,1,'2011-02-03 18:48:16','2011-02-03 18:48:16',1),(2,'l85t1sc2@ombi60.com','9f505da672e140be61e1695aedcd1a750aad0637',5,'casual','casual',NULL,1,'2011-02-04 00:10:05','2011-02-04 00:10:05',1),(3,'kimcity@gmail.com','e47292281a93d38c74a1937e1854dabcc4a54a90',4,'asd','asd',NULL,1,'2011-02-04 06:19:04','2011-02-04 06:19:04',1),(4,'owner@shop002.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'full name','full name',NULL,1,'2011-02-15 16:29:51','2011-02-15 16:29:51',1),(5,'kevhi3jg@ombi60.com','7e5728f044497afba20d606a07702f62b68152fe',5,'casual','casual',NULL,1,'2011-02-15 08:29:58','2011-02-15 08:29:58',1);
+insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'owner@shop001.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'shop001','asd',NULL,1,'2011-02-18 15:43:48','2011-02-18 15:43:48',1),(2,'p9xzcsw0@ombi60.com','a6a2def0cc611f4aed5f094502aa3e1062d6a321',5,'casual','casual',NULL,1,'2011-02-18 07:43:53','2011-02-18 07:43:53',1),(3,'customer1@abc.com','8b25ed8ffc27ad1d5c3c7ac65cc286d695429206',4,'asd','asd',NULL,1,'2011-02-18 07:47:47','2011-02-18 07:47:47',1),(4,'customer2@abc.com','52efedccaa079676a2721204144676e22a0c46bd',4,'asd','asd',NULL,1,'2011-02-18 07:48:50','2011-02-18 07:48:50',1),(5,'customer3@abc.com','1abc218dc577a32541b3363b34f13873376bce3b',4,'asd','asd',NULL,1,'2011-02-18 08:07:31','2011-02-18 08:07:31',1);
 
 /*Table structure for table `webpages` */
 
@@ -1010,11 +1009,11 @@ CREATE TABLE `webpages` (
   `handle` varchar(150) DEFAULT NULL,
   `visible` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `webpages` */
 
-insert  into `webpages`(`id`,`shop_id`,`title`,`text`,`created`,`modified`,`meta_title`,`meta_keywords`,`meta_description`,`author`,`real_author`,`handle`,`visible`) values (1,1,'welcome','<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Lorem ipsum dolor sit amet, consectetur \r\n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \r\n					in lacinia dolor egestas. Integer seper imperdiet enim eu \r\n					convallis. Suspendisse nec orci tellus. Aenean consectetur \r\n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \r\n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \r\n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\r\n					Phasellus euismod</a> \r\n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \r\n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \r\n					Praesent aliquet sem sit amet massa scelerisque vitae semper \r\n					purus varius. Pellentesque habitant morbi tristique senectus et \r\n					netus et malesuada fames ac turpis egestas.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"itemAlt\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Proin mauris tortor, ultricies \r\n					interdum posuere eu, placerat vitae orci. Duis non laoreet \r\n					libero. Suspendisse aliquam congue metus non elementum. Cras \r\n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \r\n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \r\n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \r\n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \r\n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \r\n					aptent taciti sociosqu ad litora torquent per conubia nostra, \r\n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \r\n					ultrices. Nunc eros lectus, bibendum eu consequat id, \r\n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \r\n					Pellentesque ante tortor, mattis auctor condimentum ut, \r\n					convallis a dui. Mauris scelerisque dapibus libero, vitae \r\n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \r\n					at venenatis et, egestas a diam.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Nulla auctor sapien lorem. Ut vitae \r\n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \r\n					eu magna tempus eleifend. Donec interdum interdum lacus eget \r\n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \r\n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \r\n					pellentesque, orci lorem vestibulum elit, ac tristique justo \r\n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \r\n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \r\n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \r\n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \r\n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \r\n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \r\n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \r\n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \r\n					orci ut nibh tristique laoreet.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','2010-09-01 11:38:15','2010-12-22 02:15:17',NULL,NULL,NULL,1,NULL,'shopfront',1),(2,2,'Welcome','<div class=\"item\">\n		\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td class=\"itemLeftCell\">\n					Lorem ipsum dolor sit amet, consectetur \n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \n					in lacinia dolor egestas. Integer seper imperdiet enim eu \n					convallis. Suspendisse nec orci tellus. Aenean consectetur \n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\n					Phasellus euismod</a> \n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \n					Praesent aliquet sem sit amet massa scelerisque vitae semper \n					purus varius. Pellentesque habitant morbi tristique senectus et \n					netus et malesuada fames ac turpis egestas.\n				</td>\n<td class=\"itemRightCell\">\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\n				</td>\n</tr>\n</tbody>\n</table>\n</div>\n<div class=\"itemAlt\">\n		\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td class=\"itemLeftCell\">\n					Proin mauris tortor, ultricies \n					interdum posuere eu, placerat vitae orci. Duis non laoreet \n					libero. Suspendisse aliquam congue metus non elementum. Cras \n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \n					aptent taciti sociosqu ad litora torquent per conubia nostra, \n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \n					ultrices. Nunc eros lectus, bibendum eu consequat id, \n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \n					Pellentesque ante tortor, mattis auctor condimentum ut, \n					convallis a dui. Mauris scelerisque dapibus libero, vitae \n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \n					at venenatis et, egestas a diam.\n				</td>\n<td class=\"itemRightCell\">\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\n				</td>\n</tr>\n</tbody>\n</table>\n</div>\n<div class=\"item\">\n		\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td class=\"itemLeftCell\">\n					Nulla auctor sapien lorem. Ut vitae \n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \n					eu magna tempus eleifend. Donec interdum interdum lacus eget \n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \n					pellentesque, orci lorem vestibulum elit, ac tristique justo \n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \n					orci ut nibh tristique laoreet.\n				</td>\n<td class=\"itemRightCell\">\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\n				</td>\n</tr>\n</tbody>\n</table>\n</div>','2011-02-03 18:48:16','2011-02-03 18:48:16',NULL,NULL,NULL,1,NULL,'shopfront',1),(3,2,'About Us','<p>The <strong>About Us</strong> page is important.</p>\n				     <p>Customers visit About Us page when they are new to your online shop. They want to establish a level of trust in your business.  Since trust is crucial when selling online, itâ€™s a good idea to provide a fair amount of information about yourself and your business.  Here are a few things you should touch on:</p>\n<ul>\n	\n  <li>Who you are</li>\n	\n  <li>Why you are selling these items</li>\n	\n  <li>Where your business is located</li>\n	\n  <li>How long you have been in business</li>\n	\n  <li>Who are the people on your team</li>\n</ul>\n<p>Go to the <a href=\"/admin/pages\">Blogs &amp; Pages</a> in administration menu.</p>','2011-02-03 18:48:16','2011-02-03 18:48:16',NULL,NULL,NULL,1,NULL,'about-us',1),(4,3,'Welcome','<div class=\"item\">\n		\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td class=\"itemLeftCell\">\n					Lorem ipsum dolor sit amet, consectetur \n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \n					in lacinia dolor egestas. Integer seper imperdiet enim eu \n					convallis. Suspendisse nec orci tellus. Aenean consectetur \n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\n					Phasellus euismod</a> \n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \n					Praesent aliquet sem sit amet massa scelerisque vitae semper \n					purus varius. Pellentesque habitant morbi tristique senectus et \n					netus et malesuada fames ac turpis egestas.\n				</td>\n<td class=\"itemRightCell\">\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\n				</td>\n</tr>\n</tbody>\n</table>\n</div>\n<div class=\"itemAlt\">\n		\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td class=\"itemLeftCell\">\n					Proin mauris tortor, ultricies \n					interdum posuere eu, placerat vitae orci. Duis non laoreet \n					libero. Suspendisse aliquam congue metus non elementum. Cras \n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \n					aptent taciti sociosqu ad litora torquent per conubia nostra, \n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \n					ultrices. Nunc eros lectus, bibendum eu consequat id, \n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \n					Pellentesque ante tortor, mattis auctor condimentum ut, \n					convallis a dui. Mauris scelerisque dapibus libero, vitae \n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \n					at venenatis et, egestas a diam.\n				</td>\n<td class=\"itemRightCell\">\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\n				</td>\n</tr>\n</tbody>\n</table>\n</div>\n<div class=\"item\">\n		\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td class=\"itemLeftCell\">\n					Nulla auctor sapien lorem. Ut vitae \n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \n					eu magna tempus eleifend. Donec interdum interdum lacus eget \n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \n					pellentesque, orci lorem vestibulum elit, ac tristique justo \n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \n					orci ut nibh tristique laoreet.\n				</td>\n<td class=\"itemRightCell\">\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\n				</td>\n</tr>\n</tbody>\n</table>\n</div>','2011-02-15 16:29:51','2011-02-15 16:29:51',NULL,NULL,NULL,4,NULL,'shopfront',1),(5,3,'About Us','<p>The <strong>About Us</strong> page is important.</p>\n				     <p>Customers visit About Us page when they are new to your online shop. They want to establish a level of trust in your business.  Since trust is crucial when selling online, itâ€™s a good idea to provide a fair amount of information about yourself and your business.  Here are a few things you should touch on:</p>\n<ul>\n	\n  <li>Who you are</li>\n	\n  <li>Why you are selling these items</li>\n	\n  <li>Where your business is located</li>\n	\n  <li>How long you have been in business</li>\n	\n  <li>Who are the people on your team</li>\n</ul>\n<p>Go to the <a href=\"/admin/pages\">Blogs &amp; Pages</a> in administration menu.</p>','2011-02-15 16:29:51','2011-02-15 16:29:51',NULL,NULL,NULL,4,NULL,'about-us',1),(6,3,'Terms of Service','<p>The <strong>Terms of Service</strong> page is for you to enter any privacy statements or terms of service you wish to render.</p>\n				     <p>Customers may need to know the limits of their patronage, so here are a few things you should touch on:</p>\n<ul>\n	\n  <li>Who you are</li>\n	\n  <li>What you would consider as acceptable customer behavior</li>\n	\n  <li>Any limits as to whom you can serve or which regions you can serve</li>\n	\n  <li>What legal recourses you would seek if customers abuse your service</li>\n  \n  <li>What rights you reserve as a business owner</li>\n</ul>\n<p>Go to the <a href=\"/admin/pages\">Blogs &amp; Pages</a> in administration menu.</p>','2011-02-15 16:29:51','2011-02-15 16:29:51',NULL,NULL,NULL,4,NULL,'terms-of-service',1);
+insert  into `webpages`(`id`,`shop_id`,`title`,`text`,`created`,`modified`,`meta_title`,`meta_keywords`,`meta_description`,`author`,`real_author`,`handle`,`visible`) values (1,1,'welcome','<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Lorem ipsum dolor sit amet, consectetur \r\n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \r\n					in lacinia dolor egestas. Integer seper imperdiet enim eu \r\n					convallis. Suspendisse nec orci tellus. Aenean consectetur \r\n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \r\n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \r\n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\r\n					Phasellus euismod</a> \r\n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \r\n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \r\n					Praesent aliquet sem sit amet massa scelerisque vitae semper \r\n					purus varius. Pellentesque habitant morbi tristique senectus et \r\n					netus et malesuada fames ac turpis egestas.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"itemAlt\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Proin mauris tortor, ultricies \r\n					interdum posuere eu, placerat vitae orci. Duis non laoreet \r\n					libero. Suspendisse aliquam congue metus non elementum. Cras \r\n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \r\n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \r\n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \r\n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \r\n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \r\n					aptent taciti sociosqu ad litora torquent per conubia nostra, \r\n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \r\n					ultrices. Nunc eros lectus, bibendum eu consequat id, \r\n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \r\n					Pellentesque ante tortor, mattis auctor condimentum ut, \r\n					convallis a dui. Mauris scelerisque dapibus libero, vitae \r\n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \r\n					at venenatis et, egestas a diam.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Nulla auctor sapien lorem. Ut vitae \r\n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \r\n					eu magna tempus eleifend. Donec interdum interdum lacus eget \r\n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \r\n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \r\n					pellentesque, orci lorem vestibulum elit, ac tristique justo \r\n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \r\n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \r\n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \r\n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \r\n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \r\n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \r\n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \r\n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \r\n					orci ut nibh tristique laoreet.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','2010-09-01 11:38:15','2010-12-22 02:15:17',NULL,NULL,NULL,1,NULL,'shopfront',1),(2,2,'Welcome','<div class=\"item\">\n		\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td class=\"itemLeftCell\">\n					Lorem ipsum dolor sit amet, consectetur \n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \n					in lacinia dolor egestas. Integer seper imperdiet enim eu \n					convallis. Suspendisse nec orci tellus. Aenean consectetur \n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\n					Phasellus euismod</a> \n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \n					Praesent aliquet sem sit amet massa scelerisque vitae semper \n					purus varius. Pellentesque habitant morbi tristique senectus et \n					netus et malesuada fames ac turpis egestas.\n				</td>\n<td class=\"itemRightCell\">\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\n				</td>\n</tr>\n</tbody>\n</table>\n</div>\n<div class=\"itemAlt\">\n		\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td class=\"itemLeftCell\">\n					Proin mauris tortor, ultricies \n					interdum posuere eu, placerat vitae orci. Duis non laoreet \n					libero. Suspendisse aliquam congue metus non elementum. Cras \n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \n					aptent taciti sociosqu ad litora torquent per conubia nostra, \n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \n					ultrices. Nunc eros lectus, bibendum eu consequat id, \n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \n					Pellentesque ante tortor, mattis auctor condimentum ut, \n					convallis a dui. Mauris scelerisque dapibus libero, vitae \n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \n					at venenatis et, egestas a diam.\n				</td>\n<td class=\"itemRightCell\">\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\n				</td>\n</tr>\n</tbody>\n</table>\n</div>\n<div class=\"item\">\n		\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td class=\"itemLeftCell\">\n					Nulla auctor sapien lorem. Ut vitae \n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \n					eu magna tempus eleifend. Donec interdum interdum lacus eget \n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \n					pellentesque, orci lorem vestibulum elit, ac tristique justo \n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \n					orci ut nibh tristique laoreet.\n				</td>\n<td class=\"itemRightCell\">\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\n				</td>\n</tr>\n</tbody>\n</table>\n</div>','2011-02-18 15:43:48','2011-02-18 15:43:48',NULL,NULL,NULL,1,NULL,'shopfront',1),(3,2,'About Us','<p>The <strong>About Us</strong> page is important.</p>\n				     <p>Customers visit About Us page when they are new to your online shop. They want to establish a level of trust in your business.  Since trust is crucial when selling online, itâ€™s a good idea to provide a fair amount of information about yourself and your business.  Here are a few things you should touch on:</p>\n<ul>\n	\n  <li>Who you are</li>\n	\n  <li>Why you are selling these items</li>\n	\n  <li>Where your business is located</li>\n	\n  <li>How long you have been in business</li>\n	\n  <li>Who are the people on your team</li>\n</ul>\n<p>Go to the <a href=\"/admin/pages\">Blogs &amp; Pages</a> in administration menu.</p>','2011-02-18 15:43:48','2011-02-18 15:43:48',NULL,NULL,NULL,1,NULL,'about-us',1),(4,2,'Terms of Service','<p>The <strong>Terms of Service</strong> page is for you to enter any privacy statements or terms of service you wish to render.</p>\n				     <p>Customers may need to know the limits of their patronage, so here are a few things you should touch on:</p>\n<ul>\n	\n  <li>Who you are</li>\n	\n  <li>What you would consider as acceptable customer behavior</li>\n	\n  <li>Any limits as to whom you can serve or which regions you can serve</li>\n	\n  <li>What legal recourses you would seek if customers abuse your service</li>\n  \n  <li>What rights you reserve as a business owner</li>\n</ul>\n<p>Go to the <a href=\"/admin/pages\">Blogs &amp; Pages</a> in administration menu.</p>','2011-02-18 15:43:48','2011-02-18 15:43:48',NULL,NULL,NULL,1,NULL,'terms-of-service',1);
 
 /*Table structure for table `weight_based_rates` */
 
@@ -1026,11 +1025,11 @@ CREATE TABLE `weight_based_rates` (
   `max_weight` decimal(10,4) unsigned DEFAULT NULL,
   `shipping_rate_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `weight_based_rates` */
 
-insert  into `weight_based_rates`(`id`,`min_weight`,`max_weight`,`shipping_rate_id`) values (1,'10.0000','20.0000',1),(2,'20.0000','50.0000',2),(3,'10.0000','20.0000',3),(4,'20.0000','50.0000',4),(5,'10.0000','20.0000',5),(6,'20.0000','50.0000',6),(7,'10.0000','20.0000',7),(8,'20.0000','50.0000',8),(9,'10.0000','20.0000',9),(10,'20.0000','50.0000',10);
+insert  into `weight_based_rates`(`id`,`min_weight`,`max_weight`,`shipping_rate_id`) values (1,'10.0000','20.0000',1),(2,'20.0000','50.0000',2),(3,'10.0000','20.0000',3),(4,'20.0000','50.0000',4),(5,'10.0000','20.0000',5),(6,'20.0000','50.0000',6);
 
 /*Table structure for table `wishlists` */
 
