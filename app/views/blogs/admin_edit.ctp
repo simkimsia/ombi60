@@ -5,6 +5,7 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('name');
+		echo $this->Form->input('visible',array('options' => array('1'=>'Published', '0'=>'Hidden')));
 		
 		
 		$label = $this->Form->label('handle', 'Permalink/handle');

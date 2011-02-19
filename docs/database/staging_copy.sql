@@ -12,10 +12,6 @@ MySQL - 5.1.41-3ubuntu12.9 : Database - s2s_new
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`s2s_new` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `s2s_new`;
-
 /*Table structure for table `acos` */
 
 DROP TABLE IF EXISTS `acos`;
@@ -113,6 +109,7 @@ CREATE TABLE `blogs` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   `shop_id` int(11) DEFAULT NULL,
+  `visible` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
