@@ -23,7 +23,6 @@ class PostsController extends AppController {
 
 
 	function view($short_name = false, $id = false, $slug = false) {
-		
 		if (!$short_name || !$id) {
 			$this->Session->setFlash(sprintf(__('Invalid %s', true), 'post'));
 			$this->redirect(array('action' => 'index'));
@@ -39,7 +38,6 @@ class PostsController extends AppController {
 							 'fields'=>array('Post.*',
 									 'Blog.name',
 									 'Blog.short_name')));
-		
 		$this->set(compact('post'));
 		
 		

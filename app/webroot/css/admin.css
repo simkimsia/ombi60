@@ -137,7 +137,7 @@ ul#subnav li a {
 /** end of dropdown menu **/
 
 /* New CSS Code Starts */
-#content .products, #content .orders {
+#content .products, #content .orders, #content .main-container-div {
 	border: none;
 	padding: 10px 2%;
     width:97%;
@@ -186,6 +186,7 @@ ul#subnav li a {
 
 .bottom-paging {
 	text-align:center;   
+  margin-top:10px;
 }
 
 .products table tr td {
@@ -217,7 +218,7 @@ ul#subnav li a {
 }
 
 .products-table, .items-table {
-	border: 1px solid;
+	/*border: 1px solid;*/
 	width: 85%;
 	align:center;
 }
@@ -305,10 +306,29 @@ div.products.form div.submit {
 /**CSS added for domain listing on 15-02-2011*/
 #domain_intro_text{
     padding:10px 0px 30px;
-    width: 35%;
+    width: 50%;
 }
 
+#domain_intro_text p{
+    padding:10px 0px;
+}
 .text_center{
+    text-align: center;
+    margin: 15px;
+}
+
+.text_center a {
+    padding: 0px 10px;
+    /*border-right: 1px solid;*/
+}
+.internal_forms .paginator-top, .internal_forms .top-paging{
+    /*margin-top: 20px;*/
+}
+
+.internal_forms .products-table {
+}
+
+.center_align{
     text-align: center;
 }
 
@@ -333,3 +353,69 @@ div.products.form div.submit {
     padding: 20px 10px;
     border: 1px solid #E4E4E4;
 }
+
+.internal_forms{
+    margin: 0px;
+}
+
+.internal_forms label {
+    font-weight: bold;
+    margin-top: 20px;
+}
+.example_text{
+    font-size: 90%;
+    padding: 0px;
+}
+
+.slug_text{
+    padding: 0px;
+    margin: 10px 0px;
+}
+
+.slug_text input{
+    width: auto;
+}
+
+.hidden_gray{
+    background: #E4E4E4;
+    color: #000000;
+    padding:5px 10px;
+    margin: 5px;
+}
+
+.border_none{
+    border: none;
+}
+
+.background_none{
+    background: none;
+}
+
+.link_li{
+    display: block; 
+    float: left; 
+    width: 470px;
+}
+/*table tr:nth-child(2n) td {
+    background: none;
+}*/
+
+input.small {
+  width:20%;
+}
+
+div.pagination-margin {
+  margin:20px;
+}
+.sortable li span.link_li, .sortable li span a {
+  font-size:15px;
+}
+tr.add-link-tr td  {
+  background:none repeat scroll 0 0 #F5F5F5;
+  padding:15px;
+}
+tr.add-link-tr-submit td  {
+  background:none repeat scroll 0 0 #F5F5F5;
+  padding-left:15px;
+}
+
