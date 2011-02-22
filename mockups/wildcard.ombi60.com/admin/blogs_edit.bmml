@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" measuredW="955" measuredH="735" mockupW="797" mockupH="727">
+<mockup version="1.0" skin="sketch" measuredW="955" measuredH="555" mockupW="797" mockupH="547">
   <controls>
     <control controlID="27" controlTypeID="com.balsamiq.mockups::ButtonBar" x="182" y="127" w="-1" h="-1" measuredW="434" measuredH="31" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
@@ -28,7 +28,7 @@
         <text/>
       </controlProperties>
     </control>
-    <control controlID="32" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="158" y="8" w="797" h="727" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="158" y="8" w="797" h="547" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
         <text>A%20Web%20Page%0Ahttp%3A//shop001.ombi60.com/admin/blogs/edit/23</text>
       </controlProperties>
@@ -92,7 +92,7 @@
         <text>%29</text>
       </controlProperties>
     </control>
-    <control controlID="112" controlTypeID="__group__" x="241" y="652" w="159" h="28" measuredW="159" measuredH="28" zOrder="11" locked="false" isInGroup="-1">
+    <control controlID="112" controlTypeID="__group__" x="248" y="467" w="159" h="28" measuredW="159" measuredH="28" zOrder="11" locked="false" isInGroup="-1">
       <groupChildrenDescriptors>
         <control controlID="0" controlTypeID="com.balsamiq.mockups::Button" x="0" y="0" w="-1" h="-1" measuredW="70" measuredH="28" zOrder="0" locked="false" isInGroup="112">
           <controlProperties>
@@ -110,30 +110,6 @@
           </controlProperties>
         </control>
       </groupChildrenDescriptors>
-    </control>
-    <control controlID="114" controlTypeID="com.balsamiq.mockups::FieldSet" x="224" y="441" w="663" h="183" measuredW="200" measuredH="170" zOrder="18" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Properties</text>
-      </controlProperties>
-    </control>
-    <control controlID="115" controlTypeID="com.balsamiq.mockups::ComboBox" x="241" y="533" w="-1" h="-1" measuredW="89" measuredH="54" zOrder="19" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Published%0AHidden</text>
-      </controlProperties>
-    </control>
-    <control controlID="116" controlTypeID="com.balsamiq.mockups::Label" x="241" y="502" w="-1" h="-1" measuredW="448" measuredH="23" zOrder="20" locked="false" isInGroup="-1">
-      <controlProperties>
-        <bold>false</bold>
-        <size>12</size>
-        <text>If%20you%20want%20to%20hide%20this%20blog%20and%20its%20articles%20from%20your%20clients%2C%20choose%20hidden.</text>
-      </controlProperties>
-    </control>
-    <control controlID="117" controlTypeID="com.balsamiq.mockups::Label" x="239" y="471" w="138" h="26" measuredW="111" measuredH="29" zOrder="21" locked="false" isInGroup="-1">
-      <controlProperties>
-        <bold>true</bold>
-        <size>16</size>
-        <text>Blog%20Visibility</text>
-      </controlProperties>
     </control>
   </controls>
 </mockup>
