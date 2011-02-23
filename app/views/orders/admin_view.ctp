@@ -3,6 +3,10 @@ echo $html->script('jquery.styledButton.js', array('inline' => FALSE));
 echo $html->script('jquery.action_button.js', array('inline' => FALSE));  
 
 echo $html->css('styledButton');
+
+/*echo "<pre>";
+print_r($order);
+echo "</pre>";*/
 ?>
 <div class="orders">
     <div class="text_center">
@@ -41,7 +45,7 @@ echo $html->css('styledButton');
             </div>
             <div style="clear: both;">&nbsp;</div>
             <div>
-                <div style="padding: 0px 10px;">
+                <div style="padding: 0px 10px; margin-bottom: 10px;">
                     <h1><strong><?php  __('Delivery Address');?></strong></h1>
                     <ul class="order_customer_info">
                         <li>
@@ -62,7 +66,7 @@ echo $html->css('styledButton');
                     </ul>
                 </div>
 
-                <div style="padding: 0px 10px;">
+                <div style="padding: 0px 10px; margin-bottom: 10px;">
                     <h1><strong><?php  __('Billing Address');?></strong></h1>
                     <ul class="order_customer_info">
                         <li>
@@ -87,31 +91,35 @@ echo $html->css('styledButton');
         </div>
         <div id="order_right">
             <div id="payment_shipping">
-                <div style="border-bottom: 1px solid;">
+                <div style="border-bottom: 1px solid;padding: 5px">
                     <div style="float:left;">
-                        Payment Mode
+                        <label>Payment Mode</label>
                         <br />
                         <?php
-                        foreach ($order['Payment'] as $payment):
-                        ?>
-                        <div>
-	                        <?php echo $payment['name']; ?>
-                        </div>
-                        <?php
-	                    endforeach;
+                        echo $module_name;
                         ?>
                     </div>
                     <div style="float: right;">
-                        You have not received payment for this order.
-                        <br />
-                        <div style="float: right; margin-top: 5px;"><span class="markPaymentReceived">Mark as payment received</span></div>
+                        <?php
+                        $status = $order['Order']['payment_status'];
+                        if ($status == 2) {
+                            echo  "You have received payment for this order.";
+                        } else {
+                            echo "You have NOT received payment for this order.";
+                            ?>
+                            <br />
+                            <div style="float: right; margin-top: 5px;"><span class="markPaymentReceived">Mark as payment received</span></div>
+                            <?php
+                        }
+                        ?>
+                        
                         <?php //echo $html->link('Mark as payment received', 'javascript: void(0);');?>
                     </div>
-                    <div style="clear: both;">&nbsp;</div>
+                    <div style="clear: both;"></div>
                 </div>
                 <div style="padding: 5px;">
                     <div style="float:left;">
-                       Shipping Mode
+                       <label>Shipping Mode</label>
                        <br />
                        <?php
 	                   foreach ($order['Shipment'] as $shipment):
@@ -124,29 +132,39 @@ echo $html->css('styledButton');
                         ?>
                     </div>
                     <div style="float: right;">
-                        You need to fullfill <strong>1 line item</strong>.
-                        <br />
-                        <div style="float: right; margin-top: 5px;" class=""><span class="fullfillItem">Fullfill line items</span></div>
-                        <?php //echo $html->link('Fullfill line items', 'javascript: void(0);');?>
+                        <?php
+                        $fullfill_status = $order['Order']['fulfillment_status'];
+                        if ($fullfill_status == 0) {
+                            echo "You have fullfilled all line items";
+                        } else {
+                        ?>
+                            You need to fullfill <strong><?php echo $order['Order']['order_line_item_count'];?> line item</strong>.
+                            <br />
+                            <div style="float: right; margin-top: 5px;" class=""><span class="fullfillItem">Fullfill line items</span></div>
+                        <?php
+                        }
+                        ?>
+                        
                     </div>
-                    <div style="clear: both;">&nbsp;</div>
+                    <div style="clear: both;"></div>
                 </div>
-                <div style="clear: both;">&nbsp;</div>
+                <div style="clear: both;"></div>
             </div>
-            <div style="clear: both;">&nbsp;</div>
+            <div style="clear: both;"></div>
             <div>
                 <table cellpadding="0" cellspacing="0" class="products-table" style="width: 100%;">
                     <tr>
-	                    <th><?php echo 'Product'; ?></th>
-	                    <th><?php echo 'Price'; ?></th>
-	                    <th><?php echo 'Quantity'; ?></th>
-	                    <th><?php echo 'Total'; ?></th>
+	                    <th width="25%"><?php echo 'Product'; ?></th>
+	                    <th width="25%" class="text_center"><?php echo 'Price'; ?></th>
+	                    <th width="25%" class="text_center"><?php echo 'Quantity'; ?></th>
+	                    <th width="25%" class="text_right"><?php echo 'Total'; ?></th>
 	
                     </tr>
                     <?php
                     $i = 0;
-
+                    $temp = 0;
                     foreach ($order['OrderLineItem'] as $lineItem):
+                        $temp = $temp + $lineItem['product_quantity'] * $lineItem['product_price'];
 	                    $class = null;
 	                    if ($i++ % 2 == 0) {
 		                    $class = ' class="altrow"';
@@ -162,20 +180,68 @@ echo $html->css('styledButton');
 							                       $lineItem['product_id'])); ?>
 			
 		                    </td>
-		                    <td>
-			                    <?php echo $number->currency($lineItem['product_price'], 'SGD'); ?>
+		                    <td class="text_center">
+			                    <?php echo $number->currency($lineItem['product_price'], '$'); ?>
 		                    </td>
-		                    <td>
+		                    <td class="text_center">
 			                    <?php echo $lineItem['product_quantity']; ?>
 		                    </td>
 		
-		                    <td>
-			                    <?php echo $number->currency($lineItem['product_quantity'] * $lineItem['product_price'], 'SGD'); ?>
+		                    <td class="text_right">
+		                        <?php
+                             	$options = array(
+                             		'before' => '$', 'after' => 'c', 'zero' => "Free", 'places' => 2, 'thousands' => ',', 'decimals' => '.');?>
+                                <?php $number->addFormat($order['Order']['currency'], array('before' => '$'));?>
+                                <?php echo $number->currency(($lineItem['product_quantity'] * $lineItem['product_price']), $order['Order']['currency'], $options).$order['Order']['currency'];?> 
 		                    </td>
 	                    </tr>
                     <?php endforeach; ?>
+                        <tr><td colspan="4">&nbsp;</td></tr>
+                        <tr>
+                            <td style="background: none;">&nbsp;</td>
+                            <td colspan="2" class="text_right" style="background: none;">Subtotal</td>
+                            <td class="text_right" style="background: none;">                            
+                             <?php
+                             	$options = array(
+                             		'before' => '$', 'after' => 'c', 'zero' => "Free", 'places' => 2, 'thousands' => ',', 'decimals' => '.');?>
+                            <?php $number->addFormat($order['Order']['currency'], array('before' => '$'));?>
+                            <?php echo $number->currency($temp, $order['Order']['currency'], $options).$order['Order']['currency'];?> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background: none;">&nbsp;</td>
+                            <td colspan="2" class="text_right" style="background: none;">Shipping fee (
+                            <?php
+                           foreach ($order['Shipment'] as $shipment):
+                           ?>
+                                
+                                <?php echo $shipment['name']; ?>
+                                <?php $shipment_price = $shipment['price'];?>
+                            <?php
+                            endforeach;
+                            ?>
+                            )</td>
+                            <td class="text_right" style="background: none;">
+                                <?php
+                             	$options = array(
+                             		'before' => '$', 'after' => 'c', 'zero' => "Free", 'places' => 2, 'thousands' => ',', 'decimals' => '.');?>
+                                <?php $number->addFormat($order['Order']['currency'], array('before' => '$'));?>
+                                <?php echo $number->currency($shipment_price, $order['Order']['currency'], $options).$order['Order']['currency'];?> 
+                            </td>
+                        </tr>
+                        <tr><td colspan="4" class="background_none" style="background: none;"><hr /></td></tr>
+                        <tr>
+                            <td style="background: none;">&nbsp;</td>
+                            <td colspan=2 class="text_right" style="background: none;"><?php __('Total');?></td>
+                            <td class="text_right" style="background: none;">
+                                <?php
+                             	$options = array(
+                             		'before' => '$', 'after' => 'c', 'zero' => "Free", 'places' => 2, 'thousands' => ',', 'decimals' => '.');?>
+                                <?php $number->addFormat($order['Order']['currency'], array('before' => '$'));?>
+                                <?php echo $number->currency(($temp + $shipment_price), $order['Order']['currency'], $options).$order['Order']['currency'];?> 
+                            </td>
+                        </tr>
                     </table>
-                    Total amount: <?php echo $number->currency($order['Order']['amount'], 'SGD'); ?>
             </div>
             <div style="clear: both;">&nbsp;</div>	
         </div>

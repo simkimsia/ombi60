@@ -482,5 +482,70 @@ margin: 5px 6px 7px 11px;
 
 #payment_shipping{
     border: 1px solid #E4E4E4; 
-    padding: 5px;
+    padding: 15px;
+}
+
+.text_right{
+    text-align: right;
+}
+
+.background_none {
+    background: none;
+}
+
+.payments{
+    border: 1px solid #E4E4E4;
+    padding: 10px;
+    margin: 10px 5px;
+}
+
+.clear{
+    clear: both;
+}
+
+.payment_right{
+    float: right;
+    margin: 10px;
+    padding: 10px;
+    width: 725px;
+}
+
+.payment_left{
+    float:left; 
+    width: 200px;
+     padding: 10px;
+}
+
+.service_class{
+    padding: 0px 20px;
+}
+
+.payment_dropdown{
+    background: #F5F5F5;
+    border: 1px solid #E4E4E4;
+    margin: 0px;
+    padding: 0px 10px;
+}
+
+.method_list{
+    margin: 0px;
+    list-style: none;
+    padding: 0px 5px;
+}
+
+.method_list li {
+    float: left;
+    margin: 0px;
+}
+
+.payment_name{
+    width: 300px;
+}
+
+.payment_edit{
+    width: 400px;
+}
+
+.payment_turn_off{
+    width: 500px;
 }
