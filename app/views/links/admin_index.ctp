@@ -1,3 +1,4 @@
+<?php echo $this->element('admin_scripts'); ?>
 <?php
 
 	echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js');
@@ -102,7 +103,6 @@
 			}			
 		?>
 		<li class="ui-state-default <?php echo $class;?>" id="displayrow_<?php echo $link['id']; ?>">
-			
 			<span class="link_li"><?php echo $this->Html->link($link['name'], $link['route']); ?>&nbsp;</span>
 			<span class="link_li"><?php echo $this->Html->link($link['route'],
 							   $link['route']); ?>
@@ -129,7 +129,7 @@
 		<?php
 		echo $this->Form->create('Link', array('url'=>array('action'=>'edit',$listId)));
 		echo $this->Form->input('LinkList.id', array('type'=>'hidden', 'value'=>$listId));
-		echo '<table id="edit_list_'.$listId.'" style="display:none" class="items-table">';
+		echo '<table id="edit_list_'.$listId.'" style="display:none;" class="items-table">';
 		?>
 		<tr>
 			<?php //echo "<td>$listName</td>"; ?>
@@ -165,7 +165,7 @@
 		<tr id="edit_row_<?php echo $linkId; ?>">
 			
 			<td>
-				<?php echo $this->Form->input('Link.'.$i.'.name', array('value'=>$link['name'], 'label' => false, 'div' => false)); ?>&nbsp;
+				<?php echo $this->Form->input('Link.'.$i.'.name', array('value'=>$link['name'], 'label' => FALSE, 'div' => false)); ?>&nbsp;
 				<?php echo $this->Form->input('Link.'.$i.'.id', array('type'=>'hidden',
 										      'value'=>$linkId)); ?>
 			</td>
@@ -211,7 +211,6 @@
 					$textBoxNeeded = true;
 				}
 				
-				
 				if ($actionNeeded) {
 					$displayVisible = '';
 					
@@ -232,13 +231,14 @@
 						'selected' => $link['action'],
 						'div'=>false,
 						'label'=>false,
-						'style'=>$displayVisible));
+						'style'=>$displayVisible,
+						));
 				
 				echo $this->Form->input('Link.'.$i.'.action1', array(
 						'value' => $link['action'],
 						'div'=>false,
 						'label'=>false,
-						'style'=>'width:100%;'.$textBoxVisible));
+						'style'=>$textBoxVisible));
 				
 				
 				?>

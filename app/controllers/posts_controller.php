@@ -106,8 +106,9 @@ class PostsController extends AppController {
 		}
 		
 		$authors = $this->Post->Blog->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
-		
-		$this->set(compact('blog_id', 'authors'));
+		$blog_name_info = $this->Post->find('first', array('conditions' => array('Post.blog_id' => $blog_id), 'fields' => array('Blog.name')));
+		$blog_name = $blog_name_info['Blog']['name'];
+		$this->set(compact('blog_id', 'authors', 'blog_name'));
 	}
 
 	function admin_edit($blog_id = false, $id = false) {

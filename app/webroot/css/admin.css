@@ -221,6 +221,7 @@ ul#subnav li a {
 	/*border: 1px solid;*/
 	width: 85%;
 	align:center;
+	margin: 10px 0px;
 }
 
 .products-table td, .items-table td, th {
@@ -305,7 +306,7 @@ div.products.form div.submit {
 
 /**CSS added for domain listing on 15-02-2011*/
 #domain_intro_text{
-    padding:10px 0px 30px;
+    padding:10px 0px 15px;
     width: 50%;
 }
 
@@ -418,4 +419,68 @@ tr.add-link-tr-submit td  {
   background:none repeat scroll 0 0 #F5F5F5;
   padding-left:15px;
 }
+div.example-text {
+  margin-bottom:1px;
+}
+div.pagination-container-div {
+  margin:15px 0;
+}
 
+.view_textarea{
+padding: 5px;
+border: 1px solid #E4E4E4;
+margin: 10px 0px;
+}
+
+.float_right {
+float: right;
+}
+
+.action-buttons{
+float: left;
+margin: 10px 5px 0px 0px;
+}
+
+.checkbox{
+margin: 5px 6px 7px 11px;
+}
+
+.order_customer_info{
+    list-style: none;
+    margin: 0px;
+}
+
+.order_customer_info li{
+    padding: 5px 0px;
+    margin: 0px;
+}
+
+.image_div{
+    float: left; 
+    margin: 5px;
+}
+
+.customer_information{
+    margin: 10px; 
+    padding: 5px; 
+    border: 1px solid #E4E4E4;
+}
+
+#order_left{
+    float: left; 
+    width: 350px; 
+    margin: 10px; 
+    padding: 5px;
+}
+
+#order_right{
+    float: right;
+    margin: 17px 10px;
+    padding: 5px;
+    width: 725px;
+}
+
+#payment_shipping{
+    border: 1px solid #E4E4E4; 
+    padding: 5px;
+}
