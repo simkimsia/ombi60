@@ -1,0 +1,88 @@
+<mockup version="1.0" skin="sketch" measuredW="1188" measuredH="741" mockupW="1030" mockupH="733">
+  <controls>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="158" y="8" w="1030" h="733" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Shop001%20-%20Welcome%20-%20Google%20Chrome%0Ahttp%3A//shop001.ombi60.com</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Canvas" x="164" y="77" w="1024" h="115" measuredW="100" measuredH="70" zOrder="1" locked="false" isInGroup="-1"/>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Label" x="252" y="77" w="181" h="54" measuredW="174" measuredH="62" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>40</size>
+        <text>Shop001</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::ButtonBar" x="252" y="152" w="366" h="40" measuredW="355" measuredH="31" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>2</selectedIndex>
+        <text>Home%2C%20About%20Us%2C%20Catalogue%2C%20Blog%2C%20Cart</text>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::HRule" x="164" y="152" w="1018" h="-1" measuredW="100" measuredH="5" zOrder="4" locked="false" isInGroup="-1"/>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::VRule" x="252" y="184" w="-1" h="529" measuredW="5" measuredH="100" zOrder="5" locked="false" isInGroup="-1"/>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::VRule" x="1071" y="192" w="-1" h="521" measuredW="5" measuredH="100" zOrder="6" locked="false" isInGroup="-1"/>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Accordion" x="252" y="212" w="150" h="295" measuredW="150" measuredH="250" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>-1</selectedIndex>
+        <text>Category%20One%0ACategory%20Two%0A-%20Item%201%0A-%20Item%202%0A-%20Item%203%0A-%20Item%204%0A-%20Item%205%0A-%20Item%206%0ACategory%20Three%0ACategory%20Four</text>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::VRule" x="397" y="192" w="-1" h="521" measuredW="5" measuredH="100" zOrder="8" locked="false" isInGroup="-1"/>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::DataGrid" x="417" y="274" w="639" h="409" measuredW="251" measuredH="406" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>none</borderStyle>
+        <hasHeader>false</hasHeader>
+        <rowHeight>58</rowHeight>
+        <selectedIndex>-1</selectedIndex>
+        <text>%5Cr%5Cr%5Cr%5BProduct1%5D%5Cr%2410.00SGD%2C%20Summarized%20version%20of%20%5Cr%20long%20paragraph%20of%20%5Cr%20product%20description%0A%5Cr%5Cr%5Cr%5BProduct2%5D%5Cr%2450.00SGD%2C%20Summarized%20version%20of%20%5Cr%20long%20paragraph%20of%20%5Cr%20product%20description%0A%5Cr%5Cr%5Cr%5BProduct3%5D%5Cr%2435.00SGD%2C%20Summarized%20version%20of%20%5Cr%20long%20paragraph%20of%20%5Cr%20product%20description%0A%5Cr%5Cr%5Cr%5BProduct4%5D%5Cr%2425.00SGD%2C%20Summarized%20version%20of%20%5Cr%20long%20paragraph%20of%20%5Cr%20product%20description%0A%7B25L%2C%2075C%7D</text>
+        <vLines>false</vLines>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::LinkBar" x="649" y="680" w="-1" h="-1" measuredW="151" measuredH="25" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%3C%3C%20previous%2C%20next%20%3E%3E</text>
+      </controlProperties>
+    </control>
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::Canvas" x="417" y="212" w="639" h="62" measuredW="100" measuredH="70" zOrder="11" locked="false" isInGroup="-1"/>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::Label" x="878" y="249" w="-1" h="-1" measuredW="64" measuredH="25" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Sort%20by%3A%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::ComboBox" x="934" y="243" w="-1" h="-1" measuredW="114" measuredH="72" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Date%3A%20Latest%0APrice%3A%20Low%20to%20High%0APrice%3A%20High%20to%20Low</text>
+      </controlProperties>
+    </control>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::Label" x="426" y="243" w="-1" h="-1" measuredW="126" measuredH="25" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Showing%201%20-%204%20of%204</text>
+      </controlProperties>
+    </control>
+    <control controlID="52" controlTypeID="com.balsamiq.mockups::Label" x="649" y="212" w="-1" h="-1" measuredW="91" measuredH="25" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Category%20One</text>
+      </controlProperties>
+    </control>
+    <control controlID="54" controlTypeID="com.balsamiq.mockups::Icon" x="433" y="283" w="-1" h="-1" measuredW="48" measuredH="48" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>ImageIcon%7Clarge</icon>
+      </controlProperties>
+    </control>
+    <control controlID="55" controlTypeID="com.balsamiq.mockups::Icon" x="433" y="388" w="-1" h="-1" measuredW="48" measuredH="48" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>ImageIcon%7Clarge</icon>
+      </controlProperties>
+    </control>
+    <control controlID="56" controlTypeID="com.balsamiq.mockups::Icon" x="433" y="486" w="-1" h="-1" measuredW="48" measuredH="48" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>ImageIcon%7Clarge</icon>
+      </controlProperties>
+    </control>
+    <control controlID="57" controlTypeID="com.balsamiq.mockups::Icon" x="433" y="584" w="-1" h="-1" measuredW="48" measuredH="48" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>ImageIcon%7Clarge</icon>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

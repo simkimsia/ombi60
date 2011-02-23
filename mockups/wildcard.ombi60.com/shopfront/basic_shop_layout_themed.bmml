@@ -1,0 +1,24 @@
+<mockup version="1.0" skin="sketch" measuredW="1188" measuredH="741" mockupW="1030" mockupH="733">
+  <controls>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="158" y="8" w="1030" h="733" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Shop001%20-%20Welcome%20-%20Google%20Chrome%0Ahttp%3A//shop001.ombi60.com</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Canvas" x="164" y="77" w="1024" h="115" measuredW="100" measuredH="70" zOrder="1" locked="false" isInGroup="-1"/>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Label" x="252" y="77" w="181" h="54" measuredW="174" measuredH="62" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>40</size>
+        <text>Shop001</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::ButtonBar" x="252" y="152" w="366" h="40" measuredW="355" measuredH="31" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Home%2C%20About%20Us%2C%20Catalogue%2C%20Blog%2C%20Cart</text>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::HRule" x="164" y="152" w="1018" h="-1" measuredW="100" measuredH="5" zOrder="4" locked="false" isInGroup="-1"/>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::VRule" x="252" y="184" w="-1" h="529" measuredW="5" measuredH="100" zOrder="5" locked="false" isInGroup="-1"/>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::VRule" x="1071" y="192" w="-1" h="521" measuredW="5" measuredH="100" zOrder="6" locked="false" isInGroup="-1"/>
+  </controls>
+</mockup>
