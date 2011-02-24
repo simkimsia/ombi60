@@ -16,12 +16,16 @@
         <legend>Properties</legend>
         <label><?php __('Article Visibility');?></label>
  		<span class="hint">If you want to hide this article from your clients, choose</span>
- 		<br><br>
-        <?php print ((bool)$post['Post']['status'] ? "Published" : "Hidden")?>
-        <br><br>
-        <label>Author</label>
+ 		<br>
+ 		<?php 
+        echo $this->Form->input('visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'selected' => $post['Post']['status'])); 
+         ?>
+        <?php //print ((bool)$post['Post']['status'] ? "Published" : "Hidden")?>
         <br>
-        <?php print $post['Author']['full_name'];?>
+        <?php        
+  		echo $this->Form->input('Post.author', array('options' => $authors, 'selected' => $post['Author']['full_name']));  		
+        //print $webpage['Author']['full_name'];?>
+        <?php //print $post['Author']['full_name'];?>
         <br>
     </fieldset>
   </div>	

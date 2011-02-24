@@ -37,7 +37,7 @@
 	
 ?>
 
-<div class="main-container-div index">
+<div class="">
 	<h2 class="text_center"><?php __('Navigation & Menu Links');?></h2>
 	<div id="domain_intro_text">
 	    <strong>Link Lists</strong>

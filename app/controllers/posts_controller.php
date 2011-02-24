@@ -82,7 +82,10 @@ class PostsController extends AppController {
 		
 		$post = $this->Post->find('first', array('conditions'=>array('Post.id'=>$id,
 									     'Post.blog_id'=>$blog_id)));
-		$this->set(compact('post'));
+		$authors = $this->Post->Blog->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
+		$this->set(compact('post', 'authors'));
+
+		
 	}
 
 	function admin_add($blog_id = false) {

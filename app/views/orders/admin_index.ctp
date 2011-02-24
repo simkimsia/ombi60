@@ -1,4 +1,4 @@
-<div class="orders index">
+<div>
 <h2 align="center"><?php __('Orders');?></h2>
 <?php echo $this->Form->create('Order', array('url' => array('controller' => 'orders', 'action' => 'index', 'admin' => 'true'), 'id'=>'filters')); ?>
 <table cellpadding="0" cellspacing="0" class="search-filters">

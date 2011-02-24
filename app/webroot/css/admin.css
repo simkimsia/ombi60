@@ -315,7 +315,7 @@ div.products.form div.submit {
 }
 .text_center{
     text-align: center;
-    margin: 15px;
+    margin: 15px 0px;
 }
 
 .text_center a {
@@ -464,6 +464,8 @@ margin: 5px 6px 7px 11px;
     margin: 10px; 
     padding: 5px; 
     border: 1px solid #E4E4E4;
+    margin-left: 0px;
+    padding-left: 0px;
 }
 
 #order_left{
@@ -471,13 +473,15 @@ margin: 5px 6px 7px 11px;
     width: 350px; 
     margin: 10px; 
     padding: 5px;
+    margin-left: 0px;
+    padding-left: 0px;
 }
 
 #order_right{
     float: right;
     margin: 17px 10px;
     padding: 5px;
-    width: 725px;
+    width: 775px;
 }
 
 #payment_shipping{
@@ -566,4 +570,9 @@ margin: 5px 6px 7px 11px;
     margin-top: -75px;
     padding: 11px;
     width: 734px;
+}
+
+.order_info_div{
+    padding-right: 10px; 
+    margin-bottom: 10px;
 }

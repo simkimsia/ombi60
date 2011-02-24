@@ -8,7 +8,7 @@ echo $html->css('styledButton');
 print_r($order);
 echo "</pre>";*/
 ?>
-<div class="orders">
+<div>
     <div class="text_center">
       <h2>
         <?php __('Overview of order #'.$order['Order']['order_no']); ?>
@@ -45,7 +45,7 @@ echo "</pre>";*/
             </div>
             <div style="clear: both;">&nbsp;</div>
             <div>
-                <div style="padding: 0px 10px; margin-bottom: 10px;">
+                <div class="order_info_div">
                     <h1><strong><?php  __('Delivery Address');?></strong></h1>
                     <ul class="order_customer_info">
                         <li>
@@ -66,7 +66,7 @@ echo "</pre>";*/
                     </ul>
                 </div>
 
-                <div style="padding: 0px 10px; margin-bottom: 10px;">
+                <div class="order_info_div">
                     <h1><strong><?php  __('Billing Address');?></strong></h1>
                     <ul class="order_customer_info">
                         <li>
@@ -212,6 +212,7 @@ echo "</pre>";*/
                             <td style="background: none;">&nbsp;</td>
                             <td colspan="2" class="text_right" style="background: none;">Shipping fee (
                             <?php
+                            $shipment_price  = 0;
                             if (!empty($order['Shipment'])) {
                                 foreach ($order['Shipment'] as $shipment):
                                 ?>
@@ -230,10 +231,10 @@ echo "</pre>";*/
                              		'before' => '$', 'after' => 'c', 'zero' => "Free", 'places' => 2, 'thousands' => ',', 'decimals' => '.');?>
                                 <?php $number->addFormat($order['Order']['currency'], array('before' => '$'));?>
                                 <?php
-                                if (isset($shipment_price)) {
-                                    ?>
-                                    <?php echo $number->currency($shipment_price, $order['Order']['currency'], $options).$order['Order']['currency'];?> 
-                                    <?php
+                                if ($shipment_price != 0) {
+                                    echo $number->currency($shipment_price, $order['Order']['currency'], $options).$order['Order']['currency'];
+                                } else {
+                                    echo $number->currency($shipment_price, $order['Order']['currency'], $options);
                                 }
                                 ?>
                                 
@@ -249,10 +250,10 @@ echo "</pre>";*/
                              		'before' => '$', 'after' => 'c', 'zero' => "Free", 'places' => 2, 'thousands' => ',', 'decimals' => '.');?>
                                 <?php $number->addFormat($order['Order']['currency'], array('before' => '$'));?>
                                 <?php
-                                if (isset($shipment_price)) {
-                                ?>
-                                    <?php echo $number->currency(($temp + $shipment_price), $order['Order']['currency'], $options).$order['Order']['currency'];?> 
-                                <?php
+                                if (($temp + $shipment_price) != 0) {
+                                    echo $number->currency(($temp + $shipment_price), $order['Order']['currency'], $options).$order['Order']['currency'];
+                                } else {
+                                    echo $number->currency(($temp + $shipment_price), $order['Order']['currency'], $options);
                                 }
                                 ?>
                                 

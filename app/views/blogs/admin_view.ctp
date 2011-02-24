@@ -1,4 +1,4 @@
-<div class="internal_forms main-container-div index">
+<div class="internal_forms">
     <div class="text_center">
         <h2><?php echo $blog['Blog']['name']; ?></h2>
         <?php echo $this->Html->link(__('Write a new article', true), array('controller' => 'posts', 'action' => 'add', 'blog_id'=>$blog['Blog']['id'])); ?>|
