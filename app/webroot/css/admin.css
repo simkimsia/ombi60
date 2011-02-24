@@ -22,7 +22,7 @@ a.actions {
 
 .new-rate-table {
 	background:none repeat scroll 0 0 #EFEFEF;
-	border-top:1px solid #CCCCCC;
+	/*border-top:1px solid #CCCCCC;*/
 	padding:10px 0;
 	width:100%;
 }
@@ -499,8 +499,8 @@ margin: 5px 6px 7px 11px;
 
 .payments{
     border: 1px solid #E4E4E4;
-    padding: 10px;
-    margin: 10px 5px;
+    /*padding: 10px;*/
+    margin: 10px 0px;
 }
 
 .clear{
@@ -575,4 +575,33 @@ margin: 5px 6px 7px 11px;
 .order_info_div{
     padding-right: 10px; 
     margin-bottom: 10px;
+}
+
+.express_list{
+    list-style: none;
+    padding-left: 10px;
+    margin-top: 20px;
+}
+
+.express_list li{
+    padding: 5px;
+}
+
+.border_bottom{
+    border-bottom: 1px solid #E4E4E4;
+}
+
+.shipping-view {
+    list-style: none;
+    margin: 0px;
+}
+
+.shipping-view li{
+    padding: 15px;
+    margin: 0px;
+}
+
+.shipping-view li label{
+    font-size: 115%;
+    font-weight: inherit;
 }
