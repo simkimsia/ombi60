@@ -7,7 +7,7 @@ echo $html->css('styledButton');
 
 <div style="width: 85%;">
         <div class="action-buttons">
-            <span class="selectCheckbox"><input type="checkbox" class="checkAll" /></span><span class="checkUnCheck" style="width: 50px;">⇣
+            <span class="selectCheckbox"><input type="checkbox" class="checkAll" />&nbsp;</span><span class="checkUnCheck" style="width: 25px;">&nbsp;&nbsp;⇣&nbsp;&nbsp;
 		        <ul>
 			        <li>All</li>
 			        <li>None</li>

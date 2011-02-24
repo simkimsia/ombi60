@@ -524,7 +524,7 @@ margin: 5px 6px 7px 11px;
     background: #F5F5F5;
     border: 1px solid #E4E4E4;
     margin: 0px;
-    padding: 0px 10px;
+    padding: 0 10px 2px;
 }
 
 .method_list{
@@ -539,13 +539,31 @@ margin: 5px 6px 7px 11px;
 }
 
 .payment_name{
-    width: 300px;
-}
-
-.payment_edit{
     width: 400px;
 }
 
+.payment_edit{
+    width: 600px;
+}
+
 .payment_turn_off{
-    width: 500px;
+    width: 100px;
+}
+
+.custom_select{
+    margin: 5px 0px;
+}
+
+.email_div{
+    float:left; 
+    width: 300px;
+}
+
+.description_div{
+    background: #FFFFFF;
+    border: 1px solid #E4E4E4;
+    float: right;
+    margin-top: -75px;
+    padding: 11px;
+    width: 734px;
 }

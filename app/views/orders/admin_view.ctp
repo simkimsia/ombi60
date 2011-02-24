@@ -212,13 +212,16 @@ echo "</pre>";*/
                             <td style="background: none;">&nbsp;</td>
                             <td colspan="2" class="text_right" style="background: none;">Shipping fee (
                             <?php
-                           foreach ($order['Shipment'] as $shipment):
-                           ?>
-                                
-                                <?php echo $shipment['name']; ?>
-                                <?php $shipment_price = $shipment['price'];?>
-                            <?php
-                            endforeach;
+                            if (!empty($order['Shipment'])) {
+                                foreach ($order['Shipment'] as $shipment):
+                                ?>
+                                    
+                                    <?php echo $shipment['name']; ?>
+                                    <?php $shipment_price = $shipment['price'];?>
+                                <?php
+                                endforeach;
+                            }
+                           
                             ?>
                             )</td>
                             <td class="text_right" style="background: none;">
@@ -226,7 +229,14 @@ echo "</pre>";*/
                              	$options = array(
                              		'before' => '$', 'after' => 'c', 'zero' => "Free", 'places' => 2, 'thousands' => ',', 'decimals' => '.');?>
                                 <?php $number->addFormat($order['Order']['currency'], array('before' => '$'));?>
-                                <?php echo $number->currency($shipment_price, $order['Order']['currency'], $options).$order['Order']['currency'];?> 
+                                <?php
+                                if (isset($shipment_price)) {
+                                    ?>
+                                    <?php echo $number->currency($shipment_price, $order['Order']['currency'], $options).$order['Order']['currency'];?> 
+                                    <?php
+                                }
+                                ?>
+                                
                             </td>
                         </tr>
                         <tr><td colspan="4" class="background_none" style="background: none;"><hr /></td></tr>
@@ -238,7 +248,14 @@ echo "</pre>";*/
                              	$options = array(
                              		'before' => '$', 'after' => 'c', 'zero' => "Free", 'places' => 2, 'thousands' => ',', 'decimals' => '.');?>
                                 <?php $number->addFormat($order['Order']['currency'], array('before' => '$'));?>
-                                <?php echo $number->currency(($temp + $shipment_price), $order['Order']['currency'], $options).$order['Order']['currency'];?> 
+                                <?php
+                                if (isset($shipment_price)) {
+                                ?>
+                                    <?php echo $number->currency(($temp + $shipment_price), $order['Order']['currency'], $options).$order['Order']['currency'];?> 
+                                <?php
+                                }
+                                ?>
+                                
                             </td>
                         </tr>
                     </table>

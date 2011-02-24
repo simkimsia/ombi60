@@ -17,11 +17,16 @@
         <label><?php __('Page Visibility');?></label>
  		<span class="hint">If you want to hide this page from your clients, choose hidden.</span>
  		<br>
-        <?php print ((bool)$webpage['Webpage']['visible'] ? "Published" : "Hidden")?>
-        <br><br>
-        <label>Author</label>
-        <br>
-        <?php print $webpage['Author']['full_name'];?>
+ 		<?php 
+        echo $this->Form->input('visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'selected' => $webpage['Webpage']['visible'])); 
+         ?>
+        <?php //print ((bool)$webpage['Webpage']['visible'] ? "Published" : "Hidden")?>
+        <br>        
+        <?php 
+        
+  		echo $this->Form->input('Webpage.author', array('options' => $authors, 'selected' => $webpage['Author']['full_name']));
+  		
+        //print $webpage['Author']['full_name'];?>
         <br>
     </fieldset>
   </div>	
