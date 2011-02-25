@@ -1,3 +1,4 @@
+<?php echo $this->element('admin_scripts'); ?>
 <?php
 
 	echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js');
@@ -34,10 +35,17 @@
 		return $array;
 	}
 	
-	
 ?>
-<div class="links index">
-	<h2><?php __('Links');?></h2>
+
+<div class="">
+	<h2 class="text_center"><?php __('Navigation & Menu Links');?></h2>
+	<div id="domain_intro_text">
+	    <strong>Link Lists</strong>
+	    <br>
+	    There are two link lists. One for the Main Menu you see at the top of your shop. 
+	    <br>
+	    One for the Footer you see at the bottom of your shop.	    
+	</div>
 	
 	<?php
 	foreach ($lists as $list):
@@ -53,48 +61,50 @@
 	
 	<style type="text/css">
 		.sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
-        	.sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px;}
+        .sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; /*background: url('/img/admin/icon_star_empty.gif') no-repeat left center #E4E4E4;*/}
+        .sortable li:hover
+        {
+            background: url('/img/admin/hand_icon.gif') no-repeat left center;
+        }
         </style>
-	
-	<table cellpadding="0" cellspacing="0">
+	<table cellpadding="0" cellspacing="0" class="products-table">
 	
 	
 		
 	<tr>
 		<?php
 		echo '
-		<table id="display_list_'.$listId.'">';
-		
-		
+		<table id="display_list_'.$listId.'" cellpadding="0" cellspacing="0" class="products-table">';		
 		echo '
-			<tr >
-				<td>
-					'.$listName.'
+			<tr class="background_gray" >
+				<td class="background_none" >
+					<strong>'.$listName.'</strong>
 				</td>
-				<td>
+				<td class="background_none" style="text-align: right;">
 					<a href="#" onclick="editListForm('.$listId.');return false;">Edit link list</a>
 				</td>
 			</tr>';
 		?>
 		
 		<tr>	
-			<th><?php echo 'Name';?></th>
-			<th><?php echo 'Route';?></th>
+			<th width="42%"><?php echo __('Name of link', true);?></th>
+			<th width="45%"><?php echo 'Route';?></th>
 			
 		</tr>
 		<tr>
-			<td>
+			<td colspan="2">
 				<ul class="sortable" id="display_links_sortable_<?php echo $listId; ?>">
 		<?php
 		$i = 0;
 		foreach ($list['Link'] as $link):
-			
-			
+    		$class = null;
+			if ($i++ % 2 == 0) {
+				$class = 'background_gray';
+			}			
 		?>
-		<li class="ui-state-default" id="displayrow_<?php echo $link['id']; ?>">
-			
-			<span><?php echo $link['name']; ?>&nbsp;</span>
-			<span><?php echo $this->Html->link($link['route'],
+		<li class="ui-state-default <?php echo $class;?>" id="displayrow_<?php echo $link['id']; ?>">
+			<span class="link_li"><?php echo $this->Html->link($link['name'], $link['route']); ?>&nbsp;</span>
+			<span class="link_li"><?php echo $this->Html->link($link['route'],
 							   $link['route']); ?>
 			</span>
 			
@@ -104,10 +114,13 @@
 					
 				</td>
 			</tr>
+			<tr><td colspan="2" style="background: none;">&nbsp;</td></tr>
+			<!--<tr><td colspan="2" class="background_gray" style="padding-top: 0px;padding-bottom: 0px;">&nbsp;</td></tr>
+			<tr><td colspan="2" style="background: none;">&nbsp;</td></tr>-->
 		<?php
 			$displayLinksSortable = 'display_links_sortable_'.$listId;
 			echo $this->Ajax->sortable($displayLinksSortable, array('update'=>"writeupdate('$displayLinksSortable')"));
-			echo '<tr id="new_link_'. $listId .'"><td><a href="#" onclick="showLinkForm('.$listId.');return false;">Add Link</a>&nbsp;</td></tr>';
+			echo '<tr id="new_link_'. $listId .'" class="background_gray"><td class="background_none" colspan="2"><a href="#" onclick="showLinkForm('.$listId.');return false;">Add Link</a>&nbsp;</td></tr>';
 			echo $this->element('add_link_form', array('linkListId'=>$listId, 'linkCount' => $linkCount));
 		?>
 				
@@ -116,18 +129,19 @@
 		<?php
 		echo $this->Form->create('Link', array('url'=>array('action'=>'edit',$listId)));
 		echo $this->Form->input('LinkList.id', array('type'=>'hidden', 'value'=>$listId));
-		echo '<table id="edit_list_'.$listId.'" style="display:none">';
+		echo '<table id="edit_list_'.$listId.'" style="display:none;" class="items-table">';
 		?>
 		<tr>
-			<?php echo "<td>$listName</td>"; ?>
+			<?php //echo "<td>$listName</td>"; ?>
+      <td><?php //echo __('Name of link list') ?></td>
 		</tr>
 		<?php
 		
 		echo '
 		<tr>	
-			<td>';
+			<td colspan="3">';
 		
-		echo $this->Form->input('LinkList.name', array('value'=>$listName));
+		echo $this->Form->input('LinkList.name', array('value'=>$listName, 'label' => __('Name of link list', true)));
 		
 				
 		echo '
@@ -151,7 +165,7 @@
 		<tr id="edit_row_<?php echo $linkId; ?>">
 			
 			<td>
-				<?php echo $this->Form->input('Link.'.$i.'.name', array('value'=>$link['name'])); ?>&nbsp;
+				<?php echo $this->Form->input('Link.'.$i.'.name', array('value'=>$link['name'], 'label' => FALSE, 'div' => false)); ?>&nbsp;
 				<?php echo $this->Form->input('Link.'.$i.'.id', array('type'=>'hidden',
 										      'value'=>$linkId)); ?>
 			</td>
@@ -175,7 +189,6 @@
 					      'selected' => $link['model'],
 					      'div'=>false,
 					      'label'=>false,
-					      'style'=>'width:100%;',
 					      'onchange'=>'resetLinkAction(\''.$i.'\', \''.$link['model'].'\', \''.$link['action'].'\')'));
 				
 				$options       = array();
@@ -198,7 +211,6 @@
 					$textBoxNeeded = true;
 				}
 				
-				
 				if ($actionNeeded) {
 					$displayVisible = '';
 					
@@ -219,13 +231,14 @@
 						'selected' => $link['action'],
 						'div'=>false,
 						'label'=>false,
-						'style'=>'width:100%;'.$displayVisible));
+						'style'=>$displayVisible,
+						));
 				
 				echo $this->Form->input('Link.'.$i.'.action1', array(
 						'value' => $link['action'],
 						'div'=>false,
 						'label'=>false,
-						'style'=>'width:100%;'.$textBoxVisible));
+						'style'=>$textBoxVisible));
 				
 				
 				?>
@@ -246,7 +259,7 @@
 		echo '
 		<tr id="new_edit_link_'. $listId .'">
 			<td>';
-		echo $this->Form->submit('Save changes');
+		echo $this->Form->submit('Save Changes', array('div' => false));
 		echo '&nbsp;or&nbsp;';
 		echo '<a href="#" onclick="cancelEditListForm('.$listId.')">Cancel</a>';
 		echo '
@@ -258,18 +271,18 @@
 		<?php echo $this->Form->end(); ?>
 	</tr>
 	</table>
+	<div class="clear">&nbsp;</div>
 <?php endforeach; ?>
-	<p>
 
 </div>
-<div class="actions">
+<!--<div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New Link', true), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('List Link Lists', true), array('controller' => 'link_lists', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Link List', true), array('controller' => 'link_lists', 'action' => 'add')); ?> </li>
 	</ul>
-</div>
+</div>-->
 
 <?php
 	# blog array;
@@ -341,7 +354,7 @@
 	function showLinkForm(id) {
 		
 		var linkForm = '#link-form-'+id;
-		
+		$('#new_link_'+id).hide();
 		$(linkForm).show();
 		
 	}

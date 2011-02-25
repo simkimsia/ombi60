@@ -9,7 +9,7 @@
 	echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
 ?>
 
-<div class="products form">
+<div>
 <h2 align="center"><?php __('Add your New Product');?></h2>
 <div align="center"><?php echo $this->Html->link(__('Cancel', true), array('action' => 'index', 'admin' => true)); ?></div>
 <?php

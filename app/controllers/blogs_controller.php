@@ -44,7 +44,12 @@ class BlogsController extends AppController {
 			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('blog', $this->Blog->read(null, $id));
+		$blog                         = $this->Blog->read(null, $id);
+		$this->paginate['conditions'] = array('Post.blog_id' => $blog['Blog']['id']);
+		$this->paginate['order']      = array('Post.created DESC');
+	    $posts                        = $this->paginate('Post');
+
+	    $this->set(compact('blog', 'posts'));	
 	}
 
 	function admin_add() {

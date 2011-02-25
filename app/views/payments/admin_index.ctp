@@ -1,67 +1,87 @@
 <?php
-
-	echo $this->Html->script('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
-
+echo $this->Html->script('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
 ?>
+<div>
+    <div class="text_center"><h2><?php __('Payments');?></h2></div>
 
-<div class="products index">
-<h2><?php __('Payment Settings');?></h2>
-
-	<?php
+    <div class="payments">
+        <div class="payment_left">
+            <?php echo $html->image('paypal_cc.gif', array('alt' => 'Paypal'));?>
+        </div>
+        <div class="payment_right">
+            <div class="service_class">Service: <strong>PayPal</strong></div>
+            <br>
+            Description: PayPal Express Checkout, PayPal Website Payments Standard 
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="payment_dropdown">
+        <?php
 	//echo '<pre/>';
 	//print_r($paypalPaymentModule);
 	
 	if ($paypalPaymentModule) {
 		
 		$id = $paypalPaymentModule['PaypalPaymentModule']['shop_payment_module_id'];
-	
-		echo '<div id="activate-paypal-'.$id.'" style="padding-top: 10px;" class="payment">';
-		
-		echo 'Using method:<strong>' . $paypalPaymentModule['PaypalPaymentModule']['name'] . '</strong>';
-		
-		echo '<a href="#" onclick="toggleEditForm('.$id.', \'paypal\');return false;">edit</a>';
-		
-		echo $this->Html->link(__('Turn Off', true),
-				       array(
-					'controller' => 'payments',
-					   'action' => 'delete_custom_payment',
-					   'admin' => true,
-					     $id),
-				       array('class'=>'actions'),
-				       __('Are you sure?', true)); 
-		
-		
-		echo '</div>';
+	    ?>
+	        <div id="activate-paypal-<?php echo $id; ?>" style="padding-top: 10px;" class="payment">
+                <ul class="method_list">
+                    <li class="payment_name"><span>Using method:<strong> <?php echo $paypalPaymentModule['PaypalPaymentModule']['name'];?></strong></span></li>
+                    <li class="payment_edit"><span><a href="#" onclick="toggleEditForm('<?php echo $id; ?>', 'paypal');return false;">edit</a></span></li>
+                    <li class="payment_turn_off"><?php
+                     echo $this->Html->link(__('Turn Off', true),
+				           array(
+					    'controller' => 'payments',
+					       'action' => 'delete_custom_payment',
+					       'admin' => true,
+					         $id),
+				           array('class'=>'actions'),
+				           __('Are you sure you want to turn off this payment method?', true)); 
+                    ?></li>
+                </ul>
+            <div class="clear">&nbsp;</div>
+		    </div>
+		<?php
 		
 		$spmID = $paypalPaymentModule['PaypalPaymentModule']['shop_payment_module_id'];
 		$ppmID = $paypalPaymentModule['PaypalPaymentModule']['id'];
+		?>
+		<div class="payment" style="display:none;" id="form-edit-paypal-<?php echo $spmID;?>">
+		<?php
 		
-		echo '<div class="payment" style="display:none;border-top:1px solid rgb(221, 221, 221);padding-bottom:10px;" id="form-edit-paypal-'.$spmID.'">';
 		
 		echo $this->Form->create('PaypalPaymentModule', array('url'=>array('controller' => 'payments',
 								      'action' => 'edit_paypal_payment',
 								      'admin' => true,
 									$ppmID
 									)));
-	
-		echo $this->Form->input('account_email', array('value'=>$paypalPaymentModule['PaypalPaymentModule']['account_email'], 'id'=>'EditPaypalPaymentModuleName'.$spmID));
+	    ?>
+	    <div class="email_div">
+	        <?php
+	            echo $this->Form->input('account_email', array('value'=>$paypalPaymentModule['PaypalPaymentModule']['account_email'], 'id'=>'EditPaypalPaymentModuleName'.$spmID, 'div' => FALSE, 'label' => 'PayPal Account Email'));
 		echo $this->Form->input('PaypalPaymentModule.shop_payment_module_id', array('value'=>$spmID, 'type'=>'hidden'));
+	        ?>
+	    </div>
+	    <div class="description_div">
+	        <?php
 		
-		if (strpos($paypalPaymentModule['PaypalPaymentModule']['name'], 'Website Payments Standard') >= 0) {
-			echo '	<div id="paypalWPSDescription">
-	Please provide your PayPal Website Payments Standard account credentials.  Sign up for a PayPal account now<br />PayPal: Proven to increase sales. According to Jupiter Research, 23% of online shoppers like to pay with PayPal.* If you offer your visitors the choice to pay with PayPal, they may be more likely to buy.<br /> *September 2007 Jupiter Research study of payment preferences online. See a demo of Paypal Website Payments Standard
-		</div>';	
-		} else if (strpos($paypalPaymentModule['PaypalPaymentModule']['name'], 'Website Payments Standard') >= 0) {
-			echo '	<div id="paypalECDescription" >
-	Please provide your PayPal Express Checkout account credentials.  Sign up for a PayPal account nowYou must have a PayPal business account and you must grant Shopify third-party API Access in your PayPal profile:Navigate to the Give Third-Party API Permission PageEnter scott_api1.jadedpixel.com as the API Partner Username.Check all of the boxes: Direct Payment, Express Checkout, Reporting and Backoffice APIs, Authorization and Settlement APIs, and click Submit.On the following screen click the Give Permission button.Click the Edit button to edit the permissions and check ManagePendingTransactionStatus. Click Submit.PayPal: Proven to increase sales. According to Jupiter Research, 23% of online shoppers like to pay with PayPal.* If you offer your visitors the choice to pay with PayPal, they may be more likely to buy.* September 2007 Jupiter Research study of payment preferences online.See a demo of Paypal Express Checkout
-		</div>';
-		}
-		
-		echo $this->Form->submit('Save');
+		    if (strpos($paypalPaymentModule['PaypalPaymentModule']['name'], 'Website Payments Standard') >= 0) {
+		        echo $this->element('paypal_description');
+		    } else if (strpos($paypalPaymentModule['PaypalPaymentModule']['name'], 'Website Payments Standard') >= 0) {
+		        echo $this->element('paypal_express_description');
+		    }
+		?>
+	    </div>
+	    <div class="clear"></div>
+	    <div class="border_bottom"></div>
+		<?php
+		echo $this->Form->submit('Save', array('div' => false));
+		echo "&nbsp;or&nbsp;";
 		echo '<a href="#" onclick="toggleEditForm('.$id.', \'paypal\');return false;">Cancel</a>';
 		echo $this->Form->end();
-		
-		echo '</div>';
+		?>
+		</div>
+		<?php
 		
 	} else {
 		
@@ -69,155 +89,170 @@
 							      'action' => 'add_paypal_payment',
 							   'admin' => true)));
 	
-		echo '<div>';
-		
+
 		$paypalOptions = array(''=>'I do not use Paypal',
-				       'Website Payments Standard' => 'Paypal Website Payments Standard',
+				       'Website Payments Standard' => 'PayPal Website Payments Standard',
 				       'Express Checkout' => 'Paypal Express Checkout');
 		echo $this->Form->input('PaypalPaymentModule.name', array('options'=>$paypalOptions,
 									  'id'=>'paypalPaymentSelect',
-									  'label' => false));
+									  'label' => false,
+									  'div' => FALSE,
+									  'class' => 'custom_select',
+									  ));
 		
-		echo '</div>';
-		
-		
-		echo '<div id="paypalForm" style="display:none">';
-		echo $this->Form->input('account_email');
-		
-		echo '	<div id="paypalWPSDescription" style="display:none">
-		Please provide your PayPal Website Payments Standard account credentials.  Sign up for a PayPal account now<br />PayPal: Proven to increase sales. According to Jupiter Research, 23% of online shoppers like to pay with PayPal.* If you offer your visitors the choice to pay with PayPal, they may be more likely to buy.<br /> *September 2007 Jupiter Research study of payment preferences online. See a demo of Paypal Website Payments Standard
-			</div>';
-		echo '	<div id="paypalECDescription" style="display:none">
-		Please provide your PayPal Express Checkout account credentials.  Sign up for a PayPal account nowYou must have a PayPal business account and you must grant Shopify third-party API Access in your PayPal profile:Navigate to the Give Third-Party API Permission PageEnter scott_api1.jadedpixel.com as the API Partner Username.Check all of the boxes: Direct Payment, Express Checkout, Reporting and Backoffice APIs, Authorization and Settlement APIs, and click Submit.On the following screen click the Give Permission button.Click the Edit button to edit the permissions and check ManagePendingTransactionStatus. Click Submit.PayPal: Proven to increase sales. According to Jupiter Research, 23% of online shoppers like to pay with PayPal.* If you offer your visitors the choice to pay with PayPal, they may be more likely to buy.* September 2007 Jupiter Research study of payment preferences online.See a demo of Paypal Express Checkout
-			</div>';
+		?>
+		<div id="paypalForm" style="display:none">
+		    <div class="email_div">
+		        <?php echo $this->Form->input('account_email');?>    
+		    </div>
+		    <div class="description_div">
+		        <?php echo $this->element('paypal_description');?>
+                <?php echo $this->element('paypal_express_description');?>
+		    </div>
+		    <div class="clear"></div>
+		    <div class="border_bottom"></div>
+		<?php
 			
-		echo $this->Form->submit('Turn On');
-		echo '</div>';
-		echo $this->Form->end();
-	
-		
-	}
-	
-	
-	
-	
+		echo $this->Form->submit('Turn On', array('div' => FALSE));
+		?>
+		</div>
+		<?php
+		echo $this->Form->end();		
+	}	
 	?>
-
-
-	<div id="custom_payment_gateway" style="padding: 0px 10px 0pt; margin-bottom: 0pt; border-top: 1px solid rgb(221, 221, 221);">
-
+	    <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        
+    </div>
+    <div class="payments">
+        <div class="payment_left">
+            <?php echo $html->image('custom_payment_method.gif', array('alt' => 'Custom'));?>
+        </div>
+        <div class="payment_right">
+            <div class="service_class">Service: <strong>Custom Payment Methods</strong></div>
+            <br>
+            Description: Cash On Delivery, Money Order, Internet Banking and Others
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        
+        <div class="payment_dropdown">
+            <div id="custom_payment_gateway">	
+	        <?php
+	            $count = count($customPaymentModules);
 	
-	<?php
+	            $codPresent = false;
+	            $moPresent = false;
+	            $ibPresent = false;
 	
-	$count = count($customPaymentModules);
+	            if ($count > 0) {
+	            ?>
+	                <div class="payment">
+	                    <div>
+	            <?php
+	            }
 	
-	$codPresent = false;
-	$moPresent = false;
-	$ibPresent = false;
+	            foreach($customPaymentModules as $key => $paymentModule):
+		            if (!$codPresent)
+			            $codPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Cash On Delivery');
+		            if (!$moPresent)
+			            $moPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Money Order');
+		            if (!$ibPresent)
+			            $ibPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Internet Banking Transfer');
 	
-	if ($count > 0) {
-		echo '<div class="payment">';
-		echo '<div>';
-	}
-	
-	foreach($customPaymentModules as $key => $paymentModule):
-		if (!$codPresent)
-			$codPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Cash On Delivery');
-		if (!$moPresent)
-			$moPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Money Order');
-		if (!$ibPresent)
-			$ibPresent = ($paymentModule['CustomPaymentModule']['name'] == 'Internet Banking Transfer');
-	
-		$id = $paymentModule['CustomPaymentModule']['shop_payment_module_id'];
-	
-		echo '<div id="activate-custom-'.$id.'" style="padding-top: 10px;" class="payment">';
+		            $id = $paymentModule['CustomPaymentModule']['shop_payment_module_id'];
+	                ?>
+                    <div id="activate-custom-'<?php echo $id;?>'" style="padding: 10px 2px;" class="payment">
+                        <ul class="method_list">
+                            <li class="payment_name"><span>Using method:<strong> <?php echo $paymentModule['CustomPaymentModule']['name'];?></strong></span></li>
+                            <li class="payment_edit"><span><a href="#" onclick="toggleEditForm('<?php echo $id; ?>', 'custom');return false;">edit</a></span></li>
+                            <li class="payment_turn_off"><?php
+                             echo $this->Html->link(__('Turn Off', true),
+				                   array(
+					            'controller' => 'payments',
+					               'action' => 'delete_custom_payment',
+					               'admin' => true,
+					                 $id),
+				                   array('class'=>'actions'),
+				                   __('Are you sure you want to turn off this payment method?', true)); 
+                            ?></li>
+                        </ul>
+                    </div>
+                    <div class="clear">&nbsp;</div>
+                    <div class="border_bottom"></div>
+	                <?php		
 		
-		echo 'Using method:<strong>' . $paymentModule['CustomPaymentModule']['name'] . '</strong>';
+		            $spmID = $paymentModule['CustomPaymentModule']['shop_payment_module_id'];
+		            $cpmID = $paymentModule['CustomPaymentModule']['id'];
+		            ?>
+                    <div class="payment" style="display:none;" id="form-edit-custom-<?php echo $spmID;?>">
+		            <?php
 		
-		echo '<a href="#" onclick="toggleEditForm('.$id.', \'custom\');return false;">edit</a>';
-		
-		echo $this->Html->link(__('Turn Off', true),
-				       array(
-					'controller' => 'payments',
-					   'action' => 'delete_custom_payment',
-					   'admin' => true,
-					     $id),
-				       array('class'=>'actions'),
-				       __('Are you sure?', true)); 
-		
-		
-		
-		
-		echo '</div>';
-		
-		$spmID = $paymentModule['CustomPaymentModule']['shop_payment_module_id'];
-		$cpmID = $paymentModule['CustomPaymentModule']['id'];
-		
-		echo '<div class="payment" style="display:none;border-top:1px solid rgb(221, 221, 221);padding-bottom:10px;" id="form-edit-custom-'.$spmID.'">';
-		
-		echo $this->Form->create('CustomPaymentModule', array('url'=>array('controller' => 'payments',
-								      'action' => 'edit_custom_payment',
-								      'admin' => true,
-									$cpmID
-									)));
+		            echo $this->Form->create('CustomPaymentModule', array('url'=>array('controller' => 'payments',
+								                  'action' => 'edit_custom_payment',
+								                  'admin' => true,
+									            $cpmID
+									            )));
 	
-		echo $this->Form->input('name', array('value'=>$paymentModule['CustomPaymentModule']['name'], 'id'=>'EditCustomPaymentModuleName'.$spmID));
-		echo $this->Form->input('CustomPaymentModule.shop_payment_module_id', array('value'=>$spmID, 'type'=>'hidden'));
-		echo $this->Form->input('instructions', array('type'=>'textarea', 'value'=> $paymentModule['CustomPaymentModule']['instructions']));
-		echo $this->Form->submit('Save');
-		echo '<a href="#" onclick="toggleEditForm('.$id.', \'custom\');return false;">Cancel</a>';
-		echo $this->Form->end();
-		
-		echo '</div>';
-	
-	?>
-	
-	
-	
-	<?php endforeach;
-	if ($count > 0) {
-		echo '</div>';
-		echo '</div>';
-	}
-	
-	?>
-	
-	
-
-	<?php
-	echo '<div>';
-	echo '<select id="customPaymentSelect" >
-			<option value="">Select a custom payment mode to add</option>
-			<option value="">------</option>';
+		            echo $this->Form->input('name', array('value'=>$paymentModule['CustomPaymentModule']['name'], 'id'=>'EditCustomPaymentModuleName'.$spmID));
+		            echo $this->Form->input('CustomPaymentModule.shop_payment_module_id', array('value'=>$spmID, 'type'=>'hidden'));
+		            ?>
+		            <span class="hint">Enter instructions. We wil display to the customer when they are checking out.</span>
+		            <?php
+		            echo $this->Form->input('instructions', array('type'=>'textarea', 'value'=> $paymentModule['CustomPaymentModule']['instructions'], 'label' => FALSE));
+		            echo $this->Form->submit('Save', array('div' => FALSE));
+		            ?>
+		            &nbsp;or&nbsp;
+		            <a href="#" onclick="toggleEditForm('<?php echo $id;?>', 'custom');return false;">Cancel</a>
+		            <?php		            
+		            echo $this->Form->end();
+		            ?>
+		            </div>
+	            <?php endforeach;
+	                if ($count > 0) {
+	                    ?>
+	                        </div>
+	                    </div>
+	                    <?php
+	                }
+	            ?>
+	            <div class="clear"></div>
+	            
+	            <select id="customPaymentSelect" class="custom_select">
+			        <option value="">Select a custom payment mode to add</option>
+			        <option value="">------</option>';
 			
-	if (!$codPresent) echo	'	<option value="Cash On Delivery">Cash On Delivery</option>';
-	if (!$moPresent) echo '		<option value="Money Order">Money Order</option>';
-	if (!$ibPresent) echo '		<option value="Internet Banking Transfer">Internet Banking Transfer</option>';
-	echo '		<option value="">------</option>
-			<option value="custom">Create new custom payment mode</option>
-		</select>';
-	echo '</div>';
+	                <?php if (!$codPresent) { ?><option value="Cash On Delivery">Cash On Delivery</option><?php } ?>
+	                <?php if (!$moPresent) { ?><option value="Money Order">Money Order</option><?php } ?>
+	                <?php if (!$ibPresent) { ?><option value="Internet Banking Transfer">Internet Banking Transfer</option><?php } ?>
+	                <option value="">------</option>
+			        <option value="custom">Create new custom payment mode</option>
+		        </select>
+		        <div class="clear"></div>
+                <div class="border_bottom"></div>
+                <div id="customForm" style="display:none">
+	            <?php
+	                echo $this->Form->create('CustomPaymentModule', array('url'=>array('controller' => 'payments',
+							                      'action' => 'add_custom_payment',
+							                   'admin' => true)));
 	
-	echo '<div id="customForm" style="display:none">';
-	echo $this->Form->create('CustomPaymentModule', array('url'=>array('controller' => 'payments',
-							      'action' => 'add_custom_payment',
-							   'admin' => true)));
-	
-	echo $this->Form->input('name');
-	echo $this->Form->input('instructions', array('type'=>'textarea'));
-	
-	echo $this->Form->end('Turn On');
-	echo '</div>';
-	
-	
-	?>
-
-	
-
-
-	
-
-	</div>	
+	                echo $this->Form->input('name');
+	                ?>
+	                <span class="hint">Enter instructions. We wil display to the customer when they are checking out.</span>
+	                <?php
+	                echo $this->Form->input('instructions', array('type'=>'textarea', 'label' => FALSE));
+	                echo $this->Form->submit('Save', array('div' => FALSE));
+	                ?>
+	                &nbsp;or&nbsp;
+	                <a href="#" onclick="$('#customForm').hide(); return false;">Cancel</a>
+	                <?php
+	                echo $this->Form->end();
+	            ?>
+                </div>
+        </div>
+        <div class="clear"></div>
+    </div>	
 </div>
 
 

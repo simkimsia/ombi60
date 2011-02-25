@@ -1,74 +1,22 @@
-<div class="blogs view">
-<h2><?php  __('Blog');?></h2>
-	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['name']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Link'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php
-				$link = Router::url('/blogs/', true) . $blog['Blog']['short_name'];
-				echo $this->Html->link($link,
-						       $link,
-						       array('target'=>'_blank')); ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Description'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['description']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Theme'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['theme']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Created'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['created']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modified'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $blog['Blog']['modified']; ?>
-			&nbsp;
-		</dd>
-	</dl>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('Edit Blog', true), array('action' => 'edit', $blog['Blog']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('Delete Blog', true), array('action' => 'delete', $blog['Blog']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $blog['Blog']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('Blogs & Pages', true), array('controller'=>'webpages','action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Post', true), array('controller' => 'posts', 'action' => 'add', 'blog_id'=>$blog['Blog']['id'])); ?> </li>
-	</ul>
-</div>
-<div class="related">
-	<h3><?php __('Related Posts');?></h3>
-	<?php if (!empty($blog['Post'])):?>
-	<table cellpadding = "0" cellspacing = "0">
+<div class="internal_forms">
+    <div class="text_center">
+        <h2><?php echo $blog['Blog']['name']; ?></h2>
+        <?php echo $this->Html->link(__('Write a new article', true), array('controller' => 'posts', 'action' => 'add', 'blog_id'=>$blog['Blog']['id'])); ?>|
+        <?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $blog['Blog']['id'])); ?>|
+        <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $blog['Blog']['id']), null, sprintf(__('Are you sure you want to delete this blog?', true))); ?>|
+        <?php echo $this->Html->link(__('Back to Blogs', true), array('controller'=>'webpages','action' => 'index')); ?>
+    </div>
+
+
+<?php if (!empty($blog['Post'])):?>
+    <?php echo $this->element('action_buttons', array('modelName' => 'Post', 'deleteConfirm' => sprintf(__('Are you sure you want to delete this blog?', true)), 'deleteURL' => '/admin/blogs/delete/'.$blog['Blog']['id']));?>
+	<table cellpadding = "0" cellspacing = "0" class="products-table">
 	<tr>
-		<th><?php __('Id'); ?></th>
-		<th><?php __('Blog Id'); ?></th>
-		<th><?php __('Author Id'); ?></th>
-		<th><?php __('Status'); ?></th>
-		<th><?php __('Title'); ?></th>
-		<th><?php __('Slug'); ?></th>
-		<th><?php __('Body'); ?></th>
-		<th><?php __('No Comments'); ?></th>
-		<th><?php __('Allow Comments'); ?></th>
-		<th><?php __('Allow Pingback'); ?></th>
-		<th><?php __('Created'); ?></th>
-		<th><?php __('Modified'); ?></th>
-		<th class="actions"><?php __('Actions');?></th>
+	    <th>&nbsp;</th>
+		<th width="60%"><?php __('Title'); ?></th>
+		<th class="center_align" width="15%"><?php __('Created'); ?></th>
+		<th class="center_align" width="15%"><?php __('Modified'); ?></th>
+		<!--<th class="center_align" width="25%"><?php __('Actions');?></th>-->
 	</tr>
 	<?php
 		$i = 0;
@@ -79,26 +27,31 @@
 			}
 		?>
 		<tr<?php echo $class;?>>
-			<td><?php echo $post['id'];?></td>
-			<td><?php echo $post['blog_id'];?></td>
-			<td><?php echo $post['author_id'];?></td>
-			<td><?php echo $post['status'];?></td>
-			<td><?php echo $post['title'];?></td>
-			<td><?php echo $post['slug'];?></td>
-			<td><?php echo $post['body'];?></td>
-			<td><?php echo $post['no_comments'];?></td>
-			<td><?php echo $post['allow_comments'];?></td>
-			<td><?php echo $post['allow_pingback'];?></td>
-			<td><?php echo $post['created'];?></td>
-			<td><?php echo $post['modified'];?></td>
-			<td class="actions">
+		    <td width="5%" align="center"><?php echo $form->input('check_box_id', array('value' => $post['blog_id'], 'class' => 'checkbox_check', 'type' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>
+			<td>
+        <?php echo $this->Html->link($post['title'], array('controller' => 'posts', 'action' => 'view', $post['blog_id'], $post['id']));
+           if (!(bool)$post['status']) { ?>
+            <span class="hidden_gray">Hidden</span>
+        <?php }?>
+      </td>
+			<td><?php echo date('D, M dS Y, h:i', strtotime($post['created']));?></td>
+			<td><?php echo date('D, M dS Y, h:i', strtotime($post['modified']));?></td>
+			<!--<td class="actions">
 				<?php echo $this->Html->link(__('Edit', true), array('controller' => 'posts', 'action' => 'edit', 'blog_id'=>$post['blog_id'],'id'=>$post['id'])); ?>
-				<?php echo $this->Html->link(__('Delete', true), array('controller' => 'posts', 'action' => 'delete', 'blog_id'=>$post['blog_id'],'id'=>$post['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $post['id'])); ?>
-			</td>
+				<?php echo $this->Html->link(__('Delete', true), array('controller' => 'posts', 'action' => 'delete', 'blog_id'=>$post['blog_id'],'id'=>$post['id']), null, sprintf(__('Are you sure you want to delete this article?', true), $post['id'])); ?>
+			</td>-->
 		</tr>
 	<?php endforeach; ?>
 	</table>
-<?php endif; ?>
-
-	
+    <?php 
+    if ($paginator->params['paging']['Post']['pageCount'] > 1) {
+    ?>
+        <div class="text_center" style="width: 85%;">
+            <?php echo $this->element('pagination', array('modelName' => 'Post'));?> 
+        </div>
+    <?php
+    }
+    ?>
+	<?php endif; ?>
+    
 </div>

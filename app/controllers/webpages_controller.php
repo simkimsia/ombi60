@@ -62,6 +62,9 @@ class WebpagesController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('webpage', $this->Webpage->read(null, $id));
+		$authors = $this->Webpage->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
+
+		$this->set(compact('authors'));
 	}
 
 	function admin_add() {

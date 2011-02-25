@@ -23,7 +23,6 @@ class PostsController extends AppController {
 
 
 	function view($short_name = false, $id = false, $slug = false) {
-		
 		if (!$short_name || !$id) {
 			$this->Session->setFlash(sprintf(__('Invalid %s', true), 'post'));
 			$this->redirect(array('action' => 'index'));
@@ -39,7 +38,6 @@ class PostsController extends AppController {
 							 'fields'=>array('Post.*',
 									 'Blog.name',
 									 'Blog.short_name')));
-		
 		$this->set(compact('post'));
 		
 		
@@ -84,7 +82,10 @@ class PostsController extends AppController {
 		
 		$post = $this->Post->find('first', array('conditions'=>array('Post.id'=>$id,
 									     'Post.blog_id'=>$blog_id)));
-		$this->set(compact('post'));
+		$authors = $this->Post->Blog->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
+		$this->set(compact('post', 'authors'));
+
+		
 	}
 
 	function admin_add($blog_id = false) {
@@ -108,8 +109,9 @@ class PostsController extends AppController {
 		}
 		
 		$authors = $this->Post->Blog->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
-		
-		$this->set(compact('blog_id', 'authors'));
+		$blog_name_info = $this->Post->find('first', array('conditions' => array('Post.blog_id' => $blog_id), 'fields' => array('Blog.name')));
+		$blog_name = $blog_name_info['Blog']['name'];
+		$this->set(compact('blog_id', 'authors', 'blog_name'));
 	}
 
 	function admin_edit($blog_id = false, $id = false) {

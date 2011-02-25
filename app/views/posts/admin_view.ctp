@@ -1,4 +1,37 @@
-<div class="posts view">
+<div class="webpages">
+    <div class="text_center">
+        <h2>
+          <?php echo $post['Post']['title']; ?>
+        </h2>
+        <?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $post['Blog']['id'], $post['Post']['id'])); ?>|
+        <?php echo $this->Html->link(__('All articles', true), array('controller' => 'blogs', 'action' => 'view', $post['Blog']['id'])); ?>|
+          <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $post['Post']['id']), null, sprintf(__('Are you sure you want to delete this post?', true), $post['Post']['id'])); ?>
+          
+  </div>
+  <div class="view_textarea">
+    <?php echo $post['Post']['body']; ?>
+  </div>
+  <div>
+    <fieldset>
+        <legend>Properties</legend>
+        <label><?php __('Article Visibility');?></label>
+ 		<span class="hint">If you want to hide this article from your clients, choose</span>
+ 		<br>
+ 		<?php 
+        echo $this->Form->input('visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'selected' => $post['Post']['status'])); 
+         ?>
+        <?php //print ((bool)$post['Post']['status'] ? "Published" : "Hidden")?>
+        <br>
+        <?php        
+  		echo $this->Form->input('Post.author', array('options' => $authors, 'selected' => $post['Author']['full_name']));  		
+        //print $webpage['Author']['full_name'];?>
+        <?php //print $post['Author']['full_name'];?>
+        <br>
+    </fieldset>
+  </div>	
+</div>
+
+<!--<div class="posts view">
 <h2><?php  __('Post');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
@@ -129,4 +162,4 @@
 			<li><?php echo $this->Html->link(__('New Comment', true), array('controller' => 'comments', 'action' => 'add'));?> </li>
 		</ul>
 	</div>
-</div>
+</div>-->

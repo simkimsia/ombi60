@@ -41,7 +41,7 @@
 			
 			echo $this->Html->css('saved_themes');
 		}
-
+        echo $this->Html->script('jquery.js'); 
 		echo $scripts_for_layout;
 	?>
 </head>
@@ -119,7 +119,7 @@
 
 			<?php echo $this->Session->flash(); ?>
 			
-			<?php echo $this->element('admin_scripts'); ?>
+			<?php //echo $this->element('admin_scripts'); ?>
 
 			<?php echo $content_for_layout; ?>
 

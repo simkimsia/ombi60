@@ -1,3 +1,4 @@
+<?php echo $this->element('admin_scripts'); ?>
 <div>
 	<h2 class="text_center"><?php __('Domains');?></h2>
 	<div id="domain_intro_text">

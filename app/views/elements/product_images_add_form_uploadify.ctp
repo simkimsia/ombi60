@@ -1,62 +1,57 @@
-<div class="products form">
-
+<?php
+	echo $this->Html->script('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
+	
+	// include uploadify specific js files
+	echo $this->Html->script('/uploadify/js/jquery.uploadify.v2.1.0.min');
+	echo $this->Html->script('/uploadify/js/swfobject');
+	
+	echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
+?>
 <?php
 	echo $this->element('errors', array('errors' => $errors));
-	echo $this->Form->create('ProductImage' , array('id' => 'ProductImageAdminAddByProductForm',
+	/*echo $this->Form->create('ProductImage' , array('id' => 'ProductImageAdminAddByProductForm',
 							'type'=>'file',
                                                         'url' => array('controller' => 'product_images',
                                                                         'action' => 'add_by_product',
                                                                         'product_id' => $product_id,
                                                                        ),
-                                                        ));
+                                                        ));*/
 ?>
-	<fieldset>
- 		<legend><?php __('Images');?></legend>
-	<?php
-		echo $this->Form->input('product_id', array('type'=>'hidden', 'value'=>$product_id));
-		echo $this->Form->input('imagesCount', array('type'=>'hidden', 'value'=>count($productImages)));
-	?>
-		<input type="file" name="uploadify" id="fileInput" />
-		
-		
-	<div class="products ">
-	<a name="images"></a>
-		<div class="">
-		<ul id="product_images-list" class="product_image-thumbs">
-		
-		
-		
-		<?php
-		
-		echo $this->element('product_images_ajax_list');
-		
-		?>
-		</ul>
-		</div>
-		
-	</div>
-		
-	</fieldset>
-<?php echo $this->Form->end('Submit');?>
+	<fieldset class="right">
+ 		<legend><?php __('Product Images');?></legend>
+	    <div>
+            <?php
+	            echo $this->Form->input('product_id', array('type'=>'hidden', 'value'=>$product_id, 'div' => FALSE));
+	            echo $this->Form->input('imagesCount', array('type'=>'hidden', 'value'=>count($productImages)));
+            ?>
+	            <input type="file" name="uploadify" id="fileInput" />
+	
+	
+           
+                <a name="images"></a>
+	            <div class="">
+	                <ul id="product_images-list" class="product_image-thumbs">		
+	                    <?php echo $this->element('product_images_ajax_list');?>
+	                </ul>
+	            </div>
+	
+            </div>		
+    </fieldset>
 
-
-	<div id="dummyTrashLinkDiv" style="display:none;">
-		<?php
-			$trashPic = $this->Html->image('trash.gif');
-			// before changing this code, please double check against the bindNewClick js function below.
-			// that will append in the ajax call for those dynamically generated images.
-			echo $this->Ajax->link($trashPic,
-						     array('controller' => 'product_images', 'action' => 'delete', 'id'=>0, 'product_id'=>$product_id),
-						     array('id'=>'dummy',
-							   'complete' => "afterDelete(request.responseText);",
-							   'escape' => false,
-							   'indicator' => 'busy-indicator',
-							   'confirm' => sprintf(__('Are you sure you want to delete %s?', true), 'fakefilename')));
-		?>
-	</div>
-
-</div>
-
+    <div id="dummyTrashLinkDiv" style="display:none;">
+        <?php
+            $trashPic = $this->Html->image('trash.gif');
+            // before changing this code, please double check against the bindNewClick js function below.
+            // that will append in the ajax call for those dynamically generated images.
+            echo $this->Ajax->link($trashPic,
+			                 array('controller' => 'product_images', 'action' => 'delete', 'id'=>0, 'product_id'=>$product_id),
+			                 array('id'=>'dummy',
+				               'complete' => "afterDelete(request.responseText);",
+				               'escape' => false,
+				               'indicator' => 'busy-indicator',
+				               'confirm' => sprintf(__('Are you sure you want to delete %s?', true), 'fakefilename')));
+        ?>
+    </div>
 <script type="text/javascript" language="javascript">
 
 	var product_id = '<?php echo $product_id; ?>';

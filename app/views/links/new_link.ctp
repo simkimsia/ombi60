@@ -19,15 +19,15 @@
 	
         <li id="displayrow_<?php echo $linkId; ?>">
 		
-		<span><?php echo $linkName; ?>&nbsp;</span>
-		<span><?php echo $this->Html->link($linkRoute,
+		<span class="link_li"><?php echo $linkName; ?>&nbsp;</span>
+		<span class="link_li"><?php echo $this->Html->link($linkRoute,
 						 $linkRoute); ?>&nbsp;</span>
 	    
 	</li>&copy;
 	<tr id="edit_row_<?php echo $linkId; ?>">
 			
                 <td>
-                        <?php echo $this->Form->input('Link.' . $order . '.name', array('value'=>$linkName));
+                        <?php echo $this->Form->input('Link.' . $order . '.name', array('value'=>$linkName, 'label' => FALSE, 'div' => FALSE));
                         ?>&nbsp;
                         <?php echo $this->Form->input('Link.' . $order . '.id', array('type'=>'hidden',
                                                                               'value'=>$linkId)); ?>
@@ -50,7 +50,6 @@
                                                                                         'selected' => $linkModel,
                                                                                         'div'=>false,
                                                                                         'label'=>false,
-                                                                                        'style'=>'width:100%;',
                                                                                         'onchange'=>'resetLinkAction(\''.$order.'\', \''.$linkModel.'\', \''.$linkAction.'\')'));
                         
                         if ($actionNeeded) {
@@ -70,13 +69,13 @@
                                                                                     'selected' => $linkAction,
                                                                                     'div'=>false,
                                                                                     'label'=>false,
-                                                                                    'style'=>'width:100%;'.$displayVisible));
+                                                                                    'style'=>$displayVisible));
                         
                         echo $this->Form->input('Link.'.$order.'.action1', array(
 						'value' => $linkAction,
 						'div'=>false,
 						'label'=>false,
-						'style'=>'width:100%;'.$textBoxVisible));
+						'style'=>$textBoxVisible));
                         
                         ?>
                 &nbsp;

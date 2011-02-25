@@ -107,14 +107,14 @@
 		</ul>
 	</div>
 	
-	<span id="contentInOverallContainer" class="<?php if (!empty($classForContentContainer)) echo $classForContentContainer; ?>">
+	<div id="contentInOverallContainer" class="<?php if (!empty($classForContentContainer)) echo $classForContentContainer; ?>">
 	<?php
                 if (!empty($content_for_layout)) {
 			echo $this->Session->flash(); 
                         echo $content_for_layout;
                 }
         ?>
-	</span>
+	</div>
 
 	<div id="footer">
 		Copyright &copy; <?php echo $companyName; ?> <?php echo date('Y'); ?><br />

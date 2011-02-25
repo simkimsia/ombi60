@@ -1,4 +1,4 @@
-<div class="blogs index">
+<div class="blogs">
 	<h2><?php __('Blogs');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>

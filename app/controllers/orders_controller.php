@@ -125,8 +125,17 @@ class OrdersController extends AppController {
 			$this->redirect(array('action' => 'index',
 					      'admin' => true));
 		}
-		
+		$module_name = "";
 		$order = $this->Order->getDetailed($id);
+		if (!empty($order) && isset($order['Payment'][0]['shops_payment_module_id'])) {
+		    $shops_payment_module_id = $order['Payment'][0]['shops_payment_module_id'];
+		    $conditions = array('ShopsPaymentModule.id' => array($shops_payment_module_id));
+		    $payment_module_name = $this->Order->Payment->ShopsPaymentModule->find('first', array(
+                                                                                     'conditions' => $conditions,
+                                                                                     'fields' => array('ShopsPaymentModule.display_name'),
+                                                                                    ));            
+            $module_name = $payment_module_name['ShopsPaymentModule']['display_name'];
+		}
 		
 		if (!$this->checkCorrectShop($order['Order']['shop_id'])) {
 			$this->Session->setFlash(__('You do not have the permission to view this order', true), 'default', array('class'=>'flash_failure'));
@@ -134,7 +143,7 @@ class OrdersController extends AppController {
 					      'admin' => true));
 		}
 		
-		$this->set('order', $order);
+		$this->set(compact('order', 'module_name'));
 	}
 	
 	function view($id = null) {

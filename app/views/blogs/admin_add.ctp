@@ -1,20 +1,23 @@
-<div class="blogs form">
+<div class="internal_forms">
+    <div class="text_center">
+        <h2><?php __('Add your New Blog');?></h2>
+        <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'webpages','action' => 'index')); ?>
+    </div>
+
+
 <?php echo $this->Form->create('Blog');?>
 	<fieldset>
- 		<legend><?php __('Admin Add Blog'); ?></legend>
+ 		<legend><?php __('New Blog'); ?></legend>
+ 		<label><?php __('Title');?></label>
+ 		<span class="hint">Examples: News, Behind the Scenes</span>
 	<?php
-		echo $this->Form->input('name');
+		echo $this->Form->input('name', array('label' => FALSE, 'div' => FALSE,));
 		
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit', true));?>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Html->link(__('Blogs & Pages', true), array('controller'=>'webpages','action' => 'index')); ?> </li>
-		
-		
-	</ul>
+  <div class="submit">
+    <?php echo $this->Form->submit(__('Create Blog', true), array('div' => FALSE,));?>&nbsp;or&nbsp;
+    <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'webpages','action' => 'index')); ?>
+  </div>  
+<?php echo $this->Form->end();?>
 </div>

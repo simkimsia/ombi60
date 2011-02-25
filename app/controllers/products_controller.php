@@ -598,6 +598,7 @@ class ProductsController extends AppController {
 		$uploadifySettings = array('browseButtonId' => 'fileInput',
 					   'script' => Router::url("/admin/products/upload/".$product_id, true),
 					   'auto' => true,
+                                           'buttonText' => __('Choose File', true),
 					   'onComplete' => true,);
 		
 		$this->set(compact('product_id', 'productImages', 'errors', 'uploadifySettings'));

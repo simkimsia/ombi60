@@ -1,5 +1,4 @@
 
-
 <div class="products index">
 <h2 align="center" class="product-heading"><?php __('Products');?></h2>
 <div class="product-add">
