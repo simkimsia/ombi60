@@ -33,7 +33,7 @@
 		$prefix = Router::url('/blogs/'.$this->data['Blog']['short_name'].'/'.$this->data['Post']['id'].'-', true);		
         $suffix = ' ( ' . $this->Html->link(__('What is this?', true), '#') . ' )';
 		echo $this->Html->div('input text', $label.$prefix.$textbox. $suffix ,array(), true);
-		
+		echo $this->Form->input('body', array('label' => 'Write your own article'));
 		
 		
 			
