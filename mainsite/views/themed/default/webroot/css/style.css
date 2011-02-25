@@ -64,7 +64,7 @@ input{
     border-left: 1px solid #CCCCCC;
     border-right: 1px solid #CCCCCC;
     margin: 0 auto;
-    padding: 10px;
+    /*padding: 10px;*/
     position: relative;
     width: 960px;
 }
@@ -79,6 +79,103 @@ input{
 
 #contentInOverallContainer ul{
     margin-left: 25px;
+}
+
+#contentInOverallContainer .contentDiv{
+    padding: 10px;
+}
+
+#contentInOverallContainer .bold_green{
+    color: #009100;
+    font-weight: bold;
+    font-size: 200%;
+    clear: both;
+}
+#contentInOverallContainer .steps{
+    font-weight: bold;
+    font-size: 150%;
+    font-style: italic;
+}
+#contentInOverallContainer #checkout_warning{
+    background: #f1c986; 
+    text-align: center; 
+    padding: 10px;
+}
+#contentInOverallContainer .margin_right_5{
+    margin-right: 5px;
+}
+#contentInOverallContainer .font_bold{
+    font-weight: bold;
+}
+
+#contentInOverallContainer .checkout_products{
+    background: #f1c986; 
+    padding: 10px;
+}
+
+#contentInOverallContainer .products_list_left{
+    float: left; 
+    border-right:2px solid #ffff72; 
+}
+
+#contentInOverallContainer .products_list_left ul {
+    list-style: none;
+    width: 500px;
+}
+#contentInOverallContainer .product_list_right{
+    text-align: center; 
+}
+
+#contentInOverallContainer .products_list_left .product_thumb {
+    border: none;
+    margin: 5px;
+}
+
+#contentInOverallContainer .products_list_left .product_thumb .product_image {
+    width: 75px;
+}
+
+#contentInOverallContainer .gray_background{
+    background: #e4e4e4;
+    padding: 10px;
+}
+
+#contentInOverallContainer label {
+    display: block;/**/
+    float: left;/**/
+    margin: 10px 0;
+    width: 145px;/**/
+}
+
+#contentInOverallContainer input {
+    background: #FFFFFF;
+    margin: 10px 0;
+    clear: both;
+}
+
+.clear {
+    clear: both;
+}
+
+#contentInOverallContainer .products_list_left .left{
+    float: left;
+}
+#contentInOverallContainer .error_message {
+    background: #daa09c;
+    border: 1px solid #da3429;
+    padding: 10px;
+    color: #000000;
+    text-align: center;
+    font-weight: bold;
+    margin: 10px;
+}
+
+#contentInOverallContainer .info {
+    display: block;
+}
+
+.right{
+    float: right;
 }
 
 .homepage{
