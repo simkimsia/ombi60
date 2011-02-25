@@ -9,6 +9,7 @@
       ?>
 
   </div>
+  <div class="list-pages">
 	<h2><?php __('Pages');?></h2>
   <p>A page is a standalone part of your shop informing your customers about your business or products.</p>
   <p>Examples: "About Us" section, Warranty, Terms of Service</p>
@@ -61,7 +62,6 @@
     }
     ?>
 	
-</div>
 
 <div class="blogs">
 	<h2><?php __('Blogs');?></h2>
@@ -98,4 +98,5 @@
 	
 <?php endforeach; ?>
 	</table>
+    </div>
 </div>

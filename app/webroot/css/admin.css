@@ -197,6 +197,8 @@ ul#subnav li a {
 
 .product-search, .search-filters {
     border: 1px solid #DDDDDD;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .search-filters th {
@@ -222,8 +224,13 @@ ul#subnav li a {
 	width: 85%;
 	align:center;
 	margin: 10px 0px;
+	margin-left: auto;
+    margin-right: auto;
 }
-
+table.products-table {
+    width: 100%;
+    margin: 0px;
+}
 .products-table td, .items-table td, th {
     /*border-right: 1px solid black;*/
 }	
@@ -604,4 +611,34 @@ margin: 5px 6px 7px 11px;
 .shipping-view li label{
     font-size: 115%;
     font-weight: inherit;
+}
+
+.product_image-thumbs{
+    list-style: none;
+    margin: 0px auto;
+    width: 70%;
+}
+
+.product_image-thumbs li{
+    float: left;
+    margin: 0px;
+    /*margin-right: 20px ;*/
+    /*width: 215px;*/
+}
+
+.action_button_main_div{
+    /*width: 85%;*/
+    margin-left: auto; 
+    margin-right: auto;
+}
+.product_image-thumbs li.right {
+    float: right;
+}
+.make_cover {
+    font-size: 90%;
+    margin-left: 5px;
+}
+.list-pages {
+    width: 85%;
+    margin: 0 auto;
 }

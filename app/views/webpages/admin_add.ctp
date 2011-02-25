@@ -1,4 +1,4 @@
-<div class="webpages main-container-div">
+<div class="webpages">
       <div class="text_center">
         <h2><?php __('Add your New Page');?></h2>
         <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'webpages','action' => 'index')); ?>

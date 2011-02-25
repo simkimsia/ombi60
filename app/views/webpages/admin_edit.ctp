@@ -1,4 +1,4 @@
-<div class="webpages main-container-div">
+<div class="webpages">
     <div class="text_center">
       <h2>
         <?php echo isset($this->data['Webpage']['title']) ? $this->data['Webpage']['title'] : ""; ?>
