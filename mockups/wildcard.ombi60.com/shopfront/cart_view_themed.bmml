@@ -70,7 +70,7 @@
             <text>Checkout</text>
           </controlProperties>
         </control>
-        <control controlID="2" controlTypeID="com.balsamiq.mockups::Image" x="0" y="0" w="104" h="35" measuredW="145" measuredH="42" zOrder="2" locked="false" isInGroup="50">
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Image" x="0" y="0" w="104" h="35" measuredW="77" measuredH="79" zOrder="2" locked="false" isInGroup="50">
           <controlProperties>
             <src>./assets/paypal_btn_xpressCheckout.gif</src>
           </controlProperties>
