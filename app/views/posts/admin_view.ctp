@@ -5,7 +5,7 @@
         </h2>
         <?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $post['Blog']['id'], $post['Post']['id'])); ?>|
         <?php echo $this->Html->link(__('All articles', true), array('controller' => 'blogs', 'action' => 'view', $post['Blog']['id'])); ?>|
-          <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $post['Post']['id']), null, sprintf(__('Are you sure you want to delete this post?', true), $post['Page']['id'])); ?>
+          <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $post['Post']['id']), null, sprintf(__('Are you sure you want to delete this post?', true), $post['Post']['id'])); ?>
           
   </div>
   <div class="view_textarea">

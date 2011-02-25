@@ -59,8 +59,11 @@ table tr:nth-child(2n) td {
 	                }
 		                echo $this->Html->link($shippingRate['ShippingRate']['name'], array('action' => 'edit', 'based'=>$based, 'id'=>$shippingRate['ShippingRate']['id'])); ?>
 	                &nbsp;</td>
-	                <td class="other_td"><?php echo $this->element('display_shipping_range', array('shippingRate'=>$shippingRate)); ?>&nbsp;</td>
-	                <td class="other_td">$<?php echo $shippingRate['ShippingRate']['price']; ?> SGD</td>
+	                <td class="other_td"><?php echo $this->element('display_shipping_range', array('shippingRate'=>$shippingRate, 'based' => $based)); ?>&nbsp;</td>
+	                <td class="other_td">
+	                <?php
+	                echo $this->Number->format($shippingRate['ShippingRate']['price'], array('places' => 2, 'escape' => false, 'decimals' => '.',)) . " SGD";
+	                ?></td>
 	                <td class="actions other_td">		
 		                <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $shippingRate['ShippingRate']['id']), null, sprintf(__('Are you sure you want to delete %s for %s?', true), $shippingRate['ShippingRate']['name'], $displayCountryTitle)); ?>
 	                </td>

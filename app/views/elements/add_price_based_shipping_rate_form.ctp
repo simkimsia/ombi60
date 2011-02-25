@@ -8,18 +8,18 @@
                 <td class="new-rate rate-weight" style="background: #EFEFEF;" width="25%">
                     <?php 
                     echo $this->Form->label('Purchase range');
-                    echo "$".$this->Form->text('PriceBasedRate.min_price', array('value'=>'50.00', 'size' => 3)). "SGD";?>
+                    echo "$".$this->Form->text('PriceBasedRate.min_price', array('value'=>'50.00', 'size' => 5)). "SGD";?>
 
                     &nbsp;<a href="#" id="max-purchase-link-<?php echo $id;?>" onclick="showMaxPurchase(<?php echo $id ;?>);return false;">and more</a>
                     <span id="max-purchase-<?php echo $id ?>" style="display:none;">
-                        <?php echo "&nbsp;-&nbsp;$&nbsp;".$this->Form->text('PriceBasedRate.max_price', array('id'=>'max-price-input-'.$id, 'size' => 3)) . "SGD";?>
+                        <?php echo "&nbsp;-&nbsp;$&nbsp;".$this->Form->text('PriceBasedRate.max_price', array('id'=>'max-price-input-'.$id, 'size' => 5)) . "SGD";?>
                     </span>
                 </td>
 
                 <td class="new-rate rate-price" style="background: #EFEFEF;" width="25%">
                 <?php 
                 echo $this->Form->label('Shipping Price');
-                echo "$".$this->Form->text('ShippingRate.price', array('value'=>'0.00', 'size' => 3))."SGD";
+                echo "$".$this->Form->text('ShippingRate.price', array('value'=>'0.00', 'size' => 5))."SGD";
                 ?>
                 </td>
             </tr>

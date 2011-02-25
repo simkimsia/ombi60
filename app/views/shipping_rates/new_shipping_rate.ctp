@@ -19,7 +19,7 @@
 			echo $this->Html->link($shippingRate['ShippingRate']['name'], array('action' => 'edit', 'based'=>$based, $shippingRate['ShippingRate']['id'])); ?>
 		&nbsp;</td>
 		<td><?php echo $this->element('display_shipping_range', array('shippingRate'=>$shippingRate)); ?>&nbsp;</td>
-		<td><?php echo $shippingRate['ShippingRate']['price']; ?>&nbsp;</td>
+		<td><?php echo $this->Number->currency($shippingRate['ShippingRate']['price']) . "SGD";?>&nbsp;</td>
 		
 		
 		<td class="actions">

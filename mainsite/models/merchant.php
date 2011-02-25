@@ -181,100 +181,23 @@ class Merchant extends AppModel {
 		// now we set up the shopfront page and other pages
 		$webpage = ClassRegistry::init('Webpage');
 		
-		$homePage = array('title'=>'Welcome',
-				  'text'=>'<div class="item">
-		
-<table class="itemTable" cellspacing="0" cellpadding="0">
-<tbody>
-<tr>
-<td class="itemLeftCell">
-					Lorem ipsum dolor sit amet, consectetur 
-					adipiscing elit. <a href="#">Sed semper est sed</a> eros sodales 
-					in lacinia dolor egestas. Integer seper imperdiet enim eu 
-					convallis. Suspendisse nec orci tellus. Aenean consectetur 
-					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a 
-					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna 
-					quam. Etiam ac risus magna, nec pretium diam. <a href="#">
-					Phasellus euismod</a> 
-					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi 
-					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. 
-					Praesent aliquet sem sit amet massa scelerisque vitae semper 
-					purus varius. Pellentesque habitant morbi tristique senectus et 
-					netus et malesuada fames ac turpis egestas.
-				</td>
-<td class="itemRightCell">
-					<img src="user_generated_content/images/Jellyfish.jpg" alt="Picture 1" width="192" height="144" />
-				</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="itemAlt">
-		
-<table class="itemTable" cellspacing="0" cellpadding="0">
-<tbody>
-<tr>
-<td class="itemLeftCell">
-					Proin mauris tortor, ultricies 
-					interdum posuere eu, placerat vitae orci. Duis non laoreet 
-					libero. Suspendisse aliquam congue metus non elementum. Cras 
-					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci 
-					tortor. Suspendisse potenti. Nulla luctus interdum massa in 
-					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel 
-					orci. <a href="#">Nullam sollicitudin</a> nibh ac dolor tempor 
-					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class 
-					aptent taciti sociosqu ad litora torquent per conubia nostra, 
-					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing 
-					ultrices. Nunc eros lectus, bibendum eu consequat id, 
-					<a href="#">cursus non quam</a>. Nam vel dolor dolor. 
-					Pellentesque ante tortor, mattis auctor condimentum ut, 
-					convallis a dui. Mauris scelerisque dapibus libero, vitae 
-					facilisis tellus mattis a. Pellentesque metus nulla, tristique 
-					at venenatis et, egestas a diam.
-				</td>
-<td class="itemRightCell">
-					<img src="user_generated_content/images/Koala.jpg" alt="Picture 2" width="192" height="144" />
-				</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="item">
-		
-<table class="itemTable" cellspacing="0" cellpadding="0">
-<tbody>
-<tr>
-<td class="itemLeftCell">
-					Nulla auctor sapien lorem. Ut vitae 
-					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam 
-					eu magna tempus eleifend. Donec interdum interdum lacus eget 
-					iaculis. Nulla facilisi. Phasellus <a href="#">eget lacus auctor</a> 
-					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt 
-					pellentesque, orci lorem vestibulum elit, ac tristique justo 
-					magna at ante. <a href="#">Lorem ipsum</a> dolor sit amet, 
-					consectetur adipiscing elit. Curabitur rutrum interdum tempus. 
-					Nunc et sapien eros, et ultrices elit. <a href="#">Maecenas in 
-					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut 
-					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui 
-					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus 
-					fringilla sit amet. Vivamus faucibus nisl a enim lacinia 
-					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae 
-					orci ut nibh tristique laoreet.
-				</td>
-<td class="itemRightCell">
-					<img src="user_generated_content/images/Hydrangeas.jpg" alt="Picture 3" width="192" height="144" />
-				</td>
-</tr>
-</tbody>
-</table>
-</div>',
-						'shop_id'=>$this->Shop->id,
-						'author'=>$this->User->id,
-						'handle'=>'shopfront');
+		$homePage = array(
+		             'title'=>'Welcome',
+				     'text'=>'<div>
+                                <h2>Welcome</h2>
+                                <p>Congratulations on starting your own e-commerce store and on your way towards buiding a business empire!</p>
+                                <p>This is the front page of your store - the first thing your customers will see when they arrive</p>
+                                <p>To start adding products or edit this page, head over to <a href="/">Admin</a></p>
+                                <p>Enjoy our services, <br />
+                                Team OMBI60</p>
+                                </div>',
+					'shop_id'=>$this->Shop->id,
+					'author'=>$this->User->id,
+					'handle'=>'shopfront');
 		
 		$aboutUsPage = array('title'=>'About Us',
 				     'text'=>'<p>The <strong>About Us</strong> page is important.</p>
-				     <p>Customers visit About Us page when they are new to your online shop. They want to establish a level of trust in your business.  Since trust is crucial when selling online, it’s a good idea to provide a fair amount of information about yourself and your business.  Here are a few things you should touch on:</p>
+				     <p>Customers visit About Us page when they are new to your online shop. They want to establish a level of trust in your business.  Since trust is crucial when selling online, it\'s a good idea to provide a fair amount of information about yourself and your business.  Here are a few things you should touch on:</p>
 <ul>
 	
   <li>Who you are</li>

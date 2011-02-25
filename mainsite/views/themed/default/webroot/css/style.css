@@ -56,8 +56,29 @@ input{
 	right:0;
 	top:0;
 	bottom:0;
-	text-align:center;
+	/*text-align:center;*/
 	z-index:1;
+}
+
+#contentInOverallContainer{
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+    width: 960px;
+}
+
+#contentInOverallContainer h2 {
+    font-size: 120%;
+}
+
+#contentInOverallContainer p{
+    margin: 15px 0px;
+}
+
+#contentInOverallContainer ul{
+    margin-left: 25px;
 }
 
 .homepage{
