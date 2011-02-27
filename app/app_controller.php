@@ -95,7 +95,8 @@ class AppController extends Controller {
 	App::import('Model', 'Shop');
 	$currentShop = $this->Session->read('CurrentShop');
 
-	if(empty($currentShop) OR $currentShop['Domain']['domain'] != FULL_BASE_URL) {
+
+	if(empty($currentShop) OR !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain'])) {
 	    $this->loadModel('Shop');
 	    $currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
 	    $this->Session->write('CurrentShop', $currentShop);
@@ -292,6 +293,24 @@ class AppController extends Controller {
 	    }
 	    
 	}
+	
+    }
+    
+    protected function checkUrlAgainstDomain($fullBaseUrl, $httpDomainInDB) {
+	
+	$fullBaseUrl    = strtolower($fullBaseUrl);
+	$httpDomainInDB = strtolower($httpDomainInDB);
+	$httpsDomain    = str_replace('http://', 'https://', $httpDomainInDB);
+	
+	if ($fullBaseUrl === $httpDomainInDB) {
+	    return true;
+	}
+	
+	if ($fullBaseUrl === $httpsDomain) {
+	    return true;
+	}
+	
+	return false;
 	
     }
     

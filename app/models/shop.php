@@ -222,6 +222,12 @@ class Shop extends AppModel {
 	 * Returns boolean false if no such shop
 	 * */
 	function getByDomain($url) {
+		
+		// to allow https url we need to do replacement where necessary.
+		$url = strtolower($url);
+		$url = str_replace('https://', 'http://', $url);
+		
+		
 		$this->recursive         = -1;
 		$this->Domain->recursive = -1;
 		
