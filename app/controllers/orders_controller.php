@@ -662,9 +662,7 @@ class OrdersController extends AppController {
 	function pay($shop_id, $hash) {
 		
 		$payPalShopsPaymentModuleId = $this->Order->Shop->getPayPalShopsPaymentModuleId($shop_id);
-		
 		if ($this->RequestHandler->isGet()) {
-			
 			$confirmPage = $this->Session->read('Shop.' .$shop_id. '.confirmPage');
 			
 			$PayPalRequest = $confirmPage['PayPalRequest'];
@@ -720,9 +718,8 @@ class OrdersController extends AppController {
 			
 			
 			$shippingRates = array();
-			$defaultShipment = '';
+			$defaultShipment = "";
 			if ($displayShipment) {
-				
 				$shippingRatesResultSet = $this->getShipmentOptions($shippedAmt, $shippedWeight, $shop_id, $country);
 				$shippingRates = $shippingRatesResultSet['display'];
 				$defaultShipment = key($shippingRates);
@@ -740,10 +737,19 @@ class OrdersController extends AppController {
 				$displayPaymentMode = false;
 			} else {
 				// retrieve all payment modes because payment mode is undecided
-				$shopsPaymentModules = $paymentModuleInShop->find('list', array('conditions'=>array('ShopsPaymentModule.shop_id'=>$shop_id,
-												 'ShopsPaymentModule.active'=>true),
-									     ));
-				
+				$shopsPaymentModules = $paymentModuleInShop->find('list', array(
+				                                                           'conditions'=>array('ShopsPaymentModule.shop_id'=>$shop_id, 'ShopsPaymentModule.active' => true), ));
+			    foreach ($shopsPaymentModules as $module_id => $payments) {
+			        $pos = strpos($payments,'Paypal');
+                    
+                    if($pos === false) {
+                     $test[$module_id] = $payments;
+                    }
+                    else {
+                     $test[$module_id] = "<img src='/img/paypal.jpeg' style='float:left; margin-right: 5px;' />".$payments;
+                    }
+			    }
+			    $shopsPaymentModules = $test;
 				$defaultPayment = key($shopsPaymentModules);
 			}
 			

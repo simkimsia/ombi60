@@ -1,7 +1,7 @@
 <?php
 	echo $this->Html->script('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
 ?>
-<?php echo $this->element('checkout_information');?>
+<?php echo $this->element('checkout_information', array('is_shipping_included' => FALSE, 'step' => 1));?>
 
 <div class="gray_background">
     <div><?php
@@ -17,8 +17,8 @@
 							     'shop_id' => $shop_id)));?>
 <div class="gray_background">
 
-    <div style="float: left; width: 50%;">
-        <h2 style="border-bottom: 1px solid #CCCCCC;">Billing Address</h2>
+    <div class="billing_left">
+        <h2 class="border_bottom">Billing Address</h2>
         <?php
 	    if (!empty($shippingAddresses)) {
 	    ?>
@@ -59,16 +59,16 @@
         echo "<div class='clear'></div>";
         echo $this->Form->input('BillingAddress.0.zip_code', array('div' => FALSE));
         echo "<div class='clear'></div>";
-        echo $this->Form->input('BillingAddress.0.country', array('type' => 'select', 'options' => $countries, 'div' => FALSE, 'style' => "width: 250px;"));
+        echo $this->Form->input('BillingAddress.0.country', array('type' => 'select', 'options' => $countries, 'div' => FALSE, 'style' => "width: 250px;", 'empty' => '-----------'));
         echo "<div class='clear'></div>";
         echo $this->Form->input('BillingAddress.0.type', array('type' => 'hidden', 'value' => BILLING, 'div' => FALSE));
         echo "<div class='clear'></div>";
-        echo $this->Form->checkbox('DeliveryAddress.same', array('checked'=>true));
+        echo $this->Form->checkbox('DeliveryAddress.same', array('checked'=>true, ));
         echo 'Ship to above billing address';
         ?>
     </div>
-    <div style="float: left; width: 50%;">
-        <h2 style="border-bottom: 1px solid #CCCCCC;">Shipping Address</h2>
+    <div class="billing_left">
+        <h2 class="border_bottom">Shipping Address</h2>
         <div class="error_message" id="err_msg">Product(s) shipped to billing address</div>
         <div id="delivery_address">
         <?php
@@ -82,15 +82,13 @@
         echo "<div class='clear'></div>";
         echo $this->Form->input('DeliveryAddress.0.zip_code', array('div' => FALSE));
         echo "<div class='clear'></div>";
-        echo $this->Form->input('DeliveryAddress.0.country', array('type' => 'select', 'options' => $countries, 'div' => FALSE, 'style' => "width: 250px;"));
+        echo $this->Form->input('DeliveryAddress.0.country', array('type' => 'select', 'options' => $countries, 'div' => FALSE, 'style' => "width: 250px;", 'empty' => '-----------'));
         echo "<div class='clear'></div>";
         echo $this->Form->input('DeliveryAddress.0.type', array('type'=>'hidden', 'value'=>BILLING));
         ?>
         </div>
     </div>
     <div class="clear"></div>
-    
-
 </div>
 <?php echo $this->Form->submit('Continue to next step', array('div' => FALSE));?>
 &nbsp;or&nbsp;
@@ -107,8 +105,10 @@ echo $html->link('return to store', array('controller' => 'products'));
 
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        
+    var isChanged = false;
+    var isChangedDelivery = false;
+
+    $(document).ready(function(){       
         //Hide div w/id extra
        $("#delivery_address").css("display","none");
         // Add onclick handler to checkbox w/id checkme
@@ -130,16 +130,22 @@ echo $html->link('return to store', array('controller' => 'products'));
       });
        
        $(":input.shipToThisAddressBtn").each(function() {
-	
 		$(this).click(function() {
-	
-			alert($(this).attr('id'));
-			
+			alert($(this).attr('id'));			
 			$("#OrderFixedDelivery").val($(this).attr('id'));
-		
-	
 		});
        });
-    
+       $('#BillingAddress0Country').click(function(){      
+         if (isChanged == false) {
+             $('#BillingAddress0Country').prepend('<option value="0">Please select</option>');
+             isChanged = true;
+         }        
+       }); 
+       $('#DeliveryAddress0Country').click(function(){      
+         if (isChangedDelivery == false) {
+             $('#DeliveryAddress0Country').prepend('<option value="0">Please select</option>');
+             isChangedDelivery = true;
+         }        
+       }); 
     });
 </script>

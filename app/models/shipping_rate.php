@@ -62,7 +62,7 @@ class ShippingRate extends AppModel {
 	public function __construct($id=false,$table=null,$ds=null) {
 		parent::__construct($id,$table,$ds);
 		$this->virtualFields = array(
-			'display_name'=>"CONCAT(`{$this->alias}`.`name`,' $', FORMAT(`{$this->alias}`.`price`, 2))"
+			'display_name'=>"CONCAT(`{$this->alias}`.`name`,' - $', FORMAT(`{$this->alias}`.`price`, 2))"
 		);
 	}
 
