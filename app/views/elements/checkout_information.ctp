@@ -46,9 +46,18 @@
         <span class="bold_green">
         <?php echo $total = $this->Number->format($totalAmountWithShipping, array('places' => 2, 'escape' => false, 'decimals' => '.', 'before' => '$'));
         ?>
+        
         <?php //echo $this->Number->currency($total, 'SGD'); ?></span>
         <br />
-        <span class="steps">Step 1 of 2</span>
+        <?php
+        if (isset($is_shipping_included) && $is_shipping_included) {
+            ?>
+                <span class="red_text">including shipping for <span class="cost"><?php echo $shipping_cost?></span></span>
+            <?php
+        }
+        ?>
+        <br />
+        <span class="steps">Step <?php echo $step;?> of 2</span>
     </div>
     <div style="clear: both;"></div>
 </div>

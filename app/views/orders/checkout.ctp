@@ -1,7 +1,7 @@
 <?php
 	echo $this->Html->script('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
 ?>
-<?php echo $this->element('checkout_information');?>
+<?php echo $this->element('checkout_information', array('is_shipping_included' => FALSE, 'step' => 1));?>
 
 <div class="gray_background">
     <div><?php
@@ -17,8 +17,8 @@
 							     'shop_id' => $shop_id)));?>
 <div class="gray_background">
 
-    <div style="float: left; width: 50%;">
-        <h2 style="border-bottom: 1px solid #CCCCCC;">Billing Address</h2>
+    <div class="billing_left">
+        <h2 class="border_bottom">Billing Address</h2>
         <?php
 	    if (!empty($shippingAddresses)) {
 	    ?>
@@ -67,8 +67,8 @@
         echo 'Ship to above billing address';
         ?>
     </div>
-    <div style="float: left; width: 50%;">
-        <h2 style="border-bottom: 1px solid #CCCCCC;">Shipping Address</h2>
+    <div class="billing_left">
+        <h2 class="border_bottom">Shipping Address</h2>
         <div class="error_message" id="err_msg">Product(s) shipped to billing address</div>
         <div id="delivery_address">
         <?php

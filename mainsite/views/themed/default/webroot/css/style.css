@@ -92,10 +92,28 @@ input{
 }
 
 #contentInOverallContainer .bold_green{
-    color: #009100;
-    font-weight: bold;
-    font-size: 325%;
     clear: both;
+    color: #009100;
+    display: block;
+    font-size: 325%;
+    font-weight: bold;
+}
+#contentInOverallContainer .red_text{
+    color: #b10000;
+    font-size: 150%;
+    clear: both;
+    font-style: italic;
+    display: block;
+}
+#contentInOverallContainer .cost{
+    color: #8c0808;
+    font-size: 120%;
+    clear: both;
+    font-style: italic;
+}
+
+#contentInOverallContainer .border_bottom {
+    border-bottom: 1px solid #CCCCCC;
 }
 #contentInOverallContainer .steps{
     display: block;
@@ -162,11 +180,27 @@ input{
     margin: 10px 0;
     clear: both;
 }
-
+#contentInOverallContainer input[type=radio] {
+    float: left;
+    margin: 13px 5px;
+}
+#contentInOverallContainer input[type=submit] {
+    margin: 10px 35px;
+}
+#contentInOverallContainer  .show_shipment_option{
+    margin-left: 25px;
+}
+#contentInOverallContainer  .show_shipment_option label {
+    width: auto;
+}
 .clear {
     clear: both;
 }
 
+#contentInOverallContainer .billing_left {
+    float: left; 
+    width: 50%;
+}
 #contentInOverallContainer .products_list_left .left{
     float: left;
 }
