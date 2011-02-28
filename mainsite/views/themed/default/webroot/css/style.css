@@ -85,16 +85,24 @@ input{
     padding: 10px;
 }
 
+#contentInOverallContainer .youarebuying{
+    display: block;
+    margin: 0 30px 10px;
+    font-weight: bold;
+}
+
 #contentInOverallContainer .bold_green{
     color: #009100;
     font-weight: bold;
-    font-size: 200%;
+    font-size: 325%;
     clear: both;
 }
 #contentInOverallContainer .steps{
-    font-weight: bold;
+    display: block;
     font-size: 150%;
     font-style: italic;
+    font-weight: bold;
+    margin: 10px 0;
 }
 #contentInOverallContainer #checkout_warning{
     background: #f1c986; 
@@ -123,7 +131,9 @@ input{
     width: 500px;
 }
 #contentInOverallContainer .product_list_right{
-    text-align: center; 
+    float: left;
+    text-align: center;
+    width: 43%;
 }
 
 #contentInOverallContainer .products_list_left .product_thumb {
