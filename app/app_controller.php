@@ -299,6 +299,7 @@ class AppController extends Controller {
 	// if its admin, we want to force SSL on production or staging server
 	if (isset($this->params['admin']) && !$localhostDomain) {
 	    $this->Security->blackHoleCallback = 'forceSSL';
+	    $this->Security->requireSecure();
 	}
 	
     }
