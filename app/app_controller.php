@@ -294,6 +294,17 @@ class AppController extends Controller {
 	    
 	}
 	
+	$localhostDomain = (strpos(FULL_BASE_URL, '.localhost') > 0);
+	
+	// if its admin, we want to force SSL on production or staging server
+	if (isset($this->params['admin']) && !$localhostDomain) {
+	    $this->Security->blackHoleCallback = 'forceSSL';
+	}
+	
+    }
+    
+    function forceSSL() {
+	$this->redirect('https://' . env('SERVER_NAME') . $this->here);
     }
     
     protected function checkUrlAgainstDomain($fullBaseUrl, $httpDomainInDB) {
