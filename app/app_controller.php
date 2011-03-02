@@ -35,17 +35,25 @@
 class AppController extends Controller {
 
     var $components = array(
-        'Auth',
-        'Acl',
-        'Session',
-        'Security',
-        'RequestHandler',
-	'DebugKit.Toolbar',
-	'Cookie',
-	'RandomString.RandomString', );
+                       'Auth',
+                       'Acl',
+                       'Session',
+                       'Security',
+                       'RequestHandler',
+                       'DebugKit.Toolbar',
+	                   'Cookie',
+	                   'RandomString.RandomString', 
+	                  // 'RequestAction',
+	                  );
 
     var $helpers = array('Html', 'Form', 'Session');
 
+    //Allowed controller with actions
+    var $sslActions = array(
+                       'orders' => array('checkout', 'pay'),
+                       'products' => array('checkout'),
+	                  );
+	    
     function beforeFilter() {
 
         /**
@@ -94,19 +102,19 @@ class AppController extends Controller {
 	// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
 	App::import('Model', 'Shop');
 	$currentShop = $this->Session->read('CurrentShop');
-
+    $url = FULL_BASE_URL;
 	if(empty($currentShop) OR $currentShop['Domain']['domain'] != FULL_BASE_URL) {
 	    $this->loadModel('Shop');
-	    $currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
+	    $url = str_replace("https://", 'http://', $url);
+        $currentShop = $this->Shop->getByDomain($url); 
 	    $this->Session->write('CurrentShop', $currentShop);
 	}
 	
 	if (!$currentShop) {
 	    $this->cakeError('noSuchDomain', array('url'=>FULL_BASE_URL));
 	}
-	
-	
-        Shop::store($currentShop);
+
+    Shop::store($currentShop);
 	
 	/** setup cookies
 	 * */
@@ -278,33 +286,52 @@ class AppController extends Controller {
 	 **/
 	
 	
-	$denied = $currentShop['Shop']['deny_access'];
+	    $denied = $currentShop['Shop']['deny_access'];
 	
-	if ($denied) {
-	    $this->cakeError('noSuchDomain');
-	} else {
+	    if ($denied) {
+	        $this->cakeError('noSuchDomain');
+	    } else {
 	
-	    if(!isset($this->params['admin'])) {
-		$cart = ClassRegistry::init('Cart');
-		$cartItemsCount = $cart->getCartItemsCountByCustomerId(User::get('User.id'));
-		$this->set('cartItemsCount', $cartItemsCount);
+	        if(!isset($this->params['admin'])) {
+		    $cart = ClassRegistry::init('Cart');
+		    $cartItemsCount = $cart->getCartItemsCountByCustomerId(User::get('User.id'));
+		    $this->set('cartItemsCount', $cartItemsCount);
 		
+	        }
 	    }
-	    
-	}
-	
+	    $this->checkSSL();
     }
     
+    
+    /***
+     * This action is used check whether the URL is SSL verified or not
+     */
+    private function checkSSL()
+    {
+        $url = FULL_BASE_URL;
+        //Check if array key i.e the name of controller exists or not.
+	    if (array_key_exists($this->params['controller'], $this->sslActions) && in_array($this->params['action'], $this->sslActions[$this->params['controller']])) {
+                if (!$this->RequestHandler->isSSL()) {
+                    $url = str_replace("http://", 'https://', $url);
+                    $url .= "/".$this->params['url']['url'];
+                    $this->redirect($url);
+            	    die;
+                }
+	    }
+	    return TRUE;
+    }//end checkSSL();
+
+
     protected function createCasualInCookie() {
-	App::import('Model', 'CasualSurfer');
-	$this->loadModel('CasualSurfer');
+	    App::import('Model', 'CasualSurfer');
+	    $this->loadModel('CasualSurfer');
 	
-	// create new casual surfer
-	$randomPassword = $this->Auth->password($this->RandomString->generate());
-	$randomEmail = $this->RandomString->generate() . '@ombi60.com';
-	$userIdInCookie = $this->CasualSurfer->createNew($randomEmail, $randomPassword);
+	    // create new casual surfer
+	    $randomPassword = $this->Auth->password($this->RandomString->generate());
+	    $randomEmail = $this->RandomString->generate() . '@ombi60.com';
+	    $userIdInCookie = $this->CasualSurfer->createNew($randomEmail, $randomPassword);
 	
-	$this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
+	    $this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
     }
 
     protected function updateAuthSessionKey($data = NULL) {
