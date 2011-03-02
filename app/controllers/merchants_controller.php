@@ -100,9 +100,47 @@ class MerchantsController extends AppController {
 
 
 		if ($this->Auth->user()) {
+			
+			// this code is for the remember me when Merchant first logs in and chooses the remember me
+			if (!empty($this->data) & $this->data['User']['remember_me']) {
+				$cookie = array('email'    => $this->data['User']['email'],
+						'password' => $this->data['User']['password'],);
+				
+				$this->updateCookie();
+				
+				unset($this->data['User']['remember_me']);
+				
+			}
+			
+			
+
+			
 			$this->updateSession();
 			$this->redirect($this->Auth->redirect());
+			
 		}
+		
+		if (empty($this->data)) {
+
+			$cookie = $this->Cookie->read('Auth.User');
+
+			if (!is_null($cookie)) {
+		
+				if ($this->Auth->login($cookie)) {
+		
+					//  Clear auth message, just in case we use it.
+			
+					$this->Session->delete('Message.auth');
+			
+					$this->redirect($this->Auth->redirect());
+		
+				} else { // Delete invalid Cookie
+		
+					$this->Cookie->delete('Auth.User');
+				}
+			}
+		}
+		
 	}
 
 	function admin_logout() {
@@ -131,8 +169,11 @@ class MerchantsController extends AppController {
 	private function updateSession() {
 		$result = $this->Merchant->retrieveShopUserLanguageByUserId($this->Auth->user('id'));
 		$this->updateAuthSessionKey($result);
-		
-		
+	}
+	
+	private function updateCookie() {
+		$result = $this->Merchant->retrieveShopUserLanguageByUserId($this->Auth->user('id'));
+		$this->updateAuthCookieKey($result);
 	}
 
 	/**

@@ -373,6 +373,41 @@ class AppController extends Controller {
 
     }
     
+    protected function updateAuthCookieKey($data = NULL) {
+
+            if (!empty($data['Merchant'])) {
+                    $this->Cookie->write('Auth.Merchant', $data['Merchant'], true, '+2 weeks');
+            } else {
+                   $this->Cookie->delete('Auth.Merchant');
+            }
+
+            if (!empty($data['Shop'])) {
+                    $this->Cookie->write('Auth.Shop', $data['Shop'], true, '+2 weeks');
+            } else {
+
+                    $this->Cookie->delete('Auth.Shop');
+            }
+
+            if (!empty($data['Customer'])) {
+                    $this->Cookie->write('Auth.Customer', $data['Customer'], true, '+2 weeks');
+            } else {
+
+                    $this->Cookie->delete('Auth.Customer');
+            }
+
+            if (!empty($data['User'])) {
+                    unset($data['User']['password']);
+                    $this->Cookie->write('Auth.User', $data['User'], true, '+2 weeks');
+            }
+	    
+	    if (!empty($data['Language'])) {
+                    $this->Cookie->write('Auth.Language', $data['Language'], true, '+2 weeks');
+            } else {
+                   $this->Cookie->delete('Auth.Language');
+            }
+
+    }
+    
     	function admin_change_active_status($id = null, $product_id = null) {
 		if (!$id OR !$product_id) {
 			$this->Session->setFlash(__('Invalid id for ProductImage', true));
