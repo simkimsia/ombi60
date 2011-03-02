@@ -8,7 +8,7 @@ set :branch, "master"
 # Use git to deploy. You can also set this to 'svn'
 set :scm, :git
 # Keep Git quiet
-set :scm_verbose, false
+set :scm_verbose, true
 
 # set server user account responsible
 set :user, "deploy"
@@ -20,14 +20,14 @@ set :user, "deploy"
 set :deploy_via, :remote_cache
 # Do NOT use sudo by default. Helps with file permissions. You can still
 # manually sudo by prepending #{sudo} to run commands
-set :use_sudo, false
+set :use_sudo, true
 
 ## SSH Options
 
 # SSH Agent forwarding, sends my personal keys for usage by git when deploying.
-ssh_options[:forward_agent] = true
+ssh_options[:forward_agent] = false
 
-ssh_options[:keys] = %w( /home/kei/Dropbox/amazon\ aws/ombi60_key.pem )
+ssh_options[:keys] = %w( /home/kimsia/Dropbox/amazon\ aws/ombi60_company.pem )
 
 
 # setting for production environment and clearing production database

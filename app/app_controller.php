@@ -35,25 +35,17 @@
 class AppController extends Controller {
 
     var $components = array(
-                       'Auth',
-                       'Acl',
-                       'Session',
-                       'Security',
-                       'RequestHandler',
-                       'DebugKit.Toolbar',
-	                   'Cookie',
-	                   'RandomString.RandomString', 
-	                  // 'RequestAction',
-	                  );
+        'Auth',
+        'Acl',
+        'Session',
+        'Security',
+        'RequestHandler',
+	'DebugKit.Toolbar',
+	'Cookie',
+	'RandomString.RandomString', );
 
     var $helpers = array('Html', 'Form', 'Session');
 
-    //Allowed controller with actions
-    var $sslActions = array(
-                       'orders' => array('checkout', 'pay'),
-                       'products' => array('checkout'),
-	                  );
-	    
     function beforeFilter() {
 
         /**
@@ -102,19 +94,20 @@ class AppController extends Controller {
 	// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
 	App::import('Model', 'Shop');
 	$currentShop = $this->Session->read('CurrentShop');
-    $url = FULL_BASE_URL;
-	if(empty($currentShop) OR $currentShop['Domain']['domain'] != FULL_BASE_URL) {
+
+
+	if(empty($currentShop) OR !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain'])) {
 	    $this->loadModel('Shop');
-	    $url = str_replace("https://", 'http://', $url);
-        $currentShop = $this->Shop->getByDomain($url); 
+	    $currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
 	    $this->Session->write('CurrentShop', $currentShop);
 	}
 	
 	if (!$currentShop) {
 	    $this->cakeError('noSuchDomain', array('url'=>FULL_BASE_URL));
 	}
-
-    Shop::store($currentShop);
+	
+	
+        Shop::store($currentShop);
 	
 	/** setup cookies
 	 * */
@@ -286,52 +279,63 @@ class AppController extends Controller {
 	 **/
 	
 	
-	    $denied = $currentShop['Shop']['deny_access'];
+	$denied = $currentShop['Shop']['deny_access'];
 	
-	    if ($denied) {
-	        $this->cakeError('noSuchDomain');
-	    } else {
+	if ($denied) {
+	    $this->cakeError('noSuchDomain');
+	} else {
 	
-	        if(!isset($this->params['admin'])) {
-		    $cart = ClassRegistry::init('Cart');
-		    $cartItemsCount = $cart->getCartItemsCountByCustomerId(User::get('User.id'));
-		    $this->set('cartItemsCount', $cartItemsCount);
+	    if(!isset($this->params['admin'])) {
+		$cart = ClassRegistry::init('Cart');
+		$cartItemsCount = $cart->getCartItemsCountByCustomerId(User::get('User.id'));
+		$this->set('cartItemsCount', $cartItemsCount);
 		
-	        }
 	    }
-	    $this->checkSSL();
+	    
+	}
+	
+	$localhostDomain = (strpos(FULL_BASE_URL, '.localhost') > 0);
+	
+	// if its admin, we want to force SSL on production or staging server
+	if (isset($this->params['admin']) && !$localhostDomain) {
+	    $this->Security->blackHoleCallback = 'forceSSL';
+	    $this->Security->requireSecure();
+	}
+	
     }
     
+    function forceSSL() {
+	$this->redirect('https://' . env('SERVER_NAME') . $this->here);
+    }
     
-    /***
-     * This action is used check whether the URL is SSL verified or not
-     */
-    private function checkSSL()
-    {
-        $url = FULL_BASE_URL;
-        //Check if array key i.e the name of controller exists or not.
-	    if (array_key_exists($this->params['controller'], $this->sslActions) && in_array($this->params['action'], $this->sslActions[$this->params['controller']])) {
-                if (!$this->RequestHandler->isSSL()) {
-                    $url = str_replace("http://", 'https://', $url);
-                    $url .= "/".$this->params['url']['url'];
-                    $this->redirect($url);
-            	    die;
-                }
-	    }
-	    return TRUE;
-    }//end checkSSL();
-
-
+    protected function checkUrlAgainstDomain($fullBaseUrl, $httpDomainInDB) {
+	
+	$fullBaseUrl    = strtolower($fullBaseUrl);
+	$httpDomainInDB = strtolower($httpDomainInDB);
+	$httpsDomain    = str_replace('http://', 'https://', $httpDomainInDB);
+	
+	if ($fullBaseUrl === $httpDomainInDB) {
+	    return true;
+	}
+	
+	if ($fullBaseUrl === $httpsDomain) {
+	    return true;
+	}
+	
+	return false;
+	
+    }
+    
     protected function createCasualInCookie() {
-	    App::import('Model', 'CasualSurfer');
-	    $this->loadModel('CasualSurfer');
+	App::import('Model', 'CasualSurfer');
+	$this->loadModel('CasualSurfer');
 	
-	    // create new casual surfer
-	    $randomPassword = $this->Auth->password($this->RandomString->generate());
-	    $randomEmail = $this->RandomString->generate() . '@ombi60.com';
-	    $userIdInCookie = $this->CasualSurfer->createNew($randomEmail, $randomPassword);
+	// create new casual surfer
+	$randomPassword = $this->Auth->password($this->RandomString->generate());
+	$randomEmail = $this->RandomString->generate() . '@ombi60.com';
+	$userIdInCookie = $this->CasualSurfer->createNew($randomEmail, $randomPassword);
 	
-	    $this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
+	$this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
     }
 
     protected function updateAuthSessionKey($data = NULL) {
@@ -365,6 +369,41 @@ class AppController extends Controller {
                     $this->Session->write('Auth.Language', $data['Language']);
             } else {
                    $this->Session->delete('Auth.Language');
+            }
+
+    }
+    
+    protected function updateAuthCookieKey($data = NULL) {
+
+            if (!empty($data['Merchant'])) {
+                    $this->Cookie->write('Auth.Merchant', $data['Merchant'], true, '+2 weeks');
+            } else {
+                   $this->Cookie->delete('Auth.Merchant');
+            }
+
+            if (!empty($data['Shop'])) {
+                    $this->Cookie->write('Auth.Shop', $data['Shop'], true, '+2 weeks');
+            } else {
+
+                    $this->Cookie->delete('Auth.Shop');
+            }
+
+            if (!empty($data['Customer'])) {
+                    $this->Cookie->write('Auth.Customer', $data['Customer'], true, '+2 weeks');
+            } else {
+
+                    $this->Cookie->delete('Auth.Customer');
+            }
+
+            if (!empty($data['User'])) {
+                    unset($data['User']['password']);
+                    $this->Cookie->write('Auth.User', $data['User'], true, '+2 weeks');
+            }
+	    
+	    if (!empty($data['Language'])) {
+                    $this->Cookie->write('Auth.Language', $data['Language'], true, '+2 weeks');
+            } else {
+                   $this->Cookie->delete('Auth.Language');
             }
 
     }
