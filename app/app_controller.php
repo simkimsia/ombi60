@@ -45,7 +45,12 @@ class AppController extends Controller {
 	'RandomString.RandomString', );
 
     var $helpers = array('Html', 'Form', 'Session');
-
+    
+    //Allowed controllers with actions
+    var $sslActions = array(
+                       'orders' => array('checkout', 'pay'),
+                       'products' => array('checkout'),
+	                  );
     function beforeFilter() {
 
         /**
@@ -296,8 +301,8 @@ class AppController extends Controller {
 	
 	$localhostDomain = (strpos(FULL_BASE_URL, '.localhost') > 0);
 	
-	// if its admin, we want to force SSL on production or staging server
-	if (isset($this->params['admin']) && !$localhostDomain) {
+	// if its admin or an ssl action, we want to force SSL on production or staging server
+	if ((isset($this->params['admin']) && !$localhostDomain) || (!$localhostDomain && array_key_exists($this->params['controller'], $this->sslActions) && in_array($this->params['action'], $this->sslActions[$this->params['controller']]))) {
 	    $this->Security->blackHoleCallback = 'forceSSL';
 	    $this->Security->requireSecure();
 	}
