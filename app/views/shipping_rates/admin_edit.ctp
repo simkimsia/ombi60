@@ -1,4 +1,4 @@
-<?php echo $this->Html->script('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');?>
+<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');?>
 <div>
     <?php $displayCountryTitle = ($this->data['Country']['name'] !== null) ? $this->data['Country']['printable_name'] : 'Rest of World'; ?>
     <div class="text_center"><h2><?php __('Shipping to '.$displayCountryTitle);?></h2>
