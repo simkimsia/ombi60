@@ -1,6 +1,6 @@
 <?php
 	
-	echo $this->Html->script('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
+	echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
 	
 	// include uploadify specific js files
 	echo $this->Html->script('/uploadify/js/jquery.uploadify.v2.1.0.min');
