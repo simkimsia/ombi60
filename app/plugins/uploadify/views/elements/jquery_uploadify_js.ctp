@@ -5,11 +5,6 @@ function convertmb(f) {
 	return Math.round(f/1048576*100)/100;
 }
 
-<?php
-	$localhostDomain = (strpos(FULL_BASE_URL, '.localhost') > 0);
-	
-?>
-
 $(document).ready(function() {
 	var buttonId = '<?php echo '#'.$uploadifySettings['browseButtonId'];?>';
 	$(buttonId).uploadify({
@@ -23,7 +18,7 @@ $(document).ready(function() {
                 <?php if(isset($uploadifySettings['cancelImg'])) { ?>
 		'cancelImg'      : '<?php echo $uploadifySettings['cancelImg']; ?>',
                 <?php } else { ?>
-                'cancelImg'      : '<?php echo Router::url('/uploadify/img/cancel.png'); ?>',
+                'cancelImg'      : '<?php echo Router::url('/uploadify/img/cancel.png', true); ?>',
                 <?php } ?>
                 
                 <?php if(isset($uploadifySettings['buttonText'])) { ?>
