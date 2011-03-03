@@ -5,11 +5,15 @@ function convertmb(f) {
 	return Math.round(f/1048576*100)/100;
 }
 
+<?php
+	$localhostDomain = (strpos(FULL_BASE_URL, '.localhost') > 0);
+	
+?>
 
 $(document).ready(function() {
 	var buttonId = '<?php echo '#'.$uploadifySettings['browseButtonId'];?>';
 	$(buttonId).uploadify({
-		'uploader'       : '<?php echo Router::url('/uploadify/scripts/uploadify.swf'); ?>',
+		'uploader'       : '<?php echo Router::url('/uploadify/scripts/uploadify.swf', true); ?>',
 		<?php if(isset($uploadifySettings['script'])) { ?>
 		'script'         : '<?php
 				$currentSess = '?sess='.$this->Session->id();
