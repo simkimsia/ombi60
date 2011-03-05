@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" measuredW="278" measuredH="232" mockupW="218" mockupH="212">
+<mockup version="1.0" skin="sketch" measuredW="634" measuredH="318" mockupW="574" mockupH="298">
   <controls>
     <control controlID="0" controlTypeID="__group__" x="60" y="20" w="218" h="28" measuredW="218" measuredH="28" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
@@ -72,6 +72,115 @@
         <control controlID="1" controlTypeID="com.balsamiq.mockups::Canvas" x="0" y="1" w="18" h="31" measuredW="100" measuredH="70" zOrder="1" locked="false" isInGroup="3">
           <controlProperties>
             <borderColor>16777215</borderColor>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="4" controlTypeID="__group__" x="60" y="260" w="574" h="58" measuredW="574" measuredH="58" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <controlName>WYSIWYG%20editor</controlName>
+      </controlProperties>
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::TabBar" x="0" y="0" w="574" h="58" measuredW="192" measuredH="100" zOrder="0" locked="false" isInGroup="4">
+          <controlProperties>
+            <selectedIndex>1</selectedIndex>
+            <tabHPosition>right</tabHPosition>
+            <tabVPosition>top</tabVPosition>
+            <text>Visual%2C%20HTML</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Button" x="2" y="28" w="31" h="28" measuredW="32" measuredH="28" zOrder="1" locked="false" isInGroup="4">
+          <controlProperties>
+            <text>B</text>
+          </controlProperties>
+        </control>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Button" x="33" y="28" w="31" h="28" measuredW="32" measuredH="28" zOrder="2" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>true</italic>
+            <text>I</text>
+          </controlProperties>
+        </control>
+        <control controlID="3" controlTypeID="com.balsamiq.mockups::Button" x="65" y="28" w="38" h="28" measuredW="45" measuredH="28" zOrder="3" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>false</italic>
+            <text>%5Blink%5D</text>
+          </controlProperties>
+        </control>
+        <control controlID="4" controlTypeID="com.balsamiq.mockups::Button" x="103" y="28" w="-1" h="-1" measuredW="73" measuredH="28" zOrder="4" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>false</italic>
+            <text>b-quote</text>
+          </controlProperties>
+        </control>
+        <control controlID="5" controlTypeID="com.balsamiq.mockups::Button" x="204" y="28" w="28" h="28" measuredW="40" measuredH="28" zOrder="5" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>false</italic>
+            <text>ins</text>
+          </controlProperties>
+        </control>
+        <control controlID="6" controlTypeID="__group__" x="172" y="28" w="31" h="28" measuredW="31" measuredH="28" zOrder="6" locked="false" isInGroup="4">
+          <groupChildrenDescriptors>
+            <control controlID="111" controlTypeID="com.balsamiq.mockups::Button" x="0" y="0" w="31" h="28" measuredW="41" measuredH="28" zOrder="0" locked="false" isInGroup="6">
+              <controlProperties>
+                <bold>true</bold>
+                <italic>false</italic>
+                <size>12</size>
+                <text>del</text>
+              </controlProperties>
+            </control>
+            <control controlID="112" controlTypeID="com.balsamiq.mockups::HRule" x="2" y="11" w="21" h="-1" measuredW="100" measuredH="5" zOrder="1" locked="false" isInGroup="6">
+              <controlProperties>
+                <backgroundAlpha>0.75</backgroundAlpha>
+              </controlProperties>
+            </control>
+          </groupChildrenDescriptors>
+        </control>
+        <control controlID="7" controlTypeID="com.balsamiq.mockups::Button" x="232" y="28" w="40" h="28" measuredW="43" measuredH="28" zOrder="7" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>false</italic>
+            <text>img</text>
+          </controlProperties>
+        </control>
+        <control controlID="8" controlTypeID="com.balsamiq.mockups::Button" x="266" y="28" w="27" h="28" measuredW="35" measuredH="28" zOrder="8" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>false</italic>
+            <text>ul</text>
+          </controlProperties>
+        </control>
+        <control controlID="9" controlTypeID="com.balsamiq.mockups::Button" x="293" y="28" w="27" h="28" measuredW="35" measuredH="28" zOrder="9" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>false</italic>
+            <text>ol</text>
+          </controlProperties>
+        </control>
+        <control controlID="10" controlTypeID="com.balsamiq.mockups::Button" x="320" y="28" w="27" h="28" measuredW="32" measuredH="28" zOrder="10" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>false</italic>
+            <text>li</text>
+          </controlProperties>
+        </control>
+        <control controlID="11" controlTypeID="com.balsamiq.mockups::Button" x="347" y="28" w="39" h="28" measuredW="53" measuredH="28" zOrder="11" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>false</italic>
+            <text>code</text>
+          </controlProperties>
+        </control>
+        <control controlID="12" controlTypeID="com.balsamiq.mockups::Button" x="386" y="28" w="44" h="28" measuredW="53" measuredH="28" zOrder="12" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>false</italic>
+            <text>more</text>
+          </controlProperties>
+        </control>
+        <control controlID="13" controlTypeID="com.balsamiq.mockups::Button" x="430" y="28" w="54" h="28" measuredW="61" measuredH="28" zOrder="13" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>false</italic>
+            <text>lookup</text>
+          </controlProperties>
+        </control>
+        <control controlID="14" controlTypeID="com.balsamiq.mockups::Button" x="484" y="28" w="73" h="28" measuredW="87" measuredH="28" zOrder="14" locked="false" isInGroup="4">
+          <controlProperties>
+            <italic>false</italic>
+            <text>close%20tags</text>
           </controlProperties>
         </control>
       </groupChildrenDescriptors>

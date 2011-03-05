@@ -437,7 +437,7 @@
 
         #this handles sitename.leaguelogix.com
         ServerName simkimsia.com
-        ServerAlias *.simkimsia.com
+        ServerAlias www.simkimsia.com simkimsia.com
 
                 Options -Indexes FollowSymLinks
 

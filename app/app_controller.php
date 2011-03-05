@@ -134,7 +134,8 @@ class AppController extends Controller {
 	App::import('Model', 'User');
 	$this->loadModel('User');
 	
-	if(!isset($this->params['admin'])) {
+	
+	if(!isset($this->params['admin'])) {	
 		
 		$userIdInSession = $this->Session->read('User.id');
 		$this->log('what ever is the session over here' . $this->Session->read('User'));
@@ -401,7 +402,7 @@ class AppController extends Controller {
             }
 
             if (!empty($data['User'])) {
-                    unset($data['User']['password']);
+                    // we need to write in everything including the password
                     $this->Cookie->write('Auth.User', $data['User'], true, '+2 weeks');
             }
 	    

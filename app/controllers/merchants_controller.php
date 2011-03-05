@@ -6,8 +6,6 @@ class MerchantsController extends AppController {
 	var $helpers = array('Javascript', 'Ajax',
 			     'Log.Log');
 	
-	
-
 	function beforeFilter() {
 
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
@@ -112,9 +110,6 @@ class MerchantsController extends AppController {
 				
 			}
 			
-			
-
-			
 			$this->updateSession();
 			$this->redirect($this->Auth->redirect());
 			
@@ -145,6 +140,9 @@ class MerchantsController extends AppController {
 
 	function admin_logout() {
 
+		$this->Cookie->delete('Auth.User');
+		$this->Cookie->delete('Auth.Merchant');
+		$this->Cookie->delete('Auth.Shop');
 		$this->Session->delete('Auth.Merchant');
 		$this->Session->delete('Auth.Shop');
 		$this->redirect($this->Auth->logout());
