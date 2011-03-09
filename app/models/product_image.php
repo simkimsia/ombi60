@@ -57,10 +57,10 @@ class ProductImage extends AppModel {
 	
 	// this is to deal with obnoxious behavior of uploadify that treats all files as application/octet-stream
 	function uploadifySave($data) {
-		if (isset($data['ProductImage']['filename']) && is_array($data['ProductImage']['filename'])) {
+		/*if (isset($data['ProductImage']['filename']) && is_array($data['ProductImage']['filename'])) {
 			$data['ProductImage']['filename'] = $this->convertTypeBasedOnExtension($data['ProductImage']['filename']);
 		}
-		
+		*/
 		return $this->save($data);
 	}
 
