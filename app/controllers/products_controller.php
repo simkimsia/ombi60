@@ -483,6 +483,10 @@ class ProductsController extends AppController {
 			} else {
 				$this->Product->create();
 				if ($this->Product->createProductDetails($this->data)) {
+				    $id = $this->Product->getLastInsertId();
+				                 
+                    $this->save_image($id); //This will save product images
+
 					$this->Session->setFlash(__('Product has been saved', true), 'default', array('class'=>'flash_success'));
 					$this->redirect(array('action' => 'index'));
 				
@@ -567,6 +571,7 @@ class ProductsController extends AppController {
 
 		if (!empty($this->data)) {
 			if ($this->Product->save($this->data)) {
+			    $this->save_image($id, TRUE); //This will save product images
 				$this->Session->setFlash(__('The Product has been saved', true), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -612,6 +617,52 @@ class ProductsController extends AppController {
 		}
 	
 	}
+	
+	
+	/**
+	 * This private action is used to save product images
+	 * 
+	 * @param integer $product_id Product Id
+	 * 
+	 * @return void
+	 */
+	private function save_image($product_id, $edit = FALSE)
+	{
+	    if (!empty($_FILES)) {
+            $tmp = array();
+            
+            foreach ($_FILES['product_images'] as $key => $valueArray) {
+                $i=0;
+                foreach ($valueArray as $value) {
+                    //Only consider first 4 photos
+                    if ($i < 4) {
+                        $tmp[$i][$key] = $value;
+                        $i++;
+                    }
+                }
+            }
+            
+            $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
+            $i = 0;
+            foreach ($tmp as $tempFile) {
+                $name = $tempFile['name'];
+                $str = strtolower(substr(strrchr($tempFile['name'], '.'), 1));
+                
+                if (in_array($str, $allowedExtensions)) {
+                    $this->Product->ProductImage->create();
+                    $data = array('ProductImage'=>array('filename'=>$tempFile,
+                						                'product_id' => $product_id,));
+
+                    $result = $this->Product->ProductImage->uploadifySave($data);   
+
+                    if ($result != false && $i++ == 0 && !$edit) {
+                        $this->Product->ProductImage->make_this_cover($this->Product->ProductImage->id, $product_id);
+                    }    
+                }
+            }
+        }
+	}//end save_image()
+	
 	
 	function admin_delete($id = null) {
 		if (!$id) {

@@ -1,11 +1,15 @@
 <?php
 	echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
 	
-	// include uploadify specific js files
-	echo $this->Html->script('/uploadify/js/jquery.uploadify.v2.1.0.min');
-	echo $this->Html->script('/uploadify/js/swfobject');
+	//Here we will include all the JQuery files required by multi file functionlity
 	
-	echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
+	echo $this->Html->script('jquery/multiple_file/jquery.MultiFile.js');
+	
+	// include uploadify specific js files
+	//echo $this->Html->script('/uploadify/js/jquery.uploadify.v2.1.0.min');
+	//echo $this->Html->script('/uploadify/js/swfobject');
+	
+	//echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
 ?>
 <?php
 	echo $this->element('errors', array('errors' => $errors));
@@ -24,9 +28,16 @@
 	            echo $this->Form->input('product_id', array('type'=>'hidden', 'value'=>$product_id, 'div' => FALSE));
 	            echo $this->Form->input('imagesCount', array('type'=>'hidden', 'value'=>count($productImages)));
             ?>
-	            <input type="file" name="uploadify" id="fileInput" />
-	
-	
+                <?php
+                if (count($productImages) < 4) {
+                    $max = 4 - count($productImages);
+                ?>
+                    <input type="file" class="multi max-<?php echo $max;?>" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp"/>
+                <?php
+                }
+                ?>
+                
+	            <!--<input type="file" name="uploadify" id="fileInput" />-->
            
                 <a name="images"></a>
 	            <div class="">

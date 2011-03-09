@@ -2,11 +2,15 @@
 	
 	echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
 	
-	// include uploadify specific js files
-	echo $this->Html->script('/uploadify/js/jquery.uploadify.v2.1.0.min');
-	echo $this->Html->script('/uploadify/js/swfobject');
+	//Here we will include all the JQuery files required by multi file functionlity
 	
-	echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
+	echo $this->Html->script('jquery/multiple_file/jquery.MultiFile.js');
+
+	// include uploadify specific js files
+	//echo $this->Html->script('/uploadify/js/jquery.uploadify.v2.1.0.min');
+	//echo $this->Html->script('/uploadify/js/swfobject');
+	
+	//echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
 ?>
 
 <div>
@@ -58,7 +62,8 @@
 	<fieldset class="right">
 	<legend><?php __('Product Images'); ?></legend>
 	<br />
-	<input type="file" name="uploadify" id="fileInput" />
+	<?php //echo $this->Form->input('ProductImage.product_images', array('class' => 'multi', 'type' => 'file', 'accept' => 'gif|jpg'));?>
+	<input type="file" class="multi max-4" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp"/>
 	</fieldset>
 <?php
 	$options = array(
@@ -71,7 +76,8 @@
 		'complete' => "ajaxCompleteFunction(request.responseText)", 'div' => false);
    
   echo '<div class="submit">';
-	echo $this->Ajax->submit(__('Create Product', true), $options);
+  echo $this->Form->submit(__('Create Product', true), array('div' => FALSE));
+	//echo $this->Ajax->submit(__('Create Product', true), $options);
   echo ' or ' . $this->Html->link(__('Cancel', true), array('action' => 'index', 'admin' => true)); 
   echo '</div>';
 	echo $this->Form->end();
