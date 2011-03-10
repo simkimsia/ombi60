@@ -42,7 +42,7 @@ class ProductsController extends AppController {
 				
 				);
 	
-	var $view = 'Theme';
+	var $view = 'TwigView.TwigTheme';
 
 	function beforeFilter() {
 		
@@ -411,7 +411,6 @@ class ProductsController extends AppController {
 		$this->set('product', $productFound);
 		
 		$this->set('productsInCart', $this->Session->read('Shop.' . $shop_id . '.cart'));
-		
 		
 	}
 

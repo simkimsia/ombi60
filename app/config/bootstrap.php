@@ -49,6 +49,7 @@
  *
  */
 
+
 /**
  *
  *  Production Mode
@@ -182,6 +183,11 @@ Configure::write('Payment.PayPal', 2);
 
 Configure::load('Paypal.config');
 Configure::load('Paydollar.config');
+
+/**
+ * for TwigView plugin
+ **/
+define('TWIG_VIEW_CACHE', TMP.'cache'.DS.'views');
 
 
 /**

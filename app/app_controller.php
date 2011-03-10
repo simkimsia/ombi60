@@ -51,6 +51,7 @@ class AppController extends Controller {
                        'orders' => array('checkout', 'pay'),
                        'products' => array('checkout'),
 	                  );
+    
     function beforeFilter() {
 
         /**
