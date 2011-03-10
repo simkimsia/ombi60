@@ -2,19 +2,23 @@
 	echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
 ?>
 <?php echo $this->element('checkout_information', array('is_shipping_included' => FALSE, 'step' => 1));?>
-
+<?php echo $this->Form->create('Order', array('url' => array('controller' => 'orders',
+							     'action' => 'checkout',
+							     'hash' => $hash,
+							     'shop_id' => $shop_id)));?>
 <div class="gray_background">
     <div><?php
     echo $this->Form->label('Contact Email');
     ?></div>
     <div class="clear"></div>
-    <?php echo $this->Form->input('contact_email', array('label' => FALSE)); ?>
+    <?php 
+    if (!$customer_id) {
+        echo $this->Form->input('User.email', array('div' => FALSE));
+    } 
+    ?>
 </div>
 <div class="clear">&nbsp;</div>
-<?php echo $this->Form->create('Order', array('url' => array('controller' => 'orders',
-							     'action' => 'checkout',
-							     'hash' => $hash,
-							     'shop_id' => $shop_id)));?>
+
 <div class="gray_background">
 
     <div class="billing_left">
