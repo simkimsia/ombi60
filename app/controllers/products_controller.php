@@ -403,12 +403,13 @@ class ProductsController extends AppController {
 		// get ALL the images belonging to this product with the cover image as first image.
 		$images = $this->Product->ProductImage->find('all',
 							     array('conditions' => array('ProductImage.product_id'=>$id),
-									  'order' => 'ProductImage.cover DESC'));
-
+								   'fields' => array('ProductImage.filename'),
+								   'order' => 'ProductImage.cover DESC'));
+		
 		// attach the images to the product array under the key ProductImages. Note the 's'
-		$productFound['ProductImages'] = $images;
-
-		$this->set('product', $productFound);
+		$productFound['Product']['images'] = Set::extract('{n}.ProductImage.filename', $images);
+		
+		$this->set('product', $productFound['Product']);
 		
 		$this->set('productsInCart', $this->Session->read('Shop.' . $shop_id . '.cart'));
 		

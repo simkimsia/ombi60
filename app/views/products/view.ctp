@@ -151,7 +151,10 @@
 				
 				<div class="categorybottom">					
 				
-					<div id="itemback"><a href="catalogueitem.html">&lt; Previous Item</a></div> <a href="catalogue.html">Back to Category 1</a> <div id="itemforward"><a href="catalogueitem3.html">Next Item &gt;</a></div></div>
+					<div id="itemback"><a href="catalogueitem.html">&lt; Previous Item</a></div>
+					<a href="catalogue.html">Back to Category 1</a>
+					<div id="itemforward"><a href="catalogueitem3.html">Next Item &gt;</a></div>
+				</div>
 				
 			</div>
 			
