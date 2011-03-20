@@ -368,6 +368,8 @@ class ProductsController extends AppController {
 	}
 
 	function view($id = null) {
+		
+		
 
 		// to retrieve the shop id based on the url
 		// see app_controller code and shop model code
@@ -416,10 +418,16 @@ class ProductsController extends AppController {
 	}
 
 	function index() {
-
+		
+		
+		$sort = isset($this->params['named']['sort']) ? $this->params['named']['sort'] : 'created';
+		
+		$order = isset($this->params['named']['direction']) ? $this->params['named']['direction'] : 'desc';
+		
 		$this->Product->recursive = 0;
 		
 		$this->paginate = array(
+			      'fields'=>array('Product.*', 'ProductImage.id', 'ProductImage.filename', 'ProductImage.dir'),
 			      'conditions' => array('OR' =>
 							array (
 								array('ProductImage.cover'=>true),
@@ -427,14 +435,37 @@ class ProductsController extends AppController {
 							),
 						    ),
 			      'link'=>array('ProductImage'),
-			      'fields'=>array('Product.*', 'ProductImage.id', 'ProductImage.filename', 'ProductImage.dir'),
+			      
 			      'order'=> array('Product.created DESC')
 			      );
 
 
 		$this->paginate['conditions']['AND'] = array('Product.shop_id' => Shop::get('Shop.id'));
+		
+		$products = $this->paginate('Product');
+		
+		/* here is the ugly code to remove unnecessary fields and to remove the layer involving Product and ProductImage */
+		$images = Set::combine($products, '{n}.ProductImage.product_id', '{n}.ProductImage.filename');
+		
+		$products = Set::extract('{n}.Product', $products);
+		
+		foreach($products as $key=>$product) {
+			
+			foreach($images as $product_id => $image) {
+				if ($product['id'] == $product_id) {
+					$products[$key]['image'] = $image;
+					unset($images[$product_id]);
+					break;
+				}
+			}
+		}
+		
+		/* end of ugly code */
+		
+		
+		$domainPagePath = Router::url('/products/index/', true);
 
-		$this->set('products', $this->paginate());
+		$this->set(compact('sort', 'order', 'products', 'domainPagePath'));
 		
 	}
 

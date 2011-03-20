@@ -21,9 +21,72 @@ class AppError extends ErrorHandler {
                                              'title' => $name));
                 
                 
-                $this->controller->layout = "error"; 
+                $this->controller->layout = "error";
+		
                 $this->_outputMessage('no_such_domain');
         }
+	
+	
+	function error404($params) {
+
+		if (!isset($url)) {
+			$url = $this->controller->here;
+		}
+		$url = Router::normalize($url);
+		$this->controller->header("HTTP/1.0 404 Not Found");
+		$this->controller->set(array(
+			'code' => '404',
+			'name' => __('Not Found', true),
+			'message' => h($url),
+			'base' => $this->controller->base
+		));
+		$this->log('1');
+		
+		// retrieve the theme name to view pages with
+			$shopId = Shop::get('Shop.id');
+		
+			
+			// first check the Cache
+			$currentShop = Cache::read('Shop'.$shopId);
+		
+			// check if Cache is empty by checking the theme used
+			if (empty($currentShop) ||
+			    empty($currentShop['FeaturedSavedTheme']['name'])) {
+		
+				// since cache does not have this, we shall go to database to retrieve
+				
+				$this->controller->loadModel('Shop');
+				
+				$this->controller->Shop->recursive = -1;
+				$this->controller->Shop->Behaviors->attach('Containable');
+				
+				$shop = $this->controller->Shop->find('first', array('conditions'=>array('Shop.id'=>$shopId),
+									 'contain'=>array( 'FeaturedSavedTheme')));
+				
+		
+				// now we write to Cache
+				Cache::write('Shop'.$shopId, $shop);
+				// once again we read from Cache.
+				$currentShop = Cache::read('Shop'.$shopId);
+			}
+			
+			$this->controller->theme = !empty($currentShop['FeaturedSavedTheme']['folder_name']) ? $currentShop['FeaturedSavedTheme']['folder_name'] : 'blue-white';
+		
+		
+		if (isset($this->controller->params['admin'])) {
+			// show admin 404
+			$this->log('2');
+		} else {
+			$this->log('3');
+			$this->controller->view = 'TwigView.TwigTheme';
+			$this->controller->viewPath = 'errors';
+			$this->controller->render = '404';	
+		}
+		
+
+	}
+	
+
     
 }	
 ?>

@@ -25,15 +25,15 @@
 		<div id="cataloguewrapper">
 			<div class="categorywrapper">
 			<div class="categorytop"></div>
-				<div class="contentcategory"><?php echo $product['Product']['title']; ?></div>
+				<div class="contentcategory"><?php echo $product['title']; ?></div>
 										
 					<div class="contentitem">
 						<div class="scroll">
 							<div class="pics">
 								<?php
 	
-									foreach($product['ProductImages'] as $key => $image){
-										echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_LARGE_URL . $image['ProductImage']['filename'],
+									foreach($product['images'] as $key => $image){
+										echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_LARGE_URL . $image,
 													array('id'=>'full_'.$key));
 									}
 								?>
@@ -46,7 +46,7 @@
 
 						<?php
 							$limit = 5;
-							$count = count($product['ProductImages']);
+							$count = count($product['images']);
 							
 							$leftRightButtonsNeeded = $count > $limit;
 							$shortenScrollableLength = ($count > 0 AND $count < $limit);
@@ -127,7 +127,7 @@
 								echo $this->Form->create('Product',
 											 array('url' => array('action' => 'add_to_cart',
 													      'controller' => 'products',
-													      'product_id' => $product['Product']['id'])
+													      'product_id' => $product['id'])
 											));
 								
 								echo $this->element('products_dropdown_quantity',
