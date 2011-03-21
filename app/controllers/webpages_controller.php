@@ -10,7 +10,7 @@ class WebpagesController extends AppController {
 	
 	
 	
-	var $view = 'TwigView.TwigTheme';
+	//var $view = 'TwigView.TwigTheme';
 	
 	var $helpers = array('TinyMce.TinyMce');
 

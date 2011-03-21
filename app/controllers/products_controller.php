@@ -107,7 +107,7 @@ class ProductsController extends AppController {
 			$this->Security->validatePost = false;
 		}
 		
-		
+		$this->layout = 'theme';
 
 	}
 	

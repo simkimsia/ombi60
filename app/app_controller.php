@@ -42,7 +42,8 @@ class AppController extends Controller {
         'RequestHandler',
 	'DebugKit.Toolbar',
 	'Cookie',
-	'RandomString.RandomString', );
+	'RandomString.RandomString',
+	'Theme');
 
     var $helpers = array('Html', 'Form', 'Session');
     
@@ -51,6 +52,8 @@ class AppController extends Controller {
                        'orders' => array('checkout', 'pay'),
                        'products' => array('checkout'),
 	                  );
+    
+    var $view = 'TwigView.TwigTheme';
     
     function beforeFilter() {
 
