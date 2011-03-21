@@ -5,7 +5,10 @@ class WebpagesController extends AppController {
 	
 	var $components = array('Theme' => array(
 					'actions'=>array(
-						'view')),);
+						'view',
+						'frontpage')),);
+	
+	
 	
 	var $view = 'TwigView.TwigTheme';
 	
@@ -14,7 +17,7 @@ class WebpagesController extends AppController {
 	function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-		$this->Auth->allow('view', 'shopfront');
+		$this->Auth->allow('view', 'shopfront', 'frontpage');
 	}
 
 	
@@ -47,6 +50,13 @@ class WebpagesController extends AppController {
 		
 	}
 
+
+	// this is where the / will get routed to
+	// this is supposed to use the index.tpl inside pages folder within the theme
+	function frontpage() {
+		$this->viewPath = 'pages';
+		$this->render('index');
+	}
 	
 	function admin_index() {
 		$this->Webpage->recursive = 0;
