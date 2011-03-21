@@ -9,7 +9,7 @@
           <?php echo $this->Html->link(__('Back to Pages', true), array('action' => 'index')); ?>
   </div>
   <div class="view_textarea">
-    <?php echo $webpage['Webpage']['text']; ?>
+    <?php echo $webpage['Webpage']['content']; ?>
   </div>
   <div>
     <fieldset>

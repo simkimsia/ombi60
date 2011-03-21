@@ -3,9 +3,11 @@ class WebpagesController extends AppController {
 
 	var $name = 'Webpages';
 	
-	var $components = array('Theme');
+	var $components = array('Theme' => array(
+					'actions'=>array(
+						'view')),);
 	
-	var $view = 'Theme';
+	var $view = 'TwigView.TwigTheme';
 	
 	var $helpers = array('TinyMce.TinyMce');
 
@@ -35,6 +37,13 @@ class WebpagesController extends AppController {
 		}
 		
 		$this->set('title_for_layout', $webpage['Webpage']['title']);
+		
+		$page = $webpage['Webpage'];
+		
+		$this->set(compact('page'));
+		
+		$this->viewPath = 'pages';
+		$this->render('page');
 		
 	}
 

@@ -1,3 +1,3 @@
 <?php
-echo $webpage['Webpage']['text'];
+echo $webpage['Webpage']['content'];
 ?>

@@ -21,7 +21,7 @@
 	
 		echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=>Shop::get('Shop.id')));
 		echo $this->Form->input('title');
-		echo $this->Form->input('text', array('label' => __('Write your page', true)));
+		echo $this->Form->input('content', array('label' => __('Write your page', true)));
 	
 	?>
 	</fieldset>
