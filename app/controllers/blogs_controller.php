@@ -7,6 +7,8 @@ class BlogsController extends AppController {
 	
 	var $components = array('Theme' => array('actions'=>array('view')),);
 	
+	
+	
 	function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();

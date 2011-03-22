@@ -3,7 +3,7 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('name');?></th>
+			<th><?php echo $this->Paginator->sort('title');?></th>
 			<th><?php echo $this->Paginator->sort('short_name');?></th>
 			<th><?php echo $this->Paginator->sort('description');?></th>
 			<th><?php echo $this->Paginator->sort('theme');?></th>
@@ -21,7 +21,7 @@
 	?>
 	<tr<?php echo $class;?>>
 		<td><?php echo $blog['Blog']['id']; ?>&nbsp;</td>
-		<td><?php echo $blog['Blog']['name']; ?>&nbsp;</td>
+		<td><?php echo $blog['Blog']['title']; ?>&nbsp;</td>
 		<td><?php echo $blog['Blog']['short_name']; ?>&nbsp;</td>
 		<td><?php echo $blog['Blog']['description']; ?>&nbsp;</td>
 		<td><?php echo $blog['Blog']['theme']; ?>&nbsp;</td>

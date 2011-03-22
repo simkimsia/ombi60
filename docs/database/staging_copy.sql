@@ -102,7 +102,7 @@ DROP TABLE IF EXISTS `blogs`;
 
 CREATE TABLE `blogs` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
   `short_name` varchar(100) NOT NULL,
   `description` text,
   `theme` varchar(100) DEFAULT NULL,
@@ -681,7 +681,7 @@ CREATE TABLE `posts` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `title` varchar(100) DEFAULT NULL,
   `slug` varchar(150) DEFAULT NULL,
-  `body` text,
+  `content` text,
   `no_comments` int(4) NOT NULL DEFAULT '0',
   `allow_comments` tinyint(1) NOT NULL DEFAULT '1',
   `allow_pingback` tinyint(1) NOT NULL DEFAULT '1',

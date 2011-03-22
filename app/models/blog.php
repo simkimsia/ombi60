@@ -1,7 +1,7 @@
 <?php
 class Blog extends AppModel {
 	var $name = 'Blog';
-	var $displayField = 'name';
+	var $displayField = 'title';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $hasMany = array(
@@ -33,7 +33,7 @@ class Blog extends AppModel {
 	function beforeValidate() {
 		// ensure short_name is set
 		if (!isset($this->data[$this->alias]['short_name']) || empty($this->data[$this->alias]['short_name'])) {
-			$this->data[$this->alias]['short_name'] = substr(Inflector::slug(utf8_encode(strtolower($this->data[$this->alias]['name'])), '-'), 0, 100);
+			$this->data[$this->alias]['short_name'] = substr(Inflector::slug(utf8_encode(strtolower($this->data[$this->alias]['title'])), '-'), 0, 100);
 		}
 		// ensure shop_id is set
 		if (!isset($this->data[$this->alias]['shop_id']) || empty($this->data[$this->alias]['shop_id'])) {
@@ -46,7 +46,7 @@ class Blog extends AppModel {
 	function beforeSave() {
 		// ensure short_name is set
 		if (!isset($this->data[$this->alias]['short_name']) || empty($this->data[$this->alias]['short_name'])) {
-			$this->data[$this->alias]['short_name'] = substr(Inflector::slug(utf8_encode(strtolower($this->data[$this->alias]['name'])), '-'), 0, 100);
+			$this->data[$this->alias]['short_name'] = substr(Inflector::slug(utf8_encode(strtolower($this->data[$this->alias]['title'])), '-'), 0, 100);
 		}
 		
 		// ensure shop_id is set

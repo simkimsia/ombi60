@@ -1,6 +1,6 @@
 <div class="internal_forms">
     <div class="text_center">
-        <h2><?php echo $blog['Blog']['name']; ?></h2>
+        <h2><?php echo $blog['Blog']['title']; ?></h2>
         <?php echo $this->Html->link(__('Write a new article', true), array('controller' => 'posts', 'action' => 'add', 'blog_id'=>$blog['Blog']['id'])); ?>|
         <?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $blog['Blog']['id'])); ?>|
         <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $blog['Blog']['id']), null, sprintf(__('Are you sure you want to delete this blog?', true))); ?>|

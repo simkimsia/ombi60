@@ -576,7 +576,7 @@ CREATE TABLE `posts` (
   `status` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
   `title` VARCHAR(100) DEFAULT NULL,
   `slug` VARCHAR(150) DEFAULT NULL,
-  `body` TEXT,
+  `content` TEXT,
   `no_comments` INT(4) NOT NULL DEFAULT '0',
   `allow_comments` TINYINT(1) NOT NULL DEFAULT '1',
   `allow_pingback` TINYINT(1) NOT NULL DEFAULT '1',

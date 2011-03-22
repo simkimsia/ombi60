@@ -8,7 +8,7 @@
 			<th><?php echo $this->Paginator->sort('status');?></th>
 			<th><?php echo $this->Paginator->sort('title');?></th>
 			<th><?php echo $this->Paginator->sort('slug');?></th>
-			<th><?php echo $this->Paginator->sort('body');?></th>
+			<th><?php echo $this->Paginator->sort('content');?></th>
 			<th><?php echo $this->Paginator->sort('no_comments');?></th>
 			<th><?php echo $this->Paginator->sort('allow_comments');?></th>
 			<th><?php echo $this->Paginator->sort('allow_pingback');?></th>
@@ -35,7 +35,7 @@
 		<td><?php echo $post['Post']['status']; ?>&nbsp;</td>
 		<td><?php echo $post['Post']['title']; ?>&nbsp;</td>
 		<td><?php echo $post['Post']['slug']; ?>&nbsp;</td>
-		<td><?php echo $post['Post']['body']; ?>&nbsp;</td>
+		<td><?php echo $post['Post']['content']; ?>&nbsp;</td>
 		<td><?php echo $post['Post']['no_comments']; ?>&nbsp;</td>
 		<td><?php echo $post['Post']['allow_comments']; ?>&nbsp;</td>
 		<td><?php echo $post['Post']['allow_pingback']; ?>&nbsp;</td>

@@ -1,6 +1,6 @@
 <div class="blogs">
     <div class="text_center">
-        <h2><?php __($this->data['Blog']['name']);?></h2>
+        <h2><?php __($this->data['Blog']['title']);?></h2>
         <?php echo $this->Html->link(__('View', true), array('action' => 'view', $this->Form->value('Blog.id'))); ?>|
         <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Blog.id')), null, sprintf(__('Are you sure you want to delete blog?', true))); ?>|
         <?php echo $this->Html->link(__('Back to Blogs', true), array('controller'=>'webpages','action' => 'index')); ?>

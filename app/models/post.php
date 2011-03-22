@@ -13,10 +13,10 @@ class Post extends AppModel {
 				'message' => 'Title is required.'
 			),
 		),
-		'body' => array(
+		'content' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
-				'message' => 'Body is required.'
+				'message' => 'Content is required.'
 			),
 		),
 	);

@@ -9,7 +9,7 @@
           
   </div>
   <div class="view_textarea">
-    <?php echo $post['Post']['body']; ?>
+    <?php echo $post['Post']['content']; ?>
   </div>
   <div>
     <fieldset>

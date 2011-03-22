@@ -25,7 +25,7 @@
 		
 		echo $this->Form->input('title');
 		
-		echo $this->Form->input('body', array('label' => 'Write your article'));
+		echo $this->Form->input('content', array('label' => 'Write your article'));
 	
 	?>
 	</fieldset>

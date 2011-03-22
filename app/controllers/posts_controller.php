@@ -5,7 +5,7 @@ class PostsController extends AppController {
 	
 	var $helpers = array('TinyMce.TinyMce', 'Text');
 	
-	var $view = 'Theme';
+	var $view = 'TwigView.TwigTheme';
 	
 	var $components = array(
 				'Theme' => array(
@@ -36,14 +36,28 @@ class PostsController extends AppController {
 									'Blog.shop_id'=>Shop::get('Shop.id')),
 							 'link'=>array('Blog', 'User'),
 							 'fields'=>array('Post.*',
-									 'Blog.name',
+									 'Blog.title',
 									 'Blog.short_name')));
-		$this->set(compact('post'));
 		
+		
+		
+		
+		
+		$blog = $post['Blog'];
+		$post = $post['Post'];
+		
+		
+		
+		$this->set(compact('post', 'blog'));
+		
+		$this->viewPath = 'articles';
+		$this->render('article');
 		
 	}
 	
 	function index($short_name = false) {
+		
+		
 		
 		if (!$short_name) {
 			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
@@ -64,11 +78,21 @@ class PostsController extends AppController {
 							  'Post.blog_id','Post.author_id',
 							  'Post.author_id', 'Post.status',
 							  'Post.title', 'Post.slug',
-							  'Post.body', 'Post.created'));
+							  'Post.content', 'Post.created'));
 		
 		$posts = $this->paginate();
 		
+		
+		
+		$posts = Set::extract('{n}.Post', $posts);
+		
+		$blog = $blog['Blog'];
+		
+		
 		$this->set(compact('posts', 'blog'));
+		
+		$this->viewPath = 'articles';
+		$this->render('blog');
 	}
 	
 	

@@ -11,7 +11,7 @@
  		<label><?php __('Title');?></label>
  		<span class="hint">Examples: News, Behind the Scenes</span>
 	<?php
-		echo $this->Form->input('name', array('label' => FALSE, 'div' => FALSE,));
+		echo $this->Form->input('title', array('label' => FALSE, 'div' => FALSE,));
 		
 	?>
 	</fieldset>
