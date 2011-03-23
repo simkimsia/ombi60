@@ -152,7 +152,32 @@ class CartItem extends AppModel {
 	}
 	
 	
-	
+	/**
+	 * to be used in view_cart action in products controller
+	 * */
+	function prepareCartItemInView($items = array()) {
+		
+		$resultItems = array();
+		foreach($items as $item) {
+			$resultItems[] = array('id'=>$item['id'],
+					       'cart_id'=>$item['cart_id'],
+					       'price'=>$item['product_price'],
+					       'quantity'=>$item['product_quantity'],
+					       'status'=>$item['status'],
+					       'title'=>$item['product_title'],
+					       'weight'=>$item['product_weight'],
+					       'currency'=>$item['currency'],
+					       'weight_unit'=>$item['weight_unit'],
+					       'shipping_required'=>$item['shipping_required'],
+					       'previous_price'=>$item['previous_price'],
+					       'previous_currency'=>$item['previous_currency'],
+					       'product' => array('id'=>$item['product_id'],
+								  'cover_image'=>$item['ProductImage']['filename'])
+					       );
+		}
+		
+		return $resultItems;
+	}
 
 }
 ?>

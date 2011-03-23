@@ -319,7 +319,12 @@ class ProductsController extends AppController {
 		
 		$this->Session->write('Shop.' . $shop_id . '.paymentAmount', $paymentAmount);
 		$cart_id = $productsInCart['Cart']['id'];
-		$this->set(compact('products', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
+		
+		
+		// reassign the products into items
+		$items = $this->Product->CartItem->prepareCartItemInView($products);
+		
+		$this->set(compact('items', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
 		
 		$sessionString = '';
 		$mainUrl = Shop::get('Shop.web_address');
@@ -336,6 +341,8 @@ class ProductsController extends AppController {
 		}
 		
 		$this->set('sessionString', $sessionString);
+		
+		$this->render('cart');
 	}
 
 	function admin_index() {

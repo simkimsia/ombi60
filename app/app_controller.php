@@ -50,7 +50,7 @@ class AppController extends Controller {
     //Allowed controllers with actions
     var $sslActions = array(
                        'orders' => array('checkout', 'pay'),
-                       'products' => array('checkout'),
+                       //'products' => array('checkout'),
 	                  );
     
     var $view = 'TwigView.TwigTheme';
