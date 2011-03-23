@@ -26,8 +26,8 @@ class AppError extends ErrorHandler {
                 $this->_outputMessage('no_such_domain');
         }
 	
-	
 	function error404($params) {
+		extract($params, EXTR_OVERWRITE);
 
 		if (!isset($url)) {
 			$url = $this->controller->here;
@@ -40,53 +40,56 @@ class AppError extends ErrorHandler {
 			'message' => h($url),
 			'base' => $this->controller->base
 		));
-		$this->log('1');
 		
-		// retrieve the theme name to view pages with
-			$shopId = Shop::get('Shop.id');
+		$this->controller->view = 'TwigView.TwigTheme';
+		$this->controller->layout = 'theme';
 		
-			
-			// first check the Cache
-			$currentShop = Cache::read('Shop'.$shopId);
+		$theme = $this->getTheme();
 		
-			// check if Cache is empty by checking the theme used
-			if (empty($currentShop) ||
-			    empty($currentShop['FeaturedSavedTheme']['name'])) {
+		$pathToError = DS . 'themed' . DS . $theme . DS . 'errors' . DS . '404';
 		
-				// since cache does not have this, we shall go to database to retrieve
-				
-				$this->controller->loadModel('Shop');
-				
-				$this->controller->Shop->recursive = -1;
-				$this->controller->Shop->Behaviors->attach('Containable');
-				
-				$shop = $this->controller->Shop->find('first', array('conditions'=>array('Shop.id'=>$shopId),
-									 'contain'=>array( 'FeaturedSavedTheme')));
-				
+		$this->log($pathToError);
+		$this->_outputMessage($pathToError);
 		
-				// now we write to Cache
-				Cache::write('Shop'.$shopId, $shop);
-				// once again we read from Cache.
-				$currentShop = Cache::read('Shop'.$shopId);
-			}
-			
-			$this->controller->theme = !empty($currentShop['FeaturedSavedTheme']['folder_name']) ? $currentShop['FeaturedSavedTheme']['folder_name'] : 'blue-white';
-		
-		
-		if (isset($this->controller->params['admin'])) {
-			// show admin 404
-			$this->log('2');
-		} else {
-			$this->log('3');
-			$this->controller->view = 'TwigView.TwigTheme';
-			$this->controller->viewPath = 'errors';
-			$this->controller->render = '404';	
-		}
-		
-
 	}
 	
-
+	private function getTheme() {
+		
+		App::import('Model', 'Shop');
+		
+		// retrieve the theme name to view pages with
+		$shopId = Shop::get('Shop.id');
+	
+		
+		// first check the Cache
+		$currentShop = Cache::read('Shop'.$shopId);
+	
+		// check if Cache is empty by checking the theme used
+		if (empty($currentShop) ||
+		    empty($currentShop['FeaturedSavedTheme']['name'])) {
+	
+			// since cache does not have this, we shall go to database to retrieve
+			
+			$this->controller->loadModel('Shop');
+			
+			$this->controller->Shop->recursive = -1;
+			$this->controller->Shop->Behaviors->attach('Containable');
+			
+			$shop = $this->controller->Shop->find('first', array('conditions'=>array('Shop.id'=>$shopId),
+								 'contain'=>array( 'FeaturedSavedTheme')));
+			
+	
+			// now we write to Cache
+			Cache::write('Shop'.$shopId, $shop);
+			// once again we read from Cache.
+			$currentShop = Cache::read('Shop'.$shopId);
+		}
+		
+		$this->controller->theme = !empty($currentShop['FeaturedSavedTheme']['folder_name']) ? $currentShop['FeaturedSavedTheme']['folder_name'] : 'blue-white';
+		
+		return $this->controller->theme;
+	}
     
-}	
+}
+
 ?>
