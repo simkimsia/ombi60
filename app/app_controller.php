@@ -76,7 +76,10 @@ class AppController extends Controller {
 		}
 
 
-        } 
+        } else {
+	    
+		$this->layout = 'theme';	
+	}
 
         // allow non users to access register and login actions only.
         $this->Auth->allow('/register', '/admin/login');
