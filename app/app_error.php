@@ -48,7 +48,7 @@ class AppError extends ErrorHandler {
 		
 		$pathToError = DS . 'themed' . DS . $theme . DS . 'errors' . DS . '404';
 		
-		$this->log($pathToError);
+		
 		$this->_outputMessage($pathToError);
 		
 	}
