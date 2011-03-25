@@ -317,6 +317,23 @@ class Shop extends AppModel {
 		}
 		return $value[0];
 	}
+	
+	
+	function getTemplateVariable() {
+		$shopInstance = Shop::getInstance();
+		$shop = array('name' => $shopInstance['Shop']['name'],
+			      'url'  => $shopInstance['Shop']['name'],
+			      'primary_domain'=> $shopInstance['Shop']['name'],
+			      'permanent_domain'=>$shopInstance['Shop']['name'],
+			      'email'=>$shopInstance['Shop']['name'],
+			      'products_count'=>$shopInstance['Shop']['name'],
+			      'products_count'=>$shopInstance['Shop']['name'],
+			      'product_groups_count'=>$shopInstance['Shop']['name'],
+			      'currency'=>$shopInstance['Shop']['currency'],
+			      'money_format'=>$shopInstance['Shop']['currency'],
+			      'money_format_in_currency'=>$shopInstance['Shop']['currency'],
+			      'vendors'=>$shopInstance['Shop']['currency'],);
+	}
 
 	/**
 	 * End of Static user code

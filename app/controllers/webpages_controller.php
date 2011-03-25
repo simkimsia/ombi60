@@ -18,9 +18,12 @@ class WebpagesController extends AppController {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		$this->Auth->allow('view', 'shopfront', 'frontpage');
+		$this->prepareGlobalObjectsInTwigViews();
 	}
 
-	
+	private function prepareGlobalObjectsInTwigViews() {
+		$shop = Shop::getTemplateVariable();
+	}
 
 	function view($handle = false) {
 		
