@@ -181,6 +181,48 @@ class Shop extends AppModel {
 			'counterQuery' => ''
 		),
 		
+		'Product' => array(
+			'className' => 'Product',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		
+		'ProductGroup' => array(
+			'className' => 'ProductGroup',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		
+		'Vendor' => array(
+			'className' => 'Vendor',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		
 	);
 
 	var $belongsTo = array(
@@ -322,9 +364,9 @@ class Shop extends AppModel {
 	function getTemplateVariable() {
 		$shopInstance = Shop::getInstance();
 		$shop = array('name' => $shopInstance['Shop']['name'],
-			      'url'  => $shopInstance['Shop']['name'],
-			      'primary_domain'=> $shopInstance['Shop']['name'],
-			      'permanent_domain'=>$shopInstance['Shop']['name'],
+			      'url'  => $shopInstance['Shop']['web_address'] . '/',
+			      'primary_domain'=> $shopInstance['Shop']['web_address'] . '/',
+			      'permanent_domain'=>$shopInstance['Shop']['web_address'] . '/',
 			      'email'=>$shopInstance['Shop']['name'],
 			      'products_count'=>$shopInstance['Shop']['name'],
 			      'products_count'=>$shopInstance['Shop']['name'],

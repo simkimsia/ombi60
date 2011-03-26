@@ -21,8 +21,20 @@ class Product extends AppModel {
 			'foreignKey' => 'shop_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => ''
-		)
+			'order' => '',
+			'counterCache' => true,
+			'counterScope' => array('Product.status' => 1) 
+		),
+		'Vendor' => array(
+			'className' => 'Vendor',
+			'foreignKey' => 'vendor_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => false,
+			'counterScope' =>  '',
+		),
+		
 	);
 
 	var $hasMany = array(
@@ -65,6 +77,20 @@ class Product extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
+		
+		'ProductsInGroup' => array(
+			'className' => 'ProductsInGroup',
+			'foreignKey' => 'product_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
 
 	);
 	
