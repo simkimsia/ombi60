@@ -237,6 +237,22 @@ class Shop extends AppModel {
 		),
 	);
 	
+	var $hasOne = array(
+		'ShopSetting' => array(
+			'className' => 'ShopSetting',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+	
 	
 
 	/**

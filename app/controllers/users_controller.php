@@ -131,6 +131,7 @@ class UsersController extends AppController {
 		$this->log('shops');
 		$this->Acl->allow($group, 'controllers/Shops/admin_account');
 		$this->Acl->allow($group, 'controllers/Shops/admin_cancelaccount');
+		$this->Acl->allow($group, 'controllers/Shops/admin_general_settings');
 		
 		$this->log('payments');
 		$this->Acl->allow($group, 'controllers/Payments/admin_index');

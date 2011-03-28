@@ -10,6 +10,31 @@ class ShopsController extends AppController {
 	var $components = array('Paypal.Paypal',
 				'Paydollar.Paydollar');
 
+
+	function beforeFilter() {
+		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
+		parent::beforeFilter();
+		$this->Auth->allow('admin_general_settings');
+	}
+	
+	function admin_general_settings() {
+		
+		if (!empty($this->data)) {
+			if ($this->Shop->ShopSetting->save($this->data)) {
+				$this->Session->setFlash(__('General Settings have been saved', true), 'default', array('class'=>'flash_success'));
+				$this->redirect(array('action' => 'admin_general_settings'));
+			} else {
+				$this->Session->setFlash(__('General Settings could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+			}
+		}
+		
+		if (empty($this->data)) {
+			$this->Shop->ShopSetting->recursive = -1;
+			$shopSetting = $this->Shop->ShopSetting->find('first', array('conditions'=>array('ShopSetting.shop_id'=>Shop::get('Shop.id'))));
+			$this->set(compact('shopSetting'));
+		} 
+		
+	}
 	
 
 	function admin_account() {

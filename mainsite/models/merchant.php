@@ -83,6 +83,36 @@ class Merchant extends AppModel {
 			return false;
 		}
 		
+		// we need to create shop settings
+		$shopSetting = $this->Shop->ShopSetting;
+
+		$settingData = array();
+		
+		
+		$settingData['ShopSetting']['shop_id'] = $this->Shop->id;
+		
+		/* timezone, unit_system, currency, checkout language dependent on country */
+		$settingData['ShopSetting']['timezone']  = '';
+		$settingData['ShopSetting']['unit_system'] = 'metric';		
+		$settingData['ShopSetting']['currency'] = 'SGD';
+		$settingData['ShopSetting']['checkout_language'] = 1;
+		
+		
+		/* money in html, email with or without currency */
+		$settingData['ShopSetting']['money_html']  = '';
+		$settingData['ShopSetting']['money_html_currency'] = 'metric';		
+		$settingData['ShopSetting']['money_email'] = 'SGD';
+		$settingData['ShopSetting']['money_email_currency'] = '';
+		
+		$shopSetting->create();
+		$result = $shopSetting->save($settingData);
+		
+		if (!$result) {
+			$datasource->rollback($this);
+			return false;
+		}
+		
+		
 		// we need to create invoice entries
 		$invoice = $this->Shop->Invoice;
 
