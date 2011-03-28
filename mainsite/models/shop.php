@@ -4,7 +4,7 @@ class Shop extends AppModel {
 	var $name = 'Shop';
 
 	var $validate = array(
-		'web_address' => array(
+		'primary_domain' => array(
 			'isUnique' => array(
 				'rule' => 'isUnique',
 				'message' => 'This web address is already used. Please choose another.'
@@ -16,7 +16,7 @@ class Shop extends AppModel {
 			
 			'url' => array(
 				'rule' => 'url',
-				'message' => 'Web address format should be: http://example.myspree2shop.com OR http://example.com.'
+				'message' => 'Web address format should be: http://example.ombi60.com OR http://example.com.'
 			),
 			
 
@@ -229,7 +229,7 @@ class Shop extends AppModel {
 		
 		// for localhost we will NOT validate for url
 		if(strpos(FULL_BASE_URL, '.localhost')) {
-			unset($this->validate['web_address']['url']);
+			unset($this->validate['primary_domain']['url']);
 		}
 		
 		return true;
@@ -247,7 +247,7 @@ class Shop extends AppModel {
 		$shopErrors = $this->validationErrors;
 
 		foreach ( $shopErrors as $key => $value ) {
-			if ($key == 'web_address') {
+			if ($key == 'primary_domain') {
 				$this->validationErrors['subdomain'] = $value;
 				unset($this->validationErrors[$key]);
 				break;

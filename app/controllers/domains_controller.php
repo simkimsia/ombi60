@@ -14,7 +14,7 @@ class DomainsController extends AppController {
 
 	function admin_index() {
 		$this->Domain->recursive = 0;
-		$mainUrl = Shop::get('Shop.web_address');
+		$mainUrl = Shop::get('Shop.primary_domain');
 		$this->set('mainUrl', $mainUrl);
         $shopId = User::get('Merchant.shop_id');
 		$this->set('domains', $this->paginate('Domain', array(
@@ -148,7 +148,7 @@ class DomainsController extends AppController {
 	
 		$this->Domain->recursive = 0;
 		
-		$mainUrl = Shop::get('Shop.web_address');
+		$mainUrl = Shop::get('Shop.primary_domain');
 		$this->set('mainUrl', $mainUrl);
 		
         $shopId = User::get('Merchant.shop_id');

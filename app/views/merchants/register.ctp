@@ -8,7 +8,7 @@
 	echo $this->element('errors', array('errors' => $errors));
 	echo $this->Form->create('Merchant', array('action' => 'register'));
 	echo $this->Form->input('Shop.name', array('label'=>'Shop name'));
-	echo $this->Form->input('Shop.web_address', array('value'=>'', 'type'=>'hidden') );
+	echo $this->Form->input('Shop.primary_domain', array('value'=>'', 'type'=>'hidden') );
 	echo 'http://' . $this->Form->input('Shop.subdomain', array('label'=>'Web Address')) . '.myspree2shop.com' ;
 	echo $this->Form->input('User.full_name');
 	echo $this->Form->input('User.name_to_call');

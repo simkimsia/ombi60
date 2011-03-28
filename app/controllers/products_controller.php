@@ -328,7 +328,7 @@ class ProductsController extends AppController {
 		$this->set(compact('items', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
 		
 		$sessionString = '';
-		$mainUrl = Shop::get('Shop.web_address');
+		$mainUrl = Shop::get('Shop.primary_domain');
 		
 		$this->log('user id in view_cart ' . User::get('User.id'));
 		

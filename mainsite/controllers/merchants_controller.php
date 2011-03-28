@@ -22,11 +22,11 @@ class MerchantsController extends AppController {
 
 			// because Security component is turned on
 			// hence need to disable any hidden fields that is auto changed by jQuery
-			$this->Security->disabledFields[] = 'Shop.web_address';
+			$this->Security->disabledFields[] = 'Shop.primary_domain';
 
 			// in case the merchant did not turn on Js,
-			if (empty($this->data['Shop']['web_address'])) {
-				$this->data['Shop']['web_address'] = 'http://' . $this->data['Shop']['subdomain'] . '.myspree2shop.com';
+			if (empty($this->data['Shop']['primary_domain'])) {
+				$this->data['Shop']['primary_domain'] = 'http://' . $this->data['Shop']['subdomain'] . '.myspree2shop.com';
 			}
 
 
@@ -96,14 +96,17 @@ class MerchantsController extends AppController {
 			$this->data['Invoice']['title'] = $plan;
 			$this->data['Invoice']['description'] = 'Initial signup';
 			
+			// set the Shop email
+			$this->data['Shop']['email'] = $this->data['User']['email'];
+			
 			/* get price of subscription plan */
 			$this->Merchant->Shop->Invoice->SubscriptionPlan->id = $plan;
 			$this->data['Invoice']['price'] = $this->Merchant->Shop->Invoice->SubscriptionPlan->field('price');
 			
 			
-			if (isset($this->data['Shop']['web_address'])) {
+			if (isset($this->data['Shop']['primary_domain'])) {
 				
-				$this->data['Shop']['web_address'] = 'http://' . $this->data['Shop']['subdomain'] . $mainDomain;
+				$this->data['Shop']['primary_domain'] = 'http://' . $this->data['Shop']['subdomain'] . $mainDomain;
 				
 			}
 			
@@ -214,7 +217,7 @@ class MerchantsController extends AppController {
 			
 			// retrieve the url
 			$this->Merchant->Shop->recursive = -1;
-			$domain = $this->Merchant->Shop->read(array('Shop.web_address'), $shopid);
+			$domain = $this->Merchant->Shop->read(array('Shop.primary_domain'), $shopid);
 			
 			
 		}

@@ -17,11 +17,11 @@ class MerchantsController extends AppController {
 
 			// because Security component is turned on
 			// hence need to disable any hidden fields that is auto changed by jQuery
-			$this->Security->disabledFields[] = 'Shop.web_address';
+			$this->Security->disabledFields[] = 'Shop.primary_domain';
 
 			// in case the merchant did not turn on Js,
-			if (empty($this->data['Shop']['web_address'])) {
-				$this->data['Shop']['web_address'] = 'http://' . $this->data['Shop']['subdomain'] . '.myspree2shop.com';
+			if (empty($this->data['Shop']['primary_domain'])) {
+				$this->data['Shop']['primary_domain'] = 'http://' . $this->data['Shop']['subdomain'] . '.myspree2shop.com';
 			}
 
 

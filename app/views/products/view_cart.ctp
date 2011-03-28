@@ -116,7 +116,7 @@
 			</div>
 			<?php
 				if ($count > 0) {
-				    $url = str_replace("http", 'https', Shop::get('web_address'));
+				    $url = str_replace("http", 'https', Shop::get('primary_domain'));
 					$actionLink = $url . Router::url(array('controller'=>'products', 'action'=>'checkout'));
 					$actionLink .= $sessionString;
 					echo $this->Form->create('Product', array('url'=>$actionLink ));

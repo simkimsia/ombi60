@@ -4,7 +4,7 @@ class Shop extends AppModel {
 	var $name = 'Shop';
 
 	var $validate = array(
-		'web_address' => array(
+		'primary_domain' => array(
 			'isUnique' => array(
 				'rule' => 'isUnique',
 				'message' => 'This web address is already used. Please choose another.'
@@ -249,7 +249,7 @@ class Shop extends AppModel {
 		$shopErrors = $this->validationErrors;
 
 		foreach ( $shopErrors as $key => $value ) {
-			if ($key == 'web_address') {
+			if ($key == 'primary_domain') {
 				$this->validationErrors['subdomain'] = $value;
 				unset($this->validationErrors[$key]);
 				break;
