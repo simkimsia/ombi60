@@ -99,10 +99,10 @@ class Merchant extends AppModel {
 		
 		
 		/* money in html, email with or without currency */
-		$settingData['ShopSetting']['money_html']  = '';
-		$settingData['ShopSetting']['money_html_currency'] = 'metric';		
-		$settingData['ShopSetting']['money_email'] = 'SGD';
-		$settingData['ShopSetting']['money_email_currency'] = '';
+		$settingData['ShopSetting']['money_in_html']  = '';
+		$settingData['ShopSetting']['money_in_html_with_currency'] = 'metric';		
+		$settingData['ShopSetting']['money_in_email'] = 'SGD';
+		$settingData['ShopSetting']['money_in_email_with_currency'] = '';
 		
 		$shopSetting->create();
 		$result = $shopSetting->save($settingData);

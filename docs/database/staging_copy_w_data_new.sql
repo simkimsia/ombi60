@@ -917,10 +917,10 @@ CREATE TABLE `shop_settings` (
   `timezone` varchar(255) DEFAULT NULL,
   `unit_system` varchar(50) DEFAULT 'metric',
   `currency` varchar(100) DEFAULT NULL,
-  `money_html_currency` varchar(255) DEFAULT NULL,
-  `money_html` varchar(255) DEFAULT NULL,
-  `money_email_currency` varchar(255) DEFAULT NULL,
-  `money_email` varchar(255) DEFAULT NULL,
+  `money_in_html_with_currency` varchar(255) DEFAULT NULL,
+  `money_in_html` varchar(255) DEFAULT NULL,
+  `money_in_email_with_currency` varchar(255) DEFAULT NULL,
+  `money_in_email` varchar(255) DEFAULT NULL,
   `checkout_language` int(3) DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

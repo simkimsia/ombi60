@@ -41,10 +41,10 @@
         <div id="money-format-div">
 	
 	<?php
-                echo $this->Form->input('ShopSetting.money_html', array('value'=>$shopSetting['ShopSetting']['money_html']));
-		echo $this->Form->input('ShopSetting.money_html_currency', array('value'=>$shopSetting['ShopSetting']['money_html_currency']));
-		echo $this->Form->input('ShopSetting.money_email', array('value'=>$shopSetting['ShopSetting']['money_email']));
-		echo $this->Form->input('ShopSetting.money_email_currency', array('value'=>$shopSetting['ShopSetting']['money_email_currency']));
+                echo $this->Form->input('ShopSetting.money_in_html', array('value'=>$shopSetting['ShopSetting']['money_in_html']));
+		echo $this->Form->input('ShopSetting.money_in_html_with_currency', array('value'=>$shopSetting['ShopSetting']['money_in_html_with_currency']));
+		echo $this->Form->input('ShopSetting.money_in_email', array('value'=>$shopSetting['ShopSetting']['money_in_email']));
+		echo $this->Form->input('ShopSetting.money_in_email_with_currency', array('value'=>$shopSetting['ShopSetting']['money_in_email_with_currency']));
 	?>
 		      
         </div>
