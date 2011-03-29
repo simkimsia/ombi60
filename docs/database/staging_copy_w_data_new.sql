@@ -65,11 +65,11 @@ CREATE TABLE `aros` (
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `aros` */
 
-insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,10),(4,NULL,'Group',4,'customers',11,20),(5,NULL,'Group',5,'casual',21,44),(6,3,'User',1,NULL,6,7),(7,5,'User',2,NULL,22,23),(8,4,'User',3,NULL,12,13),(9,4,'User',4,NULL,14,15),(10,4,'User',5,NULL,16,17),(11,4,'User',6,NULL,18,19),(12,5,'User',7,NULL,24,25),(13,5,'User',8,NULL,26,27),(14,5,'User',9,NULL,28,29),(15,5,'User',10,NULL,30,31),(16,5,'User',11,NULL,32,33),(17,5,'User',12,NULL,34,35),(18,5,'User',13,NULL,36,37),(19,5,'User',14,NULL,38,39),(20,5,'User',15,NULL,40,41),(21,3,'User',16,NULL,8,9),(22,5,'User',17,NULL,42,43);
+insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,12),(4,NULL,'Group',4,'customers',13,22),(5,NULL,'Group',5,'casual',23,46),(6,3,'User',1,NULL,6,7),(7,5,'User',2,NULL,24,25),(8,4,'User',3,NULL,14,15),(9,4,'User',4,NULL,16,17),(10,4,'User',5,NULL,18,19),(11,4,'User',6,NULL,20,21),(12,5,'User',7,NULL,26,27),(13,5,'User',8,NULL,28,29),(14,5,'User',9,NULL,30,31),(15,5,'User',10,NULL,32,33),(16,5,'User',11,NULL,34,35),(17,5,'User',12,NULL,36,37),(18,5,'User',13,NULL,38,39),(19,5,'User',14,NULL,40,41),(20,5,'User',15,NULL,42,43),(21,3,'User',16,NULL,8,9),(22,5,'User',17,NULL,44,45),(23,3,'User',18,NULL,10,11);
 
 /*Table structure for table `aros_acos` */
 
@@ -111,11 +111,11 @@ CREATE TABLE `blogs` (
   `shop_id` int(11) DEFAULT NULL,
   `visible` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `blogs` */
 
-insert  into `blogs`(`id`,`title`,`short_name`,`description`,`theme`,`created`,`modified`,`shop_id`,`visible`) values (1,'shop001','shop001',NULL,NULL,'2011-02-18 15:43:48','2011-02-19 04:06:24',2,0),(2,'','shop002',NULL,NULL,'2011-03-28 09:17:33','2011-03-28 09:17:33',3,1);
+insert  into `blogs`(`id`,`title`,`short_name`,`description`,`theme`,`created`,`modified`,`shop_id`,`visible`) values (1,'shop001','shop001',NULL,NULL,'2011-02-18 15:43:48','2011-02-19 04:06:24',2,0),(2,'','shop002',NULL,NULL,'2011-03-28 09:17:33','2011-03-28 09:17:33',3,1),(3,'','shop003',NULL,NULL,'2011-03-29 09:28:25','2011-03-29 09:28:25',4,1);
 
 /*Table structure for table `cake_sessions` */
 
@@ -130,7 +130,7 @@ CREATE TABLE `cake_sessions` (
 
 /*Data for the table `cake_sessions` */
 
-insert  into `cake_sessions`(`id`,`data`,`expires`) values ('0itosgo2tgc4g0k2ibhqsgfci3','Config|a:3:{s:9:\"userAgent\";s:32:\"7bc68914b7dc4cdb5da75fbf9c0a2cbd\";s:4:\"time\";i:1301287056;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"e80a9c0e65c7159d7c18607a48608da35ad62f10\";s:7:\"expires\";i:1301281056;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1301287056),('mgf34cvovh1jup6n3pfmu4l734','Config|a:4:{s:9:\"userAgent\";s:32:\"7bc68914b7dc4cdb5da75fbf9c0a2cbd\";s:4:\"time\";i:1301276076;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"3\";s:4:\"name\";s:7:\"shop002\";s:7:\"created\";s:19:\"2011-03-28 09:17:33\";s:8:\"modified\";s:19:\"2011-03-28 09:17:33\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"2\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop002.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";N;s:13:\"product_count\";s:1:\"0\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop002.ombi60.localhost\";s:2:\"id\";s:1:\"3\";s:7:\"shop_id\";s:1:\"3\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}}_Token|s:212:\"a:5:{s:3:\"key\";s:40:\"d9d4cccccc973b0904e4d046033941664154be12\";s:7:\"expires\";i:1301281076;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:1:{i:0;s:21:\"ProductImage.filename\";}}\";Message|a:0:{}Auth|a:4:{s:4:\"User\";a:10:{s:2:\"id\";s:2:\"16\";s:5:\"email\";s:17:\"owner@shop002.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:3:\"asd\";s:12:\"name_to_call\";s:3:\"asd\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2011-03-28 09:17:33\";s:8:\"modified\";s:19:\"2011-03-28 09:17:33\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"2\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"3\";s:7:\"user_id\";s:2:\"16\";}s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"3\";s:4:\"name\";s:7:\"shop002\";s:7:\"created\";s:19:\"2011-03-28 09:17:33\";s:8:\"modified\";s:19:\"2011-03-28 09:17:33\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"2\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop002.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";N;s:13:\"product_count\";s:1:\"0\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}}Filter|a:1:{s:8:\"products\";a:1:{s:11:\"admin_index\";s:20:\"/Filter.parsed:true/\";}}',1301276076);
+insert  into `cake_sessions`(`id`,`data`,`expires`) values ('nd3fk7mgbfimhdr5eprdk8g5v2','Config|a:3:{s:9:\"userAgent\";s:32:\"1525a9408f56eba4f645337c30dfe5b4\";s:4:\"time\";i:1301374109;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"54aef8da930f82346fb992abfb8551a25bb26529\";s:7:\"expires\";i:1301368109;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1301374109),('btbu7kqbo6qf3pd8og5r9qla10','Config|a:4:{s:9:\"userAgent\";s:32:\"1525a9408f56eba4f645337c30dfe5b4\";s:4:\"time\";i:1301363168;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"4\";s:4:\"name\";s:7:\"shop003\";s:7:\"created\";s:19:\"2011-03-29 09:28:25\";s:8:\"modified\";s:19:\"2011-03-29 09:28:25\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"3\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop003.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop003.com\";s:13:\"product_count\";s:1:\"0\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop003.ombi60.localhost\";s:2:\"id\";s:1:\"4\";s:7:\"shop_id\";s:1:\"4\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}}Message|a:0:{}Auth|a:4:{s:4:\"User\";a:10:{s:2:\"id\";s:2:\"18\";s:5:\"email\";s:17:\"owner@shop003.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:7:\"shop003\";s:12:\"name_to_call\";s:3:\"asd\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2011-03-29 09:28:25\";s:8:\"modified\";s:19:\"2011-03-29 09:28:25\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"3\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"4\";s:7:\"user_id\";s:2:\"18\";}s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"4\";s:4:\"name\";s:7:\"shop003\";s:7:\"created\";s:19:\"2011-03-29 09:28:25\";s:8:\"modified\";s:19:\"2011-03-29 09:28:25\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"3\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop003.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop003.com\";s:13:\"product_count\";s:1:\"0\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"d7335eefcf5c7c7b3515e556012c3ebba574638e\";s:7:\"expires\";i:1301368168;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1301363168);
 
 /*Table structure for table `cancellations` */
 
@@ -304,11 +304,11 @@ CREATE TABLE `domains` (
   `shop_web_address` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UniqueDomain` (`domain`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `domains` */
 
-insert  into `domains`(`id`,`domain`,`shop_id`,`primary`,`always_redirect_here`,`shop_web_address`) values (1,'http://ombi60.localhost',1,1,0,0),(2,'http://shop001.ombi60.localhost',2,1,0,1),(3,'http://shop002.ombi60.localhost',3,1,0,1);
+insert  into `domains`(`id`,`domain`,`shop_id`,`primary`,`always_redirect_here`,`shop_web_address`) values (1,'http://ombi60.localhost',1,1,0,0),(2,'http://shop001.ombi60.localhost',2,1,0,1),(3,'http://shop002.ombi60.localhost',3,1,0,1),(4,'http://shop003.ombi60.localhost',4,1,0,1);
 
 /*Table structure for table `gc_designs` */
 
@@ -393,11 +393,11 @@ CREATE TABLE `invoices` (
   `payer_user` int(11) unsigned DEFAULT NULL,
   `reference` varchar(35) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `invoices` */
 
-insert  into `invoices`(`id`,`created`,`title`,`shop_id`,`description`,`payment_number`,`payer_user`,`reference`) values (1,'2011-02-18 15:43:48','starter',2,'Initial signup',NULL,NULL,'2011-02-18-1543-1'),(2,'2011-03-28 09:17:33','starter',3,'Initial signup',NULL,NULL,'2011-03-28-0917-2');
+insert  into `invoices`(`id`,`created`,`title`,`shop_id`,`description`,`payment_number`,`payer_user`,`reference`) values (1,'2011-02-18 15:43:48','starter',2,'Initial signup',NULL,NULL,'2011-02-18-1543-1'),(2,'2011-03-28 09:17:33','starter',3,'Initial signup',NULL,NULL,'2011-03-28-0917-2'),(3,'2011-03-29 09:28:25','starter',4,'Initial signup',NULL,NULL,'2011-03-29-0928-3');
 
 /*Table structure for table `languages` */
 
@@ -426,11 +426,11 @@ CREATE TABLE `link_lists` (
   `link_count` int(3) unsigned DEFAULT '0',
   `handle` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `link_lists` */
 
-insert  into `link_lists`(`id`,`shop_id`,`name`,`deletable`,`link_count`,`handle`) values (1,2,'Main Menu',0,6,'main-menu'),(2,2,'Footer Menu',0,2,'footer-menu'),(3,3,'Main Menu',0,5,'main-menu'),(4,3,'Footer Menu',0,2,'footer-menu');
+insert  into `link_lists`(`id`,`shop_id`,`name`,`deletable`,`link_count`,`handle`) values (1,2,'Main Menu',0,6,'main-menu'),(2,2,'Footer Menu',0,2,'footer-menu'),(3,3,'Main Menu',0,5,'main-menu'),(4,3,'Footer Menu',0,2,'footer-menu'),(5,4,'Main Menu',0,5,'main-menu'),(6,4,'Footer Menu',0,2,'footer-menu');
 
 /*Table structure for table `links` */
 
@@ -445,11 +445,11 @@ CREATE TABLE `links` (
   `action` varchar(155) DEFAULT '',
   `order` int(2) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 /*Data for the table `links` */
 
-insert  into `links`(`id`,`name`,`route`,`link_list_id`,`model`,`action`,`order`) values (1,'Home','/',1,'/','',0),(2,'About Us','/pages/about-us',1,'/pages/','about-us',1),(3,'Catalogue','/products/',1,'/products/','',3),(4,'Blog','/blogs/shop001',1,'/blogs/','shop001',4),(5,'Cart','/cart/view',1,'/cart/view','',2),(6,'Terms of Service','/pages/terms-of-service',2,'/pages/','',0),(7,'About Us','/pages/about-us',2,'/pages/','about-us',1),(9,'test','/blogs/shop001',1,'/blogs/','shop001',5),(10,'Home','/',3,'/','',0),(11,'About Us','/pages/about-us',3,'/pages/','about-us',1),(12,'Catalogue','/products/',3,'/products/','',2),(13,'Blog','/blogs/shop002',3,'/blogs/','shop002',3),(14,'Cart','/cart/view',3,'/cart/view','',4),(15,'Terms of Service','/pages/terms-of-service',4,'/pages/','',0),(16,'About Us','/pages/about-us',4,'/pages/','about-us',1);
+insert  into `links`(`id`,`name`,`route`,`link_list_id`,`model`,`action`,`order`) values (1,'Home','/',1,'/','',0),(2,'About Us','/pages/about-us',1,'/pages/','about-us',1),(3,'Catalogue','/products/',1,'/products/','',3),(4,'Blog','/blogs/shop001',1,'/blogs/','shop001',4),(5,'Cart','/cart/view',1,'/cart/view','',2),(6,'Terms of Service','/pages/terms-of-service',2,'/pages/','',0),(7,'About Us','/pages/about-us',2,'/pages/','about-us',1),(9,'test','/blogs/shop001',1,'/blogs/','shop001',5),(10,'Home','/',3,'/','',0),(11,'About Us','/pages/about-us',3,'/pages/','about-us',1),(12,'Catalogue','/products/',3,'/products/','',2),(13,'Blog','/blogs/shop002',3,'/blogs/','shop002',3),(14,'Cart','/cart/view',3,'/cart/view','',4),(15,'Terms of Service','/pages/terms-of-service',4,'/pages/','',0),(16,'About Us','/pages/about-us',4,'/pages/','about-us',1),(17,'Home','/',5,'/','',0),(18,'About Us','/pages/about-us',5,'/pages/','about-us',1),(19,'Catalogue','/products/',5,'/products/','',2),(20,'Blog','/blogs/shop003',5,'/blogs/','shop003',3),(21,'Cart','/cart/view',5,'/cart/view','',4),(22,'Terms of Service','/pages/terms-of-service',6,'/pages/','',0),(23,'About Us','/pages/about-us',6,'/pages/','about-us',1);
 
 /*Table structure for table `logs` */
 
@@ -482,11 +482,11 @@ CREATE TABLE `merchants` (
   `shop_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `merchants` */
 
-insert  into `merchants`(`id`,`owner`,`shop_id`,`user_id`) values (1,1,2,1),(2,1,3,16);
+insert  into `merchants`(`id`,`owner`,`shop_id`,`user_id`) values (1,1,2,1),(2,1,3,16),(3,1,4,18);
 
 /*Table structure for table `order_line_items` */
 
@@ -712,11 +712,11 @@ CREATE TABLE `posts` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `posts` */
 
-insert  into `posts`(`id`,`blog_id`,`author_id`,`status`,`title`,`slug`,`content`,`no_comments`,`allow_comments`,`allow_pingback`,`created`,`modified`) values (1,1,1,1,'Open for business!','open-for-business','<p>We are OPEN for business!!</p>',0,1,1,'2011-02-18 15:43:48','2011-02-22 09:00:53'),(2,2,16,1,'Open for business!','open-for-business',NULL,0,1,1,'2011-03-28 09:17:33','2011-03-28 09:17:33');
+insert  into `posts`(`id`,`blog_id`,`author_id`,`status`,`title`,`slug`,`content`,`no_comments`,`allow_comments`,`allow_pingback`,`created`,`modified`) values (1,1,1,1,'Open for business!','open-for-business','<p>We are OPEN for business!!</p>',0,1,1,'2011-02-18 15:43:48','2011-02-22 09:00:53'),(2,2,16,1,'Open for business!','open-for-business',NULL,0,1,1,'2011-03-28 09:17:33','2011-03-28 09:17:33'),(3,3,18,1,'Open for business!','open-for-business',NULL,0,1,1,'2011-03-29 09:28:25','2011-03-29 09:28:25');
 
 /*Table structure for table `price_based_rates` */
 
@@ -749,7 +749,7 @@ CREATE TABLE `product_groups` (
   `handle` varchar(255) DEFAULT NULL,
   `vendor_count` int(7) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `product_groups` */
 
@@ -768,11 +768,11 @@ CREATE TABLE `product_images` (
   `mimetype` varchar(255) DEFAULT NULL,
   `filesize` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `product_images` */
 
-insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads\\products','image/jpeg',6103),(2,2,1,'2011-02-18 15:43:49','2011-02-18 15:43:49','default-0.jpg','uploads/products','image/jpeg',6103),(3,6,1,'2011-03-03 08:06:18','2011-03-03 08:06:18','wal_mart_t_shirt_for_web.jpg','uploads/products','image/jpeg',14479),(4,7,1,'2011-03-03 08:42:17','2011-03-03 08:42:17','wal_mart_t_shirt_for_web-0.jpg','uploads/products','image/jpeg',14479),(5,8,1,'2011-03-03 09:51:41','2011-03-03 09:51:41','wal_mart_t_shirt_for_web-1.jpg','uploads/products','image/jpeg',14479),(6,6,0,'2011-03-17 04:06:27','2011-03-17 04:06:27','8cb42ecccafe.jpg','uploads/products','image/jpeg',25926),(7,9,1,'2011-03-28 09:17:34','2011-03-28 09:17:34','default-1.jpg','uploads/products','image/jpeg',6103);
+insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads\\products','image/jpeg',6103),(2,2,1,'2011-02-18 15:43:49','2011-02-18 15:43:49','default-0.jpg','uploads/products','image/jpeg',6103),(3,6,1,'2011-03-03 08:06:18','2011-03-03 08:06:18','wal_mart_t_shirt_for_web.jpg','uploads/products','image/jpeg',14479),(4,7,1,'2011-03-03 08:42:17','2011-03-03 08:42:17','wal_mart_t_shirt_for_web-0.jpg','uploads/products','image/jpeg',14479),(5,8,1,'2011-03-03 09:51:41','2011-03-03 09:51:41','wal_mart_t_shirt_for_web-1.jpg','uploads/products','image/jpeg',14479),(6,6,0,'2011-03-17 04:06:27','2011-03-17 04:06:27','8cb42ecccafe.jpg','uploads/products','image/jpeg',25926),(7,9,1,'2011-03-28 09:17:34','2011-03-28 09:17:34','default-1.jpg','uploads/products','image/jpeg',6103),(8,10,1,'2011-03-29 09:28:26','2011-03-29 09:28:26','default-2.jpg','uploads/products','image/jpeg',6103);
 
 /*Table structure for table `products` */
 
@@ -794,11 +794,11 @@ CREATE TABLE `products` (
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `vendor_id` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`weight_unit`,`shipping_required`,`vendor_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,'7.0000','SGD','kg',1,0),(2,2,'test item','11','','10.0000','2011-02-18 15:43:49','2011-03-25 12:40:23',0,'7.0000','SGD','kg',1,0),(6,2,'test','','','10.0000','2011-03-03 08:06:18','2011-03-17 04:06:27',1,'1.0000','SGD','kg',1,0),(7,2,'test','','<p>test</p>','0.0000','2011-03-03 08:42:16','2011-03-03 08:42:17',1,'0.0000','SGD','kg',1,0),(8,2,'test','','<p>test</p>','1.0000','2011-03-03 09:51:41','2011-03-03 09:51:41',1,'1.0000','SGD','kg',1,0),(9,3,'Dummy Product',NULL,NULL,'0.0000','2011-03-28 09:17:33','2011-03-28 09:17:34',1,'7.0000','SGD','kg',1,0);
+insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`weight_unit`,`shipping_required`,`vendor_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,'7.0000','SGD','kg',1,0),(2,2,'test item','11','','10.0000','2011-02-18 15:43:49','2011-03-25 12:40:23',0,'7.0000','SGD','kg',1,0),(6,2,'test','','','10.0000','2011-03-03 08:06:18','2011-03-17 04:06:27',1,'1.0000','SGD','kg',1,0),(7,2,'test','','<p>test</p>','0.0000','2011-03-03 08:42:16','2011-03-03 08:42:17',1,'0.0000','SGD','kg',1,0),(8,2,'test','','<p>test</p>','1.0000','2011-03-03 09:51:41','2011-03-03 09:51:41',1,'1.0000','SGD','kg',1,0),(9,3,'Dummy Product',NULL,NULL,'0.0000','2011-03-28 09:17:33','2011-03-28 09:17:34',1,'7.0000','SGD','kg',1,0),(10,4,'Dummy Product',NULL,NULL,'0.0000','2011-03-29 09:28:25','2011-03-29 09:28:26',1,'7.0000','SGD','kg',1,0);
 
 /*Table structure for table `products_in_groups` */
 
@@ -809,7 +809,7 @@ CREATE TABLE `products_in_groups` (
   `product_id` int(10) unsigned DEFAULT NULL,
   `product_group_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `products_in_groups` */
 
@@ -827,11 +827,11 @@ CREATE TABLE `recurring_payment_profiles` (
   `modified` datetime DEFAULT NULL,
   `status` varchar(50) DEFAULT 'active',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `recurring_payment_profiles` */
 
-insert  into `recurring_payment_profiles`(`id`,`gateway`,`method`,`shop_id`,`gateway_reference_id`,`created`,`modified`,`status`) values (1,'paydollar','AddSchPay API',2,'10907','2011-02-18 15:43:50','2011-02-18 15:43:50','active'),(2,'paydollar','AddSchPay API',3,'10974','2011-03-28 09:17:35','2011-03-28 09:17:35','active');
+insert  into `recurring_payment_profiles`(`id`,`gateway`,`method`,`shop_id`,`gateway_reference_id`,`created`,`modified`,`status`) values (1,'paydollar','AddSchPay API',2,'10907','2011-02-18 15:43:50','2011-02-18 15:43:50','active'),(2,'paydollar','AddSchPay API',3,'10974','2011-03-28 09:17:35','2011-03-28 09:17:35','active'),(3,'paydollar','AddSchPay API',4,'11001','2011-03-29 09:28:29','2011-03-29 09:28:29','active');
 
 /*Table structure for table `saved_themes` */
 
@@ -849,11 +849,11 @@ CREATE TABLE `saved_themes` (
   `theme_id` int(11) NOT NULL,
   `featured` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `saved_themes` */
 
-insert  into `saved_themes`(`id`,`name`,`description`,`author`,`created`,`modified`,`folder_name`,`shop_id`,`theme_id`,`featured`) values (1,'default','default','shop001','2011-02-18 15:43:48','2011-02-18 15:43:48','2_cover',2,3,1),(2,'default','default','asd','2011-03-28 09:17:33','2011-03-28 09:17:33','3_cover',3,3,1);
+insert  into `saved_themes`(`id`,`name`,`description`,`author`,`created`,`modified`,`folder_name`,`shop_id`,`theme_id`,`featured`) values (1,'default','default','shop001','2011-02-18 15:43:48','2011-02-18 15:43:48','2_cover',2,3,1),(2,'default','default','asd','2011-03-28 09:17:33','2011-03-28 09:17:33','3_cover',3,3,1),(3,'default','default','shop003','2011-03-29 09:28:25','2011-03-29 09:28:25','4_cover',4,3,1);
 
 /*Table structure for table `shipments` */
 
@@ -884,11 +884,11 @@ CREATE TABLE `shipped_to_countries` (
   `country_id` int(5) DEFAULT '0',
   `shop_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shipped_to_countries` */
 
-insert  into `shipped_to_countries`(`id`,`country_id`,`shop_id`) values (1,0,1),(2,192,1),(3,192,2),(4,0,2),(5,192,3),(6,0,3);
+insert  into `shipped_to_countries`(`id`,`country_id`,`shop_id`) values (1,0,1),(2,192,1),(3,192,2),(4,0,2),(5,192,3),(6,0,3),(7,192,4),(8,0,4);
 
 /*Table structure for table `shipping_rates` */
 
@@ -901,11 +901,11 @@ CREATE TABLE `shipping_rates` (
   `shipped_to_country_id` int(11) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shipping_rates` */
 
-insert  into `shipping_rates`(`id`,`name`,`price`,`shipped_to_country_id`,`description`) values (1,'Standard Shipping','10.000',2,'From 10kg to 20kg'),(2,'Heavy Duty Shipping','25.000',2,'From 20kg to 50kg'),(3,'Standard Shipping','10.000',3,'From 10kg to 20kg'),(4,'Heavy Duty','25.000',3,'From 20kg to 50kg'),(5,'Standard Shipping','10.000',4,'From 10kg to 20kg'),(6,'Heavy Duty','25.000',4,'From 20kg to 50kg'),(7,'trest','0.000',4,'From 50kg to 100kg'),(8,'test','0.000',4,'From $50.00 and above'),(9,'test','14.000',4,'From $50.00 to $100'),(10,'Standard Shipping','10.000',5,'From 10kg to 20kg'),(11,'Heavy Duty','25.000',5,'From 20kg to 50kg'),(12,'Standard Shipping','10.000',6,'From 10kg to 20kg'),(13,'Heavy Duty','25.000',6,'From 20kg to 50kg');
+insert  into `shipping_rates`(`id`,`name`,`price`,`shipped_to_country_id`,`description`) values (1,'Standard Shipping','10.000',2,'From 10kg to 20kg'),(2,'Heavy Duty Shipping','25.000',2,'From 20kg to 50kg'),(3,'Standard Shipping','10.000',3,'From 10kg to 20kg'),(4,'Heavy Duty','25.000',3,'From 20kg to 50kg'),(5,'Standard Shipping','10.000',4,'From 10kg to 20kg'),(6,'Heavy Duty','25.000',4,'From 20kg to 50kg'),(7,'trest','0.000',4,'From 50kg to 100kg'),(8,'test','0.000',4,'From $50.00 and above'),(9,'test','14.000',4,'From $50.00 to $100'),(10,'Standard Shipping','10.000',5,'From 10kg to 20kg'),(11,'Heavy Duty','25.000',5,'From 20kg to 50kg'),(12,'Standard Shipping','10.000',6,'From 10kg to 20kg'),(13,'Heavy Duty','25.000',6,'From 20kg to 50kg'),(14,'Standard Shipping','10.000',7,'From 10kg to 20kg'),(15,'Heavy Duty','25.000',7,'From 20kg to 50kg'),(16,'Standard Shipping','10.000',8,'From 10kg to 20kg'),(17,'Heavy Duty','25.000',8,'From 20kg to 50kg');
 
 /*Table structure for table `shop_settings` */
 
@@ -923,9 +923,11 @@ CREATE TABLE `shop_settings` (
   `money_in_email` varchar(255) DEFAULT NULL,
   `checkout_language` int(3) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shop_settings` */
+
+insert  into `shop_settings`(`id`,`shop_id`,`timezone`,`unit_system`,`currency`,`money_in_html_with_currency`,`money_in_html`,`money_in_email_with_currency`,`money_in_email`,`checkout_language`) values (1,2,'Singapore','imperial','MYR','${{money}}','${{money}}','${{money}}','${{money}}',1),(3,4,'','metric','SGD','metric','','','SGD',1);
 
 /*Table structure for table `shops` */
 
@@ -947,11 +949,11 @@ CREATE TABLE `shops` (
   `product_group_count` int(7) unsigned DEFAULT '0',
   `vendor_count` int(7) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shops` */
 
-insert  into `shops`(`id`,`name`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`,`url`,`primary_domain`,`permanent_domain`,`email`,`product_count`,`product_group_count`,`vendor_count`) values (1,'a',NULL,NULL,1,0,0,NULL,'http://a.myspree2shop.com',NULL,NULL,0,0,0),(2,'shop001','2011-02-18 15:43:48','2011-02-18 15:43:49',1,1,0,NULL,'http://shop001.ombi60.localhost',NULL,NULL,3,0,0),(3,'shop002','2011-03-28 09:17:33','2011-03-28 09:17:33',1,2,0,NULL,'http://shop002.ombi60.localhost',NULL,NULL,0,0,0);
+insert  into `shops`(`id`,`name`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`,`url`,`primary_domain`,`permanent_domain`,`email`,`product_count`,`product_group_count`,`vendor_count`) values (1,'a',NULL,NULL,1,0,0,NULL,'http://a.myspree2shop.com',NULL,NULL,0,0,0),(2,'shop001','2011-02-18 15:43:48','2011-02-18 15:43:49',1,1,0,NULL,'http://shop001.ombi60.localhost',NULL,NULL,3,0,0),(3,'shop002','2011-03-28 09:17:33','2011-03-28 09:17:33',1,2,0,NULL,'http://shop002.ombi60.localhost',NULL,NULL,0,0,0),(4,'shop003','2011-03-29 09:28:25','2011-03-29 09:28:25',1,3,0,NULL,'http://shop003.ombi60.localhost',NULL,'owner@shop003.com',0,0,0);
 
 /*Table structure for table `shops_payment_modules` */
 
@@ -1038,11 +1040,11 @@ CREATE TABLE `users` (
   `modified` datetime DEFAULT NULL,
   `language_id` int(5) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'owner@shop001.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'shop001','asd',NULL,1,'2011-02-18 15:43:48','2011-02-18 15:43:48',1),(2,'p9xzcsw0@ombi60.com','a6a2def0cc611f4aed5f094502aa3e1062d6a321',5,'casual','casual',NULL,1,'2011-02-18 07:43:53','2011-02-18 07:43:53',1),(3,'customer1@abc.com','8b25ed8ffc27ad1d5c3c7ac65cc286d695429206',4,'asd','asd',NULL,1,'2011-02-18 07:47:47','2011-02-18 07:47:47',1),(4,'customer2@abc.com','52efedccaa079676a2721204144676e22a0c46bd',4,'asd','asd',NULL,1,'2011-02-18 07:48:50','2011-02-18 07:48:50',1),(5,'customer3@abc.com','1abc218dc577a32541b3363b34f13873376bce3b',4,'asd','asd',NULL,1,'2011-02-18 08:07:31','2011-02-18 08:07:31',1),(6,'kimcity@gmail.com','663efec33df5bdbc266d1ddef98bd1daacc7fbeb',4,'asd','asd',NULL,1,'2011-02-25 12:29:57','2011-02-25 12:29:57',1),(7,'lznsq09e@ombi60.com','aa62b3ab89d067812dd73a1a2e9a543ce5d3d2b2',5,'casual','casual',NULL,1,'2011-02-28 23:30:37','2011-02-28 23:30:37',1),(8,'ue87mxzy@ombi60.com','e58272f040ea54c30350f418b227787cf3ce66b5',5,'casual','casual',NULL,1,'2011-03-05 02:50:55','2011-03-05 02:50:55',1),(9,'vkxzr3tf@ombi60.com','e8ae97993bf83ae93a2bc6d73397b74d2e6bd7ce',5,'casual','casual',NULL,1,'2011-03-08 04:20:56','2011-03-08 04:20:56',1),(10,'za$y3fvu@ombi60.com','86a83242c467bd021680d877ba84d47281eedaeb',5,'casual','casual',NULL,1,'2011-03-17 03:41:22','2011-03-17 03:41:22',1),(11,'u41d06g3@ombi60.com','4641a697eef5823dbb1d7cc2f88bdad7d513748a',5,'casual','casual',NULL,1,'2011-03-20 21:57:21','2011-03-20 21:57:21',1),(12,'lwk63njx@ombi60.com','dd0f956c5d429293a41f7e0cabd8306643d2c538',5,'casual','casual',NULL,1,'2011-03-22 03:18:17','2011-03-22 03:18:17',1),(13,'cguj34ob@ombi60.com','f5de1b025986ae3eea5b33c8dc62ffa220207e23',5,'casual','casual',NULL,1,'2011-03-23 02:16:21','2011-03-23 02:16:21',1),(14,'a10g2bjo@ombi60.com','655d95bf3024c776ef1ce4551b83d53f488efc08',5,'casual','casual',NULL,1,'2011-03-23 04:07:00','2011-03-23 04:07:00',1),(15,'grbv1nf0@ombi60.com','5ee446f5df465d068b7f0034f75bebf6027334f4',5,'casual','casual',NULL,1,'2011-03-25 06:44:01','2011-03-25 06:44:01',1),(16,'owner@shop002.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'asd','asd',NULL,1,'2011-03-28 09:17:33','2011-03-28 09:17:33',1),(17,'sfqmu96g@ombi60.com','0e7c268890492b9f08ab420fc724c82f515c4764',5,'casual','casual',NULL,1,'2011-03-28 01:17:38','2011-03-28 01:17:38',1);
+insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'owner@shop001.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'shop001','asd',NULL,1,'2011-02-18 15:43:48','2011-02-18 15:43:48',1),(2,'p9xzcsw0@ombi60.com','a6a2def0cc611f4aed5f094502aa3e1062d6a321',5,'casual','casual',NULL,1,'2011-02-18 07:43:53','2011-02-18 07:43:53',1),(3,'customer1@abc.com','8b25ed8ffc27ad1d5c3c7ac65cc286d695429206',4,'asd','asd',NULL,1,'2011-02-18 07:47:47','2011-02-18 07:47:47',1),(4,'customer2@abc.com','52efedccaa079676a2721204144676e22a0c46bd',4,'asd','asd',NULL,1,'2011-02-18 07:48:50','2011-02-18 07:48:50',1),(5,'customer3@abc.com','1abc218dc577a32541b3363b34f13873376bce3b',4,'asd','asd',NULL,1,'2011-02-18 08:07:31','2011-02-18 08:07:31',1),(6,'kimcity@gmail.com','663efec33df5bdbc266d1ddef98bd1daacc7fbeb',4,'asd','asd',NULL,1,'2011-02-25 12:29:57','2011-02-25 12:29:57',1),(7,'lznsq09e@ombi60.com','aa62b3ab89d067812dd73a1a2e9a543ce5d3d2b2',5,'casual','casual',NULL,1,'2011-02-28 23:30:37','2011-02-28 23:30:37',1),(8,'ue87mxzy@ombi60.com','e58272f040ea54c30350f418b227787cf3ce66b5',5,'casual','casual',NULL,1,'2011-03-05 02:50:55','2011-03-05 02:50:55',1),(9,'vkxzr3tf@ombi60.com','e8ae97993bf83ae93a2bc6d73397b74d2e6bd7ce',5,'casual','casual',NULL,1,'2011-03-08 04:20:56','2011-03-08 04:20:56',1),(10,'za$y3fvu@ombi60.com','86a83242c467bd021680d877ba84d47281eedaeb',5,'casual','casual',NULL,1,'2011-03-17 03:41:22','2011-03-17 03:41:22',1),(11,'u41d06g3@ombi60.com','4641a697eef5823dbb1d7cc2f88bdad7d513748a',5,'casual','casual',NULL,1,'2011-03-20 21:57:21','2011-03-20 21:57:21',1),(12,'lwk63njx@ombi60.com','dd0f956c5d429293a41f7e0cabd8306643d2c538',5,'casual','casual',NULL,1,'2011-03-22 03:18:17','2011-03-22 03:18:17',1),(13,'cguj34ob@ombi60.com','f5de1b025986ae3eea5b33c8dc62ffa220207e23',5,'casual','casual',NULL,1,'2011-03-23 02:16:21','2011-03-23 02:16:21',1),(14,'a10g2bjo@ombi60.com','655d95bf3024c776ef1ce4551b83d53f488efc08',5,'casual','casual',NULL,1,'2011-03-23 04:07:00','2011-03-23 04:07:00',1),(15,'grbv1nf0@ombi60.com','5ee446f5df465d068b7f0034f75bebf6027334f4',5,'casual','casual',NULL,1,'2011-03-25 06:44:01','2011-03-25 06:44:01',1),(16,'owner@shop002.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'asd','asd',NULL,1,'2011-03-28 09:17:33','2011-03-28 09:17:33',1),(17,'sfqmu96g@ombi60.com','0e7c268890492b9f08ab420fc724c82f515c4764',5,'casual','casual',NULL,1,'2011-03-28 01:17:38','2011-03-28 01:17:38',1),(18,'owner@shop003.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'shop003','asd',NULL,1,'2011-03-29 09:28:25','2011-03-29 09:28:25',1);
 
 /*Table structure for table `vendors` */
 
@@ -1055,7 +1057,7 @@ CREATE TABLE `vendors` (
   `modified` datetime DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `vendors` */
 
@@ -1078,11 +1080,11 @@ CREATE TABLE `webpages` (
   `handle` varchar(150) DEFAULT NULL,
   `visible` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `webpages` */
 
-insert  into `webpages`(`id`,`shop_id`,`title`,`content`,`created`,`modified`,`meta_title`,`meta_keywords`,`meta_description`,`author`,`real_author`,`handle`,`visible`) values (1,1,'welcome','<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Lorem ipsum dolor sit amet, consectetur \r\n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \r\n					in lacinia dolor egestas. Integer seper imperdiet enim eu \r\n					convallis. Suspendisse nec orci tellus. Aenean consectetur \r\n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \r\n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \r\n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\r\n					Phasellus euismod</a> \r\n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \r\n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \r\n					Praesent aliquet sem sit amet massa scelerisque vitae semper \r\n					purus varius. Pellentesque habitant morbi tristique senectus et \r\n					netus et malesuada fames ac turpis egestas.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"itemAlt\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Proin mauris tortor, ultricies \r\n					interdum posuere eu, placerat vitae orci. Duis non laoreet \r\n					libero. Suspendisse aliquam congue metus non elementum. Cras \r\n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \r\n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \r\n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \r\n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \r\n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \r\n					aptent taciti sociosqu ad litora torquent per conubia nostra, \r\n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \r\n					ultrices. Nunc eros lectus, bibendum eu consequat id, \r\n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \r\n					Pellentesque ante tortor, mattis auctor condimentum ut, \r\n					convallis a dui. Mauris scelerisque dapibus libero, vitae \r\n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \r\n					at venenatis et, egestas a diam.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Nulla auctor sapien lorem. Ut vitae \r\n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \r\n					eu magna tempus eleifend. Donec interdum interdum lacus eget \r\n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \r\n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \r\n					pellentesque, orci lorem vestibulum elit, ac tristique justo \r\n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \r\n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \r\n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \r\n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \r\n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \r\n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \r\n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \r\n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \r\n					orci ut nibh tristique laoreet.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','2010-09-01 11:38:15','2010-12-22 02:15:17',NULL,NULL,NULL,1,NULL,'shopfront',1),(2,2,'Welcome','<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Lorem ipsum dolor sit amet, consectetur \r\n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \r\n					in lacinia dolor egestas. Integer seper imperdiet enim eu \r\n					convallis. Suspendisse nec orci tellus. Aenean consectetur \r\n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \r\n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \r\n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\r\n					Phasellus euismod</a> \r\n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \r\n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \r\n					Praesent aliquet sem sit amet massa scelerisque vitae semper \r\n					purus varius. Pellentesque habitant morbi tristique senectus et \r\n					netus et malesuada fames ac turpis egestas.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"itemAlt\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Proin mauris tortor, ultricies \r\n					interdum posuere eu, placerat vitae orci. Duis non laoreet \r\n					libero. Suspendisse aliquam congue metus non elementum. Cras \r\n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \r\n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \r\n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \r\n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \r\n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \r\n					aptent taciti sociosqu ad litora torquent per conubia nostra, \r\n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \r\n					ultrices. Nunc eros lectus, bibendum eu consequat id, \r\n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \r\n					Pellentesque ante tortor, mattis auctor condimentum ut, \r\n					convallis a dui. Mauris scelerisque dapibus libero, vitae \r\n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \r\n					at venenatis et, egestas a diam.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Nulla auctor sapien lorem. Ut vitae \r\n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \r\n					eu magna tempus eleifend. Donec interdum interdum lacus eget \r\n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \r\n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \r\n					pellentesque, orci lorem vestibulum elit, ac tristique justo \r\n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \r\n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \r\n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \r\n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \r\n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \r\n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \r\n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \r\n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \r\n					orci ut nibh tristique laoreet.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','2011-02-18 15:43:48','2011-02-19 03:40:33',NULL,NULL,NULL,1,NULL,'shopfront',0),(3,2,'About Us','<p>The <strong>About Us</strong> page is important.</p>\r\n<p>Customers visit About Us page when they are new to your online shop. They want to establish a level of trust in your business.  Since trust is crucial when selling online, it&rsquo;s a good idea to provide a fair amount of information about yourself and your business.  Here are a few things you should touch on:</p>\r\n<ul>\r\n<li>Who you are</li>\r\n<li>Why you are selling these items</li>\r\n<li>Where your business is located</li>\r\n<li>How long you have been in business</li>\r\n<li>Who are the people on your team</li>\r\n</ul>\r\n<p>Go to the <a href=\"../\">Blogs &amp; Pages</a> in administration menu.</p>','2011-02-18 15:43:48','2011-02-19 03:41:28',NULL,NULL,NULL,1,NULL,'about-us',0),(4,2,'Terms of Service','<p>The <strong>Terms of Service</strong> page is for you to enter any privacy statements or terms of service you wish to render.</p>\n				     <p>Customers may need to know the limits of their patronage, so here are a few things you should touch on:</p>\n<ul>\n	\n  <li>Who you are</li>\n	\n  <li>What you would consider as acceptable customer behavior</li>\n	\n  <li>Any limits as to whom you can serve or which regions you can serve</li>\n	\n  <li>What legal recourses you would seek if customers abuse your service</li>\n  \n  <li>What rights you reserve as a business owner</li>\n</ul>\n<p>Go to the <a href=\"/admin/pages\">Blogs &amp; Pages</a> in administration menu.</p>','2011-02-18 15:43:48','2011-02-18 15:43:48',NULL,NULL,NULL,1,NULL,'terms-of-service',1),(5,3,'Welcome',NULL,'2011-03-28 09:17:33','2011-03-28 09:17:33',NULL,NULL,NULL,16,NULL,'shopfront',1),(6,3,'About Us',NULL,'2011-03-28 09:17:33','2011-03-28 09:17:33',NULL,NULL,NULL,16,NULL,'about-us',1),(7,3,'Terms of Service',NULL,'2011-03-28 09:17:33','2011-03-28 09:17:33',NULL,NULL,NULL,16,NULL,'terms-of-service',1);
+insert  into `webpages`(`id`,`shop_id`,`title`,`content`,`created`,`modified`,`meta_title`,`meta_keywords`,`meta_description`,`author`,`real_author`,`handle`,`visible`) values (1,1,'welcome','<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Lorem ipsum dolor sit amet, consectetur \r\n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \r\n					in lacinia dolor egestas. Integer seper imperdiet enim eu \r\n					convallis. Suspendisse nec orci tellus. Aenean consectetur \r\n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \r\n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \r\n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\r\n					Phasellus euismod</a> \r\n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \r\n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \r\n					Praesent aliquet sem sit amet massa scelerisque vitae semper \r\n					purus varius. Pellentesque habitant morbi tristique senectus et \r\n					netus et malesuada fames ac turpis egestas.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"itemAlt\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Proin mauris tortor, ultricies \r\n					interdum posuere eu, placerat vitae orci. Duis non laoreet \r\n					libero. Suspendisse aliquam congue metus non elementum. Cras \r\n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \r\n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \r\n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \r\n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \r\n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \r\n					aptent taciti sociosqu ad litora torquent per conubia nostra, \r\n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \r\n					ultrices. Nunc eros lectus, bibendum eu consequat id, \r\n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \r\n					Pellentesque ante tortor, mattis auctor condimentum ut, \r\n					convallis a dui. Mauris scelerisque dapibus libero, vitae \r\n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \r\n					at venenatis et, egestas a diam.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Nulla auctor sapien lorem. Ut vitae \r\n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \r\n					eu magna tempus eleifend. Donec interdum interdum lacus eget \r\n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \r\n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \r\n					pellentesque, orci lorem vestibulum elit, ac tristique justo \r\n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \r\n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \r\n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \r\n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \r\n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \r\n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \r\n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \r\n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \r\n					orci ut nibh tristique laoreet.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','2010-09-01 11:38:15','2010-12-22 02:15:17',NULL,NULL,NULL,1,NULL,'shopfront',1),(2,2,'Welcome','<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Lorem ipsum dolor sit amet, consectetur \r\n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \r\n					in lacinia dolor egestas. Integer seper imperdiet enim eu \r\n					convallis. Suspendisse nec orci tellus. Aenean consectetur \r\n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \r\n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \r\n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\r\n					Phasellus euismod</a> \r\n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \r\n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \r\n					Praesent aliquet sem sit amet massa scelerisque vitae semper \r\n					purus varius. Pellentesque habitant morbi tristique senectus et \r\n					netus et malesuada fames ac turpis egestas.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"itemAlt\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Proin mauris tortor, ultricies \r\n					interdum posuere eu, placerat vitae orci. Duis non laoreet \r\n					libero. Suspendisse aliquam congue metus non elementum. Cras \r\n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \r\n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \r\n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \r\n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \r\n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \r\n					aptent taciti sociosqu ad litora torquent per conubia nostra, \r\n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \r\n					ultrices. Nunc eros lectus, bibendum eu consequat id, \r\n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \r\n					Pellentesque ante tortor, mattis auctor condimentum ut, \r\n					convallis a dui. Mauris scelerisque dapibus libero, vitae \r\n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \r\n					at venenatis et, egestas a diam.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Nulla auctor sapien lorem. Ut vitae \r\n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \r\n					eu magna tempus eleifend. Donec interdum interdum lacus eget \r\n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \r\n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \r\n					pellentesque, orci lorem vestibulum elit, ac tristique justo \r\n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \r\n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \r\n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \r\n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \r\n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \r\n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \r\n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \r\n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \r\n					orci ut nibh tristique laoreet.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','2011-02-18 15:43:48','2011-02-19 03:40:33',NULL,NULL,NULL,1,NULL,'shopfront',0),(3,2,'About Us','<p>The <strong>About Us</strong> page is important.</p>\r\n<p>Customers visit About Us page when they are new to your online shop. They want to establish a level of trust in your business.  Since trust is crucial when selling online, it&rsquo;s a good idea to provide a fair amount of information about yourself and your business.  Here are a few things you should touch on:</p>\r\n<ul>\r\n<li>Who you are</li>\r\n<li>Why you are selling these items</li>\r\n<li>Where your business is located</li>\r\n<li>How long you have been in business</li>\r\n<li>Who are the people on your team</li>\r\n</ul>\r\n<p>Go to the <a href=\"../\">Blogs &amp; Pages</a> in administration menu.</p>','2011-02-18 15:43:48','2011-02-19 03:41:28',NULL,NULL,NULL,1,NULL,'about-us',0),(4,2,'Terms of Service','<p>The <strong>Terms of Service</strong> page is for you to enter any privacy statements or terms of service you wish to render.</p>\n				     <p>Customers may need to know the limits of their patronage, so here are a few things you should touch on:</p>\n<ul>\n	\n  <li>Who you are</li>\n	\n  <li>What you would consider as acceptable customer behavior</li>\n	\n  <li>Any limits as to whom you can serve or which regions you can serve</li>\n	\n  <li>What legal recourses you would seek if customers abuse your service</li>\n  \n  <li>What rights you reserve as a business owner</li>\n</ul>\n<p>Go to the <a href=\"/admin/pages\">Blogs &amp; Pages</a> in administration menu.</p>','2011-02-18 15:43:48','2011-02-18 15:43:48',NULL,NULL,NULL,1,NULL,'terms-of-service',1),(5,3,'Welcome',NULL,'2011-03-28 09:17:33','2011-03-28 09:17:33',NULL,NULL,NULL,16,NULL,'shopfront',1),(6,3,'About Us',NULL,'2011-03-28 09:17:33','2011-03-28 09:17:33',NULL,NULL,NULL,16,NULL,'about-us',1),(7,3,'Terms of Service',NULL,'2011-03-28 09:17:33','2011-03-28 09:17:33',NULL,NULL,NULL,16,NULL,'terms-of-service',1),(8,4,'Welcome',NULL,'2011-03-29 09:28:25','2011-03-29 09:28:25',NULL,NULL,NULL,18,NULL,'shopfront',1),(9,4,'About Us',NULL,'2011-03-29 09:28:25','2011-03-29 09:28:25',NULL,NULL,NULL,18,NULL,'about-us',1),(10,4,'Terms of Service',NULL,'2011-03-29 09:28:25','2011-03-29 09:28:25',NULL,NULL,NULL,18,NULL,'terms-of-service',1);
 
 /*Table structure for table `weight_based_rates` */
 
@@ -1094,11 +1096,11 @@ CREATE TABLE `weight_based_rates` (
   `max_weight` decimal(10,4) unsigned DEFAULT NULL,
   `shipping_rate_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `weight_based_rates` */
 
-insert  into `weight_based_rates`(`id`,`min_weight`,`max_weight`,`shipping_rate_id`) values (1,'10.0000','20.0000',1),(2,'20.0000','50.0000',2),(3,'10.0000','20.0000',3),(4,'20.0000','50.0000',4),(5,'10.0000','20.0000',5),(6,'20.0000','50.0000',6),(7,'50.0000','100.0000',7),(8,'10.0000','20.0000',10),(9,'20.0000','50.0000',11),(10,'10.0000','20.0000',12),(11,'20.0000','50.0000',13);
+insert  into `weight_based_rates`(`id`,`min_weight`,`max_weight`,`shipping_rate_id`) values (1,'10.0000','20.0000',1),(2,'20.0000','50.0000',2),(3,'10.0000','20.0000',3),(4,'20.0000','50.0000',4),(5,'10.0000','20.0000',5),(6,'20.0000','50.0000',6),(7,'50.0000','100.0000',7),(8,'10.0000','20.0000',10),(9,'20.0000','50.0000',11),(10,'10.0000','20.0000',12),(11,'20.0000','50.0000',13),(12,'10.0000','20.0000',14),(13,'20.0000','50.0000',15),(14,'10.0000','20.0000',16),(15,'20.0000','50.0000',17);
 
 /*Table structure for table `wishlists` */
 

@@ -1,3 +1,8 @@
+TRUNCATE TABLE `vendors`;
+TRUNCATE TABLE `products_in_groups`;
+TRUNCATE TABLE `product_groups`;
+TRUNCATE TABLE `shop_settings`;
+
 DELETE FROM shops WHERE id >= 2;
 ALTER TABLE shops AUTO_INCREMENT = 2;
 
@@ -60,8 +65,6 @@ TRUNCATE TABLE orders;
 TRUNCATE TABLE `links`;
 TRUNCATE TABLE `link_lists`;
 TRUNCATE TABLE `logs`;
-
-
 
 
 INSERT INTO aros (model, foreign_key, alias, lft, rght) VALUES 

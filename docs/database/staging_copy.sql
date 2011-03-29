@@ -706,6 +706,25 @@ CREATE TABLE `price_based_rates` (
 
 /*Data for the table `price_based_rates` */
 
+/*Table structure for table `product_groups` */
+
+DROP TABLE IF EXISTS `product_groups`;
+
+CREATE TABLE `product_groups` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL,
+  `shop_id` int(11) unsigned DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `description` text,
+  `products_in_group_count` int(7) unsigned DEFAULT '0',
+  `handle` varchar(255) DEFAULT NULL,
+  `vendor_count` int(7) unsigned DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `product_groups` */
+
 /*Table structure for table `product_images` */
 
 DROP TABLE IF EXISTS `product_images`;
@@ -745,12 +764,26 @@ CREATE TABLE `products` (
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
   `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `vendor_id` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`weight_unit`,`shipping_required`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,'7.0000','SGD','kg',1);
+insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`weight_unit`,`shipping_required`,`vendor_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,'7.0000','SGD','kg',1,0);
+
+/*Table structure for table `products_in_groups` */
+
+DROP TABLE IF EXISTS `products_in_groups`;
+
+CREATE TABLE `products_in_groups` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int(10) unsigned DEFAULT NULL,
+  `product_group_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `products_in_groups` */
 
 /*Table structure for table `recurring_payment_profiles` */
 
@@ -840,6 +873,26 @@ CREATE TABLE `shipping_rates` (
 
 insert  into `shipping_rates`(`id`,`name`,`price`,`shipped_to_country_id`,`description`) values (1,'Standard Shipping','10.000',2,'From 10kg to 20kg'),(2,'Heavy Duty Shipping','25.000',2,'From 20kg to 50kg');
 
+/*Table structure for table `shop_settings` */
+
+DROP TABLE IF EXISTS `shop_settings`;
+
+CREATE TABLE `shop_settings` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `shop_id` int(10) unsigned DEFAULT NULL,
+  `timezone` varchar(255) DEFAULT NULL,
+  `unit_system` varchar(50) DEFAULT 'metric',
+  `currency` varchar(100) DEFAULT NULL,
+  `money_in_html_with_currency` varchar(255) DEFAULT NULL,
+  `money_in_html` varchar(255) DEFAULT NULL,
+  `money_in_email_with_currency` varchar(255) DEFAULT NULL,
+  `money_in_email` varchar(255) DEFAULT NULL,
+  `checkout_language` int(3) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `shop_settings` */
+
 /*Table structure for table `shops` */
 
 DROP TABLE IF EXISTS `shops`;
@@ -847,18 +900,24 @@ DROP TABLE IF EXISTS `shops`;
 CREATE TABLE `shops` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `web_address` varchar(255) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `saved_theme_id` int(11) DEFAULT '0',
   `deny_access` tinyint(1) unsigned DEFAULT '0',
+  `url` varchar(255) DEFAULT NULL,
+  `primary_domain` varchar(255) DEFAULT NULL,
+  `permanent_domain` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `product_count` int(7) unsigned DEFAULT '0',
+  `product_group_count` int(7) unsigned DEFAULT '0',
+  `vendor_count` int(7) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shops` */
 
-insert  into `shops`(`id`,`name`,`web_address`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`) values (1,'a','http://a.myspree2shop.com',NULL,NULL,1,0,0);
+insert  into `shops`(`id`,`name`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`,`url`,`primary_domain`,`permanent_domain`,`email`,`product_count`,`product_group_count`,`vendor_count`) values (1,'a',NULL,NULL,1,0,0,NULL,'http://a.ombi60.com/',NULL,NULL,0,0,0);
 
 /*Table structure for table `shops_payment_modules` */
 
@@ -948,6 +1007,21 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
+
+/*Table structure for table `vendors` */
+
+DROP TABLE IF EXISTS `vendors`;
+
+CREATE TABLE `vendors` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `shop_id` int(10) unsigned DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `vendors` */
 
 /*Table structure for table `webpages` */
 
