@@ -45,7 +45,7 @@ class AppController extends Controller {
 	'RandomString.RandomString',
 	'Theme');
 
-    var $helpers = array('Html', 'Form', 'Session');
+    var $helpers = array('Html', 'Form', 'Session', 'TimeZone.TimeZone');
     
     //Allowed controllers with actions
     var $sslActions = array(
