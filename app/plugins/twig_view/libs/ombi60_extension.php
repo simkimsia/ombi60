@@ -1,5 +1,5 @@
 <?php
-App::import('Helper', 'Html');
+
 
 /**
  * Wrapper to $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $image['ProductImage']['filename'],
@@ -11,6 +11,27 @@ function ombi60ProductImgUrl($filename, $size) {
         return $html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_URL . $size . '/' . $filename);
         */
         return '/img/' . UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_URL . $size . '/' . $filename;
+}
+
+/**
+ * Wrapper to $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $image['ProductImage']['filename'],
+											array('id'=>'small_'.$key));
+ */
+function ombi60MoneyWithCurrency($price) {
+        App::import('Model', 'Shop');
+	$money = Shop::get('ShopSetting.money_in_html_with_currency');
+	App::import('Helper', 'Number');
+	$number = new NumberHelper();
+	
+	if (strpos($money, '{{amount}}') !== false) {
+		$price = $number->precision($price, 2);
+		$price = str_replace('{{amount}}', $price, $money);
+	} else if (strpos($money, '{{amount_with_no_decimals}}') !== false){
+		$price = $number->precision($price, 0);
+		$price = str_replace('{{amount_with_no_decimals}}', $price, $money);
+	} 
+	
+	return $price;
 }
 
 /**
@@ -31,6 +52,7 @@ class Ombi60_Twig_Extension extends Twig_Extension
     {
         return array(
             'product_img_url' => new Twig_Filter_Function('ombi60ProductImgUrl'),
+	    'money_with_currency' => new Twig_Filter_Function('ombi60MoneyWithCurrency'),
         );
     }
 
