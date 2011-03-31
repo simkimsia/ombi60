@@ -46,8 +46,14 @@ class PostsController extends AppController {
 		$blog = $post['Blog'];
 		$post = $post['Post'];
 		
+		$timezone = new DateTimeZone('Asia/Singapore');
+		$time = new DateTime($post['created']);
+		$time->setTimezone(new DateTimeZone('Asia/Singapore'));
+		
+		$post['created'] = $time;
 		
 		
+		$this->log($post);
 		$this->set(compact('post', 'blog'));
 		
 		$this->viewPath = 'articles';
