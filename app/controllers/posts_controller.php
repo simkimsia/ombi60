@@ -46,7 +46,7 @@ class PostsController extends AppController {
 		$blog = $post['Blog'];
 		$post = $post['Post'];
 		
-		$timezone = new DateTimeZone('Asia/Singapore');
+		
 		$time = new DateTime($post['created']);
 		$time->setTimezone(new DateTimeZone('Asia/Singapore'));
 		
