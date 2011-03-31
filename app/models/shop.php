@@ -288,18 +288,16 @@ class Shop extends AppModel {
 		
 		$this->recursive         = -1;
 		$this->Domain->recursive = -1;
+		$this->ShopSetting->recursive = -1;
 		
-
-		$this->Domain->Behaviors->attach('Linkable.Linkable');
 		$this->Behaviors->attach('Linkable.Linkable');
 		
-
 		$result = $this->find(
 				      'first',
 				      array(
-					   'link' => array('Domain'),
+					   'link' => array('ShopSetting', 'Domain', ),
 					   'conditions' => array('Domain.domain'=>$url),
-					   'fields' => array('Shop.*', 'Domain.domain', 'Domain.id'),
+					   'fields' => array('Shop.*', 'Domain.domain', 'Domain.id', 'ShopSetting.*'),
 					   ));
 
 		if (!empty($result)) {
