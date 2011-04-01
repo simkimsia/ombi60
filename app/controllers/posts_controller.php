@@ -47,14 +47,11 @@ class PostsController extends AppController {
 		$blog = $post['Blog'];
 		$post = $post['Post'];
 		
-		/*
-		$time = new DateTime($post['created']);
-		$time->setTimezone(new DateTimeZone('Asia/Singapore'));
-		*/
+		$timezone  = Shop::get('ShopSetting.timezone');
 		
-		$post = $this->TimeZone->convert($post, new DateTimeZone('Asia/Singapore'));
+		// convert string datetime to datetime object
+		$post = $this->TimeZone->convert($post, new DateTimeZone($timezone));
 		
-		$this->log($post);
 		$this->set(compact('post', 'blog'));
 		
 		$this->viewPath = 'articles';
@@ -154,6 +151,7 @@ class PostsController extends AppController {
 		
 		if (!empty($this->data)) {
 			if ($this->Post->save($this->data)) {
+				
 				$this->Session->setFlash(__('The post has been saved', true), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('controller'=>'blogs',
 						      'action' => 'view',

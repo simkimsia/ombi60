@@ -21,6 +21,12 @@ class ShopsController extends AppController {
 		
 		if (!empty($this->data)) {
 			if ($this->Shop->ShopSetting->save($this->data)) {
+				
+				// updating Session and Shop static class
+				$currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
+				$this->Session->write('CurrentShop', $currentShop);
+				Shop::store($currentShop);
+				
 				$this->Session->setFlash(__('General Settings have been saved', true), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'admin_general_settings'));
 			} else {

@@ -378,16 +378,16 @@ class Shop extends AppModel {
 	function getTemplateVariable() {
 		$shopInstance = Shop::getInstance();
 		$shop = array('name' => $shopInstance['Shop']['name'],
-			      'url'  => $shopInstance['Shop']['web_address'] . '/',
-			      'primary_domain'=> $shopInstance['Shop']['web_address'] . '/',
-			      'permanent_domain'=>$shopInstance['Shop']['web_address'] . '/',
-			      'email'=>$shopInstance['Shop']['name'],
-			      'products_count'=>$shopInstance['Shop']['name'],
-			      'products_count'=>$shopInstance['Shop']['name'],
-			      'product_groups_count'=>$shopInstance['Shop']['name'],
+			      'url'  => $shopInstance['Shop']['url'] . '/',
+			      'primary_domain'=> $shopInstance['Shop']['primary_domain'] . '/',
+			      'permanent_domain'=>$shopInstance['Shop']['permanent_domain'] . '/',
+			      'email'=>$shopInstance['Shop']['email'],
+			      'product_count'=>$shopInstance['Shop']['product_count'],
+			      
+			      'products_group_count'=>$shopInstance['Shop']['products_group_count'],
 			      'currency'=>$shopInstance['Shop']['currency'],
-			      'money_format'=>$shopInstance['Shop']['currency'],
-			      'money_format_in_currency'=>$shopInstance['Shop']['currency'],
+			      'money_format'=>$shopInstance['ShopSetting']['money_in_html'],
+			      'money_format_in_currency'=>$shopInstance['ShopSetting']['money_in_html_with_currency'],
 			      'vendors'=>$shopInstance['Shop']['currency'],);
 	}
 
