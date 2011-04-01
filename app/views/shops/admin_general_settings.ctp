@@ -18,8 +18,7 @@
         
                 echo $this->Form->input('ShopSetting.timezone', array('type' => 'select',
                                                              'default' => $shopSetting['ShopSetting']['timezone'],
-                                                             'options' => array('Singapore' => 'GMT +8 Singapore',
-                                                                                'Malaysia'=> 'GMT +8 Malaysia')));
+                                                             'options' => $this->TimeZone->timezones));
 	
 		echo $this->Form->input('ShopSetting.unit_system', array('type' => 'select',
                                                              'default' => $shopSetting['ShopSetting']['unit_system'],
