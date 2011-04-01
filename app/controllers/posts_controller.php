@@ -12,7 +12,8 @@ class PostsController extends AppController {
 					'actions'=>array(
 						'index',
 						'view',)
-				));
+				),
+				'TimeZone.TimeZone',);
 
 	function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
@@ -46,12 +47,12 @@ class PostsController extends AppController {
 		$blog = $post['Blog'];
 		$post = $post['Post'];
 		
-		
+		/*
 		$time = new DateTime($post['created']);
 		$time->setTimezone(new DateTimeZone('Asia/Singapore'));
+		*/
 		
-		$post['created'] = $time;
-		
+		$post = $this->TimeZone->convert($post, new DateTimeZone('Asia/Singapore'));
 		
 		$this->log($post);
 		$this->set(compact('post', 'blog'));
