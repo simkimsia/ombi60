@@ -72,7 +72,7 @@
 								<a href="/products/view/{{product.id}}" class="itemlink" >{{product.title}}</a>
 							</div>
 							<div class="itemprice">
-								<a href="/products/view/{{product.id}}" class="itemlink" >{{product.price}}</a>
+								<a href="/products/view/{{product.id}}" class="itemlink" >{{ product.price | money_with_currency }}</a>
 							</div>
 						</div>
 						<div class="itemdescription">
