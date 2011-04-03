@@ -26,7 +26,7 @@
 			<div class="categorywrapper">
 				<div class="categorytop"></div>
 				<div class="contentcategory">
-					{{ product.title }}
+					{{ product.title }} - {{ product.price | money_with_currency }}
 				</div>
 										
 				<div class="contentitem">

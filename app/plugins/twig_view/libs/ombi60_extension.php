@@ -1,6 +1,8 @@
 <?php
 
 
+
+
 /**
  * Wrapper to $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $image['ProductImage']['filename'],
 											array('id'=>'small_'.$key));
@@ -51,6 +53,79 @@ function ombi60Money($price) {
 	return $price;
 }
 
+
+/**
+ * this is for cakephp framework
+ * Web path to the CSS files directory.
+ */
+if (!defined('CSS_URL')) {
+	define('CSS_URL', 'css/');
+}
+
+function ombi60AssetUrl($filename) {
+	// we need to use HtmlHelper existing in cakephp currently
+	// in future we may use cdn otherwise or whatever
+	App::import('Helper', 'Html');
+	$htmlHelper = new HtmlHelper();
+	
+	// we need to set the theme as well
+	App::import('Model', 'Shop');
+	$shopId = Shop::get('Shop.id');
+	$currentShop = Cache::read('Shop'.$shopId);
+	$htmlHelper->theme = !empty($currentShop['FeaturedSavedTheme']['folder_name']) ? $currentShop['FeaturedSavedTheme']['folder_name'] : 'blue-white';
+	
+	// we need to differentiate between css, js and image files
+	// check for .css, .js, and all possible image extensions based on the filename.
+	if (preg_match("/\.css$/", $filename)) {
+		
+		if ($filename[0] !== '/') {
+			$filename = CSS_URL . $filename;
+		}
+		
+		if (strpos($filename, '?') === false) {
+			if (substr($filename, -4) !== '.css') {
+				$filename .= '.css';
+			}
+		}
+		$url = $htmlHelper->assetTimestamp($htmlHelper->webroot($filename));
+		
+		return $url;
+	}
+	
+	
+	if (preg_match("/\.js$/", $filename)) {
+		
+		if ($filename[0] !== '/') {
+			$filename = JS_URL . $filename;
+		}
+		
+		if (strpos($filename, '?') === false) {
+			if (substr($filename, -4) !== '.js') {
+				$filename .= '.js';
+			}
+		}
+		$url = $htmlHelper->assetTimestamp($htmlHelper->webroot($filename));
+		
+		return $url;
+	}
+	// not fixed yet
+	if (preg_match("/\.png$/", $filename)) {
+		
+		if ($filename[0] !== '/') {
+			$filename = JS_URL . $filename;
+		}
+		
+		if (strpos($filename, '?') === false) {
+			if (substr($filename, -4) !== '.js') {
+				$filename .= '.js';
+			}
+		}
+		$url = $htmlHelper->assetTimestamp($htmlHelper->webroot($filename));
+		
+		return $url;
+	}
+}
+
 /**
  * Product Image Url
  * Use: {{ product.images[0] | product_img_url : 'large' }}
@@ -71,6 +146,7 @@ class Ombi60_Twig_Extension extends Twig_Extension
             'product_img_url' => new Twig_Filter_Function('ombi60ProductImgUrl'),
 	    'money_with_currency' => new Twig_Filter_Function('ombi60MoneyWithCurrency'),
 	    'money' => new Twig_Filter_Function('ombi60Money'),
+	    'asset_url' => new Twig_Filter_Function('ombi60AssetUrl'),
         );
     }
 
