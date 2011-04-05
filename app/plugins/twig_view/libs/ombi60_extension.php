@@ -62,6 +62,14 @@ if (!defined('CSS_URL')) {
 	define('CSS_URL', 'css/');
 }
 
+if (!defined('JS_URL')) {
+	define('JS_URL', 'js/');
+}
+
+if (!defined('IMAGES_URL')) {
+	define('IMAGES_URL', 'img/');
+}
+
 function ombi60AssetUrl($filename) {
 	// we need to use HtmlHelper existing in cakephp currently
 	// in future we may use cdn otherwise or whatever
@@ -100,7 +108,7 @@ function ombi60AssetUrl($filename) {
 		}
 		
 		if (strpos($filename, '?') === false) {
-			if (substr($filename, -4) !== '.js') {
+			if (substr($filename, -3) !== '.js') {
 				$filename .= '.js';
 			}
 		}
@@ -109,17 +117,13 @@ function ombi60AssetUrl($filename) {
 		return $url;
 	}
 	// not fixed yet
-	if (preg_match("/\.png$/", $filename)) {
+	if (preg_match("/\.png|.jpg|.jpeg|.gif|.tiff$/", $filename)) {
 		
 		if ($filename[0] !== '/') {
-			$filename = JS_URL . $filename;
+			$filename = IMAGES_URL . $filename;
 		}
 		
-		if (strpos($filename, '?') === false) {
-			if (substr($filename, -4) !== '.js') {
-				$filename .= '.js';
-			}
-		}
+		
 		$url = $htmlHelper->assetTimestamp($htmlHelper->webroot($filename));
 		
 		return $url;
