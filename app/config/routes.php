@@ -349,6 +349,9 @@
                               'admin'      => true,
                               ));
         
-
+        Router::connect('/admin/general_settings',
+                        array('controller' => 'shops',
+                              'action' => 'general_settings',
+                              'admin'=>true));
 
 ?>

@@ -58,6 +58,7 @@
 				</ul>
 			</div>
 		</div>
+		<?php if ($this->params['action'] != 'admin_login') { ?>
 		<div id="barwrapper">
 			<div id="contentbar">
 			<div id="barleft">
@@ -106,7 +107,8 @@
 						<ul id="subnav" class="govern">  
 							<li><?php echo $this->Html->link('Domains', '/admin/domains'); ?></li>  
 							<li><?php echo $this->Html->link('Payments', '/admin/payments'); ?></li>
-							<li><?php echo $this->Html->link('Shipping', '/admin/shipping'); ?></li>  
+							<li><?php echo $this->Html->link('Shipping', '/admin/shipping'); ?></li>
+							<li><?php echo $this->Html->link('General Settings', '/admin/general_settings'); ?></li>    
 						</ul>
 					</li>
 				</ul>
@@ -114,7 +116,7 @@
 			</div>
 		</div>
 		<!-- end of new code -->
-		
+		<?php } ?>
 		<div id="content">
 
 			<?php echo $this->Session->flash(); ?>
