@@ -718,4 +718,7 @@ div.code-coverage-results span.result-good {
 /* for the ajax pagination indicator */
 #busy-indicator { display:none; }
 
+#money-format-div input {
+  width: 50%;
+}
 

@@ -4,7 +4,7 @@
 
 <div>
 <div class="text_center"><h2><?php __('General Settings');?></h2>
-    <?php echo $this->Html->link(__('Cancel', true), array('action' => 'index', 'admin' => true));?>
+    <?php //echo $this->Html->link(__('Cancel', true), array('action' => 'index', 'admin' => true));?>
 </div>
 <?php
 	echo $this->element('errors', array('errors' => $errors));
@@ -13,7 +13,7 @@
 	echo $this->Form->input('ShopSetting.shop_id', array('type'=>'hidden', 'value'=>$shopSetting['ShopSetting']['shop_id']));
 ?>
 	<fieldset>
- 		<legend><?php __('Edit Settings');?></legend>
+ 		<!--<legend><?php __('Edit Settings');?></legend>-->
 	<?php
         
                 echo $this->Form->input('ShopSetting.timezone', array('type' => 'select',
@@ -28,25 +28,45 @@
                 
                 
                 
-                
+            
 		echo $this->Form->input('ShopSetting.currency', array('type' => 'select',
                                                              'default' => $shopSetting['ShopSetting']['currency'],
+                                                             'label' => 'Money (<a href="#" id="formatting_link">formatting</a>)',
+                                                             //'after' => '(<a href="#" id="formatting_link">formatting</a>)',
 							     'options' => array('SGD' => 'Singapore dollar (SGD)',
                                                                                 'MYR'=> 'Malaysian Ringgit (MYR)')));
                 
         ?>
                 
-        <a href="#" id="formatting_link">Change Money Format</a>
+        
         
         <div id="money-format-div">
+        <fieldset>
+        <legend><?php __('Formatting');?></legend>
 	
 	<?php
-                echo $this->Form->input('ShopSetting.money_in_html', array('value'=>$shopSetting['ShopSetting']['money_in_html']));
-		echo $this->Form->input('ShopSetting.money_in_html_with_currency', array('value'=>$shopSetting['ShopSetting']['money_in_html_with_currency']));
-		echo $this->Form->input('ShopSetting.money_in_email', array('value'=>$shopSetting['ShopSetting']['money_in_email']));
-		echo $this->Form->input('ShopSetting.money_in_email_with_currency', array('value'=>$shopSetting['ShopSetting']['money_in_email_with_currency']));
+    echo $this->Form->input('ShopSetting.money_in_html', array(
+            'value'=>$shopSetting['ShopSetting']['money_in_html'],
+            'label' => false,
+            'after' => ' Money in Html' ,
+           ));
+		echo $this->Form->input('ShopSetting.money_in_html_with_currency', array(
+		        'value' => $shopSetting['ShopSetting']['money_in_html_with_currency'],
+	          'label' => false,
+	          'after' => ' Money in Html With Currency',
+		        ));
+		echo $this->Form->input('ShopSetting.money_in_email', array(
+		        'value'=>$shopSetting['ShopSetting']['money_in_email'],
+		        'label' => false,
+	          'after' => ' Money in Email',
+		        ));
+		echo $this->Form->input('ShopSetting.money_in_email_with_currency', array(
+            'value'=>$shopSetting['ShopSetting']['money_in_email_with_currency'],
+            'label' => false,
+	          'after' => ' Money in Email With Currency',
+            ));
 	?>
-		      
+		    </fieldset>  
         </div>
                 
                 
@@ -59,7 +79,7 @@
 
 	</fieldset>
 	
-	<?php echo $this->Form->end('Submit'); ?>
+	<?php echo $this->Form->end('Apply Settings'); ?>
 
 </div>
 
