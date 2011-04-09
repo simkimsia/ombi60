@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 /**
  * Wrapper to $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $image['ProductImage']['filename'],
 											array('id'=>'small_'.$key));
@@ -97,7 +94,7 @@ function ombi60AssetUrl($filename) {
 		}
 		$url = $htmlHelper->assetTimestamp($htmlHelper->webroot($filename));
 		
-		return $url;
+		return '/' . $url;
 	}
 	
 	
@@ -114,9 +111,9 @@ function ombi60AssetUrl($filename) {
 		}
 		$url = $htmlHelper->assetTimestamp($htmlHelper->webroot($filename));
 		
-		return $url;
+		return '/' . $url;
 	}
-	// not fixed yet
+	// should be limited to these file extensions for time being
 	if (preg_match("/\.png|.jpg|.jpeg|.gif|.tiff$/", $filename)) {
 		
 		if ($filename[0] !== '/') {
@@ -126,8 +123,84 @@ function ombi60AssetUrl($filename) {
 		
 		$url = $htmlHelper->assetTimestamp($htmlHelper->webroot($filename));
 		
-		return $url;
+		return '/' . $url;
 	}
+}
+
+/**
+ * returns <img src="url...", alt="" />
+ **/
+function ombi60ImgTag($url, $alt="") {
+	// keep it simple, no need to escape characters or check if image exists
+	return '<img src="'.$url.'" alt="'.$alt.'" />';
+}
+
+/**
+ * returns <script src="url..."/>
+ **/
+function ombi60ScriptTag($url) {
+	return '<script  type="text/javascript" src="'.$url.'"></script>';
+}
+
+/**
+ * returns <script src="url..."/>
+ **/
+function ombi60CssTag($url) {
+	return '<link rel="stylesheet" type="text/css" href="'.$url.'" />' ;
+}
+
+function ombi60LinkTo($title, $url, $titleAttribute="") {
+	// we need to use HtmlHelper existing in cakephp currently
+	// in future we may use cdn otherwise or whatever
+	App::import('Helper', 'Html');
+	$htmlHelper = new HtmlHelper();
+	
+	return $htmlHelper->link($title, $url, array('title'=>$titleAttribute));
+}
+
+function ombi60Camelize($input) {
+	$input = ucwords($input);
+	$input = preg_replace("/[^a-zA-Z0-9]/", "", $input);
+	return lcfirst($input);
+}
+
+function ombi60Handle($input) {
+	$input = strtolower($input);
+	$input = str_replace(' ', '-', $input);
+	while (strpos($input, '--') !== false) {
+		$input = str_replace('--', '-', $input);
+	}
+	$input = preg_replace("/[^a-zA-Z0-9\-]/", "", $input);
+	return $input;
+}
+
+function ombi60Implode($glue, $pieces) {
+	return implode($glue, $pieces);
+}
+
+function ombi60Pluralize($number, $singular, $plural) {
+	if ($number == 1) {
+		return $number . ' ' . $singular;
+	} else {
+		return $number . ' ' . $plural;
+	}
+}
+
+function ombi60TruncateString($input, $length = 100, $endsWith = '...') {
+	return substr($input, 0, $length) . $endsWith;
+}
+
+function ombi60TruncateWords($input, $words = 15, $endsWith = '...') {
+	$tok = strtok($input, " \n\t");
+	$count = 0;
+	$result = '';
+	while ($tok !== false && $count <= $words) {
+		$count += 1;
+		$result .= $tok;
+		$tok = strtok(" \n\t");
+	}
+	
+	return $result;
 }
 
 /**
@@ -151,6 +224,16 @@ class Ombi60_Twig_Extension extends Twig_Extension
 	    'money_with_currency' => new Twig_Filter_Function('ombi60MoneyWithCurrency'),
 	    'money' => new Twig_Filter_Function('ombi60Money'),
 	    'asset_url' => new Twig_Filter_Function('ombi60AssetUrl'),
+	    'img_tag' => new Twig_Filter_Function('ombi60ImgTag'),
+	    'script_tag' => new Twig_Filter_Function('ombi60ScriptTag'),
+	    'css_tag' => new Twig_Filter_Function('ombi60CssTag'),
+	    'link_to' => new Twig_Filter_Function('ombi60LinkTo'),
+	    'camelize' => new Twig_Filter_Function('ombi60Camelize'),
+	    'handleize' => new Twig_Filter_Function('ombi60Handle'),
+	    'implode' => new Twig_Filter_Function('ombi60Implode'),
+	    'pluralize' => new Twig_Filter_Function('ombi60Pluralize'),
+	    'truncate' => new Twig_Filter_Function('ombi60Truncate'),
+	    'truncatewords' => new Twig_Filter_Function('ombi60TruncateWords'),
         );
     }
 
