@@ -203,6 +203,23 @@ function ombi60TruncateWords($input, $words = 15, $endsWith = '...') {
 	return $result;
 }
 
+function ombi60WeightWithUnit($weight_in_grams) {
+	App::import('Model', 'Shop');
+	$unit = Shop::get('ShopSetting.unit_system');
+	
+	App::import('Helper', 'Number');
+	$number = new NumberHelper();
+	
+	$result_weight = 0.0;
+	if ($unit === 'metric') {
+		$result_weight =  $weight_in_grams * 0.001;
+		return $number->precision($result_weight, 1) . ' kg';
+	} else {
+		$result_weight =  $weight_in_grams * 0.00220462262;
+		return $number->precision($result_weight, 1) . ' lb';
+	}
+}
+
 /**
  * Product Image Url
  * Use: {{ product.images[0] | product_img_url : 'large' }}
@@ -234,6 +251,7 @@ class Ombi60_Twig_Extension extends Twig_Extension
 	    'pluralize' => new Twig_Filter_Function('ombi60Pluralize'),
 	    'truncate' => new Twig_Filter_Function('ombi60Truncate'),
 	    'truncatewords' => new Twig_Filter_Function('ombi60TruncateWords'),
+	    'weight_with_unit' => new Twig_Filter_Function('ombi60WeightWithUnit'),
         );
     }
 

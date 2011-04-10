@@ -133,7 +133,7 @@ class CartItem extends AppModel {
 
 	}
 	
-	function updatePricesAndWeights($product_id, $newPrice, $newCurrency, $newWeight, $newWeightUnit) {
+	function updatePricesAndWeights($product_id, $newPrice, $newCurrency, $newWeight) {
 		
 		// first we get all the affected cart_items
 		$items = $this->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
@@ -146,7 +146,7 @@ class CartItem extends AppModel {
 		return $this->updateAll(array('CartItem.product_price' => $newPrice,
 				       'CartItem.currency' => "'" . $newCurrency . "'",
 				       'CartItem.product_weight' => $newWeight,
-				       'CartItem.weight_unit' => "'" . $newWeightUnit . "'"),
+				       ),
 				 array('CartItem.product_id'=>$product_id,
 				       'CartItem.id'=>$cartItemIdArray));
 	}
@@ -167,7 +167,7 @@ class CartItem extends AppModel {
 					       'title'=>$item['product_title'],
 					       'weight'=>$item['product_weight'],
 					       'currency'=>$item['currency'],
-					       'weight_unit'=>$item['weight_unit'],
+					       
 					       'shipping_required'=>$item['shipping_required'],
 					       'previous_price'=>$item['previous_price'],
 					       'previous_currency'=>$item['previous_currency'],

@@ -127,7 +127,7 @@ class Order extends AppModel {
 		$data['Order']['shipped_weight'] = $cartData['Cart']['shipped_weight'];
 		$data['Order']['shipped_amount'] = $cartData['Cart']['shipped_amount'];
 		$data['Order']['shipping_required'] = $shipping_required;
-		$data['Order']['weight_unit'] = $cartData['Cart']['weight_unit'];
+		
 		$data['Order']['currency'] = $cartData['Cart']['currency'];
 		// to count the no. of order_line_item to fulfil
 		$data['Order']['order_line_item_count'] = count($cartData['CartItem']);
@@ -402,7 +402,7 @@ class Order extends AppModel {
 		$data['Order']['shipped_weight'] = $cartData['Cart']['shipped_weight'];
 		$data['Order']['shipped_amount'] = $cartData['Cart']['shipped_amount'];
 		$data['Order']['shipping_required'] = $cartData['Cart']['shipping_required'];
-		$data['Order']['weight_unit'] = $cartData['Cart']['weight_unit'];
+		
 		$data['Order']['currency'] = $cartData['Cart']['currency'];
 		
 		

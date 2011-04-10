@@ -139,7 +139,7 @@ class Cart extends AppModel {
 						  'Product.shipping_required',
 					      'Product.weight',
 					      'Product.currency',
-					      'Product.weight_unit'
+					      
 					      ),
 			      ));
 		
@@ -175,7 +175,7 @@ class Cart extends AppModel {
 						'product_title' => $products[$product_id]['Product']['title'],
 						'product_weight'=> $products[$product_id]['Product']['weight'],
 						'currency' => $products[$product_id]['Product']['currency'],
-						'weight_unit' => $products[$product_id]['Product']['weight_unit'],
+						
 						'shipping_required' => $products[$product_id]['Product']['shipping_required'],);
 			
 			// if shipping_required we totaled the amount
@@ -191,14 +191,14 @@ class Cart extends AppModel {
 			$shippingRequired = ($shippingRequired || $products[$product_id]['Product']['shipping_required']);
 			
 			$cartCurrency = $products[$product_id]['Product']['currency'];
-			$cartWeightUnit = $products[$product_id]['Product']['weight_unit'];
+			
 		}
 		$data['Cart']['total_weight'] = $totalWeight;
 		$data['Cart']['shipped_amount'] = $shippingAmount;
 		$data['Cart']['amount'] = $subtotal;
 		$data['Cart']['shipped_weight'] = $shippingWeight;
 		$data['Cart']['shipping_required'] = $shippingRequired;
-		$data['Cart']['weight_unit'] = $cartWeightUnit;
+		
 		$data['Cart']['currency'] = $cartCurrency;
 		
 		if ($subtotal > 0 AND !empty($data['CartItem'])) {
@@ -338,7 +338,7 @@ class Cart extends AppModel {
 		$sql = 'UPDATE carts SET amount = (SELECT SUM(product_price*product_quantity) FROM cart_items WHERE cart_id = %1$d),
 				total_weight = (SELECT SUM(product_weight*product_quantity) FROM cart_items WHERE cart_id = %1$d),
 				currency = (SELECT currency FROM cart_items WHERE cart_id = %1$d LIMIT 1),
-				weight_unit = (SELECT weight_unit FROM cart_items WHERE cart_id = %1$d LIMIT 1),
+				
 				shipped_amount = IFNULL((SELECT SUM(product_price*product_quantity)  FROM cart_items WHERE cart_id = %1$d AND shipping_required = 1),0),
 				shipped_weight = IFNULL((SELECT SUM(product_weight*product_quantity)  FROM cart_items WHERE cart_id = %1$d AND shipping_required = 1),0)
 
@@ -513,7 +513,7 @@ class Cart extends AppModel {
 								'Product.currency',
 								'Product.shipping_required',
 								'Product.weight',
-								'Product.weight_unit',
+								
 								'Product.title'), $product_id);
 			
 			$product['Product']['quantity'] = $quantity;
@@ -538,7 +538,7 @@ class Cart extends AppModel {
 					'product_title'=>$product['Product']['title'],
 					'currency'=>$product['Product']['currency'],
 					'product_weight'=>$product['Product']['weight'],
-					'product_weight_unit'=>$product['Product']['weight_unit'],
+					
 					'shipping_required'=>$product['Product']['shipping_required'],
 					);	
 			}
@@ -583,7 +583,7 @@ class Cart extends AppModel {
 							      'product_title'=>$product['Product']['title'],
 							      'currency'=>$product['Product']['currency'],
 							      'product_weight'=>$product['Product']['weight'],
-							      'product_weight_unit'=>$product['Product']['weight_unit'],
+							      
 							      'shipping_required'=>$product['Product']['shipping_required'],
 							      // cart_id ensures put item in right cart
 							      'cart_id' => $cart['Cart']['id'] 
@@ -649,7 +649,7 @@ class Cart extends AppModel {
 					      'Product.shipping_required',
 					      'Product.weight',
 					      'Product.currency',
-					      'Product.weight_unit'
+					      
 					      ),
 			));
 		
@@ -684,7 +684,7 @@ class Cart extends AppModel {
 						'product_title' => $products[$product_id]['Product']['title'],
 						'product_weight'=> $products[$product_id]['Product']['weight'],
 						'currency' => $products[$product_id]['Product']['currency'],
-						'weight_unit' => $products[$product_id]['Product']['weight_unit'],
+						
 						'shipping_required' => $products[$product_id]['Product']['shipping_required'],);
 			
 			// if shipping_required we totaled the amount
@@ -700,14 +700,14 @@ class Cart extends AppModel {
 			$shippingRequired = ($shippingRequired || $products[$product_id]['Product']['shipping_required']);
 			
 			$cartCurrency = $products[$product_id]['Product']['currency'];
-			$cartWeightUnit = $products[$product_id]['Product']['weight_unit'];
+			
 		}
 		$data['Cart']['total_weight'] = $totalWeight;
 		$data['Cart']['shipped_amount'] = $shippingAmount;
 		$data['Cart']['amount'] = $subtotal;
 		$data['Cart']['shipped_weight'] = $shippingWeight;
 		$data['Cart']['shipping_required'] = $shippingRequired;
-		$data['Cart']['weight_unit'] = $cartWeightUnit;
+		
 		$data['Cart']['currency'] = $cartCurrency;
 		
 		if (!empty($data['CartItem'])) {

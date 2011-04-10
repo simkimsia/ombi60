@@ -6,6 +6,8 @@
 	echo $this->Html->script('/uploadify/js/swfobject');
 	
 	echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
+	
+	$unitForWeight = $this->Constant->displayUnitForWeight();
 ?>
 
 <div>
@@ -55,7 +57,7 @@
 	  	echo $this->Form->radio('status',$options, $attributes);
 			echo $this->Form->input('shipping_required', array('type'=>'checkbox', 'checked'=>'checked', 'value'=>1, 'label'=>'Shipping Address required'));
 		  echo $this->Form->input('price', array('label' => __('Selling Price', true), 'div' => array('class' => 'input text left'), 'after' => __(' SGD', true), 'class' => 'noclear'));
-		  echo $this->Form->input('weight', array('div' => array('class' => 'input text right'), 'class' => 'noclear', 'after' => __(' Kg', true)));
+		  echo $this->Form->input('weight', array('div' => array('class' => 'input text right'), 'class' => 'noclear', 'after' => __(' ' . $unitForWeight, true)));
 	?>
 	</fieldset>
 	<?php echo $this->element('product_images_add_form_uploadify'); ?>
