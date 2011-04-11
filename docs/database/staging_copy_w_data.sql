@@ -65,11 +65,11 @@ CREATE TABLE `aros` (
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `aros` */
 
-insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,8),(4,NULL,'Group',4,'customers',9,10),(5,NULL,'Group',5,'casual',11,14),(6,3,'User',1,NULL,6,7),(7,5,'User',2,NULL,12,13);
+insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,8),(4,NULL,'Group',4,'customers',9,10),(5,NULL,'Group',5,'casual',11,20),(6,3,'User',1,NULL,6,7),(7,5,'User',2,NULL,12,13),(8,5,'User',3,NULL,14,15),(9,5,'User',4,NULL,16,17),(10,5,'User',5,NULL,18,19);
 
 /*Table structure for table `aros_acos` */
 
@@ -130,7 +130,7 @@ CREATE TABLE `cake_sessions` (
 
 /*Data for the table `cake_sessions` */
 
-insert  into `cake_sessions`(`id`,`data`,`expires`) values ('dhd723hm0c3rdev7lvjnlnn4u1','Config|a:3:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1301469777;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"39370d301484e4a4ae8013ee24194c0d2456451b\";s:7:\"expires\";i:1301474777;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1301469777),('scf8at7mokcqqraqj3p2131me5','Config|a:3:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1301469987;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"e3c63b4b67b365acafae99b324023e50f3a9df90\";s:7:\"expires\";i:1301474987;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1301469997),('e058sb0rlg5p62p91m5cgm6211','Config|a:3:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1301481179;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"4303cc972492c8efa8f31145163489992ddd67a0\";s:7:\"expires\";i:1301475180;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1301481180),('hq0r2lam00fqt432oqecju1c40','Config|a:4:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1301470183;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"0\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"27f94f45bc5c9e54d7e6652009f877240d01712a\";s:7:\"expires\";i:1301475183;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1301470183),('hejcknneokqm5s0hs3f378tic7','Config|a:4:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1301470221;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"0\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}}Message|a:1:{s:4:\"auth\";a:3:{s:7:\"message\";s:47:\"You are not authorized to access that location.\";s:7:\"element\";s:7:\"default\";s:6:\"params\";a:0:{}}}Auth|a:1:{s:8:\"redirect\";s:6:\"/admin\";}',1301470221),('1vul77ickkf4dcvj58gm79vhs2','Config|a:4:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1301470239;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:2:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"0\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"5e75a52a63eddfcc5b5676548894cc3a467240f9\";s:7:\"expires\";i:1301475240;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";Auth|a:4:{s:4:\"User\";a:10:{s:2:\"id\";s:1:\"1\";s:5:\"email\";s:17:\"owner@shop001.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:16:\"tester testerson\";s:12:\"name_to_call\";s:6:\"tester\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"user_id\";s:1:\"1\";}s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"0\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}}',1301470240);
+insert  into `cake_sessions`(`id`,`data`,`expires`) values ('d2n0nokq27jifimdmuj2qerho7','Config|a:4:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1302500548;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:3:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"2\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}s:11:\"ShopSetting\";a:10:{s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:8:\"timezone\";s:9:\"US/Alaska\";s:11:\"unit_system\";s:6:\"metric\";s:8:\"currency\";s:3:\"SGD\";s:27:\"money_in_html_with_currency\";s:15:\"${{amount}} SGD\";s:13:\"money_in_html\";s:11:\"${{amount}}\";s:28:\"money_in_email_with_currency\";s:15:\"${{amount}} SGD\";s:14:\"money_in_email\";s:11:\"${{amount}}\";s:17:\"checkout_language\";s:1:\"0\";}}Message|a:1:{s:5:\"flash\";a:3:{s:7:\"message\";s:32:\"The shipping rate has been saved\";s:7:\"element\";s:7:\"default\";s:6:\"params\";a:1:{s:5:\"class\";s:13:\"flash_success\";}}}Auth|a:4:{s:4:\"User\";a:10:{s:2:\"id\";s:1:\"1\";s:5:\"email\";s:17:\"owner@shop001.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:16:\"tester testerson\";s:12:\"name_to_call\";s:6:\"tester\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"user_id\";s:1:\"1\";}s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"2\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"b456968c77877f0177b01544327b390883b5a5ba\";s:7:\"expires\";i:1302505549;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1302500549),('630e9hqb56tigilndtjomfc110','Config|a:4:{s:9:\"userAgent\";s:32:\"1525a9408f56eba4f645337c30dfe5b4\";s:4:\"time\";i:1302500946;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:3:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"2\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}s:11:\"ShopSetting\";a:10:{s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:8:\"timezone\";s:9:\"US/Alaska\";s:11:\"unit_system\";s:8:\"imperial\";s:8:\"currency\";s:3:\"SGD\";s:27:\"money_in_html_with_currency\";s:15:\"${{amount}} SGD\";s:13:\"money_in_html\";s:11:\"${{amount}}\";s:28:\"money_in_email_with_currency\";s:15:\"${{amount}} SGD\";s:14:\"money_in_email\";s:11:\"${{amount}}\";s:17:\"checkout_language\";s:1:\"0\";}}Message|a:0:{}Auth|a:4:{s:4:\"User\";a:10:{s:2:\"id\";s:1:\"1\";s:5:\"email\";s:17:\"owner@shop001.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:16:\"tester testerson\";s:12:\"name_to_call\";s:6:\"tester\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"user_id\";s:1:\"1\";}s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"2\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}}_Token|s:212:\"a:5:{s:3:\"key\";s:40:\"d2a831f9d14229b9d048ee72384a9dbd52881995\";s:7:\"expires\";i:1302505946;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:1:{i:0;s:21:\"ProductImage.filename\";}}\";',1302500947),('o59705iavgsmnuto8hu5q6gpk7','Config|a:4:{s:9:\"userAgent\";s:32:\"1525a9408f56eba4f645337c30dfe5b4\";s:4:\"time\";i:1302500417;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:3:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"2\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}s:11:\"ShopSetting\";a:10:{s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:8:\"timezone\";s:9:\"US/Alaska\";s:11:\"unit_system\";s:6:\"metric\";s:8:\"currency\";s:3:\"SGD\";s:27:\"money_in_html_with_currency\";s:15:\"${{amount}} SGD\";s:13:\"money_in_html\";s:11:\"${{amount}}\";s:28:\"money_in_email_with_currency\";s:15:\"${{amount}} SGD\";s:14:\"money_in_email\";s:11:\"${{amount}}\";s:17:\"checkout_language\";s:1:\"0\";}}Message|a:1:{s:5:\"flash\";a:3:{s:7:\"message\";s:32:\"The shipping rate has been saved\";s:7:\"element\";s:7:\"default\";s:6:\"params\";a:1:{s:5:\"class\";s:13:\"flash_success\";}}}Auth|a:4:{s:4:\"User\";a:10:{s:2:\"id\";s:1:\"1\";s:5:\"email\";s:17:\"owner@shop001.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:16:\"tester testerson\";s:12:\"name_to_call\";s:6:\"tester\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"user_id\";s:1:\"1\";}s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-03-30 15:12:57\";s:8:\"modified\";s:19:\"2011-03-30 15:12:57\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"2\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"c8841260f28288450bc6cac526d959d37d3a446f\";s:7:\"expires\";i:1302505417;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";Filter|a:1:{s:8:\"products\";a:1:{s:11:\"admin_index\";s:20:\"/Filter.parsed:true/\";}}',1302500417);
 
 /*Table structure for table `cancellations` */
 
@@ -161,9 +161,8 @@ CREATE TABLE `cart_items` (
   `product_quantity` int(4) NOT NULL DEFAULT '1',
   `status` tinyint(1) DEFAULT '1',
   `product_title` varchar(255) DEFAULT NULL,
-  `product_weight` decimal(10,4) unsigned DEFAULT NULL,
+  `product_weight` int(10) unsigned DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
-  `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `previous_price` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `previous_currency` varchar(5) DEFAULT NULL,
@@ -185,11 +184,10 @@ CREATE TABLE `carts` (
   `amount` decimal(10,4) NOT NULL DEFAULT '0.0000',
   `status` tinyint(1) DEFAULT '1',
   `hash` varchar(255) DEFAULT NULL,
-  `total_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
+  `total_weight` decimal(10,0) unsigned NOT NULL DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
-  `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipped_amount` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
-  `shipped_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
+  `shipped_weight` int(10) unsigned NOT NULL DEFAULT '0',
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -207,11 +205,11 @@ CREATE TABLE `casual_surfers` (
   PRIMARY KEY (`id`),
   KEY `shop` (`shop_id`),
   KEY `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `casual_surfers` */
 
-insert  into `casual_surfers`(`id`,`shop_id`,`user_id`) values (1,2,2);
+insert  into `casual_surfers`(`id`,`shop_id`,`user_id`) values (1,2,2),(2,2,3),(3,2,4),(4,2,5);
 
 /*Table structure for table `comments` */
 
@@ -462,9 +460,11 @@ CREATE TABLE `logs` (
   `user_id` int(11) NOT NULL,
   `change` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `logs` */
+
+insert  into `logs`(`id`,`title`,`created`,`description`,`model`,`model_id`,`action`,`user_id`,`change`) values (1,'asd','2011-03-31 11:19:01','Product \"asd\" (3) added by System.','Product',3,'add',0,'shop_id, title, description, status, shipping_required, price, weight, created'),(2,'Dummy Product','2011-04-11 02:02:21','Product \"Dummy Product\" (2) updated by System.','Product',2,'edit',0,'weight'),(3,'asd','2011-04-11 05:08:37','Product \"asd\" (3) updated by System.','Product',3,'edit',0,'weight');
 
 /*Table structure for table `merchants` */
 
@@ -494,9 +494,8 @@ CREATE TABLE `order_line_items` (
   `product_quantity` int(4) NOT NULL DEFAULT '1',
   `status` int(4) DEFAULT '1',
   `product_title` varchar(255) DEFAULT NULL,
-  `product_weight` decimal(10,4) unsigned DEFAULT NULL,
+  `product_weight` int(10) unsigned DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
-  `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -521,9 +520,8 @@ CREATE TABLE `orders` (
   `cart_id` int(11) NOT NULL,
   `payment_status` tinyint(2) DEFAULT '0',
   `fulfillment_status` tinyint(2) DEFAULT '1',
-  `shipped_weight` decimal(10,4) unsigned DEFAULT NULL,
+  `shipped_weight` int(10) unsigned DEFAULT '0',
   `shipped_amount` decimal(10,4) unsigned DEFAULT NULL,
-  `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
   `total_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -716,9 +714,11 @@ CREATE TABLE `price_based_rates` (
   `max_price` decimal(10,3) DEFAULT NULL,
   `shipping_rate_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `price_based_rates` */
+
+insert  into `price_based_rates`(`id`,`min_price`,`max_price`,`shipping_rate_id`) values (4,'50.000',NULL,12);
 
 /*Table structure for table `product_groups` */
 
@@ -774,17 +774,16 @@ CREATE TABLE `products` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `status` tinyint(1) DEFAULT '1',
-  `weight` decimal(10,4) unsigned DEFAULT NULL,
+  `weight` int(10) unsigned DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
-  `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `vendor_id` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`weight_unit`,`shipping_required`,`vendor_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,'7.0000','SGD','kg',1,0),(2,2,'Dummy Product',NULL,NULL,'0.0000','2011-03-30 15:12:57','2011-03-30 15:12:57',1,'7.0000','SGD','kg',1,0);
+insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`shipping_required`,`vendor_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0),(2,2,'Dummy Product','','','0.0000','2011-03-30 15:12:57','2011-04-11 02:02:21',1,5500,'SGD',1,0),(3,2,'asd','','<p>ad</p>','1.0000','2011-03-31 11:19:01','2011-04-11 05:08:37',1,2000,'SGD',1,0);
 
 /*Table structure for table `products_in_groups` */
 
@@ -885,11 +884,11 @@ CREATE TABLE `shipping_rates` (
   `shipped_to_country_id` int(11) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shipping_rates` */
 
-insert  into `shipping_rates`(`id`,`name`,`price`,`shipped_to_country_id`,`description`) values (1,'Standard Shipping','10.000',2,'From 10kg to 20kg'),(2,'Heavy Duty Shipping','25.000',2,'From 20kg to 50kg'),(3,'Standard Shipping','10.000',3,'From 10kg to 20kg'),(4,'Heavy Duty','25.000',3,'From 20kg to 50kg'),(5,'Standard Shipping','10.000',4,'From 10kg to 20kg'),(6,'Heavy Duty','25.000',4,'From 20kg to 50kg');
+insert  into `shipping_rates`(`id`,`name`,`price`,`shipped_to_country_id`,`description`) values (1,'Standard Shipping','10.000',2,'From 10kg to 20kg'),(2,'Heavy Duty Shipping','25.000',2,'From 20kg to 50kg'),(3,'Standard Shipping','10.000',3,'From 10kg to 20kg'),(4,'Heavy Duty','25.000',3,'From 20kg to 50kg'),(5,'Standard Shipping','10.000',4,'From 10kg to 20kg'),(6,'Heavy Duty','25.000',4,'From 20kg to 50kg'),(12,'test1','10.000',4,'From $50.00 and above'),(13,'test2','1.000',4,'From 1kg to 2kg');
 
 /*Table structure for table `shop_settings` */
 
@@ -911,7 +910,7 @@ CREATE TABLE `shop_settings` (
 
 /*Data for the table `shop_settings` */
 
-insert  into `shop_settings`(`id`,`shop_id`,`timezone`,`unit_system`,`currency`,`money_in_html_with_currency`,`money_in_html`,`money_in_email_with_currency`,`money_in_email`,`checkout_language`) values (1,2,'','metric','SGD','metric','','','SGD',1);
+insert  into `shop_settings`(`id`,`shop_id`,`timezone`,`unit_system`,`currency`,`money_in_html_with_currency`,`money_in_html`,`money_in_email_with_currency`,`money_in_email`,`checkout_language`) values (1,2,'US/Alaska','imperial','SGD','${{amount}} SGD','${{amount}}','${{amount}} SGD','${{amount}}',0);
 
 /*Table structure for table `shops` */
 
@@ -937,7 +936,7 @@ CREATE TABLE `shops` (
 
 /*Data for the table `shops` */
 
-insert  into `shops`(`id`,`name`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`,`url`,`primary_domain`,`permanent_domain`,`email`,`product_count`,`product_group_count`,`vendor_count`) values (1,'a',NULL,NULL,1,0,0,NULL,'http://a.ombi60.com/',NULL,NULL,0,0,0),(2,'shop001','2011-03-30 15:12:57','2011-03-30 15:12:57',1,1,0,NULL,'http://shop001.ombi60.localhost',NULL,'owner@shop001.com',0,0,0);
+insert  into `shops`(`id`,`name`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`,`url`,`primary_domain`,`permanent_domain`,`email`,`product_count`,`product_group_count`,`vendor_count`) values (1,'a',NULL,NULL,1,0,0,NULL,'http://a.ombi60.com/',NULL,NULL,0,0,0),(2,'shop001','2011-03-30 15:12:57','2011-03-30 15:12:57',1,1,0,NULL,'http://shop001.ombi60.localhost',NULL,'owner@shop001.com',2,0,0);
 
 /*Table structure for table `shops_payment_modules` */
 
@@ -1024,11 +1023,11 @@ CREATE TABLE `users` (
   `modified` datetime DEFAULT NULL,
   `language_id` int(5) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'owner@shop001.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'tester testerson','tester',NULL,1,'2011-03-30 15:12:57','2011-03-30 15:12:57',1),(2,'q0wc1ifp@ombi60.com','b535ce138ea53e3f576ff69d33b3fa50a2d09d84',5,'casual','casual',NULL,1,'2011-03-30 07:13:03','2011-03-30 07:13:03',1);
+insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'owner@shop001.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'tester testerson','tester',NULL,1,'2011-03-30 15:12:57','2011-03-30 15:12:57',1),(2,'q0wc1ifp@ombi60.com','b535ce138ea53e3f576ff69d33b3fa50a2d09d84',5,'casual','casual',NULL,1,'2011-03-30 07:13:03','2011-03-30 07:13:03',1),(3,'xi8f2$en@ombi60.com','2a7a2231be12e025addc289b9fe49f3ab8686739',5,'casual','casual',NULL,1,'2011-03-31 06:32:03','2011-03-31 06:32:03',1),(4,'735$y6jf@ombi60.com','2747a2cfadcd6ae2d37178996bf03794a7382aff',5,'casual','casual',NULL,1,'2011-04-01 07:32:55','2011-04-01 07:32:55',1),(5,'n$rabj3q@ombi60.com','5d7fbd99cab3ca12392ef66badd80a15ebc20e2a',5,'casual','casual',NULL,1,'2011-04-05 01:37:30','2011-04-05 01:37:30',1);
 
 /*Table structure for table `vendors` */
 
@@ -1076,15 +1075,15 @@ DROP TABLE IF EXISTS `weight_based_rates`;
 
 CREATE TABLE `weight_based_rates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `min_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
-  `max_weight` decimal(10,4) unsigned DEFAULT NULL,
+  `min_weight` int(10) unsigned NOT NULL DEFAULT '0',
+  `max_weight` int(10) unsigned DEFAULT NULL,
   `shipping_rate_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `weight_based_rates` */
 
-insert  into `weight_based_rates`(`id`,`min_weight`,`max_weight`,`shipping_rate_id`) values (1,'10.0000','20.0000',1),(2,'20.0000','50.0000',2),(3,'10.0000','20.0000',3),(4,'20.0000','50.0000',4),(5,'10.0000','20.0000',5),(6,'20.0000','50.0000',6);
+insert  into `weight_based_rates`(`id`,`min_weight`,`max_weight`,`shipping_rate_id`) values (1,10000,20000,1),(2,20000,50000,2),(3,10000,20000,3),(4,20000,50000,4),(5,10000,20000,5),(6,20000,50000,6),(9,1000,2000,13);
 
 /*Table structure for table `wishlists` */
 

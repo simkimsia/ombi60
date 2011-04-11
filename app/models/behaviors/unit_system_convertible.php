@@ -57,6 +57,7 @@ class UnitSystemConvertibleBehavior extends ModelBehavior {
      */
     public function setup($Model, $config = array()) {
     	$this->settings[$Model->alias] = array_merge($this->defaults, $config);
+	
     	return true;
 	}
 	
@@ -78,10 +79,14 @@ class UnitSystemConvertibleBehavior extends ModelBehavior {
 	 */
 	public function convertForDisplay($Model, $dataArray=array(), $unit = null) {
 		/** check for the model used for the conversion **/
-		if ($this->sett)
+		$alias = $Model->alias;
+		if ($this->settings[$Model->alias]['model_name']!= null) {
+			$alias = $this->settings[$Model->alias]['model_name'];
+			$this->settings[$alias] = $this->settings[$Model->alias];
+		}
 		
 		if ($unit == null) {
-			$unit = $this->settings[$Model->alias]['unit'];
+			$unit = $this->settings[$alias]['unit'];
 		}
 		
 		if ($unit === 'imperial') {
@@ -92,64 +97,75 @@ class UnitSystemConvertibleBehavior extends ModelBehavior {
 			$lengthMultiplier = 0.1;
 		}
 		
+		if ($dataArray == null) {
+			return $dataArray;
+		}
 		
-		$weight_exists = array_key_exists('weight', $dataArray[$Model->alias]);
-		$height_exists = array_key_exists('height', $dataArray[$Model->alias]);
-		$length_exists = array_key_exists('length', $dataArray[$Model->alias]);
+		$weight_exists = array_key_exists('weight', $dataArray[$alias]);
+		$height_exists = array_key_exists('height', $dataArray[$alias]);
+		$length_exists = array_key_exists('length', $dataArray[$alias]);
 		
 		App::import('Helper', 'Number');
                 $number = new NumberHelper();
 		
 		if ($weight_exists) {
-			$result_weight = $dataArray[$Model->alias]['weight'] * $weightMultiplier;
-                        $dataArray[$Model->alias]['displayed_weight'] = $number->precision($result_weight, 1);
+			$result_weight = $dataArray[$alias]['weight'] * $weightMultiplier;
+                        $dataArray[$alias]['displayed_weight'] = $number->precision($result_weight, 1);
 			
                 } 
 		
 		if ($height_exists) {
-			$result_height = $dataArray[$Model->alias]['height'] * $lengthMultiplier;
-                        $dataArray[$Model->alias]['displayed_height'] = $number->precision($result_height, 1);
+			$result_height = $dataArray[$alias]['height'] * $lengthMultiplier;
+                        $dataArray[$alias]['displayed_height'] = $number->precision($result_height, 1);
 			
                 }
 		
 		if ($length_exists) {
-			$result_length = $dataArray[$Model->alias]['length'] * $lengthMultiplier;
-                        $dataArray[$Model->alias]['displayed_length'] = $number->precision($result_length, 1);
+			$result_length = $dataArray[$alias]['length'] * $lengthMultiplier;
+                        $dataArray[$alias]['displayed_length'] = $number->precision($result_length, 1);
                 }
 		
 		// for the other weight fields
-		$dataArray = $this->convertOtherWeightFieldsForDisplay($Model, $dataArray, $weightMultiplier);
+		$dataArray = $this->convertOtherWeightFieldsForDisplay($alias, $dataArray, $weightMultiplier);
 		
 		return $dataArray;
 	}
 	
-	private function convertOtherWeightFieldsForDisplay($Model, $dataArray, $weightMultiplier) {
+	private function convertOtherWeightFieldsForDisplay($alias, $dataArray, $weightMultiplier) {
 		App::import('Helper', 'Number');
                 $number = new NumberHelper();
 		
-		foreach($this->settings[$Model->alias]['weight_fields'] as $weightField){
+		if ($dataArray == null) {
+			return $dataArray;
+		}
+		
+		foreach($this->settings[$alias]['weight_fields'] as $weightField){
 			// does the field exist?
-			$field_exists = array_key_exists($weightField, $dataArray);
+			$field_exists = array_key_exists($weightField, $dataArray[$alias]);
 			if ($field_exists) {
-				$result_weight = $dataArray[$Model->alias][$weightField] * $weightMultiplier;
-				$dataArray[$Model->alias]['displayed_' . $weightField] = $number->precision($result_weight, 1);
+				$result_weight = $dataArray[$alias][$weightField] * $weightMultiplier;
+				$dataArray[$alias]['displayed_' . $weightField] = $number->precision($result_weight, 1);
 			}
 		}
 		
 		return $dataArray;
 	}
 	
-	private function convertOtherWeightFieldsForSave($Model, $dataArray, $weightMultiplier) {
+	private function convertOtherWeightFieldsForSave($alias, $dataArray, $weightMultiplier) {
 		App::import('Helper', 'Number');
                 $number = new NumberHelper();
 		
-		foreach($this->settings[$Model->alias]['weight_fields'] as $weightField){
+		if ($dataArray == null) {
+			return $dataArray;
+		}
+		
+		foreach($this->settings[$alias]['weight_fields'] as $weightField){
 			// does the displayed_ field exist?
 			$displayedWeightField = 'displayed_' . $weightField;
-			$field_exists = array_key_exists($displayedWeightField, $dataArray);
+			$field_exists = array_key_exists($displayedWeightField, $dataArray[$alias]);
 			if ($field_exists) {
-				$result_weight = $dataArray[$Model->alias][$displayedWeightField] / $weightMultiplier;
-				$dataArray[$Model->alias][$weightField] = $number->precision($result_weight, 0);
+				$result_weight = $dataArray[$alias][$displayedWeightField] / $weightMultiplier;
+				$dataArray[$alias][$weightField] = $number->precision($result_weight, 0);
 			}
 		}
 		
@@ -179,8 +195,15 @@ class UnitSystemConvertibleBehavior extends ModelBehavior {
 	 */
 	public function convertForSave($Model, $dataArray=array(), $unit = null) {
 		
+		/** check for the model used for the conversion **/
+		$alias = $Model->alias;
+		if ($this->settings[$Model->alias]['model_name']!= null) {
+			$alias = $this->settings[$Model->alias]['model_name'];
+			$this->settings[$alias] = $this->settings[$Model->alias];
+		}
+		
 		if ($unit == null) {
-			$unit = $this->settings[$Model->alias]['unit'];
+			$unit = $this->settings[$alias]['unit'];
 		}
 		
 		if ($unit === 'imperial') {
@@ -191,34 +214,36 @@ class UnitSystemConvertibleBehavior extends ModelBehavior {
 			$lengthMultiplier = 0.1;
 		}
 		
+		if ($dataArray == null) {
+			return $dataArray;
+		}
 		
-		
-		$weight_exists = array_key_exists('displayed_weight', $dataArray[$Model->alias]);
-		$height_exists = array_key_exists('displayed_height', $dataArray[$Model->alias]);
-		$length_exists = array_key_exists('displayed_length', $dataArray[$Model->alias]);
+		$weight_exists = array_key_exists('displayed_weight', $dataArray[$alias]);
+		$height_exists = array_key_exists('displayed_height', $dataArray[$alias]);
+		$length_exists = array_key_exists('displayed_length', $dataArray[$alias]);
 		
 		App::import('Helper', 'Number');
                 $number = new NumberHelper();
 		
 		if ($weight_exists) {
-			$result_weight = $dataArray[$Model->alias]['displayed_weight'] / $weightMultiplier;
-                        $dataArray[$Model->alias]['weight'] = $number->precision($result_weight, 0);
+			$result_weight = $dataArray[$alias]['displayed_weight'] / $weightMultiplier;
+                        $dataArray[$alias]['weight'] = $number->precision($result_weight, 0);
 			
                 } 
 		
 		if ($height_exists) {
-			$result_height = $dataArray[$Model->alias]['displayed_height'] / $lengthMultiplier;
-                        $dataArray[$Model->alias]['height'] = $number->precision($result_height, 0);
+			$result_height = $dataArray[$alias]['displayed_height'] / $lengthMultiplier;
+                        $dataArray[$alias]['height'] = $number->precision($result_height, 0);
 			
                 }
 		
 		if ($length_exists) {
-			$result_length = $dataArray[$Model->alias]['displayed_length'] / $lengthMultiplier;
-                        $dataArray[$Model->alias]['length'] = $number->precision($result_length, 0);
+			$result_length = $dataArray[$alias]['displayed_length'] / $lengthMultiplier;
+                        $dataArray[$alias]['length'] = $number->precision($result_length, 0);
                 }
 		
 		// for the other weight fields
-		$dataArray = $this->convertOtherWeightFieldsForSave($Model, $dataArray, $weightMultiplier);
+		$dataArray = $this->convertOtherWeightFieldsForSave($alias, $dataArray, $weightMultiplier);
 		
 		return $dataArray;
 	}

@@ -13,13 +13,14 @@ class WeightBasedRate extends AppModel {
 		)
 	);
 	
-	
 	var $actsAs    = array(
 			       'UnitSystemConvertible' => array(
 					'weight_fields' =>array(
 						'min_weight',
 						'max_weight',
-							)
+							),
+					'model_name' => 'WeightBasedRate',
+					
 								),
 			       );
 	
@@ -94,7 +95,7 @@ class WeightBasedRate extends AppModel {
                 $unit = Shop::get('ShopSetting.unit_system');
 		
 		foreach ($results as $key => $val) {
-			if (isset($val[$this->alias])) {
+			if (isset($val['WeightBasedRate'])) {
 				$results[$key] = $this->convertForDisplay($val, $unit);
 			}
 		}
@@ -123,5 +124,7 @@ class WeightBasedRate extends AppModel {
 		
 		return true;
 	}
+	
+	
 }
 ?>

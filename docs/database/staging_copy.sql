@@ -159,9 +159,8 @@ CREATE TABLE `cart_items` (
   `product_quantity` int(4) NOT NULL DEFAULT '1',
   `status` tinyint(1) DEFAULT '1',
   `product_title` varchar(255) DEFAULT NULL,
-  `product_weight` decimal(10,4) unsigned DEFAULT NULL,
+  `product_weight` int(10) unsigned DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
-  `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `previous_price` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `previous_currency` varchar(5) DEFAULT NULL,
@@ -183,11 +182,10 @@ CREATE TABLE `carts` (
   `amount` decimal(10,4) NOT NULL DEFAULT '0.0000',
   `status` tinyint(1) DEFAULT '1',
   `hash` varchar(255) DEFAULT NULL,
-  `total_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
+  `total_weight` int(10) unsigned NOT NULL DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
-  `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipped_amount` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
-  `shipped_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
+  `shipped_weight` int(10) unsigned NOT NULL DEFAULT '0',
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -482,9 +480,8 @@ CREATE TABLE `order_line_items` (
   `product_quantity` int(4) NOT NULL DEFAULT '1',
   `status` int(4) DEFAULT '1',
   `product_title` varchar(255) DEFAULT NULL,
-  `product_weight` decimal(10,4) unsigned DEFAULT NULL,
+  `product_weight` int(10) unsigned DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
-  `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -509,11 +506,10 @@ CREATE TABLE `orders` (
   `cart_id` int(11) NOT NULL,
   `payment_status` tinyint(2) DEFAULT '0',
   `fulfillment_status` tinyint(2) DEFAULT '1',
-  `shipped_weight` decimal(10,4) unsigned DEFAULT NULL,
+  `shipped_weight` int(10) unsigned DEFAULT '0',
   `shipped_amount` decimal(10,4) unsigned DEFAULT NULL,
-  `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
-  `total_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
+  `total_weight` int(10) unsigned NOT NULL DEFAULT '0',
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `contact_email` varchar(255) DEFAULT '',
   `order_line_item_count` int(5) unsigned DEFAULT '0',
@@ -760,9 +756,8 @@ CREATE TABLE `products` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `status` tinyint(1) DEFAULT '1',
-  `weight` decimal(10,4) unsigned DEFAULT NULL,
+  `weight` int(10) unsigned DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
-  `weight_unit` varchar(5) NOT NULL DEFAULT 'kg',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `vendor_id` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -770,7 +765,7 @@ CREATE TABLE `products` (
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`weight_unit`,`shipping_required`,`vendor_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,'7.0000','SGD','kg',1,0);
+insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`shipping_required`,`vendor_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7,'SGD',1,0);
 
 /*Table structure for table `products_in_groups` */
 
@@ -1054,15 +1049,15 @@ DROP TABLE IF EXISTS `weight_based_rates`;
 
 CREATE TABLE `weight_based_rates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `min_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
-  `max_weight` decimal(10,4) unsigned DEFAULT NULL,
+  `min_weight` int(10) unsigned NOT NULL DEFAULT '0',
+  `max_weight` int(10) unsigned DEFAULT NULL,
   `shipping_rate_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `weight_based_rates` */
 
-insert  into `weight_based_rates`(`id`,`min_weight`,`max_weight`,`shipping_rate_id`) values (1,'10.0000','20.0000',1),(2,'20.0000','50.0000',2);
+insert  into `weight_based_rates`(`id`,`min_weight`,`max_weight`,`shipping_rate_id`) values (1,10,20,1),(2,20,50,2);
 
 /*Table structure for table `wishlists` */
 
