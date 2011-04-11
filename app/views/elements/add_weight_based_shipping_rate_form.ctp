@@ -14,10 +14,11 @@ echo $this->Form->create('ShippingRate', array('url'=>array('action'=>'add_weigh
                 <td class="new-rate rate-weight" width="25%">
                 <?php
                     echo $this->Form->label('Weight');
-                    echo $this->Form->text('WeightBasedRate.min_weight', array('value'=>'0.0', 'size'=>'3'));
-                    echo 'kg - ';
-                    echo $this->Form->text('WeightBasedRate.max_weight', array('value'=>'25.0', 'size'=>'3'));
-                    echo 'kg';
+                    echo $this->Form->text('WeightBasedRate.displayed_min_weight', array('value'=>'0.0', 'size'=>'3'));
+                    echo $unitForWeight . ' - ';
+                    echo $this->Form->text('WeightBasedRate.displayed_max_weight', array('value'=>'25.0', 'size'=>'3'));
+                    echo $unitForWeight;
+                    echo $this->Form->input('WeightBasedRate.unit', array('type'=>'hidden', 'value'=>$unitForWeight));
                 ?>
                 </td>
 

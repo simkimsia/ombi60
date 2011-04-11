@@ -43,9 +43,10 @@ class AppController extends Controller {
 	'DebugKit.Toolbar',
 	'Cookie',
 	'RandomString.RandomString',
-	'Theme');
+	'Theme',
+	);
 
-    var $helpers = array('Html', 'Form', 'Session', 'TimeZone.TimeZone');
+    var $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone');
     
     //Allowed controllers with actions
     var $sslActions = array(
@@ -314,6 +315,12 @@ class AppController extends Controller {
 	    $this->Security->blackHoleCallback = 'forceSSL';
 	    $this->Security->requireSecure();
 	}
+	
+	// set the weight unit for shop
+	App::import('Helper', 'Constant');
+	$constantHelper = new ConstantHelper();
+	$unitForWeight = $constantHelper->displayUnitForWeight();
+	$this->set('unitForWeight', $unitForWeight);
 	
     }
     

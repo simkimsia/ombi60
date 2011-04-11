@@ -12,7 +12,7 @@
 	
 	//echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
 	
-	$unitForWeight = $this->Constant->displayUnitForWeight();
+	
 ?>
 
 <div>

@@ -40,10 +40,10 @@
          		    <?php
          		        echo $this->Form->label('Weight Range');
           		        echo "From " . $this->Number->format($this->data['WeightBasedRate']['min_weight'], array('places' => 2, 'escape' => false, 'decimals' => '.',));
-                        echo "kg - ";
-                        echo $this->Number->format($this->data['WeightBasedRate']['max_weight'], array('places' => 2, 'escape' => false, 'decimals' => '.',)) . "kg";
+                        echo $unitForWeight . " - ";
+                        echo $this->Number->format($this->data['WeightBasedRate']['max_weight'], array('places' => 2, 'escape' => false, 'decimals' => '.',)) . $unitForWeight;
                         
-         		        //echo 'From ' . range($this->data['WeightBasedRate']['min_weight']) . 'kg to ' . $this->data['WeightBasedRate']['max_weight'] ."kg";
+         		        //echo 'From ' . range($this->data['WeightBasedRate']['min_weight']) . $unitForWeight . ' to ' . $this->data['WeightBasedRate']['max_weight'] .$unitForWeight;
          	        ?>
          		    </li>
     		    <?php } ?>
@@ -91,10 +91,13 @@
 		                <div>
 		                    <?php 		                    
         			        echo $this->Form->input('WeightBasedRate.id', array('type'=>'hidden'));
-		                    echo $this->Form->text('WeightBasedRate.min_weight', array('style' => 'width: auto', 'size' => 5 ));
-		                    echo ' kg - ';
-		                    echo $this->Form->text('WeightBasedRate.max_weight', array('style' => 'width: auto', 'size' => 5));
-		                    echo ' kg';
+					echo $this->Form->text('WeightBasedRate.displayed_min_weight', array('style' => 'width: auto', 'size' => 5 ));
+					echo ' ' .$unitForWeight. ' - ';
+					echo $this->Form->text('WeightBasedRate.displayed_max_weight', array('style' => 'width: auto', 'size' => 5));
+					echo ' '. $unitForWeight;
+					
+					echo $this->Form->input('WeightBasedRate.unit', array('type'=>'hidden', 'value'=>$unitForWeight));
+				    
 		                    ?>
 		                </div>
 		            </li>

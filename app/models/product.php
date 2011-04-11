@@ -110,7 +110,6 @@ class Product extends AppModel {
 	 * */
 	function afterFind($results, $primary) {
 		
-		App::import('Model', 'Shop');
                 $unit = Shop::get('ShopSetting.unit_system');
 		
 		foreach ($results as $key => $val) {
@@ -128,7 +127,6 @@ class Product extends AppModel {
 	 * */
 	function beforeSave() {
 		
-		App::import('Model', 'Shop');
                 $unit = Shop::get('ShopSetting.unit_system');
 		
 		foreach ($this->data as $key => $val) {

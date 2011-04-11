@@ -7,7 +7,7 @@ class ProductsController extends AppController {
 	var $name = 'Products';
 
 	var $helpers = array('Javascript', 'Ajax',
-			     'TinyMce.TinyMce', 'Text', 'Constant');
+			     'TinyMce.TinyMce', 'Text');
 	
 	var $components = array(
 				'Paypal.Paypal',

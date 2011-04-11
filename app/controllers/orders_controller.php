@@ -4,7 +4,7 @@ class OrdersController extends AppController {
 
 	var $name = 'Orders';
 
-	var $helpers = array('Html', 'Form', 'Session', 'Time', 'Constant', 'Number');
+	var $helpers = array('Html', 'Form', 'Session', 'Time', 'Number');
 
 	var $components = array('Session', 'Paypal.Paypal', 'RandomString.RandomString', 'Filter.Filter' => array(
 					'actions' => array('index', 'admin_index'),

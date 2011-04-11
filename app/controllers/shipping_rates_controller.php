@@ -3,8 +3,6 @@ class ShippingRatesController extends AppController {
 
 	var $name = 'ShippingRates';
 	
-	
-	
 	var $helpers = array('Ajax', 'Javascript', 'Number');
 
 	

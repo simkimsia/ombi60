@@ -63,6 +63,7 @@
 			<div id="contentbar">
 			<div id="barleft">
 				<?php
+				
 					$homeSelected = '';
 					$ordersSelected = '';
 					$productsSelected = '';
