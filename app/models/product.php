@@ -9,6 +9,7 @@ class Product extends AppModel {
 					'habtm' => false,
 					'recursive' => false,),
 			       'log.Logable',
+			       'UnitSystemConvertible',
 			       );
 	var $recursive = -1;
 	
@@ -103,6 +104,46 @@ class Product extends AppModel {
 							),)
 			     );
 	
+	
+	/**
+	 * For unit conversion
+	 * */
+	function afterFind($results, $primary) {
+		
+		App::import('Model', 'Shop');
+                $unit = Shop::get('ShopSetting.unit_system');
+		
+		foreach ($results as $key => $val) {
+			if (isset($val['Product'])) {
+				$results[$key] = $this->convertForDisplay($val, $unit);
+			}
+		}
+		
+		
+		return $results;
+	}
+	
+	/**
+	 * For unit conversion
+	 * */
+	function beforeSave() {
+		
+		App::import('Model', 'Shop');
+                $unit = Shop::get('ShopSetting.unit_system');
+		
+		foreach ($this->data as $key => $val) {
+			if (isset($val['Product'])) {
+				$this->data[$key] = $this->convertForSave($val, $unit);
+			}
+			if ($key == 'Product') {
+				$resultingProductArray = $this->convertForSave(array($key => $this->data[$key]), $unit);
+				$this->data[$key] = $resultingProductArray[$key];
+			}
+		}
+		
+		
+		return true;
+	}
 	
 	/**
 	 * will return the product url based on id
