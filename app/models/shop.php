@@ -388,7 +388,10 @@ class Shop extends AppModel {
 			      'currency'=>$shopInstance['Shop']['currency'],
 			      'money_format'=>$shopInstance['ShopSetting']['money_in_html'],
 			      'money_format_in_currency'=>$shopInstance['ShopSetting']['money_in_html_with_currency'],
-			      'vendors'=>$shopInstance['Shop']['currency'],);
+			      
+			      );
+		
+		return $shop;
 	}
 
 	/**

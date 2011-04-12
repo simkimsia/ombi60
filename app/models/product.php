@@ -330,6 +330,31 @@ class Product extends AppModel {
 		/** end of cart_items weight and price **/
 		
 	}
+	
+	/**
+	 * for use in templates for shopfront pages
+	 * */
+	function getTemplateVariable($products=array()) {
+		
+		$results = array();
+		
+		foreach($products as $key=>$product) {
+			$results[] = array('id' => $product['Product']['id'],
+					   'title' => $product['Product']['title'],
+					   'code' => $product['Product']['code'],
+					   'description' => $product['Product']['description'],
+					   'price' => $product['Product']['price'],
+					   'handle' => $product['Product']['handle'],
+					   'url' => '/products/' . $product['Product']['handle'],
+					   );
+			
+			//if (isset($product['Product']))
+		}
+		
+		
+		
+		return $results;
+	}
 
 }
 ?>
