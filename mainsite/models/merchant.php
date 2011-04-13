@@ -178,7 +178,7 @@ class Merchant extends AppModel {
 		// now we set up the blog
 		$blog = ClassRegistry::init('Blog');
 		
-		$blogData = array('Blog'=>array('name'=>$data['Shop']['name'],
+		$blogData = array('Blog'=>array('title'=>$data['Shop']['name'],
 						'shop_id'=>$this->Shop->id));
 		
 		$blog->create();

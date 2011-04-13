@@ -13,10 +13,12 @@ class Shop extends AppModel {
 				'rule' => 'notEmpty',
 				'message' => 'Your web address is required.'
 			),
+			
 			'url' => array(
 				'rule' => 'url',
-				'message' => 'Web address format should be: http://example.myspree2shop.com OR http://example.com.'
+				'message' => 'Web address format should be: http://example.ombi60.com OR http://example.com.'
 			),
+			
 
 		),
 		'subdomain' => array(
@@ -36,6 +38,20 @@ class Shop extends AppModel {
 		
 		'RecurringPaymentProfile' => array(
 			'className' => 'RecurringPaymentProfile',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		
+		'Invoice' => array(
+			'className' => 'Invoice',
 			'foreignKey' => 'shop_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -180,6 +196,20 @@ class Shop extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
+
+		'LinkList' => array(
+			'className' => 'LinkList',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
 		
 		'Product' => array(
 			'className' => 'Product',
@@ -252,6 +282,16 @@ class Shop extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+	function beforeValidate() {
+		
+		// for localhost we will NOT validate for url
+		if(strpos(FULL_BASE_URL, '.localhost')) {
+			unset($this->validate['primary_domain']['url']);
+		}
+		
+		return true;
+	}
 	
 	
 
@@ -384,8 +424,8 @@ class Shop extends AppModel {
 			      'email'=>$shopInstance['Shop']['email'],
 			      'product_count'=>$shopInstance['Shop']['product_count'],
 			      
-			      'products_group_count'=>$shopInstance['Shop']['products_group_count'],
-			      'currency'=>$shopInstance['Shop']['currency'],
+			      'products_group_count'=>$shopInstance['Shop']['product_group_count'],
+			      'currency'=>$shopInstance['ShopSetting']['currency'],
 			      'money_format'=>$shopInstance['ShopSetting']['money_in_html'],
 			      'money_format_in_currency'=>$shopInstance['ShopSetting']['money_in_html_with_currency'],
 			      
@@ -453,6 +493,10 @@ class Shop extends AppModel {
 	}
 	
 	function getPayPalShopsPaymentModuleId($shopId = 0) {
+		if ($shopId == 0) {
+			$shopId = $this->id;
+		}
+		
 		if ($shopId > 0) {
 			$this->ShopsPaymentModule->recursive = -1;
 			$paymentModule = $this->ShopsPaymentModule->find('first',

@@ -27,19 +27,17 @@ class Webpage extends AppModel {
 		),
 	);
 	
-	function beforeValidate() {
-		if (!isset($this->data[$this->alias]['handle']) || empty($this->data[$this->alias]['handle'])) {
-			$this->data[$this->alias]['handle'] = substr(Inflector::slug(utf8_encode(strtolower($this->data[$this->alias]['title'])), '-'), 0, 150);
-		}
-		return true;
-	}
+	var $actsAs = array('Sluggable'=> array(
+				'fields' => 'title',
+				'scope' => array('shop_id'),
+				'conditions' => false,
+				'slugfield' => 'handle',
+				'separator' => '-',
+				'overwrite' => false,
+				'length' => 150,
+				'lower' => true
+			));
 	
-	function beforeSave() {
-		if (!isset($this->data[$this->alias]['handle']) || empty($this->data[$this->alias]['handle'])) {
-			$this->data[$this->alias]['handle'] = substr(Inflector::slug(utf8_encode(strtolower($this->data[$this->alias]['title'])), '-'), 0, 150);
-		}
-		
-		return true;
-	}
+	
 }
 ?>

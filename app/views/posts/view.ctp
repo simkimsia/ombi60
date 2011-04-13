@@ -8,7 +8,7 @@
 		
 		<div id="sidebar">
 			<div class="barcategory" id="selectedbarcategory">
-			<?php echo $this->Html->link($post['Blog']['name'],
+			<?php echo $this->Html->link($post['Blog']['title'],
 						     array('action'=>'index',
 							   'short_name'=>$post['Blog']['short_name'])); ?>
 			</div>

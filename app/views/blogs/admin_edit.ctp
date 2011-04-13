@@ -9,8 +9,8 @@
 	<fieldset>
  		<legend><?php __('Edit this blog'); ?></legend>
 	  <?php
-		  echo $this->Form->input('id');
-		  echo $this->Form->input('name', array('label' => __('Title', true)));
+		  echo $this->Form->input('Blog.id');
+		  echo $this->Form->input('Blog.title', array('label' => __('Title', true)));
 	
 		  $label = $this->Form->label('handle', 'Permalink/handle');
 		  $textbox = $this->Form->text('Blog.short_name', array('class' => 'small'));
@@ -23,7 +23,7 @@
  		<legend><?php __('Properties'); ?></legend>
     <label><?php __('Blog Visibility');?></label>
  		<div class="example-text">If you want to hide this blog and its articles from your clients, choose hidden.</div>
-    <?php echo $this->Form->input('visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false)); ?>
+    <?php echo $this->Form->input('Blog.visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false)); ?>
   </fieldset>-->
 <div class="submit">
     <?php echo $this->Form->submit(__('Update', true), array('div' => FALSE,));?>&nbsp;or&nbsp;

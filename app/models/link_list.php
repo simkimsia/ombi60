@@ -30,6 +30,17 @@ class LinkList extends AppModel {
 		)
 	);
 	
+	var $actsAs = array('Sluggable'=> array(
+				'fields' => 'name',
+				'scope' => array('shop_id'),
+				'conditions' => false,
+				'slugfield' => 'handle',
+				'separator' => '-',
+				'overwrite' => false,
+				'length' => 150,
+				'lower' => true
+			));
+	
 	function saveAll($data = null, $options = array()) {
 		$data = $this->Link->beforeSaveAll($data);
 		return parent::saveAll($data, $options);

@@ -41,7 +41,7 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Blog'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $this->Html->link($post['Blog']['name'], array('controller' => 'blogs', 'action' => 'view', $post['Blog']['id'])); ?>
+			<?php echo $this->Html->link($post['Blog']['title'], array('controller' => 'blogs', 'action' => 'view', $post['Blog']['id'])); ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Author'); ?></dt>

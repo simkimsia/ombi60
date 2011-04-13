@@ -7,7 +7,19 @@ class Product extends AppModel {
 	var $actsAs    = array('Linkable.Linkable',
 			       'Copyable.Copyable' => array(
 					'habtm' => false,
-					'recursive' => false,)
+					'recursive' => false,),
+			       'log.Logable',
+			       'UnitSystemConvertible',
+			       'Sluggable'=> array(
+					'fields' => 'title',
+					'scope' => array('shop_id'),
+					'conditions' => false,
+					'slugfield' => 'handle',
+					'separator' => '-',
+					'overwrite' => false,
+					'length' => 150,
+					'lower' => true
+					),
 			       );
 	var $recursive = -1;
 	
@@ -20,8 +32,20 @@ class Product extends AppModel {
 			'foreignKey' => 'shop_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => ''
-		)
+			'order' => '',
+			'counterCache' => true,
+			'counterScope' => array('Product.status' => 1) 
+		),
+		'Vendor' => array(
+			'className' => 'Vendor',
+			'foreignKey' => 'vendor_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => false,
+			'counterScope' =>  '',
+		),
+		
 	);
 
 	var $hasMany = array(
@@ -64,6 +88,20 @@ class Product extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
+		
+		'ProductsInGroup' => array(
+			'className' => 'ProductsInGroup',
+			'foreignKey' => 'product_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
 
 	);
 	
@@ -75,6 +113,65 @@ class Product extends AppModel {
 					
 							),)
 			     );
+	
+	
+	/**
+	 * For unit conversion
+	 * */
+	function afterFind($results, $primary) {
+		
+                $unit = Shop::get('ShopSetting.unit_system');
+		
+		foreach ($results as $key => $val) {
+			if (isset($val['Product'])) {
+				$results[$key] = $this->convertForDisplay($val, $unit);
+			}
+		}
+		
+		
+		return $results;
+	}
+	
+	/**
+	 * For unit conversion
+	 * */
+	function beforeSave() {
+		
+                $unit = Shop::get('ShopSetting.unit_system');
+		
+		foreach ($this->data as $key => $val) {
+			if (isset($val['Product'])) {
+				$this->data[$key] = $this->convertForSave($val, $unit);
+			}
+			if ($key == 'Product') {
+				$resultingProductArray = $this->convertForSave(array($key => $this->data[$key]), $unit);
+				$this->data[$key] = $resultingProductArray[$key];
+			}
+		}
+		
+		
+		return true;
+	}
+	
+	/**
+	 * will return the product url based on id
+	 * otherwise return the shop url
+	 * **/
+	function getProductUrl($id = false) {
+		
+		if (!$id) {
+			$id = $this->id;
+		}
+		
+		if (is_numeric($id) && ($id > 0)) {
+			return Router::url(array('controller'=>'products',
+					  'action'=>'view',
+					  $id), true);
+		}
+		
+		return FULL_BASE_URL;
+		
+	}
 
 	function createProductDetails($data = NULL) {
 
@@ -205,6 +302,8 @@ class Product extends AppModel {
         }
 	
 	function afterSave($created) {
+		
+		/** set up the product image **/
 		$conditions = array(
 			      'conditions' => array('OR' =>
 							array (
@@ -226,6 +325,45 @@ class Product extends AppModel {
 			
 			$this->ProductImage->make_this_cover($topImage[0]['ProductImage']['id'], $this->id);
 		}
+		/** end of product images **/
+		
+		
+		/** update cart_items weight and price **/
+		if (!$created) {
+			$this->CartItem->updatePricesAndWeights($this->id, $this->data['Product']['price'],
+								'SGD',
+								$this->data['Product']['weight'],
+								'kg');
+		}
+		
+		
+		/** end of cart_items weight and price **/
+		
+	}
+	
+	/**
+	 * for use in templates for shopfront pages
+	 * */
+	function getTemplateVariable($products=array()) {
+		
+		$results = array();
+		
+		foreach($products as $key=>$product) {
+			$results[] = array('id' => $product['Product']['id'],
+					   'title' => $product['Product']['title'],
+					   'code' => $product['Product']['code'],
+					   'description' => $product['Product']['description'],
+					   'price' => $product['Product']['price'],
+					   'handle' => $product['Product']['handle'],
+					   'url' => '/products/' . $product['Product']['handle'],
+					   );
+			
+			//if (isset($product['Product']))
+		}
+		
+		
+		
+		return $results;
 	}
 
 }

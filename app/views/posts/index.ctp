@@ -7,7 +7,7 @@
 	<div id="cataloguebody">
 		
 		<div id="sidebar">
-			<div class="barcategory" id="selectedbarcategory"><?php echo $blog['Blog']['name']; ?></div>
+			<div class="barcategory" id="selectedbarcategory"><?php echo $blog['Blog']['title']; ?></div>
 				
 		</div>
 		<div id="cataloguewrapper">

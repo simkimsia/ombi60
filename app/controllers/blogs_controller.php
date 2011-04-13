@@ -12,7 +12,10 @@ class BlogsController extends AppController {
 	function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-		$this->Auth->allow('view');
+		if ($this->action == 'admin_edit') {
+			$this->Security->validatePost = false;
+		}
+		
 	}
 
 	
@@ -56,6 +59,7 @@ class BlogsController extends AppController {
 
 	function admin_add() {
 		if (!empty($this->data)) {
+			$this->data['Blog']['shop_id'] = Shop::get('Shop.id');
 			$this->Blog->create();
 			if ($this->Blog->save($this->data)) {
 				$this->Session->setFlash(__('The blog has been saved', true), 'default', array('class'=>'flash_success'));

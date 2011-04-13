@@ -196,9 +196,51 @@ class Shop extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		
+
 		'LinkList' => array(
 			'className' => 'LinkList',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		
+		'Product' => array(
+			'className' => 'Product',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		
+		'ProductGroup' => array(
+			'className' => 'ProductGroup',
+			'foreignKey' => 'shop_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		
+		'Vendor' => array(
+			'className' => 'Vendor',
 			'foreignKey' => 'shop_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -271,8 +313,6 @@ class Shop extends AppModel {
 		}
 		return TRUE;
 	}
-	
-	
 
 	/**
 	 *
@@ -281,26 +321,23 @@ class Shop extends AppModel {
 	 * */
 	function getByDomain($url) {
 		
-		// Hackish code, please change in future
-		// -- Andrew
-		$testdomain = '.test.myspree2shop.com';
-		$realdomain = '.myspree2shop.com';
-		$url = str_replace($testdomain, $realdomain, $url);
+		// to allow https url we need to do replacement where necessary.
+		$url = strtolower($url);
+		$url = str_replace('https://', 'http://', $url);
+		
 		
 		$this->recursive         = -1;
 		$this->Domain->recursive = -1;
-		$this->Theme->recursive  = -1;
-
-		$this->Domain->Behaviors->attach('Linkable.Linkable');
+		$this->ShopSetting->recursive = -1;
+		
 		$this->Behaviors->attach('Linkable.Linkable');
-		$this->Theme->Behaviors->attach('Linkable.Linkable');
-
+		
 		$result = $this->find(
 				      'first',
 				      array(
-					   'link' => array('Domain', 'Theme'),
+					   'link' => array('ShopSetting', 'Domain', ),
 					   'conditions' => array('Domain.domain'=>$url),
-					   'fields' => array('Shop.*', 'Domain.domain', 'Domain.id', 'Theme.name'),
+					   'fields' => array('Shop.*', 'Domain.domain', 'Domain.id', 'ShopSetting.*'),
 					   ));
 
 		if (!empty($result)) {
@@ -376,6 +413,26 @@ class Shop extends AppModel {
 		}
 		return $value[0];
 	}
+	
+	
+	function getTemplateVariable() {
+		$shopInstance = Shop::getInstance();
+		$shop = array('name' => $shopInstance['Shop']['name'],
+			      'url'  => $shopInstance['Shop']['url'] . '/',
+			      'primary_domain'=> $shopInstance['Shop']['primary_domain'] . '/',
+			      'permanent_domain'=>$shopInstance['Shop']['permanent_domain'] . '/',
+			      'email'=>$shopInstance['Shop']['email'],
+			      'product_count'=>$shopInstance['Shop']['product_count'],
+			      
+			      'products_group_count'=>$shopInstance['Shop']['product_group_count'],
+			      'currency'=>$shopInstance['ShopSetting']['currency'],
+			      'money_format'=>$shopInstance['ShopSetting']['money_in_html'],
+			      'money_format_in_currency'=>$shopInstance['ShopSetting']['money_in_html_with_currency'],
+			      
+			      );
+		
+		return $shop;
+	}
 
 	/**
 	 * End of Static user code
@@ -408,11 +465,31 @@ class Shop extends AppModel {
 										'shop_id'=>$shopId,
 										'payment_module_id'=>PAYPAL_PAYMENT_MODULE,
 										'active'=>true)));
+			if (isset($paymentModule['ShopsPaymentModule']['display_name'])) {
+				return (strpos($paymentModule['ShopsPaymentModule']['display_name'], 'Express Checkout') > 0);
+			}
 			
-			return (!empty($paymentModule));
 		}
 		return false;
 		
+	}
+	
+	
+	/**
+	 * check if the current base is the same as the shop's main domain
+	 **/
+	function isCurrentBaseThisDomain($mainUrl) {
+                $baseHost = '';
+                if (strpos(FULL_BASE_URL, 'http://') === 0) {
+			
+                    $baseHost = str_replace('http://', '', FULL_BASE_URL);    
+                } else if (strpos(FULL_BASE_URL, 'https://') === 0) {
+			
+                    $baseHost = str_replace('https://', '', FULL_BASE_URL);    
+                }
+                
+                return (strpos($mainUrl, $baseHost) !== false);
+                
 	}
 	
 	function getPayPalShopsPaymentModuleId($shopId = 0) {
@@ -421,16 +498,43 @@ class Shop extends AppModel {
 		}
 		
 		if ($shopId > 0) {
-			$id = $this->ShopsPaymentModule->field('id', array('shop_id'=>$shopId,
-								     'payment_module_id'=>Configure::read('Payment.PayPal')));
-							       
-			return $id;
+			$this->ShopsPaymentModule->recursive = -1;
+			$paymentModule = $this->ShopsPaymentModule->find('first',
+							array('conditions'=>array(
+										'shop_id'=>$shopId,
+										'payment_module_id'=>PAYPAL_PAYMENT_MODULE,
+										'active'=>true)));
+			if (isset($paymentModule['ShopsPaymentModule']['display_name'])) {
+				if (strpos($paymentModule['ShopsPaymentModule']['display_name'], 'Express Checkout') > 0) {
+					return $paymentModule['ShopsPaymentModule']['id'];
+				}
+			}
+			
 		}
-		
 		return false;
 	}
 	
-	
+	function getAccountEmailPaypal($shopId = 0) {
+		if ($shopId > 0) {
+			$this->ShopsPaymentModule->recursive = -1;
+			$this->ShopsPaymentModule->Behaviors->attach('Linkable.Linkable');
+			$paymentModule = $this->ShopsPaymentModule->find('first',
+							array('conditions'=>array(
+										'ShopsPaymentModule.shop_id'=>$shopId,
+										'ShopsPaymentModule.payment_module_id'=>PAYPAL_PAYMENT_MODULE,
+										'ShopsPaymentModule.active'=>true),
+							      'link'=>array('PaypalPaymentModule'),
+							      'fields'=>array('PaypalPaymentModule.account_email')));
+			
+			if (isset($paymentModule['PaypalPaymentModule']['account_email'])) {
+				return $paymentModule['PaypalPaymentModule']['account_email'];
+			}
+			
+			return '';
+			
+		}
+		return '';
+	}
 	
 	function getAllMerchantUsersInList($id = false, $fields=array(), $sort = true) {
 		if (!$id) {

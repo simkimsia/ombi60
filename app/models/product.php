@@ -10,6 +10,16 @@ class Product extends AppModel {
 					'recursive' => false,),
 			       'log.Logable',
 			       'UnitSystemConvertible',
+			       'Sluggable'=> array(
+					'fields' => 'title',
+					'scope' => array('shop_id'),
+					'conditions' => false,
+					'slugfield' => 'handle',
+					'separator' => '-',
+					'overwrite' => false,
+					'length' => 150,
+					'lower' => true
+					),
 			       );
 	var $recursive = -1;
 	

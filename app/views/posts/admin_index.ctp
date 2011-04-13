@@ -27,7 +27,7 @@
 	<tr<?php echo $class;?>>
 		<td><?php echo $post['Post']['id']; ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($post['Blog']['name'], array('controller' => 'blogs', 'action' => 'view', $post['Blog']['id'])); ?>
+			<?php echo $this->Html->link($post['Blog']['title'], array('controller' => 'blogs', 'action' => 'view', $post['Blog']['id'])); ?>
 		</td>
 		<td>
 			<?php echo $this->Html->link($post['Author']['name'], array('controller' => 'authors', 'action' => 'view', $post['Author']['id'])); ?>

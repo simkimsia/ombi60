@@ -1,7 +1,7 @@
 <?php
-class ProductGroup extends AppModel {
-	var $name = 'ProductGroup';
-	var $displayField = 'title';
+class Vendor extends AppModel {
+	var $name = 'Vendor';
+	var $displayField = 'name';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $belongsTo = array(
@@ -15,9 +15,9 @@ class ProductGroup extends AppModel {
 	);
 
 	var $hasMany = array(
-		'ProductsInGroup' => array(
-			'className' => 'ProductsInGroup',
-			'foreignKey' => 'product_group_id',
+		'Product' => array(
+			'className' => 'Product',
+			'foreignKey' => 'vendor_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
@@ -29,17 +29,6 @@ class ProductGroup extends AppModel {
 			'counterQuery' => ''
 		)
 	);
-	
-	var $actsAs = array('Sluggable'=> array(
-				'fields' => 'title',
-				'scope' => array('shop_id'),
-				'conditions' => false,
-				'slugfield' => 'handle',
-				'separator' => '-',
-				'overwrite' => false,
-				'length' => 150,
-				'lower' => true
-			));
 
 }
 ?>

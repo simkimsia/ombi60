@@ -84,7 +84,7 @@
 	<tr<?php echo $class;?>>
 		
 		<td width="33%">
-		<?php echo $this->Html->link(__($blog['Blog']['name'], true), array('controller'=>'blogs','action' => 'view', $blog['Blog']['id'])); ?>
+		<?php echo $this->Html->link(__($blog['Blog']['title'], true), array('controller'=>'blogs','action' => 'view', $blog['Blog']['id'])); ?>
 		</td>
 
 		<td width="33%" class="text_center"><?php echo date('D, M dS Y, h:i', strtotime($blog['Blog']['modified']));?></td>

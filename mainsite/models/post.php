@@ -13,10 +13,10 @@ class Post extends AppModel {
 				'message' => 'Title is required.'
 			),
 		),
-		'body' => array(
+		'content' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
-				'message' => 'Body is required.'
+				'message' => 'Content is required.'
 			),
 		),
 	);
@@ -55,20 +55,17 @@ class Post extends AppModel {
 		)
 	);
 	
-	function beforeValidate() {
-		if (!isset($this->data[$this->alias]['slug']) || empty($this->data[$this->alias]['slug'])) {
-			$this->data[$this->alias]['slug'] = substr(Inflector::slug(utf8_encode(strtolower($this->data[$this->alias]['title'])), '-'), 0, 150);
-		}
-		return true;
-	}
+	var $actsAs = array('Sluggable'=> array(
+				'fields' => 'title',
+				'scope' => array('shop_id'),
+				'conditions' => false,
+				'slugfield' => 'slug',
+				'separator' => '-',
+				'overwrite' => false,
+				'length' => 150,
+				'lower' => true
+			));
 	
-	function beforeSave() {
-		if (!isset($this->data[$this->alias]['slug']) || empty($this->data[$this->alias]['slug'])) {
-			$this->data[$this->alias]['slug'] = substr(Inflector::slug(utf8_encode(strtolower($this->data[$this->alias]['title'])), '-'), 0, 150);
-		}
-		
-		return true;
-	}
 
 }
 ?>
