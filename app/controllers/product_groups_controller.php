@@ -14,9 +14,9 @@ class ProductGroupsController extends AppController {
 	function admin_index() {
 		$this->ProductGroup->recursive = -1;
 		$shopId = Shop::get('Shop.id');
-		$customCollections = $this->ProductGroup->find('all', array('conditions'=>array('ProductGroup.status'=>0,
+		$customCollections = $this->ProductGroup->find('all', array('conditions'=>array('ProductGroup.type'=>0,
 												'ProductGroup.shop_id'=>$shopId)));
-		$smartCollections = $this->ProductGroup->find('all', array('conditions'=>array('ProductGroup.status'=>1,
+		$smartCollections = $this->ProductGroup->find('all', array('conditions'=>array('ProductGroup.type'=>1,
 											       'ProductGroup.shop_id'=>$shopId)));
 		$this->set(compact('customCollections', 'smartCollections'));
 	}
