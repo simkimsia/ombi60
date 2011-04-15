@@ -85,6 +85,17 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Products/admin_duplicate');
 		$this->Acl->allow($group, 'controllers/Products/admin_toggle');
 		
+		// collections
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_add_smart');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_edit_smart');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_view_smart');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_add_custom');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_edit_custom');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_view_custom');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_delete');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_index');
+		
+		
 		// navigation
 		$this->log('navi');
 		$this->Acl->allow($group, 'controllers/Links/admin_index');

@@ -130,3 +130,8 @@ linkable
 ========
 
 To use it just make sure that the parent model has attached it to Behaviors.
+
+pagination across multiple models
+=================================
+
+https://mail.google.com/mail/#search/abbas.sanisoft%40gmail.com/12f57833bb324065

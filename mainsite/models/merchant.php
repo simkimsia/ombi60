@@ -99,10 +99,10 @@ class Merchant extends AppModel {
 		
 		
 		/* money in html, email with or without currency */
-		$settingData['ShopSetting']['money_in_html']  = '';
-		$settingData['ShopSetting']['money_in_html_with_currency'] = 'metric';		
-		$settingData['ShopSetting']['money_in_email'] = 'SGD';
-		$settingData['ShopSetting']['money_in_email_with_currency'] = '';
+		$settingData['ShopSetting']['money_in_html']  = '{{amount}}';
+		$settingData['ShopSetting']['money_in_html_with_currency'] = '${{amount}}';		
+		$settingData['ShopSetting']['money_in_email'] = '{{amount}}';
+		$settingData['ShopSetting']['money_in_email_with_currency'] = '${{amount}}';
 		
 		$shopSetting->create();
 		$result = $shopSetting->save($settingData);
@@ -367,11 +367,9 @@ class Merchant extends AppModel {
 			$datasource->commit($this);
 		}
 		
-		
 		// since copyable does not allow non-atomic transaction so we put this outside the transaction.
 		// now we create the dummy default product for this shop.
 		$result = $this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);
-		
 		
 		if ($invoice->id > 0) {
 			// now we need to generate a unique reference number for the created invoice

@@ -38,7 +38,9 @@ class ProductsController extends AppController {
 					),
 				'Theme' => array('actions'=>array('view_cart',
 								  'view',
-								  'index')),
+								  'index',
+								  'view_by_group')),
+				
 				
 				);
 	
@@ -81,7 +83,7 @@ class ProductsController extends AppController {
 		$this->Auth->allow('view', 'index',
 				   'add_to_cart', 'view_cart',
 				   'delete_from_cart', 'edit_quantities_in_cart',
-				   'checkout');
+				   'checkout', 'view_by_group');
 
 		
 		if ($this->action == 'view_cart' OR
@@ -375,22 +377,22 @@ class ProductsController extends AppController {
 		$this->set('product', $this->Product->read(null, $id));
 	}
 
-	function view($id = null) {
+	function view($handle = false) {
 		
+		if (!$handle) {
+			$this->Session->setFlash(__('Invalid product', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('action' => 'index'));
+		}
 		
-
 		// to retrieve the shop id based on the url
 		// see app_controller code and shop model code
 		$shop_id = Shop::get('Shop.id');
-
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Product', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'index'));
-		}
-
+		
 		// get the product details
-		$productFound = $this->Product->read(null, $id);
+		$productFound = $this->Product->find('first', array('conditions'=>array('handle'=>$handle,
+									'shop_id'=>$shop_id)));
 
+		
 		// must be valid shop
 		$invalidShop = !($shop_id > 0);
 		// product must exist
@@ -424,32 +426,75 @@ class ProductsController extends AppController {
 		$this->set('productsInCart', $this->Session->read('Shop.' . $shop_id . '.cart'));
 		
 	}
-
-	function index() {
+	
+	function view_by_group($handle = false) {
 		
+		// check for handle
+		if (!$handle) {
+			$this->Session->setFlash(__('Invalid product group', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect('/');
+		}
 		
+		// check for any sorting or ordering parameters
 		$sort = isset($this->params['named']['sort']) ? $this->params['named']['sort'] : 'created';
 		
 		$order = isset($this->params['named']['direction']) ? $this->params['named']['direction'] : 'desc';
 		
-		$this->Product->recursive = 0;
 		
-		$this->paginate = array(
-			      'fields'=>array('Product.*', 'ProductImage.id', 'ProductImage.filename', 'ProductImage.dir'),
-			      'conditions' => array('OR' =>
-							array (
+		// to retrieve the shop id based on the url
+		// see app_controller code and shop model code
+		$shop_id = Shop::get('Shop.id');
+		
+		// get the product details
+		$groupFound = $this->Product->ProductsInGroup->ProductGroup->find('first', array('conditions'=>array('ProductGroup.handle'=>$handle,
+													'ProductGroup.shop_id'=>$shop_id)));
+
+
+		// must be valid shop
+		$invalidShop = !($shop_id > 0);
+		// product must exist
+		$noSuchProductGroup = ($invalidShop) ? true : empty($groupFound['ProductGroup']);
+		// product must belong to said shop
+		$groupDoesNotBelongToShop = ($noSuchProductGroup) ? true : $groupFound['ProductGroup']['shop_id'] != $shop_id;
+		// must be active product
+		$groupNotActive = ($groupDoesNotBelongToShop) ? true : !($groupFound['ProductGroup']['status']);
+
+
+
+		if (   $invalidShop
+		    OR $noSuchProductGroup
+		    OR $groupDoesNotBelongToShop
+		    OR $groupNotActive
+		) {
+			$this->Session->setFlash(__('No such product group for this shop', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect('/');
+		}
+
+		// to do the pagination across 3 models
+		// we need to ensure that the parent model has at least a recursive of Zero
+		$this->Product->recursive = 0;
+
+		// add in the ProductImage conditions
+		$this->paginate['conditions']['OR'] = array (
 								array('ProductImage.cover'=>true),
 								array('ProductImage.cover'=>null),
-							),
-						    ),
-			      'link'=>array('ProductImage'),
-			      
-			      'order'=> array('Product.created DESC')
-			      );
-
-
-		$this->paginate['conditions']['AND'] = array('Product.shop_id' => Shop::get('Shop.id'));
+							);
 		
+		// add in the Product status = 1 and belongs to a certain group
+		$this->paginate['conditions']['AND'] = array('Product.status' => 1,
+							     'ProductsInGroup.product_group_id' => $groupFound['ProductGroup']['id']);
+		
+		
+		// add in the link param into paginate
+		$this->paginate['link']  = array('ProductImage', 'ProductsInGroup');
+		
+		// add in the order param into paginate
+		// for some weird reason cakephp auto overrides this order when user
+		// selects the order based on the named params
+		// so basically this is the default order we are setting
+		$this->paginate['order'] = array('Product.created DESC');
+		
+		// paginate using the parent model Product
 		$products = $this->paginate('Product');
 		
 		/* here is the ugly code to remove unnecessary fields and to remove the layer involving Product and ProductImage */
@@ -475,7 +520,11 @@ class ProductsController extends AppController {
 
 		$this->set(compact('sort', 'order', 'products', 'domainPagePath'));
 		
+		
+		$this->render('collection');
+		
 	}
+
 
 	function admin_add() {
 

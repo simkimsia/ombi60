@@ -41,6 +41,35 @@
         Router::connect('/pages/*', array('controller' => 'webpages', 'action' => 'view'));
 
 
+        // product links
+        Router::connect('/products/:handle',
+                        array('controller' => 'products',
+                              'action' => 'view'),
+                        array('pass' => array('handle'),
+                              'handle' => '[a-zA-Z0-9\-_]+'
+                              ));
+        
+        // display products by collections
+        Router::connect('/collections/:handle',
+                        array('controller' => 'products',
+                              'action' => 'view_by_group'),
+                        array('pass' => array('handle'),
+                              'handle' => '[a-zA-Z0-9\-_]+'
+                              ));
+        
+        // rename product_groups into collections inside admin interface
+        Router::connect('/admin/collections',
+                        array('controller' => 'product_groups',
+                              'admin'      => true,
+                              'action'     => 'index',
+                              ));
+        
+        Router::connect('/admin/collections/:action/*',
+                        array('controller' => 'product_groups',
+                              'admin'      => true,
+                              ));
+
+
         // account links
 
         Router::connect('/admin', array('admin' => true, 'controller' => 'merchants', 'action' => 'index'));

@@ -20,6 +20,7 @@ class Product extends AppModel {
 					'length' => 150,
 					'lower' => true
 					),
+			       'Containable',
 			       );
 	var $recursive = -1;
 	
@@ -330,10 +331,13 @@ class Product extends AppModel {
 		
 		/** update cart_items weight and price **/
 		if (!$created) {
-			$this->CartItem->updatePricesAndWeights($this->id, $this->data['Product']['price'],
+			if (isset($this->data['Product']['price']) &&
+			    isset($this->data['Product']['weight'])) {
+				$this->CartItem->updatePricesAndWeights($this->id, $this->data['Product']['price'],
 								'SGD',
 								$this->data['Product']['weight'],
-								'kg');
+								'kg');	
+			}
 		}
 		
 		
