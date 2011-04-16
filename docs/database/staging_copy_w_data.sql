@@ -441,7 +441,7 @@ CREATE TABLE `links` (
 
 /*Data for the table `links` */
 
-insert  into `links`(`id`,`name`,`route`,`link_list_id`,`model`,`action`,`order`) values (1,'Home','/',1,'/','',0),(2,'About Us','/pages/about-us',1,'/pages/','about-us',1),(3,'Catalogue','/products/',1,'/products/','',2),(4,'Blog','/blogs/shop001',1,'/blogs/','shop001',3),(5,'Cart','/cart/view',1,'/cart/view','',4),(6,'Terms of Service','/pages/terms-of-service',2,'/pages/','',0),(7,'About Us','/pages/about-us',2,'/pages/','about-us',1);
+insert  into `links`(`id`,`name`,`route`,`link_list_id`,`model`,`action`,`order`) values (1,'Home','/',1,'/','',0),(2,'About Us','/pages/about-us',1,'/pages/','about-us',1),(3,'Catalogue','/collections/all',1,'/collections/all','',2),(4,'Blog','/blogs/shop001',1,'/blogs/','shop001',3),(5,'Cart','/cart/view',1,'/cart/view','',4),(6,'Terms of Service','/pages/terms-of-service',2,'/pages/','terms-of-service',0),(7,'About Us','/pages/about-us',2,'/pages/','about-us',1);
 
 /*Table structure for table `logs` */
 
