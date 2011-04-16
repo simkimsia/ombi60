@@ -5,7 +5,7 @@
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('blog_id');?></th>
 			<th><?php echo $this->Paginator->sort('author_id');?></th>
-			<th><?php echo $this->Paginator->sort('status');?></th>
+			<th><?php echo $this->Paginator->sort('visible');?></th>
 			<th><?php echo $this->Paginator->sort('title');?></th>
 			<th><?php echo $this->Paginator->sort('slug');?></th>
 			<th><?php echo $this->Paginator->sort('content');?></th>
@@ -32,7 +32,7 @@
 		<td>
 			<?php echo $this->Html->link($post['Author']['name'], array('controller' => 'authors', 'action' => 'view', $post['Author']['id'])); ?>
 		</td>
-		<td><?php echo $post['Post']['status']; ?>&nbsp;</td>
+		<td><?php echo $post['Post']['visible']; ?>&nbsp;</td>
 		<td><?php echo $post['Post']['title']; ?>&nbsp;</td>
 		<td><?php echo $post['Post']['slug']; ?>&nbsp;</td>
 		<td><?php echo $post['Post']['content']; ?>&nbsp;</td>

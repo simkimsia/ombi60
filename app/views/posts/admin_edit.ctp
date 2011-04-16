@@ -89,7 +89,7 @@
 		echo $this->Form->input('id');
 		echo $this->Form->input('blog_id', array('type'=>'hidden', 'value'=>$blog_id));
 		echo $this->Form->input('author_id');
-		echo $this->Form->input('status',array('options' => array('1'=>'Published', '0'=>'Hidden')));
+		echo $this->Form->input('visible',array('options' => array('1'=>'Published', '0'=>'Hidden')));
 		echo $this->Form->input('title');
 		
 		
