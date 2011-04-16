@@ -109,7 +109,6 @@ CREATE TABLE `blogs` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   `shop_id` int(11) DEFAULT NULL,
-  `visible` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -157,7 +156,7 @@ CREATE TABLE `cart_items` (
   `product_id` int(11) NOT NULL,
   `product_price` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `product_quantity` int(4) NOT NULL DEFAULT '1',
-  `status` tinyint(1) DEFAULT '1',
+  `visible` tinyint(1) unsigned DEFAULT '1',
   `product_title` varchar(255) DEFAULT NULL,
   `product_weight` int(10) unsigned DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
@@ -674,7 +673,7 @@ CREATE TABLE `posts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `blog_id` int(10) DEFAULT NULL,
   `author_id` int(10) DEFAULT NULL,
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `visible` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `title` varchar(100) DEFAULT NULL,
   `slug` varchar(150) DEFAULT NULL,
   `content` text,
@@ -757,7 +756,7 @@ CREATE TABLE `products` (
   `price` decimal(10,4) unsigned DEFAULT '0.0000',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  `status` tinyint(1) DEFAULT '1',
+  `visible` tinyint(1) unsigned DEFAULT '1',
   `weight` int(10) unsigned DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
@@ -768,7 +767,7 @@ CREATE TABLE `products` (
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,NULL);
+insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`visible`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,NULL);
 
 /*Table structure for table `products_in_groups` */
 
@@ -1038,7 +1037,7 @@ CREATE TABLE `webpages` (
   `author` int(11) DEFAULT NULL,
   `real_author` int(11) DEFAULT NULL,
   `handle` varchar(150) DEFAULT NULL,
-  `visible` tinyint(1) DEFAULT '1',
+  `visible` tinyint(1) unsigned DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
