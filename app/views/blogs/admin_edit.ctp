@@ -19,12 +19,7 @@
 		  echo $this->Html->div('input text', $label. $prefix. ' '. $textbox. $suffix ,array(), true);
 	  ?>
 	</fieldset>
-  <!--<fieldset>
- 		<legend><?php __('Properties'); ?></legend>
-    <label><?php __('Blog Visibility');?></label>
- 		<div class="example-text">If you want to hide this blog and its articles from your clients, choose hidden.</div>
-    <?php echo $this->Form->input('Blog.visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false)); ?>
-  </fieldset>-->
+  
 <div class="submit">
     <?php echo $this->Form->submit(__('Update', true), array('div' => FALSE,));?>&nbsp;or&nbsp;
     <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'webpages','action' => 'index')); ?>

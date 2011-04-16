@@ -64,7 +64,8 @@ class Post extends AppModel {
 				'overwrite' => false,
 				'length' => 150,
 				'lower' => true
-			));
+			),
+			    'Visible.Visible',);
 	
 
 }

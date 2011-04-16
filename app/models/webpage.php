@@ -36,7 +36,8 @@ class Webpage extends AppModel {
 				'overwrite' => false,
 				'length' => 150,
 				'lower' => true
-			));
+			),
+			    'Visible.Visible',);
 	
 	
 }

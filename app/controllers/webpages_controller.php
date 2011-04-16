@@ -9,16 +9,21 @@ class WebpagesController extends AppController {
 						'frontpage')),);
 	
 	
-	
 	//var $view = 'TwigView.TwigTheme';
 	
-	var $helpers = array('TinyMce.TinyMce');
+	var $helpers = array('Javascript',
+			     'Ajax',
+			     'TinyMce.TinyMce');
 
 	function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-		$this->Auth->allow('view', 'shopfront', 'frontpage');
+		$this->Auth->allow('view', 'shopfront', 'frontpage', 'admin_toggle');
 		$this->prepareGlobalObjectsInTwigViews();
+		if ($this->action == 'admin_toggle') {
+			$this->Security->enabled = false;
+		}
+		
 	}
 
 	private function prepareGlobalObjectsInTwigViews() {
@@ -87,6 +92,23 @@ class WebpagesController extends AppController {
 		$authors = $this->Webpage->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
 
 		$this->set(compact('authors'));
+	}
+	
+	function admin_toggle($id = false) {
+		$this->log($this->data);
+		$this->log($this->params);
+		
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid Webpage', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('action' => 'index'));
+		}
+		
+		if ($this->Webpage->toggle($id, 'visible')) {
+			$this->Session->setFlash(__('Webpage status changed', true), 'default', array('class'=>'flash_success'));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash(__('The status of Webpage could not be changed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+		$this->redirect(array('action' => 'index'));
 	}
 
 	function admin_add() {

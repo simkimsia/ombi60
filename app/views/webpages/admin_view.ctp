@@ -1,3 +1,7 @@
+<?php
+echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
+echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js');
+?>
 <div class="webpages">
     <div class="text_center">
         <h2>
@@ -18,9 +22,21 @@
  		<span class="hint">If you want to hide this page from your clients, choose hidden.</span>
  		<br>
  		<?php 
-        echo $this->Form->input('visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'selected' => $webpage['Webpage']['visible'])); 
+        echo $this->Form->input('Webpage.visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'selected' => $webpage['Webpage']['visible'])); 
          ?>
-        <?php //print ((bool)$webpage['Webpage']['visible'] ? "Published" : "Hidden")?>
+	 
+	 <?php 
+	    echo $this->Ajax->observeField( 'WebpageVisible', 
+		array(
+		    'url' => array( 'action' => 'toggle',
+				   'controller' => 'webpages',
+				   'admin' => true,
+				   $webpage['Webpage']['id']),
+		    //'complete' => 'alert(request.responseText)'
+		) 
+	    ); 
+	?>
+	 
         <br>        
         <?php 
         
