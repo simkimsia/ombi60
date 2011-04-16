@@ -64,24 +64,6 @@ class ProductImage extends AppModel {
 		return $this->save($data);
 	}
 
-	function change_active_status($id = false) {
-		if (!$id) {
-			if (!$this->id) {
-				return false;
-			}
-			$id = $this->id;
-		}
-
-		return $this->updateAll(
-			// fields to change
-			 array('ProductImage.status' => '!ProductImage.status'),
-			 // conditions
-			 array('ProductImage.id' => $id)
-			 );
-
-
-	}
-	
 	function make_this_cover($id = null, $product_id = null) {
 		if (!$id) {
 			if (!$this->id) {

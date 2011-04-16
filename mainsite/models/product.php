@@ -35,7 +35,7 @@ class Product extends AppModel {
 			'fields' => '',
 			'order' => '',
 			'counterCache' => true,
-			'counterScope' => array('Product.status' => 1) 
+			'counterScope' => array('Product.visible' => 1) 
 		),
 		'Vendor' => array(
 			'className' => 'Vendor',
@@ -209,7 +209,7 @@ class Product extends AppModel {
 
 		return $this->updateAll(
 			// fields to change
-			 array('Product.status' => '!Product.status'),
+			 array('Product.visible' => '!Product.visible'),
 			 // conditions
 			 array('Product.id' => $id)
 		);

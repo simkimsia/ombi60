@@ -400,7 +400,7 @@ class ProductsController extends AppController {
 		// product must belong to said shop
 		$productDoesNotBelongToShop = ($noSuchProduct) ? true : $productFound['Product']['shop_id'] != $shop_id;
 		// must be active product
-		$productNotActive = ($productDoesNotBelongToShop) ? true : !($productFound['Product']['status']);
+		$productNotActive = ($productDoesNotBelongToShop) ? true : !($productFound['Product']['visible']);
 
 		if (   $invalidShop
 		    OR $noSuchProduct
@@ -459,10 +459,10 @@ class ProductsController extends AppController {
 		// product must belong to said shop
 		$groupDoesNotBelongToShop = ($noSuchProductGroup) ? true : $groupFound['ProductGroup']['shop_id'] != $shop_id;
 		// must be active product
-		$groupNotActive = ($groupDoesNotBelongToShop) ? true : !($groupFound['ProductGroup']['status']);
+		$groupNotActive = ($groupDoesNotBelongToShop) ? true : !($groupFound['ProductGroup']['visible']);
 
 		// temporary fix for /collections/all until Abbas
-		if ($collectionsAllSelected) {
+		if ($collectionsAllSelected AND $noSuchProductGroup) {
 			$noSuchProductGroup = false;
 			$groupDoesNotBelongToShop = false;
 			$groupNotActive = false;
@@ -488,8 +488,8 @@ class ProductsController extends AppController {
 								array('ProductImage.cover'=>null),
 							);
 		
-		// add in the Product status = 1 
-		$this->paginate['conditions']['AND'] = array('Product.status' => 1);
+		// add in the Product visible = 1 
+		$this->paginate['conditions']['AND'] = array('Product.visible' => 1);
 		
 		// add in the link param into paginate
 		$this->paginate['link']  = array('ProductImage');
@@ -656,7 +656,7 @@ class ProductsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		
-		if ($this->Product->toggle_status($id)) {
+		if ($this->Product->toggle($id, 'visible')) {
 			$this->Session->setFlash(__('Product status changed', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}

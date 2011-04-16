@@ -65,11 +65,11 @@ CREATE TABLE `aros` (
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `aros` */
 
-insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,8),(4,NULL,'Group',4,'customers',9,10),(5,NULL,'Group',5,'casual',11,12),(6,3,'User',1,NULL,6,7);
+insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,8),(4,NULL,'Group',4,'customers',9,10),(5,NULL,'Group',5,'casual',11,14),(6,3,'User',1,NULL,6,7),(7,5,'User',2,NULL,12,13);
 
 /*Table structure for table `aros_acos` */
 
@@ -109,13 +109,12 @@ CREATE TABLE `blogs` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   `shop_id` int(11) DEFAULT NULL,
-  `visible` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `blogs` */
 
-insert  into `blogs`(`id`,`title`,`short_name`,`description`,`theme`,`created`,`modified`,`shop_id`,`visible`) values (1,'shop001','shop001',NULL,NULL,'2011-04-15 08:32:40','2011-04-15 08:32:40',2,1);
+insert  into `blogs`(`id`,`title`,`short_name`,`description`,`theme`,`created`,`modified`,`shop_id`) values (1,'shop001','shop001',NULL,NULL,'2011-04-15 08:32:40','2011-04-15 08:32:40',2);
 
 /*Table structure for table `cake_sessions` */
 
@@ -130,7 +129,7 @@ CREATE TABLE `cake_sessions` (
 
 /*Data for the table `cake_sessions` */
 
-insert  into `cake_sessions`(`id`,`data`,`expires`) values ('mk3odc18cjmn7rg0mojnmf0e37','Config|a:3:{s:9:\"userAgent\";s:32:\"204fd586a8befc39e89f866208592201\";s:4:\"time\";i:1302868372;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"b2f587ac968d3abccdc00597545725aefb70e3cc\";s:7:\"expires\";i:1302862372;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1302868372),('9s1qdtcq2oj76mjsgtfv45o5t4','Config|a:3:{s:9:\"userAgent\";s:32:\"204fd586a8befc39e89f866208592201\";s:4:\"time\";i:1302856913;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"03f38d912797d5b133014ac7ea0b23c2f76c365d\";s:7:\"expires\";i:1302861913;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1302856925),('dv75nkkpjpav96aqj7qhddfco6','Config|a:3:{s:9:\"userAgent\";s:32:\"204fd586a8befc39e89f866208592201\";s:4:\"time\";i:1302855737;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"ec9cbcf91c39e6b873ef90c779e0b2e26ef53796\";s:7:\"expires\";i:1302860737;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1302855748);
+insert  into `cake_sessions`(`id`,`data`,`expires`) values ('gqidpleqsv3t06hhd6b2gce8f2','Config|a:4:{s:9:\"userAgent\";s:32:\"204fd586a8befc39e89f866208592201\";s:4:\"time\";i:1302934986;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}Filter|a:1:{s:8:\"products\";a:1:{s:11:\"admin_index\";s:222:\"/Filter.parsed:true/Product.visible:0/log.ds:default/log.sql:SELECT `Session`.`id`, `Session`.`data`, `Session`.`expires` FROM `cake_sessions` AS `Session`   WHERE `id` = /log.hash:727b069af9d9149cc0e17b3044bb836de1d4c72c/\";}}CurrentShop|a:3:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-04-15 08:32:40\";s:8:\"modified\";s:19:\"2011-04-15 08:32:41\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"1\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}s:11:\"ShopSetting\";a:10:{s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:8:\"timezone\";s:0:\"\";s:11:\"unit_system\";s:6:\"metric\";s:8:\"currency\";s:3:\"SGD\";s:27:\"money_in_html_with_currency\";s:11:\"${{amount}}\";s:13:\"money_in_html\";s:10:\"{{amount}}\";s:28:\"money_in_email_with_currency\";s:11:\"${{amount}}\";s:14:\"money_in_email\";s:10:\"{{amount}}\";s:17:\"checkout_language\";s:1:\"1\";}}Message|a:0:{}Auth|a:4:{s:4:\"User\";a:10:{s:2:\"id\";s:1:\"1\";s:5:\"email\";s:17:\"owner@shop001.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:16:\"tester testerson\";s:12:\"name_to_call\";s:6:\"tester\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2011-04-15 08:32:40\";s:8:\"modified\";s:19:\"2011-04-15 08:32:40\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"user_id\";s:1:\"1\";}s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-04-15 08:32:40\";s:8:\"modified\";s:19:\"2011-04-15 08:32:41\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"1\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}}_Token|s:212:\"a:5:{s:3:\"key\";s:40:\"b489375f460930f1483f2adef27392ad71ead475\";s:7:\"expires\";i:1302939986;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:1:{i:0;s:21:\"ProductImage.filename\";}}\";',1302934986),('suads4c62a4juf5en3mr93lct4','Config|a:4:{s:9:\"userAgent\";s:32:\"204fd586a8befc39e89f866208592201\";s:4:\"time\";i:1302929884;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:3:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-04-15 08:32:40\";s:8:\"modified\";s:19:\"2011-04-15 08:32:41\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"1\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}s:11:\"ShopSetting\";a:10:{s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:8:\"timezone\";s:0:\"\";s:11:\"unit_system\";s:6:\"metric\";s:8:\"currency\";s:3:\"SGD\";s:27:\"money_in_html_with_currency\";s:11:\"${{amount}}\";s:13:\"money_in_html\";s:10:\"{{amount}}\";s:28:\"money_in_email_with_currency\";s:11:\"${{amount}}\";s:14:\"money_in_email\";s:10:\"{{amount}}\";s:17:\"checkout_language\";s:1:\"1\";}}_Token|s:212:\"a:5:{s:3:\"key\";s:40:\"64a190b353cae1a8aa8a8e6c8cae1bb0b8378d0a\";s:7:\"expires\";i:1302934883;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:1:{i:0;s:21:\"ProductImage.filename\";}}\";Message|a:0:{}',1302929884);
 
 /*Table structure for table `cancellations` */
 
@@ -159,7 +158,7 @@ CREATE TABLE `cart_items` (
   `product_id` int(11) NOT NULL,
   `product_price` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `product_quantity` int(4) NOT NULL DEFAULT '1',
-  `status` tinyint(1) DEFAULT '1',
+  `visible` tinyint(1) unsigned DEFAULT '1',
   `product_title` varchar(255) DEFAULT NULL,
   `product_weight` int(10) unsigned DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
@@ -205,9 +204,11 @@ CREATE TABLE `casual_surfers` (
   PRIMARY KEY (`id`),
   KEY `shop` (`shop_id`),
   KEY `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `casual_surfers` */
+
+insert  into `casual_surfers`(`id`,`shop_id`,`user_id`) values (1,2,2);
 
 /*Table structure for table `comments` */
 
@@ -686,7 +687,7 @@ CREATE TABLE `posts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `blog_id` int(10) DEFAULT NULL,
   `author_id` int(10) DEFAULT NULL,
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `visible` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `title` varchar(100) DEFAULT NULL,
   `slug` varchar(150) DEFAULT NULL,
   `content` text,
@@ -700,7 +701,7 @@ CREATE TABLE `posts` (
 
 /*Data for the table `posts` */
 
-insert  into `posts`(`id`,`blog_id`,`author_id`,`status`,`title`,`slug`,`content`,`no_comments`,`allow_comments`,`allow_pingback`,`created`,`modified`) values (1,1,1,1,'Open for business!','open-for-business',NULL,0,1,1,'2011-04-15 08:32:40','2011-04-15 08:32:40');
+insert  into `posts`(`id`,`blog_id`,`author_id`,`visible`,`title`,`slug`,`content`,`no_comments`,`allow_comments`,`allow_pingback`,`created`,`modified`) values (1,1,1,1,'Open for business!','open-for-business',NULL,0,1,1,'2011-04-15 08:32:40','2011-04-15 08:32:40');
 
 /*Table structure for table `price_based_rates` */
 
@@ -771,7 +772,7 @@ CREATE TABLE `products` (
   `price` decimal(10,4) unsigned DEFAULT '0.0000',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  `status` tinyint(1) DEFAULT '1',
+  `visible` tinyint(1) unsigned DEFAULT '1',
   `weight` int(10) unsigned DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
   `shipping_required` tinyint(1) unsigned NOT NULL DEFAULT '1',
@@ -782,7 +783,7 @@ CREATE TABLE `products` (
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`status`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,NULL),(2,2,'Dummy Product',NULL,NULL,'0.0000','2011-04-15 08:32:41','2011-04-15 08:32:41',1,7000,'SGD',1,0,'dummy-product');
+insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`visible`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,NULL),(2,2,'Dummy Product',NULL,NULL,'0.0000','2011-04-15 08:32:41','2011-04-15 08:32:41',0,7000,'SGD',1,0,'dummy-product');
 
 /*Table structure for table `products_in_groups` */
 
@@ -1022,11 +1023,11 @@ CREATE TABLE `users` (
   `modified` datetime DEFAULT NULL,
   `language_id` int(5) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'owner@shop001.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'tester testerson','tester',NULL,1,'2011-04-15 08:32:40','2011-04-15 08:32:40',1);
+insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'owner@shop001.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'tester testerson','tester',NULL,1,'2011-04-15 08:32:40','2011-04-15 08:32:40',1),(2,'w0sdtpjf@ombi60.com','8c7cfed1471f0704e1a453c6955f8a2c72000156',5,'casual','casual',NULL,1,'2011-04-15 14:11:16','2011-04-15 14:11:16',1);
 
 /*Table structure for table `vendors` */
 
@@ -1060,7 +1061,7 @@ CREATE TABLE `webpages` (
   `author` int(11) DEFAULT NULL,
   `real_author` int(11) DEFAULT NULL,
   `handle` varchar(150) DEFAULT NULL,
-  `visible` tinyint(1) DEFAULT '1',
+  `visible` tinyint(1) unsigned DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 

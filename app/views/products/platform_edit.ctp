@@ -11,7 +11,7 @@
 		echo $form->input('price');
 		echo $form->input('created');
 		echo $form->input('modified');
-		echo $form->input('status');
+		echo $form->input('visible');
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

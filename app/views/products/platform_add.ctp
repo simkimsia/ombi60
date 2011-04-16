@@ -43,7 +43,7 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Status'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $product['Product']['status']; ?>
+			<?php echo $product['Product']['visible']; ?>
 			&nbsp;
 		</dd>
 	</dl>

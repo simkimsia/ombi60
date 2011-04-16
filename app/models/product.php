@@ -21,6 +21,7 @@ class Product extends AppModel {
 					'lower' => true
 					),
 			       'Containable',
+			       'Visible.Visible',
 			       );
 	var $recursive = -1;
 	
@@ -35,7 +36,7 @@ class Product extends AppModel {
 			'fields' => '',
 			'order' => '',
 			'counterCache' => true,
-			'counterScope' => array('Product.status' => 1) 
+			'counterScope' => array('Product.visible' => 1) 
 		),
 		'Vendor' => array(
 			'className' => 'Vendor',
@@ -199,22 +200,6 @@ class Product extends AppModel {
 
 	}
 	
-	function toggle_status($id = false) {
-		if (!$id) {
-			if (!$this->id) {
-				return false;
-			}
-			$id = $this->id;
-		}
-
-		return $this->updateAll(
-			// fields to change
-			 array('Product.status' => '!Product.status'),
-			 // conditions
-			 array('Product.id' => $id)
-		);
-	}
-
 	function duplicate($id = NULL, $shop_id = 0) {
 		// this product model is copied but NOT recursively.
 		$result = $this->copy($id);

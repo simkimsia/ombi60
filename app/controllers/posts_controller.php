@@ -80,18 +80,15 @@ class PostsController extends AppController {
 					'order' => array('Post.created DESC'),
 					'fields' => array('Post.id',
 							  'Post.blog_id','Post.author_id',
-							  'Post.author_id', 'Post.status',
+							  'Post.author_id', 'Post.visible',
 							  'Post.title', 'Post.slug',
 							  'Post.content', 'Post.created'));
 		
 		$posts = $this->paginate();
 		
-		
-		
 		$posts = Set::extract('{n}.Post', $posts);
 		
 		$blog = $blog['Blog'];
-		
 		
 		$this->set(compact('posts', 'blog'));
 		

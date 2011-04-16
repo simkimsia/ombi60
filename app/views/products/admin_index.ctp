@@ -16,7 +16,7 @@
     <tr>                
         <td><?php echo $this->Form->input('Product.title', array('label'=>false)); ?></td>
         <td><?php echo $this->Form->input('Product.price', array('label'=>false)); ?></td>
-        <td><?php echo $this->Form->input('Product.status', array('options' => array('1'=>'Published', '0'=>'Hidden'),
+        <td><?php echo $this->Form->input('Product.visible', array('options' => array('1'=>'Published', '0'=>'Hidden'),
                                       'empty' => 'Any status',
                                       'label' => false)); ?></td>
                 <td>
@@ -48,7 +48,7 @@ if ($paginator->params['paging']['Product']['pageCount'] > 1) {
 <table cellpadding="0" cellspacing="0" class="products-table">
 	<tr>
 		<th class="product-header"><?php echo $paginator->sort(__('Product', true), 'title'); ?></th>
-		<th style="text-align: center;"><?php echo $paginator->sort('status');?></th>
+		<th style="text-align: center;"><?php echo $paginator->sort('visible');?></th>
 		<th class="actions" style="text-align: center;"><?php __('Actions');?></th>
 	</tr>
 
@@ -74,13 +74,16 @@ foreach ($products as $product):
 		</td>
 		<td align="center" style="text-align: center;">
 		<?php 
-			if (1 == $product['Product']['status']) {
+			if (1 == $product['Product']['visible']) {
 			    $status = __('Published', true);
 			} else {
 			    $status = __('Hidden', true);    
 			}        
 		?>	
-		  <a href="#" class="product-status"><?php echo $status; ?></a>
+		  
+		  <?php echo $this->Html->link($status,
+					       array('action' => 'toggle', $product['Product']['id']),
+					       array('class' => 'product-status')); ?>
 		</td>
 		<td class="actions" style="text-align: center;">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $product['Product']['id'], 'admin' => false)); ?>

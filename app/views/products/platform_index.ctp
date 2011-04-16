@@ -16,7 +16,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('price');?></th>
 	<th><?php echo $paginator->sort('created');?></th>
 	<th><?php echo $paginator->sort('modified');?></th>
-	<th><?php echo $paginator->sort('status');?></th>
+	<th><?php echo $paginator->sort('visible');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -53,7 +53,7 @@ foreach ($products as $product):
 			<?php echo $product['Product']['modified']; ?>
 		</td>
 		<td>
-			<?php echo $product['Product']['status']; ?>
+			<?php echo $product['Product']['visible']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action' => 'view', $product['Product']['id'])); ?>

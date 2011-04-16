@@ -163,7 +163,7 @@ class CartItem extends AppModel {
 					       'cart_id'=>$item['cart_id'],
 					       'price'=>$item['product_price'],
 					       'quantity'=>$item['product_quantity'],
-					       'status'=>$item['status'],
+					       'visible'=>$item['visible'],
 					       'title'=>$item['product_title'],
 					       'weight'=>$item['product_weight'],
 					       'currency'=>$item['currency'],
