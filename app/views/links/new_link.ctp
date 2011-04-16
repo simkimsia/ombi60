@@ -36,8 +36,8 @@
                         $modelOptions = array(
                                 '/blogs/'               =>'Blog',
                                 '/cart/view'	        =>'Cart',
-                                '/products/'	        =>'Catalogue',
-                                '/products/view/'       =>'Product',
+                                '/collections/all'	=>'Catalogue',
+                                '/products/'       	=>'Product',
                                 '/pages/'	        =>'Page',
                                 '/'		        =>'Shop Frontpage',
                                 'web'                   =>'Web Address',

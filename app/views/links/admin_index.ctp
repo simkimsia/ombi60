@@ -170,13 +170,13 @@
 										      'value'=>$linkId)); ?>
 			</td>
 			<?php
-				$modelOptions = array('/blogs/'		=>'Blog',
-						      '/cart/view'	=>'Cart',
-						      '/products/'	=>'Catalogue',
-						      '/products/view/' =>'Product',
-						      '/pages/'		=>'Page',
-						      '/'		=>'Shop Frontpage',
-						      'web'		=>'Web Address',
+				$modelOptions = array('/blogs/'			=>'Blog',
+						      '/cart/view'		=>'Cart',
+						      '/collections/all'  	=>'Catalogue',
+						      '/products/' 		=>'Product',
+						      '/pages/'			=>'Page',
+						      '/'			=>'Shop Frontpage',
+						      'web'			=>'Web Address',
 						      );
 			
 			?>
