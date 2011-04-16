@@ -445,11 +445,13 @@ class ProductsController extends AppController {
 		// see app_controller code and shop model code
 		$shop_id = Shop::get('Shop.id');
 		
+		
+		// a temporary fix for /collections/all until Abbas writes out the code for smart collections
+		$collectionsAllSelected = (strtolower($handle) == 'all');
+		
 		// get the product details
 		$groupFound = $this->Product->ProductsInGroup->ProductGroup->find('first', array('conditions'=>array('ProductGroup.handle'=>$handle,
 													'ProductGroup.shop_id'=>$shop_id)));
-
-
 		// must be valid shop
 		$invalidShop = !($shop_id > 0);
 		// product must exist
@@ -459,10 +461,16 @@ class ProductsController extends AppController {
 		// must be active product
 		$groupNotActive = ($groupDoesNotBelongToShop) ? true : !($groupFound['ProductGroup']['status']);
 
+		// temporary fix for /collections/all until Abbas
+		if ($collectionsAllSelected) {
+			$noSuchProductGroup = false;
+			$groupDoesNotBelongToShop = false;
+			$groupNotActive = false;
+		}
 
 
 		if (   $invalidShop
-		    OR $noSuchProductGroup
+		    OR ($noSuchProductGroup)
 		    OR $groupDoesNotBelongToShop
 		    OR $groupNotActive
 		) {
@@ -480,13 +488,20 @@ class ProductsController extends AppController {
 								array('ProductImage.cover'=>null),
 							);
 		
-		// add in the Product status = 1 and belongs to a certain group
-		$this->paginate['conditions']['AND'] = array('Product.status' => 1,
-							     'ProductsInGroup.product_group_id' => $groupFound['ProductGroup']['id']);
-		
+		// add in the Product status = 1 
+		$this->paginate['conditions']['AND'] = array('Product.status' => 1);
 		
 		// add in the link param into paginate
-		$this->paginate['link']  = array('ProductImage', 'ProductsInGroup');
+		$this->paginate['link']  = array('ProductImage');
+		
+		if (!$collectionsAllSelected) {
+			// add in the belongs to a certain group provided the handle is NOT all
+			$this->paginate['conditions']['AND']['ProductsInGroup.product_group_id'] = $groupFound['ProductGroup']['id'];
+			
+			$this->paginate['link'][] = 'ProductGroup';
+		}
+		
+		
 		
 		// add in the order param into paginate
 		// for some weird reason cakephp auto overrides this order when user
@@ -516,10 +531,9 @@ class ProductsController extends AppController {
 		/* end of ugly code */
 		
 		
-		$domainPagePath = Router::url('/products/index/', true);
+		$domainPagePath = Router::url('/collections/'.$handle.'/', true);
 
 		$this->set(compact('sort', 'order', 'products', 'domainPagePath'));
-		
 		
 		$this->render('collection');
 		
