@@ -101,7 +101,6 @@ class VisibleBehavior extends ModelBehavior {
                 // this should give something like Product.id
                 $identifier       = $model->alias . '.id';
                 
-$this->log('successfully used visible behavior');
 		return $model->updateAll(
 			// fields to change
                         // this should give array('Product.visible' => '!Product.visible')

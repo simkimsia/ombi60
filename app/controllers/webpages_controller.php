@@ -18,7 +18,7 @@ class WebpagesController extends AppController {
 	function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-		$this->Auth->allow('view', 'shopfront', 'frontpage', 'admin_toggle');
+		$this->Auth->allow('view', 'shopfront', 'frontpage');
 		$this->prepareGlobalObjectsInTwigViews();
 		if ($this->action == 'admin_toggle') {
 			$this->Security->enabled = false;
@@ -95,20 +95,33 @@ class WebpagesController extends AppController {
 	}
 	
 	function admin_toggle($id = false) {
-		$this->log($this->data);
-		$this->log($this->params);
 		
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Webpage', true), 'default', array('class'=>'flash_failure'));
+		$result = $this->Webpage->toggle($id, 'visible');
+		
+		if ($this->params['isAjax']) {
+			
+			$this->layout = 'json';
+			if ($result) {
+				
+				$successJSON  = true;
+				$this->set(compact('successJSON'));
+				$this->render('../json/empty');
+			} else {
+				$errors = $this->Webpage->validationErrors;
+				$successJSON  = false;
+				
+				$this->set(compact('successJSON', 'errors'));
+				$this->render('../json/error');
+			}
+				
+		} else {
+			if ($result) {
+				$this->Session->setFlash(__('Webpage status has been changed', true), 'default', array('class'=>'flash_success'));
+			} else {
+				$this->Session->setFlash(__('Webpage status could not be changed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+			}
 			$this->redirect(array('action' => 'index'));
 		}
-		
-		if ($this->Webpage->toggle($id, 'visible')) {
-			$this->Session->setFlash(__('Webpage status changed', true), 'default', array('class'=>'flash_success'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('The status of Webpage could not be changed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
-		$this->redirect(array('action' => 'index'));
 	}
 
 	function admin_add() {

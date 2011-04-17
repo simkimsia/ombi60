@@ -109,7 +109,9 @@ class ProductsController extends AppController {
 			$this->Security->validatePost = false;
 		}
 		
-		
+		if ($this->action == 'admin_toggle') {
+			$this->Security->enabled = false;
+		}
 		
 
 	}
@@ -651,17 +653,34 @@ class ProductsController extends AppController {
 	}
 	
 	function admin_toggle($id = false) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Product', true), 'default', array('class'=>'flash_failure'));
+		
+		$result = $this->Product->toggle($id, 'visible');
+		
+		if ($this->params['isAjax']) {
+			
+			$this->layout = 'json';
+			if ($result) {
+				
+				$successJSON  = true;
+				$this->set(compact('successJSON'));
+				$this->render('../json/empty');
+			} else {
+				$errors = $this->Product->validationErrors;
+				$successJSON  = false;
+				
+				$this->set(compact('successJSON', 'errors'));
+				$this->render('../json/error');
+			}
+				
+		} else {
+			if ($result) {
+				$this->Session->setFlash(__('Product status has been changed', true), 'default', array('class'=>'flash_success'));
+			} else {
+				$this->Session->setFlash(__('Product status could not be changed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+			}
 			$this->redirect(array('action' => 'index'));
 		}
 		
-		if ($this->Product->toggle($id, 'visible')) {
-			$this->Session->setFlash(__('Product status changed', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('The status of Product could not be changed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
-		$this->redirect(array('action' => 'index'));
 	}
 	
 	function admin_edit($id = null) {

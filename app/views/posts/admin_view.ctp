@@ -17,10 +17,21 @@
         <label><?php __('Article Visibility');?></label>
  		<span class="hint">If you want to hide this article from your clients, choose</span>
  		<br>
- 		<?php 
-        echo $this->Form->input('visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'selected' => $post['Post']['visible'])); 
+ 	<?php 
+        echo $this->Form->input('Post.visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'selected' => $post['Post']['visible'])); 
          ?>
-        <?php //print ((bool)$post['Post']['visible'] ? "Published" : "Hidden")?>
+	 
+	 <?php 
+	    echo $this->Ajax->observeField( 'PostVisible', 
+		array(
+		    'url' => array( 'action' => 'toggle',
+				   'controller' => 'posts',
+				   'admin' => true,
+				   $post['Post']['id']),
+		    //'complete' => 'alert(request.responseText)'
+		) 
+	    ); 
+	?>
         <br>
         <?php        
   		echo $this->Form->input('Post.author', array('options' => $authors, 'selected' => $post['Author']['full_name']));  		

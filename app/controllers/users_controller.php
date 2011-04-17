@@ -94,7 +94,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_view_custom');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_delete');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_index');
-		
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_toggle');
 		
 		// navigation
 		$this->log('navi');
@@ -174,6 +174,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Webpages/admin_delete');
 		$this->Acl->allow($group, 'controllers/Webpages/admin_view');
 		$this->Acl->allow($group, 'controllers/Webpages/admin_index');
+		$this->Acl->allow($group, 'controllers/Webpages/admin_toggle');
 		
 		$this->log('blogs');
 		$this->Acl->allow($group, 'controllers/Blogs/admin_add');
@@ -187,6 +188,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Posts/admin_edit');
 		$this->Acl->allow($group, 'controllers/Posts/admin_delete');
 		$this->Acl->allow($group, 'controllers/Posts/admin_view');
+		$this->Acl->allow($group, 'controllers/Posts/admin_toggle');
 		
 		$this->log('=============end of setting permissions for merchants=============');
 		

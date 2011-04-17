@@ -30,7 +30,7 @@
 		    <td width="5%" align="center"><?php echo $form->input('check_box_id', array('value' => $post['blog_id'], 'class' => 'checkbox_check', 'type' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>
 			<td>
         <?php echo $this->Html->link($post['title'], array('controller' => 'posts', 'action' => 'view', $post['blog_id'], $post['id']));
-           if (!(bool)$post['status']) { ?>
+           if (!(bool)$post['visible']) { ?>
             <span class="hidden_gray">Hidden</span>
         <?php }?>
       </td>

@@ -15,10 +15,21 @@
         <label><?php __('Page Visibility');?></label>
  		<span class="hint">If you want to hide this collection from your clients, choose hidden.</span>
  		<br>
- 		<?php 
-        echo $this->Form->input('visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'selected' => $productGroup['ProductGroup']['visible'])); 
+ 	<?php 
+        echo $this->Form->input('ProductGroup.visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'selected' => $productGroup['ProductGroup']['visible'])); 
          ?>
-        <?php //print ((bool)$productGroup['ProductGroup']['visible'] ? "Published" : "Hidden")?>
+	 
+	 <?php 
+	    echo $this->Ajax->observeField( 'ProductGroupVisible', 
+		array(
+		    'url' => array( 'action' => 'toggle',
+				   'controller' => 'product_groups',
+				   'admin' => true,
+				   $productGroup['ProductGroup']['id']),
+		    //'complete' => 'alert(request.responseText)'
+		) 
+	    ); 
+	?>
         <br>        
         
         

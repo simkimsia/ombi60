@@ -3,7 +3,10 @@ class PostsController extends AppController {
 
 	var $name = 'Posts';
 	
-	var $helpers = array('TinyMce.TinyMce', 'Text');
+	var $helpers = array('Javascript',
+			     'Ajax',
+			     'TinyMce.TinyMce',
+			     'Text');
 	
 	var $view = 'TwigView.TwigTheme';
 	
@@ -20,6 +23,9 @@ class PostsController extends AppController {
 		parent::beforeFilter();
 		
 		$this->Auth->allow('view', 'index');
+		if ($this->action == 'admin_toggle') {
+			$this->Security->enabled = false;
+		}
 	}
 
 
@@ -184,5 +190,37 @@ class PostsController extends AppController {
 						      'action' => 'view',
 						      $blog_id));
 	}
+	
+	function admin_toggle($id = false) {
+		
+		$result = $this->Post->toggle($id, 'visible');
+		
+		if ($this->params['isAjax']) {
+			
+			$this->layout = 'json';
+			if ($result) {
+				
+				$successJSON  = true;
+				$this->set(compact('successJSON'));
+				$this->render('../json/empty');
+			} else {
+				$errors = $this->Post->validationErrors;
+				$successJSON  = false;
+				
+				$this->set(compact('successJSON', 'errors'));
+				$this->render('../json/error');
+			}
+				
+		} else {
+			if ($result) {
+				$this->Session->setFlash(__('Post status has been changed', true), 'default', array('class'=>'flash_success'));
+			} else {
+				$this->Session->setFlash(__('Post status could not be changed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+			}
+			// the view is wrong without blog_id
+			$this->redirect(array('action' => 'view'));
+		}
+	}
+	
 }
 ?>

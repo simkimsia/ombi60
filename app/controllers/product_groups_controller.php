@@ -3,12 +3,16 @@ class ProductGroupsController extends AppController {
 
 	var $name = 'ProductGroups';
 	
-	var $helpers = array('TinyMce.TinyMce');
+	var $helpers = array('Javascript',
+			     'Ajax',
+			     'TinyMce.TinyMce');
 	
 	function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-		
+		if ($this->action == 'admin_toggle') {
+			$this->Security->enabled = false;
+		}
 	}
 
 	function admin_index() {
@@ -20,6 +24,8 @@ class ProductGroupsController extends AppController {
 											       'ProductGroup.shop_id'=>$shopId)));
 		$this->set(compact('customCollections', 'smartCollections'));
 	}
+	
+	
 
 	function admin_view_smart($id = null) {
 		if (!$id) {
@@ -120,6 +126,36 @@ class ProductGroupsController extends AppController {
 		}
 		$this->Session->setFlash(__('Product group was not deleted', true));
 		$this->redirect(array('action' => 'index'));
+	}
+	
+	function admin_toggle($id = false) {
+		
+		$result = $this->ProductGroup->toggle($id, 'visible');
+		
+		if ($this->params['isAjax']) {
+			
+			$this->layout = 'json';
+			if ($result) {
+				
+				$successJSON  = true;
+				$this->set(compact('successJSON'));
+				$this->render('../json/empty');
+			} else {
+				$errors = $this->ProductGroup->validationErrors;
+				$successJSON  = false;
+				
+				$this->set(compact('successJSON', 'errors'));
+				$this->render('../json/error');
+			}
+				
+		} else {
+			if ($result) {
+				$this->Session->setFlash(__('Collection status has been changed', true), 'default', array('class'=>'flash_success'));
+			} else {
+				$this->Session->setFlash(__('Collection status could not be changed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+			}
+			$this->redirect(array('action' => 'index'));
+		}
 	}
 	
 	
