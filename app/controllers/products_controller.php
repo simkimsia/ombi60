@@ -381,6 +381,7 @@ class ProductsController extends AppController {
 
 	function view($handle = false) {
 		
+		
 		if (!$handle) {
 			$this->Session->setFlash(__('Invalid product', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));

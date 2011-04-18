@@ -10,7 +10,7 @@ class Product extends AppModel {
 					'recursive' => false,),
 			       'log.Logable',
 			       'UnitSystemConvertible',
-			       'Sluggable'=> array(
+			       'Handleize.Sluggable'=> array(
 					'fields' => 'title',
 					'scope' => array('shop_id'),
 					'conditions' => false,
@@ -22,6 +22,7 @@ class Product extends AppModel {
 					),
 			       'Containable',
 			       'Visible.Visible',
+			       'Handleize.Handleable',
 			       );
 	var $recursive = -1;
 	
@@ -115,6 +116,12 @@ class Product extends AppModel {
 					
 							),)
 			     );
+	
+	
+	public function __construct($id=false,$table=null,$ds=null) {
+		parent::__construct($id,$table,$ds);
+		$this->createVirtualFieldForUrl();
+	}
 	
 	
 	/**

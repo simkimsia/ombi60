@@ -30,7 +30,7 @@ class Blog extends AppModel {
 		),
 	);
 	
-	var $actsAs = array('Sluggable'=> array(
+	var $actsAs = array('Handleize.Sluggable'=> array(
 				'fields' => 'title',
 				'scope' => array('shop_id'),
 				'conditions' => false,
@@ -39,7 +39,16 @@ class Blog extends AppModel {
 				'overwrite' => false,
 				'length' => 150,
 				'lower' => true
-			));
+			),
+			    'Handleize.Handleable'=>array(
+				'handleFieldName' => 'short_name'
+							  ));
+	
+	
+	public function __construct($id=false,$table=null,$ds=null) {
+		parent::__construct($id,$table,$ds);
+		$this->createVirtualFieldForUrl();
+	}
 
 }
 ?>

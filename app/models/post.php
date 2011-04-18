@@ -55,7 +55,7 @@ class Post extends AppModel {
 		)
 	);
 	
-	var $actsAs = array('Sluggable'=> array(
+	var $actsAs = array('Handleize.Sluggable'=> array(
 				'fields' => 'title',
 				'scope' => array('shop_id'),
 				'conditions' => false,
@@ -65,7 +65,16 @@ class Post extends AppModel {
 				'length' => 150,
 				'lower' => true
 			),
-			    'Visible.Visible',);
+			    'Visible.Visible',
+			    'Handleize.Handleable'=>array(
+				'handleFieldName' => 'short_name'
+							  ));
+	
+	
+	public function __construct($id=false,$table=null,$ds=null) {
+		parent::__construct($id,$table,$ds);
+		$this->createVirtualFieldForUrl();
+	}
 	
 
 }

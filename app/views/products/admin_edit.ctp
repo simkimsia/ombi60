@@ -41,7 +41,18 @@
 		echo $this->Form->error('Product.title');
 		$titleLabel = $this->Form->label('title');
 		echo $this->Form->input('title', array('error' => false, 'label' => false));
+		
+		$label = $this->Form->label('handle', 'Permalink/handle');
+		$textbox = $this->Form->text('Product.handle', array('class' => 'small'));
+		$prefix = Router::url('/products/', true);
+		$suffix = ' ( ' . $this->Html->link(__('What is this?', true), '#') . ' )';
+		echo $this->Html->div('input text', $label.$prefix.$textbox. $suffix ,array(), true);
+		
+		
 		echo $this->Form->input('description');
+		
+		
+		
 		echo $this->Form->input('Product.alt_id', array('type'=>'hidden', 'id'=>'alt_id', 'value'=>0));
 	?>
 

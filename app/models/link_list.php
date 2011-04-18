@@ -30,7 +30,7 @@ class LinkList extends AppModel {
 		)
 	);
 	
-	var $actsAs = array('Sluggable'=> array(
+	var $actsAs = array('Handleize.Sluggable'=> array(
 				'fields' => 'name',
 				'scope' => array('shop_id'),
 				'conditions' => false,
@@ -39,11 +39,17 @@ class LinkList extends AppModel {
 				'overwrite' => false,
 				'length' => 150,
 				'lower' => true
-			));
+			),
+			    'Handleize.Handleable');
 	
 	function saveAll($data = null, $options = array()) {
 		$data = $this->Link->beforeSaveAll($data);
 		return parent::saveAll($data, $options);
+	}
+	
+	public function __construct($id=false,$table=null,$ds=null) {
+		parent::__construct($id,$table,$ds);
+		$this->createVirtualFieldForUrl();
 	}
 
 }
