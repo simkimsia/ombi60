@@ -135,6 +135,30 @@ class Product extends AppModel {
 			if (isset($val['Product'])) {
 				$results[$key] = $this->convertForDisplay($val, $unit);
 			}
+			/** this is for the Products In Custom Collection **/
+			if (isset($val['ProductsInGroup'])) {
+				// we assume Containable was used to retrieve the records
+				/**
+				 * [ProductsInGroup] => Array
+					(
+					    [0] => Array
+						(
+						    [id] => 1
+						    [product_id] => 4
+						    [product_group_id] => 2
+						)
+				
+					    [1] => Array
+						(
+						    [id] => 2
+						    [product_id] => 4
+						    [product_group_id] => 3
+						)
+				
+					) */
+				$groups = Set::extract('ProductsInGroup.{n}.product_group_id', $val);
+				$results[$key]['Product']['selected_collections'] = $groups;
+			}
 		}
 		
 		
@@ -203,7 +227,13 @@ class Product extends AppModel {
 			}
 		}
 
-		return $this->saveAll($data, array('validate'=>'first'));
+		$result = $this->saveAll($data, array('validate'=>'first',
+						      'atomic' => false));
+		
+		$this->log('final result');
+		$this->log($result);
+		
+		return $result;
 
 	}
 	
@@ -335,6 +365,13 @@ class Product extends AppModel {
 		
 		/** end of cart_items weight and price **/
 		
+		/** Associate this product with custom collections **/
+		//if (!$created) {
+			$customCollectionsJoined = is_array($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
+			$this->saveCollections($this->id, $customCollectionsJoined);	
+		//}
+		
+		
 	}
 	
 	/**
@@ -360,6 +397,126 @@ class Product extends AppModel {
 		
 		
 		return $results;
+	}
+	
+	function saveCollections ($id, $customCollections = array()) {
+		if (empty($customCollections)) {
+			return true;
+		}
+		
+		$this->ProductsInGroup->recursive = -1;
+		
+		$associations = $this->ProductsInGroup->find('all', array('conditions'=>
+							  array(//'ProductsInGroup.product_group_id' => $customCollections,
+								'ProductsInGroup.product_id' => $id),
+							  'fields'=>array('ProductsInGroup.product_group_id')));
+		
+		
+		
+		/**
+		 * Array
+			(
+			    [0] => Array
+				(
+				    [ProductsInGroup] => Array
+					(
+					    [product_group_id] => 2
+					)
+			
+				)
+			
+			    [1] => Array
+				(
+				    [ProductsInGroup] => Array
+					(
+					    [product_group_id] => 3
+					)
+			
+				)
+			
+			)
+			
+		*/
+		$existingGroups = Set::extract('{n}.ProductsInGroup.product_group_id', $associations);
+		$this->log($existingGroups);
+		$this->log($customCollections);
+		$this->log($id);
+
+		/** existingGroups from here and customCollections from the view look like this **/
+		//Array
+		//(
+		//    [0] => 2
+		//    [1] => 3
+		//)
+		
+		// do some array_diff to get new records
+		$newRecords = array_diff($customCollections, $existingGroups);
+		
+		// do some array_diff to get deleted records
+		$deletedRecords = array_diff($existingGroups, $customCollections);
+		
+		// check if we need to insert new records
+		// AND/OR delete old records
+		$newRecordsOn = !empty($newRecords);
+		$deletedRecordsOn = !empty($deletedRecords);
+		$doTransaction = $newRecordsOn OR $deletedRecordsOn;
+		
+		// build the $data to save $newRecords
+		if ($newRecordsOn) {
+			$data = array('ProductsInGroup' => array());
+			foreach($newRecords as $key=>$groupId) {
+				$data['ProductsInGroup'][] = array(
+								'product_group_id'=>$groupId,
+								'product_id' => $id);
+			}
+		}
+		
+		
+		// save the new records
+		// and delete the deleted records
+		// using transaction
+		// provided we need to do so
+		if ($doTransaction) {
+			// create the datasource
+			$datasource = $this->getDataSource();
+			
+			// start transaction
+			$datasource->begin($this);
+	
+			$result = true;
+			$this->log($data);
+			if ($newRecordsOn) {
+				$result = $this->ProductsInGroup->saveAll($data['ProductsInGroup'], array('validate'=>'first',
+													  'atomic'=>false));
+				
+				$this->log($result);
+	
+				if (!$result) {
+					$datasource->rollback($this);
+					return false;
+				}	
+			}
+			
+			if ($deletedRecordsOn) {
+				$result = $this->ProductsInGroup->deleteAll(array('ProductsInGroup.product_group_id'=>$deletedRecords,
+									'ProductsInGroup.product_id' => $id));
+				
+				if (!$result) {
+					$datasource->rollback($this);
+					return false;
+				}
+				
+			}
+			
+			// finally we commit if everything is okay!
+			if ($result) {
+				$datasource->commit($this);
+			}
+			
+			return $result;
+		}
+		
+		return true;
 	}
 
 }

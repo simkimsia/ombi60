@@ -67,6 +67,15 @@
 	<?php //echo $this->Form->input('ProductImage.product_images', array('class' => 'multi', 'type' => 'file', 'accept' => 'gif|jpg'));?>
 	<input type="file" class="multi max-4" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp"/>
 	</fieldset>
+	
+	<fieldset class="right">
+		<legend><?php __('Collections'); ?></legend>
+		<?php echo $this->Form->input('Product.selected_collections',
+					 array('type' => 'select',
+					       'multiple' => 'checkbox',
+					       'options' => $collections)); ?>
+	</fieldset>
+	
 <?php
 	$options = array(
 

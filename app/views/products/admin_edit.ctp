@@ -77,6 +77,15 @@
 	<br />
 	<input type="file" name="uploadify" id="fileInput" />
 	</fieldset>-->
+	
+	<fieldset class="right">
+		<legend><?php __('Collections'); ?></legend>
+		<?php echo $this->Form->input('Product.selected_collections',
+					 array('type' => 'select',
+					       'multiple' => 'checkbox',
+					       'options' => $collections)); ?>
+	</fieldset>
+	
 <?php
 	$options = array(
 

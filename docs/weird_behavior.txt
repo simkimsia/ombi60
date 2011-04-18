@@ -135,3 +135,21 @@ pagination across multiple models
 =================================
 
 https://mail.google.com/mail/#search/abbas.sanisoft%40gmail.com/12f57833bb324065
+
+
+multiple checkbox
+=================
+http://book.cakephp.org/view/1395/options-multiple
+
+single/multiple checkbox in edit
+=========================
+You cannot use default to check a checkbox - instead you might set the value in $this->data in your controller, $this->Form->data in your view, or set the input option checked to true.
+
+http://book.cakephp.org/view/1402/options-default
+
+transactions and callbacks
+==========================
+
+if you do transaction inside afterSave, ensure that the saveAll of the
+primary model is done using atomic=>false, validate=>'first', otherwise
+the saveAll will fail despite the records safely saved.

@@ -556,7 +556,7 @@ class ProductsController extends AppController {
 			$this->layout = 'json';
 			$successJSON = false;
 			$contents = array();
-		
+			
 			$this->Product->create();
 			if ($this->Product->createProductDetails($this->data)) {
 				$this->Session->setFlash(__('Product has been saved', true), 'default', array('class'=>'flash_success'));
@@ -577,6 +577,7 @@ class ProductsController extends AppController {
 		} else if ($this->RequestHandler->isPost()) {
 
 			$uploadifyUsed = ($this->data['Product']['alt_id'] > 0);
+			
 					
 			if ($uploadifyUsed) {
 				// this is to trigger the afterSave to make first image as cover.
@@ -588,9 +589,9 @@ class ProductsController extends AppController {
 			} else {
 				$this->Product->create();
 				if ($this->Product->createProductDetails($this->data)) {
-				    $id = $this->Product->getLastInsertId();
-				                 
-                    $this->save_image($id); //This will save product images
+					$id = $this->Product->getLastInsertId();
+			
+					$this->save_image($id); //This will save product images
 
 					$this->Session->setFlash(__('Product has been saved', true), 'default', array('class'=>'flash_success'));
 					$this->redirect(array('action' => 'index'));
@@ -610,7 +611,10 @@ class ProductsController extends AppController {
 		
 		$errors = $this->Product->getAllValidationErrors();
 		
-		$this->set(compact('errors', 'uploadifySettings'));
+		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>0,
+												'ProductGroup.shop_id'=>Shop::get('Shop.id'))));
+		
+		$this->set(compact('errors', 'uploadifySettings', 'collections'));
 		
 	}
 	
@@ -692,8 +696,10 @@ class ProductsController extends AppController {
 		}
 
 		if (!empty($this->data)) {
+			
 			if ($this->Product->save($this->data)) {
-			    $this->save_image($id, TRUE); //This will save product images
+				
+				$this->save_image($id, TRUE); //This will save product images
 				$this->Session->setFlash(__('The Product has been saved', true), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -702,7 +708,9 @@ class ProductsController extends AppController {
 		}
 
 		if (empty($this->data)) {
-			$this->data = $this->Product->read(null, $id);
+			$this->data = $this->Product->find('first', array(
+								'conditions'=> array('Product.id'=>$id),
+								'contain' => array('ProductsInGroup')));
 		}
 
 
@@ -728,7 +736,15 @@ class ProductsController extends AppController {
                                            'buttonText' => __('Choose File', true),
 					   'onComplete' => true,);
 		
-		$this->set(compact('product_id', 'productImages', 'errors', 'uploadifySettings'));
+		
+		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>0,
+												'ProductGroup.shop_id'=>Shop::get('Shop.id'))));
+		
+		$this->set(compact('product_id',
+				   'productImages',
+				   'errors',
+				   'uploadifySettings',
+				   'collections'));
 
 		if ($this->RequestHandler->isAjax() == false) {
 			// standard view to render
