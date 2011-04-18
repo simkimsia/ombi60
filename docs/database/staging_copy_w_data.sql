@@ -114,7 +114,7 @@ CREATE TABLE `blogs` (
 
 /*Data for the table `blogs` */
 
-insert  into `blogs`(`id`,`title`,`short_name`,`description`,`theme`,`created`,`modified`,`shop_id`) values (1,'shop001','shop001',NULL,NULL,'2011-04-17 12:27:33','2011-04-17 12:27:33',2);
+insert  into `blogs`(`id`,`title`,`short_name`,`description`,`theme`,`created`,`modified`,`shop_id`) values (1,'shop001','shop001',NULL,NULL,'2011-04-18 06:18:32','2011-04-18 06:18:32',2);
 
 /*Table structure for table `cake_sessions` */
 
@@ -129,7 +129,7 @@ CREATE TABLE `cake_sessions` (
 
 /*Data for the table `cake_sessions` */
 
-insert  into `cake_sessions`(`id`,`data`,`expires`) values ('7iet5cdb0t0s1lme9v2q9l3fe5','Config|a:3:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1303044007;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"0bb825ae1f664e02dbdd2b99206953ef6f2460d4\";s:7:\"expires\";i:1303049007;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1303044019),('loa846vq7v77qodqf65o2h0pu3','Config|a:3:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1303055256;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"950a15714a53c1ea143bbf69aa222c68a37f1887\";s:7:\"expires\";i:1303049256;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1303055256),('mbar8r6ro1ha0271q2fjsb3r67','Config|a:4:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1303044287;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:3:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-04-17 12:27:33\";s:8:\"modified\";s:19:\"2011-04-17 12:27:33\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"1\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}s:11:\"ShopSetting\";a:10:{s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:8:\"timezone\";s:0:\"\";s:11:\"unit_system\";s:6:\"metric\";s:8:\"currency\";s:3:\"SGD\";s:27:\"money_in_html_with_currency\";s:11:\"${{amount}}\";s:13:\"money_in_html\";s:10:\"{{amount}}\";s:28:\"money_in_email_with_currency\";s:11:\"${{amount}}\";s:14:\"money_in_email\";s:10:\"{{amount}}\";s:17:\"checkout_language\";s:1:\"1\";}}Message|a:1:{s:4:\"auth\";a:3:{s:7:\"message\";s:47:\"You are not authorized to access that location.\";s:7:\"element\";s:7:\"default\";s:6:\"params\";a:0:{}}}Auth|a:1:{s:8:\"redirect\";s:6:\"/admin\";}',1303044287),('jqc9sgn79ar47bdtii5q75sum6','Config|a:4:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1303044781;s:7:\"timeout\";i:100;s:8:\"language\";s:3:\"eng\";}CurrentShop|a:3:{s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-04-17 12:27:33\";s:8:\"modified\";s:19:\"2011-04-17 12:27:33\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"1\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:6:\"Domain\";a:6:{s:6:\"domain\";s:31:\"http://shop001.ombi60.localhost\";s:2:\"id\";s:1:\"2\";s:7:\"shop_id\";s:1:\"2\";s:7:\"primary\";s:1:\"1\";s:20:\"always_redirect_here\";s:1:\"0\";s:16:\"shop_web_address\";s:1:\"1\";}s:11:\"ShopSetting\";a:10:{s:2:\"id\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:8:\"timezone\";s:0:\"\";s:11:\"unit_system\";s:6:\"metric\";s:8:\"currency\";s:3:\"SGD\";s:27:\"money_in_html_with_currency\";s:11:\"${{amount}}\";s:13:\"money_in_html\";s:10:\"{{amount}}\";s:28:\"money_in_email_with_currency\";s:11:\"${{amount}}\";s:14:\"money_in_email\";s:10:\"{{amount}}\";s:17:\"checkout_language\";s:1:\"1\";}}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"741c24bd34bf67e45f5da84c8add540611f9bb57\";s:7:\"expires\";i:1303049781;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";Auth|a:4:{s:4:\"User\";a:10:{s:2:\"id\";s:1:\"1\";s:5:\"email\";s:17:\"owner@shop001.com\";s:8:\"group_id\";s:1:\"3\";s:9:\"full_name\";s:16:\"tester testerson\";s:12:\"name_to_call\";s:6:\"tester\";s:13:\"last_login_on\";N;s:6:\"status\";s:1:\"1\";s:7:\"created\";s:19:\"2011-04-17 12:27:33\";s:8:\"modified\";s:19:\"2011-04-17 12:27:33\";s:11:\"language_id\";s:1:\"1\";}s:8:\"Merchant\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"owner\";s:1:\"1\";s:7:\"shop_id\";s:1:\"2\";s:7:\"user_id\";s:1:\"1\";}s:4:\"Shop\";a:14:{s:2:\"id\";s:1:\"2\";s:4:\"name\";s:7:\"shop001\";s:7:\"created\";s:19:\"2011-04-17 12:27:33\";s:8:\"modified\";s:19:\"2011-04-17 12:27:33\";s:6:\"status\";s:1:\"1\";s:14:\"saved_theme_id\";s:1:\"1\";s:11:\"deny_access\";s:1:\"0\";s:3:\"url\";N;s:14:\"primary_domain\";s:31:\"http://shop001.ombi60.localhost\";s:16:\"permanent_domain\";N;s:5:\"email\";s:17:\"owner@shop001.com\";s:13:\"product_count\";s:1:\"1\";s:19:\"product_group_count\";s:1:\"0\";s:12:\"vendor_count\";s:1:\"0\";}s:8:\"Language\";a:3:{s:2:\"id\";s:1:\"1\";s:4:\"name\";s:7:\"English\";s:11:\"locale_name\";s:3:\"eng\";}}',1303044781);
+insert  into `cake_sessions`(`id`,`data`,`expires`) values ('mk3odc18cjmn7rg0mojnmf0e37','Config|a:3:{s:9:\"userAgent\";s:32:\"204fd586a8befc39e89f866208592201\";s:4:\"time\";i:1302867593;s:7:\"timeout\";i:100;}_Token|s:210:\"a:5:{s:3:\"key\";s:40:\"b2f587ac968d3abccdc00597545725aefb70e3cc\";s:7:\"expires\";i:1302861594;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:1:{i:0;s:19:\"Shop.primary_domain\";}}\";NewShopID|s:1:\"3\";PaydollarResult|a:10:{s:10:\"resultCode\";s:1:\"0\";s:9:\"mSchPayId\";s:5:\"11070\";s:10:\"merchantId\";s:8:\"12101198\";s:8:\"orderRef\";s:17:\"2011-04-15-0819-2\";s:6:\"status\";s:6:\"Active\";s:6:\"errMsg\";s:19:\"Add Successfully.\r\n\";s:6:\"ERRORS\";a:0:{}s:11:\"REQUESTDATA\";a:23:{s:10:\"merchantId\";s:8:\"12101198\";s:7:\"loginId\";s:8:\"apilogin\";s:8:\"password\";s:11:\"apipass4321\";s:10:\"actionType\";s:9:\"AddSchPay\";s:4:\"sDay\";s:2:\"15\";s:6:\"sMonth\";s:2:\"06\";s:5:\"sYear\";s:4:\"2011\";s:4:\"eDay\";s:2:\"15\";s:6:\"eMonth\";s:1:\"6\";s:5:\"eYear\";s:4:\"2015\";s:8:\"orderRef\";s:17:\"2011-04-15-0819-2\";s:6:\"amount\";s:5:\"19.90\";s:4:\"name\";s:20:\"OMBI60: STARTER PLAN\";s:5:\"email\";s:17:\"owner@shop002.com\";s:9:\"orderAcct\";s:16:\"5422882800700007\";s:7:\"pMethod\";s:6:\"Master\";s:7:\"epMonth\";s:2:\"07\";s:6:\"epYear\";s:4:\"2015\";s:10:\"holderName\";s:6:\"tester\";s:6:\"status\";s:6:\"Active\";s:4:\"nSch\";s:1:\"1\";s:7:\"schType\";s:5:\"Month\";s:7:\"payType\";s:1:\"N\";}s:10:\"RAWREQUEST\";s:357:\"merchantId=12101198&loginId=apilogin&password=apipass4321&actionType=AddSchPay&sDay=15&sMonth=06&sYear=2011&eDay=15&eMonth=6&eYear=2015&orderRef=2011-04-15-0819-2&amount=19.90&name=OMBI60%3A+STARTER+PLAN&email=owner%40shop002.com&orderAcct=5422882800700007&pMethod=Master&epMonth=07&epYear=2015&holderName=tester&status=Active&nSch=1&schType=Month&payType=N\";s:11:\"RAWRESPONSE\";s:116:\"resultCode=0&mSchPayId=11070&merchantId=12101198&orderRef=2011-04-15-0819-2&status=Active&errMsg=Add Successfully.\r\n\";}',1302867595),('9s1qdtcq2oj76mjsgtfv45o5t4','Config|a:3:{s:9:\"userAgent\";s:32:\"204fd586a8befc39e89f866208592201\";s:4:\"time\";i:1302856913;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"03f38d912797d5b133014ac7ea0b23c2f76c365d\";s:7:\"expires\";i:1302861913;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1302856925),('dv75nkkpjpav96aqj7qhddfco6','Config|a:3:{s:9:\"userAgent\";s:32:\"204fd586a8befc39e89f866208592201\";s:4:\"time\";i:1302855737;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"ec9cbcf91c39e6b873ef90c779e0b2e26ef53796\";s:7:\"expires\";i:1302860737;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1302855748),('7iet5cdb0t0s1lme9v2q9l3fe5','Config|a:3:{s:9:\"userAgent\";s:32:\"abcd4ab471bb89a28c015ec9588ba30d\";s:4:\"time\";i:1303044007;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"0bb825ae1f664e02dbdd2b99206953ef6f2460d4\";s:7:\"expires\";i:1303049007;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1303044019),('hmfbb0lp86ihs9ostqpjqgivb2','Config|a:3:{s:9:\"userAgent\";s:32:\"204fd586a8befc39e89f866208592201\";s:4:\"time\";i:1303119515;s:7:\"timeout\";i:100;}_Token|s:179:\"a:5:{s:3:\"key\";s:40:\"b23a695b4df580853bc9928f74663e3d1845c467\";s:7:\"expires\";i:1303113515;s:18:\"allowedControllers\";a:0:{}s:14:\"allowedActions\";a:0:{}s:14:\"disabledFields\";a:0:{}}\";',1303119515);
 
 /*Table structure for table `cancellations` */
 
@@ -388,7 +388,7 @@ CREATE TABLE `invoices` (
 
 /*Data for the table `invoices` */
 
-insert  into `invoices`(`id`,`created`,`title`,`shop_id`,`description`,`payment_number`,`payer_user`,`reference`) values (1,'2011-04-17 12:27:33','starter',2,'Initial signup',NULL,NULL,'2011-04-17-1227-1');
+insert  into `invoices`(`id`,`created`,`title`,`shop_id`,`description`,`payment_number`,`payer_user`,`reference`) values (1,'2011-04-18 06:18:32','starter',2,'Initial signup',NULL,NULL,'2011-04-18-0618-1');
 
 /*Table structure for table `languages` */
 
@@ -461,7 +461,7 @@ CREATE TABLE `logs` (
 
 /*Data for the table `logs` */
 
-insert  into `logs`(`id`,`title`,`created`,`description`,`model`,`model_id`,`action`,`user_id`,`change`) values (1,'Dummy Product','2011-04-17 12:27:33','Product \"Dummy Product\" (2) added by System.','Product',2,'add',0,'price, visible, weight, currency, shipping_required, vendor_id, shop_id, title, handle, created'),(2,'Dummy Product','2011-04-17 12:27:34','Product (2) updated by System.','Product',2,'edit',0,'shop_id');
+insert  into `logs`(`id`,`title`,`created`,`description`,`model`,`model_id`,`action`,`user_id`,`change`) values (1,'Dummy Product','2011-04-18 06:18:32','Product \"Dummy Product\" (2) added by System.','Product',2,'add',0,'price, visible, weight, currency, shipping_required, vendor_id, shop_id, title, handle, created'),(2,'Dummy Product','2011-04-18 06:18:33','Product (2) updated by System.','Product',2,'edit',0,'shop_id');
 
 /*Table structure for table `merchants` */
 
@@ -699,7 +699,7 @@ CREATE TABLE `posts` (
 
 /*Data for the table `posts` */
 
-insert  into `posts`(`id`,`blog_id`,`author_id`,`visible`,`title`,`slug`,`content`,`no_comments`,`allow_comments`,`allow_pingback`,`created`,`modified`) values (1,1,1,0,'Open for business!','open-for-business',NULL,0,1,1,'2011-04-17 12:27:33','2011-04-17 12:27:33');
+insert  into `posts`(`id`,`blog_id`,`author_id`,`visible`,`title`,`slug`,`content`,`no_comments`,`allow_comments`,`allow_pingback`,`created`,`modified`) values (1,1,1,1,'Open for business!','open-for-business',NULL,0,1,1,'2011-04-18 06:18:32','2011-04-18 06:18:32');
 
 /*Table structure for table `price_based_rates` */
 
@@ -732,9 +732,11 @@ CREATE TABLE `product_groups` (
   `visible` tinyint(1) unsigned DEFAULT '1',
   `type` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product_groups` */
+
+insert  into `product_groups`(`id`,`title`,`shop_id`,`created`,`modified`,`description`,`products_in_group_count`,`handle`,`vendor_count`,`visible`,`type`) values (1,'Frontpage',2,'2011-04-18 06:18:33','2011-04-18 06:18:33',NULL,0,'frontpage',0,1,0);
 
 /*Table structure for table `product_images` */
 
@@ -755,7 +757,7 @@ CREATE TABLE `product_images` (
 
 /*Data for the table `product_images` */
 
-insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads\\products','image/jpeg',6103),(2,2,1,'2011-04-17 12:27:34','2011-04-17 12:27:34','default-0.jpg','uploads/products','image/jpeg',6103);
+insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads\\products','image/jpeg',6103),(2,2,1,'2011-04-18 06:18:33','2011-04-18 06:18:33','default-0.jpg','uploads/products','image/jpeg',6103);
 
 /*Table structure for table `products` */
 
@@ -781,7 +783,7 @@ CREATE TABLE `products` (
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`visible`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,NULL),(2,2,'Dummy Product',NULL,NULL,'0.0000','2011-04-17 12:27:33','2011-04-17 12:27:34',1,7000,'SGD',1,0,'dummy-product');
+insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`visible`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,NULL),(2,2,'Dummy Product',NULL,NULL,'0.0000','2011-04-18 06:18:32','2011-04-18 06:18:33',1,7000,'SGD',1,0,'dummy-product');
 
 /*Table structure for table `products_in_groups` */
 
@@ -792,9 +794,11 @@ CREATE TABLE `products_in_groups` (
   `product_id` int(10) unsigned DEFAULT NULL,
   `product_group_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `products_in_groups` */
+
+insert  into `products_in_groups`(`id`,`product_id`,`product_group_id`) values (1,2,1);
 
 /*Table structure for table `recurring_payment_profiles` */
 
@@ -814,7 +818,7 @@ CREATE TABLE `recurring_payment_profiles` (
 
 /*Data for the table `recurring_payment_profiles` */
 
-insert  into `recurring_payment_profiles`(`id`,`gateway`,`method`,`shop_id`,`gateway_reference_id`,`created`,`modified`,`status`) values (1,'paydollar','AddSchPay API',2,'11074','2011-04-17 12:27:35','2011-04-17 12:27:35','active');
+insert  into `recurring_payment_profiles`(`id`,`gateway`,`method`,`shop_id`,`gateway_reference_id`,`created`,`modified`,`status`) values (1,'paydollar','AddSchPay API',2,'11076','2011-04-18 06:18:35','2011-04-18 06:18:35','active');
 
 /*Table structure for table `saved_themes` */
 
@@ -836,7 +840,7 @@ CREATE TABLE `saved_themes` (
 
 /*Data for the table `saved_themes` */
 
-insert  into `saved_themes`(`id`,`name`,`description`,`author`,`created`,`modified`,`folder_name`,`shop_id`,`theme_id`,`featured`) values (1,'default','default','tester testerson','2011-04-17 12:27:33','2011-04-17 12:27:33','2_cover',2,3,1);
+insert  into `saved_themes`(`id`,`name`,`description`,`author`,`created`,`modified`,`folder_name`,`shop_id`,`theme_id`,`featured`) values (1,'default','default','tester testerson','2011-04-18 06:18:32','2011-04-18 06:18:32','2_cover',2,3,1);
 
 /*Table structure for table `shipments` */
 
@@ -934,7 +938,7 @@ CREATE TABLE `shops` (
 
 /*Data for the table `shops` */
 
-insert  into `shops`(`id`,`name`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`,`url`,`primary_domain`,`permanent_domain`,`email`,`product_count`,`product_group_count`,`vendor_count`) values (1,'a',NULL,NULL,1,0,0,NULL,'http://a.ombi60.com/',NULL,NULL,1,0,0),(2,'shop001','2011-04-17 12:27:33','2011-04-17 12:27:33',1,1,0,NULL,'http://shop001.ombi60.localhost',NULL,'owner@shop001.com',1,0,0);
+insert  into `shops`(`id`,`name`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`,`url`,`primary_domain`,`permanent_domain`,`email`,`product_count`,`product_group_count`,`vendor_count`) values (1,'a',NULL,NULL,1,0,0,NULL,'http://a.ombi60.com/',NULL,NULL,1,0,0),(2,'shop001','2011-04-18 06:18:32','2011-04-18 06:18:32',1,1,0,NULL,'http://shop001.ombi60.localhost',NULL,'owner@shop001.com',1,0,0);
 
 /*Table structure for table `shops_payment_modules` */
 
@@ -1025,7 +1029,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'owner@shop001.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'tester testerson','tester',NULL,1,'2011-04-17 12:27:33','2011-04-17 12:27:33',1);
+insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'owner@shop001.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'tester testerson','tester',NULL,1,'2011-04-18 06:18:32','2011-04-18 06:18:32',1);
 
 /*Table structure for table `vendors` */
 
@@ -1065,7 +1069,7 @@ CREATE TABLE `webpages` (
 
 /*Data for the table `webpages` */
 
-insert  into `webpages`(`id`,`shop_id`,`title`,`content`,`created`,`modified`,`meta_title`,`meta_keywords`,`meta_description`,`author`,`real_author`,`handle`,`visible`) values (1,1,'welcome','<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Lorem ipsum dolor sit amet, consectetur \r\n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \r\n					in lacinia dolor egestas. Integer seper imperdiet enim eu \r\n					convallis. Suspendisse nec orci tellus. Aenean consectetur \r\n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \r\n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \r\n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\r\n					Phasellus euismod</a> \r\n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \r\n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \r\n					Praesent aliquet sem sit amet massa scelerisque vitae semper \r\n					purus varius. Pellentesque habitant morbi tristique senectus et \r\n					netus et malesuada fames ac turpis egestas.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"itemAlt\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Proin mauris tortor, ultricies \r\n					interdum posuere eu, placerat vitae orci. Duis non laoreet \r\n					libero. Suspendisse aliquam congue metus non elementum. Cras \r\n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \r\n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \r\n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \r\n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \r\n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \r\n					aptent taciti sociosqu ad litora torquent per conubia nostra, \r\n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \r\n					ultrices. Nunc eros lectus, bibendum eu consequat id, \r\n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \r\n					Pellentesque ante tortor, mattis auctor condimentum ut, \r\n					convallis a dui. Mauris scelerisque dapibus libero, vitae \r\n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \r\n					at venenatis et, egestas a diam.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Nulla auctor sapien lorem. Ut vitae \r\n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \r\n					eu magna tempus eleifend. Donec interdum interdum lacus eget \r\n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \r\n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \r\n					pellentesque, orci lorem vestibulum elit, ac tristique justo \r\n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \r\n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \r\n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \r\n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \r\n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \r\n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \r\n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \r\n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \r\n					orci ut nibh tristique laoreet.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','2010-09-01 11:38:15','2010-12-22 02:15:17',NULL,NULL,NULL,1,NULL,'shopfront',1),(2,2,'Welcome',NULL,'2011-04-17 12:27:33','2011-04-17 12:27:33',NULL,NULL,NULL,1,NULL,'welcome',0),(3,2,'About Us',NULL,'2011-04-17 12:27:33','2011-04-17 12:27:33',NULL,NULL,NULL,1,NULL,'about-us',1),(4,2,'Terms of Service',NULL,'2011-04-17 12:27:33','2011-04-17 12:27:33',NULL,NULL,NULL,1,NULL,'terms-of-service',1);
+insert  into `webpages`(`id`,`shop_id`,`title`,`content`,`created`,`modified`,`meta_title`,`meta_keywords`,`meta_description`,`author`,`real_author`,`handle`,`visible`) values (1,1,'welcome','<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Lorem ipsum dolor sit amet, consectetur \r\n					adipiscing elit. <a href=\"#\">Sed semper est sed</a> eros sodales \r\n					in lacinia dolor egestas. Integer seper imperdiet enim eu \r\n					convallis. Suspendisse nec orci tellus. Aenean consectetur \r\n					venenatis gravida. Suspendisse et ipsum nisl. Nam quis libero a \r\n					nibh mollis lobortis. Ut venenatis tortor tellus. In ac magna \r\n					quam. Etiam ac risus magna, nec pretium diam. <a href=\"#\">\r\n					Phasellus euismod</a> \r\n					leo at leo vestibulum dapibus. Quisque sit amet nibh ut nisi \r\n					congue gravida nec nec ligula. Morbi feugiat mattis volutpat. \r\n					Praesent aliquet sem sit amet massa scelerisque vitae semper \r\n					purus varius. Pellentesque habitant morbi tristique senectus et \r\n					netus et malesuada fames ac turpis egestas.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Jellyfish.jpg\" alt=\"Picture 1\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"itemAlt\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Proin mauris tortor, ultricies \r\n					interdum posuere eu, placerat vitae orci. Duis non laoreet \r\n					libero. Suspendisse aliquam congue metus non elementum. Cras \r\n					quis bibendum lorem. Quisque cursus aliquam mattis. Sed id orci \r\n					tortor. Suspendisse potenti. Nulla luctus interdum massa in \r\n					malesuada. Fusce mi magna, gravida a pretium quis, ultrices vel \r\n					orci. <a href=\"#\">Nullam sollicitudin</a> nibh ac dolor tempor \r\n					porttitor. Curabitur id lacus vitae ipsum rhoncus varius. Class \r\n					aptent taciti sociosqu ad litora torquent per conubia nostra, \r\n					per inceptos himenaeos. Nunc pharetra eros et dui adipiscing \r\n					ultrices. Nunc eros lectus, bibendum eu consequat id, \r\n					<a href=\"#\">cursus non quam</a>. Nam vel dolor dolor. \r\n					Pellentesque ante tortor, mattis auctor condimentum ut, \r\n					convallis a dui. Mauris scelerisque dapibus libero, vitae \r\n					facilisis tellus mattis a. Pellentesque metus nulla, tristique \r\n					at venenatis et, egestas a diam.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Koala.jpg\" alt=\"Picture 2\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n<div class=\"item\">\r\n		\r\n<table class=\"itemTable\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"itemLeftCell\">\r\n					Nulla auctor sapien lorem. Ut vitae \r\n					euismod elit. Ut sit amet sagittis felis. Cras sollicitudin quam \r\n					eu magna tempus eleifend. Donec interdum interdum lacus eget \r\n					iaculis. Nulla facilisi. Phasellus <a href=\"#\">eget lacus auctor</a> \r\n					nibh rhoncus condimentum. Fusce volutpat, felis vel tincidunt \r\n					pellentesque, orci lorem vestibulum elit, ac tristique justo \r\n					magna at ante. <a href=\"#\">Lorem ipsum</a> dolor sit amet, \r\n					consectetur adipiscing elit. Curabitur rutrum interdum tempus. \r\n					Nunc et sapien eros, et ultrices elit. <a href=\"#\">Maecenas in \r\n					leo dui</a>, sit amet iaculis lectus. Duis lacinia, velit ut \r\n					vehicula dictum, eros sem ultricies tortor, ac faucibus dui dui \r\n					et enim. Phasellus feugiat faucibus elit, eget ultrices lacus \r\n					fringilla sit amet. Vivamus faucibus nisl a enim lacinia \r\n					venenatis. In tincidunt tincidunt dolor vel rutrum. Donec vitae \r\n					orci ut nibh tristique laoreet.\r\n				</td>\r\n<td class=\"itemRightCell\">\r\n					<img src=\"user_generated_content/images/Hydrangeas.jpg\" alt=\"Picture 3\" width=\"192\" height=\"144\" />\r\n				</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','2010-09-01 11:38:15','2010-12-22 02:15:17',NULL,NULL,NULL,1,NULL,'shopfront',1),(2,2,'Welcome',NULL,'2011-04-18 06:18:32','2011-04-18 06:18:32',NULL,NULL,NULL,1,NULL,'welcome',1),(3,2,'About Us',NULL,'2011-04-18 06:18:32','2011-04-18 06:18:32',NULL,NULL,NULL,1,NULL,'about-us',1),(4,2,'Terms of Service',NULL,'2011-04-18 06:18:32','2011-04-18 06:18:32',NULL,NULL,NULL,1,NULL,'terms-of-service',1);
 
 /*Table structure for table `weight_based_rates` */
 

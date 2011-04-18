@@ -230,8 +230,7 @@ class Product extends AppModel {
 		$result = $this->saveAll($data, array('validate'=>'first',
 						      'atomic' => false));
 		
-		$this->log('final result');
-		$this->log($result);
+		
 		
 		return $result;
 
@@ -274,6 +273,16 @@ class Product extends AppModel {
 				}
 
 			}
+			
+			// duplicate the custom collections the product is in
+			$groups = $this->ProductsInGroup->find('all', array(
+							'conditions' => array('product_id' => $id),
+							'fields' => array('ProductsInGroup.product_group_id')
+							));
+			
+			$duplicateGroups = Set::extract('{n}.ProductsInGroup.product_group_id', $groups);
+			$this->saveCollections($this->id, $duplicateGroups);
+			
 		}
 
 		// this is to copy the product to another shop
@@ -406,10 +415,10 @@ class Product extends AppModel {
 		
 		$this->ProductsInGroup->recursive = -1;
 		
-		$associations = $this->ProductsInGroup->find('all', array('conditions'=>
-							  array(//'ProductsInGroup.product_group_id' => $customCollections,
-								'ProductsInGroup.product_id' => $id),
-							  'fields'=>array('ProductsInGroup.product_group_id')));
+		$associations = $this->ProductsInGroup->find('all', array(
+							'conditions'=> array('ProductsInGroup.product_id' => $id),
+							'fields'=> array('ProductsInGroup.product_group_id')
+							));
 		
 		
 		
@@ -438,9 +447,7 @@ class Product extends AppModel {
 			
 		*/
 		$existingGroups = Set::extract('{n}.ProductsInGroup.product_group_id', $associations);
-		$this->log($existingGroups);
-		$this->log($customCollections);
-		$this->log($id);
+		
 
 		/** existingGroups from here and customCollections from the view look like this **/
 		//Array
@@ -484,12 +491,11 @@ class Product extends AppModel {
 			$datasource->begin($this);
 	
 			$result = true;
-			$this->log($data);
+			
 			if ($newRecordsOn) {
 				$result = $this->ProductsInGroup->saveAll($data['ProductsInGroup'], array('validate'=>'first',
 													  'atomic'=>false));
 				
-				$this->log($result);
 	
 				if (!$result) {
 					$datasource->rollback($this);
