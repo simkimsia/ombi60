@@ -372,6 +372,13 @@ class Merchant extends AppModel {
 		// now we create the dummy default product for this shop.
 		$result = $this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);
 		
+		// create the Frontpage collection
+		$data = array('ProductGroup'=>array('title'=>'Frontpage',
+						    'shop_id'=>$this->Shop->id),
+			      'ProductsInGroup'=>array(array('product_id'=>$this->Shop->Product->getLastInsertID())));
+		
+		$this->Shop->Product->ProductsInGroup->ProductGroup->saveAll($data);
+		
 		if ($invoice->id > 0) {
 			// now we need to generate a unique reference number for the created invoice
 			$invoiceData = $invoice->updateReference($invoice->id, $invoiceData);
