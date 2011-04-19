@@ -48,6 +48,37 @@ class ProductGroup extends AppModel {
 		parent::__construct($id,$table,$ds);
 		$this->createVirtualFieldForUrl();
 	}
+	
+	/**
+	 * for use in templates for shopfront pages
+	 * we avoid the use of many images for retrieving lots of products
+	 * */
+	function getTemplateVariable($productGroups=array()) {
+		
+		$results = array();
+		
+		$this->log($productGroups);
+		
+		foreach($productGroups as $key=>$group) {
+			$result = array('id' => $group['ProductGroup']['id'],
+					   'title' => $group['ProductGroup']['title'],
+					   
+					   'description' => $group['ProductGroup']['description'],
+					   
+					   'handle' => $group['ProductGroup']['handle'],
+					   'url' => $group['ProductGroup']['url'],
+					   'products_in_group_count' => $group['ProductGroup']['products_in_group_count'],
+					   'vendor_count' => $group['ProductGroup']['vendor_count'],
+					   
+					   
+					   );
+			
+			
+			$results[] = $result;
+		}
+		
+		return $results;
+	}
 
 }
 ?>

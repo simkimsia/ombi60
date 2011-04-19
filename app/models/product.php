@@ -375,35 +375,44 @@ class Product extends AppModel {
 		/** end of cart_items weight and price **/
 		
 		/** Associate this product with custom collections **/
-		//if (!$created) {
-			$customCollectionsJoined = is_array($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
-			$this->saveCollections($this->id, $customCollectionsJoined);	
-		//}
+		$customCollectionsJoined = is_array($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
+		$this->saveCollections($this->id, $customCollectionsJoined);	
+		
 		
 		
 	}
 	
 	/**
 	 * for use in templates for shopfront pages
+	 * we avoid the use of many images for retrieving lots of products
 	 * */
 	function getTemplateVariable($products=array()) {
 		
 		$results = array();
 		
 		foreach($products as $key=>$product) {
-			$results[] = array('id' => $product['Product']['id'],
+			$result = array('id' => $product['Product']['id'],
 					   'title' => $product['Product']['title'],
 					   'code' => $product['Product']['code'],
 					   'description' => $product['Product']['description'],
 					   'price' => $product['Product']['price'],
 					   'handle' => $product['Product']['handle'],
-					   'url' => '/products/' . $product['Product']['handle'],
+					   'url' => $product['Product']['url'],
+					   'images' => Set::extract('ProductImage.{n}.filename', $product),
+					   'cover_image' => '',
+					   'vendor' => '',
+					   'collections' => array(),
+					   'weight' => $product['Product']['weight'],
 					   );
 			
-			//if (isset($product['Product']))
+			$images = Set::extract('ProductImage.{n}.filename', $product);
+			$result['images'] = $images;
+			$result['cover_image'] = isset($images[0]) ? '' : $images[0];
+			$result['vendor'] = isset($product['Vendor']['name']) ? $product['Vendor']['name'] : '';
+			$result['collections'] = isset($product['ProductGroup']) ? ProductGroup::getTemplateVariable($product['ProductGroup']) : array();
+			
+			$results[] = $result;
 		}
-		
-		
 		
 		return $results;
 	}

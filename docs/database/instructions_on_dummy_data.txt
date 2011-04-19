@@ -1,3 +1,3 @@
 1) use the staging_copy_w_data.sql
 2) replace the app/webroot with the webroot zip file
-3) replace the app/views/themed with the themed zip file here
+3) put inside the app/views/themed with the 2_cover folder using the 2_cover.zip file here

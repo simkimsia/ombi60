@@ -443,11 +443,9 @@ class ProductsController extends AppController {
 		
 		$order = isset($this->params['named']['direction']) ? $this->params['named']['direction'] : 'desc';
 		
-		
 		// to retrieve the shop id based on the url
 		// see app_controller code and shop model code
 		$shop_id = Shop::get('Shop.id');
-		
 		
 		// a temporary fix for /collections/all until Abbas writes out the code for smart collections
 		$collectionsAllSelected = (strtolower($handle) == 'all');
@@ -483,25 +481,43 @@ class ProductsController extends AppController {
 
 		// to do the pagination across 3 models
 		// we need to ensure that the parent model has at least a recursive of Zero
-		$this->Product->recursive = 0;
+		$this->Product->recursive = -1;
 
-		// add in the ProductImage conditions
+		// add in the ProductImage conditions provided we use link for ProductImage
+		/*
 		$this->paginate['conditions']['OR'] = array (
 								array('ProductImage.cover'=>true),
 								array('ProductImage.cover'=>null),
 							);
+		*/
 		
 		// add in the Product visible = 1 
 		$this->paginate['conditions']['AND'] = array('Product.visible' => 1);
 		
 		// add in the link param into paginate
-		$this->paginate['link']  = array('ProductImage');
+		//$this->paginate['link']  = array('ProductImage');
+		
+		$this->paginate['contain'] = array('ProductImage'=>array(
+								'fields' => array('filename'),
+								'order'=>array('ProductImage.cover DESC'),
+								
+							),
+						   'ProductsInGroup'=>array(
+								'conditions' => array('ProductsInGroup.product_id =' => 'Product.id'),
+								'ProductGroup'=>array(
+									'fields' => array('id', 
+											  'title', 'handle',
+											  'description', 'products_in_group_count',
+											  'url', 'vendor_count'),
+									'conditions'=> array('ProductsInGroup.product_group_id =' => 'ProductGroup.id'),
+								)));
+		$this->paginate['link'] = array('Vendor');
 		
 		if (!$collectionsAllSelected) {
 			// add in the belongs to a certain group provided the handle is NOT all
 			$this->paginate['conditions']['AND']['ProductsInGroup.product_group_id'] = $groupFound['ProductGroup']['id'];
 			
-			$this->paginate['link'][] = 'ProductGroup';
+			//$this->paginate['link']['ProductsInGroup'] = 'ProductGroup';
 		}
 		
 		
@@ -515,10 +531,14 @@ class ProductsController extends AppController {
 		// paginate using the parent model Product
 		$products = $this->paginate('Product');
 		
+		$tempProducts = $products;
+		
 		/* here is the ugly code to remove unnecessary fields and to remove the layer involving Product and ProductImage */
 		$images = Set::combine($products, '{n}.ProductImage.product_id', '{n}.ProductImage.filename');
 		
 		$products = Set::extract('{n}.Product', $products);
+		
+		
 		
 		foreach($products as $key=>$product) {
 			
@@ -533,6 +553,7 @@ class ProductsController extends AppController {
 		
 		/* end of ugly code */
 		
+		$products = Product::getTemplateVariable($tempProducts);
 		
 		$domainPagePath = Router::url('/collections/'.$handle.'/', true);
 
