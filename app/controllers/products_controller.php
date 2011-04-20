@@ -453,6 +453,8 @@ class ProductsController extends AppController {
 		// get the product details
 		$groupFound = $this->Product->ProductsInGroup->ProductGroup->find('first', array('conditions'=>array('ProductGroup.handle'=>$handle,
 													'ProductGroup.shop_id'=>$shop_id)));
+                // Extract the product ids in the found group
+                $productIds = Set::extract($groupFound['ProductsInGroup'], '/product_id');
 		// must be valid shop
 		$invalidShop = !($shop_id > 0);
 		// product must exist
@@ -515,7 +517,7 @@ class ProductsController extends AppController {
 		
 		if (!$collectionsAllSelected) {
 			// add in the belongs to a certain group provided the handle is NOT all
-			$this->paginate['conditions']['AND']['ProductsInGroup.product_group_id'] = $groupFound['ProductGroup']['id'];
+			$this->paginate['conditions']['AND']['Product.id'] = $productIds;
 			
 			//$this->paginate['link']['ProductsInGroup'] = 'ProductGroup';
 		}
@@ -527,10 +529,8 @@ class ProductsController extends AppController {
 		// selects the order based on the named params
 		// so basically this is the default order we are setting
 		$this->paginate['order'] = array('Product.created DESC');
-		
 		// paginate using the parent model Product
 		$products = $this->paginate('Product');
-		
 		$tempProducts = $products;
 		
 		/* here is the ugly code to remove unnecessary fields and to remove the layer involving Product and ProductImage */
