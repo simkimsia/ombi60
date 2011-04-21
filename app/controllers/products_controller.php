@@ -504,14 +504,16 @@ class ProductsController extends AppController {
 								'order'=>array('ProductImage.cover DESC'),
 								
 							),
+						   //'ProductGroup',
 						   'ProductsInGroup'=>array(
-								'conditions' => array('ProductsInGroup.product_id =' => 'Product.id'),
+								'fields' => array('id', 'product_id'),
+								//'conditions' => array('ProductsInGroup.product_id =' => 'Product.id'),
 								'ProductGroup'=>array(
 									'fields' => array('id', 
 											  'title', 'handle',
 											  'description', 'products_in_group_count',
 											  'url', 'vendor_count'),
-									'conditions'=> array('ProductsInGroup.product_group_id =' => 'ProductGroup.id'),
+									//'conditions'=> array('ProductsInGroup.product_group_id =' => 'ProductGroup.id'),
 								)));
 		$this->paginate['link'] = array('Vendor');
 		
@@ -532,7 +534,6 @@ class ProductsController extends AppController {
 		// paginate using the parent model Product
 		$products = $this->paginate('Product');
 		$tempProducts = $products;
-		
 		/* here is the ugly code to remove unnecessary fields and to remove the layer involving Product and ProductImage */
 		$images = Set::combine($products, '{n}.ProductImage.product_id', '{n}.ProductImage.filename');
 		
