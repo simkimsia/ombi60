@@ -393,7 +393,23 @@ class ProductsController extends AppController {
 		
 		// get the product details
 		$productFound = $this->Product->find('first', array('conditions'=>array('handle'=>$handle,
-									'shop_id'=>$shop_id)));
+											'shop_id'=>$shop_id),
+								    'contain' => array('ProductImage'=>array(
+												'fields' => array('filename'),
+												'order'=>array('ProductImage.cover DESC'),
+											),
+											'ProductsInGroup'=>array(
+												'fields' => array('id', 'product_id'),
+												'ProductGroup'=>array(
+													'fields' => array('id', 
+															  'title', 'handle',
+															  'description', 'products_in_group_count',
+															  'url', 'vendor_count'),
+													)
+												)
+											)
+									));	
+									
 
 		
 		// must be valid shop
@@ -414,17 +430,9 @@ class ProductsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		// since valid shop AND active product, we go get images of product.
-		// get ALL the images belonging to this product with the cover image as first image.
-		$images = $this->Product->ProductImage->find('all',
-							     array('conditions' => array('ProductImage.product_id'=>$id),
-								   'fields' => array('ProductImage.filename'),
-								   'order' => 'ProductImage.cover DESC'));
+		$product = Product::getTemplateVariable($productFound, false);
 		
-		// attach the images to the product array under the key ProductImages. Note the 's'
-		$productFound['Product']['images'] = Set::extract('{n}.ProductImage.filename', $images);
-		
-		$this->set('product', $productFound['Product']);
+		$this->set('product', $product);
 		
 		$this->set('productsInCart', $this->Session->read('Shop.' . $shop_id . '.cart'));
 		

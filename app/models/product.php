@@ -386,9 +386,11 @@ class Product extends AppModel {
 	 * for use in templates for shopfront pages
 	 * we avoid the use of many images for retrieving lots of products
 	 * */
-	function getTemplateVariable($products=array()) {
+	function getTemplateVariable($products=array(), $multiple = true) {
 		
 		$results = array();
+		
+		if (!$multiple) $products = array($products);
 		
 		foreach($products as $key=>$product) {
 			
@@ -414,6 +416,12 @@ class Product extends AppModel {
 			$result['collections'] = isset($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : array();
 			
 			$results[] = $result;
+		}
+		
+		if (!$multiple && !empty($results[0])) {
+			return $results[0];
+		} else if (!$multiple && empty($results[0])) {
+			return array();
 		}
 		
 		return $results;

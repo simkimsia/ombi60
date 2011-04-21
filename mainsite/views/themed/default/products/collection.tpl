@@ -63,16 +63,16 @@
 						<div class="contentleftbar">
 							<div class="itemimage">
 								
-								<a href="/products/view/{{product.id}}" class="itemlink" ><img src="{{ product.cover_image | product_img_url("small") }}" alt="{{ product.title }}" /></a>
+								<a href="{{product.url}}" class="itemlink" ><img src="{{ product.cover_image | product_img_url("small") }}" alt="{{ product.title }}" /></a>
 								
 								
 							</div>
 							<div class="itemname">
 								
-								<a href="/products/view/{{product.id}}" class="itemlink" >{{product.title}}</a>
+								<a href="{{product.url}}" class="itemlink" >{{product.title}}</a>
 							</div>
 							<div class="itemprice">
-								<a href="/products/view/{{product.id}}" class="itemlink" >{{ product.price | money_with_currency }}</a>
+								<a href="{{product.url}}" class="itemlink" >{{ product.price | money_with_currency }}</a>
 							</div>
 						</div>
 						<div class="itemdescription">
