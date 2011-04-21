@@ -391,6 +391,9 @@ class Product extends AppModel {
 		$results = array();
 		
 		foreach($products as $key=>$product) {
+			
+			$images = Set::extract('ProductImage.{n}.filename', $product);
+			
 			$result = array('id' => $product['Product']['id'],
 					   'title' => $product['Product']['title'],
 					   'code' => $product['Product']['code'],
@@ -398,16 +401,13 @@ class Product extends AppModel {
 					   'price' => $product['Product']['price'],
 					   'handle' => $product['Product']['handle'],
 					   'url' => $product['Product']['url'],
-					   'images' => Set::extract('ProductImage.{n}.filename', $product),
-					   'cover_image' => '',
-					   'vendor' => '',
-					   'collections' => array(),
+					   
 					   'weight' => $product['Product']['weight'],
 					   );
 			
-			$images = Set::extract('ProductImage.{n}.filename', $product);
+			
 			$result['images'] = $images;
-			$result['cover_image'] = isset($images[0]) ? '' : $images[0];
+			$result['cover_image'] = isset($images[0]) ? $images[0] : '';
 			$result['vendor'] = isset($product['Vendor']['name']) ? $product['Vendor']['name'] : '';
 			
 			

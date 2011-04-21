@@ -63,7 +63,7 @@
 						<div class="contentleftbar">
 							<div class="itemimage">
 								
-								<a href="/products/view/{{product.id}}" class="itemlink" ><img src="{{ product.image | product_img_url("small") }}" alt="{{ product.title }}" /></a>
+								<a href="/products/view/{{product.id}}" class="itemlink" ><img src="{{ product.cover_image | product_img_url("small") }}" alt="{{ product.title }}" /></a>
 								
 								
 							</div>
