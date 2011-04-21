@@ -524,8 +524,6 @@ class ProductsController extends AppController {
 			//$this->paginate['link']['ProductsInGroup'] = 'ProductGroup';
 		}
 		
-		
-		
 		// add in the order param into paginate
 		// for some weird reason cakephp auto overrides this order when user
 		// selects the order based on the named params
@@ -534,25 +532,6 @@ class ProductsController extends AppController {
 		// paginate using the parent model Product
 		$products = $this->paginate('Product');
 		$tempProducts = $products;
-		/* here is the ugly code to remove unnecessary fields and to remove the layer involving Product and ProductImage */
-		$images = Set::combine($products, '{n}.ProductImage.product_id', '{n}.ProductImage.filename');
-		
-		$products = Set::extract('{n}.Product', $products);
-		
-		
-		
-		foreach($products as $key=>$product) {
-			
-			foreach($images as $product_id => $image) {
-				if ($product['id'] == $product_id) {
-					$products[$key]['image'] = $image;
-					unset($images[$product_id]);
-					break;
-				}
-			}
-		}
-		
-		/* end of ugly code */
 		
 		$products = Product::getTemplateVariable($tempProducts);
 		

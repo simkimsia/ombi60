@@ -53,13 +53,11 @@ class ProductGroup extends AppModel {
 	 * for use in templates for shopfront pages
 	 * we avoid the use of many images for retrieving lots of products
 	 * */
-	function getTemplateVariable($productGroups=array()) {
+	function getTemplateVariable($productsInGroups=array()) {
 		
 		$results = array();
 		
-		$this->log($productGroups);
-		
-		foreach($productGroups as $key=>$group) {
+		foreach($productsInGroups as $key=>$group) {
 			$result = array('id' => $group['ProductGroup']['id'],
 					   'title' => $group['ProductGroup']['title'],
 					   
