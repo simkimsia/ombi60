@@ -58,19 +58,20 @@ class ProductGroup extends AppModel {
 		$results = array();
 		
 		foreach($productsInGroups as $key=>$group) {
-			$result = array('id' => $group['ProductGroup']['id'],
+			$result = array(
+					   'id' => $group['ProductGroup']['id'],
 					   'title' => $group['ProductGroup']['title'],
 					   
 					   'description' => $group['ProductGroup']['description'],
 					   
 					   'handle' => $group['ProductGroup']['handle'],
 					   'url' => $group['ProductGroup']['url'],
-					   'products_in_group_count' => $group['ProductGroup']['products_in_group_count'],
+					   'all_products_count' => $group['ProductGroup']['products_in_group_count'],
 					   'vendor_count' => $group['ProductGroup']['vendor_count'],
 					   
-					   
-					   );
+					);
 			
+			$result['products'] = isset($group['Product']) ? ProductGroup::getTemplateVariable($group['Product']) : array();
 			
 			$results[] = $result;
 		}

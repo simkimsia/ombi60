@@ -49,6 +49,40 @@ class Blog extends AppModel {
 		parent::__construct($id,$table,$ds);
 		$this->createVirtualFieldForUrl();
 	}
+	
+	/**
+	 * for use in templates for shopfront pages
+	 * */
+	function getTemplateVariable($blogs=array(), $multiple = true) {
+		
+		$results = array();
+		
+		if (!$multiple) $blogs = array($blogs);
+		
+		foreach($blogs as $key=>$blog) {
+			
+			$result = array('id' => $blog['Blog']['id'],
+					   'title' => $blog['Blog']['title'],
+					   'description' => $blog['Blog']['description'],
+					   'handle' => $blog['Blog']['short_name'],
+					   'url' => $blog['Blog']['url'],
+					   'all_articles_count' => $blog['Blog']['posts_count'],
+					   
+					   );
+			
+			$result['articles'] = isset($blog['Post']) ? Post::getTemplateVariable($blog['Post']) : array();
+			
+			$results[] = $result;
+		}
+		
+		if (!$multiple && !empty($results[0])) {
+			return $results[0];
+		} else if (!$multiple && empty($results[0])) {
+			return array();
+		}
+		
+		return $results;
+	}
 
 }
 ?>

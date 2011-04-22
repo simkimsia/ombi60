@@ -76,6 +76,44 @@ class Post extends AppModel {
 		$this->createVirtualFieldForUrl();
 	}
 	
+	/**
+	 * for use in templates for shopfront pages
+	 * */
+	function getTemplateVariable($articles=array(), $multiple = true) {
+		
+		$results = array();
+		
+		if (!$multiple) $articles = array($articles);
+		
+		foreach($articles as $key=>$article) {
+			
+			$result = array('id' => $article['Post']['id'],
+					   'title' => $article['Post']['title'],
+					   
+					   'content' => $article['Post']['content'],
+					   
+					   'handle' => $article['Post']['slug'],
+					   'url' => $article['Post']['url'],
+					   
+					   'created_at' => $article['Post']['created'],
+					   );
+			
+			
+			$result['author'] = isset($article['User']['name_to_call']) ? $article['User']['name_to_call'] : '';
+			
+			
+			$results[] = $result;
+		}
+		
+		if (!$multiple && !empty($results[0])) {
+			return $results[0];
+		} else if (!$multiple && empty($results[0])) {
+			return array();
+		}
+		
+		return $results;
+	}
+	
 
 }
 ?>
