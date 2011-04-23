@@ -384,7 +384,6 @@ class Product extends AppModel {
 	
 	/**
 	 * for use in templates for shopfront pages
-	 * we avoid the use of many images for retrieving lots of products
 	 * */
 	function getTemplateVariable($products=array(), $multiple = true) {
 		

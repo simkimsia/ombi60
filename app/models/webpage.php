@@ -45,5 +45,41 @@ class Webpage extends AppModel {
 		$this->createVirtualFieldForUrl();
 	}
 	
+	/**
+	 * for use in templates for shopfront pages
+	 * */
+	function getTemplateVariable($pages=array(), $multiple = true) {
+		
+		$results = array();
+		
+		if (!$multiple) $pages = array($pages);
+		
+		foreach($pages as $key=>$page) {
+			
+			$result = array('id' => $page['Webpage']['id'],
+					   'title' => $page['Webpage']['title'],
+					   
+					   'content' => $page['Webpage']['content'],
+					   
+					   'handle' => $page['Webpage']['handle'],
+					   'url' => $page['Webpage']['url'],
+					   
+					   
+					   );
+			
+			$result['author'] = isset($article['User']['name_to_call']) ? $article['User']['name_to_call'] : '';
+			
+			$results[] = $result;
+		}
+		
+		if (!$multiple && !empty($results[0])) {
+			return $results[0];
+		} else if (!$multiple && empty($results[0])) {
+			return array();
+		}
+		
+		return $results;
+	}
+	
 }
 ?>

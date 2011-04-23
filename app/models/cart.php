@@ -739,6 +739,23 @@ class Cart extends AppModel {
 		
 	}
 
+	/**
+	 * for use in templates for shopfront pages
+	 * */
+	function getTemplateVariable($cart) {
+		
+		$result = array('item_count' => $cart['Cart']['cart_item_count'],
+				'requires_shipping' => $cart['Cart']['requires_shipping'],
+				'total_price' => $cart['Cart']['amount'],
+				'total_weight' => $cart['Cart']['total_weight'],
+				'shipped_weight' => $cart['Cart']['shipped_weight'],
+				);
+		
+		
+		$result['items'] = isset($cart['CartItem']) ? CartItem::getTemplateVariable($cart['CartItem']) : array();
+		
+		return $result;
+	}
 	
 	
 
