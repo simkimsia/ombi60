@@ -178,6 +178,33 @@ class CartItem extends AppModel {
 		
 		return $resultItems;
 	}
+	
+	/**
+	 * for use in templates for shopfront pages
+	 * */
+	function getTemplateVariable($items=array()) {
+		
+		$results = array();
+		
+		foreach($items as $key=>$item) {
+			
+			$result = array('id' => $item['CartItem']['id'],
+					   'title' => $item['CartItem']['product_title'],
+					   'price' => $item['CartItem']['product_price'],
+					   'line_price' => $item['CartItem']['line_price'],
+					   'quantity' => $item['CartItem']['product_quantity'],
+					   'requires_shipping' => $item['CartItem']['shipping_required'],
+					   'weight' => $item['CartItem']['product_weight'],
+					   );
+			
+			
+			$result['product'] = isset($item['Product']) ? Product::getTemplateVariable($item['Product']) : array();
+			
+			$results[] = $result;
+		}
+		
+		return $results;
+	}
 
 }
 ?>
