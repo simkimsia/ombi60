@@ -712,11 +712,12 @@ CREATE TABLE `product_groups` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `description` text,
-  `products_in_group_count` int(7) unsigned DEFAULT '0',
+  `all_product_count` int(7) unsigned DEFAULT '0',
   `handle` varchar(150) DEFAULT NULL,
   `vendor_count` int(7) unsigned DEFAULT '0',
   `visible` tinyint(1) unsigned DEFAULT '1',
   `type` tinyint(1) unsigned DEFAULT '0',
+  `visible_product_count` int(7) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

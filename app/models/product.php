@@ -39,7 +39,7 @@ class Product extends AppModel {
 								'foreignKey'	=> 'product_id',
 								'associationForeignKey'	=> 'product_group_id',
 								'unique'	=> true,
-								'counterCache'  => 'product_count',
+								'counterCache'  => 'all_product_count',
 								
 								)
 							  ),
@@ -115,7 +115,7 @@ class Product extends AppModel {
 		'ProductsInGroup' => array(
 			'className' => 'ProductsInGroup',
 			'foreignKey' => 'product_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -354,6 +354,9 @@ class Product extends AppModel {
 			
                 }
 		
+		$this->updateCounterCacheForM2MMain($this->id);
+		
+		
         }
 	
 	function afterSave($created) {
@@ -399,7 +402,6 @@ class Product extends AppModel {
 		
 		/** Associate this product with custom collections **/
 		$customCollectionsJoined = is_array($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
-		
 		$this->saveCollections($this->id, $customCollectionsJoined);	
 		
 		
