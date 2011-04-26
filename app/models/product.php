@@ -23,6 +23,26 @@ class Product extends AppModel {
 			       'Containable',
 			       'Visible.Visible',
 			       'Handleize.Handleable',
+			       'Many2manyCounterCache'=> array('VisibleProductInGroup'=>array(
+								'className' 	=> 'ProductGroup',
+								'joinModel' 	=> 'ProductsInGroup',
+								'foreignKey'	=> 'product_id',
+								'associationForeignKey'	=> 'product_group_id',
+								'unique'	=> true,
+								'counterCache'  => 'visible_product_count',
+								'counterScope'  => array('Product.visible' => 1),
+								
+								),
+							       'AllProductInGroup'=>array(
+								'className' 	=> 'ProductGroup',
+								'joinModel' 	=> 'ProductsInGroup',
+								'foreignKey'	=> 'product_id',
+								'associationForeignKey'	=> 'product_group_id',
+								'unique'	=> true,
+								'counterCache'  => 'product_count',
+								
+								)
+							  ),
 			       );
 	var $recursive = -1;
 	
@@ -107,6 +127,7 @@ class Product extends AppModel {
 		)
 
 	);
+	
 	
 	var $validate = array(
 			      'title' => array(
@@ -283,6 +304,8 @@ class Product extends AppModel {
 			$duplicateGroups = Set::extract('{n}.ProductsInGroup.product_group_id', $groups);
 			$this->saveCollections($this->id, $duplicateGroups);
 			
+			
+			
 		}
 
 		// this is to copy the product to another shop
@@ -376,6 +399,7 @@ class Product extends AppModel {
 		
 		/** Associate this product with custom collections **/
 		$customCollectionsJoined = is_array($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
+		
 		$this->saveCollections($this->id, $customCollectionsJoined);	
 		
 		
@@ -427,9 +451,11 @@ class Product extends AppModel {
 	}
 	
 	function saveCollections ($id, $customCollections = array()) {
+		/**
 		if (empty($customCollections)) {
 			return true;
 		}
+		**/
 		
 		$this->ProductsInGroup->recursive = -1;
 		
@@ -474,17 +500,23 @@ class Product extends AppModel {
 		//    [1] => 3
 		//)
 		
+		
 		// do some array_diff to get new records
 		$newRecords = array_diff($customCollections, $existingGroups);
 		
 		// do some array_diff to get deleted records
 		$deletedRecords = array_diff($existingGroups, $customCollections);
 		
+		// combined union of the unique values
+		$unionRecords = array_unique(array_merge($customCollections, $existingGroups));
+		
 		// check if we need to insert new records
 		// AND/OR delete old records
 		$newRecordsOn = !empty($newRecords);
 		$deletedRecordsOn = !empty($deletedRecords);
-		$doTransaction = $newRecordsOn OR $deletedRecordsOn;
+		$doTransaction = ($newRecordsOn OR $deletedRecordsOn);
+		
+		
 		
 		// build the $data to save $newRecords
 		if ($newRecordsOn) {
@@ -522,6 +554,7 @@ class Product extends AppModel {
 			}
 			
 			if ($deletedRecordsOn) {
+				
 				$result = $this->ProductsInGroup->deleteAll(array('ProductsInGroup.product_group_id'=>$deletedRecords,
 									'ProductsInGroup.product_id' => $id));
 				
@@ -534,13 +567,41 @@ class Product extends AppModel {
 			
 			// finally we commit if everything is okay!
 			if ($result) {
+				
 				$datasource->commit($this);
+				
+				
 			}
+			
+			// now we call the Many2manyCounterCache->_updateCounterCache
+			$this->updateCounterCacheForM2MMain($id, $unionRecords);
 			
 			return $result;
 		}
 		
+		// now we call the Many2manyCounterCache->_updateCounterCache
+		$this->updateCounterCacheForM2MMain($id, $unionRecords);
+		
 		return true;
+	}
+	
+	function updateCounterCacheForM2MMain($id, $groupIds=array(), $updateAllCount=true) {
+		if (empty($groupIds)) {
+			$associations = $this->ProductsInGroup->find('all', array(
+							'conditions'=> array('ProductsInGroup.product_id' => $id),
+							'fields'=> array('ProductsInGroup.product_group_id')
+							));
+			
+			$groupIds = Set::extract('{n}.ProductsInGroup.product_group_id', $associations);
+		}
+		$this->id = $id;
+		
+		$this->updateCounterCacheForM2M('VisibleProductInGroup', $groupIds);
+		if ($updateAllCount) {
+			$this->updateCounterCacheForM2M('AllProductInGroup', $groupIds);	
+		}
+		
+		
 	}
 
 }

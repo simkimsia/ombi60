@@ -16,6 +16,7 @@ class ProductsInGroup extends AppModel {
 		'ProductGroup' => array(
 			'className' => 'ProductGroup',
 			'foreignKey' => 'product_group_id',
+			'counterCache' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

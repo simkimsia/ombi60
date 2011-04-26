@@ -670,6 +670,11 @@ class ProductsController extends AppController {
 		
 		$result = $this->Product->toggle($id, 'visible');
 		
+		// update all the visible_product_count
+		if ($result) {
+			$this->Product->updateCounterCacheForM2MMain($id, array(), false);	
+		}
+		
 		if ($this->params['isAjax']) {
 			
 			$this->layout = 'json';
