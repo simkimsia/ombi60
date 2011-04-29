@@ -47,8 +47,8 @@ class ProductsController extends AppController {
 	var $view = 'TwigView.TwigTheme';
 
 	function beforeFilter() {
-		
-		
+		$this->Auth->allow($this->action);	
+    Configure::write('debug', 2);
 		// for uploadify to work, we must ensure that debug set to zero in admin_add and admin_edit
 		
 
@@ -1025,7 +1025,46 @@ class ProductsController extends AppController {
 			return $this->checkoutLink . 'orders/' . $shopId . '/' . $hash . '/checkout?uuid='.$uuid;
 		}
 		return false;
-	}
+	} 
+  
+  function beforeRender() {
+   // print_r($this->view);
+    
+  }
 
+  /**
+   * This action is used to search product from database
+   *
+   */
+  public function admin_search() {
+      $products = "";
+      $product_group_id = "";
+
+      if (!empty($this->data)) {
+        if (isset($this->data['Product']['title'])) {
+          $title = addslashes(trim($this->data['Product']['title']));
+          $product_group_id = (int)$this->data['Product']['product_group_id'];
+          $conditions = array(
+                         'Product.title LIKE "%'.$title.'%"',
+                         'Product.visible' => 1,
+                        );
+          
+          //$products = $this->ProductGroup->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup')));
+          $products = $this->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
+        }
+      }
+      $this->autoRender = false;
+      $this->layout = '';
+      $this->ext = '.ctp';
+      $this->set(compact('products', 'product_group_id'));
+      
+      //$data['html'] = $this->render('admin_product_search', 'ajax',ELEMENTS.'/admin_product_search.ctp');
+      //$this->sendJson($data);
+      $this->render('admin_product_search', 'ajax',ELEMENTS.'/admin_product_search.ctp');
+     // $this->render('elements/admin_product_search');
+      //$this->element('admin_product_search');
+  }//end admin_search()
+  
+    
 }
 ?>
