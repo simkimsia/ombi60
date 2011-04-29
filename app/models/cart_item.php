@@ -23,6 +23,13 @@ class CartItem extends AppModel {
 		)
 	);
 	
+	public function __construct($id=false,$table=null,$ds=null) {
+		parent::__construct($id,$table,$ds);
+		$this->virtualFields = array(
+			'line_price'=>"(`{$this->alias}`.`product_price` * `{$this->alias}`.`product_quantity`)"
+		);
+	}
+	
 	function beforeSave() {
 		
 		// placeholder for current data
