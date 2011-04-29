@@ -186,6 +186,7 @@ CREATE TABLE `carts` (
   `shipped_amount` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `shipped_weight` int(10) unsigned NOT NULL DEFAULT '0',
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `cart_item_count` int(7) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

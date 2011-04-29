@@ -757,7 +757,33 @@ class Cart extends AppModel {
 		return $result;
 	}
 	
+	function afterFind($results, $primary) {
+		if (is_array($results)) {
+			
+			
+			$flag = 0;
+			
+			foreach ($results as $key => $val) {
+				if (isset($val['CartItem'])) {
+					foreach($val['CartItem'] as $key => $item) {
+						if(isset($item['shipping_required'])) {
+							if ($item['shipping_required']) {
+								$flag = 1;
+								break;	
+							}
+						}
+					}
+				}
+				
+				$results[$key]['Cart']['shipping_required'] = $flag;
+				
+			}
+			
+			
+		}
+		return $results;
+	}
 	
-
+	
 }
 ?>

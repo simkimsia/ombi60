@@ -112,6 +112,40 @@ class VisibleBehavior extends ModelBehavior {
 	}
         
         
+        
+/**
+ * Performs a toggle on the field
+ *
+ * @param $model Object
+ * @param $id The primary key of the record
+ * @param $fieldName The fieldname that we are going to toggle
+ * @return boolean Whether the update is successful. Even if no fields are changed, true is returned
+ * @author Sim Kim Sia
+ **/
+
+        function toggleByConditions(&$model, $conditions = array(), $fieldName = 'visible') {
+		if (empty($conditions)) {
+			$conditions = array($model->alias . '.id' => $this->id);
+		}
+                
+                // this should give something like Product.visible 
+                $fieldToChange  = $model->alias . '.' . $fieldName;
+                // this should give something like !Product.visible
+                $newValue       = '!'.$fieldToChange;
+                
+                
+		return $model->updateAll(
+			// fields to change
+                        // this should give array('Product.visible' => '!Product.visible')
+			 array($fieldToChange => $newValue),
+			 // conditions
+                         // this should like array('Product.id' => $id)
+			 $conditions
+		);
+	}
+
+        
+        
 /**
  * Merges two arrays recursively
  * primeminister / 2009-11-13 : Added fix for numeric arrays like allowedMime and allowedExt.

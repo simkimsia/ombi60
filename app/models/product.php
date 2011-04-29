@@ -393,7 +393,18 @@ class Product extends AppModel {
 				$this->CartItem->updatePricesAndWeights($this->id, $this->data['Product']['price'],
 								'SGD',
 								$this->data['Product']['weight'],
-								'kg');	
+								'kg');
+			}
+			
+			if(isset($this->data['Product']['shipping_required']) &&
+			   isset($this->data['Product']['original_shipping_required'])) {
+				
+				if ($this->data['Product']['shipping_required'] != $this->data['Product']['original_shipping_required']) {
+					
+					$this->CartItem->toggleByConditions(array('CartItem.product_id'=>$this->data['Product']['product_id']), 'shipping_required');
+						
+				}
+				
 			}
 		}
 		

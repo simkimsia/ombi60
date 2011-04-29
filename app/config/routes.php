@@ -41,6 +41,8 @@
         Router::connect('/pages/*', array('controller' => 'webpages', 'action' => 'view'));
 
 
+        
+
         // product links
         Router::connect('/products/:handle',
                         array('controller' => 'products',
@@ -94,7 +96,21 @@
 
         Router::connect('/admin/profile/edit', array('admin' => true,'controller' => 'merchants', 'action' => 'edit'));
         
-        Router::connect('/cart/view', array('controller' => 'products', 'action' => 'view_cart'));
+        // cart links
+        Router::connect('/cart/edit',
+                        array('controller' => 'products',
+                              'action' => 'edit_quantities_in_cart')
+                        );
+        
+        Router::connect('/cart/checkout',
+                        array('controller' => 'products',
+                              'action' => 'checkout')
+                        );
+        
+        Router::connect('/cart/view',
+                        array('controller' => 'products',
+                              'action' => 'view_cart')
+                        );
         
         Router::connect('/cart/delete/:cart_id-:id',
                         array('controller' => 'products',

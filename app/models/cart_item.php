@@ -4,11 +4,14 @@ class CartItem extends AppModel {
 	var $name = 'CartItem';
 	
 	var $displayField = 'product_title';
+	
+	var $actsAs = array('Visible.Visible',);
 
 	var $belongsTo = array(
 		'Cart' => array(
 			'className' => 'Cart',
 			'foreignKey' => 'cart_id',
+			'counterCache' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
