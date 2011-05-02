@@ -12,6 +12,7 @@
                
           <span class="imagebox">
             <?php
+                $image = "";
               if (!empty($product['ProductImage'])) {
                 $image = "";
                 if (file_exists(WWW_ROOT.'uploads/products/thumb/icon/'.$product['ProductImage'][0]['filename'])) {
@@ -19,10 +20,12 @@
                 } else {
                   $image = '/uploads/products/thumb/icon/default-0.jpg';
                 }
+              } else {
+                 $image = '/uploads/products/thumb/icon/default-0.jpg';
               }
               ?>
             <?php 
-              if (isset($image)) {
+              if (isset($image) && !empty($image)) {
               echo $this->Html->image($image);
               }
              ?>
