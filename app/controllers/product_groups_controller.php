@@ -213,6 +213,7 @@ class ProductGroupsController extends AppController {
 			$this->Session->setFlash(__('Invalid product group', true));
 			$this->redirect(array('action' => 'index'));
 		}
+		
 		if (!empty($this->data)) {
 			// set the type to custom
 			$this->data['ProductGroup']['type'] = 0;
@@ -226,6 +227,26 @@ class ProductGroupsController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->ProductGroup->read(null, $id);
 		}
+		
+		 $this->ProductGroup->recurive = 3;
+    
+    $product_group = $this->ProductGroup->read(null, $id);
+    
+    $group_products = array();
+    if (isset($product_group['ProductsInGroup']) && !empty($product_group['ProductsInGroup'])) {
+        foreach($product_group['ProductsInGroup'] as $val) {
+            $product_in_groups[] = $val['product_id'];
+        }
+        
+         $group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
+    }
+   
+    
+		$this->set('productGroup', $this->ProductGroup->read(null, $id));
+    $conditions = array('Product.visible' => 1);
+    $products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
+    $product_group_id = $id;
+    $this->set(compact('products','product_group_id','group_products'));
 		
 	}
 

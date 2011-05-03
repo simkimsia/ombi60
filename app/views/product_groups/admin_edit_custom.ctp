@@ -39,6 +39,7 @@
 			
 	?>
 	</fieldset>
+	
 	<fieldset>
  		<legend><?php __('Properties'); ?></legend>
         <label><?php __('Page Visibility');?></label>
@@ -53,4 +54,6 @@
     <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'product_groups','action' => 'index')); ?>
   </div>
   <?php echo $this->Form->end();?>
+  
+   <?php echo $this->element('admin_product_search_and_list'); ?>
 </div>

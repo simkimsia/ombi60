@@ -763,3 +763,55 @@ div.productnote {
     text-align: center;
     width: 50px;
 }
+
+ .collections #search #startsearch{
+    float: left; 
+    width: 350px; 
+    border: 1px solid #e4e4e4; 
+    padding: 7px; 
+    margin-right: 21px;
+  }
+  .collections #search #startsearch h2 {
+    font-size: 110%;
+    font-weight: bold;
+    color: #000000;    
+    margin: 5px 10px;
+  }
+  .collections #search #startsearch p {
+    margin: 5px 10px;
+  }
+  
+  .collections #search #startsearch input[type=text] {
+    width: 70%;
+    margin: 10px 10px 10px 0px;
+  }
+
+  .collections #search #startsearch ul {
+    padding: 10px;
+  }
+
+  .collections #search #startsearch ul li{
+    list-style: none;
+  }
+  .collections #search #startsearch ul li .imagebox{
+    float: left;
+    width: 50px;
+    min-height: 20px;
+  }
+
+  .collections #search #startsearch ul li .description{
+    float: left;
+    width: 200px;
+  }
+
+  .collections #search #startsearch ul li .go{ 
+    float: left;
+    width: 30px;
+    background: url('../img/');
+  }
+  .collections #search #searchresult{
+    float: left; 
+    width: 795px; 
+    border: 1px solid #e4e4e4; 
+    padding: 5px;
+  }
