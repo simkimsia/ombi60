@@ -51,7 +51,8 @@ class PostsController extends AppController {
 		
 		
 		$blog = $post['Blog'];
-		$post = $post['Post'];
+		$post = $this->Post->getTemplateVariable($post, false);
+		
 		
 		$timezone  = Shop::get('ShopSetting.timezone');
 		
@@ -88,7 +89,8 @@ class PostsController extends AppController {
 							  'Post.blog_id','Post.author_id',
 							  'Post.author_id', 'Post.visible',
 							  'Post.title', 'Post.slug',
-							  'Post.content', 'Post.created'));
+							  'Post.content', 'Post.created',
+							  'Post.published'));
 		
 		$posts = $this->paginate();
 		
@@ -194,6 +196,10 @@ class PostsController extends AppController {
 	function admin_toggle($id = false) {
 		
 		$result = $this->Post->toggle($id, 'visible');
+		
+		if ($result) {
+			$this->Post->updatePublishedAt($id);
+		}
 		
 		if ($this->params['isAjax']) {
 			
