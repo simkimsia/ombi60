@@ -16,7 +16,7 @@
 			
 			
 				<div class="contentcategory">
-					<div class="blogtitle">{{ html.link(post.title, ['action':'view', 'short_name':blog.short_name, 'id':post.id, 'slug':post.slug]) }}</div>
+					<div class="blogtitle">{{ html.link(post.title, post.url) }}</div>
 					<div class="blogdatetime">{{ post.created | date('Y-m-d H:i:s')}}</div>
 				</div>
 				
