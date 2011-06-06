@@ -683,6 +683,7 @@ CREATE TABLE `posts` (
   `allow_pingback` tinyint(1) NOT NULL DEFAULT '1',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
+  `published` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

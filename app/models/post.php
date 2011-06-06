@@ -73,7 +73,38 @@ class Post extends AppModel {
 	
 	public function __construct($id=false,$table=null,$ds=null) {
 		parent::__construct($id,$table,$ds);
-		$this->createVirtualFieldForUrl();
+		$this->createUrlForArticle();
+	}
+	
+	function createUrlForArticle() {
+                
+                $controller = 'blogs';
+                $action = 'view';
+                
+                
+		if (!isset($this->virtualFields['url'])) {
+                        
+                        $this->virtualFields['url'] = "CONCAT('/', '$controller', '/', `Blog`.`short_name`, '/', `{$this->alias}`.`id`, '-', `{$this->alias}`.`slug`)";
+                                
+                }
+                
+	}
+	
+	
+	/**
+	 * use this method ONLY after toggle!!
+	 **/
+	function updatePublishedAt($id) {
+		
+		return $this->updateAll(
+			// fields to change
+                        // this should give array('Product.visible' => '!Product.visible')
+			 array('published' => date('Y-m-d')),
+			 // conditions
+                         // this should like array('Product.id' => $id)
+			 array('Post.id' => $id, 'Post.visible'=>true)
+		);
+		
 	}
 	
 	/**
@@ -95,7 +126,8 @@ class Post extends AppModel {
 					   'handle' => $article['Post']['slug'],
 					   'url' => $article['Post']['url'],
 					   
-					   'created_at' => $article['Post']['created'],
+					   'created' => $article['Post']['created'],
+					   'published'=> $article['Post']['published'],
 					   );
 			
 			

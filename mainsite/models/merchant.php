@@ -92,7 +92,7 @@ class Merchant extends AppModel {
 		$settingData['ShopSetting']['shop_id'] = $this->Shop->id;
 		
 		/* timezone, unit_system, currency, checkout language dependent on country */
-		$settingData['ShopSetting']['timezone']  = '';
+		$settingData['ShopSetting']['timezone']  = 'Asia/Singapore';
 		$settingData['ShopSetting']['unit_system'] = 'metric';		
 		$settingData['ShopSetting']['currency'] = 'SGD';
 		$settingData['ShopSetting']['checkout_language'] = 1;
