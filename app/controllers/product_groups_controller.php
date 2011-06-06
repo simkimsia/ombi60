@@ -23,8 +23,10 @@ class ProductGroupsController extends AppController {
 		$shopId = Shop::get('Shop.id');
 		$customCollections = $this->ProductGroup->find('all', array('conditions'=>array('ProductGroup.type'=>0,
 												'ProductGroup.shop_id'=>$shopId)));
-		$smartCollections = $this->ProductGroup->find('all', array('conditions'=>array('ProductGroup.type'=>1,
-											       'ProductGroup.shop_id'=>$shopId)));
+
+    $smartCollections = ClassRegistry::init('SmartCollection')->find('all', array('conditions' => array('shop_id' => $shopId)));
+		/*$smartCollections = $this->ProductGroup->find('all', array('conditions'=>array('ProductGroup.type'=>1,
+											       'ProductGroup.shop_id'=>$shopId)));*/
 		$this->set(compact('customCollections', 'smartCollections'));
 	}
 	

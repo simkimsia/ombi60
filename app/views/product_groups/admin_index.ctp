@@ -1,10 +1,11 @@
+<?php ?>
 <div class="collections">
   <div class="text_center">
     <h2>
       <?php __('Product Collections'); ?>
     </h2>
       <?php 
-        echo $this->Html->link(__('Create new Smart Collection', true), array('action' => 'add_smart'));
+        echo $this->Html->link(__('Create new Smart Collection', true), array('controller' => 'smart_collections', 'action' => 'add'));
         echo ' | '. $this->Html->link(__('Create new Custom Collection', true), array('action' => 'add_custom'));
       ?>
 
@@ -23,7 +24,7 @@
     
 	<table cellpadding="0" cellspacing="0" class="products-table">
 	    <tr>
-		        <th>&nbsp;</th>
+		      <!--<th>&nbsp;</th>-->
 			    <th><?php echo 'Title';?></th>
 			    <th class="text_center"><?php echo 'Modified';?></th>
 	    </tr>
@@ -36,14 +37,14 @@
 		    }
 	    ?>
 	    <tr<?php echo $class;?>>
-		    <td width="5%" align="center"><?php echo $form->input('check_box_id', array('value' => $collection['ProductGroup']['id'], 'class' => 'checkbox_check', 'type' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>
+		    <!--<td width="5%" align="center"><?php //echo $form->input('check_box_id', array('value' => $collection['SmartCollection']['id'], 'class' => 'checkbox_check', 'type' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>-->
 		    <td width="60%">
-          <?php echo $this->Html->link($collection['ProductGroup']['title'], array('action' => 'view_smart', $collection['ProductGroup']['id'])); 
-            if (!$collection['ProductGroup']['visible']) { ?>
-                <span class="hidden_gray">Hidden</span>
-          <?php } ?>
+          <?php echo $this->Html->link($collection['SmartCollection']['title'], array('controller' => 'smart_collections', 'action' => 'view', $collection['SmartCollection']['id'])); 
+            //if (!$collection['SmartCollection']['visible']) { ?>
+                <!--<span class="hidden_gray">Hidden</span>-->
+          <?php //} ?>
             </td>
-		    <td width="35%" class="text_center"><?php echo date('D, M dS Y, h:i', strtotime($collection['ProductGroup']['modified']));?></td>
+		    <td width="35%" class="text_center"><?php echo date('D, M dS Y, h:i', strtotime($collection['SmartCollection']['modified']));?></td>
 	    </tr>
     <?php endforeach; ?>
 	    </table>
