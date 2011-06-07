@@ -55,13 +55,89 @@ class SmartCollectionsController extends AppController {
     }
   }//end admin_add
 
+
+  function admin_edit($id = null) {    
+    if (!$id) {
+      $this->Session->setFlash(__('Invalid smart collection', true));
+      $this->redirect($this->refer());
+    }
+    if (!empty($this->data)) {
+      if ($this->SmartCollection->save($this->data)) {
+        $this->redirect(array('action' => 'view', $id));
+      }
+    }
+    $this->data = $this->SmartCollection->read(null, $id);
+    //$this->__getSmartCollection($id);
+    //$this->set('view', true);
+  }//end admin_edit()
+
+
   function admin_view($id = null) {
     if (!$id) {
       $this->Session->setFlash(__('Invalid smart collection', true));
       $this->redirect($this->refer());
     }
-    $smart_collection = $this->SmartCollection->read(null, $id);
+    $this->__getSmartCollection($id);
+    $this->set('view', true);
+  }//end admin_view()
 
+
+  function admin_delete($id = null) {
+    if (!$id) {
+      $this->Session->setFlash(__('Invalid smart collection', true));
+      $this->redirect($this->refer());
+    }
+    if ($this->SmartCollection->delete($id)) {
+      $this->Session->setFlash(__('Smart collection deleted successfully', true));
+      $this->redirect(array('controller' => 'product_groups', 'action' => 'index'));
+    }
+  }//end admin_view()
+
+  
+  function admin_remove_condition($condition_id = null, $smart_collection_id = null) {
+    if (!$condition_id) {
+      $this->Session->setFlash(__('Invalid smart collection', true));
+      $this->redirect($this->refer());
+    }
+
+    if ($this->SmartCollection->SmartCollectionCondition->delete($condition_id)) {
+      $this->layout = 'ajax';
+      $this->__getSmartCollection($smart_collection_id);
+      $this->render('/elements/admin_smart_collection_products');
+    }
+    die;
+  }//end admin_remove_condition()
+
+  function admin_save_condition() {
+    $i = 0;
+    foreach ($_POST['fields'] as $field) {
+      $this->data['SmartCollectionCondition'][$i]['field'] = $field;
+      $i++;
+    }
+    $i = 0;
+    foreach ($_POST['relations'] as $relation) {
+      $this->data['SmartCollectionCondition'][$i]['relation'] = $relation;
+      $i++;
+    }
+    $i = 0;
+    foreach ($_POST['conditions'] as $condition) {
+      $this->data['SmartCollectionCondition'][$i]['condition'] = $condition;
+      $i++;
+    } 
+    $smart_collection_id = $_POST['smart_collection_id'];
+    if ($this->SmartCollection->saveSmartCollectionCondition($this->data, $smart_collection_id)) {
+      if ($this->RequestHandler->isAjax()) {
+        $this->layout = 'ajax';
+      }
+      $this->__getSmartCollection($smart_collection_id);
+      $this->render('/elements/admin_smart_collection_products');
+    }
+    //die;
+  }
+
+
+  function __getSmartCollection($id) {
+    $smart_collection = $this->SmartCollection->read(null, $id);
     $ids = array();
     foreach ($smart_collection['SmartCollectionCondition'] as $smart_collection_condition) {
       $smart_products    = ClassRegistry::init('Product')->conditionalProducts($smart_collection_condition);
@@ -72,7 +148,6 @@ class SmartCollectionsController extends AppController {
       }
     }
     $product_ids = array_unique($ids);
-
     $shopId = Shop::get('Shop.id');
     $conditions  = array(
                     'Product.id'      => $product_ids,
@@ -81,6 +156,6 @@ class SmartCollectionsController extends AppController {
   
     $products = ClassRegistry::init('Product')->find('all', array('conditions' => $conditions, 'contain' => 'ProductImage'));
     $this->set(compact('smart_collection', 'products'));
-  }
+  }//end __getSmartCollection()
   
 }//end class

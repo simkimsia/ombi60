@@ -42,6 +42,10 @@
 			echo $this->Html->css('saved_themes');
 		}
         echo $this->Html->script('jquery.js'); 
+    // JS
+    //echo $this->Html->scriptBlock('var baseUrl = "' . $this->Html->url('/').'";');
+    //echo $this->Html->scriptBlock('var js_vars = ' . $this->Js->object($js_vars).';');
+
 		echo $scripts_for_layout;
 	?>
 </head>

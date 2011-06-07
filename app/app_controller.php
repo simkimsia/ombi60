@@ -40,13 +40,13 @@ class AppController extends Controller {
         'Session',
         'Security',
         'RequestHandler',
-	'DebugKit.Toolbar',
-	'Cookie',
-	'RandomString.RandomString',
-	'Theme',
-	);
+        'DebugKit.Toolbar',
+        'Cookie',
+        'RandomString.RandomString',
+        'Theme',
+        );
 
-    var $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone');
+    var $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax');
     
     //Allowed controllers with actions
     var $sslActions = array(

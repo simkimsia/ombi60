@@ -1,6 +1,6 @@
 <?php
-class SmartCollection extends AppModel {
-
+class SmartCollection extends AppModel
+{
   var $name = 'SmartCollection';
 
   var $validate = array(
@@ -24,9 +24,13 @@ class SmartCollection extends AppModel {
                                                 ),
                  );
 
-  /**
-   * This action is used to save the smart collection
-   */
+    /**
+    * This action is used to save the smart collection
+    * 
+    * @param array   $data array of data
+    * 
+    * @return boolean true on successfull execution and false in failure
+    */
   public function saveSmartCollection($data) {
     //First create an empty row in smart_collections table
     $this->create();
@@ -51,6 +55,46 @@ class SmartCollection extends AppModel {
       return true;
     }
     return false;
-  }
+  }//end saveSmartCollection()
+
+
+  /**
+    * This function is used to save smart collection condition
+    * 
+    * @param array   $data array of data
+    * @param integer $smart_collection_id Smart Collection Id
+    * 
+    * @return boolean true on successfull execution and false in failure
+    */
+  function saveSmartCollectionCondition($data, $smart_collection_id = null) {
+    if (!empty($data['SmartCollectionCondition']) && is_array($data['SmartCollectionCondition'])) {
+      //Check if rows are already present in table for smart_collection_id
+      if ($smart_collection_id != null) {
+        //Get all the records of this smart_collection_id
+        $conditions        = array('SmartCollectionCondition.smart_collection_id' => $smart_collection_id);
+        $fields            = array('SmartCollectionCondition.id');
+        $smart_collections = $this->SmartCollectionCondition->find('all', array(
+                                                                           'conditions' => $conditions, 
+                                                                           'fields'     => $fields,
+                                                                          ));
+        $ids               = Set::extract('{n}.SmartCollectionCondition.id', $smart_collections);
+        //Now we will delete all old ids from table
+        $this->SmartCollectionCondition->deleteAll($ids);
+      }
+      foreach ($data['SmartCollectionCondition'] as $smartCollectionCondtion) {
+        //Set smart collection id to array
+        $smartCollectionCondtion['smart_collection_id'] = $smart_collection_id;
+        $this->SmartCollectionCondition->create();
+        if ($this->SmartCollectionCondition->save($smartCollectionCondtion)) {
+          //Select all the products with condition selected
+          //get products from product model
+          //ClassRegistry::init('Product')->conditionalProducts($smartCollectionCondtion);
+        }
+      }
+      return true;
+    }
+    return false;
+  }//end saveSmartCollectionCondition()
+
 
 }//end class

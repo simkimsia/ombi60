@@ -815,3 +815,21 @@ div.productnote {
     border: 1px solid #e4e4e4; 
     padding: 5px;
   }
+  .plus {
+    padding: 5px; margin: 5px;
+  }
+  .minus {
+    padding: 5px; margin: 5px;
+  }
+  #smart-products {
+    list-style: none;
+  }
+  #smart-products li{
+    list-style: none;
+    margin: 2px 5px 5px 0px;
+    border-bottom: 1px dashed #CCCCCC;
+  }
+  #smart-products .smart-products-desc { 
+    float: left; 
+    margin: 5px 10px 5px 0px;
+  }

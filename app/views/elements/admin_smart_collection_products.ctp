@@ -1,17 +1,3 @@
-<style>
-  #smart-products {
-    list-style: none;
-  }
-  #smart-products li{
-    list-style: none;
-    margin: 2px 5px 5px 0px;
-    border-bottom: 1px dashed #CCCCCC;
-  }
-  #smart-products .smart-products-desc { 
-    float: left; 
-    margin: 5px 10px 5px 0px;
-  }
-</style>
 <div>
   <fieldset>
     <legend><?php __(count($products). " Products in this collection"); ?></legend>
