@@ -18,7 +18,7 @@
       <div><?php print $smart_collection['SmartCollection']['description'];?></div>
   </fieldset>
   <!--<div id="edit-form" style="display: none;">
-    <?php echo $this->element('admin_edit_smart_collection', array('data' => $smart_collection));?>
+    <?php //echo $this->element('admin_edit_smart_collection', array('data' => $smart_collection));?>
   </div>-->
   <div id="smartCollection">
     <?php echo $this->element('admin_set_smart_collection_condition');?>

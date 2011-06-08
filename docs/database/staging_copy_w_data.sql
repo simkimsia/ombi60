@@ -1130,12 +1130,13 @@ CREATE TABLE `smart_collections` (
 
 CREATE TABLE `smart_collection_conditions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NOT NULL,
-  `field` varchar(25) NOT NULL,
-  `relation` varchar(25) NOT NULL,
-  `condition` varchar(25) NOT NULL,
+  `smart_collection_id` int(11) NOT NULL,
+  `field` varchar(25) CHARACTER SET latin1 NOT NULL,
+  `relation` varchar(25) CHARACTER SET latin1 NOT NULL,
+  `condition` varchar(25) CHARACTER SET latin1 NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 );
+
 
