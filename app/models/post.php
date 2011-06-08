@@ -28,7 +28,17 @@ class Post extends AppModel {
 			'foreignKey' => 'blog_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => ''
+			'order' => '',
+			'counterCache' => 'visible_post_count',
+			'counterScope' => array('Post.visible' => 1) // only count if "article" is visible = 1
+		),
+		'BlogAllPost' => array(
+			'className' => 'Blog',
+			'foreignKey' => 'blog_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => 'all_post_count',
 		),
 		'Author' => array(
 			'className' => 'User',

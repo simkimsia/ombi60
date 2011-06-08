@@ -77,8 +77,9 @@ class WebpagesController extends AppController {
 		$blogModel->Behaviors->attach('Containable');
 		
 		$blogs = $blogModel->find('all', array('conditions'=>array('Blog.shop_id'=>$shopid),
-						       'contain'=>array('Post'=>array('limit'=>3,
-										   'order'=>'Post.modified DESC'))));
+						       'contain'=>array('Post'=>array('fields'=>array('Post.id', 'Post.blog_id'),
+										      'limit'=>3,
+										      'order'=>'Post.modified DESC'))));
 		
 		$this->set(compact('blogs', 'webpages'));
 	}

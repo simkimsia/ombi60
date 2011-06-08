@@ -12,11 +12,11 @@
 			<div class="categorywrapper">
 			<div class="categorytop"></div>
 			
-			{% for post in posts %}
+			{% for post in blog.articles %}
 				<div class="contentcategory">
 					<div class="blogtitle">{{ html.link(post.title, ['action':'view', 'short_name':blog.short_name, 'id':post.id, 'slug':post.slug]) }}
                                         </div>
-					<div class="blogdatetime">{{ post.created }}</div>
+					<div class="blogdatetime">{{ post.created | date('Y-m-d H:i:s') }}</div>
 				</div>
 				
 				

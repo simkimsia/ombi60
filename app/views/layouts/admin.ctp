@@ -71,6 +71,7 @@
 					$homeSelected = '';
 					$ordersSelected = '';
 					$productsSelected = '';
+					$collectionsSelected = '';
 					$blogsPagesSelected = '';
 					$marketingSelected = '';
 					$navigationSelected = '';
@@ -94,6 +95,7 @@
 					<li <?php echo $homeSelected; ?>><?php echo $this->Html->link('Home', '/admin'); ?></li>
 					<li <?php echo $ordersSelected; ?>><?php echo $this->Html->link('Orders', '/admin/orders'); ?></li>
 					<li <?php echo $productsSelected; ?>><?php echo $this->Html->link('Products', '/admin/products'); ?></li>
+					<li <?php echo $collectionsSelected; ?>><?php echo $this->Html->link('Collections', '/admin/collections'); ?></li>
 					<li <?php echo $blogsPagesSelected; ?>><?php echo $this->Html->link('Blogs & Pages', '/admin/pages'); ?></li>
 					<li <?php echo $navigationSelected; ?>><?php echo $this->Html->link('Navigation', '/admin/links'); ?></li> 
 				</ul>

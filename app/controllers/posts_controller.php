@@ -48,11 +48,8 @@ class PostsController extends AppController {
 		
 		
 		
-		
-		
-		$blog = $post['Blog'];
-		$post = $this->Post->getTemplateVariable($post, false);
-		
+		$blog = Blog::getTemplateVariable($post['Blog'], false);
+		$post = Post::getTemplateVariable($post, false);
 		
 		$timezone  = Shop::get('ShopSetting.timezone');
 		
@@ -68,8 +65,6 @@ class PostsController extends AppController {
 	
 	function index($short_name = false) {
 		
-		
-		
 		if (!$short_name) {
 			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect('/');
@@ -83,22 +78,21 @@ class PostsController extends AppController {
 			$this->redirect('/');
 		}
 		
-		$this->paginate = array('conditions'=>array('Post.blog_id'=>$blog['Blog']['id']),
+		$this->paginate = array('conditions'=>array('Post.blog_id'=>$blog['Blog']['id'],
+							    'Post.visible'=>true),
 					'order' => array('Post.created DESC'),
 					'fields' => array('Post.id',
-							  'Post.blog_id','Post.author_id',
-							  'Post.author_id', 'Post.visible',
-							  'Post.title', 'Post.slug',
-							  'Post.content', 'Post.created',
-							  'Post.published'));
+							  'Post.blog_id'));
 		
 		$posts = $this->paginate();
 		
-		$posts = Set::extract('{n}.Post', $posts);
+		$all_post_ids = Set::extract('{n}.Post.id', $posts);
 		
-		$blog = $blog['Blog'];
+		$blog['Post'] = $this->Post->find('all', array('conditions'=>array('Post.id'=>$all_post_ids)));
 		
-		$this->set(compact('posts', 'blog'));
+		$blog = Blog::getTemplateVariable($blog, false);
+		
+		$this->set(compact('blog'));
 		
 		$this->viewPath = 'articles';
 		$this->render('blog');

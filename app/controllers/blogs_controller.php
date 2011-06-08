@@ -19,25 +19,6 @@ class BlogsController extends AppController {
 	}
 
 	
-
-	function view($slug = false) {
-		if (!$slug) {
-			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect('/');
-		}
-		
-		$blog = $this->Blog->find('first', array('conditions'=>array('short_name'=>$slug,
-									'shop_id'=>Shop::get('Shop.id'))));
-		
-		if (!$blog) {
-			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect('/');
-		}
-		
-		$this->set(compact('blog'));
-	}
-
-
 	function admin_index() {
 		$this->Blog->recursive = 0;
 		$this->paginate = array('conditions'=>array('Blog.shop_id'=>Shop::get('Shop.id')));
@@ -49,12 +30,18 @@ class BlogsController extends AppController {
 			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
+		
+		$this->Blog->recursive 	      = 0;
 		$blog                         = $this->Blog->read(null, $id);
+		
 		$this->paginate['conditions'] = array('Post.blog_id' => $blog['Blog']['id']);
 		$this->paginate['order']      = array('Post.created DESC');
-	    $posts                        = $this->paginate('Post');
+		$this->paginate['fields']     = array('Post.id', 'Post.blog_id', 'Post.title',
+						      'Post.created', 'Post.modified', 'Post.visible');
+		
+		$posts                        = $this->paginate('Post');
 
-	    $this->set(compact('blog', 'posts'));	
+		$this->set(compact('blog', 'posts'));	
 	}
 
 	function admin_add() {

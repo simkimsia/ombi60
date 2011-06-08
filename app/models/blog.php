@@ -63,14 +63,15 @@ class Blog extends AppModel {
 			
 			$result = array('id' => $blog['Blog']['id'],
 					   'title' => $blog['Blog']['title'],
-					   'description' => $blog['Blog']['description'],
+					   
 					   'handle' => $blog['Blog']['short_name'],
 					   'url' => $blog['Blog']['url'],
-					   'all_articles_count' => $blog['Blog']['posts_count'],
+					   'all_articles_count' => $blog['Blog']['visible_post_count'],
 					   
 					   );
 			
 			$result['articles'] = isset($blog['Post']) ? Post::getTemplateVariable($blog['Post']) : array();
+			$result['articles_count'] = count($result['articles']);
 			
 			$results[] = $result;
 		}

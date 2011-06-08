@@ -8,7 +8,7 @@
     </div>
 
 
-<?php if (!empty($blog['Post'])):?>
+<?php if (!empty($posts)):?>
     <?php echo $this->element('action_buttons', array('modelName' => 'Post', 'deleteConfirm' => sprintf(__('Are you sure you want to delete this blog?', true)), 'deleteURL' => '/admin/blogs/delete/'.$blog['Blog']['id']));?>
 	<table cellpadding = "0" cellspacing = "0" class="products-table">
 	<tr>
@@ -20,7 +20,9 @@
 	</tr>
 	<?php
 		$i = 0;
-		foreach ($blog['Post'] as $post):
+		foreach ($posts as $post):
+			$post = $post['Post'];
+			
 			$class = null;
 			if ($i++ % 2 == 0) {
 				$class = ' class="altrow"';
