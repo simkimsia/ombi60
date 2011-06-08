@@ -36,8 +36,8 @@
 			'theme_advanced_toolbar_location' => 'top',
 			'remove_linebreaks' => false,
 			'extended_valid_elements' => 'textarea[cols|rows|disabled|name|readonly|class]'));
-	
-		echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=> User::get('Merchant.shop_id')));
+    echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=>Shop::get('Shop.id')));
+		//echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=> User::get('Merchant.shop_id')));
 		echo $this->Form->error('Product.title');
 		$titleLabel = $this->Form->label('title');
 		$titleHint = __('Examples: 14" LCD Screen, Maroon Brand X T-shirt', true);

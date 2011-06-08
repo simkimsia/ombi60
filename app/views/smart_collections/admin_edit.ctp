@@ -23,12 +23,21 @@
     echo $this->Form->input('title');
     echo $this->Form->input('description', array('label' => __('Write description of collection', true)));
   ?>
-    <div class="submit">
-      <?php echo $this->Form->submit(__('Edit Smart Collection', true), array('div' => false));?> &nbsp;<?php __('or'); ?>&nbsp;
-      <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'product_groups','action' => 'index')); ?>
-    </div>
+  </fieldset>
+  
+  <fieldset>
+    <legend><?php __('Properties', FALSE)?></legend>
+      <span class="hint"><?php __("If you don't want this smart collection to show up on your store front you can set its visibility to hidden.", FALSE);?></span>
+      <div style="clear: both;"></div>
+      <?php
+        echo $this->Form->input('SmartCollection.visible', array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false));        
+      ?>
   </fieldset>
 
+  <div class="submit">
+    <?php echo $this->Form->submit(__('Edit Smart Collection', true), array('div' => false));?> &nbsp;<?php __('or'); ?>&nbsp;
+    <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'product_groups','action' => 'index')); ?>
+  </div>
   
   <?php echo $this->Form->end(); ?>
 </div>

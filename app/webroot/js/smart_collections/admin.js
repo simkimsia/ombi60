@@ -22,31 +22,32 @@ $(document).ready(function() {
 });
 
 function add() {
+    var randomnumber = Math.floor(Math.random()*100001);
+    
     firstcontainer = '#setCondition';
     nodeChildren = $(firstcontainer).children();
     tmpChild = $(nodeChildren)[$(nodeChildren).length-1];
     //a clone of the current node’s last child
     curChild = $(tmpChild).clone();
-    curid = $(curChild).attr("rel");
-    val = parseInt(curid) + parseInt(1);
-    $(curChild).attr("rel", val);
-    $(curChild).attr("id", "form_"+val);
-
-    var currentValue = $(firstcontainer).children().length;    
     
+    $(curChild).attr("rel", randomnumber);    
+    $(curChild).attr("id", "form_"+randomnumber);
+
     //remove child element from parent elem
     //if scrolling stops, return removed child node
     $(firstcontainer).append(curChild);
-    
+    $('#form_'+randomnumber+' input[name="fields[]"]').val(null);
+    $('#form_'+randomnumber+' input[name="relations[]"]').val(null);
+    $('#form_'+randomnumber+' input[name="conditions[]"]').val(null);
     $('#setCondition .plus').bind('click', add);
     $('#setCondition .minus').bind('click', remove);
-    $('#form_'+val+' .minus').attr('id', val);
+    $('#form_'+randomnumber+' .minus').removeAttr('id');
     return false;
 }
 
 function remove() {
   
-  if ($(this).attr('id') != undefined && $(this).attr('id')!="") {
+  if ($(this).attr('id') != undefined && $(this).attr('id')!="" && $(this).attr('id')!="NaN") {
     firstcontainer = '#setCondition';
     nodeChildren = $(firstcontainer).children(); 
     if ((nodeChildren.length) <= 1) {
