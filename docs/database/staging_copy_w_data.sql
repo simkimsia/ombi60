@@ -2,7 +2,8 @@
 SQLyog Community v8.81 
 MySQL - 5.1.41-3ubuntu12.10 : Database - s2s_new
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -1114,3 +1115,27 @@ CREATE TABLE `wishlists` (
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+CREATE TABLE `smart_collections` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `shop_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `visible` tinyint(1) NOT NULL DEFAULT '1',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `smart_collection_conditions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `field` varchar(25) NOT NULL,
+  `relation` varchar(25) NOT NULL,
+  `condition` varchar(25) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
