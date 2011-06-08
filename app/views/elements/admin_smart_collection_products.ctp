@@ -33,10 +33,15 @@
                   </div>
                   <div class="smart-products-desc">
                       <?php echo $this->Html->link($product['Product']['title'],array('controller' => 'products','action' => 'view',$product['Product']['id'],'admin' => true),array('class' => '')); ?>
+                      <?php 
+                        if (0 == $product['Product']['visible']) {
+                            ?><span style="background: #CCCCCC"><?php __('Hidden', true);    ?></span><?php
+                            
+                        }        
+                      ?>  
                   </div>
                   <div style="clear: both;"></div>
                 </li>
-                
                 <?php
               }
             ?>

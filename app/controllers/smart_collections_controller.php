@@ -100,7 +100,7 @@ class SmartCollectionsController extends AppController {
       $this->redirect($this->refer());
     }
 
-    if ($this->SmartCollection->SmartCollectionCondition->delete($condition_id)) {
+    if ($this->SmartCollection->SmartCollectionCondition->deleteAll($condition_id)) {
       $this->layout = 'ajax';
       $this->__getSmartCollection($smart_collection_id);
       $this->render('/elements/admin_smart_collection_products');
@@ -138,23 +138,28 @@ class SmartCollectionsController extends AppController {
 
   function __getSmartCollection($id) {
     $smart_collection = $this->SmartCollection->read(null, $id);
-    $ids = array();
-    foreach ($smart_collection['SmartCollectionCondition'] as $smart_collection_condition) {
-      $smart_products    = ClassRegistry::init('Product')->conditionalProducts($smart_collection_condition);
-      $smart_product_ids = Set::extract('{n}.Product.id', $smart_products);
-      
-      foreach ($smart_product_ids as $smart_product_id) {
-        array_push($ids, $smart_product_id);
-      }
-    }
-    $product_ids = array_unique($ids);
+    $tmp = $test = array();
     $shopId = Shop::get('Shop.id');
-    $conditions  = array(
-                    'Product.id'      => $product_ids,
-                    'Product.shop_id' => $shopId,
-                   );
-  
-    $products = ClassRegistry::init('Product')->find('all', array('conditions' => $conditions, 'contain' => 'ProductImage'));
+
+    $tmp['Product.shop_id'] = $shopId;
+    foreach ($smart_collection['SmartCollectionCondition'] as $smart_collection_condition) {
+      $condition = ClassRegistry::init('Product')->conditionalProducts($smart_collection_condition);
+      if (array_key_exists(key($condition), $tmp)) {
+        $test[key($condition)][] = $tmp[key($condition)];
+        $test[key($condition)][] = $condition[key($condition)];
+      }
+      $tmp[key($condition)] = $condition[key($condition)];
+    }
+    foreach ($test as $key => $value) {
+      $tmp[$key] = $value;
+    }
+
+    $productsOptions = array(
+                        'conditions' => $tmp,
+                        'contain' => 'ProductImage',
+                       );
+    $products = ClassRegistry::init('Product')->find('all', $productsOptions);
+//debug($products);
     $this->set(compact('smart_collection', 'products'));
   }//end __getSmartCollection()
   
