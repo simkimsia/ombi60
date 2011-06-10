@@ -53,7 +53,7 @@ class ProductGroup extends AppModel {
 	 * for use in templates for shopfront pages
 	 * we avoid the use of many images for retrieving lots of products
 	 * */
-	function getTemplateVariable($productsInGroups=array()) {
+	function getTemplateVariable($productsInGroups=array(), $multiple = true) {
 		
 		$results = array();
 		
@@ -65,6 +65,7 @@ class ProductGroup extends AppModel {
 					   'description' => $group['ProductGroup']['description'],
 					   
 					   'handle' => $group['ProductGroup']['handle'],
+					   'underscore_handle' => str_replace('-', '_', $group['ProductGroup']['handle']),
 					   'url' => $group['ProductGroup']['url'],
 					   'all_products_count' => $group['ProductGroup']['products_in_group_count'],
 					   'vendor_count' => $group['ProductGroup']['vendor_count'],
@@ -73,7 +74,13 @@ class ProductGroup extends AppModel {
 			
 			$result['products'] = isset($group['Product']) ? ProductGroup::getTemplateVariable($group['Product']) : array();
 			
-			$results[] = $result;
+			$results[$result['underscore_handle']] = $result;
+		}
+		
+		if (!$multiple && !empty($results)) {
+			return current($results);
+		} else if (!$multiple && empty($results)) {
+			return array();
 		}
 		
 		return $results;

@@ -438,6 +438,7 @@ class Product extends AppModel {
 					   'description' => $product['Product']['description'],
 					   'price' => $product['Product']['price'],
 					   'handle' => $product['Product']['handle'],
+					   'underscore_handle' => str_replace('-', '_', $product['Product']['handle']),
 					   'url' => $product['Product']['url'],
 					   
 					   'weight' => $product['Product']['weight'],
@@ -451,12 +452,12 @@ class Product extends AppModel {
 			
 			$result['collections'] = isset($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : array();
 			
-			$results[] = $result;
+			$results[$result['underscore_handle']] = $result;
 		}
 		
-		if (!$multiple && !empty($results[0])) {
-			return $results[0];
-		} else if (!$multiple && empty($results[0])) {
+		if (!$multiple && !empty($results)) {
+			return current($results);
+		} else if (!$multiple && empty($results)) {
 			return array();
 		}
 		

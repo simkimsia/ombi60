@@ -49,7 +49,7 @@ class WebpagesController extends AppController {
 		
 		$this->set('title_for_layout', $webpage['Webpage']['title']);
 		
-		$page = $webpage['Webpage'];
+		$page = Webpage::getTemplateVariable($webpage, false);
 		
 		$this->set(compact('page'));
 		

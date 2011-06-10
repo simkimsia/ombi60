@@ -202,9 +202,8 @@ class AppController extends Controller {
 		
 		$this->LinkList->Behaviors->attach('Containable');
 		
-		$mainMenu = $this->LinkList->find('first', array(
-		    'conditions'=>array('LinkList.shop_id'=>$shopId,
-					'LinkList.handle' =>'main-menu'),
+		$linklists = $this->LinkList->find('all', array(
+		    'conditions'=>array('LinkList.shop_id'=>$shopId),
 		    'contain'   =>array(
 			'Link'=>array(
 			    'fields'=>array('Link.id',
@@ -213,25 +212,29 @@ class AppController extends Controller {
 					    'Link.model',
 					    'Link.action',
 					    'Link.order'),
-			    'order'=>array('Link.order ASC'))),
-		    'fields'    =>array('LinkList.id',)));
+			    'order'=>array('Link.order ASC'))),));
 		
-		$footerMenu = $this->LinkList->find('first', array(
-		    'conditions'=>array('LinkList.shop_id'=>$shopId,
-					'LinkList.handle' =>'footer-menu'),
-		    'contain'   =>array(
-			'Link'=>array(
-			    'fields'=>array('Link.id',
-					    'Link.name',
-					    'Link.route',
-					    'Link.model',
-					    'Link.action',
-					    'Link.order'),
-			    'order'=>array('Link.order ASC'))),
-		    'fields'    =>array('LinkList.id',)));
+		$linklists = LinkList::getTemplateVariable($linklists);
 		
-		$this->set('mainMenu', $mainMenu);
-		$this->set('footerMenu', $footerMenu);
+		$this->set('linklists', $linklists);
+		
+		// fetch the pages
+		$this->loadModel('Webpage');
+		$this->Webpage->recursive = -1;
+		
+		$this->Webpage->Behaviors->attach('Linkable.Linkable');
+		
+		$pages = $this->Webpage->find('all', array(
+		    'conditions'=>array('Webpage.shop_id'=>$shopId,
+					'Webpage.visible'=>true),
+		    'link'   =>array(
+			'Author'=>array(
+			    'fields'=>array('Author.name_to_call', 'Author.id'),
+			)),));
+		$this->log($pages);
+		$pages = Webpage::getTemplateVariable($pages);
+		$this->log($pages);
+		$this->set('pages', $pages);
 		
 	}
 	/**
