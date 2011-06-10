@@ -51,6 +51,38 @@ class LinkList extends AppModel {
 		parent::__construct($id,$table,$ds);
 		$this->createVirtualFieldForUrl();
 	}
+	
+	/**
+	 * for use in templates for shopfront pages
+	 * */
+	function getTemplateVariable($linklists=array(), $multiple = true) {
+		
+		$results = array();
+		
+		if (!$multiple) $linklists = array($linklists);
+		
+		foreach($linklists as $key=>$linklist) {
+			
+			$result = array('id' => $linklist['LinkList']['id'],
+					'title' => $linklist['LinkList']['name'],
+					'handle' => $linklist['LinkList']['handle'],
+					'underscore_handle' => str_replace('-', '_', $linklist['LinkList']['handle']),
+					'url' => $linklist['LinkList']['url'],
+					);
+			
+			$result['links'] = isset($linklist['Link']) ? Link::getTemplateVariable($linklist['Link']) : array();
+			
+			$results[$result['underscore_handle']] = $result;
+		}
+		
+		if (!$multiple && !empty($results)) {
+			return current($results);
+		} else if (!$multiple && empty($results)) {
+			return array();
+		}
+		
+		return $results;
+	}
 
 }
 ?>

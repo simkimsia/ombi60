@@ -57,24 +57,21 @@ class Webpage extends AppModel {
 		foreach($pages as $key=>$page) {
 			
 			$result = array('id' => $page['Webpage']['id'],
-					   'title' => $page['Webpage']['title'],
-					   
-					   'content' => $page['Webpage']['content'],
-					   
-					   'handle' => $page['Webpage']['handle'],
-					   'url' => $page['Webpage']['url'],
-					   
-					   
-					   );
+					'title' => $page['Webpage']['title'],
+					'content' => $page['Webpage']['content'],
+					'handle' => $page['Webpage']['handle'],
+					'underscore_handle' => str_replace('-', '_', $page['Webpage']['handle']),
+					'url' => $page['Webpage']['url'],
+					);
 			
-			$result['author'] = isset($article['User']['name_to_call']) ? $article['User']['name_to_call'] : '';
+			$result['author'] = isset($page['Author']['name_to_call']) ? $page['Author']['name_to_call'] : '';
 			
-			$results[] = $result;
+			$results[$result['underscore_handle']] = $result;
 		}
 		
-		if (!$multiple && !empty($results[0])) {
-			return $results[0];
-		} else if (!$multiple && empty($results[0])) {
+		if (!$multiple && !empty($results)) {
+			return current($results);
+		} else if (!$multiple && empty($results)) {
 			return array();
 		}
 		

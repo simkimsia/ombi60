@@ -153,3 +153,17 @@ transactions and callbacks
 if you do transaction inside afterSave, ensure that the saveAll of the
 primary model is done using atomic=>false, validate=>'first', otherwise
 the saveAll will fail despite the records safely saved.
+
+TWIG
+=====
+
+do realize that for arrays, best not to use keys with dashes in them.
+
+see http://groups.google.com/group/twig-users/browse_thread/thread/934faafaa302f46e
+
+my array is called list. there is a key inside called main-menu which 
+points to another array 
+{{ list.main-menu.title }} does not work. 
+But if i rename my index to main_menu replacing the dash with 
+underscore, it will work. 
+{{ list.main_menu.title }} works, provided i renamed my index. 

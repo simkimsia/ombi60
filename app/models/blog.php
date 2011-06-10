@@ -65,6 +65,7 @@ class Blog extends AppModel {
 					   'title' => $blog['Blog']['title'],
 					   
 					   'handle' => $blog['Blog']['short_name'],
+					   'underscore_handle' => str_replace('-', '_', $blog['Blog']['short_name']),
 					   'url' => $blog['Blog']['url'],
 					   'all_articles_count' => $blog['Blog']['visible_post_count'],
 					   
@@ -73,12 +74,12 @@ class Blog extends AppModel {
 			$result['articles'] = isset($blog['Post']) ? Post::getTemplateVariable($blog['Post']) : array();
 			$result['articles_count'] = count($result['articles']);
 			
-			$results[] = $result;
+			$results[$result['underscore_handle']] = $result;
 		}
 		
-		if (!$multiple && !empty($results[0])) {
-			return $results[0];
-		} else if (!$multiple && empty($results[0])) {
+		if (!$multiple && !empty($results)) {
+			return current($results);
+		} else if (!$multiple && empty($results)) {
 			return array();
 		}
 		

@@ -134,6 +134,7 @@ class Post extends AppModel {
 					   'content' => $article['Post']['content'],
 					   
 					   'handle' => $article['Post']['slug'],
+					   'underscore_handle' => str_replace('-', '_', $article['Post']['slug']),
 					   'url' => $article['Post']['url'],
 					   
 					   'created' => $article['Post']['created'],
@@ -144,12 +145,12 @@ class Post extends AppModel {
 			$result['author'] = isset($article['User']['name_to_call']) ? $article['User']['name_to_call'] : '';
 			
 			
-			$results[] = $result;
+			$results[$result['underscore_handle']] = $result;
 		}
 		
-		if (!$multiple && !empty($results[0])) {
-			return $results[0];
-		} else if (!$multiple && empty($results[0])) {
+		if (!$multiple && !empty($results)) {
+			return current($results);
+		} else if (!$multiple && empty($results)) {
 			return array();
 		}
 		

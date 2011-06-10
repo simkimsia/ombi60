@@ -135,5 +135,34 @@ class Link extends AppModel {
 		$data = $this->beforeSaveAll($data);
 		return parent::saveAll($data, $options);
 	}
+	
+	/**
+	 * for use in templates for shopfront pages
+	 * */
+	function getTemplateVariable($links=array(), $multiple = true) {
+		
+		$results = array();
+		
+		if (!$multiple) $links = array($links);
+		
+		foreach($links as $key=>$link) {
+			$link = isset($link['Link']) ? $link['Link'] : $link;
+			$result = array('id' => $link['id'],
+					'title' => $link['name'],
+					'url' => $link['route'],
+					);
+			
+			
+			$results[] = $result;
+		}
+		
+		if (!$multiple && !empty($results[0])) {
+			return $results[0];
+		} else if (!$multiple && empty($results[0])) {
+			return array();
+		}
+		
+		return $results;
+	}
 }
 ?>
