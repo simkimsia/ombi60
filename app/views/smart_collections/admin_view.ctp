@@ -17,9 +17,9 @@
       <legend><?php __('Description', FALSE)?></legend>
       <div><?php print $smart_collection['SmartCollection']['description'];?></div>
   </fieldset>
-  <!--<div id="edit-form" style="display: none;">
-    <?php //echo $this->element('admin_edit_smart_collection', array('data' => $smart_collection));?>
-  </div>-->
+  <div id="edit-form" style="display: none;">
+    <?php echo $this->element('admin_edit_smart_collection', array('data' => $smart_collection));?>
+  </div>
   <div id="smartCollection">
     <?php echo $this->element('admin_set_smart_collection_condition');?>
   </div>
@@ -28,7 +28,7 @@
       <span class="hint"><?php __("If you don't want this smart collection to show up on your store front you can set its visibility to hidden.", FALSE);?></span>
       <div style="clear: both;"></div>
       <?php
-        echo $this->Form->input('SmartCollection.visible', array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false));
+        echo $this->Form->input('SmartCollection.visible', array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'value' => $smart_collection['SmartCollection']['visible']));
         
       ?>
   </fieldset>

@@ -41,6 +41,7 @@ echo $this->Html->script(array('smart_collections/admin'), array('inline' => fal
 <?php if (isset($view)) { ?></form><?php }?>
 <div id="product-list">
 <?php 
+//echo $this->Session->flash();
 if (isset($products) && !empty($products) && count($products) > 0) {
   ?><?php
   echo $this->element('admin_smart_collection_products');

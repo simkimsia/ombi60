@@ -67,8 +67,10 @@ class SmartCollection extends AppModel
     * @return boolean true on successfull execution and false in failure
     */
   function saveSmartCollectionCondition($data, $smart_collection_id = null) {
+    $error = false;
     if (!empty($data['SmartCollectionCondition']) && is_array($data['SmartCollectionCondition'])) {
       //Check if rows are already present in table for smart_collection_id
+
       if ($smart_collection_id != null) {
         //Get all the records of this smart_collection_id
         $conditions        = array('SmartCollectionCondition.smart_collection_id' => $smart_collection_id);
@@ -78,8 +80,10 @@ class SmartCollection extends AppModel
                                                                            'fields'     => $fields,
                                                                           ));
         $ids               = Set::extract('{n}.SmartCollectionCondition.id', $smart_collections);
-        //Now we will delete all old ids from table
-        $this->SmartCollectionCondition->deleteAll($ids);
+        if (!empty($ids) && count($ids) > 0) {
+          //Now we will delete all old ids from table
+          $this->SmartCollectionCondition->deleteAll(array('SmartCollectionCondition.id' =>$ids));
+        }
       }
       foreach ($data['SmartCollectionCondition'] as $smartCollectionCondtion) {
         //Set smart collection id to array
@@ -89,12 +93,49 @@ class SmartCollection extends AppModel
           //Select all the products with condition selected
           //get products from product model
           //ClassRegistry::init('Product')->conditionalProducts($smartCollectionCondtion);
+          $error = true;
         }
       }
-      return true;
+      return $error;
     }
-    return false;
+    return $error;
   }//end saveSmartCollectionCondition()
+
+
+  /**
+    * This function is used to save smart collection condition
+    * 
+    * @param integer $id Smart Collection Id
+    * 
+    * @return boolean true on successfull execution and false in failure
+    */
+  public function getStartCollectionProducts($smart_collection, $findBy = "all") {
+    $tmp = $test = $products = array();
+    $tmp['Product.shop_id'] = $smart_collection['SmartCollection']['shop_id'];    
+    
+    if (!empty($smart_collection['SmartCollectionCondition'])) {
+      foreach ($smart_collection['SmartCollectionCondition'] as $smart_collection_condition) {
+        $condition = ClassRegistry::init('Product')->conditionalProducts($smart_collection_condition);
+        if (array_key_exists(key($condition), $tmp)) {
+          $test[key($condition)][] = $tmp[key($condition)];
+          $test[key($condition)][] = $condition[key($condition)];
+        }
+        $tmp[key($condition)] = $condition[key($condition)];
+      }
+      if (!empty($test)) {
+        foreach ($test as $key => $value) {
+          $tmp[$key] = $value;
+        }
+      }
+      $productsOptions = array(
+                          'conditions' => $tmp,
+                          'contain' => 'ProductImage',
+                        );
+      $products = ClassRegistry::init('Product')->find($findBy, $productsOptions);
+    }
+    
+    return $products;
+  }//end getStartCollectionProducts()
 
 
 }//end class

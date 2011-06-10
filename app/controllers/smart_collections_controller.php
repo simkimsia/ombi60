@@ -18,9 +18,10 @@ class SmartCollectionsController extends AppController {
     parent::beforeFilter();
     $this->Auth->allow($this->action);  
     Configure::write('debug', 2);
-    if ($this->action == 'admin_toggle') {
-      $this->Security->enabled = false;
-    }
+    $this->Security->enabled = false;
+    //if ($this->action == 'admin_toggle') {
+    //  $this->Security->enabled = false;
+    //}
   }//end beforeFilter()
 
   
@@ -56,17 +57,22 @@ class SmartCollectionsController extends AppController {
   }//end admin_add
 
 
-  function admin_edit($id = null) {    
+  public function admin_edit($id = null) {    
+//debug($this->data);exit;
     if (!$id) {
       $this->Session->setFlash(__('Invalid smart collection', true));
       $this->redirect($this->refer());
     }
     if (!empty($this->data)) {
+//print_r($this->params);
       if ($this->SmartCollection->save($this->data)) {
-        $this->redirect(array('action' => 'view', $id));
+        
+      } else {
+        $this->Session->setFlash(__('Unable to save smart collection', true));
       }
     }
-    $this->data = $this->SmartCollection->read(null, $id);
+    $this->redirect(array('action' => 'view', $id));
+    //$this->data = $this->SmartCollection->read(null, $id);
     //$this->__getSmartCollection($id);
     //$this->set('view', true);
   }//end admin_edit()
@@ -131,6 +137,10 @@ class SmartCollectionsController extends AppController {
       }
       $this->__getSmartCollection($smart_collection_id);
       $this->render('/elements/admin_smart_collection_products');
+    } else {
+      //echo 'Condition could not be left empty';
+      $this->Session->setFlash(__('Condition could not be left empty', true));
+      //die;
     }
     //die;
   }
@@ -138,28 +148,9 @@ class SmartCollectionsController extends AppController {
 
   function __getSmartCollection($id) {
     $smart_collection = $this->SmartCollection->read(null, $id);
-    $tmp = $test = array();
-    $shopId = Shop::get('Shop.id');
 
-    $tmp['Product.shop_id'] = $shopId;
-    foreach ($smart_collection['SmartCollectionCondition'] as $smart_collection_condition) {
-      $condition = ClassRegistry::init('Product')->conditionalProducts($smart_collection_condition);
-      if (array_key_exists(key($condition), $tmp)) {
-        $test[key($condition)][] = $tmp[key($condition)];
-        $test[key($condition)][] = $condition[key($condition)];
-      }
-      $tmp[key($condition)] = $condition[key($condition)];
-    }
-    foreach ($test as $key => $value) {
-      $tmp[$key] = $value;
-    }
-
-    $productsOptions = array(
-                        'conditions' => $tmp,
-                        'contain' => 'ProductImage',
-                       );
-    $products = ClassRegistry::init('Product')->find('all', $productsOptions);
-//debug($products);
+    $products         = $this->SmartCollection->getStartCollectionProducts($smart_collection); //Get list of all the products
+     
     $this->set(compact('smart_collection', 'products'));
   }//end __getSmartCollection()
   

@@ -1,11 +1,16 @@
 $(document).ready(function() {
-  //var scid = $('#smartCollectionId').val();
-  //$('#edit_'+scid).bind('click', edit);
+  var scid = $('#smartCollectionId').val();
+  $('#edit_'+scid).bind('click', edit);
+  
   $('.plus').bind('click', add);
   $('.minus').bind('click', remove);
   
   $('#saveConditionForm').submit(function() {
     var url = $(this).attr('action');
+    /*formData = $('#saveConditionForm').serializeArray();
+    if (formData.name) {
+    
+    }*/
     $.ajax({
       type: 'POST',
       url: '/admin/smart_collections/save_condition',
@@ -47,7 +52,7 @@ function add() {
 
 function remove() {
   
-  if ($(this).attr('id') != undefined && $(this).attr('id')!="" && $(this).attr('id')!="NaN") {
+  /*if ($(this).attr('id') != undefined && $(this).attr('id')!="" && $(this).attr('id')!="NaN") {
     firstcontainer = '#setCondition';
     nodeChildren = $(firstcontainer).children(); 
     if ((nodeChildren.length) <= 1) {
@@ -82,7 +87,7 @@ function remove() {
       $(tmpChild).remove();
     }
     return false;
-  }
+  }*/
   firstcontainer = '#setCondition';
   nodeChildren = $(firstcontainer).children(); 
   if ((nodeChildren.length - 1) >= 1) {
@@ -94,6 +99,15 @@ function remove() {
 
 function edit() {
   var scid = $('#smartCollectionId').val();
-  $('#sDescription').hide();
-  $('#edit-form').show();
+  
+  if ($('#edit-form').is(':hidden')) {
+    $('#edit-form').show();
+    $('#sDescription').hide();
+  } else {
+    $('#edit-form').hide();
+    $('#sDescription').show();
+  }
+  
+  
+  return false;
 }
