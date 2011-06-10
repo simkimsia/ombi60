@@ -124,7 +124,20 @@ class Product extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+		),
+		'Variant' => array(
+			'className' => 'Variant',
+			'foreignKey' => 'product_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => false,
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
 
 	);
 	
@@ -203,7 +216,6 @@ class Product extends AppModel {
 			}
 		}
 		
-		
 		return true;
 	}
 	
@@ -247,6 +259,11 @@ class Product extends AppModel {
 				unset($data['ProductImage']);
 			}
 		}
+		
+		// add in the default variant
+		$data['Variant'][] = $data['Product'];
+		$data['Variant'][0]['title'] = VARIANT_DEFAULT_TITLE;
+		$data['Variant'][0]['sku_code'] = $data['Product']['code'];
 
 		$result = $this->saveAll($data, array('validate'=>'first',
 						      'atomic' => false));

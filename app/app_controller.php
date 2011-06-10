@@ -143,6 +143,10 @@ class AppController extends Controller {
 	$this->loadModel('User');
 	
 	
+	$shopSetting = $currentShop['ShopSetting'];
+	$this->set('shop_setting', $shopSetting);
+	
+	
 	if(!isset($this->params['admin'])) {	
 		
 		$userIdInSession = $this->Session->read('User.id');

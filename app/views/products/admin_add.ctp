@@ -50,15 +50,17 @@
 	<fieldset class="left">
 	<legend><?php __('Properties'); ?></legend>
 	<?php
-			$codeLabel = $this->Form->label('code', __('SKU Code <span class="small">(Optional)</span>', true)) . __(' ', true);
+		$codeLabel = $this->Form->label('code', __('SKU Code <span class="small">(Optional)</span>', true)) . __(' ', true);
   		$codeHint = __('Unique identifier of the product for easier organization', true);
-			echo $this->Form->input('code', array('before' => $codeLabel. '<span class="hint">' . $codeHint . '</span>', 'label' => false));
-			$options=array('1'=> __('Published', true),'0'=> __('Hidden', true));
+		echo $this->Form->input('code', array('before' => $codeLabel. '<span class="hint">' . $codeHint . '</span>', 'label' => false));
+		$options=array('1'=> __('Published', true),'0'=> __('Hidden', true));
   		$attributes=array('value' => '1', 'legend' => __('Visible in store', true));
 	  	echo $this->Form->radio('visible',$options, $attributes);
-			echo $this->Form->input('shipping_required', array('type'=>'checkbox', 'checked'=>'checked', 'value'=>1, 'label'=>'Shipping Address required'));
-		  echo $this->Form->input('price', array('value'=>'0.00', 'label' => __('Selling Price', true), 'div' => array('class' => 'input text left'), 'after' => __(' SGD', true), 'class' => 'noclear'));
-		  echo $this->Form->input('displayed_weight', array('value'=>'0.0', 'div' => array('class' => 'input text right'), 'class' => 'noclear', 'after' => __(' ' . $unitForWeight, true)));
+		echo $this->Form->input('shipping_required', array('type'=>'checkbox', 'checked'=>'checked', 'value'=>1, 'label'=>'Shipping Address required'));
+		$currency = $shop_setting['currency'];
+		echo $this->Form->input('currency', array('type'=>'hidden', 'value'=>$currency));
+		echo $this->Form->input('price', array('value'=>'0.00', 'label' => __('Selling Price', true), 'div' => array('class' => 'input text left'), 'after' => __(' ' .  $currency, true), 'class' => 'noclear'));
+		echo $this->Form->input('displayed_weight', array('value'=>'0.0', 'div' => array('class' => 'input text right'), 'class' => 'noclear', 'after' => __(' ' . $unitForWeight, true)));
 	?>
 	</fieldset>
 	<fieldset class="right">

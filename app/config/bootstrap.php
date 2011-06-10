@@ -156,6 +156,11 @@ define('PAYPAL_PAYMENT_MODULE', 2);
 define('CUSTOM_PAYMENT_MODULE', 1);
 
 /**
+ * Default for variant
+ ***/
+define('VARIANT_DEFAULT_TITLE', 'Default');
+
+/**
  * production checkout link
  **/
 define('CHECKOUT_LINK', 'http://checkout.ombi60.com');

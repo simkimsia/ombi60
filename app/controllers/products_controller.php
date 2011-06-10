@@ -364,7 +364,7 @@ class ProductsController extends AppController {
 			      );
 
 		
-		$this->paginate['conditions']['AND'] = array_merge($this->Filter->paginate['conditions'], array('Product.shop_id' => User::get('Merchant.shop_id')));
+		//$this->paginate['conditions']['AND'] = array_merge($this->Filter->paginate['conditions'], array('Product.shop_id' => User::get('Merchant.shop_id')));
 
 		$this->set('products', $this->paginate());
 
