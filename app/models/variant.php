@@ -41,5 +41,33 @@ class Variant extends AppModel {
 		
 		return true;
 	}
+	
+	function getTemplateVariable($variants=array(), $multiple = true) {
+		
+		$results = array();
+		
+		if (!$multiple) $variants = array($variants);
+		
+		foreach($variants as $key=>$variant) {
+			$variant = isset($variant['Variant']) ? $variant['Variant'] : $variant;
+			$result = array('id' => $variant['id'],
+					   'title' => $variant['title'],
+					   'sku' => $variant['sku_code'],
+					   'price' => $variant['price'],
+					   'weight' => $variant['weight'],
+					);
+			
+			
+			$results[] = $result;
+		}
+		
+		if (!$multiple && !empty($results)) {
+			return current($results);
+		} else if (!$multiple && empty($results)) {
+			return array();
+		}
+		
+		return $results;
+	}
 }
 ?>

@@ -67,12 +67,14 @@ class ProductGroup extends AppModel {
 					   'handle' => $group['ProductGroup']['handle'],
 					   'underscore_handle' => str_replace('-', '_', $group['ProductGroup']['handle']),
 					   'url' => $group['ProductGroup']['url'],
-					   'all_products_count' => $group['ProductGroup']['products_in_group_count'],
+					   'all_products_count' => $group['ProductGroup']['visible_product_count'],
+					   
 					   'vendor_count' => $group['ProductGroup']['vendor_count'],
 					   
 					);
 			
 			$result['products'] = isset($group['Product']) ? ProductGroup::getTemplateVariable($group['Product']) : array();
+			$result['products_count'] = count($result['products']);
 			
 			$results[$result['underscore_handle']] = $result;
 		}

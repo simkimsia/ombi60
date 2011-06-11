@@ -394,7 +394,10 @@ class ProductsController extends AppController {
 		// get the product details
 		$productFound = $this->Product->find('first', array('conditions'=>array('handle'=>$handle,
 											'shop_id'=>$shop_id),
-								    'contain' => array('ProductImage'=>array(
+								    'contain' => array('Variant' => array(
+												'order'=>'Variant.order ASC'
+											),
+										       'ProductImage'=>array(
 												'fields' => array('filename'),
 												'order'=>array('ProductImage.cover DESC'),
 											),
@@ -403,7 +406,7 @@ class ProductsController extends AppController {
 												'ProductGroup'=>array(
 													'fields' => array('id', 
 															  'title', 'handle',
-															  'description', 'products_in_group_count',
+															  'description', 'visible_product_count',
 															  'url', 'vendor_count'),
 													)
 												)
@@ -507,7 +510,10 @@ class ProductsController extends AppController {
 		// add in the link param into paginate
 		//$this->paginate['link']  = array('ProductImage');
 		
-		$this->paginate['contain'] = array('ProductImage'=>array(
+		$this->paginate['contain'] = array('Variant' => array(
+								'order'=>'Variant.order ASC'
+							),
+						   'ProductImage'=>array(
 								'fields' => array('filename'),
 								'order'=>array('ProductImage.cover DESC'),
 								
@@ -519,7 +525,7 @@ class ProductsController extends AppController {
 								'ProductGroup'=>array(
 									'fields' => array('id', 
 											  'title', 'handle',
-											  'description', 'products_in_group_count',
+											  'description', 'visible_product_count',
 											  'url', 'vendor_count'),
 									//'conditions'=> array('ProductsInGroup.product_group_id =' => 'ProductGroup.id'),
 								)));

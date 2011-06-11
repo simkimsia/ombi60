@@ -448,6 +448,7 @@ class Product extends AppModel {
 		foreach($products as $key=>$product) {
 			
 			$images = Set::extract('ProductImage.{n}.filename', $product);
+			$variants = Set::extract('Variant.{n}', $product);
 			
 			$result = array('id' => $product['Product']['id'],
 					   'title' => $product['Product']['title'],
@@ -465,7 +466,7 @@ class Product extends AppModel {
 			$result['images'] = $images;
 			$result['cover_image'] = isset($images[0]) ? $images[0] : '';
 			$result['vendor'] = isset($product['Vendor']['name']) ? $product['Vendor']['name'] : '';
-			
+			$result['variants'] = Variant::getTemplateVariable($variants);
 			
 			$result['collections'] = isset($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : array();
 			

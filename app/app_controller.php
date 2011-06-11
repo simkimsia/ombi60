@@ -235,9 +235,9 @@ class AppController extends Controller {
 			'Author'=>array(
 			    'fields'=>array('Author.name_to_call', 'Author.id'),
 			)),));
-		$this->log($pages);
+		
 		$pages = Webpage::getTemplateVariable($pages);
-		$this->log($pages);
+		
 		$this->set('pages', $pages);
 		
 	}
