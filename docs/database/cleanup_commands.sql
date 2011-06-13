@@ -3,6 +3,7 @@ TRUNCATE TABLE `products_in_groups`;
 TRUNCATE TABLE `smart_collection_conditions`;
 TRUNCATE TABLE `smart_collections`;
 TRUNCATE TABLE `product_groups`;
+TRUNCATE TABLE `variants`;
 TRUNCATE TABLE `shop_settings`;
 
 DELETE FROM shops WHERE id >= 2;

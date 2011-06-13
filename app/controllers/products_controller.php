@@ -549,9 +549,16 @@ class ProductsController extends AppController {
 		
 		$products = Product::getTemplateVariable($tempProducts);
 		
+		// get the collection
+		if ($collectionsAllSelected) {
+			$collection = ProductGroup::getVariableForAllProducts($products);
+		} else {
+			$collection = ProductGroup::getTemplateVariable($groupFound, false);
+		}
+		
 		$domainPagePath = Router::url('/collections/'.$handle.'/', true);
 
-		$this->set(compact('sort', 'order', 'products', 'domainPagePath'));
+		$this->set(compact('sort', 'order', 'products', 'domainPagePath', 'collection'));
 		
 		$this->render('collection');
 		

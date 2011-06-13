@@ -240,6 +240,11 @@ class AppController extends Controller {
 		
 		$this->set('pages', $pages);
 		
+		// get Shop template
+		$shopTemplate = Shop::getTemplateVariable();
+		
+		$this->set('shop', $shopTemplate);
+		
 	}
 	/**
 	 *end Cookies

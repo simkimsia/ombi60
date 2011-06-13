@@ -1044,6 +1044,27 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
+/*Table structure for table `variants` */
+
+DROP TABLE IF EXISTS `variants`;
+
+CREATE TABLE `variants` (
+  `id` int(12) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL,
+  `product_id` int(10) unsigned DEFAULT NULL,
+  `sku_code` varchar(100) DEFAULT NULL,
+  `weight` int(10) unsigned DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `currency` varchar(5) DEFAULT NULL,
+  `shipping_required` tinyint(1) unsigned DEFAULT '1',
+  `price` decimal(10,4) unsigned DEFAULT NULL,
+  `order` int(2) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+/*Data for the table `variants` */
+
 /*Table structure for table `vendors` */
 
 DROP TABLE IF EXISTS `vendors`;

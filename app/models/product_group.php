@@ -87,6 +87,29 @@ class ProductGroup extends AppModel {
 		
 		return $results;
 	}
+	
+	function getVariableForAllProducts($products) {
+		
+		// need to store all visible and all products in shop
+		// need to store all vendors in shop
+		
+		$result = array(
+				'id' => 0,
+				'title' => 'all',
+				'description' => 'All Products',
+				'handle' => 'all',
+				'underscore_handle' => 'all',
+				'url' => '/collections/all',
+				'all_products_count' => '123',
+				'vendor_count' => '1',
+				
+			     );
+			
+		$result['products'] = $products;
+		$result['products_count'] = count($result['products']);
+		
+		return $result;
+	}
 
 }
 ?>

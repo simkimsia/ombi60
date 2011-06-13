@@ -422,9 +422,9 @@ class Shop extends AppModel {
 			      'primary_domain'=> $shopInstance['Shop']['primary_domain'] . '/',
 			      'permanent_domain'=>$shopInstance['Shop']['permanent_domain'] . '/',
 			      'email'=>$shopInstance['Shop']['email'],
-			      'product_count'=>$shopInstance['Shop']['product_count'],
+			      'products_count'=>$shopInstance['Shop']['product_count'],
 			      
-			      'products_group_count'=>$shopInstance['Shop']['product_group_count'],
+			      'collections_count'=>$shopInstance['Shop']['product_group_count'],
 			      'currency'=>$shopInstance['ShopSetting']['currency'],
 			      'money_format'=>$shopInstance['ShopSetting']['money_in_html'],
 			      'money_format_in_currency'=>$shopInstance['ShopSetting']['money_in_html_with_currency'],
