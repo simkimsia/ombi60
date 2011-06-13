@@ -1,4 +1,3 @@
-
 <div class="collections">
       <div class="text_center">
         <h2><?php __('Add your New Smart Collection');?></h2>

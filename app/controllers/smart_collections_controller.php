@@ -46,7 +46,7 @@ class SmartCollectionsController extends AppController {
         $this->data['SmartCollectionCondition'][$i]['condition'] = $condition;
         $i++;
       }
-      if ($this->SmartCollection->saveSmartCollection($this->data)) {
+      if ((bool)$this->SmartCollection->saveSmartCollection($this->data)) {
         $this->redirect(array(
                          'controller' => 'product_groups',
                          'admin'      => true,
@@ -131,17 +131,16 @@ class SmartCollectionsController extends AppController {
       $i++;
     } 
     $smart_collection_id = $_POST['smart_collection_id'];
+    $this->set('view', true);
+    $this->set('smart_collection_id', $smart_collection_id);
     if ($this->SmartCollection->saveSmartCollectionCondition($this->data, $smart_collection_id)) {
       if ($this->RequestHandler->isAjax()) {
         $this->layout = 'ajax';
       }
       $this->__getSmartCollection($smart_collection_id);
-      $this->render('/elements/admin_smart_collection_products');
-    } else {
-      //echo 'Condition could not be left empty';
-      $this->Session->setFlash(__('Condition could not be left empty', true));
-      //die;
+      //$this->render('/elements/admin_smart_collection_products');
     }
+    $this->render('/elements/admin_set_smart_collection_condition');
     //die;
   }
 

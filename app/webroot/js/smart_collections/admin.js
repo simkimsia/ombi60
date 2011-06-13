@@ -5,27 +5,31 @@ $(document).ready(function() {
   $('.plus').bind('click', add);
   $('.minus').bind('click', remove);
   
-  $('#saveConditionForm').submit(function() {
-    var url = $(this).attr('action');
-    /*formData = $('#saveConditionForm').serializeArray();
-    if (formData.name) {
-    
-    }*/
-    $.ajax({
-      type: 'POST',
-      url: '/admin/smart_collections/save_condition',
-      data: $('#saveConditionForm').serializeArray(),
-      success: function(t) {
-        $('#product-list').html(t);
-      },
-      error: function () {
-        alert('Sorry, something went wrong!');
-      }
-    });
-    return false;
-  });
+  $('#saveConditionForm').submit(submit); 
+  $('#saveConditionForm').bind('submit', submit);
 });
-
+function submit () {
+  var url = $(this).attr('action');
+  
+  $.ajax({
+    type: 'POST',
+    url: '/admin/smart_collections/save_condition',
+    data: $('#saveConditionForm').serializeArray(),
+    success: function(t) {
+      //$('.error').hide();
+      //$('#product-list').html(t);
+      
+      $('#smartCollection').html(t);
+      $('.plus').bind('click', add);
+      $('.minus').bind('click', remove);
+      $('#saveConditionForm').bind('submit', submit);
+    },
+    error: function () {
+      alert('Sorry, something went wrong!');
+    }
+  });
+  return false;
+}
 function add() {
     var randomnumber = Math.floor(Math.random()*100001);
     

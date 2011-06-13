@@ -32,6 +32,10 @@
   echo $this->Form->input('SmartCollectionCondition.0.Relation',array('options' => $relations, 'label' => false, 'div' => false, 'class' => 'smartRelation'));*/ 
   ?>
   <input type="text" name="conditions[]" style="width: auto;" value="<?php echo (isset($condition) ? $condition: null);?>" />
+  <?php if (isset($condition) && $condition == "") {
+    echo "<br />";
+    echo "<span class='error'>Condition could not be left empty</span>";
+  }?>
 <?php 
   //echo $this->Form->input('SmartCollectionCondition.0.Condition',array('label' => false, 'div' => false, 'style' => 'width: auto;', 'div' => false, 'class' => 'smartCondition'));
   ?>

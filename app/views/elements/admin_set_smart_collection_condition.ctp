@@ -4,7 +4,7 @@ echo $this->Html->script(array('smart_collections/admin'), array('inline' => fal
 ?>
 <?php if (isset($view)) { ?>
   <form id="saveConditionForm" action="/admin/smart_collections/save_condition" method="post" style="width: auto;">
-    <input type="hidden" name="smart_collection_id" id ="SmartCollectionId" value="<?php echo $smart_collection['SmartCollection']['id']?>"/>
+    <input type="hidden" name="smart_collection_id" id ="SmartCollectionId" value="<?php echo (isset($smart_collection['SmartCollection']['id']) ? $smart_collection['SmartCollection']['id']: (isset($smart_collection_id) ? $smart_collection_id: ""))?>"/>
 <?php } ?>
 <?php //echo $this->Form->create('SmartCollection', array('url' => array('action' => 'save_condition'), 'id' => 'saveConditionForm'));?>
 
@@ -16,25 +16,48 @@ echo $this->Html->script(array('smart_collections/admin'), array('inline' => fal
   <div style="clear: both;"></div>
   <div id="setCondition">
     <?php  
+/*echo "<pre>";
+print_r($_POST);
+echo "</pre>";*/
+
     if (isset($view)) { 
-      if (!empty($smart_collection['SmartCollectionCondition'])) {
-        foreach ($smart_collection['SmartCollectionCondition'] as $smart_condition) {
-          $field = $smart_condition['field'];
-          $relation = $smart_condition['relation'];
-          $condition = $smart_condition['condition'];
-          $id = $smart_condition['id'];
-          echo $this->element('condition_form', array('field' => $field, 'relation' => $relation, 'condition' => $condition, 'id' => $id)); 
+      if (!empty($smart_collection['SmartCollectionCondition']) || (isset($_POST['conditions']) && !empty($_POST['conditions']))) {
+        if (!empty($_POST['conditions'])) {
+          for ($i = 0 ; $i < count($_POST['conditions']); $i++) {
+            $field = $_POST['fields'][$i];
+            $relation = $_POST['relations'][$i];
+            $condition = $_POST['conditions'][$i];
+            echo $this->element('condition_form', array('field' => $field, 'relation' => $relation, 'condition' => $condition)); 
+          }
+        } else {
+          foreach ($smart_collection['SmartCollectionCondition'] as $smart_condition) {
+            $field = $smart_condition['field'];
+            $relation = $smart_condition['relation'];
+            $condition = $smart_condition['condition'];
+            $id = $smart_condition['id'];
+            echo $this->element('condition_form', array('field' => $field, 'relation' => $relation, 'condition' => $condition, 'id' => $id)); 
+          }
         }
+        
       } else {
         echo $this->element('condition_form');
       }
     } else {
-      echo $this->element('condition_form');
+      if (!empty($_POST['conditions'])) {
+        for ($i = 0 ; $i < count($_POST['conditions']); $i++) {
+          $field = $_POST['fields'][$i];
+          $relation = $_POST['relations'][$i];
+          $condition = $_POST['conditions'][$i];
+          echo $this->element('condition_form', array('field' => $field, 'relation' => $relation, 'condition' => $condition)); 
+        }
+      } else { 
+        echo $this->element('condition_form');
+      }
     }
     ?>
 
   </div>
-  <?php if (isset($view)) { ?><input type="submit" value="Update Collection"><?php }?>
+  <?php if (isset($view)) { ?><input type="submit" value="Update Collection" id="updateCollection"><?php }?>
   
 </fieldset>
 <?php //echo $this->Form->end();?>

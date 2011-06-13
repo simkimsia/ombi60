@@ -43,9 +43,9 @@
 
                 echo "<br />";
                 echo "<span class='hint'>";
-                echo $products . " product(s)";
+                echo (is_array($products) ? count($products): $products) . " product(s)";
                 echo "</span>";
-
+                unset($products);
                 /*echo "<br />";
                 echo "<span class='hint'>";
                 echo count($smartCollection['SmartCollectionCondition']) . " product(s)";

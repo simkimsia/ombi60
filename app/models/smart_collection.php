@@ -39,7 +39,11 @@ class SmartCollection extends AppModel
       //Get the last inserted id
       $smart_collection_id = $this->getLastInsertID();
       //Check if last smart collection conditions are set
+
       if (!empty($data['SmartCollectionCondition']) && is_array($data['SmartCollectionCondition'])) {
+        if (!$this->__validateSmartCollectionCondition($data['SmartCollectionCondition'])) {
+          return false;
+        }
         //
         foreach ($data['SmartCollectionCondition'] as $smartCollectionCondtion) {
           //Set smart collection id to array
@@ -69,8 +73,11 @@ class SmartCollection extends AppModel
   function saveSmartCollectionCondition($data, $smart_collection_id = null) {
     $error = false;
     if (!empty($data['SmartCollectionCondition']) && is_array($data['SmartCollectionCondition'])) {
+      if (!$this->__validateSmartCollectionCondition($data['SmartCollectionCondition'])) {
+        return false;
+      }
       //Check if rows are already present in table for smart_collection_id
-
+  
       if ($smart_collection_id != null) {
         //Get all the records of this smart_collection_id
         $conditions        = array('SmartCollectionCondition.smart_collection_id' => $smart_collection_id);
@@ -132,10 +139,27 @@ class SmartCollection extends AppModel
                           'contain' => 'ProductImage',
                         );
       $products = ClassRegistry::init('Product')->find($findBy, $productsOptions);
+
     }
-    
     return $products;
   }//end getStartCollectionProducts()
+
+
+  /**
+    * This function is used to validate smart collection condition
+    *
+    * @return boolean true on successfull execution and false in failure
+    */
+  function __validateSmartCollectionCondition($data) {
+    if (!empty($data) && is_array($data)) {
+      foreach ($data as $value) {
+        if ($value['condition'] =="" || $value['condition'] == null) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }//end validateSmartCollectionCondition()
 
 
 }//end class
