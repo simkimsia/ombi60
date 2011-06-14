@@ -1061,9 +1061,11 @@ CREATE TABLE `variants` (
   `price` decimal(10,4) unsigned DEFAULT NULL,
   `order` int(2) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `variants` */
+
+insert  into `variants`(`id`,`title`,`product_id`,`sku_code`,`weight`,`created`,`modified`,`currency`,`shipping_required`,`price`,`order`) values (1,'Default Title',1,NULL,7000,NULL,NULL,'SGD',1,'0.0000',1);
 
 /*Table structure for table `vendors` */
 

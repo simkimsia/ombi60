@@ -3,7 +3,6 @@ TRUNCATE TABLE `products_in_groups`;
 TRUNCATE TABLE `smart_collection_conditions`;
 TRUNCATE TABLE `smart_collections`;
 TRUNCATE TABLE `product_groups`;
-TRUNCATE TABLE `variants`;
 TRUNCATE TABLE `shop_settings`;
 
 DELETE FROM shops WHERE id >= 2;
@@ -11,6 +10,9 @@ ALTER TABLE shops AUTO_INCREMENT = 2;
 
 DELETE FROM products WHERE id >= 2;
 ALTER TABLE products AUTO_INCREMENT = 2;
+
+DELETE FROM variants WHERE id >= 2;
+ALTER TABLE variants AUTO_INCREMENT = 2;
 
 DELETE FROM product_images WHERE id >= 2;
 ALTER TABLE product_images AUTO_INCREMENT = 2;

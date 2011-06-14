@@ -321,6 +321,24 @@ class Product extends AppModel {
 			$duplicateGroups = Set::extract('{n}.ProductsInGroup.product_group_id', $groups);
 			$this->saveCollections($this->id, $duplicateGroups);
 			
+			// duplicate the variants as well.
+			// first we need to retrieve all the Variants belonging to the original Product
+			$variants = $this->Variant->find('all', array(
+							'conditions' => array('product_id' => $id),
+							));
+
+			// duplicate all the variants
+			foreach($variants as $key=>$variant) {
+				// remove current ids for variants
+				unset($variants[$key]['Variant']['id']);
+				// replace product_ids for variants
+				$variants[$key]['Variant']['product_id'] = $this->id;
+			}
+			
+			// nowe we prepare the saveAll
+			$variants = Set::extract('{n}.Variant', $variants);
+			
+			$variantDupeResult = $this->Variant->saveAll($variants);
 			
 			
 		}
@@ -429,7 +447,7 @@ class Product extends AppModel {
 		/** end of cart_items weight and price **/
 		
 		/** Associate this product with custom collections **/
-		$customCollectionsJoined = is_array($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
+		$customCollectionsJoined = isset($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
 		$this->saveCollections($this->id, $customCollectionsJoined);	
 		
 		

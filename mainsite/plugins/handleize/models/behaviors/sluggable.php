@@ -73,7 +73,8 @@ class SluggableBehavior extends ModelBehavior {
 
             $sameUrls = $model->find('all', array(
                 'recursive'  => -1,
-                'conditions' => $conditions
+                'conditions' => $conditions,
+                'fields'     => array($slugfield, 'id'),
             ));
 
             $sameUrls = (!empty($sameUrls)) ?

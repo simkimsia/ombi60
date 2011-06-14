@@ -106,7 +106,9 @@ class MerchantsController extends AppController {
 			
 			if (isset($this->data['Shop']['primary_domain'])) {
 				
-				$this->data['Shop']['primary_domain'] = 'http://' . $this->data['Shop']['subdomain'] . $mainDomain;
+				$this->data['Shop']['primary_domain'] 	= 'http://' . $this->data['Shop']['subdomain'] . $mainDomain;
+				$this->data['Shop']['url']	      	= $this->data['Shop']['primary_domain'];
+				$this->data['Shop']['permanent_domain']	= $this->data['Shop']['subdomain'] . $mainDomain;
 				
 			}
 			
