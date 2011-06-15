@@ -156,6 +156,13 @@ define('PAYPAL_PAYMENT_MODULE', 2);
 define('CUSTOM_PAYMENT_MODULE', 1);
 
 /**
+ * Collection type
+**/
+define('SMART_COLLECTION', 1);
+define('CUSTOM_COLLECTION', 0);
+
+
+/**
  * Default for variant
  ***/
 define('VARIANT_DEFAULT_TITLE', 'Default Title');

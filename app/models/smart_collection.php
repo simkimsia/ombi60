@@ -116,7 +116,7 @@ class SmartCollection extends AppModel
     * 
     * @return boolean true on successfull execution and false in failure
     */
-  public function getStartCollectionProducts($smart_collection, $findBy = "all") {
+  public function getSmartCollectionProducts($smart_collection, $findBy = "all") {
     $tmp = $test = $products = array();
     $tmp['Product.shop_id'] = $smart_collection['SmartCollection']['shop_id'];    
     

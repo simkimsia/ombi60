@@ -405,5 +405,7 @@
                         array('controller' => 'shops',
                               'action' => 'general_settings',
                               'admin'=>true));
+        
+       
 
 ?>

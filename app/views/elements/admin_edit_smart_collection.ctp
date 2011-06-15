@@ -1,6 +1,6 @@
 <div class="collections">
-<?php echo $this->Form->create('SmartCollection', array('url' => array('action' => 'edit', $data['SmartCollection']['id']), ));?>
-  <?php echo $this->Form->input('id', array('value' => $data['SmartCollection']['id']))?>
+<?php echo $this->Form->create('ProductGroup', array('url' => array('action' => 'edit_smart', $data['ProductGroup']['id']), ));?>
+  <?php echo $this->Form->input('id', array('value' => $data['ProductGroup']['id']))?>
   <fieldset>
     <legend><?php __('Edit Smart Collection'); ?></legend>
   <?php
@@ -26,7 +26,7 @@
       <span class="hint"><?php __("If you don't want this smart collection to show up on your store front you can set its visibility to hidden.", FALSE);?></span>
       <div style="clear: both;"></div>
       <?php
-        echo $this->Form->input('SmartCollection.visible', array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'value' => $data['SmartCollection']['visible']));        
+        echo $this->Form->input('ProductGroup.visible', array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'value' => $data['ProductGroup']['visible']));        
       ?>
   </fieldset><fieldset>
     <div class="submit">

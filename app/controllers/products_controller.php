@@ -633,7 +633,7 @@ class ProductsController extends AppController {
 		
 		$errors = $this->Product->getAllValidationErrors();
 		
-		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>0,
+		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>CUSTOM_COLLECTION,
 												'ProductGroup.shop_id'=>Shop::get('Shop.id'))));
 		
 		$this->set(compact('errors', 'uploadifySettings', 'collections'));
@@ -764,7 +764,7 @@ class ProductsController extends AppController {
 					   'onComplete' => true,);
 		
 		
-		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>0,
+		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>CUSTOM_COLLECTION,
 												'ProductGroup.shop_id'=>Shop::get('Shop.id'))));
 		
 		$this->set(compact('product_id',
