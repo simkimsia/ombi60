@@ -56,8 +56,16 @@ class Product extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
-			'counterCache' => true,
+			'counterCache' => 'visible_product_count',
 			'counterScope' => array('Product.visible' => 1) 
+		),
+		'AllProductsInShop' => array(
+			'className' => 'Shop',
+			'foreignKey' => 'shop_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => 'all_product_count',
 		),
 		'Vendor' => array(
 			'className' => 'Vendor',
