@@ -23,7 +23,7 @@ class ProductImagesController extends AppController {
 		
 
 		$this->Security->disabledFields[] = $image->name . '.' . $image->defaultNameForImage;
-		
+		$this->Auth->allow($this->action);  
 	}
 	
 	private function redirectToProductEdit($product_id = null) {
@@ -160,20 +160,66 @@ class ProductImagesController extends AppController {
 	}
 	
 	function admin_make_this_cover($id = null, $product_id = null) {
-		
+		$successJSON = false;
+    $contents = array();
+    
+    if ($this->params['isAjax']) {
+      $this->layout = 'json';
+    }
 		if (!$id OR !$product_id) {
-			$this->Session->setFlash(__('Invalid id for Image', true));
-			$this->redirectToProductEdit($product_id);
+      if ($this->params['isAjax']) {
+        $contents['reason'] = __('Invalid id for image', true);
+      } else {
+        $this->Session->setFlash(__('Invalid id for image', true));
+        $this->redirectToProductEdit($product_id);
+      }
 		}
 
 		if ($this->ProductImage->make_this_cover($id, $product_id)) {
-			$this->Session->setFlash(__('Image status changed', true));
-
-			$this->redirectToProductEdit($product_id);
-		}
-		$this->Session->setFlash(__('The status of Image could not be changed. Please, try again.', true));
-		$this->redirect(array('action' => 'index'));
+      if ($this->params['isAjax']) {
+        $successJSON = true;
+        $contents['id'] = $id;
+        
+      } else {
+        $this->Session->setFlash(__('Image status changed', true));
+        $this->redirectToProductEdit($product_id); 
+      }
+			
+		} else {
+      if ($this->params['isAjax']) {
+        $contents['reason'] = __('Image was not deleted', true);
+      } else {
+        $this->Session->setFlash(__('Image was not deleted', true));
+        $this->redirectToProductEdit($product_id);
+      }
+    }
+    $this->set(compact('contents', 'successJSON'));
+    $this->render('json/response');
+		//$this->Session->setFlash(__('The status of Image could not be changed. Please, try again.', true));
+		//$this->redirect(array('action' => 'index'));
 	}
+
+
+  function admin_ajax_product_image_upload($product_id = null, $edit = null) {
+    if (!$product_id) {
+      return false;
+    }
+//Configure::write('debug', 2);
+    $this->layout = false;
+    $makeCoverAjax = true;
+    $this->ProductImage->saveProductImage($product_id, $edit);
+
+    // the images list related code
+    // to make paging easier to test, we set as 1 per page.
+    $this->paginate = array('conditions'=>array('ProductImage.product_id'=>$product_id),
+          'order' => 'ProductImage.cover desc',
+          'limit'=>'10');
+    
+    $productImages = $this->paginate('ProductImage');
+    $this->set(compact('productImages'));
+    $this->render('/elements/product_images_ajax_list');
+    //$this->render();
+  }
 
 }
 ?>

@@ -1,15 +1,4 @@
-<?php   
-    //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
-  
-  // include uploadify specific js files
-  //echo $this->Html->script('/uploadify/js/jquery.uploadify.v2.1.0.min');
-  //echo $this->Html->script('/uploadify/js/swfobject');
-  
-  //echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
-  
-  echo $this->Html->script('ajaxupload', array('inline' => false));
-  ?>
-
+<?php echo $this->Html->script(array('jquery/jquery-1.4.2.min', 'ajaxupload'), array('inline' => false)); ?>
 <style>
   #properties label{
     background: #e4e4e4;
@@ -36,7 +25,7 @@
           <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $product['Product']['id']), null, sprintf(__('Are you sure you want to delete this product?', true), $product['Product']['id'])); ?>&nbsp;|&nbsp;
           <?php echo $this->Html->link(__('Back to Products', true), array('action' => 'index')); ?>
   </div>
-  <div style="float:left; margin-right: 10px; width: 60%;">
+  <div style="float:left; margin-right: 10px; width: 58%;">
     <div id="description">
       <fieldset>
         <legend><?php __('Description');?></legend>
@@ -73,15 +62,17 @@
 ?>               
                 <li>
                     <?php echo $this->Html->link($collection[0], array('controller' => 'smart_collections', 'action' => 'view', $collection[1])); 
-                          if (!empty($smartCollectionInfo['condition'])) {                  
-                            echo "<br />";
-                            foreach ($smartCollectionInfo['condition'] as $smartCondition) {
-                              echo "<span class='hint'>";
-                              echo Inflector::camelize($smartCondition['field']) . " is ".$smartCondition['relation'] . " '". $smartCondition['condition']."'";
-                              echo "</span>";
-                              echo "<br />";
-                            }
-                          }
+                          
+                      echo "<span class='product-status'>Smart Collection</span>";
+                      if (!empty($smartCollectionInfo['condition'])) {                  
+                        echo "<br />";
+                        foreach ($smartCollectionInfo['condition'] as $smartCondition) {
+                          echo "<span class='hint'>";
+                          echo Inflector::camelize($smartCondition['field']) . " is ".$smartCondition['relation'] . " '". $smartCondition['condition']."'";
+                          echo "</span>";
+                          echo "<br />";
+                        }
+                      }
                           ?>
                 </li>      
               <?php endforeach; ?>
@@ -98,18 +89,43 @@
         </fieldset>
      </div>
   </div>
-  <div style="float:left;width: 35%;">
-    <div id="product-image">
-      <?php //echo $this->element('product_images_add_form_uploadify'); ?>
-      <?php echo $this->Form->create('Product');?>
-        <fieldset>
+  <div style="float:left;width: 41%;">
+    <fieldset>
           <legend><?php __('Product Images');?></legend>
+    <div id="product-image">
+        <ul id="product_images-list" class="product_image-thumbs">    
+            <?php echo $this->element('product_images_ajax_list');?>
+        </ul>
+        <div class="clear"></div>
+      <?php //echo $this->element('product_images_add_form_uploadify'); ?>
+        
+          <?php echo $this->Form->create('Product');?>
+          <?php echo $this->Form->input('id', array('value' => $product['Product']['id']))?>
       <!--<form action="scripts/ajaxupload.php?filename=name&maxSize=9999999999&maxW=200&fullPath=http://www.atwebresults.com/php_ajax_image_upload/uploads/&relPath=../uploads/&colorR=255&colorG=255&colorB=255&maxH=300" method="post">-->
-        <p><input type="file" name="name" onchange="ajaxUpload(this.form,'scripts/ajaxupload.php?filename=name&maxSize=9999999999&maxW=200&fullPath=http://www.atwebresults.com/php_ajax_image_upload/uploads/&relPath=../uploads/&colorR=255&colorG=255&colorB=255&maxH=300','upload_area','File Uploading Please Wait...&lt;br /&gt;&lt;img src=\'images/loader_light_blue.gif\' width=\'128\' height=\'15\' border=\'0\' /&gt;','&lt;img src=\'images/error.gif\' width=\'16\' height=\'16\' border=\'0\' /&gt; Error in Upload, check settings and path info in source code.'); return false;" /></p>
-          </fieldset>
+        <!--<input name="product_images" type="file" onchange = "ajaxUpload(this.form,'/products/save_image/'); return false;" />-->
+        <?php
+          //if (count($product['ProductImage']) < 4) {
+              $max = 4 - count($product['ProductImage']);
+          ?>
+              <input type="file" class="multi max-<?php echo $max;?>" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp" onchange= "ajaxUpload(this.form,'/admin/product_images/ajax_product_image_upload/'); return false;"/>
+          <?php
+          //}
+          ?>
+        <?php 
+          //echo $this->Form->input('ProductImage.0.filename', array('type' => 'file', 'class'=>'multi', 'onchange' => ));
+          echo $this->Form->input('ProductImage.imagesCount', array('type'=>'hidden', 'value'=>count($product['ProductImage'])));
+          //echo $this->Form->input('product_images', array('type' => 'file', 'onchange' => return false;", 'label' => false));
+          ?>
+
+        <input type="hidden" name="maxSize" id="maxSize" value="9999999999" />
+        <input type="hidden" name="divToUpdate" id="divToUpdate" value="product_images-list" />
+        <input type="hidden" name="loadMsg" id="loadMsg" value="File Uploading Please Wait..." />
+        <input type="hidden" name="errMsg" id="errMsg" value="Error in Upload, check settings and path info in source code." />
+        
         <?php echo $this->Form->end();?>
       <!--</form>-->
     </div>
+</fieldset>
     <div class="clear"></div>
     <div id="visibility">
       <fieldset>
@@ -140,15 +156,117 @@
 
 
 <script type="text/javascript" language="javascript">
-  
-  var newAltId = 0;
 
-  function handlesUploadifyAllComplete(event, data) {
-    $('#alt_id').attr('value', newAltId);
-    
-    document.forms["ProductAdminAddForm"].submit();
+  var product_id = '<?php echo $product_id; ?>';
+  
+  
+  function afterDelete(response) {
+    var json_object = $.parseJSON(response);
+  
+    if (json_object.success) {
+      var contents = $.parseJSON(json_object.contents);
+      var id = '#product_image-' + contents.id;
+      
+      $(id).remove();
+      
+    } else {
+      var contents = $.parseJSON(json_object.contents);
+      var errors = contents.reason;
+      
+      alert(errors);
+    } 
   }
 
+  function makeThumbnail(filename) {
+    var thumb = '<?php echo $this->Html->image("../uploads/products/thumb/small/dummy.jpg"); ?>&nbsp;';
+    return thumb.replace('dummy.jpg',filename);
+  }
+  
+  function makeActionLinks(id, filename, cover) {
+    
+    var deleteLink = $('div#dummyTrashLinkDiv').html();
+    deleteLink = deleteLink.replace('fakefilename', filename);
+    deleteLink = deleteLink.replace('dummy', id+'_elt');
+    deleteLink = deleteLink.replace('0-' + product_id,  id + '-' + product_id);
+    
+    var featureLink = '';
+    if (cover == 0) {
+      featureLink = '<?php echo $this->Html->link($this->Html->image('x_solid_red_25.gif'),
+            array('controller' => 'product_images', 'action' => 'make_this_cover', 'admin' => true, 'id' => 0, 'product_id' => $product_id),
+            array('escape' => false));
+          ?>';
+      featureLink = featureLink.replace('0/cover', id +'/cover');
+    } else {
+      featureLink = '<?php echo $this->Html->image('tick.gif'); ?>';
+    } 
+    
+    
+    return deleteLink + featureLink;
+    
+  }
+  
+  function bindNewCallback(id, filename) {
+  
+    
+    postUrl = "<?php echo Router::url(array('controller' => 'product_images', 'action' => 'delete', 'id'=>0, 'product_id'=>$product_id)); ?>";
+    postUrl = postUrl.replace('0-' + product_id,  id + '-' + product_id);
+    
+    id = '#' + id+'_elt';
+
+    $(id).bind('click', function() {
+      if (confirm('Are you sure you want to delete '+filename+'?')) {
+        $.ajax({
+            async: true,
+            type: 'post',
+            beforeSend: function(request) {
+          $('#busy-indicator').show();
+            },
+            complete: function(request, json) {
+          afterDelete(request.responseText);
+          $('#busy-indicator').hide()
+            },
+            url: postUrl
+        });
+      } else {
+        return false;
+      }
+    });
+
+  }
+  
+  function handlesUploadifyComplete(event, queueID, fileObj, response, data) {
+  
+  
+    var json_object = $.parseJSON(response);
+    
+    var imageID = 0;
+    var imageName = '';
+    var cover = 0;
+    
+    if (json_object.success) {
+      var contents = $.parseJSON(json_object.contents);
+      imageID = contents.id;
+      imageName = contents.filename;
+      cover = contents.cover;
+    } else {
+      return false;
+    }
+  
+  
+    imageItem = '<li id="product_image-' + imageID + '"><div class="product_image-preview">';
+    imageItem += makeThumbnail(imageName) + '</div>';
+    imageItem += makeActionLinks(imageID, imageName, cover);
+    imageItem += '</li>';
+    
+    
+    $('#product_images-list').append(imageItem);
+  
+    bindNewCallback(imageID, imageName);
+    
+    return true;
+  }
+
+    
   
   function ajaxCompleteFunction(response) {
     
@@ -191,7 +309,7 @@
     
     queueSize = $('#fileInput').uploadifySettings('queueSize');
     if (queueSize == 0) {
-      document.forms["ProductAdminAddForm"].submit();
+      document.forms["ProductAdminEditForm"].submit();
       return false;
     } else {
       return true;
@@ -199,5 +317,5 @@
     
   }
 
-
 </script>
+
