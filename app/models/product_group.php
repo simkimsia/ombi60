@@ -2,7 +2,16 @@
 class ProductGroup extends AppModel {
 	var $name = 'ProductGroup';
 	var $displayField = 'title';
+	
+	
+	var $validate = array(
+                   'title' => array('notempty'),
+                  );
+	
+	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+
 
 	var $belongsTo = array(
 		'Shop' => array(
@@ -135,7 +144,13 @@ class ProductGroup extends AppModel {
 	* @return boolean true on successfull execution and false in failure
 	*/
 	public function saveSmartCollection($data) {
+		
+		if (!$this->__validateSmartCollectionCondition($data['SmartCollectionCondition'])) {
+			return false;
+		}
+		
 		$data['ProductGroup']['type'] = SMART_COLLECTION;
+		
 		//First create an empty row in smart_collections table
 		$this->create();
 		//Save posted data in smart_collections table
@@ -242,6 +257,8 @@ class ProductGroup extends AppModel {
 			       'conditions' => $tmp,
 			       'contain' => 'ProductImage',
 			     );
+			
+			
 			$products = $this->ProductsInGroup->Product->find($findBy, $productsOptions);
 			
 		}

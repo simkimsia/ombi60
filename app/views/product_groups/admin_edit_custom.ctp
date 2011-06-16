@@ -30,10 +30,10 @@
 		
 		echo $this->Form->input('title');
   
-  	$label = $this->Form->label('handle', 'Permalink/handle');
+		$label = $this->Form->label('handle', 'Permalink/handle');
 		$textbox = $this->Form->text('ProductGroup.handle', array('class' => 'small'));
 		$prefix = Router::url('/collections/', true);
-    $suffix = ' ( ' . $this->Html->link(__('What is this?', true), '#') . ' )';
+		$suffix = ' ( ' . $this->Html->link(__('What is this?', true), '#') . ' )';
 		echo $this->Html->div('input text', $label.$prefix.$textbox. $suffix ,array(), true);
 		echo $this->Form->input('description', array('label' => __('Write description of collection', true)));
 			

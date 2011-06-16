@@ -15,9 +15,17 @@
       'remove_linebreaks' => false,
       'extended_valid_elements' => 'textarea[cols|rows|disabled|name|readonly|class]'));
   
+    
     echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=>Shop::get('Shop.id')));
-    echo $this->Form->input('title', array('value' => $data['SmartCollection']['title']));
-    echo $this->Form->input('description', array('label' => __('Write description of collection', true), 'value' => $data['SmartCollection']['description']));
+    echo $this->Form->input('title', array('value' => $data['ProductGroup']['title']));
+    
+    $label = $this->Form->label('handle', 'Permalink/handle');
+    $textbox = $this->Form->text('ProductGroup.handle', array('class' => 'small', 'value' => $data['ProductGroup']['handle']));
+    $prefix = Router::url('/collections/', true);
+    $suffix = ' ( ' . $this->Html->link(__('What is this?', true), '#') . ' )';
+    echo $this->Html->div('input text', $label.$prefix.$textbox. $suffix ,array(), true);
+    
+    echo $this->Form->input('description', array('label' => __('Write description of collection', true), 'value' => $data['ProductGroup']['description']));
   ?>
   </fieldset>
   
