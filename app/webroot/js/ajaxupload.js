@@ -1,25 +1,46 @@
-﻿$(document).ready(function(){
-  $('.make_cover').click(function() {
-    $.ajax({
-    type: 'POST',
-    url: '/admin/product_images/make_this_cover',
-    data: $('#saveConditionForm').serializeArray(),
+﻿$(document).ready(function() {
+  $('.make_cover').live('click', make_cover);
+  //$('.delete-image').live('click', deleteImage);
+});
+function make_cover() {
+  var url = $(this).attr('href');
+  var id_element = $('#divToUpdate').val();
+  $.ajax({
+    type: 'GET',
+    url: url,
     success: function(t) {
       //$('.error').hide();
       //$('#product-list').html(t);
-      
-      $('#smartCollection').html(t);
-      $('.plus').bind('click', add);
-      $('.minus').bind('click', remove);
-      $('#saveConditionForm').bind('submit', submit);
+      //$('.minus').bind('click', remove);
+      $('#'+id_element).html(t);
+      $('.make_cover').live('click', make_cover);
     },
     error: function () {
       alert('Sorry, something went wrong!');
     }
   });
   return false;
-  }) ;
-});
+}
+function deleteImage() {
+  alert('Am I here???');return false;
+  var url = $(this).attr('href');
+  var id_element = $('#divToUpdate').val();
+  $.ajax({
+    type: 'GET',
+    url: url,
+    success: function(t) {
+      //$('.error').hide();
+      //$('#product-list').html(t);
+      //$('.minus').bind('click', remove);
+      $('#'+id_element).html(t);
+      
+    },
+    error: function () {
+      alert('Sorry, something went wrong!');
+    }
+  });
+  return false;
+}
 function $m(theVar){
 	return document.getElementById(theVar)
 }

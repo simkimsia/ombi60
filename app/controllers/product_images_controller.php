@@ -160,11 +160,8 @@ class ProductImagesController extends AppController {
 	}
 	
 	function admin_make_this_cover($id = null, $product_id = null) {
-		$successJSON = false;
-    $contents = array();
-    
     if ($this->params['isAjax']) {
-      $this->layout = 'json';
+      $this->layout = false;
     }
 		if (!$id OR !$product_id) {
       if ($this->params['isAjax']) {
@@ -177,8 +174,15 @@ class ProductImagesController extends AppController {
 
 		if ($this->ProductImage->make_this_cover($id, $product_id)) {
       if ($this->params['isAjax']) {
-        $successJSON = true;
-        $contents['id'] = $id;
+        // the images list related code
+        // to make paging easier to test, we set as 1 per page.
+        $this->paginate = array('conditions'=>array('ProductImage.product_id'=>$product_id),
+              'order' => 'ProductImage.cover desc',
+              'limit'=>'10');
+        
+        $productImages = $this->paginate('ProductImage');
+        $this->set(compact('productImages'));
+        $this->render('/elements/product_images_ajax_list');
         
       } else {
         $this->Session->setFlash(__('Image status changed', true));
@@ -193,10 +197,7 @@ class ProductImagesController extends AppController {
         $this->redirectToProductEdit($product_id);
       }
     }
-    $this->set(compact('contents', 'successJSON'));
-    $this->render('json/response');
-		//$this->Session->setFlash(__('The status of Image could not be changed. Please, try again.', true));
-		//$this->redirect(array('action' => 'index'));
+    
 	}
 
 
@@ -204,7 +205,6 @@ class ProductImagesController extends AppController {
     if (!$product_id) {
       return false;
     }
-//Configure::write('debug', 2);
     $this->layout = false;
     $makeCoverAjax = true;
     $this->ProductImage->saveProductImage($product_id, $edit);
@@ -216,8 +216,9 @@ class ProductImagesController extends AppController {
           'limit'=>'10');
     
     $productImages = $this->paginate('ProductImage');
-    $this->set(compact('productImages'));
-    $this->render('/elements/product_images_ajax_list');
+    $this->set(compact('productImages', 'product_id', 'edit'));
+    //$this->render('admin_ajax_product_image_upload');
+    
     //$this->render();
   }
 

@@ -833,3 +833,17 @@ div.productnote {
     float: left; 
     margin: 5px 10px 5px 0px;
   }
+  #properties label{
+    background: #e4e4e4;
+    float: left;
+    text-align: right;
+    width: 50%;
+    border: 1px solid #CCC;
+    padding: 5px;
+    margin-right: 2px;
+    margin-bottom: 1px;
+  }
+
+  .property-info {
+    padding: 5px;
+  }

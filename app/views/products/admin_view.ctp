@@ -54,37 +54,43 @@
             <ul>
               <?php
               $i = 0;
-              foreach ($smartCollections as $smartCollectionName => $smartCollectionInfo):  
-              ?>
-                <?php 
-                  $collection = explode('::', $smartCollectionName);
-//debug($smartCollectionInfo);
-?>               
-                <li>
-                    <?php echo $this->Html->link($collection[0], array('controller' => 'smart_collections', 'action' => 'view', $collection[1])); 
-                          
-                      echo "<span class='product-status'>Smart Collection</span>";
-                      if (!empty($smartCollectionInfo['condition'])) {                  
-                        echo "<br />";
-                        foreach ($smartCollectionInfo['condition'] as $smartCondition) {
-                          echo "<span class='hint'>";
-                          echo Inflector::camelize($smartCondition['field']) . " is ".$smartCondition['relation'] . " '". $smartCondition['condition']."'";
-                          echo "</span>";
-                          echo "<br />";
-                        }
-                      }
-                          ?>
-                </li>      
-              <?php endforeach; ?>
-
+              if (!empty($smartCollections)) {
+                foreach ($smartCollections as $smartCollectionName => $smartCollectionInfo):  
+                  ?>
+                    <?php 
+                      $collection = explode('::', $smartCollectionName);
+    //debug($smartCollectionInfo);
+    ?>               
+                    <li>
+                        <?php echo $this->Html->link($collection[0], array('controller' => 'smart_collections', 'action' => 'view', $collection[1])); 
+                              
+                          echo "<span class='product-status'>Smart Collection</span>";
+                          if (!empty($smartCollectionInfo['condition'])) {                  
+                            echo "<br />";
+                            foreach ($smartCollectionInfo['condition'] as $smartCondition) {
+                              echo "<span class='hint'>";
+                              echo Inflector::camelize($smartCondition['field']) . " is ".$smartCondition['relation'] . " '". $smartCondition['condition']."'";
+                              echo "</span>";
+                              echo "<br />";
+                            }
+                          }
+                              ?>
+                    </li>      
+                  <?php endforeach; ?>
               <?php
-              foreach ($customCollections as $collection):
-              ?>
-              <li>
-                <?php echo $this->Html->link(__($collection['ProductGroup']['title'], true), array('action' => 'view_custom', $collection['ProductGroup']['id'])); ?>
-              </li>
+              }
               
-            <?php endforeach; ?>
+              ?>
+              <?php
+              if (!empty($customCollections)) :
+                foreach ($customCollections as $collection):
+                ?>
+                <li>
+                  <?php echo $this->Html->link(__($collection['ProductGroup']['title'], true), array('action' => 'view_custom', $collection['ProductGroup']['id'])); ?>
+                </li>
+                
+              <?php endforeach; endif;
+            ?>
           </ul>
         </fieldset>
      </div>

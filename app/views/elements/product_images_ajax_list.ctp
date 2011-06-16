@@ -1,3 +1,10 @@
+<?php // ?>
+<?php
+//print_r($this->params);die;
+if (!isset($this->params['isAjax'])) {
+  echo $this->Html->script(array('jquery/jquery-1.4.2.min'));
+}
+?>
 <?php
 	$i = 0;
 	foreach ($productImages as $key=>$productImage):
@@ -43,4 +50,3 @@
 		}
 		?>
 <?php endforeach; ?>
-	
