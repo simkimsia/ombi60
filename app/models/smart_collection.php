@@ -116,9 +116,12 @@ class SmartCollection extends AppModel
     * 
     * @return boolean true on successfull execution and false in failure
     */
-  public function getStartCollectionProducts($smart_collection, $findBy = "all") {
+  public function getStartCollectionProducts($smart_collection, $findBy = "all", $productId = null) {
     $tmp = $test = $products = array();
     $tmp['Product.shop_id'] = $smart_collection['SmartCollection']['shop_id'];    
+    if ($productId != null) {
+      $tmp['Product.id'] = $productId;
+    }
     
     if (!empty($smart_collection['SmartCollectionCondition'])) {
       foreach ($smart_collection['SmartCollectionCondition'] as $smart_collection_condition) {
@@ -136,10 +139,15 @@ class SmartCollection extends AppModel
       }
       $productsOptions = array(
                           'conditions' => $tmp,
-                          'contain' => 'ProductImage',
+                          'contain'    => 'ProductImage',
+                          'fields'     => array(
+                                            'Product.title',
+                                          ),
                         );
       $products = ClassRegistry::init('Product')->find($findBy, $productsOptions);
-
+      if (!empty($products)) {
+        $products['condition'][] = $smart_collection_condition;
+      }
     }
     return $products;
   }//end getStartCollectionProducts()
@@ -161,5 +169,26 @@ class SmartCollection extends AppModel
     return true;
   }//end validateSmartCollectionCondition()
 
+
+  /**
+
+   */
+  function getProductSmartCollection($productId) {
+    $shopId = Shop::get('Shop.id');
+    $products = array();
+    $smartCollections = $this->find('all', array(
+                                            'conditions' => array('shop_id' => $shopId),
+                                            'recusrive' => 1,
+                                          ));
+    foreach ($smartCollections as $smartCollection) {
+      $result = $this->getStartCollectionProducts($smartCollection, 'first', $productId);
+      if (!empty($result)) {
+        $products[$smartCollection['SmartCollection']['title'] . "::" .$smartCollection['SmartCollection']['id']] = $result;
+        //$products[$smartCollection['SmartCollection']['title'] . "::" .$smartCollection['SmartCollection']['id']]['condition'] = $smartCollection['SmartCollectionCondition']['field'];
+      }
+    }
+    return $products;
+  }//end getProductSmartCollection()
+  
 
 }//end class

@@ -86,7 +86,7 @@ foreach ($products as $product):
 					       array('class' => 'product-status')); ?>
 		</td>
 		<td class="actions" style="text-align: center;">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $product['Product']['id'], 'admin' => false)); ?>
+			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $product['Product']['id'], 'admin' => true)); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $product['Product']['id'])); ?>
 			<?php echo $this->Html->link(__('Duplicate', true), array('action' => 'duplicate', $product['Product']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $product['Product']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $product['Product']['id'])); ?>
