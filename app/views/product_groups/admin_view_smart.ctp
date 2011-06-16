@@ -3,7 +3,7 @@
         <h2>
           <?php echo $smart_collection['ProductGroup']['title']; ?>
         </h2>
-        <?php echo $this->Html->link(__('Edit', true), array('controller' => 'product_groups', 'action' => 'edit_smart', $smart_collection['ProductGroup']['id']), array('id' => 'edit_'.$smart_collection['ProductGroup']['id'])); ?>
+        <?php echo $this->Html->link(__('Edit', true), array('action' => 'edit_smart', $smart_collection['ProductGroup']['id'])); ?>
         &nbsp;|&nbsp;
           <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $smart_collection['ProductGroup']['id']), null, sprintf(__('Are you sure you want to delete this collection?', true), $smart_collection['ProductGroup']['id'])); ?>&nbsp;|&nbsp;
           <?php echo $this->Html->link(__('Back to Collections', true), array('controller'=>'product_groups','action' => 'index')); ?>

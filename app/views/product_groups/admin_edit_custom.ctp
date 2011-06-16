@@ -4,9 +4,9 @@
         <?php echo isset($this->data['ProductGroup']['title']) ? $this->data['ProductGroup']['title'] : ""; ?>
       </h2>
       <?php 
-        echo $this->Html->link(__('View', true), array('action' => 'view', $this->Form->value('ProductGroup.id')));
+        echo $this->Html->link(__('View', true), array('action' => 'view_custom', $this->Form->value('ProductGroup.id')));
         echo ' | '. $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('ProductGroup.id')), null, sprintf(__('Are you sure you want to delete page %s?', true), $this->Form->value('ProductGroup.title')));
-        echo ' | '. $this->Html->link(__('Back to Pages', true), array('controller'=>'product_groups','action' => 'index'));  
+        echo ' | '. $this->Html->link(__('Back to Collections', true), array('controller'=>'product_groups','action' => 'index'));  
       ?>
     </div>
 <?php echo $this->Form->create('ProductGroup');?>

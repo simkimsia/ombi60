@@ -145,36 +145,12 @@ class ProductGroup extends AppModel {
 	*/
 	public function saveSmartCollection($data) {
 		
-		if (!$this->__validateSmartCollectionCondition($data['SmartCollectionCondition'])) {
-			return false;
-		}
-		
 		$data['ProductGroup']['type'] = SMART_COLLECTION;
 		
 		//First create an empty row in smart_collections table
 		$this->create();
 		//Save posted data in smart_collections table
-		if ($this->save($data)) {
-			//Get the last inserted id
-			$smart_collection_id = $this->getLastInsertID();
-			//Check if last smart collection conditions are set
-			
-			if (!empty($data['SmartCollectionCondition']) && is_array($data['SmartCollectionCondition'])) {
-				if (!$this->__validateSmartCollectionCondition($data['SmartCollectionCondition'])) {
-					return false;
-				}
-			
-				foreach ($data['SmartCollectionCondition'] as $smartCollectionCondtion) {
-					//Set smart collection id to array
-					$smartCollectionCondtion['smart_collection_id'] = $smart_collection_id;
-					$this->SmartCollectionCondition->create();
-					if ($this->SmartCollectionCondition->save($smartCollectionCondtion)) {
-					//Select all the products with condition selected
-					//get products from product model
-					//ClassRegistry::init('Product')->conditionalProducts($smartCollectionCondtion);
-					}
-				}
-			}
+		if ($this->saveAll($data)) {
 			return true;
 		}
 		return false;

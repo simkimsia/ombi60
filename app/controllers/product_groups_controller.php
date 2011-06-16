@@ -13,7 +13,7 @@ class ProductGroupsController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->allow($this->action);	
     Configure::write('debug', 2);
-		if ($this->action == 'admin_toggle') {
+		if ($this->action == 'admin_toggle' ) {
 			$this->Security->enabled = false;
 		}
 	}
@@ -88,15 +88,15 @@ class ProductGroupsController extends AppController {
 		}
 		if (!empty($this->data)) {
 			$this->data['ProductGroup']['type'] = SMART_COLLECTION;
+			
 			if ($this->ProductGroup->save($this->data)) {
-		    
+				$this->redirect(array('action' => 'admin_view_smart', $id));
 			} else {
-			  $this->Session->setFlash(__('Unable to save smart collection', true));
+				$this->Session->setFlash(__('Unable to save smart collection', true));
 			}
 		}
-		$this->redirect(array('action' => 'view', $id));
-    
-		
+		$this->data = $this->__getSmartCollection($id);
+		$this->set('view', true);
 	}
 	
 	function admin_view_custom($id = null) {
@@ -253,8 +253,6 @@ class ProductGroupsController extends AppController {
 			$this->data = $this->ProductGroup->read(null, $id);
 		}
 		
-		 $this->ProductGroup->recurive = 3;
-    
 		$product_group = $this->ProductGroup->read(null, $id);
 		
 		$group_products = array();
@@ -324,7 +322,23 @@ class ProductGroupsController extends AppController {
 		$products         = $this->ProductGroup->getSmartCollectionProducts($smart_collection); //Get list of all the products
 		 
 		$this->set(compact('smart_collection', 'products'));
+		
+		return $smart_collection;
 	}//end __getSmartCollection()
+	
+	function admin_remove_condition($condition_id = null, $smart_collection_id = null) {
+		if (!$condition_id) {
+			$this->Session->setFlash(__('Invalid smart collection', true));
+			$this->redirect($this->refer());
+		}
+	    
+		if ($this->ProductGroup->SmartCollectionCondition->deleteAll($condition_id)) {
+			$this->layout = 'ajax';
+			$this->__getSmartCollection($smart_collection_id);
+			$this->render('/elements/admin_smart_collection_products');
+		}
+		die;
+	}//end admin_remove_condition()
 	
 	function admin_save_condition() {
 		$i = 0;
