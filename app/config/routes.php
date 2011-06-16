@@ -178,6 +178,16 @@
                         array('pass' => array('id', 'product_id'),
                               'id' => '[0-9]+',
                               'product_id' => '[0-9]+',
+                              )); 
+      // this is for the removal of images for product. format as above route
+        Router::connect('/admin/productimage/:product_id',
+                        array('controller' => 'product_images',
+                              'action' => 'delete_me',
+                              'admin' => true),
+                        
+                        array('pass' => array('id', 'product_id'),
+                              'id' => '[0-9]+',
+                              'product_id' => '[0-9]+',
                               ));
         
         // this is for the ajax edit of images for saved_themes
@@ -405,7 +415,5 @@
                         array('controller' => 'shops',
                               'action' => 'general_settings',
                               'admin'=>true));
-        
-       
 
 ?>

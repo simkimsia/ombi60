@@ -1,6 +1,6 @@
 ﻿$(document).ready(function() {
   $('.make_cover').live('click', make_cover);
-  //$('.delete-image').live('click', deleteImage);
+  $('.delete_image').live('click', delete_image);
 });
 function make_cover() {
   var url = $(this).attr('href');
@@ -21,8 +21,9 @@ function make_cover() {
   });
   return false;
 }
-function deleteImage() {
-  alert('Am I here???');return false;
+
+
+function delete_image() {
   var url = $(this).attr('href');
   var id_element = $('#divToUpdate').val();
   $.ajax({
@@ -33,7 +34,7 @@ function deleteImage() {
       //$('#product-list').html(t);
       //$('.minus').bind('click', remove);
       $('#'+id_element).html(t);
-      
+      $('.delete_image').live('click', delete_image);
     },
     error: function () {
       alert('Sorry, something went wrong!');
@@ -41,6 +42,7 @@ function deleteImage() {
   });
   return false;
 }
+
 function $m(theVar){
 	return document.getElementById(theVar)
 }

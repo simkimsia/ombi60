@@ -1,9 +1,12 @@
 <?php // ?>
 <?php
-//print_r($this->params);die;
-if (!isset($this->params['isAjax'])) {
-  echo $this->Html->script(array('jquery/jquery-1.4.2.min'));
-}
+/*echo "<pre>";
+print_r($this->params);
+echo "</pre>";*/
+//die;
+/*if ($this->params['isAjax']=="") {
+  echo $this->Html->script(array('jquery/jquery-1.4.2.min', 'ajaxupload'));
+}*/
 ?>
 <?php
 	$i = 0;

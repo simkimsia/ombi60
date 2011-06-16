@@ -1,4 +1,12 @@
+<?php echo $this->Html->script(array('jquery/jquery-1.4.2.min', 'ajaxupload')); ?>
+<script>
+/*$(document).ready(function() {
+  $('.make_cover').live('click', make_cover);
+  $('.delete_image').live('click', delete_image);
+  
+});*/
 
+</script>
 <?php
   $i = 0;
   foreach ($productImages as $key=>$productImage):
@@ -18,7 +26,7 @@
       <?php
       $trashPic = $this->Html->image('trash.gif');
       
-      echo $this->Html->link($trashPic, array('controller' => 'product_images', 'action' => 'delete', 'id'=>$id, 'product_id'=>$productImage['ProductImage']['product_id']), array('confirm' => sprintf(__('Are you sure you want to delete %s?', true), $productImage['ProductImage']['filename']), 'class' => 'delete-image', 'escape' => false));
+      echo $this->Html->link($trashPic, array('controller' => 'product_images', 'action' => 'delete_me', 'id'=>$id, 'product_id'=>$productImage['ProductImage']['product_id']), array(/*'confirm' => sprintf(__('Are you sure you want to delete %s?', true), $productImage['ProductImage']['filename']), */'class' => 'delete_image', 'escape' => false));
       
       if ($productImage['ProductImage']['cover']) {
         echo '<span class="make_cover">' . __('Cover Image', true) . '</span>'; //$this->Html->image('tick.gif');
@@ -39,12 +47,3 @@
     }
     ?>
 <?php endforeach; ?>
-<?php echo $this->Html->script(array('jquery/jquery-1.4.2.min', 'ajaxupload'), array('inline' => false)); ?>
-<script>
-$(document).ready(function() {
-alert('Am I here?');
-  $('.make_cover').live('click', make_cover);
-  $('.delete-image').live('click', deleteImage);
-});
-
-</script>
