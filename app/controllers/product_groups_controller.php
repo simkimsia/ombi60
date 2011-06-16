@@ -11,9 +11,7 @@ class ProductGroupsController extends AppController {
 	  
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-		$this->Auth->allow($this->action);	
-    Configure::write('debug', 2);
-		if ($this->action == 'admin_toggle') {
+		if ($this->action == 'admin_toggle' ) {
 			$this->Security->enabled = false;
 		}
 	}
@@ -23,17 +21,19 @@ class ProductGroupsController extends AppController {
 		$shopId = Shop::get('Shop.id');
 		$customCollections = $this->ProductGroup->find('all', array(
                                                            'conditions'=>array(
-                                                                          'ProductGroup.type'=>0,
+                                                                          'ProductGroup.type'=>CUSTOM_COLLECTION,
                                                                           'ProductGroup.shop_id'=>$shopId,
                                                                          ),
                                                           ));
 
-    $smartCollections = ClassRegistry::init('SmartCollection')->find('all', array(
-                                                                             'conditions' => array('shop_id' => $shopId),
-                                                                             'recusrive' => 1,
-                                                                            ));
-		/*$smartCollections = $this->ProductGroup->find('all', array('conditions'=>array('ProductGroup.type'=>1,
-											       'ProductGroup.shop_id'=>$shopId)));*/
+		$smartCollections = $this->ProductGroup->find('all', array(
+							   'conditions'=>array(
+                                                                          'ProductGroup.type'=>SMART_COLLECTION,
+                                                                          'ProductGroup.shop_id'=>$shopId,
+                                                                         ),
+                                                           
+                                                        ));
+		
 		$this->set(compact('customCollections', 'smartCollections'));
 	}
 	
@@ -41,80 +41,94 @@ class ProductGroupsController extends AppController {
 
 	function admin_view_smart($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid product group', true));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->set('productGroup', $this->ProductGroup->read(null, $id));
+			$this->Session->setFlash(__('Invalid smart collection', true));
+			$this->redirect($this->refer());
+		      }
+		$this->__getSmartCollection($id);
+		$this->set('view', true);
 	}
 
 	function admin_add_smart() {
+		//First we check whether data is posted?    
 		if (!empty($this->data)) {
-			// set the type to smart
-			$this->data['ProductGroup']['type'] = 1;
-			$this->ProductGroup->create();
-			if ($this->ProductGroup->save($this->data)) {
-				$this->Session->setFlash(__('The product group has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The product group could not be saved. Please, try again.', true));
+			$i = 0;
+			foreach ($_POST['fields'] as $field) {
+				$this->data['SmartCollectionCondition'][$i]['field'] = $field;
+				$i++;
+			}
+			$i = 0;
+			foreach ($_POST['relations'] as $relation) {
+				$this->data['SmartCollectionCondition'][$i]['relation'] = $relation;
+				$i++;
+			}
+			$i = 0;
+			foreach ($_POST['conditions'] as $condition) {
+				$this->data['SmartCollectionCondition'][$i]['condition'] = $condition;
+				$i++;
+			}
+			$this->data['ProductGroup']['type'] = SMART_COLLECTION;
+			if ((bool)$this->ProductGroup->saveSmartCollection($this->data)) {
+				$this->redirect(array(
+						 'controller' => 'product_groups',
+						 'admin'      => true,
+						 'action'     => 'index',
+						));
 			}
 		}
 		
 	}
 
 	function admin_edit_smart($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid product group', true));
-			$this->redirect(array('action' => 'index'));
+		
+		if (!$id) {
+		  $this->Session->setFlash(__('Invalid smart collection', true));
+		  $this->redirect($this->refer());
 		}
 		if (!empty($this->data)) {
-			// set the type to smart
-			$this->data['ProductGroup']['type'] = 1;
+			$this->data['ProductGroup']['type'] = SMART_COLLECTION;
+			
 			if ($this->ProductGroup->save($this->data)) {
-				$this->Session->setFlash(__('The product group has been saved', true));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'admin_view_smart', $id));
 			} else {
-				$this->Session->setFlash(__('The product group could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('Unable to save smart collection', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->ProductGroup->read(null, $id);
-		}
-		
+		$this->data = $this->__getSmartCollection($id);
+		$this->set('view', true);
 	}
 	
 	function admin_view_custom($id = null) {
-    Configure::write('debug', 2);
+    
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid product group', true));
 			$this->redirect(array('action' => 'index'));
 		}
-    $this->ProductGroup->recurive = 3;
-    
-    $product_group = $this->ProductGroup->read(null, $id);
-    
-    $group_products = array();
-    if (isset($product_group['ProductsInGroup']) && !empty($product_group['ProductsInGroup'])) {
-        foreach($product_group['ProductsInGroup'] as $val) {
-            $product_in_groups[] = $val['product_id'];
-        }
-        
-         $group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
-    }
+		
+		
+		$product_group = $this->ProductGroup->read(null, $id);
+		
+		$group_products = array();
+		if (isset($product_group['ProductsInGroup']) && !empty($product_group['ProductsInGroup'])) {
+		    foreach($product_group['ProductsInGroup'] as $val) {
+			$product_in_groups[] = $val['product_id'];
+		    }
+		    
+		     $group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
+		}
    
     
 		$this->set('productGroup', $this->ProductGroup->read(null, $id));
-    $conditions = array('Product.visible' => 1);
-    $products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
-    $product_group_id = $id;
-    $this->set(compact('products','product_group_id','group_products'));
+		$conditions = array('Product.visible' => 1);
+		$products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
+		$product_group_id = $id;
+		$this->set(compact('products','product_group_id','group_products'));
 	}
 	
 	function admin_add_custom() {
 	  
 		if (!empty($this->data)) {
 			// set the type to custom
-			$this->data['ProductGroup']['type'] = 0;
+			$this->data['ProductGroup']['type'] = CUSTOM_COLLECTION;
 			$this->ProductGroup->create();
 			if ($this->ProductGroup->save($this->data)) {
 				$this->Session->setFlash(__('The product group has been saved', true));
@@ -129,36 +143,36 @@ class ProductGroupsController extends AppController {
 	function admin_add_product_in_group($group_id,$product_id) {
 	      
 	    
-	    if (!empty($group_id) && !empty($product_id))  {
-	       
-	         $data['ProductsInGroup']['product_id'] = $product_id;
-	         $data['ProductsInGroup']['product_group_id'] = $group_id;
-	         $recordExists = $this->ProductGroup->ProductsInGroup->find('count',array('conditions' => array('product_id' => $product_id , 'product_group_id' => $group_id)));
-	         
-	          if (!$recordExists) {
-               $this->ProductGroup->ProductsInGroup->create();
-               $this->ProductGroup->ProductsInGroup->save($data);
-            } else {
-              $this->set('error','Record already exists');
-            }
-             $product_group = $this->ProductGroup->read(null, $group_id);
-            if (isset($product_group['ProductsInGroup']) && !empty($product_group['ProductsInGroup'])) {
-                  foreach($product_group['ProductsInGroup'] as $val) {
-                      $product_in_groups[] = $val['product_id'];
-                  }
-             }
-             
-            $group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
-            
-            $product_group_id = $group_id;
-            $this->set(compact('product_group_id','group_products'));             	          
-	          
-	    } else {
-	      //$data['success'] = false;
-	    } 
-	    $this->layout = '';
-	    $this->autoRender = false;
-      $this->render('admin_product_group_list', 'ajax',ELEMENTS.'/admin_product_group_list.ctp');
+		if (!empty($group_id) && !empty($product_id))  {
+		   
+		     $data['ProductsInGroup']['product_id'] = $product_id;
+		     $data['ProductsInGroup']['product_group_id'] = $group_id;
+		     $recordExists = $this->ProductGroup->ProductsInGroup->find('count',array('conditions' => array('product_id' => $product_id , 'product_group_id' => $group_id)));
+		     
+		      if (!$recordExists) {
+		   $this->ProductGroup->ProductsInGroup->create();
+		   $this->ProductGroup->ProductsInGroup->save($data);
+		} else {
+		  $this->set('error','Record already exists');
+		}
+		 $product_group = $this->ProductGroup->read(null, $group_id);
+		if (isset($product_group['ProductsInGroup']) && !empty($product_group['ProductsInGroup'])) {
+		      foreach($product_group['ProductsInGroup'] as $val) {
+			  $product_in_groups[] = $val['product_id'];
+		      }
+		 }
+		 
+		$group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
+		
+		$product_group_id = $group_id;
+		$this->set(compact('product_group_id','group_products'));             	          
+		      
+		} else {
+		  //$data['success'] = false;
+		} 
+		$this->layout = '';
+		$this->autoRender = false;
+		$this->render('admin_product_group_list', 'ajax',ELEMENTS.'/admin_product_group_list.ctp');
 	   // $this->sendJson($data);
 	    	    
 	}
@@ -166,35 +180,35 @@ class ProductGroupsController extends AppController {
 	function admin_remove_product_from_group($group_id,$product_id) {
 	      
 	    
-	     if (!empty($group_id) && !empty($product_id))  {
+		if (!empty($group_id) && !empty($product_id))  {
+		  
+		    $record = $this->ProductGroup->ProductsInGroup->find('first',array('conditions' => array('product_id' => $product_id , 'product_group_id' => $group_id)));
+		    
+		     if (!empty($record) && is_array($record)) {
+		 // $this->ProductGroup->ProductsInGroup->create();
+		  $this->ProductGroup->ProductsInGroup->delete($record['ProductsInGroup']['id']);
+	       } else {
+		 $this->set('error','Record does not exists');
+	       }
+	       $product_group = $this->ProductGroup->read(null, $group_id);
+	       $group_products = array();
+	       if (isset($product_group['ProductsInGroup']) && !empty($product_group['ProductsInGroup'])) {
+		     foreach($product_group['ProductsInGroup'] as $val) {
+			 $product_in_groups[] = $val['product_id'];
+		     }
+		     
+		      $group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
+		}
+	      
+	      
 	       
-	         $record = $this->ProductGroup->ProductsInGroup->find('first',array('conditions' => array('product_id' => $product_id , 'product_group_id' => $group_id)));
-	         
-	          if (!empty($record) && is_array($record)) {
-              // $this->ProductGroup->ProductsInGroup->create();
-               $this->ProductGroup->ProductsInGroup->delete($record['ProductsInGroup']['id']);
-            } else {
-              $this->set('error','Record does not exists');
-            }
-            $product_group = $this->ProductGroup->read(null, $group_id);
-            $group_products = array();
-            if (isset($product_group['ProductsInGroup']) && !empty($product_group['ProductsInGroup'])) {
-                  foreach($product_group['ProductsInGroup'] as $val) {
-                      $product_in_groups[] = $val['product_id'];
-                  }
-                  
-                   $group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
-             }
-           
-           
-            
-            $product_group_id = $group_id;
-            $this->set(compact('product_group_id','group_products')); 	         	          
-	    } 
-	    
-	    $this->layout = '';
-	    $this->autoRender = false;
-      $this->render('admin_product_group_list', 'ajax',ELEMENTS.'/admin_product_group_list.ctp');
+	       $product_group_id = $group_id;
+	       $this->set(compact('product_group_id','group_products')); 	         	          
+	       } 
+	       
+	       $this->layout = '';
+	       $this->autoRender = false;
+		$this->render('admin_product_group_list', 'ajax',ELEMENTS.'/admin_product_group_list.ctp');
 	   	    	    
 	}
 	/**
@@ -225,7 +239,7 @@ class ProductGroupsController extends AppController {
 		
 		if (!empty($this->data)) {
 			// set the type to custom
-			$this->data['ProductGroup']['type'] = 0;
+			$this->data['ProductGroup']['type'] = CUSTOM_COLLECTION;
 			if ($this->ProductGroup->save($this->data)) {
 				$this->Session->setFlash(__('The product group has been saved', true));
 				$this->redirect(array('action' => 'index'));
@@ -237,25 +251,23 @@ class ProductGroupsController extends AppController {
 			$this->data = $this->ProductGroup->read(null, $id);
 		}
 		
-		 $this->ProductGroup->recurive = 3;
-    
-    $product_group = $this->ProductGroup->read(null, $id);
-    
-    $group_products = array();
-    if (isset($product_group['ProductsInGroup']) && !empty($product_group['ProductsInGroup'])) {
-        foreach($product_group['ProductsInGroup'] as $val) {
-            $product_in_groups[] = $val['product_id'];
-        }
-        
-         $group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
-    }
+		$product_group = $this->ProductGroup->read(null, $id);
+		
+		$group_products = array();
+		if (isset($product_group['ProductsInGroup']) && !empty($product_group['ProductsInGroup'])) {
+		    foreach($product_group['ProductsInGroup'] as $val) {
+			$product_in_groups[] = $val['product_id'];
+		    }
+		    
+		     $group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
+		}
    
     
 		$this->set('productGroup', $this->ProductGroup->read(null, $id));
-    $conditions = array('Product.visible' => 1);
-    $products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
-    $product_group_id = $id;
-    $this->set(compact('products','product_group_id','group_products'));
+		$conditions = array('Product.visible' => 1);
+		$products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
+		$product_group_id = $id;
+		$this->set(compact('products','product_group_id','group_products'));
 		
 	}
 
@@ -300,6 +312,62 @@ class ProductGroupsController extends AppController {
 			}
 			$this->redirect(array('action' => 'index'));
 		}
+	}
+	
+	function __getSmartCollection($id) {
+		$smart_collection = $this->ProductGroup->find('first', array('conditions'=>array('ProductGroup.id'=>$id, 'ProductGroup.type'=>SMART_COLLECTION)));
+	    
+		$products         = $this->ProductGroup->getSmartCollectionProducts($smart_collection); //Get list of all the products
+		 
+		$this->set(compact('smart_collection', 'products'));
+		
+		return $smart_collection;
+	}//end __getSmartCollection()
+	
+	function admin_remove_condition($condition_id = null, $smart_collection_id = null) {
+		if (!$condition_id) {
+			$this->Session->setFlash(__('Invalid smart collection', true));
+			$this->redirect($this->refer());
+		}
+	    
+		if ($this->ProductGroup->SmartCollectionCondition->deleteAll($condition_id)) {
+			$this->layout = 'ajax';
+			$this->__getSmartCollection($smart_collection_id);
+			$this->render('/elements/admin_smart_collection_products');
+		}
+		die;
+	}//end admin_remove_condition()
+	
+	function admin_save_condition() {
+		$i = 0;
+		foreach ($_POST['fields'] as $field) {
+		  $this->data['SmartCollectionCondition'][$i]['field'] = $field;
+		  $i++;
+		}
+		$i = 0;
+		foreach ($_POST['relations'] as $relation) {
+		  $this->data['SmartCollectionCondition'][$i]['relation'] = $relation;
+		  $i++;
+		}
+		$i = 0;
+		foreach ($_POST['conditions'] as $condition) {
+		  $this->data['SmartCollectionCondition'][$i]['condition'] = $condition;
+		  $i++;
+		} 
+		$smart_collection_id = $_POST['smart_collection_id'];
+		
+		
+		$this->set('view', true);
+		$this->set('smart_collection_id', $smart_collection_id);
+		if ($this->ProductGroup->saveSmartCollectionCondition($this->data, $smart_collection_id)) {
+		  if ($this->RequestHandler->isAjax()) {
+		    $this->layout = 'ajax';
+		  }
+		  $this->__getSmartCollection($smart_collection_id);
+		  //$this->render('/elements/admin_smart_collection_products');
+		}
+		$this->render('/elements/admin_set_smart_collection_condition');
+		//die;
 	}
 
 

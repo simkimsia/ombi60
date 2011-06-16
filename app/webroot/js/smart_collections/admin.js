@@ -13,7 +13,7 @@ function submit () {
   
   $.ajax({
     type: 'POST',
-    url: '/admin/smart_collections/save_condition',
+    url: '/admin/collections/save_condition',
     data: $('#saveConditionForm').serializeArray(),
     success: function(t) {
       //$('.error').hide();

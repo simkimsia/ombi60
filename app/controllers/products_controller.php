@@ -47,8 +47,6 @@ class ProductsController extends AppController {
 	var $view = 'TwigView.TwigTheme';
 
 	function beforeFilter() {
-		$this->Auth->allow($this->action);	
-    Configure::write('debug', 2);
 		// for uploadify to work, we must ensure that debug set to zero in admin_add and admin_edit
 		
 
@@ -670,7 +668,7 @@ class ProductsController extends AppController {
 		
 		$errors = $this->Product->getAllValidationErrors();
 		
-		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>0,
+		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>CUSTOM_COLLECTION,
 												'ProductGroup.shop_id'=>Shop::get('Shop.id'))));
 		
 		$this->set(compact('errors', 'uploadifySettings', 'collections'));
@@ -801,7 +799,7 @@ class ProductsController extends AppController {
 					   'onComplete' => true,);
 		
 		
-		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>0,
+		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>CUSTOM_COLLECTION,
 												'ProductGroup.shop_id'=>Shop::get('Shop.id'))));
 		
 		$this->set(compact('product_id',

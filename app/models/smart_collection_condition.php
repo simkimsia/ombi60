@@ -12,7 +12,7 @@ class SmartCollectionCondition extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
 		'SmartCollection' => array(
-			'className' => 'SmartCollection',
+			'className' => 'ProductGroup',
 			'foreignKey' => 'smart_collection_id',
 			'conditions' => '',
 			'fields' => '',

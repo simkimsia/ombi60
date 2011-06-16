@@ -17,7 +17,7 @@ class SmartCollectionsController extends AppController {
     // call the AppController beforeFilter method after all the $this->Auth settings have been changed.
     parent::beforeFilter();
     $this->Auth->allow($this->action);  
-    Configure::write('debug', 2);
+    
     $this->Security->enabled = false;
     //if ($this->action == 'admin_toggle') {
     //  $this->Security->enabled = false;
@@ -148,7 +148,7 @@ class SmartCollectionsController extends AppController {
   function __getSmartCollection($id) {
     $smart_collection = $this->SmartCollection->read(null, $id);
 
-    $products         = $this->SmartCollection->getStartCollectionProducts($smart_collection); //Get list of all the products
+    $products         = $this->SmartCollection->getSmartCollectionProducts($smart_collection); //Get list of all the products
      
     $this->set(compact('smart_collection', 'products'));
   }//end __getSmartCollection()

@@ -4,9 +4,9 @@
         <?php echo isset($this->data['ProductGroup']['title']) ? $this->data['ProductGroup']['title'] : ""; ?>
       </h2>
       <?php 
-        echo $this->Html->link(__('View', true), array('action' => 'view', $this->Form->value('ProductGroup.id')));
+        echo $this->Html->link(__('View', true), array('action' => 'view_custom', $this->Form->value('ProductGroup.id')));
         echo ' | '. $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('ProductGroup.id')), null, sprintf(__('Are you sure you want to delete page %s?', true), $this->Form->value('ProductGroup.title')));
-        echo ' | '. $this->Html->link(__('Back to Pages', true), array('controller'=>'product_groups','action' => 'index'));  
+        echo ' | '. $this->Html->link(__('Back to Collections', true), array('controller'=>'product_groups','action' => 'index'));  
       ?>
     </div>
 <?php echo $this->Form->create('ProductGroup');?>
@@ -30,10 +30,10 @@
 		
 		echo $this->Form->input('title');
   
-  	$label = $this->Form->label('handle', 'Permalink/handle');
+		$label = $this->Form->label('handle', 'Permalink/handle');
 		$textbox = $this->Form->text('ProductGroup.handle', array('class' => 'small'));
 		$prefix = Router::url('/collections/', true);
-    $suffix = ' ( ' . $this->Html->link(__('What is this?', true), '#') . ' )';
+		$suffix = ' ( ' . $this->Html->link(__('What is this?', true), '#') . ' )';
 		echo $this->Html->div('input text', $label.$prefix.$textbox. $suffix ,array(), true);
 		echo $this->Form->input('description', array('label' => __('Write description of collection', true)));
 			

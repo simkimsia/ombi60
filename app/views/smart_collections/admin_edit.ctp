@@ -3,7 +3,7 @@
       <h2><?php __($this->data['SmartCollection']['title']);?></h2>
       <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'product_groups','action' => 'index')); ?>
   </div>
-<?php echo $this->Form->create('SmartCollection', array('url' => array('action' => 'edit')));?>
+<?php echo $this->Form->create('SmartCollection', array('url' => array('action' => 'edit_smart')));?>
   <?php echo $this->Form->input('id')?>
   <fieldset>
     <legend><?php __('Edit Smart Collection'); ?></legend>

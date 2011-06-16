@@ -3,8 +3,8 @@ echo $this->Html->script(array('smart_collections/admin'), array('inline' => fal
 //debug($smart_collection);
 ?>
 <?php if (isset($view)) { ?>
-  <form id="saveConditionForm" action="/admin/smart_collections/save_condition" method="post" style="width: auto;">
-    <input type="hidden" name="smart_collection_id" id ="SmartCollectionId" value="<?php echo (isset($smart_collection['SmartCollection']['id']) ? $smart_collection['SmartCollection']['id']: (isset($smart_collection_id) ? $smart_collection_id: ""))?>"/>
+  <form id="saveConditionForm" action="/admin/collections/save_condition" method="post" style="width: auto;">
+    <input type="hidden" name="smart_collection_id" id ="SmartCollectionId" value="<?php echo (isset($smart_collection['ProductGroup']['id']) ? $smart_collection['ProductGroup']['id']: (isset($smart_collection_id) ? $smart_collection_id: ""))?>"/>
 <?php } ?>
 <?php //echo $this->Form->create('SmartCollection', array('url' => array('action' => 'save_condition'), 'id' => 'saveConditionForm'));?>
 

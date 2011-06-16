@@ -3,9 +3,9 @@
         <h2>
           <?php echo $smart_collection['SmartCollection']['title']; ?>
         </h2>
-        <?php echo $this->Html->link(__('Edit', true), array('controller' => 'smart_collections', 'action' => 'edit', $smart_collection['SmartCollection']['id']), array('id' => 'edit_'.$smart_collection['SmartCollection']['id'])); ?>
+        <?php echo $this->Html->link(__('Edit', true), array('controller' => 'product_groups', 'action' => 'edit_smart', $smart_collection['ProductGroup']['id']), array('id' => 'edit_'.$smart_collection['SmartCollection']['id'])); ?>
         &nbsp;|&nbsp;
-          <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $smart_collection['SmartCollection']['id']), null, sprintf(__('Are you sure you want to delete this collection?', true), $smart_collection['SmartCollection']['id'])); ?>&nbsp;|&nbsp;
+          <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $smart_collection['SmartCollection']['id']), null, sprintf(__('Are you sure you want to delete this collection?', true), $smart_collection['ProductGroup']['id'])); ?>&nbsp;|&nbsp;
           <?php echo $this->Html->link(__('Back to Collections', true), array('controller'=>'product_groups','action' => 'index')); ?>
   </div>
   <?php
