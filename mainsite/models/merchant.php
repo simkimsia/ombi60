@@ -196,9 +196,11 @@ class Merchant extends AppModel {
 		$post = ClassRegistry::init('Post');
 		
 		$postData = array('Post'=>array('title'=>'Open for business!',
-						'body'=>'We are OPEN for business!!',
+						'content'=>'We are OPEN for business!!',
 						'author_id'=>$this->User->id,
-						'blog_id'=>$blog->id));
+						'blog_id'=>$blog->id,
+						));
+		
 		
 		$post->create();
 		$result = $post->save($postData);
@@ -213,7 +215,7 @@ class Merchant extends AppModel {
 		
 		$homePage = array(
 		             'title'=>'Welcome',
-				     'text'=>'<div>
+				     'content'=>'<div>
                                 <h2>Welcome</h2>
                                 <p>Congratulations on starting your own e-commerce store and on your way towards buiding a business empire!</p>
                                 <p>This is the front page of your store - the first thing your customers will see when they arrive</p>
@@ -226,7 +228,7 @@ class Merchant extends AppModel {
 					'handle'=>'shopfront');
 		
 		$aboutUsPage = array('title'=>'About Us',
-				     'text'=>'<p>The <strong>About Us</strong> page is important.</p>
+				     'content'=>'<p>The <strong>About Us</strong> page is important.</p>
 				     <p>Customers visit About Us page when they are new to your online shop. They want to establish a level of trust in your business.  Since trust is crucial when selling online, it\'s a good idea to provide a fair amount of information about yourself and your business.  Here are a few things you should touch on:</p>
 <ul>
 	
@@ -246,7 +248,7 @@ class Merchant extends AppModel {
 						'handle'=>'about-us');
 		
 		$tosPage = array('title'=>'Terms of Service',
-				     'text'=>'<p>The <strong>Terms of Service</strong> page is for you to enter any privacy statements or terms of service you wish to render.</p>
+				     'content'=>'<p>The <strong>Terms of Service</strong> page is for you to enter any privacy statements or terms of service you wish to render.</p>
 				     <p>Customers may need to know the limits of their patronage, so here are a few things you should touch on:</p>
 <ul>
 	

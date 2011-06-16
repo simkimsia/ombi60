@@ -30,7 +30,7 @@ class Blog extends AppModel {
 		),
 	);
 	
-	var $actsAs = array('Sluggable'=> array(
+	var $actsAs = array('Handleize.Sluggable'=> array(
 				'fields' => 'title',
 				'scope' => array('shop_id'),
 				'conditions' => false,
@@ -39,7 +39,52 @@ class Blog extends AppModel {
 				'overwrite' => false,
 				'length' => 150,
 				'lower' => true
-			));
+			),
+			    'Handleize.Handleable'=>array(
+				'handleFieldName' => 'short_name'
+							  ));
+	
+	
+	public function __construct($id=false,$table=null,$ds=null) {
+		parent::__construct($id,$table,$ds);
+		$this->createVirtualFieldForUrl();
+	}
+	
+	/**
+	 * for use in templates for shopfront pages
+	 * */
+	function getTemplateVariable($blogs=array(), $multiple = true) {
+		
+		$results = array();
+		
+		if (!$multiple) $blogs = array($blogs);
+		
+		foreach($blogs as $key=>$blog) {
+			
+			$result = array('id' => $blog['Blog']['id'],
+					   'title' => $blog['Blog']['title'],
+					   
+					   'handle' => $blog['Blog']['short_name'],
+					   'underscore_handle' => str_replace('-', '_', $blog['Blog']['short_name']),
+					   'url' => $blog['Blog']['url'],
+					   'all_articles_count' => $blog['Blog']['visible_post_count'],
+					   
+					   );
+			
+			$result['articles'] = isset($blog['Post']) ? Post::getTemplateVariable($blog['Post']) : array();
+			$result['articles_count'] = count($result['articles']);
+			
+			$results[$result['underscore_handle']] = $result;
+		}
+		
+		if (!$multiple && !empty($results)) {
+			return current($results);
+		} else if (!$multiple && empty($results)) {
+			return array();
+		}
+		
+		return $results;
+	}
 
 }
 ?>

@@ -158,7 +158,7 @@ define('CUSTOM_PAYMENT_MODULE', 1);
 /**
  * Default for variant
  ***/
-define('VARIANT_DEFAULT_TITLE', 'Default');
+define('VARIANT_DEFAULT_TITLE', 'Default Title');
 
 /**
  * production checkout link

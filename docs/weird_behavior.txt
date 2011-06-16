@@ -166,4 +166,9 @@ points to another array
 {{ list.main-menu.title }} does not work. 
 But if i rename my index to main_menu replacing the dash with 
 underscore, it will work. 
-{{ list.main_menu.title }} works, provided i renamed my index. 
+{{ list.main_menu.title }} works, provided i renamed my index.
+
+Set::remove
+==========
+
+it only works for removing first level element

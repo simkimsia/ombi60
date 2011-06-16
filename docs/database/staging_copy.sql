@@ -911,7 +911,8 @@ CREATE TABLE `shops` (
   `primary_domain` varchar(255) DEFAULT NULL,
   `permanent_domain` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `product_count` int(7) unsigned DEFAULT '0',
+  `all_product_count` int(7) unsigned DEFAULT '0',
+  `visible_product_count` int(7) unsigned DEFAULT '0',
   `product_group_count` int(7) unsigned DEFAULT '0',
   `vendor_count` int(7) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -919,7 +920,7 @@ CREATE TABLE `shops` (
 
 /*Data for the table `shops` */
 
-insert  into `shops`(`id`,`name`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`,`url`,`primary_domain`,`permanent_domain`,`email`,`product_count`,`product_group_count`,`vendor_count`) values (1,'a',NULL,NULL,1,0,0,NULL,'http://a.ombi60.com/',NULL,NULL,1,0,0);
+insert  into `shops`(`id`,`name`,`created`,`modified`,`status`,`saved_theme_id`,`deny_access`,`url`,`primary_domain`,`permanent_domain`,`email`,`all_product_count`,`visible_product_count`,`product_group_count`,`vendor_count`) values (1,'a',NULL,NULL,1,0,0,NULL,'http://a.ombi60.com/',NULL,NULL,0,1,0,0);
 
 /*Table structure for table `shops_payment_modules` */
 
@@ -1061,9 +1062,11 @@ CREATE TABLE `variants` (
   `price` decimal(10,4) unsigned DEFAULT NULL,
   `order` int(2) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `variants` */
+
+insert  into `variants`(`id`,`title`,`product_id`,`sku_code`,`weight`,`created`,`modified`,`currency`,`shipping_required`,`price`,`order`) values (1,'Default Title',1,NULL,7000,NULL,NULL,'SGD',1,'0.0000',1);
 
 /*Table structure for table `vendors` */
 

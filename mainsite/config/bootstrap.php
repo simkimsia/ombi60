@@ -98,6 +98,11 @@ define('MERCHANTS', 3);
 define('CUSTOMERS', 4);
 define('CASUAL', 5);
 
+/**
+ * Default for variant
+ ***/
+define('VARIANT_DEFAULT_TITLE', 'Default Title');
+
 
 /**
  * default dummy product
