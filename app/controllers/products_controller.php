@@ -47,8 +47,6 @@ class ProductsController extends AppController {
 	var $view = 'TwigView.TwigTheme';
 
 	function beforeFilter() {
-		$this->Auth->allow($this->action);	
-    Configure::write('debug', 2);
 		// for uploadify to work, we must ensure that debug set to zero in admin_add and admin_edit
 		
 
