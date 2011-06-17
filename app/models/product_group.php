@@ -172,6 +172,9 @@ class ProductGroup extends AppModel {
 	 * 				otherwise include the actual SmartCollectionCondition data as ['SmartCollectionCondition']
 	 * */
 	public function smartUpdateProductsInGroup($smartCollection) {
+		
+		$result = true;
+		
 		$conditionsExist = isset($smartCollection['SmartCollectionCondition']) && !empty($smartCollection['SmartCollectionCondition']);
 		$smartCollectionId = $smartCollection['ProductGroup']['id'];
 		// in case there is no conditions, we go and get the conditions!
@@ -206,9 +209,14 @@ class ProductGroup extends AppModel {
 							      'product_group_id' => $smartCollectionId);
 			}
 			
-			return $this->ProductsInGroup->saveAll($newProductsInGroup);	
+			$result = $this->ProductsInGroup->saveAll($newProductsInGroup);
+			
 		}
+		$productModel = $this->ProductsInGroup->Product;
 		
+		$productModel->updateCounterCacheForM2M('VisibleProductInGroup', array($smartCollectionId));
+		$productModel->updateCounterCacheForM2M('AllProductInGroup', 	 array($smartCollectionId));
+		return $result;
 	}
 	
 	/**

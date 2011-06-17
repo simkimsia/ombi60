@@ -767,6 +767,8 @@ class Product extends AppModel {
 	 * */
 	public function smartUpdateProductsInGroup($product) {
 		
+		$result = true;
+		
 		$collectionModel = $this->ProductsInGroup->ProductGroup;
 		$collectionModel->recursive = -1;
 		$collectionModel->Behaviors->attach('Containable');
@@ -775,7 +777,7 @@ class Product extends AppModel {
 											    'ProductGroup.type'=>SMART_COLLECTION),
 									'contain'   =>array('SmartCollectionCondition')));
 		
-		$smartCollectionIDs = Set::extract('{n}.ProductGroup.id');
+		$smartCollectionIDs = Set::extract('{n}.ProductGroup.id', $smartCollections);
 		
 		// first we delete all the ProductsInGroup then we reinsert the records
 		// delete all records in ProductsInGroup
@@ -796,9 +798,12 @@ class Product extends AppModel {
 		
 		// we will insert provided there is at least 1 product that matches the conditions
 		if (!empty($productsInGroups)) {
-			return $this->ProductsInGroup->saveAll($productsInGroups);	
+			$result = $this->ProductsInGroup->saveAll($productsInGroups);
 		}
 		
+		$this->updateCounterCacheForM2M('VisibleProductInGroup', $smartCollectionIDs);
+		$this->updateCounterCacheForM2M('AllProductInGroup', 	 $smartCollectionIDs);
+		return $result;
 	}
 
 

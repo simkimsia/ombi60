@@ -8,7 +8,7 @@ class ProductGroupsController extends AppController {
 			     'TinyMce.TinyMce');
 	
 	function beforeFilter() {
-	  $this->log($this->action);
+	  
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		if ($this->action == 'admin_toggle' ) {
