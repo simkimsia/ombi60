@@ -477,12 +477,6 @@ class ProductsController extends AppController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
 	function view_by_group($handle = false) {
 		
 		// check for handle
@@ -491,24 +485,24 @@ class ProductsController extends AppController {
 			$this->redirect('/');
 		}
 		
+		// this will retrieve the collection details as well as the conditions needed for pagination of Product
 		$collection = $this->Product->ProductsInGroup->ProductGroup->getByUrl($handle, $this->params);
 		
-		
-
 		if ($collection == false) {
 			$this->Session->setFlash(__('No such product group for this shop', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect('/');
 		}
 
+		// assign the conditions for the pagination of Product
 		$this->paginate = $collection['ProductGroup']['product_paginate'];
 		
 		// paginate using the parent model Product
 		$products = $this->paginate('Product');
 		
-		// assign the paginated products into $collection
+		// assign the paginated products back into $collection
 		$collection['Product'] = $products;
-		$this->log($collection);
-		$this->log('test');
+		
+		// prepare the template variable
 		$collection = ProductGroup::getTemplateVariable($collection, false);
 		
 		$domainPagePath = Router::url('/collections/'.$handle.'/', true);

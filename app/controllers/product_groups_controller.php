@@ -8,15 +8,16 @@ class ProductGroupsController extends AppController {
 			     'TinyMce.TinyMce');
 	
 	function beforeFilter() {
-	  
+	  $this->log($this->action);
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-		if ($this->action == 'admin_toggle' ) {
+		if ($this->action == 'admin_toggle') {
 			$this->Security->enabled = false;
 		}
 	}
 
 	function admin_index() {
+		
 		$this->ProductGroup->recursive = 1;
 		$shopId = Shop::get('Shop.id');
 		$customCollections = $this->ProductGroup->find('all', array(
@@ -49,7 +50,7 @@ class ProductGroupsController extends AppController {
 	}
 
 	function admin_add_smart() {
-		//First we check whether data is posted?    
+		//First we check whether data is posted?
 		if (!empty($this->data)) {
 			$i = 0;
 			foreach ($_POST['fields'] as $field) {
@@ -67,7 +68,7 @@ class ProductGroupsController extends AppController {
 				$i++;
 			}
 			$this->data['ProductGroup']['type'] = SMART_COLLECTION;
-			if ((bool)$this->ProductGroup->saveSmartCollection($this->data)) {
+			if ((bool)$this->ProductGroup->createSmartCollection($this->data)) {
 				$this->redirect(array(
 						 'controller' => 'product_groups',
 						 'admin'      => true,

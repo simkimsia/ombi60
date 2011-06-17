@@ -145,19 +145,71 @@ class ProductGroup extends AppModel {
 	* 
 	* @return boolean true on successfull execution and false in failure
 	*/
-	public function saveSmartCollection($data) {
+	public function createSmartCollection($data) {
 		
 		$data['ProductGroup']['type'] = SMART_COLLECTION;
 		
 		//First create an empty row in smart_collections table
 		$this->create();
+		
 		//Save posted data in smart_collections table
-		if ($this->saveAll($data)) {
+		$result = $this->saveAll($data);
+		
+		if ($result) {
+			// now we update the ProductsInGroup based on the data
+			$data['ProductGroup']['id'] = $this->id;
+			$this->smartUpdateProductsInGroup($data);
 			return true;
 		}
 		return false;
 	}//end saveSmartCollection()
 	
+	/**
+	 * This function is used to update the ProductsInGroup for Smart Collections
+	 *
+	 * @param array $smartCollection array of data for the Smart Collection
+	 * 				minimum expects the id to exist as ['ProductGroup']['id']
+	 * 				otherwise include the actual SmartCollectionCondition data as ['SmartCollectionCondition']
+	 * */
+	public function smartUpdateProductsInGroup($smartCollection) {
+		$conditionsExist = isset($smartCollection['SmartCollectionCondition']) && !empty($smartCollection['SmartCollectionCondition']);
+		$smartCollectionId = $smartCollection['ProductGroup']['id'];
+		// in case there is no conditions, we go and get the conditions!
+		if (!$conditionsExist) {
+			$this->recursive = -1;
+			$this->Behaviors->attach('Containable');
+			$smartCollection = $this->find('first', array('conditions'=>array('ProductGroup.id'=>$smartCollectionId, 'ProductGroup.type'=>SMART_COLLECTION),
+								      'contain'   =>array('SmartCollectionCondition')));
+		}
+		
+		// first we delete all the ProductsInGroup then we reinsert the records
+		// delete all records in ProductsInGroup
+		$this->ProductsInGroup->deleteAll(array('ProductsInGroup.product_group_id'=>$smartCollectionId));
+		
+		// now we format the conditions to seek out all the relevant products
+		$conditionsForProducts = $this->formatSmartConditions($smartCollection);
+		
+		// get all product ids matching said conditions
+		$this->ProductsInGroup->Product->recursive = -1;
+		
+		$products = $this->ProductsInGroup->Product->find('all', array('conditions'=>$conditionsForProducts,
+									       'fields'    =>array('Product.id')));
+		
+		
+		// we will insert provided there is at least 1 product that matches the conditions
+		if (!empty($products)) {
+			$productIDs = Set::extract('{n}.Product.id', $products);
+		
+			$newProductsInGroup = array();
+			foreach($productIDs as $key=>$productID) {
+				$newProductsInGroup[] = array('product_id'       => $productID,
+							      'product_group_id' => $smartCollectionId);
+			}
+			
+			return $this->ProductsInGroup->saveAll($newProductsInGroup);	
+		}
+		
+	}
 	
 	/**
 	* This function is used to save smart collection condition
@@ -194,11 +246,17 @@ class ProductGroup extends AppModel {
 				$smartCollectionCondtion['smart_collection_id'] = $smart_collection_id;
 				$this->SmartCollectionCondition->create();
 				if ($this->SmartCollectionCondition->save($smartCollectionCondtion)) {
-				//Select all the products with condition selected
-				//get products from product model
-				//ClassRegistry::init('Product')->conditionalProducts($smartCollectionCondtion);
-				$error = true;
+					//Select all the products with condition selected
+					//get products from product model
+					//ClassRegistry::init('Product')->conditionalProducts($smartCollectionCondtion);
+					$error = true;
 				}
+			}
+			
+			if ($error) {
+				$collection = array('ProductGroup'             => array('id'=>$smart_collection_id),
+						    'SmartCollectionCondition' => $data['SmartCollectionCondition']);
+				$this->smartUpdateProductsInGroup($collection);
 			}
 			return $error;
 		}
@@ -217,6 +275,10 @@ class ProductGroup extends AppModel {
 		$tmp = $test = $products = array();
 		$tmp = $this->formatSmartConditions($smart_collection);
 		
+		$productModel = $this->ProductsInGroup->Product;
+		$productModel->recursive = -1;
+		$productModel->Behaviors->attach('Containable');
+		
 		if (!empty($tmp)) {
 			
 			$productsOptions = array(
@@ -225,7 +287,7 @@ class ProductGroup extends AppModel {
 			     );
 			
 			
-			$products = $this->ProductsInGroup->Product->find($findBy, $productsOptions);
+			$products = $productModel->find($findBy, $productsOptions);
 			
 		}
 		return $products;

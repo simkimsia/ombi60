@@ -50,7 +50,7 @@
 	</div>
 				{% set i = 0 %}
 					
-                                {% for product in products %}
+                                {% for product in collection.products %}
 					
 					{% set class = none %}
                                         {% set i = i + 1 %}
