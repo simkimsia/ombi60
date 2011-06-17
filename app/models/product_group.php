@@ -79,6 +79,8 @@ class ProductGroup extends AppModel {
 		
 		$results = array();
 		
+		if (!$multiple) $productsInGroups = array($productsInGroups);
+		
 		foreach($productsInGroups as $key=>$group) {
 			$result = array(
 					   'id' => $group['ProductGroup']['id'],
@@ -95,9 +97,9 @@ class ProductGroup extends AppModel {
 					   
 					);
 			
-			$result['products'] = isset($group['Product']) ? ProductGroup::getTemplateVariable($group['Product']) : array();
+			$result['products'] = isset($group['Product']) ? Product::getTemplateVariable($group['Product']) : array();
 			$result['products_count'] = count($result['products']);
-			
+			//$this->log($result);
 			$results[$result['underscore_handle']] = $result;
 		}
 		
@@ -232,7 +234,7 @@ class ProductGroup extends AppModel {
 	/**
 	 * return the conditions as array for cakephp find function
 	 **/
-	public function formatSmartConditions($smart_collection, $visibleOrAll = ALL_PRODUCT) {
+	public function formatSmartConditions($smart_collection, $visibleOrAll = HIDDEN_AND_VISIBLE_ENTITY) {
 		$tmp = $test = array();
 		$tmp['Product.shop_id'] = $smart_collection['ProductGroup']['shop_id'];
 		
@@ -253,9 +255,9 @@ class ProductGroup extends AppModel {
 				}
 			}
 			
-			if ($visibleOrAll == VISIBLE_PRODUCT) {
+			if ($visibleOrAll == VISIBLE_ENTITY) {
 				$tmp['Product.visible'] = true;
-			} else if ($visibleOrAll == HIDDEN_PRODUCT) {
+			} else if ($visibleOrAll == HIDDEN_ENTITY) {
 				$tmp['Product.visible'] = false;
 			}
 		}
@@ -278,6 +280,181 @@ class ProductGroup extends AppModel {
 		}
 		return true;
 	}//end validateSmartCollectionCondition()
+	
+	public function getByUrl($handle, $params, $visibleOrAll = VISIBLE_ENTITY) {
+		
+		// we want to return false if there is no such collection
+		// we want to return a collection with conditions for Product->paginate
+		// the conditions will be an array inside the collection array with
+		// an index of product_paginate
+		
+		$collection = array();
+		
+		$handle = strtolower($handle);
+		
+		$viewByProductType = ($handle == 'types');
+		$viewByVendor = ($handle == 'vendors');
+		$vendorOrTypeIndicated = (isset($this->params['named']['q']));
+		
+		// we have 2 situations
+		// situation 1 is for automatic collections like a particular vendor or type
+		// situation 2 is for regular collections like smart or custom collections
+		
+		$thisIsAutomaticCollection = (($viewByProductType OR $viewByVendor) AND $vendorOrTypeIndicated);
+		
+		if ($thisIsAutomaticCollection) {
+			$collection = $this->getAutomaticCollectionByUrl($handle, $params);
+		} else {
+			$collection = $this->getRegularCollectionByUrl($handle, $visibleOrAll);
+		}
+		
+		return $collection;
+		
+	}
+	
+	/*
+	 * need to create a table for types and vendors
+	 * and include handles for the types and vendors
+	 * */
+	private function getAutomaticCollectionByUrl($handle, $params) {
+		
+		if (isset($params['named']['q'])) {
+			$nameInParams = $params['named']['q'];			
+		} else {
+			return false;	
+		}
+		
+		if ($handle == 'types') {
+			$typeOrVendorModel = $this->Product->ProductType;
+		} elseif ($handle == 'vendors') {
+			$typeOrVendorModel = $this->Product->Vendor;
+		} else {
+			return false;
+		}
+		
+		$typeOrVendorModel->recursive = -1;
+		
+		// to retrieve the shop id based on the url
+		// see app_controller code and shop model code
+		$shop_id = Shop::get('Shop.id');
+		
+		// conditions to get Collection
+		$conditionsForCollection = array($typeOrVendorModel->alias.'.handle' =>$nameInParams,
+						 $typeOrVendorModel->alias.'.shop_id'=>$shop_id);
+		
+		
+		// does the collection for type or vendor exist?
+		$typeOrVendor = $typeOrVendorModel->find('first', array('conditions'=>$conditionsForCollection));
+		
+		if ($typeOrVendor) {
+			
+			$collection = ($handle == 'vendors') ? array('ProductGroup'=>$typeOrVendor['Vendor']) : array('ProductGroup'=>$typeOrVendor['ProductType']);
+			
+			$collection['ProductGroup']['product_paginate'] = $this->prepProductPaginate4Automatic($typeOrVendor, $handle);
+			
+			return $collection;
+		}
+		
+		return false;
+	}
+	
+	private function getRegularCollectionByUrl($handle, $visibleOrAll = VISIBLE_ENTITY) {
+		
+		$this->recursive = -1;
+		$this->Behaviors->attach('Containable');
+		
+		// to retrieve the shop id based on the url
+		// see app_controller code and shop model code
+		$shop_id = Shop::get('Shop.id');
+		
+		// conditions to get Collection
+		$conditionsForCollection = array('ProductGroup.handle' =>$handle,
+						 'ProductGroup.shop_id'=>$shop_id);
+		
+		
+		
+		if ($visibleOrAll == VISIBLE_ENTITY) {
+			$conditionsForCollection['ProductGroup.visible'] = true;
+		}
+		
+		if ($visibleOrAll == HIDDEN_ENTITY) {
+			$conditionsForCollection['ProductGroup.visible'] = false;
+		} 
+		
+		// does the collection exist?
+		$collection = $this->find('first', array('conditions'=>$conditionsForCollection,
+							 'contain'   =>array('ProductsInGroup')));
+		
+		
+		
+		if ($collection) {
+			
+			$collection['ProductGroup']['product_paginate'] = $this->prepProductPaginate4Regular($collection);
+			return $collection;
+		}
+		
+		return false;
+		
+	}
+	
+	private function prepProductPaginate4Automatic($collection, $handle) {
+		// get the standard paginate stuff like order, variants, etc
+		$productPaginate = $this->prepCommonProductPaginate();
+		if ($handle == 'types') {
+			$productPaginate['conditions']['AND']['Product.product_type_id'] = $collection['ProductType']['id'];	
+		}
+		
+		if ($handle == 'vendors') {
+			$productPaginate['conditions']['AND']['Product.vendor_id'] = $collection['Vendor']['id'];	
+		}
+		
+		return $productPaginate;
+	}
+	
+	private function prepProductPaginate4Regular($collection) {
+		// Extract the product ids in the found collection
+                $productIds = Set::extract($collection['ProductsInGroup'], '/product_id');
+		// get the standard paginate stuff like order, variants, etc
+		$productPaginate = $this->prepCommonProductPaginate();
+		// special condition meant only for regular collection
+		// regular collection regardless custom or smart uses ProductsInGroup as joint table
+		$productPaginate['conditions']['AND']['Product.id'] = $productIds;
+		
+		return $productPaginate;
+	}
+	
+	private function prepCommonProductPaginate() {
+		$productPaginate = array('conditions'=>array('AND' => array('Product.visible'=>true) ));
+		
+		$productPaginate['contain'] = array('Variant' => array(
+								'order'=>'Variant.order ASC'
+							),
+						   'ProductImage'=>array(
+								'fields' => array('filename'),
+								'order'=>array('ProductImage.cover DESC'),
+							),
+						   //'ProductGroup',
+						   'ProductsInGroup'=>array(
+								'fields' => array('id', 'product_id'),
+								//'conditions' => array('ProductsInGroup.product_id =' => 'Product.id'),
+								'ProductGroup'=>array(
+									'fields' => array('id', 
+											  'title', 'handle',
+											  'description', 'visible_product_count',
+											  'url', 'vendor_count'),
+									//'conditions'=> array('ProductsInGroup.product_group_id =' => 'ProductGroup.id'),
+								)));
+		
+		$productPaginate['link'] = array('Vendor');
+		
+		// add in the order param into paginate
+		// for some weird reason cakephp auto overrides this order when user
+		// selects the order based on the named params
+		// so basically this is the default order we are setting
+		$productPaginate['order'] = array('Product.created DESC');
+		
+		return $productPaginate;
+	}
 
 }
 ?>

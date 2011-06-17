@@ -381,7 +381,7 @@ class ProductsController extends AppController {
 
     $shopId = Shop::get('Shop.id');
     $customCollections = ClassRegistry::init('ProductsInGroup')->getProductCustomCollection($id);
-    $smartCollections  = ClassRegistry::init('SmartCollection')->getProductSmartCollection($id);
+    //$smartCollections  = ClassRegistry::init('SmartCollection')->getProductSmartCollection($id);
     $this->set(compact('customCollections', 'smartCollections'));
 
         // for uploadify
@@ -476,9 +476,12 @@ class ProductsController extends AppController {
 		
 	}
 	
-	private function prepareConditionForViewByProductType() {
-		
-	}
+	
+	
+	
+	
+	
+	
 	
 	function view_by_group($handle = false) {
 		
@@ -488,120 +491,32 @@ class ProductsController extends AppController {
 			$this->redirect('/');
 		}
 		
-		$viewByProductType = ($handle == 'types');
-		$viewByVendor = ($handle == 'vendors');
-		$vendorOrTypeIndicated = (isset($this->params['named']['q']));
+		$collection = $this->Product->ProductsInGroup->ProductGroup->getByUrl($handle, $this->params);
 		
 		
+
+		if ($collection == false) {
+			$this->Session->setFlash(__('No such product group for this shop', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect('/');
+		}
+
+		$this->paginate = $collection['ProductGroup']['product_paginate'];
+		
+		// paginate using the parent model Product
+		$products = $this->paginate('Product');
+		
+		// assign the paginated products into $collection
+		$collection['Product'] = $products;
+		$this->log($collection);
+		$this->log('test');
+		$collection = ProductGroup::getTemplateVariable($collection, false);
+		
+		$domainPagePath = Router::url('/collections/'.$handle.'/', true);
 		
 		// check for any sorting or ordering parameters
 		$sort = isset($this->params['named']['sort']) ? $this->params['named']['sort'] : 'created';
 		
 		$order = isset($this->params['named']['direction']) ? $this->params['named']['direction'] : 'desc';
-		
-		// to retrieve the shop id based on the url
-		// see app_controller code and shop model code
-		$shop_id = Shop::get('Shop.id');
-		
-		// a temporary fix for /collections/all until Abbas writes out the code for smart collections
-		$collectionsAllSelected = (strtolower($handle) == 'all');
-		
-		// get the product details
-		$groupFound = $this->Product->ProductsInGroup->ProductGroup->find('first', array('conditions'=>array('ProductGroup.handle'=>$handle,
-													'ProductGroup.shop_id'=>$shop_id)));
-                // Extract the product ids in the found group
-                $productIds = Set::extract($groupFound['ProductsInGroup'], '/product_id');
-		// must be valid shop
-		$invalidShop = !($shop_id > 0);
-		// product must exist
-		$noSuchProductGroup = ($invalidShop) ? true : empty($groupFound['ProductGroup']);
-		// product must belong to said shop
-		$groupDoesNotBelongToShop = ($noSuchProductGroup) ? true : $groupFound['ProductGroup']['shop_id'] != $shop_id;
-		// must be active product
-		$groupNotActive = ($groupDoesNotBelongToShop) ? true : !($groupFound['ProductGroup']['visible']);
-
-		// temporary fix for /collections/all until Abbas
-		if ($collectionsAllSelected AND $noSuchProductGroup) {
-			$noSuchProductGroup = false;
-			$groupDoesNotBelongToShop = false;
-			$groupNotActive = false;
-		}
-
-
-		if (   $invalidShop
-		    OR ($noSuchProductGroup)
-		    OR $groupDoesNotBelongToShop
-		    OR $groupNotActive
-		) {
-			$this->Session->setFlash(__('No such product group for this shop', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect('/');
-		}
-
-		// to do the pagination across 3 models
-		// we need to ensure that the parent model has at least a recursive of Zero
-		$this->Product->recursive = -1;
-
-		// add in the ProductImage conditions provided we use link for ProductImage
-		/*
-		$this->paginate['conditions']['OR'] = array (
-								array('ProductImage.cover'=>true),
-								array('ProductImage.cover'=>null),
-							);
-		*/
-		
-		// add in the Product visible = 1 
-		$this->paginate['conditions']['AND'] = array('Product.visible' => 1);
-		
-		// add in the link param into paginate
-		//$this->paginate['link']  = array('ProductImage');
-		
-		$this->paginate['contain'] = array('Variant' => array(
-								'order'=>'Variant.order ASC'
-							),
-						   'ProductImage'=>array(
-								'fields' => array('filename'),
-								'order'=>array('ProductImage.cover DESC'),
-								
-							),
-						   //'ProductGroup',
-						   'ProductsInGroup'=>array(
-								'fields' => array('id', 'product_id'),
-								//'conditions' => array('ProductsInGroup.product_id =' => 'Product.id'),
-								'ProductGroup'=>array(
-									'fields' => array('id', 
-											  'title', 'handle',
-											  'description', 'visible_product_count',
-											  'url', 'vendor_count'),
-									//'conditions'=> array('ProductsInGroup.product_group_id =' => 'ProductGroup.id'),
-								)));
-		$this->paginate['link'] = array('Vendor');
-		
-		if (!$collectionsAllSelected) {
-			// add in the belongs to a certain group provided the handle is NOT all
-			$this->paginate['conditions']['AND']['Product.id'] = $productIds;
-			
-			//$this->paginate['link']['ProductsInGroup'] = 'ProductGroup';
-		}
-		
-		// add in the order param into paginate
-		// for some weird reason cakephp auto overrides this order when user
-		// selects the order based on the named params
-		// so basically this is the default order we are setting
-		$this->paginate['order'] = array('Product.created DESC');
-		// paginate using the parent model Product
-		$products = $this->paginate('Product');
-		$tempProducts = $products;
-		
-		$products = Product::getTemplateVariable($tempProducts);
-		
-		// get the collection
-		if ($collectionsAllSelected) {
-			$collection = ProductGroup::getVariableForAllProducts($products);
-		} else {
-			$collection = ProductGroup::getTemplateVariable($groupFound, false);
-		}
-		
-		$domainPagePath = Router::url('/collections/'.$handle.'/', true);
 
 		$this->set(compact('sort', 'order', 'products', 'domainPagePath', 'collection'));
 		

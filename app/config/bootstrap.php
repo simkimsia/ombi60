@@ -168,11 +168,11 @@ define('CUSTOM_COLLECTION', 0);
 define('VARIANT_DEFAULT_TITLE', 'Default Title');
 
 /**
- * Visible, hidden or all products
+ * Visible, hidden or all products/collections/posts/whatever objects/entities
  * */
-define('HIDDEN_PRODUCT', 0);
-define('VISIBLE_PRODUCT', 1);
-define('ALL_PRODUCT', 2);
+define('HIDDEN_ENTITY', 0);
+define('VISIBLE_ENTITY', 1);
+define('HIDDEN_AND_VISIBLE_ENTITY', 2);
 
 /**
  * production checkout link
