@@ -11,7 +11,7 @@ class ProductGroupsController extends AppController {
 	  $this->log($this->action);
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-		if ($this->action == 'admin_toggle') {
+		if ($this->action == 'admin_toggle' ) {
 			$this->Security->enabled = false;
 		}
 	}

@@ -221,6 +221,7 @@ class ProductGroup extends AppModel {
 	*/
 	function saveSmartCollectionCondition($data, $smart_collection_id = null) {
 		$error = false;
+		
 		if (!empty($data['SmartCollectionCondition']) && is_array($data['SmartCollectionCondition'])) {
 			if (!$this->__validateSmartCollectionCondition($data['SmartCollectionCondition'])) {
 				return false;
@@ -298,7 +299,7 @@ class ProductGroup extends AppModel {
 	 **/
 	public function formatSmartConditions($smart_collection, $visibleOrAll = HIDDEN_AND_VISIBLE_ENTITY) {
 		$tmp = $test = array();
-		$tmp['Product.shop_id'] = $smart_collection['ProductGroup']['shop_id'];
+		$tmp['Product.shop_id'] = Shop::get('Shop.id');
 		
 		
 		if (!empty($smart_collection['SmartCollectionCondition'])) {

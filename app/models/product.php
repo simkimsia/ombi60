@@ -458,7 +458,10 @@ class Product extends AppModel {
 		$customCollectionsJoined = isset($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
 		$this->saveCollections($this->id, $customCollectionsJoined);	
 		
-		
+		/** update smart collections **/
+		$product 	= $this->data['Product'];
+		$product['id'] 	= $this->id;
+		$this->smartUpdateProductsInGroup($product);
 		
 	}
 	
@@ -697,6 +700,106 @@ class Product extends AppModel {
 		//First check whick type of 
 		//return ($this->find('all', array('conditions' => $conditions/*, 'fields' => $fields*/)));
 	}//end conditionalProducts()
+	
+	
+	/**
+	 * @param array $product this is the associative array of the product without Product index present
+	 * @param array $conditionalArrays this must be a numerically indexed array of the conditions
+	 *  that is the list of conditions without SmartCollectionCondition index present
+	 * */
+	private function evaluateAgainstSmartConditions($product, $conditionalArrays) {
+		$ok = true;
+		
+		foreach($conditionalArrays as $conditionalArray) {
+			$field      = str_replace('Product.', '', $conditionalArray['field']);
+			$relation   = $conditionalArray['relation'];
+			$value      = $conditionalArray['condition'];
+			
+			$fieldInProduct = $product[$field];
+			
+			// assume case-insensitive for now
+			
+			switch ($relation) :
+				case "equals":
+				  //Field in Product should be exactly equal to Value
+				  if (is_numeric($value)) {
+					$ok = ($fieldInProduct == $value);
+				  } else if(is_string($value)) {
+					
+					$ok = (strcasecmp($fieldInProduct,$value) == 0);	
+				  } else {
+					$ok = false;
+				  }
+				  break;
+				case "starts_with":
+				  //Field in Product should start with Value
+				  $ok = startsWith($fieldInProduct, $value,  false);
+				  break;
+				case "ends_with":
+				  //Field in Product should end with value
+				  $ok = endsWith($fieldInProduct, $value, false);
+				  break;
+				case "contains":
+				  //Field in Product should contain the value
+				  $ok = (stripos($fieldInProduct, $value) !== false);
+				  break;        
+				case "greater_than":
+				  //Field in Product is greater than the value
+				  $ok = ($fieldInProduct > $value);
+				  break;
+				case "less_than":
+				  //Field in Product is less than the value
+				  $ok = ($fieldInProduct < $value);
+				  break;
+			endswitch;
+			
+			if ($ok == false) {
+				break;
+			}
+		}
+		return $ok;
+	}
+	
+	/**
+	 * This function is used to update the ProductsInGroup for Smart Collections
+	 *
+	 * @param array $product this is the associative array of the product without Product index present
+	 * */
+	public function smartUpdateProductsInGroup($product) {
+		
+		$collectionModel = $this->ProductsInGroup->ProductGroup;
+		$collectionModel->recursive = -1;
+		$collectionModel->Behaviors->attach('Containable');
+			
+		$smartCollections = $collectionModel->find('all', array('conditions'=>array('ProductGroup.shop_id'=>Shop::get('Shop.id'),
+											    'ProductGroup.type'=>SMART_COLLECTION),
+									'contain'   =>array('SmartCollectionCondition')));
+		
+		$smartCollectionIDs = Set::extract('{n}.ProductGroup.id');
+		
+		// first we delete all the ProductsInGroup then we reinsert the records
+		// delete all records in ProductsInGroup
+		$this->ProductsInGroup->deleteAll(array('ProductsInGroup.product_id'	   => $product['id'],
+							'ProductsInGroup.product_group_id' => $smartCollectionIDs));
+		
+		$productsInGroups = array();
+		
+		// now we format the conditions to seek out all the relevant collection
+		foreach($smartCollections as $key=>$smartCollection) {
+			// use php functions for evaluations
+			$ok = $this->evaluateAgainstSmartConditions($product, $smartCollection['SmartCollectionCondition']);
+			if ($ok) {
+				$productsInGroups[] = array('product_id'       => $product['id'],
+							    'product_group_id' => $smartCollection['ProductGroup']['id']);
+			}
+		}
+		
+		// we will insert provided there is at least 1 product that matches the conditions
+		if (!empty($productsInGroups)) {
+			return $this->ProductsInGroup->saveAll($productsInGroups);	
+		}
+		
+	}
 
 
 }//end class

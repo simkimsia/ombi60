@@ -95,6 +95,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_delete');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_index');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_toggle');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_save_condition');
 		
 		// navigation
 		$this->log('navi');
