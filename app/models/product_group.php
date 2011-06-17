@@ -213,22 +213,10 @@ class ProductGroup extends AppModel {
 	*/
 	public function getSmartCollectionProducts($smart_collection, $findBy = "all") {
 		$tmp = $test = $products = array();
-		$tmp['Product.shop_id'] = $smart_collection['ProductGroup']['shop_id'];    
+		$tmp = $this->formatSmartConditions($smart_collection);
 		
-		if (!empty($smart_collection['SmartCollectionCondition'])) {
-			foreach ($smart_collection['SmartCollectionCondition'] as $smart_collection_condition) {
-				$condition = $this->ProductsInGroup->Product->conditionalProducts($smart_collection_condition);
-				if (array_key_exists(key($condition), $tmp)) {
-				$test[key($condition)][] = $tmp[key($condition)];
-				$test[key($condition)][] = $condition[key($condition)];
-				}
-				$tmp[key($condition)] = $condition[key($condition)];
-			}
-			if (!empty($test)) {
-				foreach ($test as $key => $value) {
-					$tmp[$key] = $value;
-				}
-			}
+		if (!empty($tmp)) {
+			
 			$productsOptions = array(
 			       'conditions' => $tmp,
 			       'contain' => 'ProductImage',
@@ -240,6 +228,39 @@ class ProductGroup extends AppModel {
 		}
 		return $products;
 	}//end getStartCollectionProducts()
+	
+	/**
+	 * return the conditions as array for cakephp find function
+	 **/
+	public function formatSmartConditions($smart_collection, $visibleOrAll = ALL_PRODUCT) {
+		$tmp = $test = array();
+		$tmp['Product.shop_id'] = $smart_collection['ProductGroup']['shop_id'];
+		
+		
+		if (!empty($smart_collection['SmartCollectionCondition'])) {
+			
+			foreach ($smart_collection['SmartCollectionCondition'] as $smart_collection_condition) {
+				$condition = $this->ProductsInGroup->Product->conditionalProducts($smart_collection_condition);
+				if (array_key_exists(key($condition), $tmp)) {
+					$test[key($condition)][] = $tmp[key($condition)];
+					$test[key($condition)][] = $condition[key($condition)];
+				}
+				$tmp[key($condition)] = $condition[key($condition)];
+			}
+			if (!empty($test)) {
+				foreach ($test as $key => $value) {
+					$tmp[$key] = $value;
+				}
+			}
+			
+			if ($visibleOrAll == VISIBLE_PRODUCT) {
+				$tmp['Product.visible'] = true;
+			} else if ($visibleOrAll == HIDDEN_PRODUCT) {
+				$tmp['Product.visible'] = false;
+			}
+		}
+		return $tmp;
+	}//end formatSmartConditions($smart_collection)
 	
 	
 	/**

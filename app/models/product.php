@@ -662,41 +662,41 @@ class Product extends AppModel {
 		
 	}
 
-  public function conditionalProducts($conditionalArray, $fields = array('Product.id')) {
-    $conditions = "";
-    $field      = $conditionalArray['field'];
-    $relation   = $conditionalArray['relation'];
-    $value      = $conditionalArray['condition'];
-    switch ($relation) :
-      case "equals":
-        //Field should be exactly equal to Value
-        $conditions = array($field => $value);
-        break;
-      case "starts_with":
-        //Field should start with Value
-        $conditions = array($field . " LIKE '".$value."%'");
-        break;
-      case "ends_with":
-        //Field should end with value
-        $conditions = array($field . " LIKE '%".$value."'");
-        break;
-      case "contains":
-        //Field should contain the value
-        $conditions = array($field . " LIKE '%".$value."%'");
-        break;        
-      case "greater_than":
-        //Field should contain the value
-        $conditions = array($field . " > "=> $value);
-        break;
-      case "less_than":
-        //Field should contain the value
-        $conditions = array($field . " < "=> $value);
-        break;
-    endswitch;
-    return $conditions;
-    //First check whick type of 
-    //return ($this->find('all', array('conditions' => $conditions/*, 'fields' => $fields*/)));
-  }//end conditionalProducts()
+	public function conditionalProducts($conditionalArray, $fields = array('Product.id')) {
+		$conditions = "";
+		$field      = $conditionalArray['field'];
+		$relation   = $conditionalArray['relation'];
+		$value      = $conditionalArray['condition'];
+		switch ($relation) :
+			case "equals":
+			  //Field should be exactly equal to Value
+			  $conditions = array($field => $value);
+			  break;
+			case "starts_with":
+			  //Field should start with Value
+			  $conditions = array($field . " LIKE '".$value."%'");
+			  break;
+			case "ends_with":
+			  //Field should end with value
+			  $conditions = array($field . " LIKE '%".$value."'");
+			  break;
+			case "contains":
+			  //Field should contain the value
+			  $conditions = array($field . " LIKE '%".$value."%'");
+			  break;        
+			case "greater_than":
+			  //Field should contain the value
+			  $conditions = array($field . " > "=> $value);
+			  break;
+			case "less_than":
+			  //Field should contain the value
+			  $conditions = array($field . " < "=> $value);
+			  break;
+		endswitch;
+		return $conditions;
+		//First check whick type of 
+		//return ($this->find('all', array('conditions' => $conditions/*, 'fields' => $fields*/)));
+	}//end conditionalProducts()
 
 
 }//end class

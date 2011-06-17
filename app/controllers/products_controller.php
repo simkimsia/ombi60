@@ -439,6 +439,10 @@ class ProductsController extends AppController {
 		
 	}
 	
+	private function prepareConditionForViewByProductType() {
+		
+	}
+	
 	function view_by_group($handle = false) {
 		
 		// check for handle
@@ -446,6 +450,12 @@ class ProductsController extends AppController {
 			$this->Session->setFlash(__('Invalid product group', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect('/');
 		}
+		
+		$viewByProductType = ($handle == 'types');
+		$viewByVendor = ($handle == 'vendors');
+		$vendorOrTypeIndicated = (isset($this->params['named']['q']));
+		
+		
 		
 		// check for any sorting or ordering parameters
 		$sort = isset($this->params['named']['sort']) ? $this->params['named']['sort'] : 'created';

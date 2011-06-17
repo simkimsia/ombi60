@@ -168,6 +168,13 @@ define('CUSTOM_COLLECTION', 0);
 define('VARIANT_DEFAULT_TITLE', 'Default Title');
 
 /**
+ * Visible, hidden or all products
+ * */
+define('HIDDEN_PRODUCT', 0);
+define('VISIBLE_PRODUCT', 1);
+define('ALL_PRODUCT', 2);
+
+/**
  * production checkout link
  **/
 define('CHECKOUT_LINK', 'http://checkout.ombi60.com');
