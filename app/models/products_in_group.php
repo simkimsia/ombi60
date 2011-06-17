@@ -21,5 +21,32 @@ class ProductsInGroup extends AppModel {
 			'order' => ''
 		)
 	);
-}
-?>
+
+  
+  /**
+   * This action is used to get the list of custome collection for this product id
+   * @param integer $productId Product Id
+   */
+  function getProductCustomCollection($productId) {
+    $shopId = Shop::get('Shop.id');
+    $customCollectionsOption = array(
+                                'conditions' => array(
+                                                'ProductsInGroup.product_id' => $productId,
+                                                ),
+                                'contain'    => array(
+                                                 'ProductGroup' => array(
+                                                                    'conditions' => array(
+                                                                                    'ProductGroup.shop_id' => $shopId,
+                                                                                    ),
+                                                                  ),
+                                                ),
+                                'fields'     => array(
+                                                 'ProductGroup.id',
+                                                 'ProductGroup.title',
+                                                ),
+                               );
+    return $this->find('all', $customCollectionsOption);
+  }//end getProductCustomCollection()
+
+
+}//end class

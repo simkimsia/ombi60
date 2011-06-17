@@ -374,7 +374,44 @@ class ProductsController extends AppController {
 			$this->Session->setFlash(__('Invalid Product', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
+    $product_id = $id;
+    $this->Product->recursive = 1;
+    $product = $this->Product->read(null, $id);
 		$this->set('product', $this->Product->read(null, $id));
+
+    $shopId = Shop::get('Shop.id');
+    $customCollections = ClassRegistry::init('ProductsInGroup')->getProductCustomCollection($id);
+    $smartCollections  = ClassRegistry::init('SmartCollection')->getProductSmartCollection($id);
+    $this->set(compact('customCollections', 'smartCollections'));
+
+        // for uploadify
+    // the images list related code
+    // to make paging easier to test, we set as 1 per page.
+    $this->paginate = array('conditions'=>array('ProductImage.product_id'=>$id),
+          'order' => 'ProductImage.cover desc',
+          'limit'=>'10');
+
+    $product_id = $id;
+    
+    
+    $productImages = $this->paginate('ProductImage');
+    
+    $errors = array();
+    
+    $count = count($productImages);
+
+    $uploadifySettings = array('browseButtonId' => 'fileInput',
+             'script' => Router::url("/admin/products/upload/".$product_id, true),
+             'auto' => true,
+                                           'buttonText' => __('Choose File', true),
+             'onComplete' => true,);
+        
+    $this->set(compact('product_id',
+           'productImages',
+           'errors',
+           'uploadifySettings',
+           ''));
+
 	}
 
 	function view($handle = false) {
@@ -793,47 +830,16 @@ class ProductsController extends AppController {
 	
 	
 	/**
-	 * This private action is used to save product images
+	 * This public action is used to save product images
 	 * 
 	 * @param integer $product_id Product Id
 	 * 
 	 * @return void
 	 */
-	private function save_image($product_id, $edit = FALSE)
+	public function save_image($product_id, $edit = FALSE)
 	{
-	    if (!empty($_FILES)) {
-            $tmp = array();
-            
-            foreach ($_FILES['product_images'] as $key => $valueArray) {
-                $i=0;
-                foreach ($valueArray as $value) {
-                    //Only consider first 4 photos
-                    if ($i < 4) {
-                        $tmp[$i][$key] = $value;
-                        $i++;
-                    }
-                }
-            }
-            
-            $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
-            $i = 0;
-            foreach ($tmp as $tempFile) {
-                $name = $tempFile['name'];
-                $str = strtolower(substr(strrchr($tempFile['name'], '.'), 1));
-                
-                if (in_array($str, $allowedExtensions)) {
-                    $this->Product->ProductImage->create();
-                    $data = array('ProductImage'=>array('filename'=>$tempFile,
-                						                'product_id' => $product_id,));
-
-                    $result = $this->Product->ProductImage->uploadifySave($data);   
-
-                    if ($result != false && $i++ == 0 && !$edit) {
-                        $this->Product->ProductImage->make_this_cover($this->Product->ProductImage->id, $product_id);
-                    }    
-                }
-            }
-        }
+      $this->Product->ProductImage->saveProductImage($product_id, $edit);
+	    
 	}//end save_image()
 	
 	

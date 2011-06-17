@@ -1,3 +1,13 @@
+<?php // ?>
+<?php
+/*echo "<pre>";
+print_r($this->params);
+echo "</pre>";*/
+//die;
+/*if ($this->params['isAjax']=="") {
+  echo $this->Html->script(array('jquery/jquery-1.4.2.min', 'ajaxupload'));
+}*/
+?>
 <?php
 	$i = 0;
 	foreach ($productImages as $key=>$productImage):
@@ -43,4 +53,3 @@
 		}
 		?>
 <?php endforeach; ?>
-	
