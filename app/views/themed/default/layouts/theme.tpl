@@ -43,31 +43,29 @@
 			
 			
 			<!-- there is a class called selectedMenuItem. to be added later -->
-			{% if ( (mainMenu.Link is defined)) %}
-                                {% set count = 0 %}
-				{% for key, link in mainMenu.Link %}
-					{% set class = '' %}
-					{% if (count == 0) %}
-						{% set class = ' class="home"' %}
-					{% endif %}
-                                        <li {{class}} >{{ html.link(link.name, link.route) }}
-                                        
-					<!-- cater for the badge in cart -->
-					{% if ('/cart/view' in link.route)  %}
-						{% if (cartItemsCount > 0) %}
-                                                <div id="cartbadge">{{ cartItemsCount }}</div>
-						{% endif %}
-						
-					{% endif %}
-					
-					</li>
-					
-					
-					
-					{% set count = count + 1 %}
 			
-				{% endfor %}
-			{% endif %}
+			
+			{% for key, link in linklists.main_menu.links %}
+				{% set class = '' %}
+				{% if (loop.first) %}
+					{% set class = ' class="home"' %}
+				{% endif %}
+				<li {{class}} >{{ html.link(link.title, link.url) }}
+				
+				<!-- cater for the badge in cart -->
+				{% if ('/cart/view' in link.url)  %}
+					{% if (cartItemsCount > 0) %}
+					<div id="cartbadge">{{ cartItemsCount }}</div>
+					{% endif %}
+					
+				{% endif %}
+				
+				</li>
+				
+				
+		
+			{% endfor %}
+			
 			
 			
 			
@@ -84,19 +82,19 @@
 
 	<div id="footer">
 		Copyright &copy; {{ companyName }} {{ "now"|date("Y") }}<br />
-		{% if ( (footerMenu.Link is defined)) %}
-                        {% set totalFooterLinksCount = footerMenu.Link | length %}
-			{% set count = 1 %}
-			{% for key, link in footerMenu.Link %}
-					
-				{{ html.link(link.name, link.route) }}
-					
-				{% if ( count < totalFooterLinksCount) %}
-					{{ ' | ' }}
-				{% endif %}
-				{% set count = count + 1 %}
-			{% endfor %}
-		{% endif %}
+		
+                
+			
+		{% for key, link in linklists.footer_menu.links %}
+				
+			{{ html.link(link.title, link.url) }}
+				
+			{% if ( not (loop.last)) %}
+				{{ ' | ' }}
+			{% endif %}
+			
+		{% endfor %}
+	
 		
 	</div>
 </div>

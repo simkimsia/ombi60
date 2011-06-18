@@ -340,13 +340,14 @@ class ProductGroup extends AppModel {
 		
 		$viewByProductType 	= ($handle == 'types');
 		$viewByVendor 		= ($handle == 'vendors');
-		$vendorOrTypeIndicated 	= (isset($this->params['named']['q']));
+		$vendorOrTypeIndicated 	= (isset($params['named']['q']));
 		
 		// we have 2 situations
 		// situation 1 is for automatic collections like a particular vendor or type
 		// situation 2 is for regular collections like smart or custom collections
 		
 		$thisIsAutomaticCollection = (($viewByProductType OR $viewByVendor) AND $vendorOrTypeIndicated);
+		$this->log($thisIsAutomaticCollection);
 		
 		if ($thisIsAutomaticCollection) {
 			$collection = $this->getAutomaticCollectionByUrl($handle, $params);
@@ -404,9 +405,9 @@ class ProductGroup extends AppModel {
 		}
 		
 		if ($handle == 'types') {
-			$typeOrVendorModel = $this->Product->ProductType;
+			$typeOrVendorModel = $this->ProductsInGroup->Product->ProductType;
 		} elseif ($handle == 'vendors') {
-			$typeOrVendorModel = $this->Product->Vendor;
+			$typeOrVendorModel = $this->ProductsInGroup->Product->Vendor;
 		} else {
 			return false;
 		}
@@ -424,6 +425,8 @@ class ProductGroup extends AppModel {
 		
 		// does the collection for type or vendor exist?
 		$typeOrVendor = $typeOrVendorModel->find('first', array('conditions'=>$conditionsForCollection));
+		
+		$this->log($typeOrVendor);
 		
 		if ($typeOrVendor) {
 			

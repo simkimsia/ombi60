@@ -76,6 +76,15 @@ class Product extends AppModel {
 			'counterCache' => false,
 			'counterScope' =>  '',
 		),
+		'ProductType' => array(
+			'className' => 'ProductType',
+			'foreignKey' => 'product_type_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => false,
+			'counterScope' =>  '',
+		),
 		
 	);
 
