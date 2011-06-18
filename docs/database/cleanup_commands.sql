@@ -1,7 +1,6 @@
 TRUNCATE TABLE `vendors`;
 TRUNCATE TABLE `products_in_groups`;
 TRUNCATE TABLE `smart_collection_conditions`;
-TRUNCATE TABLE `smart_collections`;
 TRUNCATE TABLE `product_groups`;
 TRUNCATE TABLE `shop_settings`;
 TRUNCATE TABLE `product_types`;

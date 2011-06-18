@@ -987,23 +987,6 @@ CREATE TABLE `smart_collection_conditions` (
 
 /*Data for the table `smart_collection_conditions` */
 
-/*Table structure for table `smart_collections` */
-
-DROP TABLE IF EXISTS `smart_collections`;
-
-CREATE TABLE `smart_collections` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `shop_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `visible` tinyint(1) NOT NULL DEFAULT '1',
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/*Data for the table `smart_collections` */
-
 /*Table structure for table `subscription_plans` */
 
 DROP TABLE IF EXISTS `subscription_plans`;

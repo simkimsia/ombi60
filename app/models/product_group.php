@@ -231,9 +231,7 @@ class ProductGroup extends AppModel {
 				$smartCollectionCondtion['smart_collection_id'] = $smart_collection_id;
 				$this->SmartCollectionCondition->create();
 				if ($this->SmartCollectionCondition->save($smartCollectionCondtion)) {
-					//Select all the products with condition selected
-					//get products from product model
-					//ClassRegistry::init('Product')->conditionalProducts($smartCollectionCondtion);
+					
 					$error = true;
 				}
 			}
@@ -276,7 +274,7 @@ class ProductGroup extends AppModel {
 			
 		}
 		return $products;
-	}//end getStartCollectionProducts()
+	}//end getSmartCollectionProducts()
 	
 	/**
 	 * return the conditions as array for cakephp find function
