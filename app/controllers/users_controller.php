@@ -114,6 +114,8 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_add_by_product');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_list_by_product');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_uploadify');
+		$this->Acl->allow($group, 'controllers/ProductImages/admin_ajax_product_image_upload');
+		$this->Acl->allow($group, 'controllers/ProductImages/admin_delete_me');
 
 		$this->log('merchants');
 		$this->Acl->allow($group, 'controllers/Merchants/admin_index');

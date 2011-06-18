@@ -4,6 +4,7 @@ TRUNCATE TABLE `smart_collection_conditions`;
 TRUNCATE TABLE `smart_collections`;
 TRUNCATE TABLE `product_groups`;
 TRUNCATE TABLE `shop_settings`;
+TRUNCATE TABLE `product_types`;
 
 DELETE FROM shops WHERE id >= 2;
 ALTER TABLE shops AUTO_INCREMENT = 2;
