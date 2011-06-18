@@ -83,7 +83,6 @@ class ProductGroup extends AppModel {
 		
 		foreach($productsInGroups as $key=>$group) {
 			$result = array(
-					   'id' => $group['ProductGroup']['id'],
 					   'title' => $group['ProductGroup']['title'],
 					   
 					   'description' => $group['ProductGroup']['description'],
@@ -110,29 +109,6 @@ class ProductGroup extends AppModel {
 		}
 		
 		return $results;
-	}
-	
-	function getVariableForAllProducts($products) {
-		
-		// need to store all visible and all products in shop
-		// need to store all vendors in shop
-		
-		$result = array(
-				'id' => 0,
-				'title' => 'all',
-				'description' => 'All Products',
-				'handle' => 'all',
-				'underscore_handle' => 'all',
-				'url' => '/collections/all',
-				'all_products_count' => '123',
-				'vendor_count' => '1',
-				
-			     );
-			
-		$result['products'] = $products;
-		$result['products_count'] = count($result['products']);
-		
-		return $result;
 	}
 	
 	
@@ -359,13 +335,12 @@ class ProductGroup extends AppModel {
 		// the conditions will be an array inside the collection array with
 		// an index of product_paginate
 		
-		$collection = array();
+		$collection 	= false;
+		$handle 	= strtolower($handle);
 		
-		$handle = strtolower($handle);
-		
-		$viewByProductType = ($handle == 'types');
-		$viewByVendor = ($handle == 'vendors');
-		$vendorOrTypeIndicated = (isset($this->params['named']['q']));
+		$viewByProductType 	= ($handle == 'types');
+		$viewByVendor 		= ($handle == 'vendors');
+		$vendorOrTypeIndicated 	= (isset($this->params['named']['q']));
 		
 		// we have 2 situations
 		// situation 1 is for automatic collections like a particular vendor or type
@@ -379,8 +354,41 @@ class ProductGroup extends AppModel {
 			$collection = $this->getRegularCollectionByUrl($handle, $visibleOrAll);
 		}
 		
+		$automaticCollectionForAll = ($collection === false) && ($handle == 'all');
+		
+		if ($automaticCollectionForAll) {
+			$collection = $this->getAutomaticCollectionForAll();
+		}
+		
 		return $collection;
 		
+	}
+	
+	/*
+	 * get ALL products provided no automatic and regular collections match the handle 'all'
+	 * */
+	private function getAutomaticCollectionForAll() {
+		
+		// to retrieve the shop id based on the url
+		// see app_controller code and shop model code
+		$shop_id = Shop::get('Shop.id');
+		
+		// create the collection details
+		$collection = array('ProductGroup'=>array('title'		=> 'Products',
+							  'description'		=> 'All Products',
+							  'handle' 		=> 'all',
+							  'url'    		=> '/collections/all',
+							  'all_product_count'	=> Shop::get('Shop.visible_product_count'),
+							  'vendor_count'	=> Shop::get('Shop.vendor_count')));
+		
+		
+		// prepare the pagination of products conditions
+		$productPaginate 					 = $this->prepCommonProductPaginate();
+		$productPaginate['conditions']['AND']['Product.shop_id'] = $shop_id;
+		
+		$collection['ProductGroup']['product_paginate'] 	 = $productPaginate;
+		
+		return $collection;
 	}
 	
 	/*
@@ -468,6 +476,9 @@ class ProductGroup extends AppModel {
 		
 	}
 	
+	/**
+	 * product paginate conditions for automatic collections like vendors or product types
+	 **/
 	private function prepProductPaginate4Automatic($collection, $handle) {
 		// get the standard paginate stuff like order, variants, etc
 		$productPaginate = $this->prepCommonProductPaginate();
@@ -482,6 +493,10 @@ class ProductGroup extends AppModel {
 		return $productPaginate;
 	}
 	
+	/**
+	 * product paginate conditions for regular collections like smart collections or custom collections
+	 * pre determined by the product ids in the ProductsInGroup table
+	 **/
 	private function prepProductPaginate4Regular($collection) {
 		// Extract the product ids in the found collection
                 $productIds = Set::extract($collection['ProductsInGroup'], '/product_id');
@@ -494,6 +509,10 @@ class ProductGroup extends AppModel {
 		return $productPaginate;
 	}
 	
+	/**
+	 * assumed that the products you want to paginate are visible
+	 * assumed that the conditions BEFORE invoking this will ensure the products are within a single shop
+	 * */
 	private function prepCommonProductPaginate() {
 		$productPaginate = array('conditions'=>array('AND' => array('Product.visible'=>true) ));
 		
