@@ -374,43 +374,64 @@ class ProductsController extends AppController {
 			$this->Session->setFlash(__('Invalid Product', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
-    $product_id = $id;
-    $this->Product->recursive = 1;
-    $product = $this->Product->read(null, $id);
-		$this->set('product', $this->Product->read(null, $id));
+		$product_id = $id;
+		$this->Product->recursive = -1;
+    
+		$product = $this->Product->find('first', array('conditions'=>array('Product.id'=>$id),
+							       'contain'   =>array('Variant' => array(
+											    'order'=>'Variant.order ASC'
+										    ),
+										    'ProductImage'=>array(
+											    'fields' => array('id', 'filename',
+													      'cover', 'product_id'),
+											    'order'=>array('ProductImage.cover DESC'),
+										    ),
+										    'ProductsInGroup'=>array(
+											    'fields' => array('id', 'product_id'),
+											    'ProductGroup'=>array(
+													    'fields' => array('id', 
+														    'title', 
+														    'type'),
+											    )
+										    )
+									    ),
+							       'link' 	=> array('Vendor'=>array(
+											    'fields'=>array('title')),
+										     'ProductType'=>array(
+											    'fields'=>array('title')),
+										    )
+							    ));
+	
 
-    $shopId = Shop::get('Shop.id');
-    $customCollections = ClassRegistry::init('ProductsInGroup')->getProductCustomCollection($id);
-    //$smartCollections  = ClassRegistry::init('SmartCollection')->getProductSmartCollection($id);
-    $this->set(compact('customCollections', 'smartCollections'));
-
-        // for uploadify
-    // the images list related code
-    // to make paging easier to test, we set as 1 per page.
-    $this->paginate = array('conditions'=>array('ProductImage.product_id'=>$id),
-          'order' => 'ProductImage.cover desc',
-          'limit'=>'10');
-
-    $product_id = $id;
+		$shopId = Shop::get('Shop.id');
     
     
-    $productImages = $this->paginate('ProductImage');
-    
-    $errors = array();
-    
-    $count = count($productImages);
+		$this->set(compact('collections', 'product'));
 
-    $uploadifySettings = array('browseButtonId' => 'fileInput',
-             'script' => Router::url("/admin/products/upload/".$product_id, true),
-             'auto' => true,
-                                           'buttonText' => __('Choose File', true),
-             'onComplete' => true,);
-        
-    $this->set(compact('product_id',
-           'productImages',
-           'errors',
-           'uploadifySettings',
-           ''));
+		// for uploadify
+		// the images list related code
+		// to make paging easier to test, we set as 1 per page.
+		$this->paginate = array('conditions'=>array('ProductImage.product_id'=>$id),
+		      'order' => 'ProductImage.cover desc',
+		      'limit'=>'10');
+	
+		$productImages = $this->paginate('ProductImage');
+		
+		$errors = array();
+		
+		$count = count($productImages);
+	    
+		$uploadifySettings = array('browseButtonId' => 'fileInput',
+			 'script' => Router::url("/admin/products/upload/".$product_id, true),
+			 'auto' => true,
+						       'buttonText' => __('Choose File', true),
+			 'onComplete' => true,);
+		    
+		$this->set(compact('product_id',
+		       'productImages',
+		       'errors',
+		       'uploadifySettings',
+		       ''));
 
 	}
 
