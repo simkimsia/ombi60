@@ -225,15 +225,10 @@ class ProductImagesController extends AppController {
 
 
   function admin_delete_me($id = null, $product_id = null) {
-    
-    $successJSON = false;
-    $contents = array();
-    
     if ($this->params['isAjax']) {
       $this->layout = false;
     }
-    
-    if ($id == null OR $product_id == null) {
+    if (!$id OR !$product_id) {
       if ($this->params['isAjax']) {
         $contents['reason'] = __('Invalid id for image', true);
       } else {
@@ -241,7 +236,7 @@ class ProductImagesController extends AppController {
         $this->redirect(array('action'=>'index'));  
       }
     }
-    
+
     if ($this->ProductImage->delete($id)) {
       if ($this->params['isAjax']) {
         // the images list related code
@@ -258,6 +253,7 @@ class ProductImagesController extends AppController {
         $this->Session->setFlash(__('Image status changed', true));
         $this->redirectToProductEdit($product_id); 
       }
+      
     } else {
       if ($this->params['isAjax']) {
         $contents['reason'] = __('Image was not deleted', true);
@@ -266,8 +262,6 @@ class ProductImagesController extends AppController {
         $this->redirectToProductEdit($product_id);
       }
     }
-    //$this->set(compact('contents', 'successJSON'));
-    //$this->render('json/response');
   }
 
 }
