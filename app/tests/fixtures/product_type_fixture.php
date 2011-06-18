@@ -1,7 +1,7 @@
 <?php
-/* Vendor Fixture generated on: 2011-06-18 06:06:37 : 1308378577 */
-class VendorFixture extends CakeTestFixture {
-	var $name = 'Vendor';
+/* ProductType Fixture generated on: 2011-06-18 06:06:33 : 1308378633 */
+class ProductTypeFixture extends CakeTestFixture {
+	var $name = 'ProductType';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
@@ -18,8 +18,8 @@ class VendorFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'shop_id' => 1,
-			'created' => '2011-06-18 06:29:37',
-			'modified' => '2011-06-18 06:29:37',
+			'created' => '2011-06-18 06:30:33',
+			'modified' => '2011-06-18 06:30:33',
 			'title' => 'Lorem ipsum dolor sit amet',
 			'handle' => 'Lorem ipsum dolor sit amet'
 		),

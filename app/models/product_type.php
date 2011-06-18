@@ -1,6 +1,6 @@
 <?php
-class Vendor extends AppModel {
-	var $name = 'Vendor';
+class ProductType extends AppModel {
+	var $name = 'ProductType';
 	var $displayField = 'title';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -17,7 +17,7 @@ class Vendor extends AppModel {
 	var $hasMany = array(
 		'Product' => array(
 			'className' => 'Product',
-			'foreignKey' => 'vendor_id',
+			'foreignKey' => 'product_type_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
