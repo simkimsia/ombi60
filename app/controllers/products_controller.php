@@ -448,8 +448,9 @@ class ProductsController extends AppController {
 		$shop_id = Shop::get('Shop.id');
 		
 		// get the product details
-		$productFound = $this->Product->find('first', array('conditions'=>array('handle'=>$handle,
-											'shop_id'=>$shop_id),
+		$productFound = $this->Product->find('first', array('conditions'=>array('Product.visible' => true,
+											'Product.handle'=>$handle,
+											'Product.shop_id'=>$shop_id),
 								    'contain' => array('Variant' => array(
 												'order'=>'Variant.order ASC'
 											),
@@ -475,18 +476,10 @@ class ProductsController extends AppController {
 		$invalidShop = !($shop_id > 0);
 		// product must exist
 		$noSuchProduct = ($invalidShop) ? true : empty($productFound['Product']);
-		// product must belong to said shop
-		$productDoesNotBelongToShop = ($noSuchProduct) ? true : $productFound['Product']['shop_id'] != $shop_id;
-		// must be active product
-		$productNotActive = ($productDoesNotBelongToShop) ? true : !($productFound['Product']['visible']);
-
-		if (   $invalidShop
-		    OR $noSuchProduct
-		    OR $productDoesNotBelongToShop
-		    OR $productNotActive
-		) {
+		
+		if (   $invalidShop OR $noSuchProduct) {
 			$this->Session->setFlash(__('No such product for this shop', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'index'));
+			$this->redirect('/');
 		}
 
 		$product = Product::getTemplateVariable($productFound, false);
