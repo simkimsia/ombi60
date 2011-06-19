@@ -748,6 +748,20 @@ CREATE TABLE `product_images` (
 
 insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads\\products','image/jpeg',6103);
 
+/*Table structure for table `product_options` */
+
+DROP TABLE IF EXISTS `product_options`;
+
+CREATE TABLE `product_options` (
+  `id` int(12) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `order` tinyint(2) unsigned DEFAULT NULL,
+  `product_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Data for the table `product_options` */
+
 /*Table structure for table `product_types` */
 
 DROP TABLE IF EXISTS `product_types`;
@@ -1046,6 +1060,21 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
+
+/*Table structure for table `variant_options` */
+
+DROP TABLE IF EXISTS `variant_options`;
+
+CREATE TABLE `variant_options` (
+  `id` int(14) unsigned NOT NULL AUTO_INCREMENT,
+  `variant_id` int(12) unsigned DEFAULT NULL,
+  `product_option_id` int(12) unsigned DEFAULT NULL,
+  `value` varchar(100) DEFAULT NULL,
+  `order` tinyint(2) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Data for the table `variant_options` */
 
 /*Table structure for table `variants` */
 

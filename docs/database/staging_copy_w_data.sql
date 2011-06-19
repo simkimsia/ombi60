@@ -766,6 +766,20 @@ CREATE TABLE `product_images` (
 
 insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads\\products','image/jpeg',6103),(2,2,0,'2011-06-19 05:27:32','2011-06-19 05:27:32','default-0.jpg','uploads/products','image/jpeg',6103),(3,2,1,'2011-06-19 20:45:36','2011-06-19 20:45:36','wal_mart_t_shirt_for_web.jpg','uploads/products','image/jpeg',14479);
 
+/*Table structure for table `product_options` */
+
+DROP TABLE IF EXISTS `product_options`;
+
+CREATE TABLE `product_options` (
+  `id` int(12) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `order` tinyint(2) unsigned DEFAULT NULL,
+  `product_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Data for the table `product_options` */
+
 /*Table structure for table `product_types` */
 
 DROP TABLE IF EXISTS `product_types`;
@@ -1078,6 +1092,21 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert  into `users`(`id`,`email`,`password`,`group_id`,`full_name`,`name_to_call`,`last_login_on`,`status`,`created`,`modified`,`language_id`) values (1,'owner@shop001.com','78e8f77082028fa96a619aa568aa3ca88a72ec8e',3,'shop001','shop001',NULL,1,'2011-06-19 05:27:31','2011-06-19 05:27:31',1),(2,'7qmc$fty@ombi60.com','1edbbb5571d562b0c205740cf34b24d9474f1b10',5,'casual','casual',NULL,1,'2011-06-19 20:39:33','2011-06-19 20:39:33',1);
+
+/*Table structure for table `variant_options` */
+
+DROP TABLE IF EXISTS `variant_options`;
+
+CREATE TABLE `variant_options` (
+  `id` int(14) unsigned NOT NULL AUTO_INCREMENT,
+  `variant_id` int(12) unsigned DEFAULT NULL,
+  `product_option_id` int(12) unsigned DEFAULT NULL,
+  `value` varchar(100) DEFAULT NULL,
+  `order` tinyint(2) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Data for the table `variant_options` */
 
 /*Table structure for table `variants` */
 

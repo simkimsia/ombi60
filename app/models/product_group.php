@@ -85,7 +85,7 @@ class ProductGroup extends AppModel {
 			$result = array(
 					   'title' => $group['ProductGroup']['title'],
 					   
-					   'description' => $group['ProductGroup']['description'],
+					   'content' => $group['ProductGroup']['description'],
 					   
 					   'handle' => $group['ProductGroup']['handle'],
 					   'underscore_handle' => str_replace('-', '_', $group['ProductGroup']['handle']),
