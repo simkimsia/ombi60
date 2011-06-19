@@ -94,7 +94,7 @@ class Post extends AppModel {
                 
 		if (!isset($this->virtualFields['url'])) {
                         
-                        $this->virtualFields['url'] = "CONCAT('/', '$controller', '/', `Post`.`blog_handle`, '/', `{$this->alias}`.`id`, '-', `{$this->alias}`.`slug`)";
+                        $this->virtualFields['url'] = "CONCAT('/', '$controller', '/', `Blog`.`short_name`, '/', `{$this->alias}`.`id`, '-', `{$this->alias}`.`slug`)";
                                 
                 }
                 

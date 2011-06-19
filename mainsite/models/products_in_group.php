@@ -3,6 +3,8 @@ class ProductsInGroup extends AppModel {
 	var $name = 'ProductsInGroup';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
+	
+
 	var $belongsTo = array(
 		'Product' => array(
 			'className' => 'Product',
@@ -19,5 +21,32 @@ class ProductsInGroup extends AppModel {
 			'order' => ''
 		)
 	);
-}
-?>
+
+  
+  /**
+   * This action is used to get the list of custome collection for this product id
+   * @param integer $productId Product Id
+   */
+  function getProductCustomCollection($productId) {
+    $shopId = Shop::get('Shop.id');
+    $customCollectionsOption = array(
+                                'conditions' => array(
+                                                'ProductsInGroup.product_id' => $productId,
+                                                ),
+                                'contain'    => array(
+                                                 'ProductGroup' => array(
+                                                                    'conditions' => array(
+                                                                                    'ProductGroup.shop_id' => $shopId,
+                                                                                    ),
+                                                                  ),
+                                                ),
+                                'fields'     => array(
+                                                 'ProductGroup.id',
+                                                 'ProductGroup.title',
+                                                ),
+                               );
+    return $this->find('all', $customCollectionsOption);
+  }//end getProductCustomCollection()
+
+
+}//end class

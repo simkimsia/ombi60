@@ -48,6 +48,31 @@ class Merchant extends AppModel {
 
 	}
 
+
+	
+	
+	
+
+	function updateProfile($data = NULL) {
+		$data['User']['group_id'] = MERCHANTS;
+		return $this->saveAll($data, array('validate'=>'first'));
+	}
+	
+	
+	function retrieveShopUserLanguageByUserId($id = false) {
+		if (!$id) {
+			return false;
+		}
+		
+		$this->Behaviors->attach('Linkable.Linkable');
+		$this->User->Behaviors->attach('Linkable.Linkable');
+		
+		return $this->find('first', array('conditions'=>array('Merchant.user_id'=>$id),
+					   'link'=>array('Shop', 'User'=>array('Language'))));
+	}
+
+/** sign up account code more meant for mainsite **/
+
 	function signupNewAccount($data = NULL) {
 		$data['User']['group_id'] = MERCHANTS;
 		
@@ -370,16 +395,49 @@ class Merchant extends AppModel {
 			$datasource->commit($this);
 		}
 		
+		// create new vendor
+		$vendorModel = $this->Shop->Vendor;
+		
+		$vendorModel->create();
+		$vendorData = array('title'	=>'OMBI60',
+				    'shop_id'	=> $this->Shop->id);
+		$vendorModel->save($vendorData);
+		
+		// create new product type
+		$typeModel = $this->Shop->Product->ProductType;
+		$typeModel->create();
+		$typeData = array('title'	=>'Shirts',
+				  'shop_id'	=> $this->Shop->id);
+		$typeModel->save($typeData);
+		
 		// since copyable does not allow non-atomic transaction so we put this outside the transaction.
 		// now we create the dummy default product for this shop.
-		$result = $this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $this->Shop->id);
+		$parentIDs = array('shop_id'   		=> $this->Shop->id,
+				   'vendor_id' 		=> $vendorModel->id,
+				   'product_type_id'	=> $typeModel->id);
+		$result = $this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $parentIDs);
+		
+		// this is the product id of the newly minted dummy product
+		$productID = $this->Shop->Product->getLastInsertID();
 		
 		// create the Frontpage collection
 		$data = array('ProductGroup'=>array('title'=>'Frontpage',
 						    'shop_id'=>$this->Shop->id),
-			      'ProductsInGroup'=>array(array('product_id'=>$this->Shop->Product->getLastInsertID())));
+			      'ProductsInGroup'=>array(array('product_id'=>$productID)));
 		
-		$this->Shop->Product->ProductsInGroup->ProductGroup->saveAll($data);
+		$saveGroupResult = $this->Shop->Product->ProductsInGroup->ProductGroup->saveAll($data);
+		
+	
+		if ($saveGroupResult)	{
+			$productGroupID = $this->Shop->Product->ProductsInGroup->ProductGroup->getLastInsertID();
+			$productModel = $this->Shop->Product;
+			$this->log($productGroupID);
+			$productModel->updateCounterCacheForM2M('VisibleProductInGroup', array($productGroupID));
+			$productModel->updateCounterCacheForM2M('AllProductInGroup', array($productGroupID));	
+			
+		}
+		
+	
 		
 		if ($invoice->id > 0) {
 			// now we need to generate a unique reference number for the created invoice
@@ -390,26 +448,6 @@ class Merchant extends AppModel {
 		
 		return false;		
 
-	}
-	
-	
-	
-
-	function updateProfile($data = NULL) {
-		$data['User']['group_id'] = MERCHANTS;
-		return $this->saveAll($data, array('validate'=>'first'));
-	}
-	
-	function retrieveShopUserLanguageByUserId($id = false) {
-		if (!$id) {
-			return false;
-		}
-		
-		$this->Behaviors->attach('Linkable.Linkable');
-		$this->User->Behaviors->attach('Linkable.Linkable');
-		
-		return $this->find('first', array('conditions'=>array('Merchant.user_id'=>$id),
-					   'link'=>array('Shop', 'User'=>array('Language'))));
 	}
 
 }

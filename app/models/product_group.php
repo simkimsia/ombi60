@@ -98,7 +98,7 @@ class ProductGroup extends AppModel {
 			
 			$result['products'] = isset($group['Product']) ? Product::getTemplateVariable($group['Product']) : array();
 			$result['products_count'] = count($result['products']);
-			//$this->log($result);
+			
 			$results[$result['underscore_handle']] = $result;
 		}
 		
@@ -345,7 +345,7 @@ class ProductGroup extends AppModel {
 		// situation 2 is for regular collections like smart or custom collections
 		
 		$thisIsAutomaticCollection = (($viewByProductType OR $viewByVendor) AND $vendorOrTypeIndicated);
-		$this->log($thisIsAutomaticCollection);
+		
 		
 		if ($thisIsAutomaticCollection) {
 			$collection = $this->getAutomaticCollectionByUrl($handle, $params);
@@ -424,7 +424,7 @@ class ProductGroup extends AppModel {
 		// does the collection for type or vendor exist?
 		$typeOrVendor = $typeOrVendorModel->find('first', array('conditions'=>$conditionsForCollection));
 		
-		$this->log($typeOrVendor);
+		
 		
 		if ($typeOrVendor) {
 			
@@ -546,6 +546,7 @@ class ProductGroup extends AppModel {
 		
 		return $productPaginate;
 	}
+	
 
 }
 ?>

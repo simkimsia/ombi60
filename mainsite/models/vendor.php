@@ -1,7 +1,7 @@
 <?php
 class Vendor extends AppModel {
 	var $name = 'Vendor';
-	var $displayField = 'name';
+	var $displayField = 'title';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $belongsTo = array(
@@ -29,6 +29,20 @@ class Vendor extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+	var $actsAs = array('Handleize.Sluggable'=> array(
+				'fields' => 'title',
+				'scope' => array('shop_id'),
+				'conditions' => false,
+				'slugfield' => 'handle',
+				'separator' => '-',
+				'overwrite' => false,
+				'length' => 150,
+				'lower' => true
+			),
+			    'Handleize.Handleable'=>array(
+				'handleFieldName' => 'handle'
+							  ));
 
 }
 ?>

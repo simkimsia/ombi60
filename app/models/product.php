@@ -73,8 +73,16 @@ class Product extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
-			'counterCache' => false,
-			'counterScope' =>  '',
+			'counterCache' => 'visible_product_count',
+			'counterScope' => array('Product.visible' => 1) 
+		),
+		'AllProductsInVendor' => array(
+			'className' => 'Vendor',
+			'foreignKey' => 'vendor_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => 'all_product_count',
 		),
 		'ProductType' => array(
 			'className' => 'ProductType',
@@ -82,8 +90,16 @@ class Product extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
-			'counterCache' => false,
-			'counterScope' =>  '',
+			'counterCache' => 'visible_product_count',
+			'counterScope' => array('Product.visible' => 1) 
+		),
+		'AllProductsInProductType' => array(
+			'className' => 'ProductType',
+			'foreignKey' => 'product_type_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => 'all_product_count',
 		),
 		
 	);
@@ -291,13 +307,14 @@ class Product extends AppModel {
 
 	}
 	
-	function duplicate($id = NULL, $shop_id = 0) {
+	function duplicate($id = NULL, $parentIDs = array()) {
 		// this product model is copied but NOT recursively.
 		$result = $this->copy($id);
 
 		// now we need to duplicate all the related product images
 		if ($result) {
 			// first we need to retrieve all the ProductImages belonging to the original Product
+			$this->ProductImage->recursive = -1;
 			$images = $this->ProductImage->find('all', array(
 							'conditions' => array('product_id' => $id),
 							'fields' => array('ProductImage.filename',
@@ -330,13 +347,14 @@ class Product extends AppModel {
 			}
 			
 			// duplicate the custom collections the product is in
+			$this->ProductsInGroup->recursive = -1;
 			$groups = $this->ProductsInGroup->find('all', array(
 							'conditions' => array('product_id' => $id),
 							'fields' => array('ProductsInGroup.product_group_id')
 							));
 			
 			$duplicateGroups = Set::extract('{n}.ProductsInGroup.product_group_id', $groups);
-			$this->saveCollections($this->id, $duplicateGroups);
+			$this->saveIntoCollections($this->id, $duplicateGroups);
 			
 			// duplicate the variants as well.
 			// first we need to retrieve all the Variants belonging to the original Product
@@ -360,13 +378,16 @@ class Product extends AppModel {
 			
 		}
 
-		// this is to copy the product to another shop
+		// this is to copy the product to another shop, vendor, product type or any other parent model
+		// that the product belongs to
 		// most likely to be solely used for the dummy first product of a newly created shop
-		if ($shop_id > 0) {
-			$this->set('shop_id', $shop_id);
+		foreach ($parentIDs as $field=>$value) {
+			$this->set($field, $value);
+		}
+		if (!empty($parentIDs)) {
 			return $this->save();
 		}
-
+		
 		return $result;
 	}
 	
@@ -465,7 +486,7 @@ class Product extends AppModel {
 		
 		/** Associate this product with custom collections **/
 		$customCollectionsJoined = isset($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
-		$this->saveCollections($this->id, $customCollectionsJoined);	
+		$this->saveIntoCollections($this->id, $customCollectionsJoined);	
 		
 		/** update smart collections **/
 		$product 	= $this->data['Product'];
@@ -520,7 +541,7 @@ class Product extends AppModel {
 		return $results;
 	}
 	
-	function saveCollections ($id, $customCollections = array()) {
+	function saveIntoCollections ($id, $customCollections = array()) {
 		/**
 		if (empty($customCollections)) {
 			return true;

@@ -204,6 +204,13 @@ Configure::load('Paypal.config');
 Configure::load('Paydollar.config');
 
 /**
+ * Subscription system to be used
+ * */
+define('PAYPALEXPRESSCHECKOUT', 'paypalec');
+define('PAYDOLLAR', 'paydollar');
+Configure::write('SubscriptionUsed', PAYDOLLAR);
+
+/**
  * for TwigView plugin
  **/
 define('TWIG_VIEW_CACHE', TMP.'cache'.DS.'views');

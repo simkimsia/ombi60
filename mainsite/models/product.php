@@ -56,8 +56,16 @@ class Product extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
-			'counterCache' => true,
+			'counterCache' => 'visible_product_count',
 			'counterScope' => array('Product.visible' => 1) 
+		),
+		'AllProductsInShop' => array(
+			'className' => 'Shop',
+			'foreignKey' => 'shop_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => 'all_product_count',
 		),
 		'Vendor' => array(
 			'className' => 'Vendor',
@@ -65,8 +73,33 @@ class Product extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
-			'counterCache' => false,
-			'counterScope' =>  '',
+			'counterCache' => 'visible_product_count',
+			'counterScope' => array('Product.visible' => 1) 
+		),
+		'AllProductsInVendor' => array(
+			'className' => 'Vendor',
+			'foreignKey' => 'vendor_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => 'all_product_count',
+		),
+		'ProductType' => array(
+			'className' => 'ProductType',
+			'foreignKey' => 'product_type_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => 'visible_product_count',
+			'counterScope' => array('Product.visible' => 1) 
+		),
+		'AllProductsInProductType' => array(
+			'className' => 'ProductType',
+			'foreignKey' => 'product_type_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => 'all_product_count',
 		),
 		
 	);
@@ -191,7 +224,6 @@ class Product extends AppModel {
 				
 					) */
 				$groups = Set::extract('ProductsInGroup.{n}.product_group_id', $val);
-				
 				$results[$key]['Product']['selected_collections'] = $groups;
 			}
 		}
@@ -275,13 +307,14 @@ class Product extends AppModel {
 
 	}
 	
-	function duplicate($id = NULL, $shop_id = 0) {
+	function duplicate($id = NULL, $parentIDs = array()) {
 		// this product model is copied but NOT recursively.
 		$result = $this->copy($id);
 
 		// now we need to duplicate all the related product images
 		if ($result) {
 			// first we need to retrieve all the ProductImages belonging to the original Product
+			$this->ProductImage->recursive = -1;
 			$images = $this->ProductImage->find('all', array(
 							'conditions' => array('product_id' => $id),
 							'fields' => array('ProductImage.filename',
@@ -314,13 +347,14 @@ class Product extends AppModel {
 			}
 			
 			// duplicate the custom collections the product is in
+			$this->ProductsInGroup->recursive = -1;
 			$groups = $this->ProductsInGroup->find('all', array(
 							'conditions' => array('product_id' => $id),
 							'fields' => array('ProductsInGroup.product_group_id')
 							));
 			
 			$duplicateGroups = Set::extract('{n}.ProductsInGroup.product_group_id', $groups);
-			$this->saveCollections($this->id, $duplicateGroups);
+			$this->saveIntoCollections($this->id, $duplicateGroups);
 			
 			// duplicate the variants as well.
 			// first we need to retrieve all the Variants belonging to the original Product
@@ -344,13 +378,16 @@ class Product extends AppModel {
 			
 		}
 
-		// this is to copy the product to another shop
+		// this is to copy the product to another shop, vendor, product type or any other parent model
+		// that the product belongs to
 		// most likely to be solely used for the dummy first product of a newly created shop
-		if ($shop_id > 0) {
-			$this->set('shop_id', $shop_id);
+		foreach ($parentIDs as $field=>$value) {
+			$this->set($field, $value);
+		}
+		if (!empty($parentIDs)) {
 			return $this->save();
 		}
-
+		
 		return $result;
 	}
 	
@@ -449,9 +486,12 @@ class Product extends AppModel {
 		
 		/** Associate this product with custom collections **/
 		$customCollectionsJoined = isset($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
-		$this->saveCollections($this->id, $customCollectionsJoined);	
+		$this->saveIntoCollections($this->id, $customCollectionsJoined);	
 		
-		
+		/** update smart collections **/
+		$product 	= $this->data['Product'];
+		$product['id'] 	= $this->id;
+		$this->smartUpdateProductsInGroup($product);
 		
 	}
 	
@@ -501,7 +541,7 @@ class Product extends AppModel {
 		return $results;
 	}
 	
-	function saveCollections ($id, $customCollections = array()) {
+	function saveIntoCollections ($id, $customCollections = array()) {
 		/**
 		if (empty($customCollections)) {
 			return true;
@@ -655,41 +695,146 @@ class Product extends AppModel {
 		
 	}
 
-  public function conditionalProducts($conditionalArray, $fields = array('Product.id')) {
-    $conditions = "";
-    $field      = $conditionalArray['field'];
-    $relation   = $conditionalArray['relation'];
-    $value      = $conditionalArray['condition'];
-    switch ($relation) :
-      case "equals":
-        //Field should be exactly equal to Value
-        $conditions = array($field => $value);
-        break;
-      case "starts_with":
-        //Field should start with Value
-        $conditions = array($field . " LIKE '".$value."%'");
-        break;
-      case "ends_with":
-        //Field should end with value
-        $conditions = array($field . " LIKE '%".$value."'");
-        break;
-      case "contains":
-        //Field should contain the value
-        $conditions = array($field . " LIKE '%".$value."%'");
-        break;        
-      case "greater_than":
-        //Field should contain the value
-        $conditions = array($field . " > "=> $value);
-        break;
-      case "less_than":
-        //Field should contain the value
-        $conditions = array($field . " < "=> $value);
-        break;
-    endswitch;
-    return $conditions;
-    //First check whick type of 
-    //return ($this->find('all', array('conditions' => $conditions/*, 'fields' => $fields*/)));
-  }//end conditionalProducts()
+	public function conditionalProducts($conditionalArray, $fields = array('Product.id')) {
+		$conditions = "";
+		$field      = $conditionalArray['field'];
+		$relation   = $conditionalArray['relation'];
+		$value      = $conditionalArray['condition'];
+		switch ($relation) :
+			case "equals":
+			  //Field should be exactly equal to Value
+			  $conditions = array($field => $value);
+			  break;
+			case "starts_with":
+			  //Field should start with Value
+			  $conditions = array($field . " LIKE '".$value."%'");
+			  break;
+			case "ends_with":
+			  //Field should end with value
+			  $conditions = array($field . " LIKE '%".$value."'");
+			  break;
+			case "contains":
+			  //Field should contain the value
+			  $conditions = array($field . " LIKE '%".$value."%'");
+			  break;        
+			case "greater_than":
+			  //Field should contain the value
+			  $conditions = array($field . " > "=> $value);
+			  break;
+			case "less_than":
+			  //Field should contain the value
+			  $conditions = array($field . " < "=> $value);
+			  break;
+		endswitch;
+		return $conditions;
+		//First check whick type of 
+		//return ($this->find('all', array('conditions' => $conditions/*, 'fields' => $fields*/)));
+	}//end conditionalProducts()
+	
+	
+	/**
+	 * @param array $product this is the associative array of the product without Product index present
+	 * @param array $conditionalArrays this must be a numerically indexed array of the conditions
+	 *  that is the list of conditions without SmartCollectionCondition index present
+	 * */
+	private function evaluateAgainstSmartConditions($product, $conditionalArrays) {
+		$ok = true;
+		
+		foreach($conditionalArrays as $conditionalArray) {
+			$field      = str_replace('Product.', '', $conditionalArray['field']);
+			$relation   = $conditionalArray['relation'];
+			$value      = $conditionalArray['condition'];
+			
+			$fieldInProduct = $product[$field];
+			
+			// assume case-insensitive for now
+			
+			switch ($relation) :
+				case "equals":
+				  //Field in Product should be exactly equal to Value
+				  if (is_numeric($value)) {
+					$ok = ($fieldInProduct == $value);
+				  } else if(is_string($value)) {
+					
+					$ok = (strcasecmp($fieldInProduct,$value) == 0);	
+				  } else {
+					$ok = false;
+				  }
+				  break;
+				case "starts_with":
+				  //Field in Product should start with Value
+				  $ok = startsWith($fieldInProduct, $value,  false);
+				  break;
+				case "ends_with":
+				  //Field in Product should end with value
+				  $ok = endsWith($fieldInProduct, $value, false);
+				  break;
+				case "contains":
+				  //Field in Product should contain the value
+				  $ok = (stripos($fieldInProduct, $value) !== false);
+				  break;        
+				case "greater_than":
+				  //Field in Product is greater than the value
+				  $ok = ($fieldInProduct > $value);
+				  break;
+				case "less_than":
+				  //Field in Product is less than the value
+				  $ok = ($fieldInProduct < $value);
+				  break;
+			endswitch;
+			
+			if ($ok == false) {
+				break;
+			}
+		}
+		return $ok;
+	}
+	
+	/**
+	 * This function is used to update the ProductsInGroup for Smart Collections
+	 *
+	 * @param array $product this is the associative array of the product without Product index present
+	 * */
+	public function smartUpdateProductsInGroup($product) {
+		
+		$result = true;
+		
+		$collectionModel = $this->ProductsInGroup->ProductGroup;
+		$collectionModel->recursive = -1;
+		$collectionModel->Behaviors->attach('Containable');
+			
+		$smartCollections = $collectionModel->find('all', array('conditions'=>array('ProductGroup.shop_id'=>Shop::get('Shop.id'),
+											    'ProductGroup.type'=>SMART_COLLECTION),
+									'contain'   =>array('SmartCollectionCondition')));
+		
+		$smartCollectionIDs = Set::extract('{n}.ProductGroup.id', $smartCollections);
+		
+		// first we delete all the ProductsInGroup then we reinsert the records
+		// delete all records in ProductsInGroup
+		$this->ProductsInGroup->deleteAll(array('ProductsInGroup.product_id'	   => $product['id'],
+							'ProductsInGroup.product_group_id' => $smartCollectionIDs));
+		
+		$productsInGroups = array();
+		
+		// now we format the conditions to seek out all the relevant collection
+		foreach($smartCollections as $key=>$smartCollection) {
+			// use php functions for evaluations
+			$ok = $this->evaluateAgainstSmartConditions($product, $smartCollection['SmartCollectionCondition']);
+			if ($ok) {
+				$productsInGroups[] = array('product_id'       => $product['id'],
+							    'product_group_id' => $smartCollection['ProductGroup']['id']);
+			}
+		}
+		
+		// we will insert provided there is at least 1 product that matches the conditions
+		if (!empty($productsInGroups)) {
+			$result = $this->ProductsInGroup->saveAll($productsInGroups);
+		}
+		
+		$this->updateCounterCacheForM2M('VisibleProductInGroup', $smartCollectionIDs);
+		$this->updateCounterCacheForM2M('AllProductInGroup', 	 $smartCollectionIDs);
+		return $result;
+	}
 
 
 }//end class

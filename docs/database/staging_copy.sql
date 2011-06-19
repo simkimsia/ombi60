@@ -759,6 +759,8 @@ CREATE TABLE `product_types` (
   `modified` datetime DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `handle` varchar(150) DEFAULT NULL,
+  `visible_product_count` int(7) unsigned DEFAULT '0',
+  `all_product_count` int(7) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1079,6 +1081,8 @@ CREATE TABLE `vendors` (
   `modified` datetime DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `handle` varchar(150) DEFAULT NULL,
+  `visible_product_count` int(7) unsigned DEFAULT '0',
+  `all_product_count` int(7) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

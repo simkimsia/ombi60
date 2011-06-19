@@ -49,41 +49,12 @@
  *
  */
 
+
 /**
  *
  *  Production Mode
  **/
 Configure::write('debug', 0);
-
-
-/**
- * load the config file of the paypal  + paydollar plugin
- **/
-
-Configure::load('Paypal.config');
-Configure::load('Paydollar.config');
-
-
-/**
- * Subscription system to be used
- * */
-define('PAYPALEXPRESSCHECKOUT', 'paypalec');
-define('PAYDOLLAR', 'paydollar');
-Configure::write('SubscriptionUsed', PAYDOLLAR);
-
-
-/**
- *
- * bootstrap.local.php file can override certain settings for local development purposes
- **/
-if (file_exists(dirname(__FILE__) . '/bootstrap.local.php')) {
-
-    require_once('bootstrap.local.php');
-}
-
-define('DEFAULT_LANGUAGE', 'eng');
-
-
 
 /**
  * dependent on database having a groups table and the id for
@@ -99,10 +70,12 @@ define('CUSTOMERS', 4);
 define('CASUAL', 5);
 
 /**
- * Default for variant
- ***/
-define('VARIANT_DEFAULT_TITLE', 'Default Title');
-
+ * Address type
+ * billing address is 1
+ * delivery address is 2
+ **/
+define('BILLING', 1);
+define('DELIVERY', 2);
 
 /**
  * default dummy product
@@ -158,3 +131,145 @@ define('PRODUCT_IMAGES_THUMB_THUMB_PATH', PRODUCT_IMAGES_THUMB_PATH . THUMB_DIR 
 
 // default free theme
 define('DEFAULT_FREE_THEME', 3);
+
+/**
+ * ORDERS fulfillment status
+ **/
+define('FULFILLMENT_NOT_FULFILLED', 1);
+define('FULFILLMENT_PARTIAL', 2);
+define('FULFILLMENT_FULFILLED', 0);
+
+/**
+ * ORDERS PAYment status
+ **/
+define('PAYMENT_AUTHORIZED', 1);
+define('PAYMENT_PENDING', 3);
+define('PAYMENT_PAID', 2);
+define('PAYMENT_ABANDONED', 0);
+define('PAYMENT_INITIATED', 4);
+
+
+/**
+ * ORDERS status
+ **/
+define('ORDER_CREATED', 0); // when order is created, it means that the checkout button is pressed
+define('ORDER_OPENED', 1); // when order is opened, it means that the payment has been initiated
+define('ORDER_IN_PROCESS', 2); // when order is between opened and closed
+define('ORDER_CLOSED', 3); // when order is closed
+
+
+/**
+ * Payment module id
+ **/
+define('PAYPAL_PAYMENT_MODULE', 2);
+define('CUSTOM_PAYMENT_MODULE', 1);
+
+/**
+ * Collection type
+**/
+define('SMART_COLLECTION', 1);
+define('CUSTOM_COLLECTION', 0);
+
+
+/**
+ * Default for variant
+ ***/
+define('VARIANT_DEFAULT_TITLE', 'Default Title');
+
+/**
+ * Visible, hidden or all products/collections/posts/whatever objects/entities
+ * */
+define('HIDDEN_ENTITY', 0);
+define('VISIBLE_ENTITY', 1);
+define('HIDDEN_AND_VISIBLE_ENTITY', 2);
+
+/**
+ * production checkout link
+ **/
+define('CHECKOUT_LINK', 'http://checkout.ombi60.com');
+Configure::write('currentCheckoutLink', CHECKOUT_LINK);
+
+
+/**
+ * for ease of configuration
+ * to set the $this->Auth->allow('*') inside beforeFilter inside app_controller
+ * set this value to true
+ * otherwise set to false
+ *
+ * Production mode always set to false
+ **/
+Configure::write('Auth.allowAll', false);
+
+
+
+Configure::write('Payment.PayPal', 2);
+
+
+/**
+ * load the config file of the paypal + paydollar plugin
+ **/
+
+Configure::load('Paypal.config');
+Configure::load('Paydollar.config');
+
+/**
+ * Subscription system to be used
+ * */
+define('PAYPALEXPRESSCHECKOUT', 'paypalec');
+define('PAYDOLLAR', 'paydollar');
+Configure::write('SubscriptionUsed', PAYDOLLAR);
+
+/**
+ * for TwigView plugin
+ **/
+define('TWIG_VIEW_CACHE', TMP.'cache'.DS.'views');
+
+
+/**
+ *
+ * bootstrap.local.php file can override certain settings for local development purposes
+ **/
+if (file_exists(dirname(__FILE__) . '/bootstrap.local.php')) {
+
+    require_once('bootstrap.local.php');
+}
+
+define('DEFAULT_LANGUAGE', 'eng');
+
+/**
+ * this is to include the Zend Framework files i need for Zend_Lucene
+ **/
+
+ini_set('include_path', ini_get('include_path') . ':' . CAKE_CORE_INCLUDE_PATH . DS . '/vendors');
+function __autoload($path) {
+if (substr($path, 0, 5) == 'Zend_') {
+include str_replace('_', '/', $path) . '.php';
+}
+return $path;
+}
+
+/**
+ * this is to allow getting ip addresses by domains
+ **/
+        function getAddrByHost($host, $timeout = 3) {
+		$host = str_replace('http://', '', $host);
+		
+		$query = `nslookup -timeout=$timeout -retry=1 $host`;
+		if(preg_match('/\nAddress: (.*)\n/', $query, $matches))
+		   return trim($matches[1]);
+		return $host;
+	}
+        
+        
+function startsWith($haystack,$needle,$case=true) {
+    if($case){return (strcmp(substr($haystack, 0, strlen($needle)),$needle)===0);}
+    return (strcasecmp(substr($haystack, 0, strlen($needle)),$needle)===0);
+}
+
+function endsWith($haystack,$needle,$case=true) {
+    if($case){return (strcmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);}
+    return (strcasecmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);
+}
+
+
+?>
