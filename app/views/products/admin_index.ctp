@@ -68,7 +68,7 @@ foreach ($products as $product):
                 echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $product['ProductImage']['filename']); ?>
 		  </span>
 		  <span class="product-details">
-            <?php echo $product['Product']['title']; ?> <br>
+            <?php echo $this->Html->link($product['Product']['title'], array('action' => 'view', $product['Product']['id'])); ?> <br>
             <?php echo '$', $product['Product']['price']; ?>		  
 		  </span>
 		</td>
@@ -85,8 +85,7 @@ foreach ($products as $product):
 					       array('action' => 'toggle', $product['Product']['id']),
 					       array('class' => 'product-status')); ?>
 		</td>
-		<td class="actions" style="text-align: center;">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $product['Product']['id'], 'admin' => true)); ?>
+		<td class="actions" style="text-align: center;">	
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $product['Product']['id'])); ?>
 			<?php echo $this->Html->link(__('Duplicate', true), array('action' => 'duplicate', $product['Product']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $product['Product']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $product['Product']['id'])); ?>

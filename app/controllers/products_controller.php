@@ -526,7 +526,7 @@ class ProductsController extends AppController {
 		
 		$order = isset($this->params['named']['direction']) ? $this->params['named']['direction'] : 'desc';
 
-		$this->set(compact('sort', 'order', 'products', 'domainPagePath', 'collection'));
+		$this->set(compact('sort', 'order', 'domainPagePath', 'collection'));
 		
 		$this->render('collection');
 		
