@@ -39,11 +39,11 @@
 		    <!--<td width="5%" align="center"><?php //echo $form->input('check_box_id', array('value' => $collection['ProductGroup']['id'], 'class' => 'checkbox_check', 'type' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>-->
 		    <td width="60%">
           <?php echo $this->Html->link($smartCollection['ProductGroup']['title'], array('action' => 'view_smart', $smartCollection['ProductGroup']['id'])); 
-                $products = ClassRegistry::init('ProductGroup')->getSmartCollectionProducts($smartCollection, 'count');
+                
 
                 echo "<br />";
                 echo "<span class='hint'>";
-                echo (is_array($products) ? count($products): $products) . " product(s)";
+                echo count($smartCollection['ProductsInGroup']) . " product(s)";
                 echo "</span>";
                 unset($products);
                 /*echo "<br />";
