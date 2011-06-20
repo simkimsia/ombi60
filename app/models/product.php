@@ -394,23 +394,27 @@ class Product extends AppModel {
 			
 			// duplicate the variants as well.
 			// first we need to retrieve all the Variants belonging to the original Product
+			$this->Variant->recursive = -1;
+			$this->Variant->Behaviors->attach('Containable');
 			$variants = $this->Variant->find('all', array(
-							'conditions' => array('product_id' => $id),
+							'conditions'	=> array('product_id' => $id),
+							'contain'	=> array('VariantOption')
 							));
 
+			$variantDupeResult = true;
+			
 			// duplicate all the variants
 			foreach($variants as $key=>$variant) {
 				// remove current ids for variants
 				unset($variants[$key]['Variant']['id']);
 				// replace product_ids for variants
 				$variants[$key]['Variant']['product_id'] = $this->id;
+				// now we do the saveAll for each variant and its options
+				$variantDupeResult = $this->Variant->saveAll($variants);
+				if ($variantDupeResult == false) {
+					break;
+				}
 			}
-			
-			// nowe we prepare the saveAll
-			$variants = Set::extract('{n}.Variant', $variants);
-			
-			$variantDupeResult = $this->Variant->saveAll($variants);
-			
 			
 		}
 

@@ -4,7 +4,9 @@ class Variant extends AppModel {
 	var $displayField = 'title';
 	
 	
-	var $actsAs = array('UnitSystemConvertible',);
+	var $actsAs = array('UnitSystemConvertible',
+			    'Copyable.Copyable' => array(
+					'recursive' => true));
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
