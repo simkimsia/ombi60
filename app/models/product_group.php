@@ -518,7 +518,11 @@ class ProductGroup extends AppModel {
 		$productPaginate = array('conditions'=>array('AND' => array('Product.visible'=>true) ));
 		
 		$productPaginate['contain'] = array('Variant' => array(
-								'order'=>'Variant.order ASC'
+								'order'=>'Variant.order ASC',
+								'VariantOption' => array(
+									'fields' => array('id', 'value'),
+									'order'  => 'VariantOption.order ASC',
+								)
 							),
 						   'ProductImage'=>array(
 								'fields' => array('filename'),

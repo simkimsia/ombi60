@@ -68,13 +68,20 @@ class Variant extends AppModel {
 		
 		foreach($variants as $key=>$variant) {
 			$variant = isset($variant['Variant']) ? $variant['Variant'] : $variant;
-			$result = array('id' => $variant['id'],
-					   'title' => $variant['title'],
-					   'sku' => $variant['sku_code'],
-					   'price' => $variant['price'],
-					   'weight' => $variant['weight'],
+			$result = array('id' 			=> $variant['id'],
+					'title' 		=> $variant['title'],
+					'sku' 			=> $variant['sku_code'],
+					'price'			=> $variant['price'],
+					'weight'		=> $variant['weight'],
+					'shipping_required' 	=> $variant['shipping_required'],
+					'compare_with_price' 	=> $variant['compare_with_price'],
 					);
 			
+			if (!empty($variant['VariantOption'])) {
+				$result['options'] = Set::extract('{n}.value', $variant['VariantOption']);
+			} else {
+				$result['options'] = array();
+			}
 			
 			$results[] = $result;
 		}

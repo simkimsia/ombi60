@@ -452,7 +452,11 @@ class ProductsController extends AppController {
 											'Product.handle'=>$handle,
 											'Product.shop_id'=>$shop_id),
 								    'contain' => array('Variant' => array(
-												'order'=>'Variant.order ASC'
+												'order'=>'Variant.order ASC',
+												'VariantOption' => array(
+													'fields' => array('id', 'value'),
+													'order'  => 'VariantOption.order ASC',
+												)
 											),
 										       'ProductImage'=>array(
 												'fields' => array('filename'),

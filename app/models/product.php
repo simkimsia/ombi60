@@ -558,16 +558,15 @@ class Product extends AppModel {
 			$variants = Set::extract('Variant.{n}', $product);
 			
 			$result = array('id' => $product['Product']['id'],
-					   'title' => $product['Product']['title'],
-					   'code' => $product['Product']['code'],
-					   'description' => $product['Product']['description'],
-					   'price' => $product['Product']['price'],
-					   'handle' => $product['Product']['handle'],
-					   'underscore_handle' => str_replace('-', '_', $product['Product']['handle']),
-					   'url' => $product['Product']['url'],
-					   
-					   'weight' => $product['Product']['weight'],
-					   );
+					'title' => $product['Product']['title'],
+					'code' => $product['Product']['code'],
+					'description' => $product['Product']['description'],
+					'price' => $product['Product']['price'],
+					'handle' => $product['Product']['handle'],
+					'underscore_handle' => str_replace('-', '_', $product['Product']['handle']),
+					'url' => $product['Product']['url'],
+					'weight' => $product['Product']['weight'],
+					);
 			
 			
 			$result['images'] = $images;
