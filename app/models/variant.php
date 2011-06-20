@@ -20,6 +20,22 @@ class Variant extends AppModel {
 		)
 	);
 	
+	var $hasMany = array(
+		'VariantOption' => array(
+			'className' => 'VariantOption',
+			'foreignKey' => 'variant_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => true,
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+	);
+	
 	
 	/**
 	 * For unit conversion

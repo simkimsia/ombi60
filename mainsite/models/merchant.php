@@ -431,7 +431,7 @@ class Merchant extends AppModel {
 		if ($saveGroupResult)	{
 			$productGroupID = $this->Shop->Product->ProductsInGroup->ProductGroup->getLastInsertID();
 			$productModel = $this->Shop->Product;
-			$this->log($productGroupID);
+			
 			$productModel->updateCounterCacheForM2M('VisibleProductInGroup', array($productGroupID));
 			$productModel->updateCounterCacheForM2M('AllProductInGroup', array($productGroupID));	
 			

@@ -161,13 +161,26 @@ class Product extends AppModel {
 		'Variant' => array(
 			'className' => 'Variant',
 			'foreignKey' => 'product_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
-			'exclusive' => false,
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'ProductOption' => array(
+			'className' => 'ProductOption',
+			'foreignKey' => 'product_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
@@ -293,15 +306,38 @@ class Product extends AppModel {
 			}
 		}
 		
+		$variantTitle = VARIANT_DEFAULT_TITLE;
+		$variantOptions = array();
+		if (!empty($data['Variant'][0]['VariantOption'])) {
+			$variantTitle = '';
+			// set the order of the 1st variant's options
+			foreach($data['Variant'][0]['VariantOption'] as $key=>$option) {
+				$variantTitle .= $option['value'] . ' /';
+			}
+			
+			$variantTitle = rtrim($variantTitle, " /");
+			
+			$variantOptions = $data['Variant'][0]['VariantOption'];
+		}
+		
 		// add in the default variant
-		$data['Variant'][] = $data['Product'];
-		$data['Variant'][0]['title'] = VARIANT_DEFAULT_TITLE;
+		$data['Variant'][0] = $data['Product'];
+		$data['Variant'][0]['title'] = $variantTitle;
 		$data['Variant'][0]['sku_code'] = $data['Product']['code'];
+		$data['Variant'][0]['order'] = 0;
 
 		$result = $this->saveAll($data, array('validate'=>'first',
 						      'atomic' => false));
 		
-		
+		// now we need to save the variant options
+		if ($result) {
+			$variantID = $this->Variant->getLastInsertId();
+			$data['Variant'][0]['id'] = $variantID;
+			
+			$variantData = array('Variant'		=> $data['Variant'][0],
+					     'VariantOption'	=> $variantOptions);
+			$result = $this->Variant->saveAll($variantData);
+		}
 		
 		return $result;
 
@@ -485,8 +521,10 @@ class Product extends AppModel {
 		/** end of cart_items weight and price **/
 		
 		/** Associate this product with custom collections **/
-		$customCollectionsJoined = isset($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
+		$customCollectionsJoined = (!empty($this->data['Product']['selected_collections'])) ? $this->data['Product']['selected_collections'] : array();
+		
 		$this->saveIntoCollections($this->id, $customCollectionsJoined);	
+		
 		
 		/** update smart collections **/
 		$product 	= $this->data['Product'];
@@ -590,7 +628,6 @@ class Product extends AppModel {
 		//    [0] => 2
 		//    [1] => 3
 		//)
-		
 		
 		// do some array_diff to get new records
 		$newRecords = array_diff($customCollections, $existingGroups);

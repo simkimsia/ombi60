@@ -61,8 +61,14 @@
 		echo $this->Form->input('currency', array('type'=>'hidden', 'value'=>$currency));
 		echo $this->Form->input('price', array('value'=>'0.00', 'label' => __('Selling Price', true), 'div' => array('class' => 'input text left'), 'after' => __(' ' .  $currency, true), 'class' => 'noclear'));
 		echo $this->Form->input('displayed_weight', array('value'=>'0.0', 'div' => array('class' => 'input text right'), 'class' => 'noclear', 'after' => __(' ' . $unitForWeight, true)));
+		
+		echo '<strong>Product Options</strong>';
+		echo $this->Form->input('Variant.0.VariantOption.0.field', array('label' => __('Option Field', true),'value'=>'Title'));
+		echo $this->Form->input('Variant.0.VariantOption.0.value', array('label' => __('Default Value', true), 'value'=>'Default Title'));
+		echo $this->Form->input('Variant.0.VariantOption.0.order', array('type'=>'hidden', 'value'=>'0'));
 	?>
 	</fieldset>
+	
 	<fieldset class="right">
 	<legend><?php __('Product Images'); ?></legend>
 	<br />
