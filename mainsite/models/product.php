@@ -161,13 +161,26 @@ class Product extends AppModel {
 		'Variant' => array(
 			'className' => 'Variant',
 			'foreignKey' => 'product_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
-			'exclusive' => false,
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'ProductOption' => array(
+			'className' => 'ProductOption',
+			'foreignKey' => 'product_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
@@ -293,15 +306,38 @@ class Product extends AppModel {
 			}
 		}
 		
+		$variantTitle = VARIANT_DEFAULT_TITLE;
+		$variantOptions = array();
+		if (!empty($data['Variant'][0]['VariantOption'])) {
+			$variantTitle = '';
+			// set the order of the 1st variant's options
+			foreach($data['Variant'][0]['VariantOption'] as $key=>$option) {
+				$variantTitle .= $option['value'] . ' /';
+			}
+			
+			$variantTitle = rtrim($variantTitle, " /");
+			
+			$variantOptions = $data['Variant'][0]['VariantOption'];
+		}
+		
 		// add in the default variant
-		$data['Variant'][] = $data['Product'];
-		$data['Variant'][0]['title'] = VARIANT_DEFAULT_TITLE;
+		$data['Variant'][0] = $data['Product'];
+		$data['Variant'][0]['title'] = $variantTitle;
 		$data['Variant'][0]['sku_code'] = $data['Product']['code'];
+		$data['Variant'][0]['order'] = 0;
 
 		$result = $this->saveAll($data, array('validate'=>'first',
 						      'atomic' => false));
 		
-		
+		// now we need to save the variant options
+		if ($result) {
+			$variantID = $this->Variant->getLastInsertId();
+			$data['Variant'][0]['id'] = $variantID;
+			
+			$variantData = array('Variant'		=> $data['Variant'][0],
+					     'VariantOption'	=> $variantOptions);
+			$result = $this->Variant->saveAll($variantData);
+		}
 		
 		return $result;
 
@@ -358,23 +394,33 @@ class Product extends AppModel {
 			
 			// duplicate the variants as well.
 			// first we need to retrieve all the Variants belonging to the original Product
+			$this->Variant->recursive = -1;
+			$this->Variant->Behaviors->attach('Containable');
 			$variants = $this->Variant->find('all', array(
-							'conditions' => array('product_id' => $id),
+							'conditions'	=> array('product_id' => $id),
+							'contain'	=> array('VariantOption')
 							));
 
+			$variantDupeResult = true;
+			
 			// duplicate all the variants
 			foreach($variants as $key=>$variant) {
 				// remove current ids for variants
-				unset($variants[$key]['Variant']['id']);
+				unset($variant['Variant']['id']);
 				// replace product_ids for variants
-				$variants[$key]['Variant']['product_id'] = $this->id;
+				$variant['Variant']['product_id'] = $this->id;
+				// remove the variant_id, id inside the option
+				foreach($variant['VariantOption'] as $optionKey => $option) {
+					unset($variant['VariantOption'][$optionKey]['variant_id']);
+					unset($variant['VariantOption'][$optionKey]['id']);
+				}
+				
+				// now we do the saveAll for each variant and its options
+				$variantDupeResult = $this->Variant->saveAll($variant);
+				if ($variantDupeResult == false) {
+					break;
+				}
 			}
-			
-			// nowe we prepare the saveAll
-			$variants = Set::extract('{n}.Variant', $variants);
-			
-			$variantDupeResult = $this->Variant->saveAll($variants);
-			
 			
 		}
 
@@ -485,8 +531,10 @@ class Product extends AppModel {
 		/** end of cart_items weight and price **/
 		
 		/** Associate this product with custom collections **/
-		$customCollectionsJoined = isset($this->data['Product']['selected_collections']) ? $this->data['Product']['selected_collections'] : array();
+		$customCollectionsJoined = (!empty($this->data['Product']['selected_collections'])) ? $this->data['Product']['selected_collections'] : array();
+		
 		$this->saveIntoCollections($this->id, $customCollectionsJoined);	
+		
 		
 		/** update smart collections **/
 		$product 	= $this->data['Product'];

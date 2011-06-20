@@ -1072,9 +1072,11 @@ CREATE TABLE `variant_options` (
   `value` varchar(100) DEFAULT NULL,
   `order` tinyint(2) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `variant_options` */
+
+insert  into `variant_options`(`id`,`variant_id`,`field`,`value`,`order`) values (1,1,'Title','Default Title',0);
 
 /*Table structure for table `variants` */
 

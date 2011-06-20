@@ -639,6 +639,7 @@ class Product extends AppModel {
 		//    [1] => 3
 		//)
 		
+		
 		// do some array_diff to get new records
 		$newRecords = array_diff($customCollections, $existingGroups);
 		

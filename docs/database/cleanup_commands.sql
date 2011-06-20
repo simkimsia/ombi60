@@ -1,4 +1,5 @@
 TRUNCATE TABLE `vendors`;
+
 TRUNCATE TABLE `products_in_groups`;
 TRUNCATE TABLE `smart_collection_conditions`;
 TRUNCATE TABLE `product_groups`;
@@ -13,6 +14,9 @@ ALTER TABLE products AUTO_INCREMENT = 2;
 
 DELETE FROM variants WHERE id >= 2;
 ALTER TABLE variants AUTO_INCREMENT = 2;
+
+DELETE FROM variant_options WHERE id >= 2;
+ALTER TABLE variant_options AUTO_INCREMENT = 2;
 
 DELETE FROM product_images WHERE id >= 2;
 ALTER TABLE product_images AUTO_INCREMENT = 2;
