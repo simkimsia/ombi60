@@ -4,7 +4,9 @@ class Variant extends AppModel {
 	var $displayField = 'title';
 	
 	
-	var $actsAs = array('UnitSystemConvertible',);
+	var $actsAs = array('UnitSystemConvertible',
+			    'Copyable.Copyable' => array(
+					'recursive' => true));
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -18,6 +20,22 @@ class Variant extends AppModel {
 			'fields' => '',
 			'order' => ''
 		)
+	);
+	
+	var $hasMany = array(
+		'VariantOption' => array(
+			'className' => 'VariantOption',
+			'foreignKey' => 'variant_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => true,
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
 	);
 	
 	

@@ -11,13 +11,7 @@ class VariantOption extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'ProductOption' => array(
-			'className' => 'ProductOption',
-			'foreignKey' => 'product_option_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
+		
 	);
 }
 ?>
