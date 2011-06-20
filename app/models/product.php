@@ -406,11 +406,17 @@ class Product extends AppModel {
 			// duplicate all the variants
 			foreach($variants as $key=>$variant) {
 				// remove current ids for variants
-				unset($variants[$key]['Variant']['id']);
+				unset($variant['Variant']['id']);
 				// replace product_ids for variants
-				$variants[$key]['Variant']['product_id'] = $this->id;
+				$variant['Variant']['product_id'] = $this->id;
+				// remove the variant_id, id inside the option
+				foreach($variant['VariantOption'] as $optionKey => $option) {
+					unset($variant['VariantOption'][$optionKey]['variant_id']);
+					unset($variant['VariantOption'][$optionKey]['id']);
+				}
+				
 				// now we do the saveAll for each variant and its options
-				$variantDupeResult = $this->Variant->saveAll($variants);
+				$variantDupeResult = $this->Variant->saveAll($variant);
 				if ($variantDupeResult == false) {
 					break;
 				}
