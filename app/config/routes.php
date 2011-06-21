@@ -121,13 +121,10 @@
                               'cart_id' => '[0-9]+'
                               ));
         
-        Router::connect('/cart/add/:product_id',
+        Router::connect('/cart/add',
                         array('controller' => 'products',
                               'action' => 'add_to_cart',
-                             ),
-                        array('pass' => array('product_id'),
-                              'product_id' => '[0-9]+'
-                              ));
+                             ));
 
         Router::connect('/platform/login', array('platform'=>true, 'controller' => 'users', 'action' => 'login'));
 

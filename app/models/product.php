@@ -118,32 +118,7 @@ class Product extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'CartItem' => array(
-			'className' => 'CartItem',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => false,
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'OrderLineItem' => array(
-			'className' => 'OrderLineItem',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => false,
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
+		
 		
 		'ProductsInGroup' => array(
 			'className' => 'ProductsInGroup',
@@ -505,7 +480,7 @@ class Product extends AppModel {
 		/** end of product images **/
 		
 		
-		/** update cart_items weight and price **/
+		/** update cart_items weight and price 
 		if (!$created) {
 			if (isset($this->data['Product']['price']) &&
 			    isset($this->data['Product']['weight'])) {
@@ -526,7 +501,7 @@ class Product extends AppModel {
 				
 			}
 		}
-		
+		**/
 		
 		/** end of cart_items weight and price **/
 		

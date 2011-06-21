@@ -23,6 +23,34 @@ class Variant extends AppModel {
 	);
 	
 	var $hasMany = array(
+		'CartItem' => array(
+			'className' => 'CartItem',
+			'foreignKey' => 'variant_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => false,
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		
+		'OrderLineItem' => array(
+			'className' => 'OrderLineItem',
+			'foreignKey' => 'variant_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => false,
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		
 		'VariantOption' => array(
 			'className' => 'VariantOption',
 			'foreignKey' => 'variant_id',
@@ -93,6 +121,29 @@ class Variant extends AppModel {
 		}
 		
 		return $results;
+	}
+	
+	function afterSave($created) {
+		if (!$created) {
+			if (isset($this->data['Variant']['price']) &&
+			    isset($this->data['Variant']['weight'])) {
+				$this->CartItem->updatePricesAndWeights($this->id, $this->data['Variant']['price'],
+								'SGD',
+								$this->data['Variant']['weight'],
+								'kg');
+			}
+			
+			if(isset($this->data['Variant']['shipping_required']) &&
+			   isset($this->data['Variant']['original_shipping_required'])) {
+				
+				if ($this->data['Variant']['shipping_required'] != $this->data['Variant']['original_shipping_required']) {
+					
+					$this->CartItem->toggleByConditions(array('CartItem.product_id'=>$this->data['Variant']['variant_id']), 'shipping_required');
+						
+				}
+				
+			}
+		}
 	}
 }
 ?>

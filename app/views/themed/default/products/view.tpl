@@ -111,21 +111,24 @@
 						<div class="instock">Always in stock.</div>
 						
 						
-						{% set action = ['url':['action':'add_to_cart','controller':'products','product_id':product.id]] %}
-						
-						{{ form.create('Product', action) }}
+						<form action="/cart/add" method="post">
 						<!-- Starting to render - products_dropdown_quantity -->
 						{% set qtyArray = [1:1, 2:2, 3:3, 4:4, 5:5] %}
 						
-						{{ form.input('quantity', ['options':qtyArray, 'div':false]) }}
-
 						
+							<input type="hidden" name="id" value="{{ product.variants.0.id }}" />
+						
+							<select name="quantity">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
 						<!-- Finished - products_dropdown_quantity -->
 							
 						
+							<input type="submit" value="Add To Cart" />
 						
-						{{ form.submit("Add To Cart", ['div':false]) }}
-						{{ form.end() }}
+						</form>
 		
 					</div>
 	

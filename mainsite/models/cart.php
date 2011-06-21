@@ -128,7 +128,7 @@ class Cart extends AppModel {
 		
 		
 		
-		$products = $this->CartItem->Product->find('all',
+		$products = $this->CartItem->Variant->Product->find('all',
 			    array('conditions' => array(
 							'Product.id' => array_keys($productsInCart)
 						    ),
@@ -389,7 +389,7 @@ class Cart extends AppModel {
 			
 			$product_id_set = Set::extract('/CartItem/product_id', $cart);
 			
-			$images = $this->CartItem->Product->ProductImage->find('all',
+			$images = $this->CartItem->Variant->Product->ProductImage->find('all',
 				    array('conditions' => array('OR' =>
 								array (
 									array('ProductImage.cover'=>true),
@@ -508,7 +508,7 @@ class Cart extends AppModel {
 		
 		// we go retrieve all the product details to insert into the cart
 		foreach($productsAndQuantities as $product_id => $quantity) {
-			$product = $this->CartItem->Product->read(array('Product.id',
+			$product = $this->CartItem->Variant->Product->read(array('Product.id',
 								'Product.price',
 								'Product.currency',
 								'Product.shipping_required',
@@ -638,7 +638,7 @@ class Cart extends AppModel {
 		$products_key = Set::combine($items, '{n}.CartItem.id', '{n}.CartItem.product_id');
 		
 		// get live product data based on item list 
-		$products = $this->CartItem->Product->find('all',
+		$products = $this->CartItem->Variant->Product->find('all',
 			    array('conditions' => array(
 							'Product.id' => array_values($products_key)
 						    ),

@@ -121,7 +121,7 @@ class ProductsController extends AppController {
 		
 		$userId = User::get('User.id');
 		
-		$cart = $this->Product->CartItem->Cart->getLiveCartByCustomerId($userId, true);
+		$cart = $this->Product->Variant->CartItem->Cart->getLiveCartByCustomerId($userId, true);
 		$postFields = array();
 		
 		if ($this->RequestHandler->isPost()) {
@@ -267,7 +267,7 @@ class ProductsController extends AppController {
 		$paypalExpressOn = $this->Product->Shop->getPaypalExpressOn($shop_id);
 		
 		// retrieve live cart of customer
-		$productsInCart = $this->Product->CartItem->Cart->getLiveCartByCustomerId(User::get('User.id'), true, true);
+		$productsInCart = $this->Product->Variant->CartItem->Cart->getLiveCartByCustomerId(User::get('User.id'), true, true);
 		
 		$paymentAmount = 0.00;
 			
@@ -325,21 +325,21 @@ class ProductsController extends AppController {
 		
 		
 		// reassign the products into items
-		$items = $this->Product->CartItem->prepareCartItemInView($products);
+		$items = $this->Product->Variant->CartItem->prepareCartItemInView($products);
 		
 		$this->set(compact('items', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
 		
 		$sessionString = '';
 		$mainUrl = Shop::get('Shop.primary_domain');
 		
-		$this->log('user id in view_cart ' . User::get('User.id'));
+		//$this->log('user id in view_cart ' . User::get('User.id'));
 		
 		// now we are going to pass the session into the database for the crossover for checkout
 		
 		if (!$this->Product->Shop->isCurrentBaseThisDomain($mainUrl)) {
 			// test if we need to send User id over
 			$this->Session->write('User.id', User::get('User.id'));
-			$this->log('new user id in session write ' . $this->Session->read('User.id'));
+			//$this->log('new user id in session write ' . $this->Session->read('User.id'));
 			$sessionString = '?ss='.$this->transferSession();
 		}
 		
@@ -861,7 +861,7 @@ class ProductsController extends AppController {
 			// for verifying purposes
 			$cartId = $this->data['Cart']['id'];
 			$userId = User::get('User.id');
-			$validCartItems = $this->Product->CartItem->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
+			$validCartItems = $this->Product->Variant->CartItem->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
 												 'Cart.user_id'=>$userId,
 												 'Cart.id'=>$cartId),
 							  'fields'=>array('CartItem.id')
@@ -888,13 +888,15 @@ class ProductsController extends AppController {
 				}
 			}
 			
-			$this->Product->CartItem->refreshCart($this->data);	
+			$this->Product->Variant->CartItem->refreshCart($this->data);	
 		}
 		
 		$this->redirect(array('action'=>'view_cart'));
 	}
 	
-	function add_to_cart($id = null) {
+	function add_to_cart() {
+		$id = !empty($_POST['id']) ? $_POST['id'] : false;
+		
 		if(!$id) {
 			$this->Session->setFlash(__('Invalid id for Product', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -902,10 +904,10 @@ class ProductsController extends AppController {
 		
 		$qty = 1;
 		
-		$qtyExists = !empty($this->data['Product']['quantity']);
-		$qtyIsPositive = $qtyExists ? is_numeric($this->data['Product']['quantity']) AND ($this->data['Product']['quantity'] > 0) : false;
+		$qtyExists = !empty($_POST['quantity']);
+		$qtyIsPositive = $qtyExists ? is_numeric($_POST['quantity']) AND ($_POST['quantity'] > 0) : false;
 		if ($qtyIsPositive) {
-			$qty = 	$this->data['Product']['quantity'];
+			$qty = 	$_POST['quantity'];
 		}
 		
 		
@@ -918,8 +920,8 @@ class ProductsController extends AppController {
 	}
 	
 	private function addToCart($id = null, $quantity = 1) {
-		
-		return $this->Product->CartItem->Cart->addProductForCustomer(User::get('User.id'), array($id=>$quantity));
+		$cartModel = $this->Product->Variant->CartItem->Cart;
+		return $cartModel->addProductForCustomer(User::get('User.id'), array($id=>$quantity));
 		
 	}
 	
@@ -945,7 +947,7 @@ class ProductsController extends AppController {
 		
 		$userId = User::get('User.id');
 		
-		$validCartItems = $this->Product->CartItem->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
+		$validCartItems = $this->Product->Variant->CartItem->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
 											 'Cart.user_id'=>$userId,
 											 'Cart.id'=>$cartId),
 						  'fields'=>array('CartItem.id')
@@ -955,9 +957,9 @@ class ProductsController extends AppController {
 		$cartItemIdArray = Set::extract('{n}.CartItem.id', $validCartItems);
 		
 		if (in_array($id, $cartItemIdArray)) {
-			$result = $this->Product->CartItem->delete($id);
+			$result = $this->Product->Variant->CartItem->delete($id);
 			if (count($cartItemIdArray) == 1 && $result) {
-				return $this->Product->CartItem->Cart->delete($cartId);
+				return $this->Product->Variant->CartItem->Cart->delete($cartId);
 			}
 		}
 		

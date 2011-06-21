@@ -128,7 +128,7 @@ class Cart extends AppModel {
 		
 		
 		
-		$products = $this->CartItem->Product->find('all',
+		$products = $this->CartItem->Variant->Product->find('all',
 			    array('conditions' => array(
 							'Product.id' => array_keys($productsInCart)
 						    ),
@@ -389,7 +389,7 @@ class Cart extends AppModel {
 			
 			$product_id_set = Set::extract('/CartItem/product_id', $cart);
 			
-			$images = $this->CartItem->Product->ProductImage->find('all',
+			$images = $this->CartItem->Variant->Product->ProductImage->find('all',
 				    array('conditions' => array('OR' =>
 								array (
 									array('ProductImage.cover'=>true),
@@ -465,7 +465,7 @@ class Cart extends AppModel {
 		}
 		
 		$this->Behaviors->attach('Containable');
-		
+		$this->recursive = -1;
 		$cart = $this->find('first', array('conditions'=>
 						   array('Cart.user_id'=>$user_id,
 							 'Cart.past_checkout_point'=>false),
@@ -504,27 +504,41 @@ class Cart extends AppModel {
 		// we go get the unprocessed cart of this customer
 		$cart = $this->getLiveCartByCustomerId($user_id, true);
 		
+		
+		
 		$arrayOfProducts = array();
 		
 		// we go retrieve all the product details to insert into the cart
-		foreach($productsAndQuantities as $product_id => $quantity) {
-			$product = $this->CartItem->Product->read(array('Product.id',
-								'Product.price',
-								'Product.currency',
-								'Product.shipping_required',
-								'Product.weight',
-								
-								'Product.title'), $product_id);
+		foreach($productsAndQuantities as $variant_id => $quantity) {
 			
-			$product['Product']['quantity'] = $quantity;
+			$variantModel = $this->CartItem->Variant;
+			$variantModel->recursive = -1;
+			$variantModel->Behaviors->attach('Linkable.Linkable');
+			
+			$productVariant = $this->CartItem->Variant->find('first',
+						array('conditions'	=>array('Variant.id' => $variant_id),
+						      'fields'		=>array('Variant.id',
+										'Variant.price',
+										'Variant.currency',
+										'Variant.shipping_required',
+										'Variant.weight',
+										'Variant.product_id',
+										'Variant.title'),
+						      'link'		=> array('Product'   => array('fields'=>array('Product.id', 'Product.title')))
+						));
+			
+			
+			$productVariant['Variant']['quantity'] = $quantity;
 			
 			// we need to add in quantity so this is an illegal field in Product model
-			$arrayOfProducts[] = $product;
+			$arrayOfProducts[] = $productVariant;
 		}
+		
 		
 		$newItems = array('CartItem'=>array());
 		// if its a brand new cart
 		if (!$cart) {
+			
 			// make new cart
 			$data = array('Cart' => array('user_id' => $user_id,
 						      'shop_id' => $shop_id),
@@ -532,14 +546,15 @@ class Cart extends AppModel {
 					));
 			
 			foreach($arrayOfProducts as $product) {
-				$data['CartItem'][] = array('product_id'=>$product['Product']['id'],
-					'product_quantity'=>$product['Product']['quantity'],
-					'product_price'=>$product['Product']['price'],
+				$data['CartItem'][] = array('product_id'=>$product['Variant']['product_id'],
+					'variant_id' => $product['Variant']['id'],
+					'product_quantity'=>$product['Variant']['quantity'],
+					'product_price'=>$product['Variant']['price'],
 					'product_title'=>$product['Product']['title'],
-					'currency'=>$product['Product']['currency'],
-					'product_weight'=>$product['Product']['weight'],
-					
-					'shipping_required'=>$product['Product']['shipping_required'],
+					'variant_title'=>$product['Variant']['title'],
+					'currency'=>$product['Variant']['currency'],
+					'product_weight'=>$product['Variant']['weight'],
+					'shipping_required'=>$product['Variant']['shipping_required'],
 					);	
 			}
 			
@@ -557,10 +572,10 @@ class Cart extends AppModel {
 			
 			// look for existing item in cart
 			foreach($arrayOfProducts as $product) {
-				$product_id = $product['Product']['id'];
-				$quantity = $product['Product']['quantity'];
+				$product_id = $product['Variant']['id'];
+				$quantity = $product['Variant']['quantity'];
 				
-				$extractStmt = '/CartItem[product_id=' . $product_id . ']';
+				$extractStmt = '/CartItem[variant_id=' . $product_id . ']';
 				$possibleMatches = Set::extract($extractStmt, $cart);
 				
 				$itemExistsInCart = (!empty($possibleMatches));
@@ -571,20 +586,23 @@ class Cart extends AppModel {
 					$cart_item_id = $possibleItem['CartItem']['id'];
 					// we change the quantity, price, currency and title
 					$cart['CartItem'][$cart_item_id]['product_quantity'] += $quantity;
-					$cart['CartItem'][$cart_item_id]['product_price'] = $product['Product']['price'];
+					$cart['CartItem'][$cart_item_id]['product_price'] = $product['Variant']['price'];
 					$cart['CartItem'][$cart_item_id]['product_title'] = $product['Product']['title'];
-					$cart['CartItem'][$cart_item_id]['currency'] = $product['Product']['currency'];
+					$cart['CartItem'][$cart_item_id]['variant_title'] = $product['Variant']['title'];
+					$cart['CartItem'][$cart_item_id]['currency'] = $product['Variant']['currency'];
 				
 				} else {
+					
 					// we just add product into cart as item
-					$newItems['CartItem'][] = array('product_id'=>$product_id,
+					$newItems['CartItem'][] = array('variant_id'=>$product_id,
 							      'product_quantity'=>$quantity,
-							      'product_price'=>$product['Product']['price'],
+							      'product_price'=>$product['Variant']['price'],
 							      'product_title'=>$product['Product']['title'],
-							      'currency'=>$product['Product']['currency'],
-							      'product_weight'=>$product['Product']['weight'],
+							      'variant_title'=>$product['Variant']['title'],
+							      'currency'=>$product['Variant']['currency'],
+							      'product_weight'=>$product['Variant']['weight'],
 							      
-							      'shipping_required'=>$product['Product']['shipping_required'],
+							      'shipping_required'=>$product['Variant']['shipping_required'],
 							      // cart_id ensures put item in right cart
 							      'cart_id' => $cart['Cart']['id'] 
 							);
@@ -638,7 +656,7 @@ class Cart extends AppModel {
 		$products_key = Set::combine($items, '{n}.CartItem.id', '{n}.CartItem.product_id');
 		
 		// get live product data based on item list 
-		$products = $this->CartItem->Product->find('all',
+		$products = $this->CartItem->Variant->Product->find('all',
 			    array('conditions' => array(
 							'Product.id' => array_values($products_key)
 						    ),
