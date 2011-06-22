@@ -96,18 +96,13 @@
 
         Router::connect('/admin/profile/edit', array('admin' => true,'controller' => 'merchants', 'action' => 'edit'));
         
-        // cart links
-        Router::connect('/cart/edit',
-                        array('controller' => 'products',
-                              'action' => 'edit_quantities_in_cart')
-                        );
-        
+        // cart links        
         Router::connect('/cart/checkout',
                         array('controller' => 'products',
                               'action' => 'checkout')
                         );
         
-        Router::connect('/cart/view',
+        Router::connect('/cart',
                         array('controller' => 'products',
                               'action' => 'view_cart')
                         );

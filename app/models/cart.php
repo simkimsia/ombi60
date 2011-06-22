@@ -11,6 +11,11 @@ class Cart extends AppModel {
 			       );
 
 	var $belongsTo = array(
+		// the reason why we assign Cart to User instead of Customer
+		// is because we allow CasualSurfer to also use Cart
+		// Customer are defined as people who have checked out at least once.
+		// hence Customer hasMany Order
+		// but User hasMany Cart
 		'User' => array(
 			'className' => 'User',
 			'foreignKey' => 'user_id',
@@ -322,12 +327,42 @@ class Cart extends AppModel {
 		// hashcode created for newly created cart
 		if ($created) {
 			$this->makeHash($this->data);
+			
+			
 		}
 		
-		
 		$this->sqlUpdatePriceWeightCurrencyShippingStats($this->id);
-           
-
+		$this->updateLiveCartOnUser();
+		
+	}
+	
+	function updateLiveCartOnUser() {
+		// update the users table on the latest live cart id
+		$userID 	= User::get('User.id');
+		$latestCartID 	= $this->getLiveCartIDByUserID(User::get('User.id'));
+		$currentCartID 	= User::get('User.live_cart_id');
+		if ($latestCartID != $currentCartID) {
+			$this->User->id = $userID;
+			$result = $this->User->saveField('live_cart_id', $latestCartID);
+			if ($result) User::store($this->User->read(null, $userID ));
+		}
+	}
+	
+	function afterDelete() {
+		$this->updateLiveCartOnUser();
+	}
+	
+	function getLiveCartIDByUserID($userID) {
+		$this->recursive = -1;
+		$cart = $this->find('first', array('conditions'=>
+						   array('Cart.user_id'=>$userID,
+							 'Cart.past_checkout_point'=>false),
+						   'fields'	=> array('id')
+						   ));
+		if (!empty($cart['Cart']['id'])) {
+			return $cart['Cart']['id'];
+		}
+		return 0;
 	}
 	
 	function sqlUpdatePriceWeightCurrencyShippingStats($id = false) {
@@ -469,7 +504,8 @@ class Cart extends AppModel {
 		$cart = $this->find('first', array('conditions'=>
 						   array('Cart.user_id'=>$user_id,
 							 'Cart.past_checkout_point'=>false),
-						   'contain' => array('CartItem'),
+						   
+						   'contain' => array('CartItem'=>array('conditions'=>array('CartItem.product_quantity >'=>0))),
 						   
 						   ));
 		
@@ -480,7 +516,7 @@ class Cart extends AppModel {
 					
 	
 		if ($placeItemIdAsKeyInArray) {
-			$cartItems = Set::combine($cart, 'CartItem.{n}.id', 'CartItem.{n}');
+			$cartItems = Set::combine($cart, 'CartItem.{n}.variant_id', 'CartItem.{n}');
 			$cart['CartItem'] = $cartItems;
 		}
 		
@@ -800,6 +836,64 @@ class Cart extends AppModel {
 			
 		}
 		return $results;
+	}
+	
+	/**
+	 * we are assuming that this $postData is from $_POST
+	 * and that it contains updates as an array of new quantities
+	 *
+	 * update the cart quantities by the frontpage Customers/CasualSurfers
+	 * because we want to reduce the amount of info that frontpage designs require
+	 * we need to retrieve the LiveCart everytime we do a POST or GET for the cart page
+	 * and we assume the order of the CartItem is always in terms of CartItem.id
+	 * 
+	 **/
+	function editQuantities($postData = array()) {
+		if (empty($postData)) return true;
+		// for verifying purposes
+		$userId = User::get('User.id');
+		
+		// retrieving the cart data again. necessary to avoid overloading the form on cart page
+		$cart 	= $this->getLiveCartByCustomerId($userId, true, false);
+		
+		// retrieving the new quantities in the cart page
+		$newQuantities = (!empty($postData['updates'])) ? $postData['updates'] : array();
+		
+		// we are assuming that the new quantities are meant for the items in the cart in the SAME ORDER
+		// if the no. of new quantities is larger than the stored items, we ignore the excess new quantities
+		// if the stored items is more than the no., we change what can be changed and carry on.
+		
+		// if there is actually stored cart items
+		if ($cart && !empty($cart['CartItem'])) {
+			// if we really do have new quantities to update with
+			if (!empty($newQuantities)) {
+				// do we REALLY need to update the cart?
+				$needToUpdate = false;
+				
+				foreach($cart['CartItem'] as $variant_id=>$item) {
+					
+					if (!empty($newQuantities)) {
+						
+						$newQty = array_shift($newQuantities);
+						if ($newQty != $item['product_quantity']) {
+							$cart['CartItem'][$variant_id]['product_quantity'] = $newQty;
+							$needToUpdate = true; // at least 1 change means YES we need to update
+						}
+						
+					}
+				}
+				
+				if ($needToUpdate) {
+					return $this->saveAll($cart);
+				}
+				// since no need to update might as well assume true
+				return true;
+				
+			}
+			
+		}
+		// since there is no Cart stored in database
+		return true;
 	}
 	
 	

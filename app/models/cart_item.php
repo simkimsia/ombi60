@@ -12,6 +12,7 @@ class CartItem extends AppModel {
 			'className' => 'Cart',
 			'foreignKey' => 'cart_id',
 			'counterCache' => true,
+			'counterScope' => array('CartItem.product_quantity >' => 0), // count only those with quantities > 0
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
