@@ -338,7 +338,7 @@ class ProductGroup extends AppModel {
 		
 		$viewByProductType 	= ($handle == 'types');
 		$viewByVendor 		= ($handle == 'vendors');
-		$vendorOrTypeIndicated 	= (isset($params['named']['q']));
+		$vendorOrTypeIndicated 	= (isset($params['q']));
 		
 		// we have 2 situations
 		// situation 1 is for automatic collections like a particular vendor or type
@@ -396,8 +396,8 @@ class ProductGroup extends AppModel {
 	 * */
 	private function getAutomaticCollectionByUrl($handle, $params) {
 		
-		if (isset($params['named']['q'])) {
-			$nameInParams = $params['named']['q'];			
+		if (isset($params['q'])) {
+			$nameInParams = $params['q'];			
 		} else {
 			return false;	
 		}

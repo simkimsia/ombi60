@@ -4,7 +4,7 @@
 		<div id="checkouttop">
 			<div id="cartupdate">
 				
-				{% set count = items|length %}
+				{% set count = cart.items|length %}
 					
 				{% if (count == 0) %}
                                         You have not selected any products. You should view our products <a href="/products">here</a>.
@@ -28,7 +28,7 @@
 			{% set i = 0 %}
                         {% set paymentAmount = 0 %}
 				
-			{% for item in items %}
+			{% for item in cart.items %}
 				{% set class = none %}
                                 {% set i = i + 1 %}
 				{% if (i is even) %}
@@ -64,7 +64,8 @@
 				</td>
 				<td class="cartprice">{{ item.price }}</td>
 				<td class="cartremove">
-					{{ html.link('R', ['controller':'products','action':'delete_from_cart','id':item.id,'cart_id':item.cart_id]) }}
+					<a href="/cart/change/{{item.variants.id}}?quantity=0" >R</a>
+					
 					<a href="#"><span class="removeitem">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a></td>
 			</tr>
 			

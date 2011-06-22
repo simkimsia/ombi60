@@ -56,7 +56,15 @@ class AppController extends Controller {
     
     var $view = 'TwigView.TwigTheme';
     
+    var $params4GETAndNamed = array();
+    
     function beforeFilter() {
+	
+	/**
+	 * merge the named params and the get params into a single array
+	 * with the GET params taking precedence
+	 **/
+	$this->params4GETAndNamed = array_merge($this->params['named'], $this->params['url']);
 
         /**
          *Configure AuthComponent

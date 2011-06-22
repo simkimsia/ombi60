@@ -24,6 +24,14 @@ class CartItem extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		
+		'Product' => array(
+			'className' => 'Product',
+			'foreignKey' => 'product_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 	
@@ -201,18 +209,19 @@ class CartItem extends AppModel {
 		$results = array();
 		
 		foreach($items as $key=>$item) {
+			$item = (isset($item['CartItem'])) ? $item['CartItem'] : $item;
+			$result = array('id' => $item['variant_id'],
+					'title' => $item['product_title'],
+					'price' => $item['product_price'],
+					'line_price' => $item['line_price'],
+					'quantity' => $item['product_quantity'],
+					'requires_shipping' => $item['shipping_required'],
+					'weight' => $item['product_weight'],
+					);
 			
-			$result = array('id' => $item['CartItem']['id'],
-					   'title' => $item['CartItem']['product_title'],
-					   'price' => $item['CartItem']['product_price'],
-					   'line_price' => $item['CartItem']['line_price'],
-					   'quantity' => $item['CartItem']['product_quantity'],
-					   'requires_shipping' => $item['CartItem']['shipping_required'],
-					   'weight' => $item['CartItem']['product_weight'],
-					   );
 			
-			
-			$result['product'] = isset($item['Product']) ? Product::getTemplateVariable($item['Product']) : array();
+			$result['product'] = !empty($item['Product']) ? Product::getTemplateVariable($item['Product'], false) : array();
+			$result['variant'] = !empty($item['Variant']) ? Variant::getTemplateVariable($item['Variant'], false) : array();
 			
 			$results[] = $result;
 		}

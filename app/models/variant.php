@@ -101,7 +101,7 @@ class Variant extends AppModel {
 					'sku' 			=> $variant['sku_code'],
 					'price'			=> $variant['price'],
 					'weight'		=> $variant['weight'],
-					'shipping_required' 	=> $variant['shipping_required'],
+					'requires_shipping' 	=> $variant['shipping_required'],
 					'compare_with_price' 	=> $variant['compare_with_price'],
 					);
 			

@@ -5,7 +5,7 @@ App::import('Core', 'HttpSocket');
 class ProductsController extends AppController {
 
 	var $name = 'Products';
-
+	
 	var $helpers = array('Javascript', 'Ajax',
 			     'TinyMce.TinyMce', 'Text');
 	
@@ -45,8 +45,17 @@ class ProductsController extends AppController {
 				);
 	
 	var $view = 'TwigView.TwigTheme';
+	
+	var $cartModel = '';
+	var $cartItemModel = '';
 
 	function beforeFilter() {
+		/**
+		 * initialize the cartModel and cartItemModel
+		 * **/
+		$this->cartModel 	= $this->Product->Shop->Cart;
+		$this->cartItemModel 	= $this->cartModel->CartItem;
+		
 		// for uploadify to work, we must ensure that debug set to zero in admin_add and admin_edit
 		
 
@@ -80,7 +89,7 @@ class ProductsController extends AppController {
 		
 		$this->Auth->allow('view', 'index',
 				   'add_to_cart', 'view_cart',
-				   'delete_from_cart',
+				   'delete_from_cart', 'change_qty_for_1_item_in_cart',
 				   'checkout', 'view_by_group');
 
 		
@@ -121,7 +130,7 @@ class ProductsController extends AppController {
 		
 		$userId = User::get('User.id');
 		
-		$cart = $this->Product->Variant->CartItem->Cart->getLiveCartByCustomerId($userId, true);
+		$cart = $this->cartModel->getLiveCartByCustomerId($userId, true);
 		$postFields = array();
 		
 		if ($this->RequestHandler->isPost()) {
@@ -258,10 +267,32 @@ class ProductsController extends AppController {
 		
 	}
 	
+	function change_qty_for_1_item_in_cart($variant_id = 0) {
+		
+		$paramExist = !empty($this->params4GETAndNamed['quantity']);
+		
+		if (!$paramExist) return false;
+		
+		$variantIsPositive 	= is_numeric($variant_id) && ($variant_id > 0);
+		
+		$quantity 		= $this->params4GETAndNamed['quantity'];
+		$qtyIsNonNegative 	= is_numeric($quantity) && ($quantity >= 0);
+		
+		$continue = $variantIsPositive && $qtyIsNonNegative;
+			
+		if ($continue) {
+			return $this->cartModel->changeQuantityFor1Item($variant_id, $quantity);
+		}
+		
+		return $continue;
+	}
+	
 	function view_cart() {
 		
 		// need to check for POST and the Update button
-		if (isset($_POST)) {
+		// update button is named as update (singular)
+		// the update_x is to work with input type="image"
+		if (isset($_POST['update']) || isset($_POST['update_x'])) {
 			$this->Cart->editQuantities($_POST);
 			$this->redirect('/cart');
 		}
@@ -273,7 +304,9 @@ class ProductsController extends AppController {
 		$paypalExpressOn = $this->Product->Shop->getPaypalExpressOn($shop_id);
 		
 		// retrieve live cart of customer
-		$productsInCart = $this->Product->Variant->CartItem->Cart->getLiveCartByCustomerId(User::get('User.id'), true, true);
+		$productsInCart = $this->cartModel->getLiveCartByCustomerId(User::get('User.id'), true, true);
+		
+		
 		
 		$paymentAmount = 0.00;
 			
@@ -331,9 +364,9 @@ class ProductsController extends AppController {
 		
 		
 		// reassign the products into items
-		$items = $this->Product->Variant->CartItem->prepareCartItemInView($products);
+		$cart = Cart::getTemplateVariable($productsInCart);
 		
-		$this->set(compact('items', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
+		$this->set(compact('cart', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
 		
 		$sessionString = '';
 		$mainUrl = Shop::get('Shop.primary_domain');
@@ -510,7 +543,7 @@ class ProductsController extends AppController {
 		}
 		
 		// this will retrieve the collection details as well as the conditions needed for pagination of Product
-		$collection = $this->Product->ProductsInGroup->ProductGroup->getByUrl($handle, $this->params);
+		$collection = $this->Product->ProductsInGroup->ProductGroup->getByUrl($handle, $this->params4GETAndNamed);
 		
 		if ($collection == false) {
 			$this->Session->setFlash(__('No such product group for this shop', true), 'default', array('class'=>'flash_failure'));
@@ -889,7 +922,7 @@ class ProductsController extends AppController {
 	}
 	
 	private function addToCart($id = null, $quantity = 1) {
-		$cartModel = $this->Product->Variant->CartItem->Cart;
+		$cartModel = $this->cartModel;
 		return $cartModel->addProductForCustomer(User::get('User.id'), array($id=>$quantity));
 		
 	}
@@ -916,7 +949,7 @@ class ProductsController extends AppController {
 		
 		$userId = User::get('User.id');
 		
-		$validCartItems = $this->Product->Variant->CartItem->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
+		$validCartItems = $this->cartItemModel->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
 											 'Cart.user_id'=>$userId,
 											 'Cart.id'=>$cartId),
 						  'fields'=>array('CartItem.id')
@@ -926,9 +959,9 @@ class ProductsController extends AppController {
 		$cartItemIdArray = Set::extract('{n}.CartItem.id', $validCartItems);
 		
 		if (in_array($id, $cartItemIdArray)) {
-			$result = $this->Product->Variant->CartItem->delete($id);
+			$result = $this->cartItemModel->delete($id);
 			if (count($cartItemIdArray) == 1 && $result) {
-				return $this->Product->Variant->CartItem->Cart->delete($cartId);
+				return $this->cartModel->delete($cartId);
 			}
 		}
 		
@@ -952,43 +985,37 @@ class ProductsController extends AppController {
 		return false;
 	} 
   
-  function beforeRender() {
-   // print_r($this->view);
-    
-  }
-
-  /**
-   * This action is used to search product from database
-   *
-   */
-  public function admin_search() {
-      $products = "";
-      $product_group_id = "";
-
-      if (!empty($this->data)) {
-        if (isset($this->data['Product']['title'])) {
-          $title = addslashes(trim($this->data['Product']['title']));
-          $product_group_id = (int)$this->data['Product']['product_group_id'];
-          $conditions = array(
-                         'Product.title LIKE "%'.$title.'%"',
-                         'Product.visible' => 1,
-                        );
-          
-          //$products = $this->ProductGroup->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup')));
-          $products = $this->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
-        }
-      }
-      $this->autoRender = false;
-      $this->layout = '';
-      $this->ext = '.ctp';
-      $this->set(compact('products', 'product_group_id'));
-      
-      //$data['html'] = $this->render('admin_product_search', 'ajax',ELEMENTS.'/admin_product_search.ctp');
-      //$this->sendJson($data);
-      $this->render('admin_product_search', 'ajax',ELEMENTS.'/admin_product_search.ctp');
-     // $this->render('elements/admin_product_search');
-      //$this->element('admin_product_search');
-  }//end admin_search()
+  
+	/**
+	 * This action is used to search product from database
+	 *
+	 */
+	public function admin_search() {
+		$products = "";
+		$product_group_id = "";
+	  
+		if (!empty($this->data)) {
+			if (isset($this->data['Product']['title'])) {
+				$title = addslashes(trim($this->data['Product']['title']));
+				$product_group_id = (int)$this->data['Product']['product_group_id'];
+				$conditions = array(
+					       'Product.title LIKE "%'.$title.'%"',
+					       'Product.visible' => 1,
+					      );
+				
+				
+				$products = $this->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
+			}
+		}
+		$this->autoRender = false;
+		$this->layout = '';
+		$this->ext = '.ctp';
+		$this->set(compact('products', 'product_group_id'));
+		
+		
+		$this->render('admin_product_search', 'ajax',ELEMENTS.'/admin_product_search.ctp');
+	       
+	}//end admin_search()
   
     
 }

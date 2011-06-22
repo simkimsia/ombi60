@@ -172,3 +172,10 @@ Set::remove
 ==========
 
 it only works for removing first level element
+
+afterFind
+=========
+
+need to be careful about assuming the data format in
+afterFind operations. the parameter $primary is important
+in determining the likely data format

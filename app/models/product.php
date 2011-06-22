@@ -185,13 +185,44 @@ class Product extends AppModel {
 	function afterFind($results, $primary) {
 		
                 $unit = Shop::get('ShopSetting.unit_system');
-		
-		foreach ($results as $key => $val) {
-			if (isset($val['Product'])) {
-				$results[$key] = $this->convertForDisplay($val, $unit);
+		if ($primary) {
+			foreach ($results as $key => $val) {
+				
+				if (isset($val['Product'])) {
+					$results[$key] = $this->convertForDisplay($val, $unit, $primary);
+				}
+				/** this is for the Products In Custom Collection **/
+				if (isset($val['ProductsInGroup'])) {
+					// we assume Containable was used to retrieve the records
+					/**
+					 * [ProductsInGroup] => Array
+						(
+						    [0] => Array
+							(
+							    [id] => 1
+							    [product_id] => 4
+							    [product_group_id] => 2
+							)
+					
+						    [1] => Array
+							(
+							    [id] => 2
+							    [product_id] => 4
+							    [product_group_id] => 3
+							)
+					
+						) */
+					$groups = Set::extract('ProductsInGroup.{n}.product_group_id', $val);
+					$results[$key]['Product']['selected_collections'] = $groups;
+				}
 			}
-			/** this is for the Products In Custom Collection **/
-			if (isset($val['ProductsInGroup'])) {
+			return $results;
+		} else {
+			
+			// in this case, we do not get back a {n}.{ModelName}.{field} format for results
+			// we got back an array of {field} directly
+			$results = $this->convertForDisplay($results, $unit, $primary);
+			if (isset($results['ProductsInGroup'])) {
 				// we assume Containable was used to retrieve the records
 				/**
 				 * [ProductsInGroup] => Array
@@ -211,13 +242,12 @@ class Product extends AppModel {
 						)
 				
 					) */
-				$groups = Set::extract('ProductsInGroup.{n}.product_group_id', $val);
-				$results[$key]['Product']['selected_collections'] = $groups;
+				$groups = Set::extract('ProductsInGroup.{n}.product_group_id', $results);
+				$results['selected_collections'] = $groups;
 			}
 		}
 		
 		
-		return $results;
 	}
 	
 	/**
@@ -529,25 +559,35 @@ class Product extends AppModel {
 		
 		foreach($products as $key=>$product) {
 			
-			$images = Set::extract('ProductImage.{n}.filename', $product);
-			$variants = Set::extract('Variant.{n}', $product);
+			if (isset($product['ProductImage'])) {
+				$images = Set::extract('ProductImage.{n}.filename', $product);	
+			} else {
+				$images = array();
+			}
 			
-			$result = array('id' => $product['Product']['id'],
-					'title' => $product['Product']['title'],
-					'code' => $product['Product']['code'],
-					'description' => $product['Product']['description'],
-					'price' => $product['Product']['price'],
-					'handle' => $product['Product']['handle'],
-					'underscore_handle' => str_replace('-', '_', $product['Product']['handle']),
-					'url' => $product['Product']['url'],
-					'weight' => $product['Product']['weight'],
+			$product = isset($product['Product']) ? $product['Product'] : $product;
+			$result = array('id' => $product['id'],
+					'title' => $product['title'],
+					'code' => $product['code'],
+					'description' => $product['description'],
+					'price' => $product['price'],
+					'handle' => $product['handle'],
+					'underscore_handle' => str_replace('-', '_', $product['handle']),
+					'url' => $product['url'],
+					'weight' => $product['weight'],
 					);
 			
 			
 			$result['images'] = $images;
 			$result['cover_image'] = isset($images[0]) ? $images[0] : '';
-			$result['vendor'] = isset($product['Vendor']['name']) ? $product['Vendor']['name'] : '';
-			$result['variants'] = Variant::getTemplateVariable($variants);
+			$result['vendor'] = isset($product['Vendor']['title']) ? $product['Vendor']['title'] : '';
+			
+			if (isset($product['Variant'])) {
+				$variants = Set::extract('Variant.{n}', $product);
+				$result['variants'] = Variant::getTemplateVariable($variants);
+			} else {
+				$result['variants'] = array();
+			}
 			
 			$result['collections'] = isset($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : array();
 			

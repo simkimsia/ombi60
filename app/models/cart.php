@@ -501,27 +501,107 @@ class Cart extends AppModel {
 		
 		$this->Behaviors->attach('Containable');
 		$this->recursive = -1;
+		
+		// to be used for the find statement
+		$containableArray = array('CartItem'=>array(
+						// we want only cart items with at least qty 1
+						'conditions'=>array(
+							'CartItem.product_quantity >'=>0),
+						
+						)
+					);
+		
+		// if we want to view the cart, we need to gather a lot of data
+		// from Product, ProductImage, Variant, etc
+		// due to some weird reason with containable, i need to append the Variant first
+		// and do the Product one cart item at a time separately.
+		if ($viewCart) {
+			$containVariantData = array(
+						
+					       'Variant' => array(
+						       'order'=>'Variant.order ASC',
+						       'VariantOption' => array(
+							       'fields' => array('id', 'value'),
+							       'order'  => 'VariantOption.order ASC',
+						       )
+					       ));
+			
+			$containableArray['CartItem'] = array_merge($containableArray['CartItem'], $containVariantData);
+		}
+		
 		$cart = $this->find('first', array('conditions'=>
 						   array('Cart.user_id'=>$user_id,
 							 'Cart.past_checkout_point'=>false),
 						   
-						   'contain' => array('CartItem'=>array('conditions'=>array('CartItem.product_quantity >'=>0))),
+						   'contain' => $containableArray,
 						   
 						   ));
+		
+		
+		if ($viewCart) {
+			$productIDs = Set::extract('CartItem.{n}.product_id', $cart);
+			$conditionsForProduct = array(
+					// Product Data	
+					'conditions' => array(
+						'Product.visible' =>true,
+						'Product.id'  	  =>$productIDs,
+					),
+					'contain' => array(
+						'ProductImage'=>array(
+						       'fields' => array('filename'),
+						       'order'=>array(
+								'ProductImage.cover DESC')
+						),
+						
+						'ProductsInGroup'=>array(
+						       'fields' => array(
+								'id',
+								'product_id'),
+						       
+						       'ProductGroup'=>array(
+							       'fields' => array(
+									'id', 
+									'title', 'handle',
+									'description', 'visible_product_count',
+									'url', 'vendor_count'),
+						       )
+					       )
+				       ),
+					'link' => array('Vendor'=>array('fields'=>array('id', 'title'))),
+				);
+			
+			/**
+			 * $products is in the form of {n}=>array(Product, ProductImage, ProductsInGroup=>array(ProductGroup))
+			 **/
+			$products = $this->Shop->Product->find('all', $conditionsForProduct);
+			
+			
+			// first we retrieve the previous index
+			$originalIndex = array_keys($cart['CartItem']);
+			// then we use product_key as the index in $cart['CartItem'] to facilitate the insertion
+			$cartItems = Set::combine($cart, 'CartItem.{n}.product_id', 'CartItem.{n}');
+			$cart['CartItem'] = $cartItems;
+			
+			// now we insert the Product data
+			foreach($products as $key=>$product) {
+				$cart = Set::insert($cart, 'CartItem.'.$product['Product']['id'].'.Product', $product['Product']);
+				$cart = Set::insert($cart, 'CartItem.'.$product['Product']['id'].'.ProductImage', $product['ProductImage']);
+				$cart = Set::insert($cart, 'CartItem.'.$product['Product']['id'].'.ProductsInGroup', $product['ProductsInGroup']);
+			}
+			
+			// now we put the original index back
+			$cartItems = array_values($cart['CartItem']);
+			$cart['CartItem'] = array_combine($originalIndex, $cartItems);
+		}
 		
 		$placeItemIdAsKeyInArray = isset($cart['CartItem']) AND
 					is_array($cart['CartItem']) AND
 					!empty($cart['CartItem']) AND
 					$cartItemIdAsKey;
-					
-	
+		
 		if ($placeItemIdAsKeyInArray) {
 			$cartItems = Set::combine($cart, 'CartItem.{n}.variant_id', 'CartItem.{n}');
 			$cart['CartItem'] = $cartItems;
-		}
-		
-		if ($viewCart) {
-			$cart = $this->retrieveImagesOfCartItems($cart);
 		}
 		
 		return $cart;
@@ -799,10 +879,12 @@ class Cart extends AppModel {
 	function getTemplateVariable($cart) {
 		
 		$result = array('item_count' => $cart['Cart']['cart_item_count'],
-				'requires_shipping' => $cart['Cart']['requires_shipping'],
+				//'requires_shipping' => $cart['Cart']['requires_shipping'],
 				'total_price' => $cart['Cart']['amount'],
 				'total_weight' => $cart['Cart']['total_weight'],
 				'shipped_weight' => $cart['Cart']['shipped_weight'],
+				//'note' => $cart['Cart']['note'],
+				//'attributes' => json_decode($cart['Cart']['attributes']),
 				);
 		
 		
@@ -840,7 +922,7 @@ class Cart extends AppModel {
 	
 	/**
 	 * we are assuming that this $postData is from $_POST
-	 * and that it contains updates as an array of new quantities
+	 * and that it contains updates (plural) as an array of new quantities
 	 *
 	 * update the cart quantities by the frontpage Customers/CasualSurfers
 	 * because we want to reduce the amount of info that frontpage designs require
@@ -893,6 +975,44 @@ class Cart extends AppModel {
 			
 		}
 		// since there is no Cart stored in database
+		return true;
+	}
+	
+	/**
+	 *
+	 * @param int $variant_id the id of the variant we want to change quantity
+	 * @param int $new_quantity the new quantity must be non-negative
+	 **/
+	function changeQuantityFor1Item($variant_id, $new_quantity) {
+		// for verifying purposes
+		$userId = User::get('User.id');
+		
+		// retrieving the cart data again. necessary to avoid overloading the form on cart page
+		$cart 	= $this->getLiveCartByCustomerId($userId, true, false);
+		
+		// if there is actually stored cart items
+		if ($cart && !empty($cart['CartItem'])) {
+			// if we really do have new quantities to update with
+			if (is_numeric($variant_id) && is_numeric($new_quantity) && ($new_quantity >= 0)) {
+				// do we REALLY need to update the cart?
+				$needToUpdate = false;
+				
+				if (!empty($cart['CartItem'][$variant_id])) {
+					if ($new_quantity != $cart['CartItem'][$variant_id]['product_quantity']) {
+						$cart['CartItem'][$variant_id]['product_quantity'] = $new_quantity;
+						$needToUpdate = true; // at least 1 change means YES we need to update
+					}
+				}
+				
+				if ($needToUpdate) {
+					return $this->saveAll($cart);
+				}
+				// since no need to update might as well assume true
+				return true;
+				
+			}
+		}
+		// if no cart might as well return true
 		return true;
 	}
 	
