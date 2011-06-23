@@ -181,40 +181,43 @@ class ProductImage extends AppModel {
 	}
 
   
-  function saveProductImage($product_id, $edit = false) {
-    if (!empty($_FILES)) {
-          $tmp = array();
-          
-          foreach ($_FILES['product_images'] as $key => $valueArray) {
-              $i=0;
-              foreach ($valueArray as $value) {
-                  //Only consider first 4 photos
-                  if ($i < 4) {
-                      $tmp[$i][$key] = $value;
-                      $i++;
-                  }
-              }
-          }           
-          $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
-          $i = 0;
-          foreach ($tmp as $tempFile) {
-              $name = $tempFile['name'];
-              $str = strtolower(substr(strrchr($tempFile['name'], '.'), 1));
-              
-              if (in_array($str, $allowedExtensions)) {
-                  $this->create();
-                  $data = array('ProductImage'=>array('filename'=>$tempFile,
-                                          'product_id' => $product_id,));
-
-                  $result = $this->uploadifySave($data);   
-
-                  if ($result != false && $i++ == 0 && !$edit) {
-                      $this->make_this_cover($this->id, $product_id);
-                  }    
-              }
-          }
-      }
-  }//end saveProductImage()
+	function saveProductImage($product_id, $edit = false) {
+		
+		if (!empty($_FILES)) {
+			
+			$tmp = array();
+			
+			foreach ($_FILES['product_images'] as $key => $valueArray) {
+				$i=0;
+				foreach ($valueArray as $value) {
+					//Only consider first 4 photos
+					if ($i < 4) {
+						$tmp[$i][$key] = $value;
+						$i++;
+					}
+				}
+			}           
+			$allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
+			$i = 0;
+			foreach ($tmp as $tempFile) {
+				$name = $tempFile['name'];
+				$str = strtolower(substr(strrchr($tempFile['name'], '.'), 1));
+				
+				if (in_array($str, $allowedExtensions)) {
+					$this->create();
+					$data = array('ProductImage'=>array('filename'=>$tempFile,
+								'product_id' => $product_id,));
+		      
+					$result = $this->uploadifySave($data);   
+		      
+					if ($result != false && $i++ == 0 && !$edit) {
+						$this->make_this_cover($this->id, $product_id);
+					}    
+				}
+			}
+			
+		  }
+	}//end saveProductImage()
 
 
 }

@@ -363,7 +363,7 @@ class ProductsController extends AppController {
 		$cart_id = $productsInCart['Cart']['id'];
 		
 		
-		// reassign the products into items
+		// reassign the pwroducts into items
 		$cart = Cart::getTemplateVariable($productsInCart);
 		
 		$this->set(compact('cart', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
@@ -577,77 +577,37 @@ class ProductsController extends AppController {
 
 
 	function admin_add() {
-
+		
 		$this->set('title_for_layout', 'Add Product');
 		
-		// for handling ajax request.
-		// usually because of the need to upload images using uploadify hence
-		// we need ajax to first create the Saved Theme in order to have a proper folder
-		// for uploadify to upload the pics to
-		if ($this->params['isAjax']) {
+		if ($this->RequestHandler->isPost()) {
+
 			
-			$this->layout = 'json';
-			$successJSON = false;
-			$contents = array();
 			
 			$this->Product->create();
 			if ($this->Product->createProductDetails($this->data)) {
-				$this->Session->setFlash(__('Product has been saved', true), 'default', array('class'=>'flash_success'));
-				$successJSON = true;
-				$contents = array('id' => $this->Product->id);
-				
-			} else {
-				$this->Session->setFlash(__('Product could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
-				$contents = array('reason' => $this->Product->validationErrors);
-				
-			}
-			$this->set(compact('contents', 'successJSON'));
-			$this->render('json/response');
 			
-		// this handles all the normal form submission
-		// When there is NO images, just a normal POST will create the Product
-		// When there ARE images, this will be activated at the very last step to redirect back to the index page
-		} else if ($this->RequestHandler->isPost()) {
-
-			$uploadifyUsed = ($this->data['Product']['alt_id'] > 0);
+				$id = $this->Product->getLastInsertId();
+		
+				$this->save_image($id); //This will save product images
 			
-					
-			if ($uploadifyUsed) {
-				// this is to trigger the afterSave to make first image as cover.
-				// regardless save is successful, it is already there.
-				$this->Product->id = $this->data['Product']['alt_id'];
-				$this->Product->save($this->data);
 				$this->Session->setFlash(__('Product has been saved', true), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Product->create();
-				if ($this->Product->createProductDetails($this->data)) {
-					$id = $this->Product->getLastInsertId();
 			
-					$this->save_image($id); //This will save product images
-
-					$this->Session->setFlash(__('Product has been saved', true), 'default', array('class'=>'flash_success'));
-					$this->redirect(array('action' => 'index'));
-				
-				} else {
-					$this->Session->setFlash(__('Product could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
-				}
+			} else {
+				$this->Session->setFlash(__('Product could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
 			}
+			
 			
 		}
 		
-		$uploadifySettings = array('browseButtonId' => 'fileInput',
-					   'script' => Router::url('/admin/products/upload', true),
-					   'onAllComplete' => true,
-					   'buttonText' => __('Choose File', true),
-					   );
 		
 		$errors = $this->Product->getAllValidationErrors();
 		
 		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>CUSTOM_COLLECTION,
 												'ProductGroup.shop_id'=>Shop::get('Shop.id'))));
 		
-		$this->set(compact('errors', 'uploadifySettings', 'collections'));
+		$this->set(compact('errors', 'collections'));
 		
 	}
 	
@@ -804,7 +764,7 @@ class ProductsController extends AppController {
 	 */
 	public function save_image($product_id, $edit = FALSE)
 	{
-      $this->Product->ProductImage->saveProductImage($product_id, $edit);
+		$this->Product->ProductImage->saveProductImage($product_id, $edit);
 	    
 	}//end save_image()
 	

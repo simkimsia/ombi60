@@ -6,11 +6,6 @@
 	
 	echo $this->Html->script('jquery/multiple_file/jquery.MultiFile.js');
 
-	// include uploadify specific js files
-	//echo $this->Html->script('/uploadify/js/jquery.uploadify.v2.1.0.min');
-	//echo $this->Html->script('/uploadify/js/swfobject');
-	
-	//echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
 	
 	
 ?>
@@ -43,7 +38,7 @@
 		$titleHint = __('Examples: 14" LCD Screen, Maroon Brand X T-shirt', true);
 		echo $this->Form->input('title', array('error' => false, 'label' => false, 'before' => $titleLabel . '<span class="hint">' . $titleHint . '</span>'));
 		echo $this->Form->input('description', array('label' => __('Describe your product', true)));
-		echo $this->Form->input('Product.alt_id', array('type'=>'hidden', 'id'=>'alt_id', 'value'=>0));
+		
 	?>
 
 	</fieldset>
@@ -104,65 +99,3 @@
 
 </div>
 
-<script type="text/javascript" language="javascript">
-	
-	var newAltId = 0;
-
-	function handlesUploadifyAllComplete(event, data) {
-		$('#alt_id').attr('value', newAltId);
-		
-		document.forms["ProductAdminAddForm"].submit();
-	}
-
-	
-	function ajaxCompleteFunction(response) {
-		
-		var json_object = $.parseJSON(response);
-		
-		if (json_object.success) {
-			
-			var contents = $.parseJSON(json_object.contents);
-			
-			var script = '<?php echo $uploadifySettings['script']; ?>';
-			$('#fileInput').uploadifySettings('script', script + '/' + contents.id + '<?php echo "?sess=".$this->Session->id();?>');
-			newAltId = contents.id;
-			
-			
-			
-			$('#fileInput').uploadifyUpload();
-			
-			
-		} else {
-			var contents = $.parseJSON(json_object.contents);
-			var errors = contents.reason;
-			
-			if (errors['title'].length > 0 ) {
-				
-				if ($('#title-error-msg').length == 0) {
-					$('#ProductTitle').before('<div id="title-error-msg" class="error-message">' + errors['title'] + '</div>');	
-				} else {
-					$('#title-error-msg').text(errors['title']);
-				}
-				
-				
-			} 
-			
-		}
-		
-	}
-	
-	
-	function ajaxConditionFunction() {
-		
-		queueSize = $('#fileInput').uploadifySettings('queueSize');
-		if (queueSize == 0) {
-			document.forms["ProductAdminAddForm"].submit();
-			return false;
-		} else {
-			return true;
-		}
-		
-	}
-
-
-</script>
