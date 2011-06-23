@@ -107,11 +107,9 @@ class ProductsController extends AppController {
 			$this->Security->validatePost = false;
 		}
 		
-		if ($this->action == 'admin_toggle') {
+		if ($this->action == 'admin_toggle' || $this->action == 'admin_edit' ) {
 			$this->Security->enabled = false;
 		}
-		
-
 	}
 	
 	function checkout() {
@@ -376,44 +374,23 @@ class ProductsController extends AppController {
 		}
 		$product_id = $id;
 		$this->Product->recursive = -1;
-    
-		$product = $this->Product->find('first', array('conditions'=>array('Product.id'=>$id),
-							       'contain'   =>array('Variant' => array(
-											    'order'=>'Variant.order ASC'
-										    ),
-										    'ProductImage'=>array(
-											    'fields' => array('id', 'filename',
-													      'cover', 'product_id'),
-											    'order'=>array('ProductImage.cover DESC'),
-										    ),
-										    'ProductsInGroup'=>array(
-											    'fields' => array('id', 'product_id'),
-											    'ProductGroup'=>array(
-													    'fields' => array('id', 
-														    'title', 
-														    'type'),
-											    )
-										    )
-									    ),
-							       'link' 	=> array('Vendor'=>array(
-											    'fields'=>array('title')),
-										     'ProductType'=>array(
-											    'fields'=>array('title')),
-										    )
-							    ));
-	
-
+		
+		// to retrieve the shop id based on the url
+		// see app_controller code and shop model code
 		$shopId = Shop::get('Shop.id');
+		
+		// get the product details
+                $product = $this->Product->getProductInfo($id, $shopId); //This action gets complete product information
+		$variantOptions = $this->__getVariantOption($product); //This is used to set variant option in systamatic manner
+                
     
-    
-		$this->set(compact('collections', 'product'));
-
+		$this->set(compact('collections', 'product', 'variantOptions'));
 		// for uploadify
 		// the images list related code
 		// to make paging easier to test, we set as 1 per page.
 		$this->paginate = array('conditions'=>array('ProductImage.product_id'=>$id),
-		      'order' => 'ProductImage.cover desc',
-		      'limit'=>'10');
+                                      'order' => 'ProductImage.cover desc',
+                                      'limit'=>'10');
 	
 		$productImages = $this->paginate('ProductImage');
 		
@@ -422,16 +399,12 @@ class ProductsController extends AppController {
 		$count = count($productImages);
 	    
 		$uploadifySettings = array('browseButtonId' => 'fileInput',
-			 'script' => Router::url("/admin/products/upload/".$product_id, true),
-			 'auto' => true,
-						       'buttonText' => __('Choose File', true),
-			 'onComplete' => true,);
+                                         'script' => Router::url("/admin/products/upload/".$product_id, true),
+                                         'auto' => true,
+                                                                       'buttonText' => __('Choose File', true),
+                                         'onComplete' => true,);
 		    
-		$this->set(compact('product_id',
-		       'productImages',
-		       'errors',
-		       'uploadifySettings',
-		       ''));
+		$this->set(compact('product_id', 'productImages', 'errors', 'uploadifySettings', ''));
 
 	}
 
@@ -693,23 +666,30 @@ class ProductsController extends AppController {
 			$this->Session->setFlash(__('Invalid Product', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
-
+                // to retrieve the shop id based on the url
+		// see app_controller code and shop model code
+		$shopId = Shop::get('Shop.id');
 		if (!empty($this->data)) {
-			
-			if ($this->Product->save($this->data)) {
-				
-				$this->save_image($id, TRUE); //This will save product images
-				$this->Session->setFlash(__('The Product has been saved', true), 'default', array('class'=>'flash_success'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The Product could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
-			}
+                if (!empty($this->data['VariantOption'])) {
+                        $this->__saveVariantOption();
+                }
+                if ($this->Product->saveAll($this->data, array('validate' => 'first'))) {
+                        
+                        $this->save_image($id, TRUE); //This will save product images
+                        $this->Session->setFlash(__('The Product has been saved', true), 'default', array('class'=>'flash_success'));
+                        $this->redirect(array('action' => 'index'));
+                } else {
+                        $this->Session->setFlash(__('The Product could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+                }
 		}
 
 		if (empty($this->data)) {
-			$this->data = $this->Product->find('first', array(
+                        // get the product details
+                        $this->data = $this->Product->getProductInfo($id, $shopId); //This action gets complete product information
+                        $variants = $this->__getVariantOption($this->data); //This is used to set variant option in systamatic manner
+                        /*$this->data = $this->Product->find('first', array(
 								'conditions'=> array('Product.id'=>$id),
-								'contain' => array('ProductsInGroup')));
+								'contain' => array('ProductsInGroup')));*/
 		}
 
 
@@ -739,11 +719,7 @@ class ProductsController extends AppController {
 		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>CUSTOM_COLLECTION,
 												'ProductGroup.shop_id'=>Shop::get('Shop.id'))));
 		
-		$this->set(compact('product_id',
-				   'productImages',
-				   'errors',
-				   'uploadifySettings',
-				   'collections'));
+		$this->set(compact('product_id', 'productImages', 'errors', 'uploadifySettings', 'collections', 'variants'));
 
 		if ($this->RequestHandler->isAjax() == false) {
 			// standard view to render
@@ -754,6 +730,32 @@ class ProductsController extends AppController {
 		}
 	
 	}
+
+
+        function __saveVariantOption()
+        {
+                $varientOpts = $this->data['VariantOption'];
+                unset($this->data['VariantOption']);
+                $variantId = 2; //By default the variant id will be 2
+                if (isset($varientOpts['variant_id'])) {
+                        $variantId = $varientOpts['variant_id']; //If variant id is set from form
+                }
+                //First delete all the already added variants
+                $this->Product->Variant->VariantOption->deleteAll(array('VariantOption.variant_id' => $variantId));
+                $data['VariantOption']['variant_id'] = $variantId;
+                foreach ($varientOpts as $option) {
+                        if ($option['fieldcustom'] != "") {
+                                $data['VariantOption']['field'] = $option['fieldcustom'];
+                        } else {
+                                $data['VariantOption']['field'] = $option['field'];
+                        }
+                        $data['VariantOption']['value'] = $option['value'];
+                        $this->Product->Variant->VariantOption->create();
+                        if (!$this->Product->Variant->VariantOption->save($data)) {
+                                return false;
+                        }
+                }
+        }//end __saveVariantOption()
 	
 	
 	/**
@@ -981,43 +983,68 @@ class ProductsController extends AppController {
 		return false;
 	} 
   
-  function beforeRender() {
-   // print_r($this->view);
-    
-  }
+        function beforeRender() {
+        // print_r($this->view);
 
-  /**
-   * This action is used to search product from database
-   *
-   */
-  public function admin_search() {
-      $products = "";
-      $product_group_id = "";
-
-      if (!empty($this->data)) {
-        if (isset($this->data['Product']['title'])) {
-          $title = addslashes(trim($this->data['Product']['title']));
-          $product_group_id = (int)$this->data['Product']['product_group_id'];
-          $conditions = array(
-                         'Product.title LIKE "%'.$title.'%"',
-                         'Product.visible' => 1,
-                        );
-          
-          //$products = $this->ProductGroup->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup')));
-          $products = $this->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
         }
-      }
-      $this->autoRender = false;
-      $this->layout = '';
-      $this->ext = '.ctp';
-      $this->set(compact('products', 'product_group_id'));
-      
-      //$data['html'] = $this->render('admin_product_search', 'ajax',ELEMENTS.'/admin_product_search.ctp');
-      //$this->sendJson($data);
-      $this->render('admin_product_search', 'ajax',ELEMENTS.'/admin_product_search.ctp');
-     // $this->render('elements/admin_product_search');
-      //$this->element('admin_product_search');
-  }//end admin_search()
+
+        /**
+        * This action is used to search product from database
+        *
+        */
+        public function admin_search() {
+                $products = "";
+                $product_group_id = "";
+
+                if (!empty($this->data)) {
+                        if (isset($this->data['Product']['title'])) {
+                          $title = addslashes(trim($this->data['Product']['title']));
+                          $product_group_id = (int)$this->data['Product']['product_group_id'];
+                          $conditions = array(
+                                         'Product.title LIKE "%'.$title.'%"',
+                                         'Product.visible' => 1,
+                                        );
+                          
+                          //$products = $this->ProductGroup->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup')));
+                          $products = $this->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
+                        }
+                }
+                $this->autoRender = false;
+                $this->layout = '';
+                $this->ext = '.ctp';
+                $this->set(compact('products', 'product_group_id'));
+
+                //$data['html'] = $this->render('admin_product_search', 'ajax',ELEMENTS.'/admin_product_search.ctp');
+                //$this->sendJson($data);
+                $this->render('admin_product_search', 'ajax',ELEMENTS.'/admin_product_search.ctp');
+                // $this->render('elements/admin_product_search');
+                //$this->element('admin_product_search');
+        }//end admin_search()
+  
+        
+        /**
+         * This action is used to manupulate variant option
+         * 
+         * @param Array $product Array of productInfo
+         * 
+         * @return array of options
+         * */
+        private function __getVariantOption($product) {
+                $variants = set::Extract('Variant.{n}.VariantOption', $product);
+                $voption = array();
+                
+                if (!empty($variants)) {                        
+                        foreach ($variants as $variantOptions) {
+                                if (!empty($variantOptions)) {
+                                        foreach ($variantOptions as $variantOption) {
+                                                $key = $variantOption['field'];
+                                                $voption[$variantOption['variant_id']][$key][] = $variantOption['value'];
+                                        }
+                                }
+                        }
+                }
+                return $voption;
+        }        
   
     
 }

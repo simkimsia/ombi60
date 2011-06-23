@@ -9,7 +9,7 @@
 	
 	
 ?>
-
+<?php echo $this->Html->script('variant_options', array('inline' => false));?>
 <div>
 <div class="text_center"><h2><?php __($this->Form->value('Product.title'));?></h2>
     <?php echo $this->Html->link(__('Duplicate', true), array('action' => 'duplicate', $this->Form->value('Product.id'))); ?>|
@@ -37,7 +37,7 @@
 			'remove_linebreaks' => false,
 			'extended_valid_elements' => 'textarea[cols|rows|disabled|name|readonly|class]'));
 	
-		echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=> User::get('Merchant.shop_id')));
+		echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=> Shop::get('Shop.id')));
 		echo $this->Form->error('Product.title');
 		$titleLabel = $this->Form->label('title');
 		echo $this->Form->input('title', array('error' => false, 'label' => false));
@@ -60,18 +60,25 @@
 	<fieldset class="left">
 	<legend><?php __('Properties'); ?></legend>
 	<?php
-			$codeLabel = $this->Form->label('code', __('SKU Code', true)) . __(' ', true);
-  		
-			echo $this->Form->input('code', array('label' => false));
-			$options=array('1'=> __('Published', true),'0'=> __('Hidden', true));
-  		$attributes=array('value' => '1', 'legend' => __('Visible in store', true));
-	  	echo $this->Form->radio('visible',$options, $attributes);
-		  echo $this->Form->input('shipping_required', array('type'=>'checkbox', 'checked'=>'checked', 'value'=>1, 'label'=>'Shipping Address required'));
-		  echo $this->Form->input('original_shipping_required', array('type'=>'hidden', 'checked'=>'checked', 'value'=>$this->data['Product']['shipping_required'], 'label'=>'Shipping Address required'));
-		  echo $this->Form->input('price', array('label' => __('Selling Price', true), 'div' => array('class' => 'input text left'), 'after' => __(' SGD', true), 'class' => 'noclear'));
-		  echo $this->Form->input('displayed_weight', array('div' => array('class' => 'input text right'), 'class' => 'noclear', 'after' => __(' ' . $unitForWeight, true)));
+                $codeLabel = $this->Form->label('code', __('SKU Code', true)) . __(' ', true);
+
+                echo $this->Form->input('code', array('label' => false));
+                $options=array('1'=> __('Published', true),'0'=> __('Hidden', true));
+                $attributes=array('value' => '1', 'legend' => __('Visible in store', true));
+                echo $this->Form->radio('visible',$options, $attributes);
+                echo $this->Form->input('shipping_required', array('type'=>'checkbox', 'checked'=>'checked', 'value'=>1, 'label'=>'Shipping Address required'));
+                echo $this->Form->input('original_shipping_required', array('type'=>'hidden', 'checked'=>'checked', 'value'=>$this->data['Product']['shipping_required'], 'label'=>'Shipping Address required'));
+                echo $this->Form->input('price', array('label' => __('Selling Price', true), 'div' => array('class' => 'input text left'), 'after' => __(' SGD', true), 'class' => 'noclear'));
+                echo $this->Form->input('displayed_weight', array('div' => array('class' => 'input text right'), 'class' => 'noclear', 'after' => __(' ' . $unitForWeight, true)));
+                  
+        ?>
+        <?php echo $this->element('variant_options');?>
+
+        <?php
 	?>
 	</fieldset>
+        
+        
 	<?php echo $this->element('product_images_add_form_uploadify'); ?>
 	<!--<fieldset class="right">
 	<legend><?php __('Product Images'); ?></legend>
@@ -103,7 +110,17 @@
   echo '</div>';
 	echo $this->Form->end();
 ?>
-
+<?php
+        $voptions = array(
+                        'title' => 'Title',
+                        'color' => 'Color',
+                        'style' => 'Style',
+                        'size' => 'Size',
+                        'material' => 'Material',
+                        'custom' => 'Custom',
+                        );
+        ?>
+<?php echo $this->element('add_variant_option', array('voptions' => $voptions));?>
 </div>
 
 

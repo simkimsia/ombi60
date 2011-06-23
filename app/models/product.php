@@ -882,6 +882,48 @@ class Product extends AppModel {
 		$this->updateCounterCacheForM2M('AllProductInGroup', 	 $smartCollectionIDs);
 		return $result;
 	}
+        
+        /**
+         * This action is used to get the product Information
+         * 
+         * @params integer $id     Product Id
+         * 
+         * @params integer $shopId Shop Id
+         * 
+         * @return array of product info
+         * */
+        public function getProductInfo($id, $shopId) {
+                $productFound = $this->find('first', array('conditions'=>array('Product.visible' => true,
+                                                                               'Product.id'=>$id,
+                                                                               'Product.shop_id'=>$shopId),
+                                                            'contain' => array('Variant' => array(
+                                                                                        'conditions' => array('Variant.product_id' => $id),
+                                                                                        'order'=>'Variant.id ASC',
+                                                                                        'VariantOption' => array(
+                                                                                                'fields' => array('id', 'value', 'field', 'variant_id'),
+                                                                                                'order'  => 'VariantOption.order ASC',
+                                                                                        )
+                                                                                ),
+                                                                               'ProductImage'=>array(
+                                                                                        'fields' => array('filename'),
+                                                                                        'order'=>array('ProductImage.cover DESC'),
+                                                                                ),
+                                                                                'ProductsInGroup'=>array(
+                                                                                        'fields' => array('id', 'product_id'),
+                                                                                        'ProductGroup'=>array(
+                                                                                                'fields' => array('id', 
+                                                                                                                  'title', 'handle',
+                                                                                                                  'description', 'visible_product_count',
+                                                                                                                  'url', 'vendor_count', 'type'),
+                                                                                                )
+                                                                                        )
+                                                                                ),
+                                                             'link' => array('Vendor' => array('fields' => 'title'),
+                                                                             'ProductType' => array('fields' => 'title'),
+                                                                        ),
+                                                                ));
+                return $productFound;
+        }//end getProductInfo()
 
 
 }//end class
