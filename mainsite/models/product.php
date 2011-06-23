@@ -500,7 +500,7 @@ class Product extends AppModel {
 							       'fields'=>array('ProductImage.id'),
 							       'limit'=>1));
 			
-			$this->ProductImage->make_this_cover($topImage[0]['ProductImage']['id'], $this->id);
+			$this->ProductImage->chooseAsCoverImage($topImage[0]['ProductImage']['id'], $this->id);
 		}
 		/** end of product images **/
 		

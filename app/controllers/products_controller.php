@@ -582,14 +582,12 @@ class ProductsController extends AppController {
 		
 		if ($this->RequestHandler->isPost()) {
 
-			
-			
 			$this->Product->create();
 			if ($this->Product->createProductDetails($this->data)) {
 			
 				$id = $this->Product->getLastInsertId();
 		
-				$this->save_image($id); //This will save product images
+				//$this->Product->ProductImage->saveFILESAsProductImages($product_id); //This will save product images
 			
 				$this->Session->setFlash(__('Product has been saved', true), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
@@ -697,7 +695,7 @@ class ProductsController extends AppController {
 			
 			if ($this->Product->save($this->data)) {
 				
-				$this->save_image($id, TRUE); //This will save product images
+				//$this->save_image($id, TRUE); //This will save product images
 				$this->Session->setFlash(__('The Product has been saved', true), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -764,7 +762,7 @@ class ProductsController extends AppController {
 	 */
 	public function save_image($product_id, $edit = FALSE)
 	{
-		$this->Product->ProductImage->saveProductImage($product_id, $edit);
+		$this->Product->ProductImage->saveFILESAsProductImages($product_id, !$edit);
 	    
 	}//end save_image()
 	

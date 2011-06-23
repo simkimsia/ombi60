@@ -485,8 +485,19 @@ class Product extends AppModel {
 	
 	function afterSave($created) {
 		
-		/** set up the product image **/
-		$conditions = array(
+		/**
+		 * for products admin_add and admin_edit
+		 * we need to save the images from $_FILES
+		 * for $created, we need to also mark the first file as cover image
+		 **/
+		$this->ProductImage->saveFILESAsProductImages($this->id, $created);
+		
+		/**
+		 * check if any images were marked as cover
+		 * if no cover image, we will randomly assign one
+		**/
+		if (!$created) {
+			$conditions = array(
 			      'conditions' => array('OR' =>
 							array (
 								array('ProductImage.cover'=>true),
@@ -496,16 +507,18 @@ class Product extends AppModel {
 			      'link'=>array('ProductImage'),
 			      'fields'=>array('Product.id', 'ProductImage.id'),
 			      );
-		$conditions['conditions']['AND'] = array('Product.id' => $this->id);
-		
-		$results = $this->find('all', $conditions);
-		if (empty($results)) {
-			$this->ProductImage->recursive = -1;
-			$topImage = $this->ProductImage->find('all', array('conditions'=>array('product_id'=>$this->id),
-							       'fields'=>array('ProductImage.id'),
-							       'limit'=>1));
+			$conditions['conditions']['AND'] = array('Product.id' => $this->id);
 			
-			$this->ProductImage->make_this_cover($topImage[0]['ProductImage']['id'], $this->id);
+			$imagesMarkedAsCover = $this->find('all', $conditions);
+			$noCoverImageForProduct = empty($imagesMarkedAsCover);
+			if ($noCoverImageForProduct) {
+				$this->ProductImage->recursive = -1;
+				$topImage = $this->ProductImage->find('all', array('conditions'=>array('product_id'=>$this->id),
+								       'fields'=>array('ProductImage.id'),
+								       'limit'=>1));
+				
+				$this->ProductImage->chooseAsCoverImage($topImage[0]['ProductImage']['id'], $this->id);
+			}	
 		}
 		/** end of product images **/
 		

@@ -170,7 +170,7 @@ class ProductImagesController extends AppController {
 			}
 		}
 		  
-		if ($this->ProductImage->make_this_cover($id, $product_id)) {
+		if ($this->ProductImage->chooseAsCoverImage($id, $product_id)) {
 			if ($this->params['isAjax']) {
 				// the images list related code
 				// to make paging easier to test, we set as 1 per page.
@@ -206,7 +206,7 @@ class ProductImagesController extends AppController {
 
 		$this->layout = false;
 		$makeCoverAjax = true;
-		$this->ProductImage->saveProductImage($product_id, $edit);
+		$this->ProductImage->saveFILESAsProductImages($product_id, $edit);
 
 		// the images list related code
 		// to make paging easier to test, we set as 1 per page.
