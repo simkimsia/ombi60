@@ -1017,9 +1017,12 @@ class Product extends AppModel {
 			
 			$isOptionsValid = !empty($voption);
 			if ($isOptionsValid) {
-				foreach($voption as $fieldName => $optionValues)
 				// implode the array of values into string delimited by comma
-				$voption[$fieldName] = implode(', ', $optionValues);
+				// for every single possible option field
+				foreach($voption as $fieldName => $optionValues) {
+				
+					$voption[$fieldName] = implode(', ', $optionValues);	
+				}
 			}
                 }
                 return $voption;
