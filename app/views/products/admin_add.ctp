@@ -80,20 +80,10 @@
 	</fieldset>
 	
 <?php
-	$options = array(
-
-		'url' => array('controller'=>'products',
-			       'action' => 'add',
-			       'admin' => true,
-			       ),
-		'condition' => "ajaxConditionFunction()",
-		'complete' => "ajaxCompleteFunction(request.responseText)", 'div' => false);
-   
-  echo '<div class="submit">';
-  echo $this->Form->submit(__('Create Product', true), array('div' => FALSE));
-	//echo $this->Ajax->submit(__('Create Product', true), $options);
-  echo ' or ' . $this->Html->link(__('Cancel', true), array('action' => 'index', 'admin' => true)); 
-  echo '</div>';
+	echo '<div class="submit">';
+	echo $this->Form->submit(__('Create Product', true), array('div' => FALSE));
+	echo ' or ' . $this->Html->link(__('Cancel', true), array('action' => 'index', 'admin' => true)); 
+	echo '</div>';
 	echo $this->Form->end();
 ?>
 

@@ -32,7 +32,7 @@ class ProductTestCase extends AppModelTestCase {
 		
 		
 
-		$this->Product->createProductDetails($data);
+		$this->Product->createDetails($data);
 		
 		$result = $this->Product->find('first', array(
 					'conditions' => array('Product.title' => 'ally',
@@ -77,7 +77,7 @@ class ProductTestCase extends AppModelTestCase {
 							   );
 		
 		
-		$this->Product->createProductDetails($data);
+		$this->Product->createDetails($data);
 		
 		$id = $this->Product->id;
 		
@@ -107,7 +107,7 @@ class ProductTestCase extends AppModelTestCase {
 							   );
 		
 		
-		$this->Product->createProductDetails($data);
+		$this->Product->createDetails($data);
 		
 		$id = $this->Product->id;
 		

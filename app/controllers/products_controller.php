@@ -423,10 +423,8 @@ class ProductsController extends AppController {
 		$shopId = Shop::get('Shop.id');
 		
 		// get the product details
-                $product = $this->Product->getProductInfo($id, $shopId); //This action gets complete product information
-		$variantOptions = $this->__getVariantOption($product); //This is used to set variant option in systamatic manner
-                
-    
+                $product = $this->Product->getDetails($id); //This action gets complete product information
+		
 		$this->set(compact('collections', 'product', 'variantOptions'));
 		// for uploadify
 		// the images list related code
@@ -560,7 +558,7 @@ class ProductsController extends AppController {
 		if ($this->RequestHandler->isPost()) {
 
 			$this->Product->create();
-			if ($this->Product->createProductDetails($this->data)) {
+			if ($this->Product->createDetails($this->data)) {
 			
 				$id = $this->Product->getLastInsertId();
 		
@@ -671,8 +669,8 @@ class ProductsController extends AppController {
 		if (!empty($this->data)) {
 
 			if (!empty($this->data['VariantOption'])) {
-            	$this->__saveVariantOption();
-            }
+				$this->__saveVariantOption();
+			}
 			if ($this->Product->save($this->data)) {
 				
 				//$this->save_image($id, TRUE); //This will save product images
@@ -685,49 +683,23 @@ class ProductsController extends AppController {
 
 		if (empty($this->data)) {
                         // get the product details
-                        $this->data = $this->Product->getProductInfo($id, $shopId); //This action gets complete product information
+                        $this->data = $this->Product->getDetails($id); //This action gets complete product information
                         $variants = $this->__getVariantOption($this->data); //This is used to set variant option in systamatic manner
-                        /*$this->data = $this->Product->find('first', array(
-								'conditions'=> array('Product.id'=>$id),
-								'contain' => array('ProductsInGroup')));*/
+                        
 		}
-
-
-		// the images list related code
-		// to make paging easier to test, we set as 1 per page.
-		$this->paginate = array('conditions'=>array('ProductImage.product_id'=>$id),
-					'order' => 'ProductImage.cover desc',
-					'limit'=>'10');
 
 		$product_id = $id;
 		
-		
-		$productImages = $this->paginate('ProductImage');
-		
 		$errors = array();
-		
-		$count = count($productImages);
-		
-		// for uploadify
-		$uploadifySettings = array('browseButtonId' => 'fileInput',
-					   'script' => Router::url("/admin/products/upload/".$product_id, true),
-					   'auto' => true,
-                                           'buttonText' => __('Choose File', true),
-					   'onComplete' => true,);
-		
 		
 		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>CUSTOM_COLLECTION,
 												'ProductGroup.shop_id'=>Shop::get('Shop.id'))));
 		
-		$this->set(compact('product_id', 'productImages', 'errors', 'uploadifySettings', 'collections', 'variants'));
+		$this->set(compact('product_id', 'errors', 'collections', 'variants'));
+		
+		$this->render('admin_edit');
 
-		if ($this->RequestHandler->isAjax() == false) {
-			// standard view to render
-			$this->render('admin_edit');
-		} else {
-			// must be Ajax request so we only fetch the form and nothing else.
-			$this->render('admin_edit_form_only');
-		}
+		
 	
 	}
 
@@ -991,6 +963,7 @@ class ProductsController extends AppController {
          * */
         private function __getVariantOption($product) {
                 $variants = set::Extract('Variant.{n}.VariantOption', $product);
+		
                 $voption = array();
                 
                 if (!empty($variants)) {                        

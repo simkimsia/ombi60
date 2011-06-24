@@ -47,17 +47,15 @@
             <div class="property-info"><?php echo (($product['Product']['weight']!="") ? $product['Product']['weight'] : '');?></div>
             <div class="clear"></div>
             <?php 
-                if (!empty($variantOptions)) {
-                        foreach ($variantOptions as $variantId => $options) {
-                                foreach ($options as $field => $values) {
+                if (!empty($product['Product']['options'])) {
+                        foreach ($product['Product']['options'] as $field => $optionValues) :
+	    ?>
+				<label><?php __($field, false);?></label>
+				<div class="property-info"><?php echo $optionValues;?></div>
+				<div class="clear"></div>                    
+            <?php
                                 
-                                        ?>
-                                        <label><?php __($field, false);?></label>
-                                        <div class="property-info"><?php echo implode(', ', $values);?></div>
-                                        <div class="clear"></div>                    
-                                        <?php
-                                }         
-                        }
+                        endforeach;
                 }
             ?>
             

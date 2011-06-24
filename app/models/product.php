@@ -289,8 +289,22 @@ class Product extends AppModel {
 		return FULL_BASE_URL;
 		
 	}
+	
+	/**
+	 * Prepares data for a newly created Product and the associated models.
+	 * The newly created Product will have 1 Variant and its list of VariantOption created as well.
+	 *
+	 * @param array $data The associative array with the following expected indices:
+	 * Product, ProductImage, Variant.
+	 * The Product index points to an array of Product data fields.
+	 * The ProductImage and Variant indices point to lists of ProductImage and Variant.
+	 * A list of VariantOption is expected in each element of the Variant list.
+	 *
+	 * @return boolean Returns true if the newly created Product and associated models are saved. False otherwise.
+	 * 
+	 **/
 
-	function createProductDetails($data = NULL) {
+	function createDetails($data = NULL) {
 		
 		$variantTitle = VARIANT_DEFAULT_TITLE;
 		$variantOptions = array();
@@ -327,7 +341,7 @@ class Product extends AppModel {
 		
 		return $result;
 
-	}
+	}//end createDetails()
 	
 	function duplicate($id = NULL, $parentIDs = array()) {
 		// this product model is copied but NOT recursively.
@@ -597,9 +611,23 @@ class Product extends AppModel {
 		return $results;
 	}
 	
-	function saveIntoCollections ($id, $customCollections = array()) {
+	/**
+	 *
+	 * Product of $id joins a list of ProductGroups/Collections whose ids are listed in $newCollections.
+	 * 
+	 * Any Collection or ProductGroup which this Product is linked with PRIOR to this function
+	 * will be delinked AFTER this function is called.
+	 * 
+	 * if Product of $id ProductGroups not listed in $newCollections are automatically 
+	 *
+	 * @param int $id id of Product 
+	 * @param array $newCollections List of ProductGroup ids which the said Product wants to join ONLY.
+	 *
+	 * Returns true if successful. False otherwise.
+	 **/
+	function saveIntoCollections ($id, $newCollections = array()) {
 		/**
-		if (empty($customCollections)) {
+		if (empty($newCollections)) {
 			return true;
 		}
 		**/
@@ -610,8 +638,6 @@ class Product extends AppModel {
 							'conditions'=> array('ProductsInGroup.product_id' => $id),
 							'fields'=> array('ProductsInGroup.product_group_id')
 							));
-		
-		
 		
 		/**
 		 * Array
@@ -649,13 +675,13 @@ class Product extends AppModel {
 		
 		
 		// do some array_diff to get new records
-		$newRecords = array_diff($customCollections, $existingGroups);
+		$newRecords = array_diff($newCollections, $existingGroups);
 		
 		// do some array_diff to get deleted records
-		$deletedRecords = array_diff($existingGroups, $customCollections);
+		$deletedRecords = array_diff($existingGroups, $newCollections);
 		
 		// combined union of the unique values
-		$unionRecords = array_unique(array_merge($customCollections, $existingGroups));
+		$unionRecords = array_unique(array_merge($newCollections, $existingGroups));
 		
 		// check if we need to insert new records
 		// AND/OR delete old records
@@ -893,15 +919,22 @@ class Product extends AppModel {
 	}
         
         /**
-         * This action is used to get the product Information
+         * This function does a DEEP $this->find('first') 
+         * supplying a Product that is visible with all the Product fields
+         * with a full list of Variant, ProductImage, ProductsInGroup, Vendor, ProductType.
          * 
-         * @params integer $id     Product Id
+         * Each Variant contains a list of VariantOption.
+         * Each ProductsInGroup contains the ProductGroup this Product belongs to.
+         * ProductImage only contains the filename and the cover image is the first in the list.
          * 
-         * @params integer $shopId Shop Id
+         * @params integer $id Product Id
          * 
-         * @return array of product info
+         * @return array of product info as explained above
          * */
-        public function getProductInfo($id, $shopId) {
+        public function getDetails($id) {
+		
+		$shopId = Shop::get('Shop.id');
+		
                 $productFound = $this->find('first', array('conditions'=>array('Product.visible' => true,
                                                                                'Product.id'=>$id,
                                                                                'Product.shop_id'=>$shopId),
@@ -931,8 +964,88 @@ class Product extends AppModel {
                                                                              'ProductType' => array('fields' => 'title'),
                                                                         ),
                                                                 ));
+		
+		// extract the unique VariantOptions for the Product
+		$productOptions = $this->extractProductOptions($productFound);
+		
+		// insert the options into the Product
+		$validProduct 		  = !empty($productFound) && !empty($productFound['Product']['id']);
+		$validProductOptions 	  = !empty($productOptions);
+		$insertOptionsIntoProduct = $validProduct AND $validProductOptions;
+		
+		if ($insertOptionsIntoProduct) {
+			$productFound['Product']['options'] = $productOptions;
+		}
+		
+
                 return $productFound;
-        }//end getProductInfo()
+        }//end getDetails()
+	
+	
+	/**
+	 * Extracts the list of VariantOption associated with a single Product
+	 *
+	 * @param array $productDetails The full details of this Product in array format.
+	 * $this->getDetails gives you such full details.
+	 *
+	 * @return array An array of option data. Maximum length is 3.
+	 * The indices are the option fields and the values are the possible option values in a string format delimited by comma.
+	 **/
+	public function extractProductOptions($productDetails = array()) {
+		$variants = Set::extract('Variant.{n}.VariantOption', $productDetails);
+		
+                $voption = array();
+                
+                if (!empty($variants)) {                        
+                        foreach ($variants as $variantOptions) {
+                                if (!empty($variantOptions)) {
+                                        foreach ($variantOptions as $variantOption) {
+                                                $fieldName = $variantOption['field'];
+						$optionValue = $variantOption['value'];
+						// if no such field, we create it
+						if (!isset($voption[$fieldName])) {
+							$voption[$fieldName] = array($optionValue);
+						} else {
+							// check if we have stored this value and store it if not existent
+							if (!in_array($optionValue, $voption[$fieldName])) {
+								$voption[$fieldName][] = $optionValue;
+							}
+						}
+                                        }
+                                }
+                        }
+			
+			$isOptionsValid = !empty($voption);
+			if ($isOptionsValid) {
+				foreach($voption as $fieldName => $optionValues)
+				// implode the array of values into string delimited by comma
+				$voption[$fieldName] = implode(', ', $optionValues);
+			}
+                }
+                return $voption;
+	}
+	
+	/**
+	 *may need to remove this function
+	 *this replicates the private function __getVariantOption in product_controller
+	 **/
+	public function extractVariantOption($productDetails = array()) {
+		$variants = Set::extract('Variant.{n}.VariantOption', $productDetails);
+		
+                $voption = array();
+                
+                if (!empty($variants)) {                        
+                        foreach ($variants as $variantOptions) {
+                                if (!empty($variantOptions)) {
+                                        foreach ($variantOptions as $variantOption) {
+                                                $key = $variantOption['field'];
+                                                $voption[$variantOption['variant_id']][$key][] = $variantOption['value'];
+                                        }
+                                }
+                        }
+                }
+                return $voption;
+	}
 
 
 }//end class
