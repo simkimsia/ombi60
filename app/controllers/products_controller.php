@@ -743,6 +743,8 @@ class ProductsController extends AppController {
                 //First delete all the already added variants
                 $this->Product->Variant->VariantOption->deleteAll(array('VariantOption.variant_id' => $variantId));
                 $data['VariantOption']['variant_id'] = $variantId;
+
+                unset($varientOpts['variant_id']);
                 foreach ($varientOpts as $option) {
                         if ($option['fieldcustom'] != "") {
                                 $data['VariantOption']['field'] = $option['fieldcustom'];
@@ -1038,13 +1040,32 @@ class ProductsController extends AppController {
                                 if (!empty($variantOptions)) {
                                         foreach ($variantOptions as $variantOption) {
                                                 $key = $variantOption['field'];
-                                                $voption[$variantOption['variant_id']][$key][] = $variantOption['value'];
+                                                $voption[$variantOption['variant_id']][$key."_".$variantOption['id']][] = $variantOption['value'];
                                         }
                                 }
                         }
                 }
                 return $voption;
-        }        
+        }
+  
+        
+        /**
+         * This action is used to manupulate variant option
+         * 
+         * @param Array $product Array of productInfo
+         * 
+         * @return array of options
+         * */
+        public function admin_remove_variant_option($id) {
+                if ($this->params['isAjax']) {
+                        $this->layout = "";
+                }
+                if ($this->Product->Variant->VariantOption->delete($id)) {
+                        $successJSON  = true;
+                        $this->set(compact('successJSON'));
+                        $this->render('../json/empty');
+                }
+        }  
   
     
 }

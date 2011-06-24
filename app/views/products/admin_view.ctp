@@ -49,8 +49,9 @@
             <?php 
                 if (!empty($variantOptions)) {
                         foreach ($variantOptions as $variantId => $options) {
-                                foreach ($options as $field => $values) {
-                                
+                                foreach ($options as $fieldId => $values) {
+                                        $fieldIdArr = explode("_", $fieldId);
+                                        $field = $fieldIdArr[0];
                                         ?>
                                         <label><?php __($field, false);?></label>
                                         <div class="property-info"><?php echo implode(', ', $values);?></div>
