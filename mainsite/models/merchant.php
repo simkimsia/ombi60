@@ -331,8 +331,8 @@ class Merchant extends AppModel {
 				      'action'	=> $shopBlog['Blog']['short_name'],
 				      'order'	=> '3'),
 				array('name'	=> 'Cart',
-				      'route'	=> '/cart/view',
-				      'model'	=> '/cart/view',
+				      'route'	=> '/cart',
+				      'model'	=> '/cart',
 				      'order'	=> '4')
 				));
 		

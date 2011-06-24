@@ -14,7 +14,7 @@
         echo '<td class="new-link link-route border_none">';
         $modelOptions = array(
                 '/blogs/'               =>'Blog',
-		'/cart/view'	        =>'Cart',
+		'/cart'	      	  	=>'Cart',
 		'/products/'	        =>'Catalogue',
                 '/products/view/'       =>'Product',
 		'/pages/'	        =>'Page',

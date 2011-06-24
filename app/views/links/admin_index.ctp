@@ -171,7 +171,7 @@
 			</td>
 			<?php
 				$modelOptions = array('/blogs/'			=>'Blog',
-						      '/cart/view'		=>'Cart',
+						      '/cart'		=>'Cart',
 						      '/collections/all'  	=>'Catalogue',
 						      '/products/' 		=>'Product',
 						      '/pages/'			=>'Page',
@@ -199,7 +199,7 @@
 					$options = convertBlogOptions($blogs);
 				} else if (($link['model'] === '/products/') ||
 					   ($link['model'] === '/') ||
-					   ($link['model'] === '/cart/view') ) {
+					   ($link['model'] === '/cart') ) {
 					$actionNeeded = false;
 					$options      = convertEmptyOptions();
 				} else if (strpos($link['model'], 'product') !== false) {

@@ -210,7 +210,7 @@ class LinksController extends AppController {
 			
 		} else if  (($model === '/products/') ||
 			    ($model === '/') ||
-			    ($model === '/cart/view') ) {
+			    ($model === '/cart') ) {
 			
 			$actions = array(
 				'options'	=> $this->convertEmptyOptions(),
