@@ -46,7 +46,7 @@
            $vendor = ClassRegistry::init('Vendor');
            if (!empty($product['Product']['vendor_id'])) {               
               $vendor->id =  $product['Product']['vendor_id'];  
-              $vendorName =  $vendor->field('name');
+              $vendorName =  $vendor->field('title');
               echo $vendorName . ',';
             }
           ?>

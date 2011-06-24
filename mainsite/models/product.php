@@ -572,7 +572,7 @@ class Product extends AppModel {
 			
 			$result['images'] = $images;
 			$result['cover_image'] = isset($images[0]) ? $images[0] : '';
-			$result['vendor'] = isset($product['Vendor']['name']) ? $product['Vendor']['name'] : '';
+			$result['vendor'] = isset($product['Vendor']['title']) ? $product['Vendor']['title'] : '';
 			$result['variants'] = Variant::getTemplateVariable($variants);
 			
 			$result['collections'] = isset($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : array();
