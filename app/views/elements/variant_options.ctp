@@ -28,10 +28,9 @@
                                                                         ));
                 }
                 ?></div><?php
-                if (count($variantOptions) < 3) {
-                        //echo $this->element('add_variant_option', array('voptions' => $voptions));
-                        echo $this->Html->link('Add more variant option', 'javascript: void(0);', array('id' => 'plus'));
-                }
+                
+                //echo $this->element('add_variant_option', array('voptions' => $voptions));
+                echo $this->Html->link('Add more variant option', 'javascript: void(0);', array('id' => 'plus', 'style' => ife((count($variantOptions) < 3), 'display: block', 'display: none;')));
         } else {
                 ?><div id="vOpts"><?php
                 //echo $this->element('add_variant_option', array('voptions' => $voptions));

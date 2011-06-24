@@ -47,6 +47,7 @@
             <div class="property-info"><?php echo (($product['Product']['weight']!="") ? $product['Product']['weight'] : '');?></div>
             <div class="clear"></div>
             <?php 
+
                 if (!empty($product['Product']['options'])) {
                         foreach ($product['Product']['options'] as $field => $optionValues) :
 	    ?>

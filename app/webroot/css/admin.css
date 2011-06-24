@@ -847,3 +847,26 @@ div.productnote {
   .property-info {
     padding: 5px;
   }
+
+#variants, #vOpts, .alreadAddedOptions{
+    margin: 0px;
+}
+.alreadAddedOptions {
+        width: 50%;
+        padding: 0px;
+        margin-bottom: 0px; 
+}
+.addMultiple table tr td {
+        padding: 0px;
+}
+.addMultiple table tr:nth-child(2n) td {
+    background: none repeat scroll 0 0 #F5F5F5;
+    padding: 0px;
+}
+.alreadAddedOptions table tr:nth-child(2n) td {
+    padding: 0px;
+}
+.addMultiple{
+        margin-bottom: 0px; 
+        display: none;
+}
