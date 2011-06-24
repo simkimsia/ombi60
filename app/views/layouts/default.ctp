@@ -81,7 +81,7 @@
 					$menuLink .= $this->Html->link($link['name'], $link['route']);
 					
 					// cater for the badge in cart
-					if (strpos($link['route'],'/cart/view') !== false) {
+					if (strpos($link['route'],'/cart') !== false) {
 						$menuLink .= '<div id="cartbadge">';
 						
 						// the cart items count

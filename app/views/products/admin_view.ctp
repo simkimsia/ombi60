@@ -46,6 +46,22 @@
             <label><?php __('Weight', false);?></label>
             <div class="property-info"><?php echo (($product['Product']['weight']!="") ? $product['Product']['weight'] : '');?></div>
             <div class="clear"></div>
+            <?php 
+                if (!empty($variantOptions)) {
+                        foreach ($variantOptions as $variantId => $options) {
+                                foreach ($options as $field => $values) {
+                                
+                                        ?>
+                                        <label><?php __($field, false);?></label>
+                                        <div class="property-info"><?php echo implode(', ', $values);?></div>
+                                        <div class="clear"></div>                    
+                                        <?php
+                                }         
+                        }
+                }
+            ?>
+            
+            
       </fieldset>
      </div>
      <div id="collection">
@@ -85,12 +101,12 @@
       <!--<form action="scripts/ajaxupload.php?filename=name&maxSize=9999999999&maxW=200&fullPath=http://www.atwebresults.com/php_ajax_image_upload/uploads/&relPath=../uploads/&colorR=255&colorG=255&colorB=255&maxH=300" method="post">-->
         <!--<input name="product_images" type="file" onchange = "ajaxUpload(this.form,'/products/save_image/'); return false;" />-->
         <?php
-          //if (count($product['ProductImage']) < 4) {
+          if (count($product['ProductImage']) < 4) {
               $max = 4 - count($product['ProductImage']);
           ?>
               <input type="file" maxlength="4" class="multi max-<?php echo $max;?>" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp" onchange= "ajaxUpload(this.form,'/admin/product_images/ajax_product_image_upload/'); return false;"/>
           <?php
-          //}
+          }
           ?>
         <?php 
           //echo $this->Form->input('ProductImage.0.filename', array('type' => 'file', 'class'=>'multi', 'onchange' => ));
