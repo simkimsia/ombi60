@@ -12,8 +12,8 @@
 					
 				{% elseif (count > 0) %}
 						
-					{{ form.create('Product', ['action':'edit_quantities_in_cart']) }}
-					{{ form.submit('Refresh Cart', ['name':'btnRefresh','id':'cartbutton']) }}
+					<form action="/cart" method="post">
+					<input type="submit" id="cartbutton" name="update" value="Refresh Cart" />
 						
 				
 			</div>
@@ -54,9 +54,9 @@
 				</td>
 				<td class="cartquantity">
 					
-					{{ form.text(['CartItem.',item.id,'.product_quantity']|join,['value':item.quantity,'maxlength':3,'class':'textbox'] ) }}
+					<input type="text" class="textbox" name="updates[]" maxlength="3" value="{{ item.quantity }}" />
 						
-					{{ form.input(['CartItem.',item.id,'.id']|join, ['value':item.id,'type':'hidden'] ) }}
+					
 						
 					<!-- calculate subtotal -->
 					{% set paymentAmount = paymentAmount + (item.price * item.quantity) %}
@@ -88,10 +88,10 @@
 		
 		<div id="checkout">
 			<div id="cartupdate">
-			{{ form.input('Cart.id', ['type':'hidden','value':cart.id]) }}
-					
-			{{ form.submit('Refresh Cart', ['name':'btnRefresh','id':'cartbutton']) }}
-			{{ form.end() }}
+			
+				<input type="submit" id="cartbutton" name="update" value="Refresh Cart" />
+			
+			</form>
 				
                         <!-- end if not empty cart -->	
 			{% endif %}

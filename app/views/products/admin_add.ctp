@@ -68,7 +68,7 @@
 	<legend><?php __('Product Images'); ?></legend>
 	<br />
 	<?php //echo $this->Form->input('ProductImage.product_images', array('class' => 'multi', 'type' => 'file', 'accept' => 'gif|jpg'));?>
-	<input type="file" class="multi max-4" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp"/>
+	<input type="file" class="multi max-4" maxlength="4" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp"/>
 	</fieldset>
 	
 	<fieldset class="right">

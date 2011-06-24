@@ -291,10 +291,14 @@ class ProductsController extends AppController {
 		
 		// need to check for POST and the Update button
 		// update button is named as update (singular)
-		// the update_x is to work with input type="image"
-		if (isset($_POST['update']) || isset($_POST['update_x'])) {
-			$this->Cart->editQuantities($_POST);
-			$this->redirect('/cart');
+		// the update_x is to work with input type="image" for the update button
+		$updateButtonUsed 	= isset($this->params['form']['update']);
+		$updateImageButtonUsed 	= isset($this->params['form']['update_x']);
+		$updateButtonTriggered	= $updateButtonUsed OR $updateImageButtonUsed;
+		
+		if ($updateButtonTriggered) {
+			$this->cartModel->editQuantities();
+			$this->redirect(array('action' => 'view_cart'));
 		}
 		
 		$products = array();

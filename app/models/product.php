@@ -291,25 +291,6 @@ class Product extends AppModel {
 	}
 
 	function createProductDetails($data = NULL) {
-
-		$image = $this->ProductImage;
-
-		if (!empty($data['ProductImage']) AND is_array($data['ProductImage'])) {
-			$firstValidImage = true;
-			foreach ($data['ProductImage'] as $key => $value) {
-				if (is_array($value) AND ($value[$image->defaultNameForImage]['error'] === UPLOAD_ERR_NO_FILE)) {
-					unset($data['ProductImage'][$key]);
-				} elseif ($firstValidImage) {
-					// we make the first image for this new product its default cover
-					$data['ProductImage'][$key]['cover'] = true;
-					$firstValidImage                     = false;
-				}
-			}
-
-			if (empty($data['ProductImage'])) {
-				unset($data['ProductImage']);
-			}
-		}
 		
 		$variantTitle = VARIANT_DEFAULT_TITLE;
 		$variantOptions = array();

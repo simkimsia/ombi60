@@ -53,7 +53,7 @@
 				<li {{class}} >{{ html.link(link.title, link.url) }}
 				
 				<!-- cater for the badge in cart -->
-				{% if ('/cart/view' in link.url)  %}
+				{% if ('/cart' in link.url)  %}
 					{% if (cartItemsCount > 0) %}
 					<div id="cartbadge">{{ cartItemsCount }}</div>
 					{% endif %}

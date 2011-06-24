@@ -472,7 +472,9 @@ class Cart extends AppModel {
 		
 		return $this->CartItem->find('count', array('conditions'=>
 						   array('Cart.user_id'=>$user_id,
-							 'Cart.past_checkout_point'=>false),
+							 'Cart.past_checkout_point'=>false,
+							 'CartItem.product_quantity >' => 0),
+							 
 						   'link' => array('Cart'),
 						   
 						   ));
@@ -537,7 +539,9 @@ class Cart extends AppModel {
 						   
 						   ));
 		
-		
+		$emptyCart = empty($cart['CartItem']);
+		return $cart;
+	
 		if ($viewCart) {
 			$productIDs = Set::extract('CartItem.{n}.product_id', $cart);
 			$conditionsForProduct = array(
@@ -578,6 +582,7 @@ class Cart extends AppModel {
 			
 			// first we retrieve the previous index
 			$originalIndex = array_keys($cart['CartItem']);
+			
 			// then we use product_key as the index in $cart['CartItem'] to facilitate the insertion
 			$cartItems = Set::combine($cart, 'CartItem.{n}.product_id', 'CartItem.{n}');
 			$cart['CartItem'] = $cartItems;
@@ -930,8 +935,17 @@ class Cart extends AppModel {
 	 * and we assume the order of the CartItem is always in terms of CartItem.id
 	 * 
 	 **/
-	function editQuantities($postData = array()) {
-		if (empty($postData)) return true;
+	function editQuantities() {
+		
+		$postData = $_POST;
+		
+		/**
+		 * assume that $_POST['updates'] is not empty
+		 * if empty exit this function
+		 **/
+		$noNeedToUpdate = empty($postData['updates']);
+		if ($noNeedToUpdate) return true;
+		
 		// for verifying purposes
 		$userId = User::get('User.id');
 		

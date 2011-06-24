@@ -88,7 +88,7 @@
           //if (count($product['ProductImage']) < 4) {
               $max = 4 - count($product['ProductImage']);
           ?>
-              <input type="file" class="multi max-<?php echo $max;?>" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp" onchange= "ajaxUpload(this.form,'/admin/product_images/ajax_product_image_upload/'); return false;"/>
+              <input type="file" maxlength="4" class="multi max-<?php echo $max;?>" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp" onchange= "ajaxUpload(this.form,'/admin/product_images/ajax_product_image_upload/'); return false;"/>
           <?php
           //}
           ?>
