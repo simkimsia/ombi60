@@ -299,9 +299,12 @@ class ProductsController extends AppController {
 			$this->redirect(array('action' => 'view_cart'));
 		}
 		
+		
+		
 		$checkoutButtonUsed 		= isset($this->params['form']['checkout']);
 		$checkoutImageButtonUsed 	= isset($this->params['form']['checkout_x']);
 		$checkoutButtonTriggered	= $checkoutButtonUsed OR $checkoutImageButtonUsed;
+		
 		
 		if ($checkoutButtonTriggered) {
 			$this->log('checkout button works');
