@@ -299,6 +299,16 @@ class ProductsController extends AppController {
 			$this->redirect(array('action' => 'view_cart'));
 		}
 		
+		$checkoutButtonUsed 		= isset($this->params['form']['checkout']);
+		$checkoutImageButtonUsed 	= isset($this->params['form']['checkout_x']);
+		$checkoutButtonTriggered	= $checkoutButtonUsed OR $checkoutImageButtonUsed;
+		
+		if ($checkoutButtonTriggered) {
+			$this->log('checkout button works');
+			$this->redirect(array('action' => 'view_cart'));
+		}
+		
+		
 		$products = array();
 		$shop_id  = Shop::get('Shop.id');
 		
@@ -503,8 +513,6 @@ class ProductsController extends AppController {
 		$product = Product::getTemplateVariable($productFound, false);
 		
 		$this->set('product', $product);
-		
-		$this->set('productsInCart', $this->Session->read('Shop.' . $shop_id . '.cart'));
 		
 	}
 	
@@ -838,7 +846,7 @@ class ProductsController extends AppController {
 		
 		if(!$id) {
 			$this->Session->setFlash(__('Invalid id for Product', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'index'));
+			$this->redirect($this->referer());
 		}
 		
 		$qty = 1;
@@ -849,13 +857,12 @@ class ProductsController extends AppController {
 			$qty = 	$_POST['quantity'];
 		}
 		
-		
 		if($this->addToCart($id, $qty)) {
 			$this->Session->setFlash(__('Product added to cart', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'view_cart'));
 		}
 		$this->Session->setFlash(__('The Product could not be added to cart. Please, try again.', true), 'default', array('class'=>'flash_failure'));
-		$this->redirect(array('action' => 'index'));
+		$this->redirect($this->referer());
 	}
 	
 	private function addToCart($id = null, $quantity = 1) {

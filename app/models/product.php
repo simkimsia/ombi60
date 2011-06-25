@@ -567,13 +567,29 @@ class Product extends AppModel {
 		
 		foreach($products as $key=>$product) {
 			
-			if (isset($product['ProductImage'])) {
+			/**
+			 * prepare ProductImage first;
+			 **/
+			if (!empty($product['ProductImage'])) {
 				$images = Set::extract('ProductImage.{n}.filename', $product);	
 			} else {
 				$images = array();
 			}
 			
+			/**
+			 * Vendor
+			 **/
+			$vendor = (!empty($product['Vendor'])) ? $product['Vendor'] : array();
+			
+			/**
+			 * Variants
+			 **/
+			$variants = (!empty($product['Variant']))  ? Set::extract('Variant.{n}', $product) : array();
+			
+			$collections = !empty($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : array();
+			
 			$product = isset($product['Product']) ? $product['Product'] : $product;
+			
 			$result = array('id' => $product['id'],
 					'title' => $product['title'],
 					'code' => $product['code'],
@@ -586,18 +602,12 @@ class Product extends AppModel {
 					);
 			
 			
-			$result['images'] = $images;
-			$result['cover_image'] = isset($images[0]) ? $images[0] : '';
-			$result['vendor'] = isset($product['Vendor']['title']) ? $product['Vendor']['title'] : '';
+			$result['images'] 	= $images;
+			$result['cover_image'] 	= isset($images[0]) ? $images[0] : '';
 			
-			if (isset($product['Variant'])) {
-				$variants = Set::extract('Variant.{n}', $product);
-				$result['variants'] = Variant::getTemplateVariable($variants);
-			} else {
-				$result['variants'] = array();
-			}
-			
-			$result['collections'] = isset($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : array();
+			$result['vendor'] 	= !empty($vendor['title']) ? $vendor['title'] : '';			
+			$result['variants']	= $variants;
+			$result['collections'] 	= $collections;
 			
 			$results[$result['underscore_handle']] = $result;
 		}

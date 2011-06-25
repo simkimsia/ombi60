@@ -480,7 +480,7 @@ class Cart extends AppModel {
 						   ));
 	}
 	
-	function getLiveCartByCustomerId($user_id = false, $cartItemIdAsKey = false, $viewCart = false) {
+	function getLiveCartByCustomerId($user_id = false, $variantIdAsKey = false, $viewCart = false) {
 		if (!$user_id) {
 			return false;
 		}
@@ -488,7 +488,7 @@ class Cart extends AppModel {
 		// get the most updated cart stats since we need to do this for viewCart action 
 		if ($viewCart) {
 			// need to set this true always if viewCart is true
-			$cartItemIdAsKey = true;
+			$variantIdAsKey = true;
 			
 			// first we get the cart_id
 			$cart_id = $this->field('id', array('user_id'=>$user_id,
@@ -540,7 +540,11 @@ class Cart extends AppModel {
 						   ));
 		
 		$emptyCart = empty($cart['CartItem']);
-		return $cart;
+		
+		if ($emptyCart) {
+			return $cart;
+		}
+		
 	
 		if ($viewCart) {
 			$productIDs = Set::extract('CartItem.{n}.product_id', $cart);
@@ -579,19 +583,19 @@ class Cart extends AppModel {
 			 **/
 			$products = $this->Shop->Product->find('all', $conditionsForProduct);
 			
-			
-			// first we retrieve the previous index
 			$originalIndex = array_keys($cart['CartItem']);
 			
-			// then we use product_key as the index in $cart['CartItem'] to facilitate the insertion
-			$cartItems = Set::combine($cart, 'CartItem.{n}.product_id', 'CartItem.{n}');
-			$cart['CartItem'] = $cartItems;
+			// then we use product_id as the index in $products to facilitate the insertion
+			$products = Set::combine($products, '{n}.Product.id', '{n}');
 			
 			// now we insert the Product data
-			foreach($products as $key=>$product) {
-				$cart = Set::insert($cart, 'CartItem.'.$product['Product']['id'].'.Product', $product['Product']);
-				$cart = Set::insert($cart, 'CartItem.'.$product['Product']['id'].'.ProductImage', $product['ProductImage']);
-				$cart = Set::insert($cart, 'CartItem.'.$product['Product']['id'].'.ProductsInGroup', $product['ProductsInGroup']);
+			foreach($cart['CartItem'] as $id=>$item) {
+				$product_id = $item['product_id'];
+				if (!empty($products[$product_id])) {
+					$cart['CartItem'][$id]['Product'] = $products[$product_id]['Product'];
+					$cart['CartItem'][$id]['ProductImage'] = $products[$product_id]['ProductImage'];
+					$cart['CartItem'][$id]['ProductsInGroup'] = $products[$product_id]['ProductsInGroup'];
+				}
 			}
 			
 			// now we put the original index back
@@ -599,13 +603,10 @@ class Cart extends AppModel {
 			$cart['CartItem'] = array_combine($originalIndex, $cartItems);
 		}
 		
-		$placeItemIdAsKeyInArray = isset($cart['CartItem']) AND
-					is_array($cart['CartItem']) AND
-					!empty($cart['CartItem']) AND
-					$cartItemIdAsKey;
+		$placeItemIdAsKeyInArray = (!empty($cart['CartItem']) AND $variantIdAsKey);
 		
 		if ($placeItemIdAsKeyInArray) {
-			$cartItems = Set::combine($cart, 'CartItem.{n}.variant_id', 'CartItem.{n}');
+			$cartItems = Set::combine($cart, 'CartItem.{n}.variant_id', 'CartItem.{n}');		
 			$cart['CartItem'] = $cartItems;
 		}
 		
@@ -624,8 +625,6 @@ class Cart extends AppModel {
 		
 		// we go get the unprocessed cart of this customer
 		$cart = $this->getLiveCartByCustomerId($user_id, true);
-		
-		
 		
 		$arrayOfProducts = array();
 		
@@ -648,10 +647,9 @@ class Cart extends AppModel {
 						      'link'		=> array('Product'   => array('fields'=>array('Product.id', 'Product.title')))
 						));
 			
-			
+			// we need to add in quantity so this is an illegal field in Variant model
 			$productVariant['Variant']['quantity'] = $quantity;
 			
-			// we need to add in quantity so this is an illegal field in Product model
 			$arrayOfProducts[] = $productVariant;
 		}
 		
@@ -704,7 +702,8 @@ class Cart extends AppModel {
 				if ($itemExistsInCart) {
 				
 					$possibleItem = $possibleMatches[0];
-					$cart_item_id = $possibleItem['CartItem']['id'];
+					$cart_item_id = $possibleItem['CartItem']['variant_id'];
+					
 					// we change the quantity, price, currency and title
 					$cart['CartItem'][$cart_item_id]['product_quantity'] += $quantity;
 					$cart['CartItem'][$cart_item_id]['product_price'] = $product['Variant']['price'];
@@ -715,24 +714,28 @@ class Cart extends AppModel {
 				} else {
 					
 					// we just add product into cart as item
-					$newItems['CartItem'][] = array('variant_id'=>$product_id,
+					$newItems['CartItem'][$product_id] = array('variant_id'=>$product_id,
 							      'product_quantity'=>$quantity,
 							      'product_price'=>$product['Variant']['price'],
 							      'product_title'=>$product['Product']['title'],
 							      'variant_title'=>$product['Variant']['title'],
 							      'currency'=>$product['Variant']['currency'],
 							      'product_weight'=>$product['Variant']['weight'],
+							      'product_id' => $product['Variant']['product_id'],
 							      
 							      'shipping_required'=>$product['Variant']['shipping_required'],
 							      // cart_id ensures put item in right cart
 							      'cart_id' => $cart['Cart']['id'] 
 							);
+					
+					
 				}
 				
 			}
 			
-			// to update existing items with new quantities
+			$cart['CartItem'] = array_merge($cart['CartItem'], $newItems['CartItem']);
 			
+			// to update existing items with new quantities
 			$result = $this->saveAll($cart);
 			
 			if (!empty($newItems['CartItem'])) {
