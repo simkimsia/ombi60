@@ -640,6 +640,7 @@ class Product extends AppModel {
 			// form the new options
 			$newOptionData = array();
 			$nextOrder = $this->getNextOptionOrder($productID);
+			
 			foreach($newOptions as $key=>$option) {
 				$field = ($option['field'] == 'custom' && !empty($option['custom_field'])) ? $option['custom_field'] : $option['field'];
 				$value = $option['value'];
@@ -705,8 +706,13 @@ class Product extends AppModel {
 		 )
 		 * 
 		**/
-		if (!empty($nextOrder['next_order'])) {
-			return $nextOrder['next_order'] + 1;
+		
+		
+		// cannot use !empty because possible to get 0
+		// 0 is defined as empty
+		if (isset($nextOrder['0']['next_order']) && is_numeric($nextOrder['0']['next_order'])) {
+			return intval($nextOrder['0']['next_order']) + 1;
+			
 		}
 		
 		return false;
