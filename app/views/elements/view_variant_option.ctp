@@ -20,7 +20,7 @@
                                 </select>
                                 <input type="hidden" id="ProductOptions<?php echo Inflector::camelize(str_replace(' ', '_', $field)); ?>Delete" name="data[Product][options][<?php echo $field; ?>][delete]" value="0" />
                         </td>
-                        <td style="display: none;" style="width: 30%;" id="showCustom_<?php echo $field;?>"><input type="text" name="data[Product][options][<?php echo $field; ?>][new_field_custom]" /></td>
+                        <td style="display: none;" style="width: 30%;" id="showCustom_<?php echo $field;?>"><input type="text" name="data[Product][options][<?php echo $field; ?>][custom_new_field]" /></td>
                     </tr>
                 
                 </table>

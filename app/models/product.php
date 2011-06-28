@@ -47,6 +47,8 @@ class Product extends AppModel {
 	var $recursive = -1;
 	
 	var $imagesToDelete = array();
+	
+	var $optionModel = '';
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
@@ -176,6 +178,7 @@ class Product extends AppModel {
 	public function __construct($id=false,$table=null,$ds=null) {
 		parent::__construct($id,$table,$ds);
 		$this->createVirtualFieldForUrl();
+		$this->optionModel = $this->Variant->VariantOption;
 	}
 	
 	
@@ -519,8 +522,6 @@ class Product extends AppModel {
 		$currentOptions = !empty($data['Product']['options']) ? $data['Product']['options'] : array();
 		$newOptions 	= !empty($data['Product']['new_options']) ? $data['Product']['new_options'] : array();
 		
-		$this->log($currentOptions);
-		
 		// extract only deleted current options
 		$deleteCurrentOptions = array();
 		$validCurrentOptions = array();
@@ -532,16 +533,84 @@ class Product extends AppModel {
 			}
 		}
 		
-		if (!empty($data['Product']['id'])) {
-			$this->addNewProductOptions($newOptions, $data['Product']['id']);	
+		// we need to have at least 1 Product Option
+		if (!empty($data['Product']['id']) && (!empty($validCurrentOptions) || !empty($newOptions))) {
+			$productID = $data['Product']['id'];
+			// retrieve all the current Product Variants
+			$variantIDs = $this->Variant->find('list', array('conditions'=>array('Variant.product_id' => $productID),
+								         'fields'    =>array('Variant.id')));
+			
+			// add new Product options
+			$this->addNewProductOptions($productID, $newOptions, $variantIDs);
+			// rename any current options
+			$this->renameOptionFields($validCurrentOptions, $variantIDs);
+			// delete any current options
+			$this->deleteAllOptions($deleteCurrentOptions, $variantIDs);
 		}
 		
-		
-		
-		
-		
-		
 	}//end updateOptions()
+	
+	/**
+	 *
+	 * Rename multiple fields of product options.
+	 *
+	 * @param array $currentOptions An associative array for current options
+	 * the indices are the original field names.
+	 * @param array $variantIDs A numerically indexed array for valid Variant IDs
+	 *
+	 * @return boolean True if successful. False otherwise.
+	 **/
+	function renameOptionFields($currentOptions=array(), $variantIDs = array()) {
+		
+		
+		if (!empty($variantIDs) && !empty($currentOptions)) {
+			
+			$currentOptionsData = array();
+			$this->optionModel->recursive = -1;
+			$result = true;
+			foreach($currentOptions as $originalField => $option) {
+				$field = ($option['new_field'] == 'custom' && !empty($option['custom_new_field'])) ? $option['custom_new_field'] : $option['new_field'];
+				$fieldsToUpdate = array('VariantOption.field'=>"'" . $field . "'");
+				$conditions = array('VariantOption.field '=>$originalField,
+						    'VariantOption.variant_id'   =>$variantIDs);
+				
+				$result = $result && $this->optionModel->updateAll($fieldsToUpdate, $conditions);
+				
+			}
+			
+			return $result;	
+			
+		}
+		return false;
+	}
+	
+	/**
+	 *
+	 * Delete multiple product options.
+	 *
+	 * @param array $options An associative array for options to be deleted
+	 * the indices are the original field names. 
+	 * @param array $variantIDs A numerically indexed array for valid Variant IDs
+	 *
+	 * @return boolean True if successful. False otherwise.
+	 **/
+	function deleteAllOptions($options=array(), $variantIDs = array()) {
+		
+		
+		if (!empty($variantIDs) && !empty($options)) {
+			
+			$this->optionModel->recursive = -1;
+			
+			$fields = array_keys($options);
+			
+			$conditions = array('VariantOption.field'=>$fields,
+					    'VariantOption.variant_id'   =>$variantIDs);
+				
+			return $this->optionModel->deleteAll($conditions);
+			
+		}
+		return false;
+	}
 	
 	/**
 	 *
@@ -549,40 +618,64 @@ class Product extends AppModel {
 	 * Add in the option field, option value for all these Variants.
 	 * 
 	 * If add just 1 option, then wrap that option into an array
-	 *
-	 * @param array $newOptions A numerically indexed array for new options
+	 * 
 	 * @param integer $productID the Product id which we want to add new options to
+	 * @param array $newOptions A numerically indexed array for new options
+	 * @param array $variantIDs A numerically indexed array for valid Variant IDs
+	 *
+	 * @return boolean Return true if successful save. False otherwise.
 	 **/
-	function addNewProductOptions($newOptions=array(), $productID = false) {
+	function addNewProductOptions($productID, $newOptions=array(), $variantIDs = array()) {
 		
-		if ($productID > 0) {
-			// find all variants of this product
-			$variantIDs = $this->Variant->find('list', array('conditions'=>array('Variant.product_id' => $productID),
+		
+		
+		if ($productID > 0 && !empty($newOptions)) {
+			
+			if (empty($variantIDs)) {
+				$variantIDs = $this->Variant->find('list', array('conditions'=>array('Variant.product_id' => $productID),
 								         'fields'    =>array('Variant.id')));
 			
+			}
 			
 			// form the new options
 			$newOptionData = array();
 			$nextOrder = $this->getNextOptionOrder($productID);
 			foreach($newOptions as $key=>$option) {
-				//$option['field']
+				$field = ($option['field'] == 'custom' && !empty($option['custom_field'])) ? $option['custom_field'] : $option['field'];
+				$value = $option['value'];
+				foreach($variantIDs as $variantID) {
+					$newOptionData[] = array('variant_id'	=>$variantID,
+								 'value'	=>$value,
+								 'field'	=>$field,
+								 'order'	=>$nextOrder);
+					
+				}
+				// increment the nextOrder
+				$nextOrder++;
 			}
-			// form the VariantOption
-			//$this->Variant->VariantOption->saveAll();
+			// saveAll the VariantOption
+			return $this->Variant->VariantOption->saveAll($newOptionData);
 			
 		}
 		return false;
 		
-	}
+	}//end addNewProductOptions
 	
+	/**
+	 * get the next Option order by Product id
+	 * if currently the maximum order is 1, then the result should be 2.
+	 *
+	 * @param integer $productID Product id
+	 * @return mixed False if not valid, otherwise returns the next order no.
+	 **/
 	function getNextOptionOrder($productID = false) {
-		$optionModel 		= $this->Variant->VariantOption;
-		$optionModel->recursive = -1;
 		
-		$optionModel->Behaviors->attach('Linkable.Linkable');
+		$this->optionModel->recursive = -1;
 		
-		$nextOrder = $optionModel->find('all', array(	'conditions'=>array('Product.id'=>$productID),
-								'link'=>array('Variant'=>array(
+		$this->optionModel->Behaviors->attach('Linkable.Linkable');
+		
+		$nextOrder = $this->optionModel->find('first', array(	'conditions'=>array('Product.id'=>$productID),
+									'link'=>array('Variant'=>array(
 											'Product'=>array('fields'=>array('Product.id')),
 											'fields'=>array('Variant.id', 'Variant.product_id')),
 											
@@ -591,13 +684,33 @@ class Product extends AppModel {
 							)
 						);
 		
-		$this->log($nextOrder);
-		if (!empty($nextOrder['VariantOption']['next_order'])) {
-			return $nextOrder['VariantOption']['next_order'] + 1;
+		
+		/**
+		 *
+		 * $nextOrder gives back an
+		 * array (
+			[0] => Array
+			(
+			   [next_order] => 1
+			),
+			[Variant] => Array
+			(
+			    [id] => 2
+			    [product_id] => 7
+			),
+			[Product] => Array
+			(
+			    [id] => 7
+			)
+		 )
+		 * 
+		**/
+		if (!empty($nextOrder['next_order'])) {
+			return $nextOrder['next_order'] + 1;
 		}
 		
 		return false;
-	}
+	}//end getNextOptionOrder()
 	
 	function afterSave($created) {
 		
@@ -609,8 +722,7 @@ class Product extends AppModel {
 		 **/
 		$oldProductOptionsSet 	= !empty($this->data['Product']['options']);
 		$updateOptions 		=  ($oldProductOptionsSet AND !$created);
-		$this->log($oldProductOptionsSet);
-		$this->log($updateOptions);
+		
 		if ($updateOptions) {
 			$this->updateOptions($this->data);
 		}
