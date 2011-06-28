@@ -91,18 +91,19 @@
 			
 				<input type="submit" id="cartbutton" name="update" value="Refresh Cart" />
 			
-			</form>
+			
 				
-                        <!-- end if not empty cart -->	
-			{% endif %}
+                        
+			
 			
 			</div>
-			{% if (count > 0) %}
-                                {{ form.create('Product', ['url':'/products/checkout']) }}
+			
+                                
                                         <div id="cartcheckout">
-                                                {{ form.submit('Checkout', ['name':'checkoutBtn', 'value':'proceed', 'id':'cartbutton']) }}
+                                                <input type="submit" id="cartbutton" name="checkout" value="Checkout" />
+						
                                         </div>
-					{{ form.hidden('products_count', ['value':count]) }}
+					
 	
 					{% if paypalExpressOn %}
 		
@@ -113,9 +114,15 @@
 						</div>
 				
 					{% endif %}
-				{{ form.end() }}
-			{% endif %}
+				
+				
+				
+			
 			
 		</div>
+			
+			</form>
+					
+		{% endif %}
 	</div>
 	<div id="cataloguebottom"></div>

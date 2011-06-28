@@ -7,17 +7,24 @@
                     <tr>
                         <td valign="top">
                             <?php
-                            echo $this->Form->input('VariantOption.0.field', array('class' => 'PluOptName', 'options' => $voptions, 'label' => false, 'div' => false, 'onChange' => 'checkCustomAdd(this.value)'));
+                            
+                            $voptions = array('title'=>'Title',
+                                              'color'=>'Color',
+                                              'style'=>'Style',
+                                              'size'=>'Size',
+                                              'material'=>'Material',
+                                              'custom'=>'Custom', );
+                            echo $this->Form->input('Product.new_options.0.field', array('class' => 'PluOptName', 'options' => $voptions, 'label' => false, 'div' => false, 'onChange' => 'checkCustomAdd(this.value)'));
                             ?>
                         </td>
-                        <td style="display: none;" class="custom"  valign="top"><input type="text" class="custom" /></td>
+                        <td style="display: none;" class="custom"  valign="top"><input type="text" class="custom" name="data[Product][new_options][0][custom_field]"/></td>
                     </tr>
                 </table>
             </td>
             
             <td  valign="top">
                 <?php
-                        echo $this->Form->input('VariantOption.0.value', array('class' => 'OptValue','label' => false, 'value' => 'Default Value', 'div' => false, ));
+                        echo $this->Form->input('Product.new_options.0.value', array('class' => 'OptValue','label' => false, 'value' => 'Default Value', 'div' => false, ));
                 ?>
             </td>
             <td valign="top"><div style="padding: 5px;"><?php echo $this->Html->link($this->Html->image('trash.gif', array('alt' => 'Remove')), 'javascript: void(0);', array('class' => 'minus', 'escape' => false));?></div></td>

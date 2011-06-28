@@ -478,7 +478,142 @@ class Product extends AppModel {
 		
         }
 	
+	/**
+	 *
+	 * Update the VariantOptions belonging to a Product.
+	 * Option field names may be changed. Option may be deleted if that option has only 1 possible value.
+	 * 
+	 * 
+	 * @param array $data Product array.
+	 * 
+	 * Expected values are $data['Product']['new_options'], (optional)
+	 * $data['Product']['options'],$data['Product']['id'],
+	 * (both compulsory) are expected.
+	 *
+	 * $data['Product']['new_options'] is a numerically indexed array
+	 * [0] => array[
+			[field] => title/style/custom/...
+			[custom_field] => whatever the custom field
+			[value] => the default value
+		 ],
+	   [1] => array[
+		...
+		],
+	   ...
+		 
+	 * $data['Product']['options'] is an associative indexed array
+	 * the index is the original field name
+	 * ['size'] => array[
+	 * 		[new_custom_field] => batteries, // if we want to rename the custom field
+			[new_field] => color, // if we want to rename the field, this will be different from the index
+			[delete] => 1, // if we wish to remove this option, this will be set as delete = 1
+			[order] => 0, // the original order value 
+		 ],
+	   [title] => array[
+		...
+		],
+	   ...
+	   
+	   **/
+	function updateOptions($data) {
+		$currentOptions = !empty($data['Product']['options']) ? $data['Product']['options'] : array();
+		$newOptions 	= !empty($data['Product']['new_options']) ? $data['Product']['new_options'] : array();
+		
+		$this->log($currentOptions);
+		
+		// extract only deleted current options
+		$deleteCurrentOptions = array();
+		$validCurrentOptions = array();
+		foreach($currentOptions as $originalField => $option) {
+			if (!empty($option['delete']) && $option['delete'] == 1) {
+				$deleteCurrentOptions[$originalField] = $option;
+			} else {
+				$validCurrentOptions[$originalField] = $option;
+			}
+		}
+		
+		if (!empty($data['Product']['id'])) {
+			$this->addNewProductOptions($newOptions, $data['Product']['id']);	
+		}
+		
+		
+		
+		
+		
+		
+	}//end updateOptions()
+	
+	/**
+	 *
+	 * Add new product options. Basically find all Variants of this Product.
+	 * Add in the option field, option value for all these Variants.
+	 * 
+	 * If add just 1 option, then wrap that option into an array
+	 *
+	 * @param array $newOptions A numerically indexed array for new options
+	 * @param integer $productID the Product id which we want to add new options to
+	 **/
+	function addNewProductOptions($newOptions=array(), $productID = false) {
+		
+		if ($productID > 0) {
+			// find all variants of this product
+			$variantIDs = $this->Variant->find('list', array('conditions'=>array('Variant.product_id' => $productID),
+								         'fields'    =>array('Variant.id')));
+			
+			
+			// form the new options
+			$newOptionData = array();
+			$nextOrder = $this->getNextOptionOrder($productID);
+			foreach($newOptions as $key=>$option) {
+				//$option['field']
+			}
+			// form the VariantOption
+			//$this->Variant->VariantOption->saveAll();
+			
+		}
+		return false;
+		
+	}
+	
+	function getNextOptionOrder($productID = false) {
+		$optionModel 		= $this->Variant->VariantOption;
+		$optionModel->recursive = -1;
+		
+		$optionModel->Behaviors->attach('Linkable.Linkable');
+		
+		$nextOrder = $optionModel->find('all', array(	'conditions'=>array('Product.id'=>$productID),
+								'link'=>array('Variant'=>array(
+											'Product'=>array('fields'=>array('Product.id')),
+											'fields'=>array('Variant.id', 'Variant.product_id')),
+											
+									      ),
+								'fields'=>array('MAX(VariantOption.order) as next_order')
+							)
+						);
+		
+		$this->log($nextOrder);
+		if (!empty($nextOrder['VariantOption']['next_order'])) {
+			return $nextOrder['VariantOption']['next_order'] + 1;
+		}
+		
+		return false;
+	}
+	
 	function afterSave($created) {
+		
+		/**
+		 * for products admin_edit ONLY
+		 * we need to affect the Variant Options where applicable
+		 * using updateOptions function
+		 * 
+		 **/
+		$oldProductOptionsSet 	= !empty($this->data['Product']['options']);
+		$updateOptions 		=  ($oldProductOptionsSet AND !$created);
+		$this->log($oldProductOptionsSet);
+		$this->log($updateOptions);
+		if ($updateOptions) {
+			$this->updateOptions($this->data);
+		}
 		
 		/**
 		 * for products admin_add and admin_edit
@@ -590,6 +725,8 @@ class Product extends AppModel {
 			
 			$product = isset($product['Product']) ? $product['Product'] : $product;
 			
+			$options = !empty($product['options']) ? array_keys($product['options']) : array();
+			
 			$result = array('id' => $product['id'],
 					'title' => $product['title'],
 					'code' => $product['code'],
@@ -608,6 +745,8 @@ class Product extends AppModel {
 			$result['vendor'] 	= !empty($vendor['title']) ? $vendor['title'] : '';			
 			$result['variants']	= $variants;
 			$result['collections'] 	= $collections;
+			
+			$result['options']	= $options;
 			
 			$results[$result['underscore_handle']] = $result;
 		}
@@ -936,6 +1075,9 @@ class Product extends AppModel {
          * Each Variant contains a list of VariantOption.
          * Each ProductsInGroup contains the ProductGroup this Product belongs to.
          * ProductImage only contains the filename and the cover image is the first in the list.
+         *
+         * Product will also have an options which will give a list of options that is extracted using
+         * $this->extractProductOptions
          * 
          * @params integer $id Product Id
          * 
@@ -986,9 +1128,9 @@ class Product extends AppModel {
 		if ($insertOptionsIntoProduct) {
 			$productFound['Product']['options'] = $productOptions;
 		}
-		
 
                 return $productFound;
+	
         }//end getDetails()
 	
 	
@@ -999,7 +1141,29 @@ class Product extends AppModel {
 	 * $this->getDetails gives you such full details.
 	 *
 	 * @return array An array of option data. Maximum length is 3.
-	 * The indices are the option fields and the values are the possible option values in a string format delimited by comma.
+	 * the array returned will be in this format
+	 *
+	 * array[
+	 * 	// first VariantOption
+		// the field name Size is used as index
+	 *      ['Size'] => array[
+	 *      	option_ids => array(16, 17, 19), // the VariantOption ids that have the same field and belong to the same Product via Variant
+			values_in_string => 'Medium, Large', // the values delimited by commas
+			values => array('Medium', 'Large'), // the values in array format
+			
+	 *      	]
+	 *      // second VariantOption
+		// the field name Title is used as index
+		['Title'] => array[
+	 *      	option_ids => array(20, 21, 23), // the VariantOption ids that have the same field and belong to the same Product via Variant
+			values_in_string => 'Pink, Purple', // the values delimited by commas
+			values => array('Pink', 'Purple'), // the values in array format
+			
+	 *      	]
+		....
+	 *      
+	 *	]
+	 * 
 	 **/
 	public function extractProductOptions($productDetails = array()) {
 		$variants = Set::extract('Variant.{n}.VariantOption', $productDetails);
@@ -1010,15 +1174,21 @@ class Product extends AppModel {
                         foreach ($variants as $variantOptions) {
                                 if (!empty($variantOptions)) {
                                         foreach ($variantOptions as $variantOption) {
-                                                $fieldName = $variantOption['field'];
-						$optionValue = $variantOption['value'];
-						// if no such field, we create it
+                                                $fieldName 	= $variantOption['field'];
+						$optionValue 	= $variantOption['value'];
+						$optionId 	= $variantOption['id'];
+						// if no such field, we create it and store the appropriate option id and value
 						if (!isset($voption[$fieldName])) {
-							$voption[$fieldName] = array($optionValue);
+							$voption[$fieldName] = array('values'	 =>array($optionValue),
+										     'option_ids'=>array($optionId));
 						} else {
 							// check if we have stored this value and store it if not existent
-							if (!in_array($optionValue, $voption[$fieldName])) {
-								$voption[$fieldName][] = $optionValue;
+							if (!in_array($optionValue, $voption[$fieldName]['values'])) {
+								$voption[$fieldName]['values'][] = $optionValue;
+							}
+							// check if we have stored this option id and store it if not existent
+							if (!in_array($optionId, $voption[$fieldName]['option_ids'])) {
+								$voption[$fieldName]['option_ids'][] = $optionId;
 							}
 						}
                                         }
@@ -1026,17 +1196,21 @@ class Product extends AppModel {
                         }
 			
 			$isOptionsValid = !empty($voption);
+			
+			
 			if ($isOptionsValid) {
 				// implode the array of values into string delimited by comma
 				// for every single possible option field
-				foreach($voption as $fieldName => $optionValues) {
-				
-					$voption[$fieldName] = implode(', ', $optionValues);	
+				foreach($voption as $fieldName => $option) {
+					if (!empty($option['values'])) {
+						// convert all the values into string
+						$voption[$fieldName]['values_in_string'] = implode(', ', $option['values']);		
+					}
 				}
 			}
                 }
                 return $voption;
-	}
+	}//end extractProductOptions
 	
 	/**
 	 *may need to remove this function

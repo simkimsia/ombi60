@@ -285,7 +285,7 @@ class Product extends AppModel {
 		
 	}
 
-	function createProductDetails($data = NULL) {
+	function createDetails($data = NULL) {
 
 		$image = $this->ProductImage;
 

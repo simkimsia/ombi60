@@ -65,8 +65,11 @@ function in_array (needle, haystack, argStrict) {
 }
 
 function plus () {
-        var randomnumber = Math.floor(Math.random()*100001); 
-        firstcontainer = $('#vOpts');                
+        
+        //var randomnumber = Math.floor(Math.random()*100001);
+        var currentTime = new Date()
+        var randomnumber = currentTime.getTime();
+        firstcontainer   = $('#vOpts');                
         
         //console.log($('#checks').val());return false;
         nodeChildren = $('table.addMultiple').clone(true);
@@ -82,10 +85,10 @@ function plus () {
                 $("#" + randomnumber + " .custom").attr('id', "showCustom_"+randomnumber);
                 $("#" + randomnumber + " .custom").attr('name', "data[VariantOption]["+randomnumber+"][fieldcustom]");
                 
-                $("#" + randomnumber + " .OptValue").attr('name', "data[VariantOption]["+randomnumber+"][value]");
+                //$("#" + randomnumber + " .OptValue").attr('name', "data[VariantOption]["+randomnumber+"][value]");
                 $("#" + randomnumber + " .PluOptName").addClass('OptName');
                 $("#" + randomnumber + " .OptName").removeClass('PluOptName');
-                $("#" + randomnumber + " .OptName").attr('name', "data[VariantOption]["+randomnumber+"][field]");
+                //$("#" + randomnumber + " .OptName").attr('name', "data[VariantOption]["+randomnumber+"][field]");
                 $("#" + randomnumber + " .OptName").attr('onChange', "checkCustomAdd("+randomnumber+")");
                 
                 updateOptions($("#" + randomnumber + " .OptName"));

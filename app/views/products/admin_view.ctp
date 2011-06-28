@@ -49,10 +49,10 @@
             <?php 
 
                 if (!empty($product['Product']['options'])) {
-                        foreach ($product['Product']['options'] as $field => $optionValues) :
+                        foreach ($product['Product']['options'] as $field => $option) :
 	    ?>
 				<label><?php __($field, false);?></label>
-				<div class="property-info"><?php echo $optionValues;?></div>
+				<div class="property-info"><?php echo $option['values_in_string'];?></div>
 				<div class="clear"></div>                    
             <?php
                                 

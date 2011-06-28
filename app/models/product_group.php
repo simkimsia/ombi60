@@ -514,8 +514,16 @@ class ProductGroup extends AppModel {
 	 * assumed that the products you want to paginate are visible
 	 * assumed that the conditions BEFORE invoking this will ensure the products are within a single shop
 	 * */
-	private function prepCommonProductPaginate() {
-		$productPaginate = array('conditions'=>array('AND' => array('Product.visible'=>true) ));
+	private function prepCommonProductPaginate($visibleOrAll = VISIBLE_ENTITY) {
+		if ($visibleOrAll == VISIBLE_ENTITY) {
+			$productPaginate = array('conditions'=>array('AND' => array('Product.visible'=>true) ));	
+		} else if ($visibleOrAll == HIDDEN_ENTITY) {
+			$productPaginate = array('conditions'=>array('AND' => array('Product.visible'=>true) ));	
+		} else if ($visibleOrAll == HIDDEN_AND_VISIBLE_ENTITY){
+			// do nothing for conditions so that we can retrieve ALL the products
+			// regardless of HIDDEN or VISIBLE
+		}
+		
 		
 		$productPaginate['contain'] = array('Variant' => array(
 								'order'=>'Variant.order ASC',

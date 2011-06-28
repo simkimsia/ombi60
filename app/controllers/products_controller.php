@@ -403,9 +403,14 @@ class ProductsController extends AppController {
 	}
 	
 	function admin_index() {
-			
+		
+		$shop_id = Shop::get('Shop.id');
+		
 		$this->paginate = array(
-			      'conditions' => array('OR' =>
+			      'conditions' => array('AND'=> array(
+								  'Product.shop_id' => $shop_id
+								 ),
+						    'OR' =>
 							array (
 								array('ProductImage.cover'=>true),
 								array('ProductImage.cover'=>null),
@@ -679,9 +684,9 @@ class ProductsController extends AppController {
 
 		if (!empty($this->data)) {
 
-			if (!empty($this->data['VariantOption'])) {
-				$this->__saveVariantOption();
-			}
+			//if (!empty($this->data['Product']['new_options'])) {
+			//	$this->__saveVariantOption();
+			//}
 			if ($this->Product->save($this->data)) {
 				
 				//$this->save_image($id, TRUE); //This will save product images
@@ -695,8 +700,7 @@ class ProductsController extends AppController {
 		if (empty($this->data)) {
                         // get the product details
                         $this->data = $this->Product->getDetails($id); //This action gets complete product information
-                        $variants = $this->__getVariantOption($this->data); //This is used to set variant option in systamatic manner
-                        
+			
 		}
 
 		$product_id = $id;
