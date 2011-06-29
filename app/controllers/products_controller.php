@@ -683,13 +683,8 @@ class ProductsController extends AppController {
 		}
 
 		if (!empty($this->data)) {
-
-			//if (!empty($this->data['Product']['new_options'])) {
-			//	$this->__saveVariantOption();
-			//}
+			
 			if ($this->Product->save($this->data)) {
-				
-				//$this->save_image($id, TRUE); //This will save product images
 				$this->Session->setFlash(__('The Product has been saved', true), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -714,51 +709,7 @@ class ProductsController extends AppController {
 		
 		$this->render('admin_edit');
 
-		
-	
 	}
-
-
-        function __saveVariantOption()
-        {
-                $varientOpts = $this->data['VariantOption'];
-                unset($this->data['VariantOption']);
-                $variantId = 2; //By default the variant id will be 2
-                if (isset($varientOpts['variant_id'])) {
-                        $variantId = $varientOpts['variant_id']; //If variant id is set from form
-                }
-                //First delete all the already added variants
-                $this->Product->Variant->VariantOption->deleteAll(array('VariantOption.variant_id' => $variantId));
-                $data['VariantOption']['variant_id'] = $variantId;
-
-                unset($varientOpts['variant_id']);
-                foreach ($varientOpts as $option) {
-                        if ($option['fieldcustom'] != "") {
-                                $data['VariantOption']['field'] = $option['fieldcustom'];
-                        } else {
-                                $data['VariantOption']['field'] = $option['field'];
-                        }
-                        $data['VariantOption']['value'] = $option['value'];
-                        $this->Product->Variant->VariantOption->create();
-                        if (!$this->Product->Variant->VariantOption->save($data)) {
-                                return false;
-                        }
-                }
-        }//end __saveVariantOption()
-	
-	
-	/**
-	 * This public action is used to save product images
-	 * 
-	 * @param integer $product_id Product Id
-	 * 
-	 * @return void
-	 */
-	public function save_image($product_id, $edit = FALSE)
-	{
-		$this->Product->ProductImage->saveFILESAsProductImages($product_id, !$edit);
-	    
-	}//end save_image()
 	
 	
 	function admin_delete($id = null) {
@@ -968,33 +919,6 @@ class ProductsController extends AppController {
 		$this->render('admin_product_search', 'ajax',ELEMENTS.'/admin_product_search.ctp');
 	       
 	}//end admin_search()
-  
-        
-        /**
-         * This action is used to manupulate variant option
-         * 
-         * @param Array $product Array of productInfo
-         * 
-         * @return array of options
-         * */
-        private function __getVariantOption($product) {
-                $variants = set::Extract('Variant.{n}.VariantOption', $product);
-		
-                $voption = array();
-                
-                if (!empty($variants)) {                        
-                        foreach ($variants as $variantOptions) {
-                                if (!empty($variantOptions)) {
-                                        foreach ($variantOptions as $variantOption) {
-                                                $key = $variantOption['field'];
-                                                $voption[$variantOption['variant_id']][$key."_".$variantOption['id']][] = $variantOption['value'];
-                                        }
-                                }
-                        }
-                }
-                return $voption;
-        }
-  
         
         /**
          * This action is used to manupulate variant option

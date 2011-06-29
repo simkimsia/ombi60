@@ -92,13 +92,10 @@
         <ul id="product_images-list" class="product_image-thumbs">    
             <?php echo $this->element('product_images_ajax_list');?>
         </ul>
-        <div class="clear"></div>
-      <?php //echo $this->element('product_images_add_form_uploadify'); ?>
-        
+        <div class="clear"></div>  
           <?php echo $this->Form->create('Product');?>
           <?php echo $this->Form->input('id', array('value' => $product['Product']['id']))?>
-      <!--<form action="scripts/ajaxupload.php?filename=name&maxSize=9999999999&maxW=200&fullPath=http://www.atwebresults.com/php_ajax_image_upload/uploads/&relPath=../uploads/&colorR=255&colorG=255&colorB=255&maxH=300" method="post">-->
-        <!--<input name="product_images" type="file" onchange = "ajaxUpload(this.form,'/products/save_image/'); return false;" />-->
+      
         <?php
           if (count($product['ProductImage']) < 4) {
               $max = 4 - count($product['ProductImage']);

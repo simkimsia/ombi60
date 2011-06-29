@@ -178,7 +178,7 @@ class Product extends AppModel {
 	public function __construct($id=false,$table=null,$ds=null) {
 		parent::__construct($id,$table,$ds);
 		$this->createVirtualFieldForUrl();
-		$this->optionModel = $this->Variant->VariantOption;
+		
 	}
 	
 	
@@ -566,7 +566,8 @@ class Product extends AppModel {
 		if (!empty($variantIDs) && !empty($currentOptions)) {
 			
 			$currentOptionsData = array();
-			$this->optionModel->recursive = -1;
+			$optionModel = $this->Variant->VariantOption;
+			$optionModel->recursive = -1;
 			$result = true;
 			foreach($currentOptions as $originalField => $option) {
 				$field = ($option['new_field'] == 'custom' && !empty($option['custom_new_field'])) ? $option['custom_new_field'] : $option['new_field'];
@@ -574,7 +575,7 @@ class Product extends AppModel {
 				$conditions = array('VariantOption.field '=>$originalField,
 						    'VariantOption.variant_id'   =>$variantIDs);
 				
-				$result = $result && $this->optionModel->updateAll($fieldsToUpdate, $conditions);
+				$result = $result && $optionModel->updateAll($fieldsToUpdate, $conditions);
 				
 			}
 			
@@ -598,15 +599,15 @@ class Product extends AppModel {
 		
 		
 		if (!empty($variantIDs) && !empty($options)) {
-			
-			$this->optionModel->recursive = -1;
+			$optionModel = $this->Variant->VariantOption;
+			$optionModel->recursive = -1;
 			
 			$fields = array_keys($options);
 			
 			$conditions = array('VariantOption.field'=>$fields,
 					    'VariantOption.variant_id'   =>$variantIDs);
 				
-			return $this->optionModel->deleteAll($conditions);
+			return $optionModel->deleteAll($conditions);
 			
 		}
 		return false;
@@ -670,12 +671,12 @@ class Product extends AppModel {
 	 * @return mixed False if not valid, otherwise returns the next order no.
 	 **/
 	function getNextOptionOrder($productID = false) {
+		$optionModel = $this->Variant->VariantOption;
+		$optionModel->recursive = -1;
 		
-		$this->optionModel->recursive = -1;
+		$optionModel->Behaviors->attach('Linkable.Linkable');
 		
-		$this->optionModel->Behaviors->attach('Linkable.Linkable');
-		
-		$nextOrder = $this->optionModel->find('first', array(	'conditions'=>array('Product.id'=>$productID),
+		$nextOrder = $optionModel->find('first', array(	'conditions'=>array('Product.id'=>$productID),
 									'link'=>array('Variant'=>array(
 											'Product'=>array('fields'=>array('Product.id')),
 											'fields'=>array('Variant.id', 'Variant.product_id')),
@@ -723,11 +724,14 @@ class Product extends AppModel {
 		/**
 		 * for products admin_edit ONLY
 		 * we need to affect the Variant Options where applicable
+		 * provided that Product.options is not empty AND Product.edit_options is 1 AND
+		 * this is not a brand new Product
 		 * using updateOptions function
 		 * 
 		 **/
 		$oldProductOptionsSet 	= !empty($this->data['Product']['options']);
-		$updateOptions 		=  ($oldProductOptionsSet AND !$created);
+		$editOptionsSet		= !empty($this->data['Product']['edit_options']) && ($this->data['Product']['edit_options'] == 1);
+		$updateOptions 		=  ($oldProductOptionsSet AND !$created AND $editOptionsSet);
 		
 		if ($updateOptions) {
 			$this->updateOptions($this->data);
@@ -1330,27 +1334,5 @@ class Product extends AppModel {
                 return $voption;
 	}//end extractProductOptions
 	
-	/**
-	 *may need to remove this function
-	 *this replicates the private function __getVariantOption in product_controller
-	 **/
-	public function extractVariantOption($productDetails = array()) {
-		$variants = Set::extract('Variant.{n}.VariantOption', $productDetails);
-		
-                $voption = array();
-                
-                if (!empty($variants)) {                        
-                        foreach ($variants as $variantOptions) {
-                                if (!empty($variantOptions)) {
-                                        foreach ($variantOptions as $variantOption) {
-                                                $key = $variantOption['field'];
-                                                $voption[$variantOption['variant_id']][$key][] = $variantOption['value'];
-                                        }
-                                }
-                        }
-                }
-                return $voption;
-	}
-
-
+	
 }//end class

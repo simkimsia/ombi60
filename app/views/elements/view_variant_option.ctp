@@ -1,7 +1,11 @@
 <table cellpadding="2" cellspacing="2" width="100%" style="margin-bottom: 0px;">
         <?php
                 $selectedFields = array_keys($productOptions);
+                // we need to set this hidden field so that the options will definitely be updated
+                echo $this->Form->input('Product.edit_options', array('type'=>'hidden',
+                                                                     'value'=>'1'));
                 foreach($productOptions as $field=>$option) : ?>
+        
         <tr id="<?php echo $field; ?>">
             <td class="alreadAddedOptions" style="width: 50%;">
                 <table cellpadding="0" cellspacing="0">
