@@ -9,13 +9,16 @@
                 <div id="vOpts">
         
         <?php
-        if (!empty($productOptions)) {                
-            ?><input type="hidden" value="<?php echo count($productOptions)?>" name="vcount" id="vcount" />                        
+        $count = 0;
+        if (!empty($productOptions)) {
+            $count = count($productOptions);
+            ?>                       
         <?php
             echo $this->element('view_variant_option', array('productOptions'=>$productOptions));
         }
         
         ?>
+        <input type="hidden" value="<?php echo $count?>" name="vcount" id="vcount" /> 
                 </div>
                 <div class="clear"></div>
                 
