@@ -114,12 +114,12 @@ class ProductGroupsController extends AppController {
 			$product_in_groups[] = $val['product_id'];
 		    }
 		    
-		     $group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
+		     $group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
 		}
    
     
 		$this->set('productGroup', $this->ProductGroup->read(null, $id));
-		$conditions = array('Product.visible' => 1);
+		$conditions = array('Product.shop_id' => Shop::get('Shop.id'));
 		$products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
 		$product_group_id = $id;
 		$this->set(compact('products','product_group_id','group_products'));
