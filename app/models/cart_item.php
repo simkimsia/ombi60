@@ -220,8 +220,8 @@ class CartItem extends AppModel {
 					);
 			
 			
-			$result['product'] = !empty($item['Product']) ? Product::getTemplateVariable($item['Product'], false) : array();
-			$result['variant'] = !empty($item['Variant']) ? Variant::getTemplateVariable($item['Variant'], false) : array();
+			$result['product'] = !empty($item['Product']) ? Product::getTemplateVariable($item, false) : array();
+			$result['variant'] = !empty($item['Variant']) ? Variant::getTemplateVariable($item, false) : array();
 			
 			$results[] = $result;
 		}

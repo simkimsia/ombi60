@@ -887,18 +887,42 @@ class Cart extends AppModel {
 	function getTemplateVariable($cart) {
 		
 		$result = array('item_count' => $cart['Cart']['cart_item_count'],
-				//'requires_shipping' => $cart['Cart']['requires_shipping'],
+				
 				'total_price' => $cart['Cart']['amount'],
 				'total_weight' => $cart['Cart']['total_weight'],
 				'shipped_weight' => $cart['Cart']['shipped_weight'],
-				//'note' => $cart['Cart']['note'],
-				//'attributes' => json_decode($cart['Cart']['attributes']),
+				'shipped_amount' => $cart['Cart']['shipped_amount'],
+				'note' => $cart['Cart']['note'],
+				'attributes' => json_decode($cart['Cart']['attributes']),
 				);
 		
 		
-		$result['items'] = isset($cart['CartItem']) ? CartItem::getTemplateVariable($cart['CartItem']) : array();
+		$result['items'] = !empty($cart['CartItem']) ? CartItem::getTemplateVariable($cart['CartItem']) : array();
+		$result['requires_shipping'] = Cart::checkCartItemForRequiredShipping($result['items']);
+		
 		
 		return $result;
+	}
+	
+	/**
+	 * Checks if at least 1 Cart Item requires shipping. 
+	 *
+	 * @param array $cartItems a numerically indexed array of cart items.
+	 * @return boolean Returns true if at least 1 such Item. False otherwise.
+	 * */
+	function checkCartItemForRequiredShipping($cartItems = array()) {
+		
+		foreach($cartItems as $item) {
+			if (isset($item['requires_shipping']) && $item['requires_shipping'] == true) {
+				return true;	
+			}
+			if (isset($item['shipping_required']) && $item['shipping_required'] == true) {
+				return true;	
+			}
+		}
+		
+		return false;
+		
 	}
 	
 	function afterFind($results, $primary) {
