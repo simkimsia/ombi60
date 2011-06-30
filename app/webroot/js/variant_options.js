@@ -102,7 +102,6 @@ function plus () {
 }
 
 function minus() {
-        console.log($('#vcount').val());
         if ($('#vcount').val() == 1) {
             alert('Cannot delete last product option. Product must have atleast 1 option.');
             return false;
@@ -164,19 +163,25 @@ function undo() {
 
 
 function checkCustom(val, i) {
+    
         if (val == "custom") {
                 $('#showCustom_'+i).show();
                 $('#showCustom_'+i).focus();
         } else {
+                
                 $('#showCustom_'+i).hide();
         }
 }
 
 function checkCustomAdd(val) {
+    console.log(val);
         if ($("#" + val+ " .OptName").val() == "custom") {
+                $("#" + val+ " .OptValue").val("Default Value");
                 $('#showCustom_'+val).show();
                 $('#showCustom_'+val).focus();
         } else {
+                option = $("#" + val+ " .OptName").val();
+                $("#" + val+ " .OptValue").val("Default "+option);
                 $('#showCustom_'+val).hide();
         }
 }

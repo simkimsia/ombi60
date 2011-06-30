@@ -20,7 +20,7 @@
     </li>
     <li class="selectVals">
         <?php
-            echo $this->Form->input('Product.new_options.0.value', array('class' => 'OptValue','label' => false, 'value' => 'Default Value', 'div' => false, ));
+            echo $this->Form->input('Product.new_options.0.value', array('class' => 'OptValue','label' => false, 'value' => 'Default Title', 'div' => false, ));
         ?>
     </li>
     <li class="optsTrash">

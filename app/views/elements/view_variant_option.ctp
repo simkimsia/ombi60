@@ -1,8 +1,6 @@
 <?php ?>
 <style>
-    .opts, .alreadAddedOptions {
-        list-style: none;
-    }
+    
 </style>
 <ul class="opts">
     <?php
