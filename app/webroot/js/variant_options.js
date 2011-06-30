@@ -4,6 +4,7 @@ $(document).ready(function() {
         $('.OptName').live('focus', function () {        
                 updateOptions($(this));
         });
+        $('.undo').live('click', undo);
 });
 
 
@@ -71,65 +72,96 @@ function plus () {
         var randomnumber = currentTime.getTime();
         firstcontainer   = $('#vOpts');                
         
-        //console.log($('#checks').val());return false;
-        nodeChildren = $('table.addMultiple').clone(true);
-        check = $('#vOpts table.addMultiple').length + 1;
+        nodeChildren = $('ul.addMultiple').clone(true);
+        check = $('#vOpts ul.addMultiple').length + 1;
         
-        if ((check + $('#vOpts td.alreadAddedOptions').length)  <= 3) {
-                
-                tmpChild = $(nodeChildren)[$(nodeChildren).length-1];
-                $(tmpChild).show();
-                $(tmpChild).attr('id', randomnumber);
-                $(firstcontainer).append(tmpChild);
-                $("#" + randomnumber + " .minus").attr('id', "minus_"+randomnumber);
-                $("#" + randomnumber + " .custom").attr('id', "showCustom_"+randomnumber);
-                $("#" + randomnumber + " .custom").attr('name', "data[VariantOption]["+randomnumber+"][fieldcustom]");
-                
-                //$("#" + randomnumber + " .OptValue").attr('name', "data[VariantOption]["+randomnumber+"][value]");
-                $("#" + randomnumber + " .PluOptName").addClass('OptName');
-                $("#" + randomnumber + " .OptName").removeClass('PluOptName');
-                //$("#" + randomnumber + " .OptName").attr('name', "data[VariantOption]["+randomnumber+"][field]");
-                $("#" + randomnumber + " .OptName").attr('onChange', "checkCustomAdd("+randomnumber+")");
-                
-                updateOptions($("#" + randomnumber + " .OptName"));
-                
-                if ((check + $('#vOpts td.alreadAddedOptions').length)  == 3) {
-                        $('#plus').hide();
-                }
+        if ($('#vcount').val()  < 3) {
+            val = $('#vcount').val();
+            val = parseInt(val) + parseInt(1);
+            $('#vcount').val(val);
+            tmpChild = $(nodeChildren)[$(nodeChildren).length-1];
+            $(tmpChild).show();
+            $(tmpChild).attr('id', randomnumber);
+            $(firstcontainer).append(tmpChild);
+            $("#" + randomnumber + " .minus").attr('id', "minus_"+randomnumber);
+            $("#" + randomnumber + " .custom").attr('id', "showCustom_"+randomnumber);
+            $("#" + randomnumber + " .custom").attr('name', "data[VariantOption]["+randomnumber+"][fieldcustom]");
+            
+            //$("#" + randomnumber + " .OptValue").attr('name', "data[VariantOption]["+randomnumber+"][value]");
+            $("#" + randomnumber + " .PluOptName").addClass('OptName');
+            $("#" + randomnumber + " .OptName").removeClass('PluOptName');
+            //$("#" + randomnumber + " .OptName").attr('name', "data[VariantOption]["+randomnumber+"][field]");
+            $("#" + randomnumber + " .OptName").attr('onChange', "checkCustomAdd("+randomnumber+")");
+            
+            updateOptions($("#" + randomnumber + " .OptName"));               
         }
-
+        if ($('#vcount').val() == 3) {
+                $('#plus').hide();
+        }
         return false;
 }
 
 function minus() {
-        check = $('#vOpts table.addMultiple').length;
+        console.log($('#vcount').val());
+        if ($('#vcount').val() == 1) {
+            alert('Cannot delete last product option. Product must have atleast 1 option.');
+            return false;
+        }
+        /*check = $('#vOpts table.addMultiple').length;
         if ((check + $('#vOpts td.alreadAddedOptions').length)  == 1) {
-                alert('Cannot delete last product option. Product must have atleast 1 option.');
-                return false;
-        }
+                
+        }*/
+        
         id = $($(this)).attr('id');
-        if ($($(this)).attr('rel')) {
-                rel = $($(this)).attr('rel');
-                tmprel = rel.split('_');
-                optId = tmprel[1];
-                $.ajax({
-                        type: 'GET',
-                        url: '/admin/products/remove_variant_option/' + optId,
-                        success: function () {
-                                $('#plus').show();
-                        },
-                        error: function () {
-                                alert('Sorry, something went wrong!');
-                        }
-                });
-        }
         tmp = id.split('_');
-        $("#"+tmp[1]).remove();
-        if ((check + $('#vOpts td.alreadAddedOptions').length)  <= 3) {
+        //if ($($(this)).attr('rel')) {
+        //        rel = $($(this)).attr('rel');
+        //        tmprel = rel.split('_');
+        //        optId = tmprel[1];
+                //$.ajax({
+                //        type: 'GET',
+                //        url: '/admin/products/remove_variant_option/' + optId,
+                //        success: function () {
+                                //$('#plus').show();
+                                
+                //        },
+                //        error: function () {
+                //                alert('Sorry, something went wrong!');
+                //        }
+                //});
+        //}
+        
+        $("#"+tmp[1]).hide();
+        $("#deleteOption_"+tmp[1]).val(1);
+        $('#undo_'+tmp[1]).show();//return false;
+        val = $('#vcount').val();
+        val = parseInt(val) - parseInt(1);
+        $('#vcount').val(val);
+        
+        if ($('#vcount').val() < 3) {
                 $('#plus').show();
         }
         return false;
 }
+
+function undo() {        
+        
+        id = $($(this)).attr('id');
+        tmp = id.split('_');
+        
+        $("#"+tmp[1]).show();
+        $("#deleteOption_"+tmp[1]).val(0);
+        $('#undo_'+tmp[1]).hide();//return false;
+        val = $('#vcount').val();
+        val = parseInt(val) + parseInt(1);
+        $('#vcount').val(val);
+        
+        if ($('#vcount').val() == 3) {
+                $('#plus').hide();
+        }
+        return false;
+}
+
 
 function checkCustom(val, i) {
         if (val == "custom") {

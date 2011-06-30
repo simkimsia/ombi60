@@ -852,9 +852,38 @@ div.productnote {
     margin: 0px;
 }
 .alreadAddedOptions {
-        width: 50%;
-        padding: 0px;
-        margin-bottom: 0px; 
+        border: 1px solid #CCCCCC;
+        margin: 2px 0;
+        padding: 0;
+        width: 100%; 
+        list-style: none;
+}
+
+.alreadAddedOptions li {
+        float: left;
+        margin: 0 10px 0 0;
+        width: 130px;
+}
+
+.alreadAddedOptions .selectOpts{
+    width: 220px;
+    background: none;
+}
+
+.alreadAddedOptions .selectOpts table tr td{ 
+    background: none;
+}
+.alreadAddedOptions .selectVals{
+    width: 150px;
+}
+.alreadAddedOptions .optsTrash{
+    margin: 10px 0;
+    text-align: right;
+    width: 20px;
+}
+.alreadAddedOptions .optsTrash .minus{
+    margin: 0px;
+    padding: 0px;
 }
 .addMultiple table tr td {
         padding: 0px;
@@ -866,7 +895,41 @@ div.productnote {
 .alreadAddedOptions table tr:nth-child(2n) td {
     padding: 0px;
 }
+#vOpts .addMultiple {
+    border: 1px solid #CCCCCC;
+    list-style: none outside none;
+    margin: 2px 23px;
+    padding: 0;
+    width: 442px;
+}
+#vOpts .addMultiple li{
+    float: left;
+    margin: 0 10px 0 0;
+    width: 130px;
+}
+#vOpts .addMultiple .selectOpts{
+    width: 220px;
+    background: none;
+}
+#vOpts .addMultiple .selectOpts table tr td{ 
+    background: none;
+}
+
+#vOpts .addMultiple .selectVals{
+    width: 150px;
+}
+#vOpts .addMultiple .optsTrash{
+    margin: 10px 0;
+    text-align: right;
+    width: 20px;
+}
+#vOpts .addMultiple .optsTrash .minus{
+    margin: 0px;
+    padding: 0px;
+}
+
+
 .addMultiple{
         margin-bottom: 0px; 
-        display: none;
+        /*display: none;*/
 }
