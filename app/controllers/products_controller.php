@@ -903,7 +903,7 @@ class ProductsController extends AppController {
 				$product_group_id = (int)$this->data['Product']['product_group_id'];
 				$conditions = array(
 					       'Product.title LIKE "%'.$title.'%"',
-					       'Product.visible' => 1,
+					       'Product.shop_id' => Shop::get('Shop.id'),
 					      );
 				
 				
