@@ -24,7 +24,7 @@
         ?>
     </li>
     <li class="optsTrash">
-        <div><?php echo $this->Html->link($this->Html->image('trash.gif', array('alt' => 'Remove')), 'javascript: void(0);', array('class' => 'minus', 'escape' => false));?></div>
+        <div><?php echo $this->Html->link($this->Html->image('trash.gif', array('alt' => 'Remove')), 'javascript: void(0);', array('class' => 'minus newly_added', 'escape' => false));?></div>
     </li>
     <div class="clear"></div>
 </ul>

@@ -4,7 +4,7 @@
 	echo $this->Html->script('/uploadify/js/jquery.uploadify.v2.1.0.min');
 	echo $this->Html->script('/uploadify/js/swfobject');
 	
-	echo $this->element('jquery_uploadify_js', array('plugin' => 'uploadify'));
+	
 ?>
 
 			

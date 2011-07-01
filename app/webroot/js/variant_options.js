@@ -75,75 +75,114 @@ function plus () {
         nodeChildren = $('ul.addMultiple').clone(true);
         check = $('#vOpts ul.addMultiple').length + 1;
         
-        if ($('#vcount').val()  < 3) {
-            val = $('#vcount').val();
+        // we allow total 3 displayed
+        var hardLimit = parseInt(3);
+        // intial page load shows how many?
+        var initialOptionsCount = parseInt($('.initial_product_option').length);
+        // limit of newly added
+        var additionalOptionsLimit = parseInt(hardLimit - initialOptionsCount);
+        
+        // the undeleted initial + the newly_added
+        var newAndUndeletedCount = parseInt($('#vcount').val());
+        // the newly added
+        var additionalLiveCount = parseInt($('#newly_added_count').val());
+        
+        // so newly_added cannot be more than limit of newly added
+        if (additionalLiveCount  < additionalOptionsLimit) {
+            
+            val = newAndUndeletedCount;
+            
             val = parseInt(val) + parseInt(1);
             $('#vcount').val(val);
+            $('#newly_added_count').val(additionalLiveCount + parseInt(1));
+            // update the newly added and undeleted
+            newAndUndeletedCount = parseInt($('#vcount').val());
+            // update the newly added 
+            additionalLiveCount = parseInt($('#newly_added_count').val());
+            
             tmpChild = $(nodeChildren)[$(nodeChildren).length-1];
             $(tmpChild).show();
             $(tmpChild).attr('id', randomnumber);
             $(firstcontainer).append(tmpChild);
             $("#" + randomnumber + " .minus").attr('id', "minus_"+randomnumber);
             $("#" + randomnumber + " .custom").attr('id', "showCustom_"+randomnumber);
-            $("#" + randomnumber + " .custom").attr('name', "data[VariantOption]["+randomnumber+"][fieldcustom]");
+            $("#" + randomnumber + " .custom").attr('name', "data[Product][new_options]["+randomnumber+"][custom_field]");
             
-            //$("#" + randomnumber + " .OptValue").attr('name', "data[VariantOption]["+randomnumber+"][value]");
+            $("#" + randomnumber + " .OptValue").attr('name', "data[Product][new_options]["+randomnumber+"][value]");
             $("#" + randomnumber + " .PluOptName").addClass('OptName');
             $("#" + randomnumber + " .OptName").removeClass('PluOptName');
-            //$("#" + randomnumber + " .OptName").attr('name', "data[VariantOption]["+randomnumber+"][field]");
+            $("#" + randomnumber + " .OptName").attr('name', "data[Product][new_options]["+randomnumber+"][field]");
             $("#" + randomnumber + " .OptName").attr('onChange', "checkCustomAdd("+randomnumber+")");
             
             updateOptions($("#" + randomnumber + " .OptName"));               
         }
-        if ($('#vcount').val() == 3) {
+        // if newly added equal or more than newly added limit we hide the Add another option link
+        if (additionalLiveCount  >= additionalOptionsLimit) {
                 $('#plus').hide();
         }
         return false;
 }
 
 function minus() {
-        if ($('#vcount').val() == 1) {
+        
+        // we allow total 3 displayed
+        var hardLimit = parseInt(3);
+        // intial page load shows how many?
+        var initialOptionsCount = parseInt($('.initial_product_option').length);
+        // limit of newly added
+        var additionalOptionsLimit = parseInt(hardLimit - initialOptionsCount);
+        
+        // the undeleted initial + the newly_added
+        var newAndUndeletedCount = parseInt($('#vcount').val());
+        // the newly added
+        var additionalLiveCount = parseInt($('#newly_added_count').val());
+        
+        // we need to preserve at least 1 newly added or undeleted option
+        if (newAndUndeletedCount == 1) {
             alert('Cannot delete last product option. Product must have atleast 1 option.');
             return false;
         }
-        /*check = $('#vOpts table.addMultiple').length;
-        if ((check + $('#vOpts td.alreadAddedOptions').length)  == 1) {
-                
-        }*/
+        
         
         id = $($(this)).attr('id');
         tmp = id.split('_');
-        //if ($($(this)).attr('rel')) {
-        //        rel = $($(this)).attr('rel');
-        //        tmprel = rel.split('_');
-        //        optId = tmprel[1];
-                //$.ajax({
-                //        type: 'GET',
-                //        url: '/admin/products/remove_variant_option/' + optId,
-                //        success: function () {
-                                //$('#plus').show();
-                                
-                //        },
-                //        error: function () {
-                //                alert('Sorry, something went wrong!');
-                //        }
-                //});
-        //}
         
         $("#"+tmp[1]).hide();
         $("#deleteOption_"+tmp[1]).val(1);
         $('#undo_'+tmp[1]).show();//return false;
-        val = $('#vcount').val();
+        val = newAndUndeletedCount;
         val = parseInt(val) - parseInt(1);
         $('#vcount').val(val);
         
-        if ($('#vcount').val() < 3) {
+        // update the newly added and undeleted
+        newAndUndeletedCount = parseInt($('#vcount').val());
+        if ($(this).hasClass('newly_added')) {
+            // update the newly added
+            $('#newly_added_count').val(additionalLiveCount - parseInt(1));
+            additionalLiveCount = parseInt($('#newly_added_count').val());
+        }
+        
+        
+        
+        if (additionalLiveCount  < additionalOptionsLimit) {
                 $('#plus').show();
         }
         return false;
 }
 
-function undo() {        
+function undo() {
+        
+        // we allow total 3 displayed
+        var hardLimit = parseInt(3);
+        // intial page load shows how many?
+        var initialOptionsCount = parseInt($('.initial_product_option').length);
+        // limit of newly added
+        var additionalOptionsLimit = parseInt(hardLimit - initialOptionsCount);
+        
+        // the undeleted initial + the newly_added
+        var newAndUndeletedCount = parseInt($('#vcount').val());
+        // the newly added
+        var additionalLiveCount = parseInt($('#newly_added_count').val());
         
         id = $($(this)).attr('id');
         tmp = id.split('_');
@@ -155,9 +194,17 @@ function undo() {
         val = parseInt(val) + parseInt(1);
         $('#vcount').val(val);
         
-        if ($('#vcount').val() == 3) {
+        // update the newly added and undeleted
+        newAndUndeletedCount = parseInt($('#vcount').val());
+        // update the newly added 
+        additionalLiveCount = parseInt($('#newly_added_count').val());
+        
+        if (additionalLiveCount  < additionalOptionsLimit) {
+                $('#plus').show();
+        } else {
                 $('#plus').hide();
         }
+        
         return false;
 }
 
@@ -174,7 +221,7 @@ function checkCustom(val, i) {
 }
 
 function checkCustomAdd(val) {
-    console.log(val);
+    //console.log(val);
         if ($("#" + val+ " .OptName").val() == "custom") {
                 $("#" + val+ " .OptValue").val("Default Value");
                 $('#showCustom_'+val).show();

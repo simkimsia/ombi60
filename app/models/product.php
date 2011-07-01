@@ -540,12 +540,17 @@ class Product extends AppModel {
 			$variantIDs = $this->Variant->find('list', array('conditions'=>array('Variant.product_id' => $productID),
 								         'fields'    =>array('Variant.id')));
 			
+			/**
+			 * the order is very important!!
+			 * we need to allow new options which in case are the same as the old option fields
+			 **/
+			// delete any current options
+			$this->deleteAllOptions($deleteCurrentOptions, $variantIDs);
 			// add new Product options
 			$this->addNewProductOptions($productID, $newOptions, $variantIDs);
 			// rename any current options
 			$this->renameOptionFields($validCurrentOptions, $variantIDs);
-			// delete any current options
-			$this->deleteAllOptions($deleteCurrentOptions, $variantIDs);
+			
 		}
 		
 	}//end updateOptions()
