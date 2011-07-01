@@ -396,12 +396,6 @@ class ProductsController extends AppController {
 			//$this->log('new user id in session write ' . $this->Session->read('User.id'));
 			$sessionString = '?ss='.$this->transferSession();
 		}
-		
-		$this->log($productsInCart);
-		
-		$this->log($cart);
-		
-		
 		$this->set('sessionString', $sessionString);
 		
 		$this->render('cart');

@@ -520,8 +520,8 @@ class Cart extends AppModel {
 		if ($viewCart) {
 			$containVariantData = array(
 						
-					       'Variant' => array(
-						       'order'=>'Variant.order ASC',
+					       'AssociatedVariant' => array(
+						       'order'=>'AssociatedVariant.order ASC',
 						       'VariantOption' => array(
 							       'fields' => array('id', 'value'),
 							       'order'  => 'VariantOption.order ASC',
@@ -538,6 +538,7 @@ class Cart extends AppModel {
 						   'contain' => $containableArray,
 						   
 						   ));
+		
 		
 		$emptyCart = empty($cart['CartItem']);
 		
@@ -559,6 +560,14 @@ class Cart extends AppModel {
 						       'fields' => array('filename'),
 						       'order'=>array(
 								'ProductImage.cover DESC')
+						),
+						
+						'Variant' => array(
+							'order'=>'Variant.order ASC',
+							'VariantOption' => array(
+								'fields' => array('id', 'value', 'field', 'variant_id'),
+								'order'  => 'VariantOption.order ASC',
+							)
 						),
 						
 						'ProductsInGroup'=>array(
@@ -595,6 +604,8 @@ class Cart extends AppModel {
 					$cart['CartItem'][$id]['Product'] = $products[$product_id]['Product'];
 					$cart['CartItem'][$id]['ProductImage'] = $products[$product_id]['ProductImage'];
 					$cart['CartItem'][$id]['ProductsInGroup'] = $products[$product_id]['ProductsInGroup'];
+					$cart['CartItem'][$id]['Variant']	= $products[$product_id]['Variant'];
+					$cart['CartItem'][$id]['Vendor']	= $products[$product_id]['Vendor'];
 				}
 			}
 			

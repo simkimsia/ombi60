@@ -18,7 +18,7 @@ class CartItem extends AppModel {
 			'order' => ''
 		),
 
-		'Variant' => array(
+		'AssociatedVariant' => array(
 			'className' => 'Variant',
 			'foreignKey' => 'variant_id',
 			'conditions' => '',
@@ -175,33 +175,6 @@ class CartItem extends AppModel {
 	
 	
 	/**
-	 * to be used in view_cart action in products controller
-	 * */
-	function prepareCartItemInView($items = array()) {
-		
-		$resultItems = array();
-		foreach($items as $item) {
-			$resultItems[] = array('id'=>$item['id'],
-					       'cart_id'=>$item['cart_id'],
-					       'price'=>$item['product_price'],
-					       'quantity'=>$item['product_quantity'],
-					       'visible'=>$item['visible'],
-					       'title'=>$item['product_title'],
-					       'weight'=>$item['product_weight'],
-					       'currency'=>$item['currency'],
-					       
-					       'shipping_required'=>$item['shipping_required'],
-					       'previous_price'=>$item['previous_price'],
-					       'previous_currency'=>$item['previous_currency'],
-					       'product' => array('id'=>$item['product_id'],
-								  'cover_image'=>$item['ProductImage']['filename'])
-					       );
-		}
-		
-		return $resultItems;
-	}
-	
-	/**
 	 * for use in templates for shopfront pages
 	 * */
 	function getTemplateVariable($items=array()) {
@@ -211,7 +184,7 @@ class CartItem extends AppModel {
 		foreach($items as $key=>$item) {
 			$item = (isset($item['CartItem'])) ? $item['CartItem'] : $item;
 			$result = array('id' => $item['variant_id'],
-					'title' => $item['product_title'],
+					
 					'price' => $item['product_price'],
 					'line_price' => $item['line_price'],
 					'quantity' => $item['product_quantity'],
@@ -221,7 +194,47 @@ class CartItem extends AppModel {
 			
 			
 			$result['product'] = !empty($item['Product']) ? Product::getTemplateVariable($item, false) : array();
-			$result['variant'] = !empty($item['Variant']) ? Variant::getTemplateVariable($item, false) : array();
+			$result['variant'] = !empty($item['AssociatedVariant']) ? Variant::getTemplateVariable($item['AssociatedVariant'], false) : array();
+			
+			// we get the latest product and variant title where possible
+			// we also collect the sku from variant
+			// collect vendor from product
+			if (!empty($result['product'])) {
+				$productTitle = $result['product']['title'] ;
+				$vendor = $result['product']['vendor'] ;
+			} else {
+				$productTitle = $item['product_title'];
+				$vendor = '';
+			}
+			
+			if (!empty($result['variant'])) {
+				$variantTitle = $result['variant']['title'] ;
+				$variantSKU = $result['variant']['sku'] ;
+			} else {
+				$variantTitle = $item['variant_title'];
+				$variantSKU = '';
+			}
+			
+			
+			/**
+			 * for the cart item title, if there is  1 variant for the product
+			 * and the variant title starts with "default" case-insensitive
+			 * we just use ProductTitle
+			 **/
+			if (count($result['product']['variants']) == 1) {
+				if (startsWith($variantTitle, 'default', false)) {
+					$result['title'] = $productTitle;
+				}
+			}
+			// In all other cases, we use ProductTitle - VariantTitle
+			if (!isset($result['title'])) {
+				$result['title'] = $productTitle . ' - ' . $variantTitle;
+			}
+			
+			// assign the sku
+			$result['sku'] = $variantSKU;
+			$result['vendor'] = $vendor;
+			
 			
 			$results[] = $result;
 		}
