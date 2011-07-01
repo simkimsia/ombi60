@@ -18,6 +18,7 @@
         }
         
         ?>
+
         <input type="hidden" value="<?php echo $count?>" name="vcount" id="vcount" />
         <input type="hidden" value="0" name="newly_added_count" id="newly_added_count" /> 
                 </div>
