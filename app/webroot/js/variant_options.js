@@ -1,4 +1,8 @@
 $(document).ready(function() {
+        if ($('#vcount').val() < 1) {
+            plus();
+        }
+        
         $('#plus').live('click', plus);
         $('.minus').live('click', minus);
         $('.OptName').live('focus', function () {        
@@ -76,23 +80,39 @@ function plus () {
         check = $('#vOpts ul.addMultiple').length + 1;
         
         if ($('#vcount').val()  < 3) {
+            
             val = $('#vcount').val();
             val = parseInt(val) + parseInt(1);
             $('#vcount').val(val);
+             
             tmpChild = $(nodeChildren)[$(nodeChildren).length-1];
+            //console.log($(tmpChild).children());return false;
             $(tmpChild).show();
             $(tmpChild).attr('id', randomnumber);
             $(firstcontainer).append(tmpChild);
+            //var $inputs = $(tmpChild);
+            
             $("#" + randomnumber + " .minus").attr('id', "minus_"+randomnumber);
             $("#" + randomnumber + " .custom").attr('id', "showCustom_"+randomnumber);
-            $("#" + randomnumber + " .custom").attr('name', "data[VariantOption]["+randomnumber+"][fieldcustom]");
+            
             
             //$("#" + randomnumber + " .OptValue").attr('name', "data[VariantOption]["+randomnumber+"][value]");
             $("#" + randomnumber + " .PluOptName").addClass('OptName');
+            $("#" + randomnumber + " .PluOptName").attr('name', "data[Product][new_options]["+randomnumber+"][field]");
+            
+            $("#" + randomnumber + " .custom").attr('name', "data[Product][new_options]["+randomnumber+"][custom_field]");
+            
+            $("#" + randomnumber + " .OptValue").attr('name', "data[Product][new_options]["+randomnumber+"][value]");
+            
             $("#" + randomnumber + " .OptName").removeClass('PluOptName');
             //$("#" + randomnumber + " .OptName").attr('name', "data[VariantOption]["+randomnumber+"][field]");
             $("#" + randomnumber + " .OptName").attr('onChange', "checkCustomAdd("+randomnumber+")");
-            
+            if ($('#vcount').val() > 1) {
+                $("#" + randomnumber + " .OptName").val('custom');
+                $("#" + randomnumber + " .custom").show();
+                $("#" + randomnumber + " .custom").val('Default');
+                $("#" + randomnumber + " .OptValue").val('Default');
+            }
             updateOptions($("#" + randomnumber + " .OptName"));               
         }
         if ($('#vcount').val() == 3) {
@@ -144,7 +164,10 @@ function minus() {
 }
 
 function undo() {        
-        
+        if ($('#vcount').val() == 3) {
+            alert('Product could not have more than 3 options, please remove at-least one option.');
+            return false;
+        }
         id = $($(this)).attr('id');
         tmp = id.split('_');
         

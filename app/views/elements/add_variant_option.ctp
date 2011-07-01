@@ -1,4 +1,5 @@
-<ul class="addMultiple" style="margin-bottom: 0px; display: none;">
+<?php ?>
+<ul class="addMultiple" style="margin-bottom: 0px; <?php echo ife(isset($show), 'display: block;', 'display: none')?>;">
     <li class="selectOpts">
         <table cellpadding="0" cellspacing="0">
             <tr>
@@ -10,7 +11,8 @@
                                         'style'=>'Style',
                                         'size'=>'Size',
                                         'material'=>'Material',
-                                        'custom'=>'Custom', );
+                                        'custom'=>'Custom', 
+                                );
                     echo $this->Form->input('Product.new_options.0.field', array('class' => 'PluOptName', 'options' => $voptions, 'label' => false, 'div' => false, 'onChange' => 'checkCustomAdd(this.value)'));
                     ?>
                 </td>

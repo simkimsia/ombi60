@@ -15,6 +15,8 @@
             ?>                       
         <?php
             echo $this->element('view_variant_option', array('productOptions'=>$productOptions));
+        } else {
+            //echo $this->element('add_variant_option', array('show'=>true));
         }
         
         ?>
