@@ -63,6 +63,11 @@ if (!defined('JS_URL')) {
 	define('JS_URL', 'js/');
 }
 
+if (!defined('ASSETS_URL')) {
+	define('ASSETS_URL', 'assets/');
+}
+
+
 if (!defined('IMAGES_URL')) {
 	define('IMAGES_URL', 'img/');
 }
@@ -84,7 +89,7 @@ function ombi60AssetUrl($filename) {
 	if (preg_match("/\.css$/", $filename)) {
 		
 		if ($filename[0] !== '/') {
-			$filename = CSS_URL . $filename;
+			$filename = ASSETS_URL . $filename;
 		}
 		
 		if (strpos($filename, '?') === false) {
@@ -101,7 +106,7 @@ function ombi60AssetUrl($filename) {
 	if (preg_match("/\.js$/", $filename)) {
 		
 		if ($filename[0] !== '/') {
-			$filename = JS_URL . $filename;
+			$filename = ASSETS_URL . $filename;
 		}
 		
 		if (strpos($filename, '?') === false) {
@@ -117,7 +122,7 @@ function ombi60AssetUrl($filename) {
 	if (preg_match("/\.png|.jpg|.jpeg|.gif|.tiff$/", $filename)) {
 		
 		if ($filename[0] !== '/') {
-			$filename = IMAGES_URL . $filename;
+			$filename = ASSETS_URL . $filename;
 		}
 		
 		
@@ -220,6 +225,14 @@ function ombi60WeightWithUnit($weight_in_grams) {
 	}
 }
 
+function ombi60StripNewlines($input) {
+	return (string)str_replace(array("\r", "\r\n", "\n"), '', $input);
+}
+
+function ombi60StripHtml($input) {
+	return (string)strip_tags($input);
+}
+
 /**
  * Product Image Url
  * Use: {{ product.images[0] | product_img_url : 'large' }}
@@ -249,9 +262,12 @@ class Ombi60_Twig_Extension extends Twig_Extension
 	    'handleize' => new Twig_Filter_Function('ombi60Handle'),
 	    'implode' => new Twig_Filter_Function('ombi60Implode'),
 	    'pluralize' => new Twig_Filter_Function('ombi60Pluralize'),
-	    'truncate' => new Twig_Filter_Function('ombi60Truncate'),
+	    'truncate' => new Twig_Filter_Function('ombi60TruncateString'),
 	    'truncatewords' => new Twig_Filter_Function('ombi60TruncateWords'),
 	    'weight_with_unit' => new Twig_Filter_Function('ombi60WeightWithUnit'),
+	    'strip_newlines' => new Twig_Filter_Function('ombi60StripNewlines'),
+	    'strip_html' => new Twig_Filter_Function('ombi60StripHtml'),
+	    'json' => new Twig_Filter_Function('ombi60JsonForJS'), // this is for converting data for use in JS see http://wiki.shopify.com/Json
         );
     }
 

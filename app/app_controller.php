@@ -230,6 +230,25 @@ class AppController extends Controller {
 		
 		$this->set('linklists', $linklists);
 		
+		$this->loadModel('Blog');
+		$this->Blog->recursive = -1;
+		
+		$this->Blog->Behaviors->attach('Containable');
+		
+		$blogs = $this->Blog->find('all', array(
+		    'conditions'=>array('Blog.shop_id'=>$shopId),
+		    'contain'   =>array(
+			'Post'=>array(
+			    'conditions' => array('Post.visible'=>true),
+			    'order' => array('Post.created DESC'),
+			    )
+			),
+		    ));
+		
+		$blogs = Blog::getTemplateVariable($blogs);
+		
+		$this->set('blogs', $blogs);
+		
 		// fetch the pages
 		$this->loadModel('Webpage');
 		$this->Webpage->recursive = -1;

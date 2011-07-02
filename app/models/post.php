@@ -94,7 +94,7 @@ class Post extends AppModel {
                 
 		if (!isset($this->virtualFields['url'])) {
                         
-                        $this->virtualFields['url'] = "CONCAT('/', '$controller', '/', `Blog`.`short_name`, '/', `{$this->alias}`.`id`, '-', `{$this->alias}`.`slug`)";
+                        $this->virtualFields['url'] = "CONCAT('/', '$controller', '/', `{$this->alias}`.`blog_handle`, '/', `{$this->alias}`.`id`, '-', `{$this->alias}`.`slug`)";
                                 
                 }
                 
@@ -127,22 +127,23 @@ class Post extends AppModel {
 		if (!$multiple) $articles = array($articles);
 		
 		foreach($articles as $key=>$article) {
-			
-			$result = array('id' => $article['Post']['id'],
-					   'title' => $article['Post']['title'],
+			$author = isset($article['User']['name_to_call']) ? $article['User']['name_to_call'] : '';
+			$article = !empty($article['Post']) ? $article['Post'] : $article;
+			$result = array('id' => $article['id'],
+					   'title' => $article['title'],
 					   
-					   'content' => $article['Post']['content'],
+					   'content' => $article['content'],
 					   
-					   'handle' => $article['Post']['slug'],
-					   'underscore_handle' => str_replace('-', '_', $article['Post']['slug']),
-					   'url' => $article['Post']['url'],
+					   'handle' => $article['slug'],
+					   'underscore_handle' => str_replace('-', '_', $article['slug']),
+					   'url' => $article['url'],
 					   
-					   'created' => $article['Post']['created'],
-					   'published'=> $article['Post']['published'],
+					   'created' => $article['created'],
+					   'published'=> $article['published'],
 					   );
 			
 			
-			$result['author'] = isset($article['User']['name_to_call']) ? $article['User']['name_to_call'] : '';
+			$result['author'] = $author;
 			
 			
 			$results[$result['underscore_handle']] = $result;

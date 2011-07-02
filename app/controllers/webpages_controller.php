@@ -62,7 +62,8 @@ class WebpagesController extends AppController {
 	// this is where the / will get routed to
 	// this is supposed to use the index.tpl inside pages folder within the theme
 	function frontpage() {
-		$this->viewPath = 'pages';
+		$this->viewPath = 'templates';
+		$this->set('template', 'page');
 		$this->render('index');
 	}
 	
