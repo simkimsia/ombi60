@@ -72,6 +72,37 @@ if (!defined('IMAGES_URL')) {
 	define('IMAGES_URL', 'img/');
 }
 
+if (!defined('SNIPPETS_URL')) {
+	define('SNIPPETS_URL', 'snippets/');
+}
+
+function ombi60SnippetsUrl($filename) {
+	// we need to set the theme as well
+	App::import('Model', 'Shop');
+	$shopId = Shop::get('Shop.id');
+	$currentShop = Cache::read('Shop'.$shopId);
+	$theme = !empty($currentShop['FeaturedSavedTheme']['folder_name']) ? $currentShop['FeaturedSavedTheme']['folder_name'] : 'blue-white';
+	
+	// we need to differentiate between css, js and image files
+	// check for .css, .js, and all possible image extensions based on the filename.
+	if (preg_match("/\.tpl$/", $filename)) {
+		
+		if ($filename[0] !== '/') {
+			$filename = 'themed' . DS. $theme . DS . SNIPPETS_URL . $filename;
+		}
+		
+		if (strpos($filename, '?') === false) {
+			if (substr($filename, -4) !== '.tpl') {
+				$filename .= '.tpl';
+			}
+		}
+		
+		
+		return $filename;
+	}
+	
+}
+
 function ombi60AssetUrl($filename) {
 	// we need to use HtmlHelper existing in cakephp currently
 	// in future we may use cdn otherwise or whatever
@@ -233,6 +264,13 @@ function ombi60StripHtml($input) {
 	return (string)strip_tags($input);
 }
 
+function ombi60PutProductUrlWithinCollection($product_url, $collection) {
+	$isCollectionValid = !empty($collection['url']);
+	if ($isCollectionValid) {
+		return $collection['url'] . $product_url;
+	}
+}
+
 /**
  * Product Image Url
  * Use: {{ product.images[0] | product_img_url : 'large' }}
@@ -267,7 +305,9 @@ class Ombi60_Twig_Extension extends Twig_Extension
 	    'weight_with_unit' => new Twig_Filter_Function('ombi60WeightWithUnit'),
 	    'strip_newlines' => new Twig_Filter_Function('ombi60StripNewlines'),
 	    'strip_html' => new Twig_Filter_Function('ombi60StripHtml'),
-	    'json' => new Twig_Filter_Function('ombi60JsonForJS'), // this is for converting data for use in JS see http://wiki.shopify.com/Json
+	    'json' => new Twig_Filter_Function('json_encode'), // this is for converting data for use in JS see http://wiki.shopify.com/Json
+	    'within' => new Twig_Filter_Function('ombi60PutProductUrlWithinCollection'),
+	    'snippets_url' => new Twig_Filter_Function('ombi60SnippetsUrl'),
         );
     }
 

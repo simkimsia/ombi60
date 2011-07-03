@@ -241,6 +241,7 @@ class AppController extends Controller {
 			'Post'=>array(
 			    'conditions' => array('Post.visible'=>true),
 			    'order' => array('Post.created DESC'),
+			    'limit' => '25',
 			    )
 			),
 		    ));
