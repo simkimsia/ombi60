@@ -111,7 +111,7 @@ function plus () {
                 $("#" + randomnumber + " .OptName").val('custom');
                 $("#" + randomnumber + " .custom").show();
                 $("#" + randomnumber + " .custom").val('Default');
-                $("#" + randomnumber + " .OptValue").val('Default');
+                $("#" + randomnumber + " .OptValue").val('Default Value');
             }
             updateOptions($("#" + randomnumber + " .OptName"));               
         }
