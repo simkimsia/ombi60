@@ -13,7 +13,7 @@
  * Twig_NodeVisitor_Escaper implements output escaping.
  *
  * @package    twig
- * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author     Fabien Potencier <fabien@symfony.com>
  */
 class Twig_NodeVisitor_Escaper implements Twig_NodeVisitorInterface
 {
@@ -84,7 +84,9 @@ class Twig_NodeVisitor_Escaper implements Twig_NodeVisitorInterface
             return $node;
         }
 
-        return new Twig_Node_Print(
+        $class = get_class($node);
+
+        return new $class(
             $this->getEscaperFilter($type, $expression),
             $node->getLine()
         );
@@ -92,11 +94,10 @@ class Twig_NodeVisitor_Escaper implements Twig_NodeVisitorInterface
 
     protected function preEscapeFilterNode(Twig_Node_Expression_Filter $filter, Twig_Environment $env)
     {
-        $filterMap = $env->getFilters();
         $name = $filter->getNode('filter')->getAttribute('value');
 
-        if (isset($filterMap[$name])) {
-            $type = $filterMap[$name]->getPreEscape();
+        if (false !== $f = $env->getFilter($name)) {
+            $type = $f->getPreEscape();
             if (null === $type) {
                 return $filter;
             }
@@ -148,5 +149,13 @@ class Twig_NodeVisitor_Escaper implements Twig_NodeVisitorInterface
         $name = new Twig_Node_Expression_Constant('escape', $line);
         $args = new Twig_Node(array(new Twig_Node_Expression_Constant((string) $type, $line)));
         return new Twig_Node_Expression_Filter($node, $name, $args, $line);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPriority()
+    {
+        return 0;
     }
 }

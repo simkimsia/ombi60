@@ -14,9 +14,9 @@
  * Represents a block call node.
  *
  * @package    twig
- * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author     Fabien Potencier <fabien@symfony.com>
  */
-class Twig_Node_BlockReference extends Twig_Node
+class Twig_Node_BlockReference extends Twig_Node implements Twig_NodeOutputInterface
 {
     public function __construct($name, $lineno, $tag = null)
     {
@@ -28,11 +28,11 @@ class Twig_Node_BlockReference extends Twig_Node
      *
      * @param Twig_Compiler A Twig_Compiler instance
      */
-    public function compile($compiler)
+    public function compile(Twig_Compiler $compiler)
     {
         $compiler
             ->addDebugInfo($this)
-            ->write(sprintf("\$this->getBlock('%s', \$context, \$blocks);\n", $this->getAttribute('name')))
+            ->write(sprintf("\$this->displayBlock('%s', \$context, \$blocks);\n", $this->getAttribute('name')))
         ;
     }
 }

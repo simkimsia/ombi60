@@ -25,13 +25,6 @@ class Twig_TokenParser_For extends Twig_TokenParser
         $this->parser->getStream()->expect(Twig_Token::OPERATOR_TYPE, 'in');
         $seq = $this->parser->getExpressionParser()->parseExpression();
 
-        $withLoop = true;
-        if ($this->parser->getStream()->test('without')) {
-            $this->parser->getStream()->next();
-            $this->parser->getStream()->expect('loop');
-            $withLoop = false;
-        }
-
         $this->parser->getStream()->expect(Twig_Token::BLOCK_END_TYPE);
         $body = $this->parser->subparse(array($this, 'decideForFork'));
         if ($this->parser->getStream()->next()->getValue() == 'else') {
@@ -50,15 +43,15 @@ class Twig_TokenParser_For extends Twig_TokenParser
             $valueTarget = $targets->getNode(0);
         }
 
-        return new Twig_Node_For($keyTarget, $valueTarget, $seq, $body, $else, $withLoop, $lineno, $this->getTag());
+        return new Twig_Node_For($keyTarget, $valueTarget, $seq, $body, $else, $lineno, $this->getTag());
     }
 
-    public function decideForFork($token)
+    public function decideForFork(Twig_Token $token)
     {
         return $token->test(array('else', 'endfor'));
     }
 
-    public function decideForEnd($token)
+    public function decideForEnd(Twig_Token $token)
     {
         return $token->test('endfor');
     }

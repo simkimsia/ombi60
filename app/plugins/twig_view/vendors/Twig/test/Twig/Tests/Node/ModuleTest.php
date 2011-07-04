@@ -22,8 +22,9 @@ class Twig_Tests_Node_ModuleTest extends Twig_Tests_Node_TestCase
         $parent = new Twig_Node_Expression_Constant('layout.twig', 0);
         $blocks = new Twig_Node();
         $macros = new Twig_Node();
+        $traits = new Twig_Node();
         $filename = 'foo.twig';
-        $node = new Twig_Node_Module($body, $parent, $blocks, $macros, $filename);
+        $node = new Twig_Node_Module($body, $parent, $blocks, $macros, $traits, $filename);
 
         $this->assertEquals($body, $node->getNode('body'));
         $this->assertEquals($blocks, $node->getNode('blocks'));
@@ -58,23 +59,31 @@ class Twig_Tests_Node_ModuleTest extends Twig_Tests_Node_TestCase
         $extends = null;
         $blocks = new Twig_Node();
         $macros = new Twig_Node();
+        $traits = new Twig_Node();
         $filename = 'foo.twig';
 
-        $node = new Twig_Node_Module($body, $extends, $blocks, $macros, $filename);
+        $node = new Twig_Node_Module($body, $extends, $blocks, $macros, $traits, $filename);
         $tests[] = array($node, <<<EOF
 <?php
 
 /* foo.twig */
 class __TwigTemplate_be925a7b06dda0dfdbd18a1509f7eb34 extends Twig_Template
 {
-    public function display(array \$context, array \$blocks = array())
+    protected function doDisplay(array \$context, array \$blocks = array())
     {
+        \$context = array_merge(\$this->env->getGlobals(), \$context);
+
         echo "foo";
     }
 
     public function getTemplateName()
     {
         return "foo.twig";
+    }
+
+    public function isTraitable()
+    {
+        return false;
     }
 }
 EOF
@@ -85,7 +94,7 @@ EOF
         $body = new Twig_Node(array($import, new Twig_Node_Text('foo', 0)));
         $extends = new Twig_Node_Expression_Constant('layout.twig', 0);
 
-        $node = new Twig_Node_Module($body, $extends, $blocks, $macros, $filename);
+        $node = new Twig_Node_Module($body, $extends, $blocks, $macros, $traits, $filename);
         $tests[] = array($node, <<<EOF
 <?php
 
@@ -103,15 +112,22 @@ class __TwigTemplate_be925a7b06dda0dfdbd18a1509f7eb34 extends Twig_Template
         return \$this->parent;
     }
 
-    public function display(array \$context, array \$blocks = array())
+    protected function doDisplay(array \$context, array \$blocks = array())
     {
-        \$context['macro'] = \$this->env->loadTemplate("foo.twig", true);
+        \$context = array_merge(\$this->env->getGlobals(), \$context);
+
+        \$context['macro'] = \$this->env->loadTemplate("foo.twig");
         \$this->getParent(\$context)->display(\$context, array_merge(\$this->blocks, \$blocks));
     }
 
     public function getTemplateName()
     {
         return "foo.twig";
+    }
+
+    public function isTraitable()
+    {
+        return false;
     }
 }
 EOF
@@ -125,7 +141,7 @@ EOF
                         0
                     );
 
-        $node = new Twig_Node_Module($body, $extends, $blocks, $macros, $filename);
+        $node = new Twig_Node_Module($body, $extends, $blocks, $macros, $traits, $filename);
         $tests[] = array($node, <<<EOF
 <?php
 
@@ -137,7 +153,7 @@ class __TwigTemplate_be925a7b06dda0dfdbd18a1509f7eb34 extends Twig_Template
     public function getParent(array \$context)
     {
         if (null === \$this->parent) {
-            \$this->parent = (true) ? ("foo") : ("foo");
+            \$this->parent = ((true) ? ("foo") : ("foo"));
             if (!\$this->parent instanceof Twig_Template) {
                 \$this->parent = \$this->env->loadTemplate(\$this->parent);
             }
@@ -146,14 +162,21 @@ class __TwigTemplate_be925a7b06dda0dfdbd18a1509f7eb34 extends Twig_Template
         return \$this->parent;
     }
 
-    public function display(array \$context, array \$blocks = array())
+    protected function doDisplay(array \$context, array \$blocks = array())
     {
+        \$context = array_merge(\$this->env->getGlobals(), \$context);
+
         \$this->getParent(\$context)->display(\$context, array_merge(\$this->blocks, \$blocks));
     }
 
     public function getTemplateName()
     {
         return "foo.twig";
+    }
+
+    public function isTraitable()
+    {
+        return false;
     }
 }
 EOF

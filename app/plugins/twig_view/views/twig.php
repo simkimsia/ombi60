@@ -5,6 +5,7 @@
  * About Twig
  *  http://www.twig-project.org/
  *
+ * @version 0.5
  * @package app.views
  * @subpackage app.views.twig
  * @author Kjell Bublitz <m3nt0r.de@gmail.com>
@@ -24,13 +25,15 @@ Twig_Autoloader::register();
 
 // overwrite twig classes (thanks to autoload, no problem)
 App::import('Lib', 'TwigView.TransNode');
-App::import('Lib', 'TwigView.ExtensionI18n');
+App::import('Lib', 'TwigView.TokenparserTrans');
 
 // my custom cake extensions
+App::import('Lib', 'TwigView.ExtensionI18n');
 App::import('Lib', 'TwigView.ExtensionAgo');
-
-// custom ombi60 extensions
+App::import('Lib', 'TwigView.ExtensionBasic');
+App::import('Lib', 'TwigView.ExtensionNumbers');
 App::import('Lib', 'TwigView.Ombi60Extension');
+
 
 // get twig core extension (overwrite trans block)
 App::import('Lib', 'TwigView.CoreExtension');
@@ -38,7 +41,7 @@ App::import('Lib', 'TwigView.CoreExtension');
 /**
  * TwigView for CakePHP
  * 
- * @version 0.4
+ * @version 0.5
  * @author Kjell Bublitz <m3nt0r.de@gmail.com>
  * @link http://github.com/m3nt0r/cakephp-twig-view GitHub
  * @package app.views
@@ -79,7 +82,8 @@ class TwigView extends View {
 		$this->Twig = new Twig_Environment($loader, array(
 			'cache' => TWIG_VIEW_CACHE,
 			'charset' => strtolower(Configure::read('App.encoding')),
-			'auto_reload' => (bool) Configure::read('debug')
+			'auto_reload' => (bool) Configure::read('debug'),
+			'autoescape' => false
 		));;
 		
 		// overwrite some stuff
@@ -91,17 +95,96 @@ class TwigView extends View {
 		// activate |ago filter
 		$this->Twig->addExtension(new Twig_Extension_TimeAgo);
 		
-		// activate ombi60 extension
+		// activate basic filter
+		$this->Twig->addExtension(new Twig_Extension_Basic);
+		
+		// activate number filters
+		$this->Twig->addExtension(new Twig_Extension_Number);
+		
+		// activate ombi60 filters
 		$this->Twig->addExtension(new Ombi60_Twig_Extension);
 		
 		parent::__construct($controller, $register);
+		
+		if (isset($controller->theme))
+			$this->theme =& $controller->theme;
+			
 		$this->ext = '.tpl';
 	}
 	
 	/**
-	 * Overwrite the default _render()
+	 * Feature Detection
 	 */
-	function _render($___viewFn, $___dataForView, $loadHelpers = true) {
+	private function isCake2() {
+		return (isset($this->Helpers) && method_exists($this->Helpers, 'attached'));
+	}
+	
+	/**
+	 * Render Proxy
+	 */
+	function _render($___viewFn, $___dataForView = array(), $loadHelpers = true) {
+		if ($this->isCake2()) {
+			return $this->_render2x($___viewFn, $___dataForView);
+	 	} else {
+			return $this->_render1x($___viewFn, $___dataForView, $loadHelpers = true);
+		}
+	}
+	
+	/**
+	 * Render: 2.0
+	 *
+	 * Thanks to BigClick
+	 * @link https://github.com/bigclick/cakephp-twig-view/commit/2e3e0aa65d3ac6e492f441cd6196c524087c5e95
+	 */
+	protected function _render2x($___viewFn, $___dataForView = array()) {
+		
+		$isCtpFile = (substr($___viewFn, -3) == 'ctp');
+		
+		if (empty($___dataForView)) {
+			$___dataForView = $this->viewVars;
+		}
+				
+		if ($isCtpFile) {
+			$out = parent::_render($___viewFn, $___dataForView);
+		} else {
+			ob_start();
+			// Setup the helpers from the new Helper Collection
+			$helpers = array();
+			$loaded_helpers = $this->Helpers->attached();
+			foreach($loaded_helpers as $helper) {
+				$name = Inflector::variable($helper);
+				$helpers[$name] =& $this->loadHelper($helper);
+			}
+
+			$data = array_merge($___dataForView, $helpers);	
+			$data['_view'] = $this;
+			
+			try {
+				$relativeFn = str_replace($this->templatePaths, '', $___viewFn);
+				$template = $this->Twig->loadTemplate($relativeFn);
+				echo $template->render($data);
+			} 
+			catch (Twig_SyntaxError $e) {
+				$this->displaySyntaxException($e);
+			} catch (Twig_RuntimeError $e) {
+				$this->displayRuntimeException($e);
+			} catch (RuntimeException $e) {
+				$this->displayRuntimeException($e);
+			} catch (Twig_Error $e) {
+				$this->displayException($e, 'Error');
+			}
+			$out = ob_get_clean();
+			
+		}
+		
+		return $out;
+	}
+	
+	
+	/**
+	 * Render: 1.2+
+	 */
+	function _render1x($___viewFn, $___dataForView, $loadHelpers = true) {
 		$loadedHelpers = array();
 		
 		if ($this->helpers != false && $loadHelpers === true) {
@@ -134,8 +217,9 @@ class TwigView extends View {
 			} else {
 				@include ($___viewFn);
 			}
-		} else {
-			$data = array_merge($___dataForView, $this->loaded);	
+		} else {			
+			$data = array_merge($___dataForView, $this->loaded);
+			$data['_view'] = $this;
 			try {
 				$relativeFn = str_replace($this->templatePaths, '', $___viewFn);
 				$template = $this->Twig->loadTemplate($relativeFn);
@@ -180,23 +264,81 @@ class TwigView extends View {
 	}
 	
 	/**
-	 * Workaround for Debug Kit and possibly others.
-	 * In Twig we use the "element" tag, not this method. 
-	 * Shouldn't matter.. KISS
+	 * Element: 1.2+
 	 */
-	function element($name, $params = array(), $loadHelpers = false) {
-		
-		// email hack
-		if (substr($name, 0, 5) != 'email') {
-			$this->ext = '.ctp'; // not an email, use .ctp
-		}
-		
+	function element1x($name, $params = array(), $loadHelpers = false) {
 		// render and revert to using .tpl
 		$return = parent::element($name, $params, $loadHelpers);
 		$this->ext = '.tpl';
 		return $return;
 	}
 	
+	/**
+	 * Element: 2.0
+	 */
+	function element2x($name, $params = array(), $callbacks = false) {
+		// render and revert to using .tpl
+		$return = parent::element($name, $params, $callbacks);
+		$this->ext = '.tpl';
+		return $return;
+	}
+	
+	/**
+	 * Element Proxy
+	 *
+	 * Support for cake 2.0
+	 */
+	public function element($name, $params = array(), $callbacks = false) {
+		// email hack
+		if (substr($name, 0, 5) != 'email') {
+			$this->ext = '.ctp'; // not an email, use .ctp
+		}
+		
+		if ($this->isCake2()) {
+			return $this->element2x($name, $params, $callbacks);
+		} else {
+			return $this->element1x($name, $params, $callbacks);
+		}
+	}
+
+	/**
+	 * Return all possible paths to find view files in order
+	 * 
+	 * Added to TwigView
+	 *   - super hard copy-paste job from /cake/libs/view/theme.php :)
+	 *   - added "isset" test: fallback to default behavior.
+	 *
+	 * @param string $plugin The name of the plugin views are being found for.
+	 * @param boolean $cached Set to true to force dir scan.
+	 * @return array paths
+	 * @access protected
+	 * @todo Make theme path building respect $cached parameter.
+	 */
+	function _paths($plugin = null, $cached = true) {
+		if (!isset($this->theme)) {
+			return parent::_paths($plugin, $cached);
+		}
+		
+		$paths = parent::_paths($plugin, $cached);
+		$themePaths = array();
+
+		if (!empty($this->theme)) {
+			$count = count($paths);
+			for ($i = 0; $i < $count; $i++) {
+				if (strpos($paths[$i], DS . 'plugins' . DS) === false
+					&& strpos($paths[$i], DS . 'libs' . DS . 'view') === false) {
+						if ($plugin) {
+							$themePaths[] = $paths[$i] . 'themed'. DS . $this->theme . DS . 'plugins' . DS . $plugin . DS;
+						}
+						$themePaths[] = $paths[$i] . 'themed'. DS . $this->theme . DS;
+					}
+			}
+			$paths = array_merge($themePaths, $paths);
+		}
+		return $paths;
+	}
+
+
 	/**
 	 * I know. There are probably a million better ways, but this works too.
 	 */

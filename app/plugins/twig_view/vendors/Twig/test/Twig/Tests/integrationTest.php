@@ -46,14 +46,14 @@ class Twig_Tests_IntegrationTest extends PHPUnit_Framework_TestCase
     public function testIntegration($file, $test, $message, $templates)
     {
         $loader = new Twig_Loader_Array($templates);
-        $twig = new Twig_Environment($loader, array('trim_blocks' => true, 'cache' => false));
+        $twig = new Twig_Environment($loader, array('cache' => false));
         $twig->addExtension(new Twig_Extension_Escaper());
         $twig->addExtension(new TestExtension());
 
         try {
             $template = $twig->loadTemplate('index.twig');
-        } catch (Twig_SyntaxError $e) {
-            $e->setFilename($file);
+        } catch (Twig_Error_Syntax $e) {
+            $e->setTemplateFile($file);
 
             throw $e;
         } catch (Exception $e) {
@@ -79,6 +79,11 @@ class Twig_Tests_IntegrationTest extends PHPUnit_Framework_TestCase
     }
 }
 
+function test_foo($value = 'foo')
+{
+    return $value;
+}
+
 class Foo
 {
     const BAR_NAME = 'bar';
@@ -97,6 +102,26 @@ class Foo
     {
         return $this;
     }
+
+    public function is()
+    {
+        return 'is';
+    }
+
+    public function in()
+    {
+        return 'in';
+    }
+
+    public function not()
+    {
+        return 'not';
+    }
+
+    public function strToLower($value)
+    {
+        return strtolower($value);
+    }
 }
 
 class TestExtension extends Twig_Extension
@@ -107,6 +132,14 @@ class TestExtension extends Twig_Extension
             'escape_and_nl2br' => new Twig_Filter_Method($this, 'escape_and_nl2br', array('needs_environment' => true, 'is_safe' => array('html'))),
             'nl2br' => new Twig_Filter_Method($this, 'nl2br', array('pre_escape' => 'html', 'is_safe' => array('html'))),
             'escape_something' => new Twig_Filter_Method($this, 'escape_something', array('is_safe' => array('something'))),
+        );
+    }
+
+    public function getFunctions()
+    {
+        return array(
+            'safe_br' => new Twig_Function_Method($this, 'br', array('is_safe' => array('html'))),
+            'unsafe_br' => new Twig_Function_Method($this, 'br'),
         );
     }
 
@@ -131,6 +164,11 @@ class TestExtension extends Twig_Extension
     public function escape_something($value)
     {
         return strtoupper($value);
+    }
+
+    public function br()
+    {
+        return '<br />';
     }
 
     public function getName()

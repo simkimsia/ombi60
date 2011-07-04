@@ -44,7 +44,7 @@ class ProductsController extends AppController {
 				
 				);
 	
-	var $view = 'TwigView.TwigTheme';
+	var $view = 'TwigView.Twig';
 	
 	var $cartModel = '';
 	var $cartItemModel = '';

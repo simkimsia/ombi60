@@ -22,9 +22,10 @@ class Twig_Tests_Node_SandboxedModuleTest extends Twig_Tests_Node_TestCase
         $parent = new Twig_Node_Expression_Constant('layout.twig', 0);
         $blocks = new Twig_Node();
         $macros = new Twig_Node();
+        $traits = new Twig_Node();
         $filename = 'foo.twig';
-        $node = new Twig_Node_Module($body, $parent, $blocks, $macros, $filename);
-        $node = new Twig_Node_SandboxedModule($node, array('for'), array('upper'));
+        $node = new Twig_Node_Module($body, $parent, $blocks, $macros, $traits, $filename);
+        $node = new Twig_Node_SandboxedModule($node, array('for'), array('upper'), array('cycle'));
 
         $this->assertEquals($body, $node->getNode('body'));
         $this->assertEquals($blocks, $node->getNode('blocks'));
@@ -54,10 +55,11 @@ class Twig_Tests_Node_SandboxedModuleTest extends Twig_Tests_Node_TestCase
         $extends = null;
         $blocks = new Twig_Node();
         $macros = new Twig_Node();
+        $traits = new Twig_Node();
         $filename = 'foo.twig';
 
-        $node = new Twig_Node_Module($body, $extends, $blocks, $macros, $filename);
-        $node = new Twig_Node_SandboxedModule($node, array('for'), array('upper'));
+        $node = new Twig_Node_Module($body, $extends, $blocks, $macros, $traits, $filename);
+        $node = new Twig_Node_SandboxedModule($node, array('for'), array('upper'), array('cycle'));
 
         $tests[] = array($node, <<<EOF
 <?php
@@ -65,22 +67,30 @@ class Twig_Tests_Node_SandboxedModuleTest extends Twig_Tests_Node_TestCase
 /* foo.twig */
 class __TwigTemplate_be925a7b06dda0dfdbd18a1509f7eb34 extends Twig_Template
 {
-    public function display(array \$context, array \$blocks = array())
+    protected function doDisplay(array \$context, array \$blocks = array())
     {
         \$this->checkSecurity();
+        \$context = array_merge(\$this->env->getGlobals(), \$context);
+
         echo "foo";
     }
 
     protected function checkSecurity() {
         \$this->env->getExtension('sandbox')->checkSecurity(
             array('upper'),
-            array('for')
+            array('for'),
+            array('cycle')
         );
     }
 
     public function getTemplateName()
     {
         return "foo.twig";
+    }
+
+    public function isTraitable()
+    {
+        return false;
     }
 }
 EOF
@@ -90,10 +100,11 @@ EOF
         $extends = new Twig_Node_Expression_Constant('layout.twig', 0);
         $blocks = new Twig_Node();
         $macros = new Twig_Node();
+        $traits = new Twig_Node();
         $filename = 'foo.twig';
 
-        $node = new Twig_Node_Module($body, $extends, $blocks, $macros, $filename);
-        $node = new Twig_Node_SandboxedModule($node, array('for'), array('upper'));
+        $node = new Twig_Node_Module($body, $extends, $blocks, $macros, $traits, $filename);
+        $node = new Twig_Node_SandboxedModule($node, array('for'), array('upper'), array('cycle'));
 
         $tests[] = array($node, <<<EOF
 <?php
@@ -112,15 +123,18 @@ class __TwigTemplate_be925a7b06dda0dfdbd18a1509f7eb34 extends Twig_Template
         return \$this->parent;
     }
 
-    public function display(array \$context, array \$blocks = array())
+    protected function doDisplay(array \$context, array \$blocks = array())
     {
+        \$context = array_merge(\$this->env->getGlobals(), \$context);
+
         \$this->getParent(\$context)->display(\$context, array_merge(\$this->blocks, \$blocks));
     }
 
     protected function checkSecurity() {
         \$this->env->getExtension('sandbox')->checkSecurity(
             array('upper'),
-            array('for')
+            array('for'),
+            array('cycle')
         );
 
         \$this->parent->checkSecurity();
@@ -129,6 +143,11 @@ class __TwigTemplate_be925a7b06dda0dfdbd18a1509f7eb34 extends Twig_Template
     public function getTemplateName()
     {
         return "foo.twig";
+    }
+
+    public function isTraitable()
+    {
+        return false;
     }
 }
 EOF

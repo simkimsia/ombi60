@@ -41,7 +41,7 @@ class AppError extends ErrorHandler {
 			'base' => $this->controller->base
 		));
 		
-		$this->controller->view = 'TwigView.TwigTheme';
+		$this->controller->view = 'TwigView.Twig';
 		$this->controller->layout = 'theme';
 		
 		$theme = $this->getTheme();

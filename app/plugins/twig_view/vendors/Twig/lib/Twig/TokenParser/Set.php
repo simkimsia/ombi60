@@ -26,7 +26,7 @@ class Twig_TokenParser_Set extends Twig_TokenParser
         $capture = false;
         if ($stream->test(Twig_Token::OPERATOR_TYPE, '=')) {
             $stream->next();
-            list(, $values) = $this->parser->getExpressionParser()->parseMultitargetExpression();
+            $values = $this->parser->getExpressionParser()->parseMultitargetExpression();
 
             $stream->expect(Twig_Token::BLOCK_END_TYPE);
 
@@ -49,7 +49,7 @@ class Twig_TokenParser_Set extends Twig_TokenParser
         return new Twig_Node_Set($capture, $names, $values, $lineno, $this->getTag());
     }
 
-    public function decideBlockEnd($token)
+    public function decideBlockEnd(Twig_Token $token)
     {
         return $token->test('endset');
     }

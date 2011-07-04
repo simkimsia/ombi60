@@ -13,7 +13,7 @@
  * Represents an extension call node.
  *
  * @package    twig
- * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author     Fabien Potencier <fabien@symfony.com>
  */
 class Twig_Node_Expression_ExtensionReference extends Twig_Node_Expression
 {
@@ -27,7 +27,7 @@ class Twig_Node_Expression_ExtensionReference extends Twig_Node_Expression
      *
      * @param Twig_Compiler A Twig_Compiler instance
      */
-    public function compile($compiler)
+    public function compile(Twig_Compiler $compiler)
     {
         $compiler->raw(sprintf("\$this->env->getExtension('%s')", $this->getAttribute('name')));
     }

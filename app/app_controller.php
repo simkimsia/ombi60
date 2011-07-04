@@ -54,7 +54,7 @@ class AppController extends Controller {
                        //'products' => array('checkout'),
 	                  );
     
-    var $view = 'TwigView.TwigTheme';
+    var $view = 'TwigView.Twig';
     
     var $params4GETAndNamed = array();
     

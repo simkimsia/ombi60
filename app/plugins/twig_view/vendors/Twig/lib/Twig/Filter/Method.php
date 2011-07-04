@@ -13,7 +13,7 @@
  * Represents a method template filter.
  *
  * @package    twig
- * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author     Fabien Potencier <fabien@symfony.com>
  */
 class Twig_Filter_Method extends Twig_Filter
 {
@@ -29,6 +29,6 @@ class Twig_Filter_Method extends Twig_Filter
 
     public function compile()
     {
-        return sprintf('$this->getEnvironment()->getExtension(\'%s\')->%s', $this->extension->getName(), $this->method);
+        return sprintf('$this->env->getExtension(\'%s\')->%s', $this->extension->getName(), $this->method);
     }
 }

@@ -18,9 +18,7 @@ class Twig_Tests_Node_SandboxedPrintTest extends Twig_Tests_Node_TestCase
      */
     public function testConstructor()
     {
-        $expr = new Twig_Node_Expression_Constant('foo', 0);
-        $node = new Twig_Node_Print($expr, 0);
-        $node = new Twig_Node_SandboxedPrint($node);
+        $node = new Twig_Node_SandboxedPrint($expr = new Twig_Node_Expression_Constant('foo', 0), 0);
 
         $this->assertEquals($expr, $node->getNode('expr'));
     }
@@ -38,13 +36,8 @@ class Twig_Tests_Node_SandboxedPrintTest extends Twig_Tests_Node_TestCase
     {
         $tests = array();
 
-        $node = new Twig_Node_Print(new Twig_Node_Expression_Constant('foo', 0), 0);
-        $tests[] = array(new Twig_Node_SandboxedPrint($node), <<<EOF
-\$_tmp = "foo";
-if (is_object(\$_tmp)) {
-    \$this->env->getExtension('sandbox')->checkMethodAllowed(\$_tmp, '__toString');
-}
-echo \$_tmp;
+        $tests[] = array(new Twig_Node_SandboxedPrint(new Twig_Node_Expression_Constant('foo', 0), 0), <<<EOF
+echo \$this->env->getExtension('sandbox')->ensureToStringAllowed("foo");
 EOF
         );
 

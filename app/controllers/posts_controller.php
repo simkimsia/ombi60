@@ -8,7 +8,7 @@ class PostsController extends AppController {
 			     'TinyMce.TinyMce',
 			     'Text');
 	
-	var $view = 'TwigView.TwigTheme';
+	var $view = 'TwigView.Twig';
 	
 	var $components = array(
 				'Theme' => array(
