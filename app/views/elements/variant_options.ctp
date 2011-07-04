@@ -3,6 +3,8 @@
         <div id="variants">
             <?php
             $productOptions = !empty($this->data['Product']['options']) ? $this->data['Product']['options']: array();
+            
+            // we need to set this hidden field so that the options will definitely be updated
             echo $this->Form->input('Product.edit_options', array('type'=>'hidden',
                                                             'value'=>'1'));
             ?>
