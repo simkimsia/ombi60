@@ -1,5 +1,5 @@
 $(document).ready(function() {
-        if ($('#vcount').val() < 1) {
+        if ($('#vcount').val() == 0) {
             plus();
         }
         
@@ -133,24 +133,12 @@ function minus() {
         
         id = $($(this)).attr('id');
         tmp = id.split('_');
-        //if ($($(this)).attr('rel')) {
-        //        rel = $($(this)).attr('rel');
-        //        tmprel = rel.split('_');
-        //        optId = tmprel[1];
-                //$.ajax({
-                //        type: 'GET',
-                //        url: '/admin/products/remove_variant_option/' + optId,
-                //        success: function () {
-                                //$('#plus').show();
-                                
-                //        },
-                //        error: function () {
-                //                alert('Sorry, something went wrong!');
-                //        }
-                //});
-        //}
         
-        $("#"+tmp[1]).hide();
+        if (!$($(this)).attr('rel')) {
+            $("#"+tmp[1]).remove();
+        } else {        
+            $("#"+tmp[1]).hide();
+        }
         $("#deleteOption_"+tmp[1]).val(1);
         $('#undo_'+tmp[1]).show();//return false;
         val = $('#vcount').val();
@@ -197,7 +185,6 @@ function checkCustom(val, i) {
 }
 
 function checkCustomAdd(val) {
-    console.log(val);
         if ($("#" + val+ " .OptName").val() == "custom") {
                 $("#" + val+ " .OptValue").val("Default Value");
                 $('#showCustom_'+val).show();

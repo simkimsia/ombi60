@@ -6,8 +6,7 @@
     <?php
     $selectedFields = array_keys($productOptions);
     // we need to set this hidden field so that the options will definitely be updated
-    echo $this->Form->input('Product.edit_options', array('type'=>'hidden',
-                                                            'value'=>'1'));
+    
     foreach($productOptions as $field=>$option) : ?>
         <li id="<?php echo $field; ?>" class="">
             <ul class="alreadAddedOptions">
@@ -17,14 +16,14 @@
                             <td>                            
                                 <select name="data[Product][options][<?php echo $field; ?>][new_field]" onchange="checkCustom(this.value, '<?php echo $field;?>');" class="OptName">';
                         
-                                        <option <?php echo ife(($field == "title"), 'selected="selected"', "");?> <?php echo ife((in_array("title", $selectedFields) || $field === "title"), "", 'disabled=true')?> value="title">Title</option>
-                                        <option <?php echo ife(($field == "color"), 'selected="selected"', "");?> <?php echo ife((in_array("color", $selectedFields) || $field === "color"), "", 'disabled=true')?> value="color">Color</option>
-                                        <option <?php echo ife(($field == "style"), 'selected="selected"', "");?> <?php echo ife((in_array("style", $selectedFields) || $field === "style"), "", 'disabled=true')?> value="style">Style</option>
-                                        <option <?php echo ife(($field == "size"), 'selected="selected"', "");?> <?php echo ife((in_array("size", $selectedFields) || $field === "size"), "", 'disabled=true')?> value="size">Size</option>
-                                        <option <?php echo ife(($field == "material"), 'selected="selected"', "");?> <?php echo ife((in_array("material", $selectedFields) || $field === "material"), "", 'disabled=true')?> value="material">Material</option>
-                                        <option <?php echo ife(($field == "custom"), 'selected="selected"', "");?> value="custom" >Custom</option>
+                                        <option <?php echo ife(($field == "title"), 'selected="selected"', "");?> <?php echo ife((in_array("title", $selectedFields) || $field === "title"), "", 'disabled=true')?> value="title"><?php __('Title')?></option>
+                                        <option <?php echo ife(($field == "color"), 'selected="selected"', "");?> <?php echo ife((in_array("color", $selectedFields) || $field === "color"), "", 'disabled=true')?> value="color"><?php __('Color')?></option>
+                                        <option <?php echo ife(($field == "style"), 'selected="selected"', "");?> <?php echo ife((in_array("style", $selectedFields) || $field === "style"), "", 'disabled=true')?> value="style"><?php __('Style')?></option>
+                                        <option <?php echo ife(($field == "size"), 'selected="selected"', "");?> <?php echo ife((in_array("size", $selectedFields) || $field === "size"), "", 'disabled=true')?> value="size"><?php __('Size')?></option>
+                                        <option <?php echo ife(($field == "material"), 'selected="selected"', "");?> <?php echo ife((in_array("material", $selectedFields) || $field === "material"), "", 'disabled=true')?> value="material"><?php __('Material')?></option>
+                                        <option <?php echo ife(($field == "custom"), 'selected="selected"', "");?> value="custom" ><?php __('Custom')?></option>
                                 </select>
-                                <!--<input type="hidden" id="ProductOptions<?php echo Inflector::camelize(str_replace(' ', '_', $field)); ?>Delete" name="data[Product][options][<?php echo $field; ?>][delete]" value="0" id="deleteOption_<?php echo $field;?>" />-->
+                                <!--<input type="hidden" id="ProductOptions<?php //echo Inflector::camelize(str_replace(' ', '_', $field)); ?>Delete" name="data[Product][options][<?php //echo $field; ?>][delete]" value="0" id="deleteOption_<?php //echo $field;?>" />-->
                                 <input type="hidden" name="data[Product][options][<?php echo $field; ?>][delete]" value="0" id="deleteOption_<?php echo $field;?>" />
                             </td>
                             <td style="display: none;" style="width: 30%;" id="showCustom_<?php echo $field;?>"><input type="text" name="data[Product][options][<?php echo $field; ?>][custom_new_field]" /></td>

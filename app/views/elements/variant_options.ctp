@@ -1,31 +1,29 @@
 <fieldset>
         <legend><?php __('Options');?></legend>
         <div id="variants">
-                
-        <?php
-        $productOptions = !empty($this->data['Product']['options']) ? $this->data['Product']['options']: array();
-        ?>
-        
-                <div id="vOpts">
-        
-        <?php
-        $count = 0;
-        if (!empty($productOptions)) {
-            $count = count($productOptions);
-            ?>                       
-        <?php
-            echo $this->element('view_variant_option', array('productOptions'=>$productOptions));
-        } else {
-            //echo $this->element('add_variant_option', array('show'=>true));
-        }
-        
-        ?>
+            <?php
+            $productOptions = !empty($this->data['Product']['options']) ? $this->data['Product']['options']: array();
+            echo $this->Form->input('Product.edit_options', array('type'=>'hidden',
+                                                            'value'=>'1'));
+            ?>
 
-        <input type="hidden" value="<?php echo $count?>" name="vcount" id="vcount" />
-        <input type="hidden" value="0" name="newly_added_count" id="newly_added_count" /> 
-                </div>
-                <div class="clear"></div>
+            <div id="vOpts">
+
+                <?php
+                $count = 0;
+                if (!empty($productOptions)) {
+                    $count = count($productOptions);
+                    ?>                       
+                <?php
+                    echo $this->element('view_variant_option', array('productOptions'=>$productOptions));
+                } else {
+                    //echo $this->element('add_variant_option', array('show'=>true));
+                }
                 
+                ?>
+                <input type="hidden" value="<?php echo $count?>" name="vcount" id="vcount" /> 
+            </div>
+            <div class="clear"></div>
         </div>
         <?php
             echo $this->Html->link('Add another option', 'javascript: void(0);', array('id' => 'plus', 'style' => ife((count($productOptions) < 3), 'display: block', 'display: none;')));
