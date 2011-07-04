@@ -540,12 +540,17 @@ class Product extends AppModel {
 			$variantIDs = $this->Variant->find('list', array('conditions'=>array('Variant.product_id' => $productID),
 								         'fields'    =>array('Variant.id')));
 			
+			/**
+			 * the order is very important!!
+			 * we need to allow new options which in case are the same as the old option fields
+			 **/
+			// delete any current options
+			$this->deleteAllOptions($deleteCurrentOptions, $variantIDs);
 			// add new Product options
 			$this->addNewProductOptions($productID, $newOptions, $variantIDs);
 			// rename any current options
 			$this->renameOptionFields($validCurrentOptions, $variantIDs);
-			// delete any current options
-			$this->deleteAllOptions($deleteCurrentOptions, $variantIDs);
+			
 		}
 		
 	}//end updateOptions()
@@ -841,14 +846,28 @@ class Product extends AppModel {
 			/**
 			 * Variants
 			 **/
-			$variants = (!empty($product['Variant']))  ? Set::extract('Variant.{n}', $product) : array();
+			$variants = (!empty($product['Variant']))  ? Variant::getTemplateVariable($product['Variant']) : array();
 			
+			/* Collections */
 			$collections = !empty($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : array();
 			
+			/* store the original variants. needed for deriving Product Options */
+			$originalVariants = (!empty($product['Variant']))  ? $product['Variant'] : array();
+			
+			/* now we isolate Product data */
 			$product = isset($product['Product']) ? $product['Product'] : $product;
 			
-			$options = !empty($product['options']) ? array_keys($product['options']) : array();
+			/* preparing Product options first */
+			if (empty($product['options'])) {
+				if (!empty($originalVariants)) {
+					$product['options'] = Product::extractProductOptions(array('Variant'=>$originalVariants));	
+				} else {
+					$product['options'] = array();
+				}
+			} 
+			$options = array_keys($product['options']);
 			
+			/* now we build  the template variable */
 			$result = array('id' => $product['id'],
 					'title' => $product['title'],
 					'code' => $product['code'],
@@ -860,7 +879,10 @@ class Product extends AppModel {
 					'weight' => $product['weight'],
 					);
 			
-			
+			/*
+			  assign the peripheral data back into Product Template Variable
+			  eg, ProductImage, Vendor, Product options, Variant, Collection
+			*/
 			$result['images'] 	= $images;
 			$result['cover_image'] 	= isset($images[0]) ? $images[0] : '';
 			
@@ -1214,7 +1236,7 @@ class Product extends AppModel {
                                                                                'Product.shop_id'=>$shopId),
                                                             'contain' => array('Variant' => array(
                                                                                         'conditions' => array('Variant.product_id' => $id),
-                                                                                        'order'=>'Variant.id ASC',
+                                                                                        'order'=>'Variant.order ASC',
                                                                                         'VariantOption' => array(
                                                                                                 'fields' => array('id', 'value', 'field', 'variant_id'),
                                                                                                 'order'  => 'VariantOption.order ASC',
@@ -1288,6 +1310,7 @@ class Product extends AppModel {
 	 * 
 	 **/
 	public function extractProductOptions($productDetails = array()) {
+		
 		$variants = Set::extract('Variant.{n}.VariantOption', $productDetails);
 		
                 $voption = array();

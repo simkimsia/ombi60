@@ -95,6 +95,7 @@ class Variant extends AppModel {
 		if (!$multiple) $variants = array($variants);
 		
 		foreach($variants as $key=>$variant) {
+			
 			$variant = isset($variant['Variant']) ? $variant['Variant'] : $variant;
 			$result = array('id' 			=> $variant['id'],
 					'title' 		=> $variant['title'],
@@ -106,10 +107,13 @@ class Variant extends AppModel {
 					);
 			
 			if (!empty($variant['VariantOption'])) {
-				$result['options'] = Set::extract('{n}.value', $variant['VariantOption']);
+				$options = Set::extract('{n}.value', $variant['VariantOption']);
 			} else {
-				$result['options'] = array();
+				$options = array();
 			}
+			
+			$result['options'] = $options;
+			
 			
 			$results[] = $result;
 		}
