@@ -89,6 +89,9 @@ class TwigView extends View {
 		// overwrite some stuff
 		$this->Twig->addExtension(new CoreExtension);
 		
+		// include the Debug extension
+		$this->Twig->addExtension(new Twig_Extensions_Extension_Debug);
+		
 		// activate |trans filter
 		$this->Twig->addExtension(new Twig_Extension_I18n);
 		

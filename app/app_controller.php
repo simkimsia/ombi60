@@ -273,6 +273,11 @@ class AppController extends Controller {
 		
 		$this->set('shop', $shopTemplate);
 		
+		$content_for_header = ''; // we will put the shop specific header scripts
+		// and also any other ombi60 stats
+		
+		$this->set('content_for_header', $content_for_header);
+		
 	}
 	/**
 	 *end Cookies

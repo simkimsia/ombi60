@@ -212,6 +212,7 @@ Configure::write('SubscriptionUsed', PAYDOLLAR);
 
 /**
  * for TwigView plugin
+ * // change the cache for twig view from TWIG_VIEW_CACHE to TMP/cache/views
  **/
 define('TWIG_VIEW_CACHE', TMP.'cache'.DS.'views');
 
