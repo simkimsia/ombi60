@@ -265,7 +265,8 @@ class AppController extends Controller {
 			)),));
 		
 		$pages = Webpage::getTemplateVariable($pages);
-		
+		$twigArray = array('IteratorAggregate'=>array('pages'));
+		$this->set('TwigObjects', $twigArray);
 		$this->set('pages', $pages);
 		
 		// get Shop template
@@ -515,6 +516,31 @@ class AppController extends Controller {
 	protected function setClassInLayoutOrView() {
 		$this->set('classForContainer', 'homepage');
 		$this->set('contentElementInOverallContainer', 'homeBody');
+	}
+	
+	
+	function beforeRender() {
+		App::import('Lib', 'Array2IteratorAggregate');
+		
+		$iterators = empty($this->viewVars['TwigObjects']['IteratorAggregate']) ?
+					array() : $this->viewVars['TwigObjects']['IteratorAggregate'];
+					
+		foreach($iterators as $alias) { 
+			$array = empty($this->viewVars[$alias]) ?
+				array() : $this->viewVars[$alias];
+			if (is_array($array) AND !empty($array)) {
+				//$this->viewVars[$alias] = Array2IteratorAggregate::a2ia($array);
+				
+				$items = $this->viewVars[$alias];
+				
+				if( !is_array( $items ) && !$items instanceof Traversable ) {
+					$this->log('not working');
+				} else {
+					$this->log(' working');
+				}
+				$this->log($array);
+			}
+		}
 	}
 
 
