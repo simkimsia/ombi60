@@ -53,7 +53,10 @@ class WebpagesController extends AppController {
 		
 		$this->set(compact('page'));
 		
-		$this->viewPath = 'pages';
+		$this->viewPath = 'templates';
+		
+		$this->set('template', 'page');
+		$this->set('page_title', 'Welcome'); // this is hardcoded for index page
 		$this->render('page');
 		
 	}
