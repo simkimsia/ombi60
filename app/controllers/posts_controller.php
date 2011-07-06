@@ -49,16 +49,15 @@ class PostsController extends AppController {
 		
 		
 		$blog = Blog::getTemplateVariable($post['Blog'], false);
-		$post = Post::getTemplateVariable($post, false);
+		$article = Post::getTemplateVariable($post, false);
 		
 		$timezone  = Shop::get('ShopSetting.timezone');
 		
 		// convert string datetime to datetime object
-		$post = $this->TimeZone->convert($post, new DateTimeZone($timezone));
+		$article = $this->TimeZone->convert($article, new DateTimeZone($timezone));
 		
-		$this->set(compact('post', 'blog'));
-		
-		$this->viewPath = 'articles';
+		$this->set(compact('article', 'blog'));
+		$this->set('page_title', $article['title']); // this is hardcoded for index page
 		$this->render('article');
 		
 	}
@@ -94,7 +93,7 @@ class PostsController extends AppController {
 		
 		$this->set(compact('blog'));
 		
-		$this->viewPath = 'articles';
+		$this->set('page_title', $blog['title']); // this is hardcoded for index page
 		$this->render('blog');
 	}
 	

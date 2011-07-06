@@ -53,10 +53,8 @@ class WebpagesController extends AppController {
 		
 		$this->set(compact('page'));
 		
-		$this->viewPath = 'templates';
 		
-		$this->set('template', 'page');
-		$this->set('page_title', 'Welcome'); // this is hardcoded for index page
+		$this->set('page_title', $page['title']); // this is hardcoded for index page
 		$this->render('page');
 		
 	}
@@ -65,9 +63,9 @@ class WebpagesController extends AppController {
 	// this is where the / will get routed to
 	// this is supposed to use the index.tpl inside pages folder within the theme
 	function frontpage() {
-		$this->viewPath = 'templates';
 		
-		$this->set('template', 'page');
+		
+		
 		$this->set('page_title', 'Welcome'); // this is hardcoded for index page
 		$this->render('index');
 	}

@@ -520,6 +520,12 @@ class AppController extends Controller {
 	
 	
 	function beforeRender() {
+		
+		$this->setViewPathForTwig();
+		$this->convertArraysToIteratorsForTwig();
+	}
+	
+	private function convertArraysToIteratorsForTwig() {
 		App::import('Lib', 'ArrayToIterator');
 		
 		$iterators = empty($this->viewVars['TwigObjects']['Iterator']) ?
@@ -533,6 +539,42 @@ class AppController extends Controller {
 				$items = $this->viewVars[$alias];
 			}
 		}
+	}
+	
+	/**
+	 *
+	 * Sets the $this->viewPath to templates for public facing actions
+	 * which are using Twig. Also sets the template name
+	 *
+	 * Possibly consider renaming the actions so that setting template name is easier
+	 * */
+	private function setViewPathForTwig() {
+		// public actions to be set to templates
+		// capitalize and pluralize the controller apparently
+		// array([controllerName] => array([action]=>templatename))
+		$publicActions = array('Webpages' => array('view'=>'page',
+							   'frontpage'=>'index'),
+				       'Posts'    => array('view'=>'article',
+							   'index'=>'blog'),
+				       );
+		
+		$controller 	= $this->name;
+		$action 	= $this->action;
+		
+		$validControllers = array_keys($publicActions);
+		
+		if (in_array($controller, $validControllers)) {
+			$validActions = array_keys($publicActions[$controller]);
+			if (in_array($action, $validActions)) {
+				// set the view path
+				$this->viewPath = 'templates';
+				// set the template name variable
+				$templateName = $publicActions[$controller][$action];
+				$this->set('template', $templateName);
+			}
+		}
+		
+		
 	}
 
 

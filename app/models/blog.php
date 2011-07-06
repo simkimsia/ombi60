@@ -60,18 +60,19 @@ class Blog extends AppModel {
 		if (!$multiple) $blogs = array($blogs);
 		
 		foreach($blogs as $key=>$blog) {
+			// prepare articles
+			$articles = isset($blog['Post']) ? Post::getTemplateVariable($blog['Post']) : array();
 			
-			$result = array('id' => $blog['Blog']['id'],
-					   'title' => $blog['Blog']['title'],
-					   
-					   'handle' => $blog['Blog']['short_name'],
-					   'underscore_handle' => str_replace('-', '_', $blog['Blog']['short_name']),
-					   'url' => $blog['Blog']['url'],
-					   'all_articles_count' => $blog['Blog']['visible_post_count'],
-					   
+			$blog = !empty($blog['Blog']) ? $blog['Blog'] : $blog;
+			$result = array('id' => $blog['id'],
+					   'title' => $blog['title'],
+					   'handle' => $blog['short_name'],
+					   'underscore_handle' => str_replace('-', '_', $blog['short_name']),
+					   'url' => $blog['url'],
+					   'all_articles_count' => $blog['visible_post_count'],
 					   );
 			
-			$result['articles'] = isset($blog['Post']) ? Post::getTemplateVariable($blog['Post']) : array();
+			$result['articles'] = $articles;
 			$result['articles_count'] = count($result['articles']);
 			
 			$results[$result['underscore_handle']] = $result;
