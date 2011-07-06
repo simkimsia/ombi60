@@ -179,3 +179,8 @@ afterFind
 need to be careful about assuming the data format in
 afterFind operations. the parameter $primary is important
 in determining the likely data format
+
+Vendor Lib
+==========
+
+Never ever name vendor class or lib class with numbers inside.
