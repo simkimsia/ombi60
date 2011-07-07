@@ -54,7 +54,7 @@ class Blog extends AppModel {
 	 * for use in templates for shopfront pages
 	 * */
 	function getTemplateVariable($blogs=array(), $multiple = true) {
-		
+		App::import('Lib', 'ArrayToIterator');
 		$results = array();
 		
 		if (!$multiple) $blogs = array($blogs);
@@ -73,9 +73,17 @@ class Blog extends AppModel {
 					   );
 			
 			$result['articles'] = $articles;
-			$result['articles_count'] = count($result['articles']);
+			if ($articles instanceof IteratorForTwig){
+				$result['articles_count'] = $articles->getSize();
+			} else{
+				$result['articles_count'] = count($result['articles']);
+			}
 			
 			$results[$result['underscore_handle']] = $result;
+		}
+		
+		if ($multiple) {
+			$results = ArrayToIterator::array2Iterator($results);
 		}
 		
 		if (!$multiple && !empty($results)) {

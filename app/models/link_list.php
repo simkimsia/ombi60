@@ -56,7 +56,7 @@ class LinkList extends AppModel {
 	 * for use in templates for shopfront pages
 	 * */
 	function getTemplateVariable($linklists=array(), $multiple = true) {
-		
+		App::import('Lib', 'ArrayToIterator');
 		$results = array();
 		
 		if (!$multiple) $linklists = array($linklists);
@@ -73,6 +73,10 @@ class LinkList extends AppModel {
 			$result['links'] = isset($linklist['Link']) ? Link::getTemplateVariable($linklist['Link']) : array();
 			
 			$results[$result['underscore_handle']] = $result;
+		}
+		
+		if ($multiple) {
+			$results = ArrayToIterator::array2Iterator($results);
 		}
 		
 		if (!$multiple && !empty($results)) {

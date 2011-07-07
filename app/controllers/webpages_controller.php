@@ -67,7 +67,9 @@ class WebpagesController extends AppController {
 		
 		
 		$this->set('page_title', 'Welcome'); // this is hardcoded for index page
+		
 		$this->render('index');
+		
 	}
 	
 	function admin_index() {

@@ -520,7 +520,8 @@ class ProductsController extends AppController {
 		$product = Product::getTemplateVariable($productFound, false);
 		
 		$this->set('product', $product);
-		
+		$this->set('page_title', $product['title']); // this is hardcoded for index page
+		$this->render('product');
 	}
 	
 	
@@ -560,6 +561,8 @@ class ProductsController extends AppController {
 		$order = isset($this->params['named']['direction']) ? $this->params['named']['direction'] : 'desc';
 
 		$this->set(compact('sort', 'order', 'domainPagePath', 'collection'));
+		
+		$this->set('page_title', $collection['title']); // this is hardcoded for index page
 		
 		$this->render('collection');
 		

@@ -156,6 +156,11 @@ class Link extends AppModel {
 			$results[] = $result;
 		}
 		
+		if ($multiple) {
+			App::import('Lib', 'ArrayToIterator');
+			$results = ArrayToIterator::array2Iterator($results);
+		}
+		
 		if (!$multiple && !empty($results[0])) {
 			return $results[0];
 		} else if (!$multiple && empty($results[0])) {

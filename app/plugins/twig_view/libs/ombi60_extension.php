@@ -83,23 +83,21 @@ function ombi60SnippetsUrl($filename) {
 	$currentShop = Cache::read('Shop'.$shopId);
 	$theme = !empty($currentShop['FeaturedSavedTheme']['folder_name']) ? $currentShop['FeaturedSavedTheme']['folder_name'] : 'blue-white';
 	
-	// we need to differentiate between css, js and image files
-	// check for .css, .js, and all possible image extensions based on the filename.
-	if (preg_match("/\.tpl$/", $filename)) {
+	
 		
-		if ($filename[0] !== '/') {
-			$filename = 'themed' . DS. $theme . DS . SNIPPETS_URL . $filename;
-		}
-		
-		if (strpos($filename, '?') === false) {
-			if (substr($filename, -4) !== '.tpl') {
-				$filename .= '.tpl';
-			}
-		}
-		
-		
-		return $filename;
+	if ($filename[0] !== '/') {
+		$filename = 'themed' . DS. $theme . DS . SNIPPETS_URL . $filename;
 	}
+	
+	if (strpos($filename, '?') === false) {
+		if (substr($filename, -4) !== '.tpl') {
+			$filename .= '.tpl';
+		}
+	}
+	
+	
+	return $filename;
+	
 	
 }
 

@@ -149,6 +149,11 @@ class Post extends AppModel {
 			$results[$result['underscore_handle']] = $result;
 		}
 		
+		if ($multiple) {
+			App::import('Lib', 'ArrayToIterator');
+			$results = ArrayToIterator::array2Iterator($results);
+		}
+		
 		if (!$multiple && !empty($results)) {
 			return current($results);
 		} else if (!$multiple && empty($results)) {

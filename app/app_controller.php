@@ -265,9 +265,8 @@ class AppController extends Controller {
 			)),));
 		
 		$pages = Webpage::getTemplateVariable($pages);
-		$twigArray = array('Iterator'=>array('pages'));
-		$this->set('TwigObjects', $twigArray);
 		$this->set('pages', $pages);
+		
 		
 		// get Shop template
 		$shopTemplate = Shop::getTemplateVariable();
@@ -522,7 +521,7 @@ class AppController extends Controller {
 	function beforeRender() {
 		
 		$this->setViewPathForTwig();
-		$this->convertArraysToIteratorsForTwig();
+		//$this->convertArraysToIteratorsForTwig();
 	}
 	
 	private function convertArraysToIteratorsForTwig() {
@@ -534,6 +533,7 @@ class AppController extends Controller {
 		foreach($iterators as $alias) { 
 			$array = empty($this->viewVars[$alias]) ?
 				array() : $this->viewVars[$alias];
+				
 			if (is_array($array) AND !empty($array)) {
 				$this->viewVars[$alias] = ArrayToIterator::array2Iterator($array);
 				$items = $this->viewVars[$alias];
@@ -556,6 +556,8 @@ class AppController extends Controller {
 							   'frontpage'=>'index'),
 				       'Posts'    => array('view'=>'article',
 							   'index'=>'blog'),
+				       'Products' => array('view'=>'product',
+							   'view_by_group'=>'collection')
 				       );
 		
 		$controller 	= $this->name;

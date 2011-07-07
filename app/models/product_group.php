@@ -76,7 +76,7 @@ class ProductGroup extends AppModel {
 	 * we avoid the use of many images for retrieving lots of products
 	 * */
 	function getTemplateVariable($productsInGroups=array(), $multiple = true) {
-		
+		App::import('Lib', 'ArrayToIterator');
 		$results = array();
 		
 		if (!$multiple) $productsInGroups = array($productsInGroups);
@@ -96,10 +96,19 @@ class ProductGroup extends AppModel {
 					   
 					);
 			
-			$result['products'] = isset($group['Product']) ? Product::getTemplateVariable($group['Product']) : array();
-			$result['products_count'] = count($result['products']);
+			$result['products'] = isset($group['Product']) ? Product::getTemplateVariable($group['Product']) :  ArrayToIterator::array2Iterator(array());
+			if ($result['products']  instanceof IteratorForTwig){
+				$result['products_count'] = $result['products']->getSize();
+			} else{
+				$result['products_count'] = count($result['products']);
+			}
+			
 			
 			$results[$result['underscore_handle']] = $result;
+		}
+		
+		if ($multiple) {
+			$results = ArrayToIterator::array2Iterator($results);
 		}
 		
 		if (!$multiple && !empty($results)) {

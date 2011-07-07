@@ -822,7 +822,7 @@ class Product extends AppModel {
 	 * for use in templates for shopfront pages
 	 * */
 	function getTemplateVariable($products=array(), $multiple = true) {
-		
+		App::import('Lib', 'ArrayToIterator');
 		$results = array();
 		
 		if (!$multiple) $products = array($products);
@@ -846,10 +846,10 @@ class Product extends AppModel {
 			/**
 			 * Variants
 			 **/
-			$variants = (!empty($product['Variant']))  ? Variant::getTemplateVariable($product['Variant']) : array();
+			$variants = (!empty($product['Variant']))  ? Variant::getTemplateVariable($product['Variant']) : ArrayToIterator::array2Iterator(array());
 			
 			/* Collections */
-			$collections = !empty($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : array();
+			$collections = !empty($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : ArrayToIterator::array2Iterator(array());
 			
 			/* store the original variants. needed for deriving Product Options */
 			$originalVariants = (!empty($product['Variant']))  ? $product['Variant'] : array();
@@ -865,7 +865,7 @@ class Product extends AppModel {
 					$product['options'] = array();
 				}
 			} 
-			$options = array_keys($product['options']);
+			$options = ArrayToIterator::array2Iterator(array_keys($product['options']));
 			
 			/* now we build  the template variable */
 			$result = array('id' => $product['id'],
@@ -883,7 +883,7 @@ class Product extends AppModel {
 			  assign the peripheral data back into Product Template Variable
 			  eg, ProductImage, Vendor, Product options, Variant, Collection
 			*/
-			$result['images'] 	= $images;
+			$result['images'] 	= ArrayToIterator::array2Iterator($images);
 			$result['cover_image'] 	= isset($images[0]) ? $images[0] : '';
 			
 			$result['vendor'] 	= !empty($vendor['title']) ? $vendor['title'] : '';			
@@ -893,6 +893,10 @@ class Product extends AppModel {
 			$result['options']	= $options;
 			
 			$results[$result['underscore_handle']] = $result;
+		}
+		
+		if ($multiple) {
+			$results = ArrayToIterator::array2Iterator($results);
 		}
 		
 		if (!$multiple && !empty($results)) {

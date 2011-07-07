@@ -15,4 +15,4 @@
 	</div>{% endfor %}
 {% endif %}
 </div>
-<!-- END SHOWCASE -->{% include "related.tpl" | snippets_url %}
+<!-- END SHOWCASE -->{% include "related" | snippets_url %}
