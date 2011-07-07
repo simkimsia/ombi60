@@ -117,12 +117,19 @@ function ombi60AssetUrl($filename) {
 	// check for .css, .js, and all possible image extensions based on the filename.
 	if (preg_match("/\.css$/", $filename)) {
 		
+		$themeTemplate = false;
+		if ($filename == 'theme.css') {
+			$filename = $filename . '.tpl';
+			$themeTemplate = true;
+		}
+		
 		if ($filename[0] !== '/') {
 			$filename = ASSETS_URL . $filename;
 		}
 		
 		if (strpos($filename, '?') === false) {
-			if (substr($filename, -4) !== '.css') {
+			$fileExtension = substr($filename, -4);
+			if ($fileExtension !== '.css' && !$themeTemplate) {
 				$filename .= '.css';
 			}
 		}

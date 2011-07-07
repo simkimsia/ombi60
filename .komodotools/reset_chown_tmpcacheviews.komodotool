@@ -1,0 +1,17 @@
+{
+  "insertOutput": 0, 
+  "keyboard_shortcut": "", 
+  "name": "reset chown tmpcacheviews", 
+  "parseRegex": "", 
+  "operateOnSelection": 0, 
+  "value": [
+    "gnome-terminal -e \"bash -c \\\"sudo chmod 777 app/tmp/cache/views/* -R; exec bash\\\"\""
+  ], 
+  "cwd": "/var/www/wp", 
+  "env": "", 
+  "doNotOpenOutputWindow": 0, 
+  "showParsedOutputList": 0, 
+  "type": "command", 
+  "parseOutput": 0, 
+  "runIn": "command-output-window"
+}

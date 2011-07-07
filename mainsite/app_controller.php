@@ -195,11 +195,6 @@ class AppController extends Controller {
 		
 		return '';
 	}
-	
-	protected function setClassInLayoutOrView() {
-		$this->set('classForContainer', 'homepage');
-		$this->set('contentElementInOverallContainer', 'homeBody');
-	}
 
 
 }

@@ -123,9 +123,6 @@ class PagesController extends AppController {
 		}
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
 		
-		// set class attributes for the pages
-		$this->setClassInLayoutOrView();
-		
 		$this->render(implode('/', $path));
 	}
 	

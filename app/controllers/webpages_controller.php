@@ -19,16 +19,14 @@ class WebpagesController extends AppController {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		$this->Auth->allow('view', 'shopfront', 'frontpage');
-		$this->prepareGlobalObjectsInTwigViews();
+	
 		if ($this->action == 'admin_toggle') {
 			$this->Security->enabled = false;
 		}
 		
 	}
 
-	private function prepareGlobalObjectsInTwigViews() {
-		$shop = Shop::getTemplateVariable();
-	}
+	
 
 	function view($handle = false) {
 		
@@ -47,20 +45,9 @@ class WebpagesController extends AppController {
 			$this->cakeError('error404',array(array('url'=>'/')));
 		}
 		
-		$this->set(compact('webpage'));
-		
-		// set class attributes for the pages
-		if ($handle == 'shopfront') {
-			$this->set('classForContainer', 'homepage');
-		}
-		
-		$this->set('title_for_layout', $webpage['Webpage']['title']);
-		
 		$page = Webpage::getTemplateVariable($webpage, false);
 		
 		$this->set(compact('page'));
-		
-		
 		$this->set('page_title', $page['title']); // this is hardcoded for index page
 		$this->render('page');
 		
@@ -71,12 +58,8 @@ class WebpagesController extends AppController {
 	// this is supposed to use the index.tpl inside pages folder within the theme
 	function frontpage() {
 		
-		
-		
 		$this->set('page_title', 'Welcome'); // this is hardcoded for index page
-		
 		$this->render('index');
-		
 	}
 	
 	function admin_index() {

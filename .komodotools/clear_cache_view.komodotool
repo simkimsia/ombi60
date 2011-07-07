@@ -1,0 +1,17 @@
+{
+  "insertOutput": 0, 
+  "keyboard_shortcut": "", 
+  "name": "clear cache view", 
+  "parseRegex": "", 
+  "operateOnSelection": 0, 
+  "value": [
+    "rm app/tmp/cache/views/* -R"
+  ], 
+  "cwd": "/var/www/wp", 
+  "env": "", 
+  "doNotOpenOutputWindow": 0, 
+  "showParsedOutputList": 0, 
+  "type": "command", 
+  "parseOutput": 0, 
+  "runIn": "command-output-window"
+}
