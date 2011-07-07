@@ -380,7 +380,7 @@ class ProductsController extends AppController {
 		
 		// reassign the products into items
 		$cart = Cart::getTemplateVariable($productsInCart);
-		
+		$this->log($cart);
 		$this->set(compact('cart', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
 		
 		$sessionString = '';
@@ -485,7 +485,7 @@ class ProductsController extends AppController {
 								    'contain' => array('Variant' => array(
 												'order'=>'Variant.order ASC',
 												'VariantOption' => array(
-													'fields' => array('id', 'value'),
+													'fields' => array('id', 'value', 'field'),
 													'order'  => 'VariantOption.order ASC',
 												)
 											),

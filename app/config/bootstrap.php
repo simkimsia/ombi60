@@ -211,6 +211,12 @@ define('PAYDOLLAR', 'paydollar');
 Configure::write('SubscriptionUsed', PAYDOLLAR);
 
 /**
+ * Configure arrays in Twig to have size, first and last properties
+ **/
+define('TWIG_ITERATOR', false);
+
+
+/**
  * for TwigView plugin
  * // change the cache for twig view from TWIG_VIEW_CACHE to TMP/cache/views
  **/

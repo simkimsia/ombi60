@@ -112,13 +112,13 @@ class Variant extends AppModel {
 				$options = array();
 			}
 			
-			$result['options'] = ArrayToIterator::array2Iterator($options);;
+			$result['options'] = (TWIG_ITERATOR) ? ArrayToIterator::array2Iterator($options) : $options;
 			
 			
 			$results[] = $result;
 		}
 		
-		if ($multiple) {
+		if ($multiple && TWIG_ITERATOR) {
 			$results = ArrayToIterator::array2Iterator($results);
 		}
 		

@@ -523,7 +523,7 @@ class Cart extends AppModel {
 					       'AssociatedVariant' => array(
 						       'order'=>'AssociatedVariant.order ASC',
 						       'VariantOption' => array(
-							       'fields' => array('id', 'value'),
+							       'fields' => array('id', 'value', 'field'),
 							       'order'  => 'VariantOption.order ASC',
 						       )
 					       ));
@@ -913,6 +913,7 @@ class Cart extends AppModel {
 		
 		
 		return $result;
+		
 	}
 	
 	/**

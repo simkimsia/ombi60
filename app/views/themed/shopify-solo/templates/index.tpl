@@ -1,6 +1,6 @@
 <!-- START SHOWCASE -->
 <div id="showcase">
-{% if collections.frontpage.products | length > 0 %}
+{% if collections.frontpage.products.size > 0 %}
 	{% for product in collections.frontpage.products %}
 	<h1>{{ product.title | escape }}</h1>
 	<div id="image" class="clear">

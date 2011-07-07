@@ -5,12 +5,12 @@
 	<div id="images">
 		<!-- START IMAGE -->
 		<div id="image" class="clear">
-			<img src="{{ product.images[0] | product_img_url: "large" }}" alt="{{ product.title | escape }}" />
+			<img src="{{ product.images[0] | product_img_url("large") }}" alt="{{ product.title | escape }}" />
 		</div>
 		<!-- END IMAGE -->
 		<!-- START THUMBS -->
 		<div id="thumbs">{% if product.images.size > 1 %}{% for image in product.images %}
-			<p{% if forloop.first %} class="active"{% endif %}><a href="{{ image | product_img_url: "large" }}" rel="lightbox-images">{% if forloop.first %}More Images{% else %}{{ forloop.index }}{% endif %}</a></p>{% endfor %}{% endif %}
+			<p{% if forloop.first %} class="active"{% endif %}><a href="{{ image | product_img_url( "large") }}" rel="lightbox-images">{% if forloop.first %}More Images{% else %}{{ forloop.index }}{% endif %}</a></p>{% endfor %}{% endif %}
 		</div>
 		<!-- END THUMBS -->
 	</div>
@@ -49,4 +49,4 @@
 	</div>
 	<!-- END DETAILS -->
 </div>
-<!-- END SUMMARY -->{% include "related" %}
+<!-- END SUMMARY -->{% include "related" | snippets_url %}

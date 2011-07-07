@@ -521,24 +521,7 @@ class AppController extends Controller {
 	function beforeRender() {
 		
 		$this->setViewPathForTwig();
-		//$this->convertArraysToIteratorsForTwig();
-	}
 	
-	private function convertArraysToIteratorsForTwig() {
-		App::import('Lib', 'ArrayToIterator');
-		
-		$iterators = empty($this->viewVars['TwigObjects']['Iterator']) ?
-					array() : $this->viewVars['TwigObjects']['Iterator'];
-					
-		foreach($iterators as $alias) { 
-			$array = empty($this->viewVars[$alias]) ?
-				array() : $this->viewVars[$alias];
-				
-			if (is_array($array) AND !empty($array)) {
-				$this->viewVars[$alias] = ArrayToIterator::array2Iterator($array);
-				$items = $this->viewVars[$alias];
-			}
-		}
 	}
 	
 	/**
@@ -557,7 +540,8 @@ class AppController extends Controller {
 				       'Posts'    => array('view'=>'article',
 							   'index'=>'blog'),
 				       'Products' => array('view'=>'product',
-							   'view_by_group'=>'collection')
+							   'view_by_group'=>'collection',
+							   'view_cart' => 'cart',)
 				       );
 		
 		$controller 	= $this->name;

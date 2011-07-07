@@ -33,12 +33,19 @@ class WebpagesController extends AppController {
 	function view($handle = false) {
 		
 		if (!$handle) {
+			
 			$this->Session->setFlash(__('Invalid webpage', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		
-		$webpage = $this->Webpage->find('first', array('conditions'=>array('handle'=>$handle,
-									'shop_id'=>Shop::get('Shop.id'))));
+		$webpage = $this->Webpage->find('first',
+				array('conditions'=>array(
+					'handle'=>$handle,
+					'shop_id'=>Shop::get('Shop.id'))));
+		
+		if ($webpage == false) {
+			$this->cakeError('error404',array(array('url'=>'/')));
+		}
 		
 		$this->set(compact('webpage'));
 		

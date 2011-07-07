@@ -846,10 +846,18 @@ class Product extends AppModel {
 			/**
 			 * Variants
 			 **/
-			$variants = (!empty($product['Variant']))  ? Variant::getTemplateVariable($product['Variant']) : ArrayToIterator::array2Iterator(array());
+			if (!empty($product['Variant'])) {
+				$variants =  Variant::getTemplateVariable($product['Variant']);
+			} else {
+				$variants = (TWIG_ITERATOR) ? ArrayToIterator::array2Iterator(array()) : array();
+			}
 			
 			/* Collections */
-			$collections = !empty($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : ArrayToIterator::array2Iterator(array());
+			if (!empty($product['ProductsInGroup']) ) {
+				$collections = ProductGroup::getTemplateVariable($product['ProductsInGroup']);
+			} else {				
+				$collections = (TWIG_ITERATOR) ? ArrayToIterator::array2Iterator(array()) : array();
+			}
 			
 			/* store the original variants. needed for deriving Product Options */
 			$originalVariants = (!empty($product['Variant']))  ? $product['Variant'] : array();
@@ -864,8 +872,13 @@ class Product extends AppModel {
 				} else {
 					$product['options'] = array();
 				}
-			} 
-			$options = ArrayToIterator::array2Iterator(array_keys($product['options']));
+			}
+			
+			$options = array_keys($product['options']);
+			if (TWIG_ITERATOR) {
+				$options = ArrayToIterator::array2Iterator($options);	
+			}
+			
 			
 			/* now we build  the template variable */
 			$result = array('id' => $product['id'],
@@ -883,7 +896,7 @@ class Product extends AppModel {
 			  assign the peripheral data back into Product Template Variable
 			  eg, ProductImage, Vendor, Product options, Variant, Collection
 			*/
-			$result['images'] 	= ArrayToIterator::array2Iterator($images);
+			$result['images'] 	= (TWIG_ITERATOR) ? ArrayToIterator::array2Iterator($images) : $images;
 			$result['cover_image'] 	= isset($images[0]) ? $images[0] : '';
 			
 			$result['vendor'] 	= !empty($vendor['title']) ? $vendor['title'] : '';			
@@ -895,7 +908,7 @@ class Product extends AppModel {
 			$results[$result['underscore_handle']] = $result;
 		}
 		
-		if ($multiple) {
+		if ($multiple && TWIG_ITERATOR) {
 			$results = ArrayToIterator::array2Iterator($results);
 		}
 		

@@ -82,7 +82,7 @@ class Blog extends AppModel {
 			$results[$result['underscore_handle']] = $result;
 		}
 		
-		if ($multiple) {
+		if ($multiple && TWIG_ITERATOR) {
 			$results = ArrayToIterator::array2Iterator($results);
 		}
 		

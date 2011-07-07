@@ -96,7 +96,14 @@ class ProductGroup extends AppModel {
 					   
 					);
 			
-			$result['products'] = isset($group['Product']) ? Product::getTemplateVariable($group['Product']) :  ArrayToIterator::array2Iterator(array());
+			
+			if (isset($group['Product'])) {
+				$result['products'] = Product::getTemplateVariable($group['Product']);	
+			} else {
+				$result['products'] = (TWIG_ITERATOR) ? ArrayToIterator::array2Iterator(array()) : array();
+			}
+			
+			
 			if ($result['products']  instanceof IteratorForTwig){
 				$result['products_count'] = $result['products']->getSize();
 			} else{
@@ -107,7 +114,7 @@ class ProductGroup extends AppModel {
 			$results[$result['underscore_handle']] = $result;
 		}
 		
-		if ($multiple) {
+		if ($multiple && TWIG_ITERATOR) {
 			$results = ArrayToIterator::array2Iterator($results);
 		}
 		
@@ -537,7 +544,7 @@ class ProductGroup extends AppModel {
 		$productPaginate['contain'] = array('Variant' => array(
 								'order'=>'Variant.order ASC',
 								'VariantOption' => array(
-									'fields' => array('id', 'value'),
+									'fields' => array('id', 'value', 'field'),
 									'order'  => 'VariantOption.order ASC',
 								)
 							),

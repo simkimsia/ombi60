@@ -156,7 +156,7 @@ class Link extends AppModel {
 			$results[] = $result;
 		}
 		
-		if ($multiple) {
+		if ($multiple && TWIG_ITERATOR) {
 			App::import('Lib', 'ArrayToIterator');
 			$results = ArrayToIterator::array2Iterator($results);
 		}
