@@ -12,7 +12,28 @@ class Link extends AppModel {
 			'fields' => '',
 			'order' => '',
 			'counterCache' => true,
-		)
+		),
+		'Blog' => array(
+			'className' => 'Blog',
+			'foreignKey' => 'parent_id',
+			'conditions' => array('Link.parent_model'=>'Blog'),
+			'fields' => '',
+			'order' => '',
+		),
+		'Product' => array(
+			'className' => 'Product',
+			'foreignKey' => 'parent_id',
+			'conditions' => array('Link.parent_model'=>'Product'),
+			'fields' => '',
+			'order' => '',
+		),
+		'Webpage' => array(
+			'className' => 'Webpage',
+			'foreignKey' => 'parent_id',
+			'conditions' => array('Link.parent_model'=>'Webpage'),
+			'fields' => '',
+			'order' => '',
+		),
 	);
 	
 	function beforeValidate() {
@@ -32,11 +53,10 @@ class Link extends AppModel {
 			
 		}
 		
-		
 		// only for create
-		if (!isset($this->data['Link']['id'])) {
+		if (!isset($this->data[$this->alias]['id'])) {
 			$this->recursive = -1;
-			$this->data['Link']['order'] = $this->find('count', array('conditions'=>array('Link.link_list_id'=>$this->data['Link']['link_list_id'])));
+			$this->data[$this->alias]['order'] = $this->find('count', array('conditions'=>array($this->alias.'.link_list_id'=>$this->data[$this->alias]['link_list_id'])));
 			$this->recursive = 0;	
 		}
 		

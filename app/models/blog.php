@@ -17,7 +17,22 @@ class Blog extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+		),
+		'BlogLink' => array(
+			'className' => 'Link',
+			'foreignKey' => 'parent_id',
+			'dependent' => true,
+			'conditions' => array('BlogLink.parent_model' => 'Blog'),
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+	
+		
 	);
 	
 	var $belongsTo = array(
@@ -93,6 +108,32 @@ class Blog extends AppModel {
 		}
 		
 		return $results;
+	}
+	
+	function afterSave($created) {
+		$this->BlogLink->recursive = -1;
+		$blogLinks = $this->BlogLink->find('all', array('conditions'=>array('BlogLink.parent_id'=>$this->id,
+										    'BlogLink.parent_model'=>'Blog'),
+								'fields'    =>array('BlogLink.id')));
+		
+		$blogLinks = Set::extract('{n}.BlogLink', $blogLinks);
+		
+		$handle = $this->data['Blog']['short_name'];
+		$model 	= '/blogs/';
+		
+		$route  = $model . $handle;
+		$links = array();
+		
+		foreach($blogLinks as $key=>$link) {
+			$link['model'] = $model;
+			$link['action'] = $handle;
+			$link['route'] = $route;
+			if (isset($link['id'])) {
+				$links[] = $link;	
+			}
+		}
+		
+		$this->BlogLink->saveAll($links);
 	}
 
 }

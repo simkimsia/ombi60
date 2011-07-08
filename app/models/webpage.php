@@ -27,6 +27,23 @@ class Webpage extends AppModel {
 		),
 	);
 	
+	var $hasMany = array(
+		
+		'PageLink' => array(
+			'className' => 'Link',
+			'foreignKey' => 'parent_id',
+			'dependent' => true,
+			'conditions' => array('PageLink.parent_model' => 'Webpage'),
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+	);
+	
 	var $actsAs = array('Handleize.Sluggable'=> array(
 				'fields' => 'title',
 				'scope' => array('shop_id'),
@@ -81,6 +98,32 @@ class Webpage extends AppModel {
 		}
 		
 		return $results;
+	}
+	
+	function afterSave($created) {
+		$this->PageLink->recursive = -1;
+		$pageLinks = $this->PageLink->find('all', array('conditions'=>array('PageLink.parent_id'=>$this->id,
+										    'PageLink.parent_model'=>'Webpage'),
+								'fields'    =>array('PageLink.id')));
+		
+		$pageLinks = Set::extract('{n}.PageLink', $pageLinks);
+		
+		$handle = $this->data['Webpage']['handle'];
+		$model 	= '/pages/';
+		
+		$route  = $model . $handle;
+		$links = array();
+		
+		foreach($pageLinks as $key=>$link) {
+			$link['model'] = $model;
+			$link['action'] = $handle;
+			$link['route'] = $route;
+			if (isset($link['id'])) {
+				$links[] = $link;	
+			}
+		}
+		
+		$this->PageLink->saveAll($links);
 	}
 	
 }

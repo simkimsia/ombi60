@@ -73,6 +73,8 @@ class BlogsController extends AppController {
 			}
 		}
 		if (empty($this->data)) {
+			$this->Blog->recursive = -1;
+			$this->Blog->bindModel( array('hasMany' => array('Post')) );
 			$this->data = $this->Blog->read(null, $id);
 		}
 	}

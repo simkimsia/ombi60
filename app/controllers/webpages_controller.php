@@ -85,6 +85,8 @@ class WebpagesController extends AppController {
 			$this->Session->setFlash(__('Invalid webpage', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
+		
+		$this->Webpage->unbindModel( array('hasMany' => array('PageLink')) );
 		$this->set('webpage', $this->Webpage->read(null, $id));
 		$authors = $this->Webpage->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
 
@@ -153,6 +155,7 @@ class WebpagesController extends AppController {
 			}
 		}
 		if (empty($this->data)) {
+			$this->Webpage->unbindModel( array('hasMany' => array('PageLink')) );
 			$this->data = $this->Webpage->read(null, $id);
 		}
 

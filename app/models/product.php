@@ -120,7 +120,19 @@ class Product extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		
+		'ProductLink' => array(
+			'className' => 'Link',
+			'foreignKey' => 'parent_id',
+			'dependent' => true,
+			'conditions' => array('ProductLink.parent_model' => 'Product'),
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
 		
 		'ProductsInGroup' => array(
 			'className' => 'ProductsInGroup',
@@ -816,6 +828,34 @@ class Product extends AppModel {
 		$product['id'] 	= $this->id;
 		$this->smartUpdateProductsInGroup($product);
 		
+		$this->updateProductLinks();
+		
+	}
+	
+	private function updateProductLinks() {
+		$this->ProductLink->recursive = -1;
+		$productLinks = $this->ProductLink->find('all', array('conditions'=>array('ProductLink.parent_id'=>$this->id,
+											  'ProductLink.parent_model'=>'Product'),
+								'fields'    =>array('ProductLink.id')));
+		
+		$productLinks = Set::extract('{n}.ProductLink', $productLinks);
+		
+		$handle = $this->data['Product']['handle'];
+		$model 	= '/products/';
+		
+		$route  = $model . $handle;
+		$links = array();
+		
+		foreach($productLinks as $key=>$link) {
+			$link['model'] = $model;
+			$link['action'] = $handle;
+			$link['route'] = $route;
+			if (isset($link['id'])) {
+				$links[] = $link;	
+			}
+		}
+		
+		$this->ProductLink->saveAll($links);
 	}
 	
 	/**
