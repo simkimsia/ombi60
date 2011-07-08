@@ -7,11 +7,12 @@
   "value": [
     "rm app/tmp/cache/views/* -R"
   ], 
-  "cwd": "/var/www/wp", 
+  "parseOutput": 0, 
+  "version": "1.0.7", 
   "env": "", 
   "doNotOpenOutputWindow": 0, 
   "showParsedOutputList": 0, 
   "type": "command", 
-  "parseOutput": 0, 
+  "cwd": "/var/www/wp", 
   "runIn": "command-output-window"
 }

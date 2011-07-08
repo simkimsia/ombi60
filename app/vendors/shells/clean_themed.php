@@ -4,7 +4,8 @@ class CleanThemedShell extends Shell {
         
         var $uses = array();
         
-        var $whitelist = array('alt', 'shopify-solo',
+        var $whitelist = array('alt', 'shopify-solo', '2_cover_1',
+                               '2_cover_shopify', 'original_default',
                                'default', 'blue-white', 'orange');
         
         function main() {

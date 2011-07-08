@@ -203,7 +203,7 @@ class Merchant extends AppModel {
 		// now we set up the blog
 		$blog = ClassRegistry::init('Blog');
 		
-		$blogData = array('Blog'=>array('title'=>$data['Shop']['name'],
+		$blogData = array('Blog'=>array('title'=>'news',
 						'shop_id'=>$this->Shop->id));
 		
 		$blog->create();
@@ -326,7 +326,7 @@ class Merchant extends AppModel {
 				      'model'	=> '/collections/all',
 				      'order'	=> '2'),
 				array('name'	=> 'Blog',
-				      'route'	=> '/blogs/' . $shopBlog['Blog']['short_name'],
+				      'route'	=> '/blogs/news' ,
 				      'model'	=> '/blogs/',
 				      'action'	=> $shopBlog['Blog']['short_name'],
 				      'order'	=> '3'),

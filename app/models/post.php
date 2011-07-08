@@ -163,6 +163,25 @@ class Post extends AppModel {
 		return $results;
 	}
 	
+	function beforeSave($options) {
+		
+		$setBlogHandle = (empty($this->data['Post']['blog_handle']));
+		
+		if ($setBlogHandle) {
+			if (!empty($this->data['Blog']['short_name'])) {
+				$this->data['Post']['blog_handle'] = $this->data['Blog']['short_name'];
+			} elseif (!empty($this->data['Post']['blog_id'])) {
+				$this->Blog->id = $this->data['Post']['blog_id'];
+				$this->data['Post']['blog_handle'] = $this->Blog->field('short_name');
+			} else {
+				$this->data['Post']['blog_handle'] = 'news';
+			}
+		}
+		
+		return true;
+		
+	}
+	
 
 }
 ?>

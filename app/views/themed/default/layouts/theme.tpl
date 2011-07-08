@@ -68,16 +68,15 @@
 				<!-- END MAIN -->
 				<!-- START SIDEBAR -->
 				<div id="sidebar">
-					<h3>Recent Articles</h3>{% set blog_handle %}
+					<h3>Recent Articles</h3>
 						{% if template == "page" %}
-							news
+							{% set blog_handle ='news' %}
 						{% else %}
-							{{ blog.handle }}
+							{% set blog_handle = blog.handle %}
 						{% endif %}
-						{% endset %}
 						
 						{% if ((blogs[blog_handle].articles | length) > 0) %}
-							{% for article in blogs[blog_handle].articles %}
+							{% for article in blogs.news.articles %}
 					<!-- START POST {{ forloop.index }} -->
 					<div class="post{% if forloop.last %} end{% endif %}">
 						<h5><a href="{{ article.url }}">{{ article.title | escape }}</a></h5>
@@ -109,8 +108,8 @@
 					<p><a href="{{ article.url }}">Read More</a></p>{% endfor %}
 				</li>
 				<li>
-					<h3>{{ pages.about-us.title | escape }}</h3>
-					<p>{{ pages.about-us.content | strip_html | strip_newlines | truncate( 200 ) }}</p>
+					<h3>{{ pages.about_us.title | escape }}</h3>
+					<p>{{ pages.about_us.content | strip_html | strip_newlines | truncate( 200 ) }}</p>
 					<p><a href="/pages/about-us">Read More</a></p>
 				</li>
 			</ul>

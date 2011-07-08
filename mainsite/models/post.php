@@ -94,7 +94,7 @@ class Post extends AppModel {
                 
 		if (!isset($this->virtualFields['url'])) {
                         
-                        $this->virtualFields['url'] = "CONCAT('/', '$controller', '/', `Blog`.`short_name`, '/', `{$this->alias}`.`id`, '-', `{$this->alias}`.`slug`)";
+                        $this->virtualFields['url'] = "CONCAT('/', '$controller', '/', `{$this->alias}`.`blog_handle`, '/', `{$this->alias}`.`id`, '-', `{$this->alias}`.`slug`)";
                                 
                 }
                 
@@ -127,25 +127,31 @@ class Post extends AppModel {
 		if (!$multiple) $articles = array($articles);
 		
 		foreach($articles as $key=>$article) {
-			
-			$result = array('id' => $article['Post']['id'],
-					   'title' => $article['Post']['title'],
+			$author = isset($article['User']['name_to_call']) ? $article['User']['name_to_call'] : '';
+			$article = !empty($article['Post']) ? $article['Post'] : $article;
+			$result = array('id' => $article['id'],
+					   'title' => $article['title'],
 					   
-					   'content' => $article['Post']['content'],
+					   'content' => $article['content'],
 					   
-					   'handle' => $article['Post']['slug'],
-					   'underscore_handle' => str_replace('-', '_', $article['Post']['slug']),
-					   'url' => $article['Post']['url'],
+					   'handle' => $article['slug'],
+					   'underscore_handle' => str_replace('-', '_', $article['slug']),
+					   'url' => $article['url'],
 					   
-					   'created' => $article['Post']['created'],
-					   'published'=> $article['Post']['published'],
+					   'created' => $article['created'],
+					   'published'=> $article['published'],
 					   );
 			
 			
-			$result['author'] = isset($article['User']['name_to_call']) ? $article['User']['name_to_call'] : '';
+			$result['author'] = $author;
 			
 			
 			$results[$result['underscore_handle']] = $result;
+		}
+		
+		if ($multiple && TWIG_ITERATOR) {
+			App::import('Lib', 'ArrayToIterator');
+			$results = ArrayToIterator::array2Iterator($results);
 		}
 		
 		if (!$multiple && !empty($results)) {
@@ -155,6 +161,25 @@ class Post extends AppModel {
 		}
 		
 		return $results;
+	}
+	
+	function beforeSave($options) {
+		
+		$setBlogHandle = (empty($this->data['Post']['blog_handle']));
+		
+		if ($setBlogHandle) {
+			if (!empty($this->data['Blog']['short_name'])) {
+				$this->data['Post']['blog_handle'] = $this->data['Blog']['short_name'];
+			} elseif (!empty($this->data['Post']['blog_id'])) {
+				$this->Blog->id = $this->data['Post']['blog_id'];
+				$this->data['Post']['blog_handle'] = $this->Blog->field('short_name');
+			} else {
+				$this->data['Post']['blog_handle'] = 'news';
+			}
+		}
+		
+		return true;
+		
 	}
 	
 
