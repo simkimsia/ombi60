@@ -221,8 +221,9 @@ class CartItem extends AppModel {
 			 * and the variant title starts with "default" case-insensitive
 			 * we just use ProductTitle
 			 **/
+			App::import('Lib', 'StringManipulator');
 			if (count($result['product']['variants']) == 1) {
-				if (startsWith($variantTitle, 'default', false)) {
+				if (StringManipulator::startsWith($variantTitle, 'default', false)) {
 					$result['title'] = $productTitle;
 				}
 			}

@@ -786,6 +786,7 @@ class Product extends AppModel {
 	 *  that is the list of conditions without SmartCollectionCondition index present
 	 * */
 	private function evaluateAgainstSmartConditions($product, $conditionalArrays) {
+		App::import('Lib', 'StringManipulator');
 		$ok = true;
 		
 		foreach($conditionalArrays as $conditionalArray) {
@@ -811,11 +812,11 @@ class Product extends AppModel {
 				  break;
 				case "starts_with":
 				  //Field in Product should start with Value
-				  $ok = startsWith($fieldInProduct, $value,  false);
+				  $ok = StringManipulator::startsWith($fieldInProduct, $value,  false);
 				  break;
 				case "ends_with":
 				  //Field in Product should end with value
-				  $ok = endsWith($fieldInProduct, $value, false);
+				  $ok = StringManipulator::endsWith($fieldInProduct, $value, false);
 				  break;
 				case "contains":
 				  //Field in Product should contain the value

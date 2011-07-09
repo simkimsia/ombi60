@@ -834,28 +834,28 @@ class Product extends AppModel {
 	
 	private function updateProductLinks() {
 		$this->ProductLink->recursive = -1;
-		$productLinks = $this->ProductLink->find('all', array('conditions'=>array('ProductLink.parent_id'=>$this->id,
-											  'ProductLink.parent_model'=>'Product'),
-								'fields'    =>array('ProductLink.id')));
 		
-		$productLinks = Set::extract('{n}.ProductLink', $productLinks);
-		
+		// get the new handle 
 		$handle = $this->data['Product']['handle'];
 		$model 	= '/products/';
 		
+		// form the new route
 		$route  = $model . $handle;
-		$links = array();
+		// form the new fields and values
+		$fields = array('ProductLink.route' =>$route,
+				'ProductLink.model' =>$model,
+				'ProductLink.action'=>$action);
 		
-		foreach($productLinks as $key=>$link) {
-			$link['model'] = $model;
-			$link['action'] = $handle;
-			$link['route'] = $route;
-			if (isset($link['id'])) {
-				$links[] = $link;	
-			}
-		}
+		// prepare the fields by wrapping the values in quotes
+		App::import('Lib', 'StringManipulator');
+		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
 		
-		$this->ProductLink->saveAll($links);
+		// meant only for all the ProductLinks belonging to this Product
+		$conditions = array('ProductLink.parent_id'=>$this->id,
+				    'ProductLink.parent_model'=>'Product');
+		
+		return $this->ProductLink->updateAll($fields, $conditions);
+		
 	}
 	
 	/**
@@ -1170,6 +1170,7 @@ class Product extends AppModel {
 	 *  that is the list of conditions without SmartCollectionCondition index present
 	 * */
 	private function evaluateAgainstSmartConditions($product, $conditionalArrays) {
+		App::import('Lib', 'StringManipulator');
 		$ok = true;
 		
 		foreach($conditionalArrays as $conditionalArray) {
@@ -1195,11 +1196,11 @@ class Product extends AppModel {
 				  break;
 				case "starts_with":
 				  //Field in Product should start with Value
-				  $ok = startsWith($fieldInProduct, $value,  false);
+				  $ok = StringManipulator::startsWith($fieldInProduct, $value,  false);
 				  break;
 				case "ends_with":
 				  //Field in Product should end with value
-				  $ok = endsWith($fieldInProduct, $value, false);
+				  $ok = StringManipulator::endsWith($fieldInProduct, $value, false);
 				  break;
 				case "contains":
 				  //Field in Product should contain the value

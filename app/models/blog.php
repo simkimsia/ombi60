@@ -111,29 +111,51 @@ class Blog extends AppModel {
 	}
 	
 	function afterSave($created) {
+		$this->updateBlogLinks();
+		$this->updateHandlesInArticles();
+	}
+	
+	private function updateHandlesInArticles() {
+		$this->Post->recursive = -1;
+		// get the new handle 
+		$handle = $this->data['Blog']['short_name'];
+		
+		// form the new fields and values
+		$fields = array('Post.blog_handle' =>$handle);
+		
+		// prepare the fields by wrapping the values in quotes
+		App::import('Lib', 'StringManipulator');
+		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
+		
+		// meant only for all the BlogLinks belonging to this Blog
+		$conditions = array('Post.blog_id'=>$this->id);
+		
+		return $this->Post->updateAll($fields, $conditions);
+		
+	}
+	
+	private function updateBlogLinks() {
 		$this->BlogLink->recursive = -1;
-		$blogLinks = $this->BlogLink->find('all', array('conditions'=>array('BlogLink.parent_id'=>$this->id,
-										    'BlogLink.parent_model'=>'Blog'),
-								'fields'    =>array('BlogLink.id')));
 		
-		$blogLinks = Set::extract('{n}.BlogLink', $blogLinks);
-		
+		// get the new handle 
 		$handle = $this->data['Blog']['short_name'];
 		$model 	= '/blogs/';
-		
+		// form the new route
 		$route  = $model . $handle;
-		$links = array();
+		// form the new fields and values
+		$fields = array('BlogLink.route' =>$route,
+				'BlogLink.model' =>$model,
+				'BlogLink.action'=>$action);
 		
-		foreach($blogLinks as $key=>$link) {
-			$link['model'] = $model;
-			$link['action'] = $handle;
-			$link['route'] = $route;
-			if (isset($link['id'])) {
-				$links[] = $link;	
-			}
-		}
+		// prepare the fields by wrapping the values in quotes
+		App::import('Lib', 'StringManipulator');
+		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
 		
-		$this->BlogLink->saveAll($links);
+		// meant only for all the BlogLinks belonging to this Blog
+		$conditions = array('BlogLink.parent_id'=>$this->id,
+				    'BlogLink.parent_model'=>'Blog');
+		
+		return $this->BlogLink->updateAll($fields, $conditions);
 	}
 
 }

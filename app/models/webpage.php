@@ -102,28 +102,27 @@ class Webpage extends AppModel {
 	
 	function afterSave($created) {
 		$this->PageLink->recursive = -1;
-		$pageLinks = $this->PageLink->find('all', array('conditions'=>array('PageLink.parent_id'=>$this->id,
-										    'PageLink.parent_model'=>'Webpage'),
-								'fields'    =>array('PageLink.id')));
 		
-		$pageLinks = Set::extract('{n}.PageLink', $pageLinks);
-		
+		// get the new handle 
 		$handle = $this->data['Webpage']['handle'];
 		$model 	= '/pages/';
-		
+		// form the new route
 		$route  = $model . $handle;
-		$links = array();
+		// form the new fields and values
+		$fields = array('PageLink.route' =>$route,
+				'PageLink.model' =>$model,
+				'PageLink.action'=>$action);
 		
-		foreach($pageLinks as $key=>$link) {
-			$link['model'] = $model;
-			$link['action'] = $handle;
-			$link['route'] = $route;
-			if (isset($link['id'])) {
-				$links[] = $link;	
-			}
-		}
+		// prepare the fields by wrapping the values in quotes
+		App::import('Lib', 'StringManipulator');
+		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
 		
-		$this->PageLink->saveAll($links);
+		// meant only for all the PageLinks belonging to this Webpage
+		$conditions = array('PageLink.parent_id'=>$this->id,
+				    'PageLink.parent_model'=>'Webpage');
+		
+		$this->PageLink->updateAll($fields, $conditions);
+		
 	}
 	
 }
