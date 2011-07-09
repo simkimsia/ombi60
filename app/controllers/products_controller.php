@@ -513,8 +513,11 @@ class ProductsController extends AppController {
 		$noSuchProduct = ($invalidShop) ? true : empty($productFound['Product']);
 		
 		if (   $invalidShop OR $noSuchProduct) {
-			$this->Session->setFlash(__('No such product for this shop', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect('/');
+		
+			$this->cakeError('error404',array(array('url'=>'/',
+								'viewVars' =>$this->viewVars,
+								)));
+		
 		}
 
 		$product = Product::getTemplateVariable($productFound, false);

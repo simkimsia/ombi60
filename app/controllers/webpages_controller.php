@@ -42,7 +42,7 @@ class WebpagesController extends AppController {
 					'shop_id'=>Shop::get('Shop.id'))));
 		
 		if ($webpage == false) {
-			$this->cakeError('error404',array(array('url'=>'/')));
+			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 		
 		$page = Webpage::getTemplateVariable($webpage, false);

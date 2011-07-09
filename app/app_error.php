@@ -34,6 +34,25 @@ class AppError extends ErrorHandler {
 		}
 		$url = Router::normalize($url);
 		$this->controller->header("HTTP/1.0 404 Not Found");
+		
+		$viewVars = !empty($params['viewVars']) ? $params['viewVars'] : array();
+		
+		
+		// for public views under Twig
+		// we need shop, blogs, collections,
+		// linklists, pages, cart,
+		$allowed404ViewVars = array('blogs', 'collections',
+					    'cart', 'linklists',
+					    'shop', 'pages');
+		
+		foreach($allowed404ViewVars as $var) {
+			$availableVars = array_keys($viewVars);
+			if(in_array($var, $availableVars)) {
+				$this->controller->set($var, $viewVars[$var]);
+			}
+		}
+		
+		
 		$this->controller->set(array(
 			'code' => '404',
 			'name' => __('Not Found', true),
