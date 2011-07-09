@@ -57,7 +57,9 @@ class AppError extends ErrorHandler {
 			'code' => '404',
 			'name' => __('Not Found', true),
 			'message' => h($url),
-			'base' => $this->controller->base
+			'base' => $this->controller->base,
+			'page_title' => 'Page Not Found',
+			'template' => '404',
 		));
 		
 		$this->controller->view = 'TwigView.Twig';
