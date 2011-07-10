@@ -189,5 +189,26 @@ class Link extends AppModel {
 		
 		return $results;
 	}
+	
+	/**
+	 * override the original updateAll
+	 * if it comes from Webpage, Product, Blog,
+	 * then the $parentModel is set as 'Webpage', etc
+	 * 
+	
+	function deleteAll($fields, $conditions = true, $parentModel = false) {
+		$parentModels = array('Blog', 'Webpage', 'Product');
+		
+		$updateCounterCacheInLinkLists = in_array($parentModel, $parentModels);
+				
+		if ($updateCounterCacheInLinkLists) {
+			// get all the parent linklists id
+		}
+		parent::updateAll($fields, $conditions);
+		if ($updateCounterCacheInLinkLists) {
+			// now update all the parent linklists id
+		}
+	}
+	 **/
 }
 ?>

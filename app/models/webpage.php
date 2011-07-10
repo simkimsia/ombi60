@@ -38,7 +38,7 @@ class Webpage extends AppModel {
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
-			'exclusive' => '',
+			'exclusive' => false,
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
@@ -56,6 +56,8 @@ class Webpage extends AppModel {
 			),
 			    'Visible.Visible',
 			    'Handleize.Handleable');
+	
+	var $linklists = array();
 	
 	public function __construct($id=false,$table=null,$ds=null) {
 		parent::__construct($id,$table,$ds);
@@ -124,6 +126,33 @@ class Webpage extends AppModel {
 		$this->PageLink->updateAll($fields, $conditions);
 		
 	}
+	function beforeDelete() {
+		// retrieve all the linklists that this webpage's link belongs to
+		// meant only for all the PageLinks belonging to this Webpage
+		
+		$conditions = array('PageLink.parent_id'=>$this->id,
+				    'PageLink.parent_model'=>'Webpage');
+		
+		$this->PageLink->recursive = -1;
+		$linklists = $this->PageLink->find('all', array('conditions'=>$conditions,
+								'fields'=>array('DISTINCT PageLink.link_list_id')));
+		$this->log($linklists);
+		$this->linklists = Set::extract('{n}.PageLink', $linklists);
+		$this->log($this->linklists);
+		return true;
+	}
+	
+	function afterDelete() {
+		$this->log('after');
+		foreach($this->linklists as $key=>$link_list) {
+			$this->log($link_list);
+			$result = $this->Shop->LinkList->Link->updateCounterCache($link_list);
+			$this->log($result);
+		}
+		$this->linklists = array();
+	}
+	
+	
 	
 }
 ?>
