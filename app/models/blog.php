@@ -2,6 +2,9 @@
 class Blog extends AppModel {
 	var $name = 'Blog';
 	var $displayField = 'title';
+	
+	var $linklists = array();
+	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $hasMany = array(
@@ -18,11 +21,11 @@ class Blog extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'BlogLink' => array(
+		'Link' => array(
 			'className' => 'Link',
 			'foreignKey' => 'parent_id',
 			'dependent' => true,
-			'conditions' => array('BlogLink.parent_model' => 'Blog'),
+			'conditions' => array('Link.parent_model' => 'Blog'),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
@@ -135,27 +138,53 @@ class Blog extends AppModel {
 	}
 	
 	private function updateBlogLinks() {
-		$this->BlogLink->recursive = -1;
+		$this->Link->recursive = -1;
 		
 		// get the new handle 
 		$handle = $this->data['Blog']['short_name'];
 		$model 	= '/blogs/';
+		$action = $handle;
+		
 		// form the new route
 		$route  = $model . $handle;
 		// form the new fields and values
-		$fields = array('BlogLink.route' =>$route,
-				'BlogLink.model' =>$model,
-				'BlogLink.action'=>$action);
+		$fields = array('Link.route' =>$route,
+				'Link.model' =>$model,
+				'Link.action'=>$action);
 		
 		// prepare the fields by wrapping the values in quotes
 		App::import('Lib', 'StringManipulator');
 		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
 		
-		// meant only for all the BlogLinks belonging to this Blog
-		$conditions = array('BlogLink.parent_id'=>$this->id,
-				    'BlogLink.parent_model'=>'Blog');
+		// meant only for all the Links belonging to this Blog
+		$conditions = array('Link.parent_id'=>$this->id,
+				    'Link.parent_model'=>'Blog');
 		
-		return $this->BlogLink->updateAll($fields, $conditions);
+		return $this->Link->updateAll($fields, $conditions);
+	}
+	
+	function beforeDelete() {
+		// retrieve all the linklists that this webpage's link belongs to
+		// meant only for all the Links belonging to this Webpage
+		
+		$conditions = array('Link.parent_id'=>$this->id,
+				    'Link.parent_model'=>'Webpage');
+		
+		$this->Link->recursive = -1;
+		$linklists = $this->Link->find('all', array('conditions'=>$conditions,
+							    'fields'=>array('DISTINCT Link.link_list_id')));
+		
+		$this->linklists = Set::extract('{n}.Link', $linklists);
+		
+		return true;
+	}
+	
+	function afterDelete() {
+		
+		foreach($this->linklists as $key=>$link_list) {
+			$result = $this->Link->updateCounterCache($link_list);
+		}
+		$this->linklists = array();
 	}
 
 }

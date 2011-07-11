@@ -29,11 +29,11 @@ class Webpage extends AppModel {
 	
 	var $hasMany = array(
 		
-		'PageLink' => array(
+		'Link' => array(
 			'className' => 'Link',
 			'foreignKey' => 'parent_id',
 			'dependent' => true,
-			'conditions' => array('PageLink.parent_model' => 'Webpage'),
+			'conditions' => array('Link.parent_model' => 'Webpage'),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
@@ -103,7 +103,7 @@ class Webpage extends AppModel {
 	}
 	
 	function afterSave($created) {
-		$this->PageLink->recursive = -1;
+		$this->Link->recursive = -1;
 		
 		// get the new handle 
 		$handle = $this->data['Webpage']['handle'];
@@ -111,43 +111,42 @@ class Webpage extends AppModel {
 		// form the new route
 		$route  = $model . $handle;
 		// form the new fields and values
-		$fields = array('PageLink.route' =>$route,
-				'PageLink.model' =>$model,
-				'PageLink.action'=>$action);
+		$fields = array('Link.route' =>$route,
+				'Link.model' =>$model,
+				'Link.action'=>$action);
 		
 		// prepare the fields by wrapping the values in quotes
 		App::import('Lib', 'StringManipulator');
 		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
 		
-		// meant only for all the PageLinks belonging to this Webpage
-		$conditions = array('PageLink.parent_id'=>$this->id,
-				    'PageLink.parent_model'=>'Webpage');
+		// meant only for all the Links belonging to this Webpage
+		$conditions = array('Link.parent_id'=>$this->id,
+				    'Link.parent_model'=>'Webpage');
 		
-		$this->PageLink->updateAll($fields, $conditions);
+		$this->Link->updateAll($fields, $conditions);
 		
 	}
+	
 	function beforeDelete() {
 		// retrieve all the linklists that this webpage's link belongs to
-		// meant only for all the PageLinks belonging to this Webpage
+		// meant only for all the Links belonging to this Webpage
 		
-		$conditions = array('PageLink.parent_id'=>$this->id,
-				    'PageLink.parent_model'=>'Webpage');
+		$conditions = array('Link.parent_id'=>$this->id,
+				    'Link.parent_model'=>'Webpage');
 		
-		$this->PageLink->recursive = -1;
-		$linklists = $this->PageLink->find('all', array('conditions'=>$conditions,
-								'fields'=>array('DISTINCT PageLink.link_list_id')));
-		$this->log($linklists);
-		$this->linklists = Set::extract('{n}.PageLink', $linklists);
-		$this->log($this->linklists);
+		$this->Link->recursive = -1;
+		$linklists = $this->Link->find('all', array('conditions'=>$conditions,
+							    'fields'=>array('DISTINCT Link.link_list_id')));
+		
+		$this->linklists = Set::extract('{n}.Link', $linklists);
+		
 		return true;
 	}
 	
 	function afterDelete() {
-		$this->log('after');
+		
 		foreach($this->linklists as $key=>$link_list) {
-			$this->log($link_list);
-			$result = $this->Shop->LinkList->Link->updateCounterCache($link_list);
-			$this->log($result);
+			$result = $this->Link->updateCounterCache($link_list);
 		}
 		$this->linklists = array();
 	}
