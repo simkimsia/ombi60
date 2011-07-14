@@ -60,7 +60,18 @@ class Blog extends AppModel {
 			),
 			    'Handleize.Handleable'=>array(
 				'handleFieldName' => 'short_name'
-							  ));
+							  ),
+			    'ManyToManyCountable.ManyToManyCountable' => array(
+				'LinkList'=>array(
+					'className' 	=> 'LinkList',
+					'joinModel' 	=> 'Link',
+					'foreignKey'	=> 'parent_id',
+					'associationForeignKey'	=> 'link_list_id',
+					'unique'	=> true,
+					'counterCache'  => 'link_count',
+					'parentScope' => array('Link.parent_model' => 'Blog'),
+					))
+			    );
 	
 	
 	public function __construct($id=false,$table=null,$ds=null) {
@@ -163,29 +174,6 @@ class Blog extends AppModel {
 		return $this->Link->updateAll($fields, $conditions);
 	}
 	
-	function beforeDelete() {
-		// retrieve all the linklists that this webpage's link belongs to
-		// meant only for all the Links belonging to this Webpage
-		
-		$conditions = array('Link.parent_id'=>$this->id,
-				    'Link.parent_model'=>'Webpage');
-		
-		$this->Link->recursive = -1;
-		$linklists = $this->Link->find('all', array('conditions'=>$conditions,
-							    'fields'=>array('DISTINCT Link.link_list_id')));
-		
-		$this->linklists = Set::extract('{n}.Link', $linklists);
-		
-		return true;
-	}
-	
-	function afterDelete() {
-		
-		foreach($this->linklists as $key=>$link_list) {
-			$result = $this->Link->updateCounterCache($link_list);
-		}
-		$this->linklists = array();
-	}
 
 }
 ?>
