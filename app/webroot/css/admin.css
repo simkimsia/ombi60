@@ -941,3 +941,102 @@ div.productnote {
         margin-bottom: 0px; 
         /*display: none;*/
 }
+
+/***************************************  Style for variant list starts here **************************************/
+.variant_option_1 {
+  color: #237FAD !important;
+}
+
+.variant_option_2 {
+  color: #70991F !important;
+}
+
+.variant_option_3 {
+   color: #A95A05 !important;
+}
+
+table.variant_list {
+ cellpadding:0;
+ cellspacing:0;
+}
+table.variant_list th {
+    background: none repeat scroll 0 0 #F2F2F2;
+    border-bottom: 1px solid #DDDDDD;
+    color: #333333;
+    font-size: 14px;
+    padding: 2px 5px;
+    text-align: left;
+    text-shadow: 0 1px 1px #FFFFFF;
+    vertical-align:middle;
+}
+
+table.variant_list tr {
+    font-size: 12px;
+    padding: 2px 5px;
+    text-align: left;
+    font-weight:bold;
+}
+
+table.variant_list tr.row-even td {
+   background: none repeat scroll 0 0 #FFFFFF;!important;
+}
+
+table.variant_list tr.row-odd td {
+  background: none repeat scroll 0 0 #F5F5F5;!important;
+}
+
+
+table.variant_list .checkbox_cell {
+ vertical-align: middle;
+ width: 5px;
+}   
+
+
+form.variant .variant_fields  {
+    float: left;!important;
+    clear: none;!important;
+    font-size: 14px;
+    margin: 10px 20px 0 0;
+    width: 175px;
+    padding-left:20px;
+}
+.variant_div {
+    background: none repeat scroll 0 0 #F7F7F7;
+    border: 1px solid #DDDDDD;
+    margin: 20px 0;
+}
+
+.variant_div tr.divider td {
+   border-top: 1px dashed #CCCCCC;
+   border-bottom: 1px solid #CCCCCC;
+}
+
+table.secondary-variant-options {
+  width:auto;!important;
+  margin-left:0;!important;
+  padding-left:10px;!important;
+}
+
+table.secondary-variant-options tr td.right{
+  text-align:right;
+}
+.group-actions {
+ background: -moz-linear-gradient(center top , #F0F0F0 0%, #E9E9E9 100%) repeat scroll 0 0 transparent;
+    border-top: 1px solid #FAFAFA;
+    display: block;
+    margin: 10px 0 0;
+    padding: 10px;
+    position: relative;
+    vertical-align: middle;
+}  
+
+.note, .hint {
+    color: #777777;
+    font-size: 11px;
+    font-weight: normal;
+}  
+.highlight-alt {
+background-color: #FFFFE0 !important;
+}
+
+/********************************* Style for variant list ends here ********************************************/

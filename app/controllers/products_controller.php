@@ -681,14 +681,13 @@ class ProductsController extends AppController {
 	}
 	
 	function admin_edit($id = null) {
-
+   
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Product', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
-
-		if (!empty($this->data)) {
-			
+   
+		if (!empty($this->data)) {		  
 			if ($this->Product->save($this->data)) {
 				$this->Session->setFlash(__('The Product has been saved', true), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
@@ -710,12 +709,34 @@ class ProductsController extends AppController {
 		$collections = $this->Product->ProductsInGroup->ProductGroup->find('list', array('conditions'=>array('ProductGroup.type'=>CUSTOM_COLLECTION,
 												'ProductGroup.shop_id'=>Shop::get('Shop.id'))));
 		
-		$this->set(compact('product_id', 'errors', 'collections', 'variants'));
-		
+	
+   		
+    $variant_list = $this->get_variant_list($id);
+    
+		$this->set(compact('product_id', 'errors', 'collections', 'variants','variant_list'));
+				
 		$this->render('admin_edit');
 
 	}
 	
+	function get_variant_list($id) {
+	    $variant_list = $this->Product->getDetails($id);
+	    
+	    if (isset($variant_list['Variant']) && !empty($variant_list['Variant'])) {
+          foreach ($variant_list['Variant'] as $key =>$variant) {
+             if (isset($variant['VariantOption'])) {
+               foreach ($variant['VariantOption'] as $key2 => $variantOptions) {
+                  $newVariantOptions[$variantOptions['field']] = $variantOptions['value'];
+               }
+               $variant_list['Variant'][$key]['VariantOption']['options']  = $newVariantOptions;
+             } 
+             
+             
+          }
+     }
+     
+      return $variant_list;
+	}
 	
 	function admin_delete($id = null) {
 		if (!$id) {

@@ -87,4 +87,8 @@
                         );
         ?>
 <?php echo $this->element('add_variant_option', array('voptions' => $voptions));?>
+
+<?php echo $this->element('list_of_variants',array('variant_list' => $variant_list));?>
 </div>
+
+
