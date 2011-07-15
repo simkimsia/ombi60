@@ -461,8 +461,8 @@ class ProductsController extends AppController {
                                          'auto' => true,
                                                                        'buttonText' => __('Choose File', true),
                                          'onComplete' => true,);
-		    
-		$this->set(compact('product_id', 'productImages', 'errors', 'uploadifySettings', ''));
+		$variant_list = $this->get_variant_list($id);
+		$this->set(compact('product_id', 'productImages', 'errors', 'uploadifySettings', '', 'variant_list'));
 
 	}
 
