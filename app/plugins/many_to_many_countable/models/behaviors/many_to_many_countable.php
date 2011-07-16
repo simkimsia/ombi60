@@ -135,7 +135,7 @@ class ManyToManyCountableBehavior extends ModelBehavior {
 			$foreignKey = $config['foreignKey'];
 			$assocFKey = $config['associationForeignKey'];
 			$basicCondition = array($joinModel . '.' . $foreignKey =>$model->id) ;
-			$extraConditions = !empty($config['parentScope']) ? $config['parentScope'] : array();
+			$extraConditions = !empty($config['foreignScope']) ? $config['foreignScope'] : array();
 			
 			$conditions = array_merge($basicCondition, $extraConditions);
 			

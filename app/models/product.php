@@ -23,6 +23,16 @@ class Product extends AppModel {
 			       'Containable',
 			       'Visible.Visible',
 			       'Handleize.Handleable',
+			       'ManyToManyCountable.ManyToManyCountable' => array(
+				'LinkList'=>array(
+					'className' 	=> 'LinkList',
+					'joinModel' 	=> 'Link',
+					'foreignKey'	=> 'parent_id',
+					'associationForeignKey'	=> 'link_list_id',
+					'unique'	=> true,
+					'counterCache'  => 'link_count',
+					'foreignScope' => array('Link.parent_model' => 'Product'),
+					)),
 			       'Many2manyCounterCache'=> array('VisibleProductInGroup'=>array(
 								'className' 	=> 'ProductGroup',
 								'joinModel' 	=> 'ProductsInGroup',
@@ -120,11 +130,11 @@ class Product extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'ProductLink' => array(
+		'Link' => array(
 			'className' => 'Link',
 			'foreignKey' => 'parent_id',
 			'dependent' => true,
-			'conditions' => array('ProductLink.parent_model' => 'Product'),
+			'conditions' => array('Link.parent_model' => 'Product'),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
@@ -833,7 +843,7 @@ class Product extends AppModel {
 	}
 	
 	private function updateProductLinks() {
-		$this->ProductLink->recursive = -1;
+		$this->Link->recursive = -1;
 		
 		// get the new handle 
 		$handle = $this->data['Product']['handle'];
@@ -842,19 +852,19 @@ class Product extends AppModel {
 		// form the new route
 		$route  = $model . $handle;
 		// form the new fields and values
-		$fields = array('ProductLink.route' =>$route,
-				'ProductLink.model' =>$model,
-				'ProductLink.action'=>$action);
+		$fields = array('Link.route' =>$route,
+				'Link.model' =>$model,
+				'Link.action'=>$action);
 		
 		// prepare the fields by wrapping the values in quotes
 		App::import('Lib', 'StringManipulator');
 		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
 		
 		// meant only for all the ProductLinks belonging to this Product
-		$conditions = array('ProductLink.parent_id'=>$this->id,
-				    'ProductLink.parent_model'=>'Product');
+		$conditions = array('Link.parent_id'=>$this->id,
+				    'Link.parent_model'=>'Product');
 		
-		return $this->ProductLink->updateAll($fields, $conditions);
+		return $this->Link->updateAll($fields, $conditions);
 		
 	}
 	
