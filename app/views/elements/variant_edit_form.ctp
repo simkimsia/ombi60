@@ -16,7 +16,7 @@
               if (isset($variant_list['Product']['options']) && !empty($variant_list['Product']['options']) && is_array($variant_list['Product']['options'])) {
              $key=0;
             foreach($variant_list['Product']['options'] as $field => $options) {
-                  echo $this->Form->input("Variant.option.$field",array('label' => __(ucfirst($field),true),'size' => '30','div' => array('class' => "variant_fields variant_option_$i"),'value' => isset($variant_detail['VariantOption']['options'][$field]) ?  "{$variant_detail['VariantOption']['options'][$field]}" : ""));$i++;
+                  echo $this->Form->input("Variant.option.$field",array('label' => __(ucfirst($field),true),'size' => '30','div' => array('class' => "variant_fields variant_option_$i"),'value' => isset($variant_detail['VariantOption'][$field]['value']) ?  "{$variant_detail['VariantOption'][$field]['value']}" : ""));$i++;
              }
             
             }
@@ -85,7 +85,7 @@
 	   echo $this->Form->submit(__('Create Variant', true), array('div' => FALSE));
 	   echo ' or ' . $this->Html->link(__('Cancel', true),'javascript: void(0);', array('onclick' => '$(".variant_form").hide();$(".new-variant-link").show()')); 
 	} else {
-	   echo $this->Form->submit(__('update', true), array('div' => FALSE));
+	   echo $this->Form->submit(__('Update', true), array('div' => FALSE));
 	   $formid = 'row-edit-details-'.$variant_detail['id'];
 	  /* echo "<script type='text/JavaScript'> var formid = <? echo $formid; ?></script> "; */
 	   echo ' or ' . $this->Html->link(__('Cancel', true),'javascript: void(0);', array('onclick' => "hideEditForm('$formid')")); 

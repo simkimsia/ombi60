@@ -462,7 +462,10 @@ class ProductsController extends AppController {
                                                                        'buttonText' => __('Choose File', true),
                                          'onComplete' => true,);
 		    
-		$this->set(compact('product_id', 'productImages', 'errors', 'uploadifySettings', ''));
+		
+		
+		$this->set(compact('product_id', 'productImages',
+				   'errors', 'uploadifySettings'));
 
 	}
 
@@ -711,32 +714,15 @@ class ProductsController extends AppController {
 		
 	
    		
-    $variant_list = $this->get_variant_list($id);
     
-		$this->set(compact('product_id', 'errors', 'collections', 'variants','variant_list'));
+    
+		$this->set(compact('product_id', 'errors', 'collections'));
 				
 		$this->render('admin_edit');
 
 	}
 	
-	function get_variant_list($id) {
-	    $variant_list = $this->Product->getDetails($id);
-	    
-	    if (isset($variant_list['Variant']) && !empty($variant_list['Variant'])) {
-          foreach ($variant_list['Variant'] as $key =>$variant) {
-             if (isset($variant['VariantOption'])) {
-               foreach ($variant['VariantOption'] as $key2 => $variantOptions) {
-                  $newVariantOptions[$variantOptions['field']] = $variantOptions['value'];
-               }
-               $variant_list['Variant'][$key]['VariantOption']['options']  = $newVariantOptions;
-             } 
-             
-             
-          }
-     }
-     
-      return $variant_list;
-	}
+	
 	
 	function admin_delete($id = null) {
 		if (!$id) {
