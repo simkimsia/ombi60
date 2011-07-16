@@ -74,7 +74,8 @@
                                                                                     'selected' => $linkAction,
                                                                                     'div'=>false,
                                                                                     'label'=>false,
-                                                                                    'style'=>$displayVisible));
+                                                                                    'style'=>$displayVisible,
+										    'onchange'=>'updateParentModelId(\''.$linkId.'\')'));
                         
                         echo $this->Form->input('Link.'.$order.'.action1', array(
 						'value' => $linkAction,

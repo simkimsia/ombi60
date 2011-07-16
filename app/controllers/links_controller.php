@@ -328,6 +328,7 @@ class LinksController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->data)) {
+			
 			if ($this->Link->LinkList->saveAll($this->data)) {
 				$this->Session->setFlash(__('The link has been saved', true));
 				$this->redirect(array('action' => 'index'));
@@ -335,11 +336,7 @@ class LinksController extends AppController {
 				$this->Session->setFlash(__('The link could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Link->read(null, $id);
-		}
-		$linkLists = $this->Link->LinkList->find('list');
-		$this->set(compact('linkLists'));
+		
 	}
 
 	function admin_delete($id = null) {
