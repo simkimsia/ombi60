@@ -15,8 +15,8 @@
         $modelOptions = array(
                 '/blogs/'               =>'Blog',
 		'/cart'	      	  	=>'Cart',
-		'/products/'	        =>'Catalogue',
-                '/products/view/'       =>'Product',
+		'/collections/all'	=>'Catalogue',
+                '/products/'	        =>'Product',
 		'/pages/'	        =>'Page',
 		'/'		        =>'Shop Frontpage',
                 'web'                   =>'Web Address',
@@ -24,16 +24,19 @@
         
         echo $this->Form->label('Route');
         echo $this->Form->input('Link.model', array(
+		'id'=>'LinkModelList'.$linkListId,
                 'type'=>'select',
                 'options' => $modelOptions,
                 'selected' => '/blogs/',
                 'div'=>false,
                 'label'=>false,
-                'style'=>'width:auto;'));
+                'style'=>'width:auto;',
+		'class'=>'new-link-model'));
         
         echo "&nbsp;&nbsp;";
         $options = array();
         echo $this->Form->input('Link.action', array(
+		'id'=>'LinkActionList'.$linkListId,
                 'type'=>'select',
                 'options' => $options,
                 'div'=>false,
@@ -41,6 +44,7 @@
                 'style'=>'width:auto;'));
         
         echo $this->Form->input('Link.action1', array(
+		'id'=>'LinkAction1List'.$linkListId,
                 'div'=>false,
                 'label'=>false,
                 'style'=>'width:auto;display:none;'));
@@ -51,7 +55,13 @@
         
         echo '<tr class="add-link-tr-submit"><td colspan="2" class="border_none">';
         echo '<div class="submit">';
-        echo $this->Form->input('Link.link_list_id', array('type'=>'hidden','value'=>$linkListId));        
+        echo $this->Form->input('Link.link_list_id', array('type'=>'hidden','value'=>$linkListId));
+	echo $this->Form->input('Link.parent_model', array('type'=>'hidden',
+							   'value'=>'',
+							   'id'=>'LinkParentModelList'.$linkListId,));
+	echo $this->Form->input('Link.parent_id', array('type'=>'hidden',
+							'value'=>'',
+							'id'=>'LinkParentIdList'.$linkListId,));
         echo $this->Ajax->submit('Add new link', array('url'=>array('action'=>'add'),
                                                 'complete' => "afterAddLink($linkListId, request.responseText);",
                                                 'div'=>false));
