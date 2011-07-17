@@ -241,7 +241,7 @@ class Product extends AppModel {
 					$results[$key]['Product']['selected_collections'] = $groups;
 				}
 			}
-			return $results;
+			
 		} else {
 			
 			// in this case, we do not get back a {n}.{ModelName}.{field} format for results
@@ -272,7 +272,7 @@ class Product extends AppModel {
 			}
 		}
 		
-		
+		return $results;
 	}
 	
 	/**

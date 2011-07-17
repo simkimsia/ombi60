@@ -4,7 +4,7 @@ class Variant extends AppModel {
 	var $displayField = 'title';
 	
 	
-	var $actsAs = array('UnitSystemConvertible',
+	var $actsAs = array('UnitSystemConvertible'=>array(''),
 			    'Copyable.Copyable' => array(
 					'recursive' => true));
 	
@@ -84,6 +84,17 @@ class Variant extends AppModel {
 			}
 		}
 		
+		$optionsPresent = !empty($this->data['VariantOption']);
+		if ($optionsPresent) {
+			$variantTitle = '';
+			foreach($this->data['VariantOption'] as $key => $option) {
+				$variantTitle = $variantTitle . $option['value'] . ' / ';
+			}
+			$variantTitle = rtrim($variantTitle, " / ");
+			$this->data['Variant']['title'] = $variantTitle;
+		} else {
+			return false;
+		}
 		
 		return true;
 	}
@@ -152,6 +163,47 @@ class Variant extends AppModel {
 				
 			}
 		}
+	}
+	
+	/**
+	 * for unit conversion
+	 **/
+	function afterFind($results, $primary) {
+		$unit = Shop::get('ShopSetting.unit_system');
+		if ($primary) {
+			
+			foreach ($results as $key => $val) {
+				
+				if (isset($val['Variant'])) {
+					$results[$key] = $this->convertForDisplay($val, $unit, $primary);
+				}
+			}
+		} else {
+			
+			// in this case, we do not get back a {n}.{ModelName}.{field} format for results
+			// we got back an array of {field} directly
+			
+			
+			// but sometimes we get back a {n}.{ModelName}.{field}
+			// if Containable is used by the Primary model, so
+			// we need to check for {n}.{ModelName} first
+			$extracted = Set::extract('{n}.Variant', $results);
+			// means it is just a normal array of {field}
+			if (empty($extracted)) {
+				$results = $this->convertForDisplay($results, $unit, $primary);	
+			} else {
+				// means it is {n}.ModelName.field
+				foreach ($results as $key => $val) {
+				
+					if (isset($val['Variant'])) {
+						$results[$key] = $this->convertForDisplay($val, $unit, !$primary);
+					}
+				}
+			}
+			
+		}
+		
+		return $results;
 	}
 }
 ?>

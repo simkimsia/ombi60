@@ -119,7 +119,9 @@ if (isset($variant_list) && !empty($variant_list) && is_array($variant_list)) { 
 <fieldset>
 
 <h3> <?php echo __('New Variant',true);?> </h3>
-  <?php echo $this->element('variant_edit_form',array('variant_detail' => array())); ?>
+  <?php echo $this->element('variant_edit_form',array('variant_detail' => array(),
+                                                      'variant_list'   => $variant_list,
+                                                      'variant_count'  => count($variant_list['Variant']))); ?>
 
 </fieldset>
 </div>

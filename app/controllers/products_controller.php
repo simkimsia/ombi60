@@ -116,7 +116,10 @@ class ProductsController extends AppController {
 			$this->Security->validatePost = false;
 		}
 		
-		if ($this->action == 'admin_toggle' || $this->action == 'admin_edit' ) {
+		if ($this->action == 'admin_toggle' ||
+		    $this->action == 'admin_edit'   ||
+		    $this->action == 'admin_add_variant' ||
+		    $this->action == 'admin_edit_variant') {
 			$this->Security->enabled = false;
 		}
 	}
@@ -948,7 +951,66 @@ class ProductsController extends AppController {
                         $this->set(compact('successJSON'));
                         $this->render('../json/empty');
                 }
-        }  
+        }
+	
+	public function admin_add_variant($productId = false) {
+		if(!($productId)) {
+			$this->Session->setFlash(__('Invalid id for Product', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('action' => 'admin_index'));
+		}
+		if (!empty($this->data)) {
+			$this->Product->Variant->create();
+			
+			$this->data['Variant']['product_id'] = $productId;
+			
+			if ($this->Product->Variant->saveAll($this->data))	{
+				$this->Session->setFlash(__('Variant added', true), 'default', array('class'=>'flash_success'));	
+			} else {
+				$this->Session->setFlash(__('Adding new Variant failed', true), 'default', array('class'=>'flash_failure'));	
+			}
+			$this->redirect($this->referer());	
+		}
+		
+	}
+	
+	public function admin_edit_variant($productId = false, $variantId = false) {
+		
+		if(!($variantId) || !($productId)) {
+			$this->Session->setFlash(__('Invalid id for Product or Variant', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('action' => 'admin_index'));
+		}
+		
+		if (!empty($this->data)) {
+			
+			if ($this->Product->Variant->saveAll($this->data))	{
+				$this->Session->setFlash(__('Variant edited successfully', true), 'default', array('class'=>'flash_success'));
+				
+			} else {
+				$this->Session->setFlash(__('Update Variant failed', true), 'default', array('class'=>'flash_failure'));	
+			}
+			
+			$this->redirect($this->referer());	
+		}
+		
+	}
+	
+	public function admin_delete_variant($productId = false, $variantId = false) {
+		if(!($variantId) || !($productId)) {
+			$this->Session->setFlash(__('Invalid id for Product or Variant', true), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('action' => 'admin_index'));
+		}
+			
+		if ($this->Product->Variant->delete($variantId))	{
+			$this->Session->setFlash(__('Variant deleted successfully', true), 'default', array('class'=>'flash_success'));
+			
+		} else {
+			$this->Session->setFlash(__('Deleting Variant failed', true), 'default', array('class'=>'flash_failure'));
+		}
+		
+		$this->redirect($this->referer());	
+		
+		
+	}
   
     
 }
