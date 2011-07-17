@@ -9,7 +9,7 @@ class ProductsController extends AppController {
 	var $helpers = array('Javascript', 'Ajax',
 			     'TinyMce.TinyMce', 'Text');
 	
-	var $components = array(
+	var $components = array('Permission',
 				'Paypal.Paypal',
 				'Filter.Filter'  => array(
 					'actions' => array('admin_index'),
