@@ -87,8 +87,9 @@
 	} else {
 	   echo $this->Form->submit(__('update', true), array('div' => FALSE));
 	   $formid = 'row-edit-details-'.$variant_detail['id'];
+       $id = $variant_detail['id'];
 	  /* echo "<script type='text/JavaScript'> var formid = <? echo $formid; ?></script> "; */
-	   echo ' or ' . $this->Html->link(__('Cancel', true),'javascript: void(0);', array('onclick' => "hideEditForm('$formid')")); 
+	   echo ' or ' . $this->Html->link(__('Cancel', true),'javascript: void(0);', array('onclick' => "hideEditForm('$formid', '$id')")); 
 	}
 	
 	echo '</div>';

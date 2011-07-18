@@ -9,6 +9,8 @@
             $linkModel = $link['Link']['model'];
             $linkAction = $link['Link']['action'];
             $linkRoute = $link['Link']['route'];
+	    $parentModel = $link['Link']['parent_model'];
+	    $parentId = $link['Link']['parent_id'];
             
             // please note that &copy; below is a very important delimiter
             // before the &copy; it is used for the display link list
@@ -45,12 +47,14 @@
                         
                 ?>
                 <td>
-                        <?php echo $this->Form->input('Link.' . $order . '.model', array('type'=>'select',
+                        <?php echo $this->Form->input('Link.' . $order . '.model', array(
+											'id' => 'Link'.$linkId.'Model',
+											'type'=>'select',
                                                                                         'options' => $modelOptions,
                                                                                         'selected' => $linkModel,
                                                                                         'div'=>false,
                                                                                         'label'=>false,
-                                                                                        'onchange'=>'resetLinkAction(\''.$order.'\', \''.$linkModel.'\', \''.$linkAction.'\')'));
+                                                                                        'onchange'=>'resetLinkAction(\''.$linkId.'\', \''.$linkModel.'\', \''.$linkAction.'\')'));
                         
                         if ($actionNeeded) {
 				$displayVisible = '';
@@ -65,17 +69,27 @@
                         }
                                 
                         echo $this->Form->input('Link.' . $order . '.action', array('type'=>'select',
+										    'id'=>'Link'.$linkId.'Action',
                                                                                     'options' => $actionOptions,
                                                                                     'selected' => $linkAction,
                                                                                     'div'=>false,
                                                                                     'label'=>false,
-                                                                                    'style'=>$displayVisible));
+                                                                                    'style'=>$displayVisible,
+										    'onchange'=>'updateParentModelId(\''.$linkId.'\')'));
                         
                         echo $this->Form->input('Link.'.$order.'.action1', array(
 						'value' => $linkAction,
 						'div'=>false,
 						'label'=>false,
+						'id' => 'Link'.$linkId.'Action1',
 						'style'=>$textBoxVisible));
+			
+			echo $this->Form->input('Link.'.$order.'.parent_model', array('type'=>'hidden',
+										      'value'=>$parentModel,
+										      'id'=> 'Link'.$linkId.'ParentModel'));
+			echo $this->Form->input('Link.'.$order.'.parent_id', array('type'=>'hidden',
+										   'value'=>$parentId,
+										   'id'=> 'Link'.$linkId.'ParentId'));
                         
                         ?>
                 &nbsp;

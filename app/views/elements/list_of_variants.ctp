@@ -1,12 +1,12 @@
 <script type="text/JavaScript">
    function showEditForm(variantId) {
-      $('#row-edit-details-'+variantId).show();
+        $('#row-edit-details-'+variantId).show();
+        $('#row-'+variantId).hide();
    }
  
-   function hideEditForm(formid) {
-  
-     $('#'+formid).hide();
-  
+   function hideEditForm(formid, id) {
+        $('#'+formid).hide();
+        $('#row-'+id).show();  
    }
    
    function checkall() {     

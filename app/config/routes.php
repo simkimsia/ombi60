@@ -77,6 +77,33 @@
                         array('controller' => 'product_groups',
                               'admin'      => true,
                               ));
+        
+        // admin add, edit, delete variants via product
+        Router::connect('/admin/products/:id/variants/add',
+                        array('controller' => 'products',
+                              'action' => 'add_variant',
+                              'admin'=>true),
+                        array('pass' => array('id'),
+                              'id' => '[0-9]+'
+                              ));
+        
+        Router::connect('/admin/products/:id/variants/edit/:variantId',
+                        array('controller' => 'products',
+                              'action' => 'edit_variant',
+                              'admin'=>true),
+                        array('pass' => array('id', 'variantId'),
+                              'id' => '[0-9]+',
+                              'variantId' => '[0-9]+',
+                              ));
+        
+        Router::connect('/admin/products/:id/variants/delete/:variantId',
+                         array('controller' => 'products',
+                              'action' => 'delete_variant',
+                              'admin'=>true),
+                        array('pass' => array('id', 'variantId'),
+                              'id' => '[0-9]+',
+                              'variantId' => '[0-9]+',
+                              ));
 
 
         // account links

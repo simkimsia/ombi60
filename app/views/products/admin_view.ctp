@@ -144,7 +144,7 @@
   <div class="clear"></div>
 
   <div id="varients">
-    <?php echo $this->element('list_of_variants',array('variant_list' => $variant_list));?>
+    Varients Here
   </div>
 
 

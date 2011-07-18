@@ -6,7 +6,7 @@
 	function convertBlogOptions($blogs) {
 		$array = array();
 		foreach($blogs as $blog) {
-			$array[$blog['Blog']['short_name']] = $blog['Blog']['short_name'];
+			$array[$blog['Blog']['short_name']] = $blog['Blog']['title'];
 		}
 		return $array;
 	}
@@ -22,7 +22,7 @@
 	function convertProductOptions($products) {
 		$array = array();
 		foreach($products as $product) {
-			$array[$product['Product']['id']] = $product['Product']['title'];
+			$array[$product['Product']['handle']] = $product['Product']['title'];
 		}
 		return $array;
 	}
@@ -171,7 +171,7 @@
 			</td>
 			<?php
 				$modelOptions = array('/blogs/'			=>'Blog',
-						      '/cart'		=>'Cart',
+						      '/cart'			=>'Cart',
 						      '/collections/all'  	=>'Catalogue',
 						      '/products/' 		=>'Product',
 						      '/pages/'			=>'Page',
@@ -185,11 +185,12 @@
 				
 				echo $this->Form->input('Link.'.$i.'.model',
 					array('type'=>'select',
+					      'id'=>'Link'.$linkId.'Model',
 					      'options' => $modelOptions,
 					      'selected' => $link['model'],
 					      'div'=>false,
 					      'label'=>false,
-					      'onchange'=>'resetLinkAction(\''.$i.'\', \''.$link['model'].'\', \''.$link['action'].'\')'));
+					      'onchange'=>'resetLinkAction(\''.$linkId.'\', \''.$link['model'].'\', \''.$link['action'].'\')'));
 				
 				$options       = array();
 				$actionNeeded  = true;
@@ -197,7 +198,7 @@
 				
 				if (strpos($link['model'], 'blog') !== false) {
 					$options = convertBlogOptions($blogs);
-				} else if (($link['model'] === '/products/') ||
+				} else if (($link['model'] === '/collections/all') ||
 					   ($link['model'] === '/') ||
 					   ($link['model'] === '/cart') ) {
 					$actionNeeded = false;
@@ -227,19 +228,28 @@
 				
 				echo $this->Form->input('Link.'.$i.'.action', array(
 						'type'=>'select',
+						'id'=>'Link'.$linkId.'Action',
 						'options' => $options,
 						'selected' => $link['action'],
 						'div'=>false,
 						'label'=>false,
 						'style'=>$displayVisible,
+						'onchange'=>'updateParentModelId(\''.$linkId.'\')'
 						));
 				
 				echo $this->Form->input('Link.'.$i.'.action1', array(
+						'id'=>'Link'.$linkId.'Action1',
 						'value' => $link['action'],
 						'div'=>false,
 						'label'=>false,
 						'style'=>$textBoxVisible));
 				
+				echo $this->Form->input('Link.'.$i.'.parent_model', array('type'=>'hidden',
+										      'value'=>$link['parent_model'],
+										      'id'=> 'Link'.$linkId.'ParentModel'));
+				echo $this->Form->input('Link.'.$i.'.parent_id', array('type'=>'hidden',
+										   'value'=>$link['parent_id'],
+										   'id'=> 'Link'.$linkId.'ParentId'));
 				
 				?>
 			&nbsp;
@@ -275,39 +285,42 @@
 <?php endforeach; ?>
 
 </div>
-<!--<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Link', true), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Link Lists', true), array('controller' => 'link_lists', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Link List', true), array('controller' => 'link_lists', 'action' => 'add')); ?> </li>
-	</ul>
-</div>-->
+
 
 <?php
 	# blog array;
 	# "pass" php array to JS array:
 	echo "<script>\n";
 	echo "var blogs = new Object();\n";
-	
+	echo "var blogIds = new Object();\n";
 	
 	foreach($blogs as $key => $value) {
 		$js_key = $value['Blog']['short_name'];
-		echo "blogs['$js_key'] = '$js_key';\n";
+		$js_value = $value['Blog']['title'];
+		$js_blogId = $value['Blog']['id'];
+		echo "blogs['$js_key'] = '$js_value';\n";
+		echo "blogIds['$js_key'] = '$js_blogId';\n";
 	}
 	
 	echo "var products = new Object();\n";
+	echo "var productIds = new Object();\n";
+	
 	foreach($products as $key => $value) {
-		$js_key = $value['Product']['id'];
+		$js_key = $value['Product']['handle'];
 		$js_value = $value['Product']['title'];
+		$js_productId = $value['Product']['id'];
 		echo "products['$js_key'] = '$js_value';\n";
+		echo "productIds['$js_key'] = '$js_productId';\n";
 	}
 	
 	echo "var pages = new Object();\n";
+	echo "var pageIds = new Object();\n";
 	foreach($pages as $key => $value) {
 		$js_key = $value['Webpage']['handle'];
 		$js_value = $value['Webpage']['title'];
+		$js_pageId = $value['Webpage']['id'];
 		echo "pages['$js_key'] = '$js_value';\n";
+		echo "pageIds['$js_key'] = '$js_pageId';\n";
 	}
 	# .....rest of JavaScript.....
 	echo "</script>\n";
@@ -376,22 +389,28 @@
 	}
 	
 	$(document).ready(function (){
-		resetLinkAction();
-		$('#LinkModel').change(function(){
-			resetLinkAction();
+		<?php
+		foreach ($lists as $list):
+		$listId = $list['LinkList']['id'];
+		echo "resetLinkActionForAddLinkForm($listId);";
+		endforeach;
+		?>
+		$('.new-link-model').change(function(){
+			idOfLinkModel = $(this).attr("id");
+			// the model should start with LinkModelList
+			resetLinkActionForAddLinkForm(idOfLinkModel.substr(13));
 		});
 	});
 	
-	function resetLinkAction(linkId, presetModelValue, presetActionValue) {
+	function resetLinkActionForAddLinkForm(linkListId) {
 		
-		linkId            = typeof(linkId) != 'undefined' ? linkId : '';
-		presetActionValue = typeof(presetActionValue) != 'undefined' ? presetActionValue : '';
-		presetModelValue  = typeof(presetModelValue) != 'undefined' ? presetModelValue : '';
-  
-  
-		var thisLinkModel  = "#Link" + linkId + "Model";
-		var thisLinkAction = "#Link" + linkId + "Action";
-		var thisLinkAction1 = "#Link" + linkId + "Action1";
+		linkId            = '';
+		presetActionValue = '';
+		presetModelValue  = '';
+		
+		var thisLinkModel  = "#LinkModelList" + linkListId;
+		var thisLinkAction = "#LinkActionList" + linkListId;
+		var thisLinkAction1 = "#LinkAction1List" + linkListId;
 		
 		var selectedText = $(thisLinkModel + " option:selected").text();
 		var actionsArray = new Object();
@@ -440,6 +459,135 @@
 			$(thisLinkAction1).hide();
 		}
 		
+		updateParentModelIdForAddLinkForm(linkListId);
+	}
+	
+	function resetLinkAction(linkId, presetModelValue, presetActionValue) {
+		
+		linkId            = typeof(linkId) != 'undefined' ? linkId : '';
+		presetActionValue = typeof(presetActionValue) != 'undefined' ? presetActionValue : '';
+		presetModelValue  = typeof(presetModelValue) != 'undefined' ? presetModelValue : '';
+		
+		var thisLinkModel  = "#Link" + linkId + "Model";
+		var thisLinkAction = "#Link" + linkId + "Action";
+		var thisLinkAction1 = "#Link" + linkId + "Action1";
+		
+		var selectedText = $(thisLinkModel + " option:selected").text();
+		var actionsArray = new Object();
+		
+		var actionNeeded = true;
+		var textBoxNeeded = false;
+		
+		
+		
+		if (selectedText == 'Blog') {
+			actionsArray = blogs;
+			
+		} else if (selectedText == 'Product') {
+			actionsArray = products;
+			
+		} else if (selectedText == 'Page') {
+			actionsArray = pages;
+			
+		} else if ((selectedText == 'Shop Frontpage') ||
+			   (selectedText == 'Cart') ||
+			   (selectedText == 'Catalogue') ) {
+			actionNeeded = false;
+		} else if (selectedText == 'Web Address') {
+			actionNeeded = false;
+			textBoxNeeded = true;
+		}
+		
+		var selectedValue = $(thisLinkModel).val();
+		
+		if (actionNeeded) {
+			$innerHtml = '';
+			for(keyArray in actionsArray) {
+				var selected = '';
+				
+				if ((selectedValue == presetModelValue) && (keyArray == presetActionValue)) {
+					selected = 'selected';
+					
+				}
+				$innerHtml += '<option value="' + keyArray + '" '+selected+'>' + actionsArray[keyArray] + '</option>';	
+			}
+			$(thisLinkAction).html($innerHtml);
+			$(thisLinkAction).show();
+		} else {
+			$innerHtml = '<option value="" selected></option>';
+			$(thisLinkAction).html($innerHtml);
+			$(thisLinkAction).hide();
+		}
+		
+		if (textBoxNeeded) {
+			$(thisLinkAction1).show();
+		} else {
+			$(thisLinkAction1).hide();
+		}
+		
+		updateParentModelId(linkId);
+		
+	}
+	
+	function updateParentModelId(linkId) {
+		var thisLinkModel  = "#Link" + linkId + "Model";
+		var thisLinkAction = "#Link" + linkId + "Action";
+		var thisLinkParentModel  = "#Link" + linkId + "ParentModel";
+		var thisLinkParentId	 = "#Link" + linkId + "ParentId";
+		
+		var selectedText = $(thisLinkModel + " option:selected").text();
+		var parentModel = '';
+		var parentId = '';
+		
+		
+		if (selectedText == 'Blog') {
+			parentModel = 'Blog';
+			parentId = getParentId(blogIds, thisLinkAction);
+			
+		} else if (selectedText == 'Product') {
+			parentModel = 'Product';
+			parentId = getParentId(productIds, thisLinkAction);
+			
+		} else if (selectedText == 'Page') {
+			parentModel = 'Webpage';
+			parentId = getParentId(pageIds, thisLinkAction);
+		}
+		
+		$(thisLinkParentModel).attr('value', parentModel);
+		$(thisLinkParentId).attr('value', parentId);
+	}
+	
+	function updateParentModelIdForAddLinkForm(linkListId) {
+		var thisLinkModel  = "#LinkModelList" + linkListId;
+		var thisLinkAction = "#LinkActionList" + linkListId;
+		var thisLinkParentModel  = "#LinkParentModelList" + linkListId;
+		var thisLinkParentId	 = "#LinkParentIdList" + linkListId;
+		
+		var selectedText = $(thisLinkModel + " option:selected").text();
+		var parentModel = '';
+		var parentId = '';
+		
+		
+		if (selectedText == 'Blog') {
+			parentModel = 'Blog';
+			parentId = getParentId(blogIds, thisLinkAction);
+			
+		} else if (selectedText == 'Product') {
+			parentModel = 'Product';
+			parentId = getParentId(productIds, thisLinkAction);
+			
+		} else if (selectedText == 'Page') {
+			parentModel = 'Webpage';
+			parentId = getParentId(pageIds, thisLinkAction);
+		}
+		
+		$(thisLinkParentModel).attr('value', parentModel);
+		$(thisLinkParentId).attr('value', parentId);
+	}
+	
+	function getParentId(actionsArray, thisLinkAction) {
+		var handle = $(thisLinkAction).attr('value');
+		return actionsArray[handle];
 	}
 	
 	function writeupdate(sortableId) {

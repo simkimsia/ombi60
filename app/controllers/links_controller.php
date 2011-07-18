@@ -8,7 +8,7 @@ class LinksController extends AppController {
 	function beforeFilter() {
 		parent::beforeFilter();
 		
-		if ($this->action== 'admin_edit') {
+		if ($this->action== 'admin_edit' || $this->action == 'admin_add') {
 			$this->Security->validatePost = false;
 		}
 	
@@ -92,17 +92,17 @@ class LinksController extends AppController {
 		$blog = ClassRegistry::init('Blog');
 		$blog->recursive = -1;
 		$blogs = $blog->find('all', array('conditions' => array('Blog.shop_id'=>$shopId),
-						  'fields'     => array('Blog.id', 'Blog.short_name')));
+						  'fields'     => array('Blog.id', 'Blog.title', 'Blog.short_name')));
 		
 		$product = ClassRegistry::init('Product');
 		$product->recursive = -1;
 		$products = $product->find('all', array('conditions'=>array('Product.shop_id'=>$shopId),
-							'fields'     => array('Product.id','Product.title')));
+							'fields'     => array('Product.id', 'Product.handle','Product.title')));
 		
 		$page = ClassRegistry::init('Webpage');
 		$page->recursive = -1;
 		$pages = $page->find('all', array('conditions'=>array('Webpage.shop_id'=>$shopId),
-						  'fields'     => array('Webpage.handle','Webpage.title')));
+						  'fields'     => array('Webpage.id', 'Webpage.handle','Webpage.title')));
 		
 		
 		$this->set(compact('blogs', 'products', 'pages'));
@@ -166,7 +166,7 @@ class LinksController extends AppController {
 	private function convertBlogOptions($blogs) {
 		$array = array();
 		foreach($blogs as $blog) {
-			$array[$blog['Blog']['short_name']] = $blog['Blog']['short_name'];
+			$array[$blog['Blog']['short_name']] = $blog['Blog']['title'];
 		}
 		return $array;
 	}
@@ -174,7 +174,7 @@ class LinksController extends AppController {
 	private function convertProductOptions($products) {
 		$array = array();
 		foreach($products as $product) {
-			$array[$product['Product']['id']] = $product['Product']['title'];
+			$array[$product['Product']['handle']] = $product['Product']['title'];
 		}
 		return $array;
 	}
@@ -199,7 +199,7 @@ class LinksController extends AppController {
 			$blog = ClassRegistry::init('Blog');
 			$blog->recursive = -1;
 			$blogs = $blog->find('all', array('conditions' => array('Blog.shop_id'=>$shopId),
-							  'fields'     => array('Blog.id', 'Blog.short_name')));
+							  'fields'     => array('Blog.id', 'Blog.title', 'Blog.short_name')));
 			
 			$actions = array(
 				'options'	=> $this->convertBlogOptions($blogs),
@@ -208,7 +208,7 @@ class LinksController extends AppController {
 			
 			return $actions;
 			
-		} else if  (($model === '/products/') ||
+		} else if  (($model === '/collections/all') ||
 			    ($model === '/') ||
 			    ($model === '/cart') ) {
 			
@@ -232,7 +232,7 @@ class LinksController extends AppController {
 			$product = ClassRegistry::init('Product');
 			$product->recursive = -1;
 			$products = $product->find('all', array('conditions'=>array('Product.shop_id'=>$shopId),
-								'fields'     => array('Product.id','Product.title')));
+								'fields'     => array('Product.id','Product.title', 'Product.handle')));
 			
 			
 			$actions = array(
@@ -247,7 +247,7 @@ class LinksController extends AppController {
 			$page = ClassRegistry::init('Webpage');
 			$page->recursive = -1;
 			$pages = $page->find('all', array('conditions'=>array('Webpage.shop_id'=>$shopId),
-							  'fields'     => array('Webpage.handle','Webpage.title')));
+							  'fields'     => array('Webpage.id', 'Webpage.handle','Webpage.title')));
 			
 			
 			$actions = array(
@@ -264,7 +264,9 @@ class LinksController extends AppController {
 
 	function admin_add() {
 		$result = false;
+		
 		if (!empty($this->data)) {
+			
 			$this->Link->create();
 			$result = $this->Link->save($this->data);
 		}
@@ -275,9 +277,11 @@ class LinksController extends AppController {
 			if ($result) {
 				$link 	       = $this->fetchCurrent();
 				$actionResult  = $this->populateActionForNewLink($link);
+				
 				$actionOptions = isset($actionResult['options']) ? $actionResult['options'] : false;
 				$actionNeeded  = isset($actionResult['actionNeeded']) ? $actionResult['actionNeeded'] : false;
 				$textBoxNeeded = isset($actionResult['textBoxNeeded']) ? $actionResult['textBoxNeeded'] : false;
+				
 				$successJSON   = true;
 				
 				$this->set(compact('link',
@@ -324,6 +328,7 @@ class LinksController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->data)) {
+			
 			if ($this->Link->LinkList->saveAll($this->data)) {
 				$this->Session->setFlash(__('The link has been saved', true));
 				$this->redirect(array('action' => 'index'));
@@ -331,11 +336,7 @@ class LinksController extends AppController {
 				$this->Session->setFlash(__('The link could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Link->read(null, $id);
-		}
-		$linkLists = $this->Link->LinkList->find('list');
-		$this->set(compact('linkLists'));
+		
 	}
 
 	function admin_delete($id = null) {
