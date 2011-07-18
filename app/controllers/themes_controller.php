@@ -44,6 +44,7 @@ class ThemesController extends AppController {
 	  $uploadFolderPath = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'webroot'.DS.'assets';
 	
 	  if (isset($this->data) && !empty($this->data)) {
+	     print_r($_POST);
 	     debug($this->data); //print_r($_FILES);exit;
 	    // $this->__uploadFiles();
 	    $this->Theme->set($this->data);

@@ -79,6 +79,9 @@ function buildTag($key,$element,$counter,$html='') {
     } else { */
     if ($key == 'select') {
        $html .= $Settingsform->select($element); 
+    }elseif ($key == 'input') {
+      $html .= $Settingsform->input($element); 
+    
     } elseif (!is_numeric($key) && !is_array($element) ) {
         echo "<br>FIRST IF ";
         $html .= '<'.$key.'>'.$element.'</'.$key.'>';   
