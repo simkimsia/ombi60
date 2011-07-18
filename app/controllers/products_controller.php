@@ -461,7 +461,7 @@ class ProductsController extends AppController {
                                          'auto' => true,
                                                                        'buttonText' => __('Choose File', true),
                                          'onComplete' => true,);
-		$variant_list = $this->get_variant_list($id);
+		$variant_list = $this->get_variant_list($product);
 		$this->set(compact('product_id', 'productImages', 'errors', 'uploadifySettings', '', 'variant_list'));
 
 	}
@@ -711,7 +711,7 @@ class ProductsController extends AppController {
 		
 	
    		
-    $variant_list = $this->get_variant_list($id);
+    $variant_list = $this->get_variant_list($this->data);
     
 		$this->set(compact('product_id', 'errors', 'collections', 'variants','variant_list'));
 				
@@ -719,8 +719,7 @@ class ProductsController extends AppController {
 
 	}
 	
-	function get_variant_list($id) {
-	    $variant_list = $this->Product->getDetails($id);
+	function get_variant_list($variant_list) {
 	    
 	    if (isset($variant_list['Variant']) && !empty($variant_list['Variant'])) {
           foreach ($variant_list['Variant'] as $key =>$variant) {
