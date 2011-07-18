@@ -117,7 +117,6 @@
         
         <?php echo $this->Form->end();?>
       <!--</form>-->
-      
     </div>
 </fieldset>
     <div class="clear"></div>
@@ -143,9 +142,8 @@
     </div>
   </div>
   <div class="clear"></div>
-
   <div id="varients">
-    <?php echo $this->element('list_of_variants',array('variant_list' => $product));?>
+    <?php echo $this->element('list_of_variants',array('variant_list' => $variant_list));?>
   </div>
 
 

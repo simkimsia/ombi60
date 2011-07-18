@@ -1,55 +1,25 @@
 <fieldset>
-<?php
-$addNewVariant = empty($variant_detail);
-$editVariant = !$addNewVariant;
-$productId = $variant_list['Product']['id'];
-
-if ($addNewVariant) {
-	$url = $productId.'/variants/add';
-	$type = 'post';
-} elseif ($editVariant) {
-	$url = $productId.'/variants/edit/' . $variant_detail['id'];
-	$type = 'put';
-}
-
-
-
-echo $this->Form->create(null,array('url' => $url,'class' => 'variant', 'type'=>$type));?>
+<?php echo $this->Form->create('',array('action' => 'variant_create','class' => 'variant'));?>
       <!-- setting options -->
       <table cellspacing="0" cellpadding="0" class="variant_div">
       <tbody>
        <tr class="variant_div">
         <td colspan="4">
           <div id="errors_for_product_variant"></div>
-           <?php
-	   echo $this->Form->input("Variant.product_id",array('type' => 'hidden',"value" => $productId));
-	   $currency = $shop_setting['currency'];
-	   echo $this->Form->input('Variant.currency', array('type'=>'hidden', 'value'=>$currency));
-	   
-	   if ($addNewVariant) {
-		
-		echo $this->Form->input('Variant.order', array('type'=>'hidden', 'value'=>$variant_count));
-	  ?>
+           <?php if (!isset($variant_detail['id'])) { ?>
           <p class="sb"><span class="note highlight-alt"><?php echo __('Your customers will select this new variant by the following',true);?>:</span></p>
           <?php } ?>
                <?php 
                 $i=1;
                
               
-		if (isset($variant_list['Product']['options']) && !empty($variant_list['Product']['options']) && is_array($variant_list['Product']['options'])) {
-			
-			foreach($variant_list['Product']['options'] as $field => $options) {
-				$key = $i - 1;
-				echo $this->Form->input("VariantOption.$key.value",array('label' => __(ucfirst($field),true),'size' => '30','div' => array('class' => "variant_fields variant_option_$i"),'value' => isset($variant_detail['VariantOption'][$field]['value']) ?  "{$variant_detail['VariantOption'][$field]['value']}" : ""));
-				echo $this->Form->input("VariantOption.$key.field",array('type' => 'hidden', 'value' => $field));
-				echo $this->Form->input("VariantOption.$key.order",array('type' => 'hidden', 'value' => $key));
-				if ($editVariant) {
-					echo $this->Form->input("VariantOption.$key.id",array('type' => 'hidden', 'value' => $variant_detail['VariantOption'][$field]['id']));	
-				}
-				$i++;
-			}
+              if (isset($variant_list['Product']['options']) && !empty($variant_list['Product']['options']) && is_array($variant_list['Product']['options'])) {
+             $key=0;
+            foreach($variant_list['Product']['options'] as $field => $options) {
+                  echo $this->Form->input("Variant.option.$field",array('label' => __(ucfirst($field),true),'size' => '30','div' => array('class' => "variant_fields variant_option_$i"),'value' => isset($variant_detail['VariantOption']['options'][$field]) ?  "{$variant_detail['VariantOption']['options'][$field]}" : ""));$i++;
+             }
             
-		}
+            }
               
               ?>
                                             
@@ -76,17 +46,16 @@ echo $this->Form->create(null,array('url' => $url,'class' => 'variant', 'type'=>
         </td>
         <td>
          
-            <?php echo $this->Form->input("Variant.displayed_weight",array('label' => __('Weight',true),'size' => '8','style' => 'width:auto;','class' => 'variant_more_options',"after" => __("lbs",true),"value" => isset($variant_detail['displayed_weight']) ? $variant_detail['displayed_weight'] : '')); ?>
+            <?php echo $this->Form->input("Variant.weight",array('label' => __('Weight',true),'size' => '8','style' => 'width:auto;','class' => 'variant_more_options',"after" => __("lbs",true),"value" => isset($variant_detail['weight']) ? $variant_detail['weight'] : '')); ?>
         </td>
       </tr>
       <!-- end more product information -->
 
        <?php 
-        if ($editVariant) {
-		echo $this->Form->input("Variant.id",array('type' => 'hidden',"value" => $variant_detail['id'] ));
-	} 
-        
-       
+        if (isset($variant_detail['id'])) {
+       echo $this->Form->input("Variant.id",array('type' => 'hidden',"value" => isset($variant_detail['id']) ? $variant_detail['id'] : ''));
+          echo $this->Form->input("Variant.product_id",array('type' => 'hidden',"value" => isset($variant_detail['product_id']) ? $variant_detail['product_id'] : ''));
+       }
        ?>
       <tr class="no-border variant_div">
         <td colspan="4">
@@ -112,13 +81,11 @@ echo $this->Form->create(null,array('url' => $url,'class' => 'variant', 'type'=>
     </table>
 <?php
 	echo '<div class="submit group-actions">';
-	if ($addNewVariant) {
-	   
+	if (!isset($variant_detail['id'])) {
 	   echo $this->Form->submit(__('Create Variant', true), array('div' => FALSE));
 	   echo ' or ' . $this->Html->link(__('Cancel', true),'javascript: void(0);', array('onclick' => '$(".variant_form").hide();$(".new-variant-link").show()')); 
 	} else {
-	   
-	   echo $this->Form->submit(__('Update', true), array('div' => FALSE));
+	   echo $this->Form->submit(__('update', true), array('div' => FALSE));
 	   $formid = 'row-edit-details-'.$variant_detail['id'];
        $id = $variant_detail['id'];
 	  /* echo "<script type='text/JavaScript'> var formid = <? echo $formid; ?></script> "; */

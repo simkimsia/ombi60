@@ -1040,3 +1040,19 @@ background-color: #FFFFE0 !important;
 }
 
 /********************************* Style for variant list ends here ********************************************/
+
+
+/******************************** Style for theme settings page ************************************************/
+
+.section-header {
+    background: none repeat scroll 0 0 #EEEEEE !important;
+    border-bottom: 1px solid #CCCCCC !important;
+    color: #333333 !important;
+    font-size: 12px !important;
+    font-weight: bold;
+    margin-bottom: 1px;
+    padding: 2px 5px 2px 10px !important;
+}
+
+
+/****************************** styele for theme settings page ends here **************************************/
