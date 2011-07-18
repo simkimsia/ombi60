@@ -3,13 +3,7 @@ class WebpagesController extends AppController {
 
 	var $name = 'Webpages';
 	
-	var $components = array('Theme' => array(
-					'actions'=>array(
-						'view',
-						'frontpage')),);
-	
-	
-	//var $view = 'TwigView.TwigTheme';
+	var $components = array('Permission');
 	
 	var $helpers = array('Javascript',
 			     'Ajax',
@@ -25,8 +19,6 @@ class WebpagesController extends AppController {
 		}
 		
 	}
-
-	
 
 	function view($handle = false) {
 		

@@ -5,7 +5,13 @@ class BlogsController extends AppController {
 	
 	var $view = 'Theme';
 	
-	var $components = array('Theme' => array('actions'=>array('view')),);
+	var $components = array('Permission' =>
+				array('redirect' =>
+					array('controller'=>'webpages',
+					      'action'    => 'index',
+					      'admin'     => true,
+					))
+				);
 	
 	
 	

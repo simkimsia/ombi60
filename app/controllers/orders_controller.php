@@ -6,7 +6,8 @@ class OrdersController extends AppController {
 
 	var $helpers = array('Html', 'Form', 'Session', 'Time', 'Number');
 
-	var $components = array('Session', 'Paypal.Paypal', 'RandomString.RandomString', 'Filter.Filter' => array(
+	var $components = array('Permission',
+				'Session', 'Paypal.Paypal', 'RandomString.RandomString', 'Filter.Filter' => array(
 					'actions' => array('index', 'admin_index'),
 					'defaults' => array(),
 					'fieldFormatting' => array(
@@ -31,14 +32,10 @@ class OrdersController extends AppController {
 					'useSession'=>true,
 					'complicatedRelation' => array('Customer'=>'User'),
 					),
-				'Theme' => array('actions'=>array('checkout',
-								  'success',
-								  'pay',
-								  'checkout_step_1')),
+				
 				
 				);
 	
-	var $view = 'Theme';
 	
 	function beforeFilter() {
 
