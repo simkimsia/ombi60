@@ -85,6 +85,11 @@ class Variant extends AppModel {
 		}
 		
 		$optionsPresent = !empty($this->data['VariantOption']);
+		$productAbsent = empty($this->data['Product']);
+		
+		// even if we do not have options, we will NEVER return false
+		// this is due to the saveAll at the Product level
+		
 		if ($optionsPresent) {
 			$variantTitle = '';
 			foreach($this->data['VariantOption'] as $key => $option) {
@@ -92,9 +97,7 @@ class Variant extends AppModel {
 			}
 			$variantTitle = rtrim($variantTitle, " / ");
 			$this->data['Variant']['title'] = $variantTitle;
-		} else {
-			return false;
-		}
+		} 
 		
 		return true;
 	}

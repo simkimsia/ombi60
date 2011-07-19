@@ -1036,7 +1036,7 @@ CREATE TABLE `smart_collection_conditions` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `smart_collection_conditions` */
 
@@ -1111,7 +1111,7 @@ CREATE TABLE `variant_options` (
   `value` varchar(100) DEFAULT NULL,
   `order` tinyint(2) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `variant_options` */
 
@@ -1135,7 +1135,7 @@ CREATE TABLE `variants` (
   `order` int(2) unsigned DEFAULT NULL,
   `compare_with_price` decimal(10,4) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `variants` */
 

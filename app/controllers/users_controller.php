@@ -177,6 +177,7 @@ class UsersController extends AppController {
 		
 		$this->log('themes');
 		$this->Acl->allow($group, 'controllers/Themes/admin_index');
+		$this->Acl->allow($group, 'controllers/Themes/admin_settings');
 		
 		// for blogs and pages
 		$this->log('pages');

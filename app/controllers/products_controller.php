@@ -9,7 +9,14 @@ class ProductsController extends AppController {
 	var $helpers = array('Javascript', 'Ajax',
 			     'TinyMce.TinyMce', 'Text');
 	
-	var $components = array('Permission',
+	var $components = array('Permission'=>array(
+					'prefixActionsWithPrimaryForeignKey' => array(
+						'Variant'=>array('admin_edit_variant',
+								 'admin_delete_variant')),
+					'prefixActionsWithPrimaryKey' => array(
+						'Variant'=>array('admin_add_variant',
+								 )),
+					),
 				'Paypal.Paypal',
 				'Filter.Filter'  => array(
 					'actions' => array('admin_index'),
