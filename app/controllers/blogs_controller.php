@@ -5,7 +5,13 @@ class BlogsController extends AppController {
 	
 	var $view = 'Theme';
 	
-	var $components = array('Theme' => array('actions'=>array('view')),);
+	var $components = array('Permission' =>
+				array('redirect' =>
+					array('controller'=>'webpages',
+					      'action'    => 'index',
+					      'admin'     => true,
+					))
+				);
 	
 	
 	
@@ -46,7 +52,6 @@ class BlogsController extends AppController {
 
 	function admin_add() {
 		if (!empty($this->data)) {
-			$this->data['Blog']['shop_id'] = Shop::get('Shop.id');
 			$this->Blog->create();
 			if ($this->Blog->save($this->data)) {
 				$this->Session->setFlash(__('The blog has been saved', true), 'default', array('class'=>'flash_success'));

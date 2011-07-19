@@ -108,9 +108,10 @@ class UsersController extends AppController {
 		$this->log('navi');
 		$this->Acl->allow($group, 'controllers/Links/admin_index');
 		$this->Acl->allow($group, 'controllers/Links/admin_add');
-		$this->Acl->allow($group, 'controllers/Links/admin_edit');
 		$this->Acl->allow($group, 'controllers/Links/admin_delete');
 		$this->Acl->allow($group, 'controllers/Links/admin_order');
+		
+		$this->Acl->allow($group, 'controllers/LinkLists/admin_edit');
 
 
 		$this->log('product_images');

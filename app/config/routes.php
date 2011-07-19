@@ -439,6 +439,15 @@
                               'admin'      => true,
                               ));
         
+        /**
+         * admin link lists
+         **/
+        Router::connect('/admin/links/edit/*',
+                        array('controller' => 'link_lists',
+                              'action'     => 'edit',
+                              'admin'      => true,
+                              ));
+        
         Router::connect('/admin/general_settings',
                         array('controller' => 'shops',
                               'action' => 'general_settings',

@@ -63,7 +63,7 @@ if (isset($variant_list) && !empty($variant_list) && is_array($variant_list)) { 
                   ?>
                    <td class="variant_option_<?php echo ++$key;?>">
                 
-                      <?php echo $variant['VariantOption']['options'][$field] ?>
+                      <?php echo $variant['VariantOption'][$field]['value'] ?>
                  </td>
                  <?php
                
@@ -85,7 +85,8 @@ if (isset($variant_list) && !empty($variant_list) && is_array($variant_list)) { 
      <!-- row edit form -->
     <tr id="row-edit-details-<?php echo $variant['id'];?>" style="display:none;">
       <td colspan="<?php echo (count($variant_list['Product']['options']) + 5); ?>">
-          <fieldset><?php echo $this->element('variant_edit_form',array('variant_detail' => $variant)); ?></fieldset>
+          <fieldset><?php echo $this->element('variant_edit_form',array('variant_detail' => $variant,
+                                                                        'variant_list'   => $variant_list)); ?></fieldset>
       </td>    
     </tr>
       <!-- row edit form ends -->      
@@ -118,7 +119,9 @@ if (isset($variant_list) && !empty($variant_list) && is_array($variant_list)) { 
 <fieldset>
 
 <h3> <?php echo __('New Variant',true);?> </h3>
-  <?php echo $this->element('variant_edit_form',array('variant_detail' => array())); ?>
+  <?php echo $this->element('variant_edit_form',array('variant_detail' => array(),
+                                                      'variant_list'   => $variant_list,
+                                                      'variant_count'  => count($variant_list['Variant']))); ?>
 
 </fieldset>
 </div>
