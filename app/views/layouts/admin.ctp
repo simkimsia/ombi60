@@ -107,6 +107,7 @@
 						<ul id="subnav" class="govern">  
 							
 							<li><?php echo $this->Html->link('My themes', '/admin/saved_themes/switch'); ?></li>  
+							<li><?php echo $this->Html->link('Theme Settings', '/admin/themes/settings'); ?></li>  
 						</ul>
 					</li>
 					<li class="PY_slide">

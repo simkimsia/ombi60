@@ -42,7 +42,8 @@ class Theme extends AppModel {
   * Function to upload files uploaded through templates settings page.
   */
  function __uploadFiles($folderPath) {
-    
+        //debug($this->data['Theme']['theme']['settings']['files']);
+        //debug($folderPath);
        if (isset($this->data['Theme']['theme']['settings']['files']['name']) && !empty($this->data['Theme']['theme']['settings']['files']['name'])) {
     
               foreach($this->data['Theme']['theme']['settings']['files']['name'] as $key => $filename) {
@@ -56,16 +57,14 @@ class Theme extends AppModel {
                           if (move_uploaded_file($this->data['Theme']['theme']['settings']['files']['tmp_name'][$key], $folderPath .DS. $imgfilename))
                           {
                              // Store name of file in model's data
-                             $this->data['Theme']['theme']['settings'][$imgfilename] = $imgfilename;
-                             $this->invalidate($key,'save faild'); 
-                             return false;
+                             $this->data['Theme']['theme']['settings'][$imgfilename] = $imgfilename;                             
                              
                           } else {
-                             $this->invalidate($key,'save faild'); 
+                             $this->invalidate($key,'save_fail'); 
                              return false;
                           }
                      } else {
-                        //debug('not writable');
+                        //debug('not writable');exit;
                      }
        }
  

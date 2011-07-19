@@ -35,7 +35,7 @@ class ThemesController extends AppController {
 	}
 	
 	function admin_settings() {
-	  // print_r($_POST); //exit;
+	 
 	  $savedThemeId = Shop::get('Shop.saved_theme_id');
 	  configure::write('debug',3);
 	  
@@ -44,27 +44,25 @@ class ThemesController extends AppController {
 	  $uploadFolderPath = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'webroot'.DS.'assets';
 	
 	  if (isset($this->data) && !empty($this->data)) {
-	     print_r($_POST);
-	     debug($this->data); //print_r($_FILES);exit;
-	    // $this->__uploadFiles();
-	    $this->Theme->set($this->data);
-	    if (!$this->Theme->saveTemplateSettings($savedThemeId)) {
-	       debug($this->Theme->invalidFields());
+	   
+	    $this->Theme->set($this->data);	  
+	    if ($this->Theme->saveTemplateSettings($savedThemeId)) {
+	       $this->Session->setFlash('Settings saved successfully.');
+	    } else {
+	       $this->Session->setFlash('Unable to save settings.');
 	    }
+	    
 	  } 
 	  if (file_exists($settings_html)) {
-	    //parse html
-	   // App::import('Vendor', 'domParser'.DS.'domparser');
-	   App::import('Vendor', 'domparser', array('file' => 'domParser'.DS.'domparser.php'));
-
+	   
+	    App::import('Vendor', 'domparser', array('file' => 'domParser'.DS.'domparser.php'));
 	
 	    $doc = new domParser();
       $doc->loadHTMLFile($settings_html);
 	    $this->set('HtmlArray',$doc->toArray());
 	   
 	  }
-	  //echo "<br>here";exit;
-	  //exit;
+	  
 	}
   
   function __get_settings_html() {
