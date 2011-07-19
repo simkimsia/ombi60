@@ -37,7 +37,7 @@ class ThemesController extends AppController {
 	function admin_settings() {
 	 
 	  $savedThemeId = Shop::get('Shop.saved_theme_id');
-	  configure::write('debug',3);
+	  
 	  
 	  $data = $this->Theme->SavedTheme->read(null,$savedThemeId);
 	  $settings_html = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings.html';
