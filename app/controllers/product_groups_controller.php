@@ -8,13 +8,17 @@ class ProductGroupsController extends AppController {
 			     'TinyMce.TinyMce');
 	
 	var $components = array('Permission' =>
-				array('actions' =>
+				array('actionsWithPrimaryKey' =>
 				      array('admin_view_smart',
 					    'admin_edit_smart',
 					    'admin_view_custom',
 					    'admin_edit_custom',
 					    'admin_delete',
 					    'admin_toggle',),
+				      'actionsWithShopId' =>
+				      array('admin_add_smart',
+					    'admin_add_custom',
+					    ),
 				      'errorMessage' => 'You do not have permissions for this Collection',
 					)
 				);
@@ -23,7 +27,7 @@ class ProductGroupsController extends AppController {
 	  
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-		if ($this->action == 'admin_toggle' ) {
+		if ($this->action == 'admin_toggle' ||  $this->action == 'admin_add_smart' ) {
 			$this->Security->enabled = false;
 		}
 	}

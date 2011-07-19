@@ -7,10 +7,12 @@ class PermissionComponent extends Object {
  * if empty array, apply to all actions.
  * */
 
-	var $actions = array('admin_edit',
+	var $actionsWithPrimaryKey = array('admin_edit',
 			     'admin_delete',
 			     'admin_view',
 			     'admin_toggle');
+	
+	var $actionsWithShopId = array('admin_add');
 	
 	var $redirect = array('action'=>'index',
 			      'admin' => true);
@@ -28,7 +30,8 @@ class PermissionComponent extends Object {
  */     
 	function initialize(&$controller, $settings=array()) {
 		
-		$this->actions = (empty($settings['actions'])) ? $this->actions : $settings['actions'];
+		$this->actionsWithPrimaryKey = (empty($settings['actionsWithPrimaryKey'])) ? $this->actionsWithPrimaryKey : $settings['actionsWithPrimaryKey'];
+		$this->actionsWithShopId = (empty($settings['actionsWithShopId'])) ? $this->actionsWithShopId : $settings['actionsWithShopId'];
 		
 		$this->modelName = Inflector::classify($controller->name);
 		
@@ -55,13 +58,38 @@ class PermissionComponent extends Object {
  */     
 	function startup(&$controller) {
 		
+		$shopIdUserHas = User::get('Merchant.shop_id');
+		
 		// check the admin_edit, admin_view,
 		// admin_delete, admin_toggle for correct primary key
 		// assuming that the url is something like
 		// admin/:controller-name/edit/:id
 		// we use $controller->params['pass'][0] to access the $id
 		
-		if (in_array($controller->action, $this->actions)) {
+		$this->checkForValidPrimaryKeyInAction($controller, $shopIdUserHas);
+		
+		$this->checkForValidShopIdInData($controller, $shopIdUserHas);
+		
+	
+	}
+	
+	private function checkForValidShopIdInData(&$controller, $shopIdUserHas) {
+		if (in_array($controller->action, $this->actionsWithShopId)) {
+			$validData = !empty($controller->data);
+			$modelName = $this->modelName;
+			
+			if ($validData) {
+				$shopId = $controller->data[$modelName]['shop_id'];
+				
+				if ($shopId !== $shopIdUserHas) {
+					$controller->data[$modelName]['shop_id'] = $shopIdUserHas;
+				}
+			}	
+		}
+	}
+	
+	private function checkForValidPrimaryKeyInAction(&$controller, $shopIdUserHas) {
+		if (in_array($controller->action, $this->actionsWithPrimaryKey)) {
 			$validParam = isset($controller->params['pass'][0]);
 			$modelName = $this->modelName;
 			
@@ -72,8 +100,6 @@ class PermissionComponent extends Object {
 				// via the acos_aros ACL so we do
 				// not need to check for User group type
 				$modelInstance = ClassRegistry::init($modelName);
-				
-				$shopIdUserHas = User::get('Merchant.shop_id');
 				
 				$count = $modelInstance->find('count',
 						array('conditions'=>
@@ -86,8 +112,6 @@ class PermissionComponent extends Object {
 				}
 			}	
 		}
-		
-	
 	}
 }
 ?>
