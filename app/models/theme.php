@@ -45,13 +45,20 @@ class Theme extends AppModel {
         //debug($this->data['Theme']['theme']['settings']['files']);
         //debug($folderPath);
        if (isset($this->data['Theme']['theme']['settings']['files']['name']) && !empty($this->data['Theme']['theme']['settings']['files']['name'])) {
-    
+              
               foreach($this->data['Theme']['theme']['settings']['files']['name'] as $key => $filename) {
-    
+                     $imgfilename = str_replace('dot','.',$key);  
                      if ($this->data['Theme']['theme']['settings']['files']['error'][$key] == 4) {    
+          
+                       $hiddenName = '_'.$key;
+                       
+                       if (isset($this->data['Theme']['theme']['settings']['files'][$hiddenName]) && !empty($this->data['Theme']['theme']['settings']['files'][$hiddenName])) {
+                          $this->data['Theme']['theme']['settings'][$imgfilename] = $this->data['Theme']['theme']['settings']['files'][$hiddenName];
+                         
+                       }
                         continue;
                      }
-                     $imgfilename = str_replace('dot','.',$key);
+                   
                      if (is_writable($folderPath)){
 
                           if (move_uploaded_file($this->data['Theme']['theme']['settings']['files']['tmp_name'][$key], $folderPath .DS. $imgfilename))

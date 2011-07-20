@@ -1,7 +1,6 @@
-<?php echo $this->Javascript->link('jquery-collapsiblePanel.js', false); ?>
+<?php echo $this->Html->script('jquery-collapsiblePanel.js', false); ?>
 <script language="javascript" type="text/javascript">
-    $(document).ready(function() {
-      
+    $(document).ready(function() {       
         $('div.collapsable-container fieldset legend').hide();  
         $(".collapsable-container").collapse({ closed: true });
 		    //$(".collapsable-container").collapse( { closed: true } );
@@ -33,11 +32,11 @@
 </div>
 <?php
 
-$_allowedFormElements = array('input','select','textarea');
-$_unallowedElements = array('form');
-$_allowedHtmlElemnts = array('legend','table','tbody','tr','td','p','div','span');
+
  if (isset($HtmlArray['html']['body']['fieldset']) && is_array($HtmlArray['html']['body']['fieldset']) && !empty($HtmlArray['html']['body']['fieldset'])) {
       echo $this->Form->create('Theme',array('enctype' => 'multipart/form-data'));
+
+        $this->settingsform->init(array('json_data' => $json_data , 'asset_folder_url' => $asset_folder_url));
       ?>
      
       <?php

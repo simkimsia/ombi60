@@ -2,8 +2,17 @@
 
 class SettingsformHelper extends AppHelper {
 
-    var $helpers = array('Form');
+    var $helpers = array('Form','Html');
    
+         
+    function init($data) {
+        if (!empty($data) && is_array($data)) {
+              foreach ($data as $key => $value) {
+                  $this->$key = $value;
+              }
+        }
+    }
+    
     function select($data) {
       
        $options = array();
@@ -30,8 +39,12 @@ class SettingsformHelper extends AppHelper {
           }
           
           $attrArr['label'] = false;
+          
        }
       
+       if (isset($this->json_data->current->$tagName)) {
+           $attrArr['value'] = $this->json_data->current->$tagName;
+       }   
        return $this->Form->input('theme.settings.'.$tagName,array_merge(array('options' => $options),$attrArr));
        
     }
@@ -59,8 +72,12 @@ class SettingsformHelper extends AppHelper {
        if (isset($data[0]) && !empty($data[0])) {
           $attrArr['value'] = $data[0];
        } 
-                  
+              
        $tagName = str_replace('.','dot',$tagName);
+       
+       if (isset($this->json_data->current->$tagName)) {
+           $attrArr['value'] = $this->json_data->current->$tagName;
+       }   
     
       if (isset($attrArr['type']) && $attrArr['type'] == 'file') {
     
@@ -98,12 +115,24 @@ class SettingsformHelper extends AppHelper {
        
        if (isset($attrArr['type']) && $attrArr['type'] == 'checkbox') {
             $attrArr['value'] = 1;
+            if (isset($this->json_data->current->{$tagName}) && !empty($this->json_data->current->{$tagName})) {
+               $attrArr['checked'] = 1;
+            }
        } 
        
        $tagName = str_replace('.','dot',$tagName);
+       $tagName1 = str_replace('dot','.',$tagName);
+      if (isset($this->json_data->current->$tagName1)) {
+           $attrArr['value'] = $this->json_data->current->{$tagName1};
+      }
       
-      if (isset($attrArr['type']) && $attrArr['type'] == 'file') {       
-        return $this->Form->file('theme.settings.files.'.$tagName,$attrArr); 
+      if (isset($attrArr['type']) && $attrArr['type'] == 'file') {                   
+          if (isset($this->json_data->current->{$tagName1})) {
+            return $this->Form->file('theme.settings.files.'.$tagName,$attrArr).'<span>'.
+                $this->Html->link($attrArr['value'],$this->asset_folder_url.$attrArr['value'],array('target' => '_blank')).'</span>'.$this->Form->input('theme.settings.files._'.$tagName,array('type' => 'hidden','value' => $attrArr['value'])); 
+         } else {
+            return $this->Form->file('theme.settings.files.'.$tagName,$attrArr);
+         } 
        } elseif (isset($attrArr['type']) && $attrArr['type'] == 'radio') {
           return $this->Form->input('theme.settings.'.$tagName,$attrArr,$defaultArr); 
        } else {
@@ -132,8 +161,13 @@ class SettingsformHelper extends AppHelper {
         }
         
        $attributes['legend'] = false;
+       
+       $checked = $radioData['checked'];
+       if (isset($this->json_data->current->$tagName)) {
+           $checked = $this->json_data->current->$tagName;
+       }
         
-        return $this->Form->input('theme.settings.'.$tagName,array_merge($attributes,array('options' => $radioData['options'],'type' => 'radio','value' => $radioData['checked'])),array('default' => $radioData['checked'])); 
+        return $this->Form->input('theme.settings.'.$tagName,array_merge($attributes,array('options' => $radioData['options'],'type' => 'radio','value' => $checked)),array('default' => $checked)); 
     }
     
   function buildTag($key,$element,$counter,$html='') {

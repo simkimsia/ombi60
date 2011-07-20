@@ -46,8 +46,12 @@ class ThemesController extends AppController {
 	  $data = $this->Theme->SavedTheme->read(null,$savedThemeId);
 	  $settings_html = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings.html';
 	  $uploadFolderPath = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'webroot'.DS.'assets';
-	
+	  $json_data_file = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings_data.json'; 
+	  $asset_folder_url = DS.'theme'.DS.$data['SavedTheme']['folder_name'].DS.'assets'.DS;
+	  
+	  
 	  if (isset($this->data) && !empty($this->data)) {
+	    //print_r($this->data);
 	   
 	    $this->Theme->set($this->data);	  
 	    if ($this->Theme->saveTemplateSettings($savedThemeId)) {
@@ -64,47 +68,16 @@ class ThemesController extends AppController {
 	    $doc = new domParser();
       $doc->loadHTMLFile($settings_html);
 	    $this->set('HtmlArray',$doc->toArray());
-	   
+	    $json_data = array();
+	    if (file_exists($json_data_file)) {
+	       $json_data = json_decode(file_get_contents($json_data_file));
+	    }
+	    $this->set('json_data',$json_data);
+	    $this->set('asset_folder_url',$asset_folder_url);
 	  }
 	  
 	}
-  
-  function __get_settings_html() {
-    $savedThemeId = Shop::get('Shop.saved_theme_id');
-	  $data = $this->Theme->SavedTheme->read(null,$savedThemeId);
-	  $settings_html = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'settings.html';
-	  
-	  if (file_exists($settings_html)) {
-	    //parse html
-	    App::import('Vendor', 'domParser'.DS.'domparser');
-	    $doc = new domParser();
-      $doc->loadHTMLFile($settings_html);
-	    $this->set('HtmlArray',$doc->toArray());
-	  }
-  }
-  
-  function __uploadFiles($folderPath) {
-         
-     if (isset($this->data['theme']['settings']['files']['name']) && !empty($this->data['theme']['settings']['files']['name'])) {
-        foreach($this->data['theme']['settings']['files']['name'] as $key => $filename) {
-               if ($this->data['theme']['settings']['files'][$key]['error'] == 4) {
-                  continue;
-               }
-               
-               if (is_writable($folderPath))
-                    if (move_uploaded_file($model->data[$model->name][$field]['tmp_name'], $fullpath . $imgFilename))
-                    {
-                       // Store name of image file in model's data
-                        $model->data[$model->name][$options['filename']] = $imgFilename;
-                       // If any old image for this photo is present then delete it
-                       if (isset($model->data[$model->name][$options['old_filename_field']]))
-                      {
-                        @unlink($fullpath . $model->data[$model->name][$options['old_filename_field']]);
-                      }
-                    } 
-               }
-        }
-     }
+    
  
 }
 ?>
