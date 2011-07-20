@@ -21,6 +21,10 @@ class ThemesController extends AppController {
 
 		// allow non users to access register and login actions only.
 		//$this->Auth->allow($this->action);
+		
+		if($this->action == 'admin_settings')  {
+			$this->Security->enabled = false;
+		}
 	
 	}
 	
