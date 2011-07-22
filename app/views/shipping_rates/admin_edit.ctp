@@ -39,9 +39,9 @@
      		        <li>
          		    <?php
          		        echo $this->Form->label('Weight Range');
-          		        echo "From " . $this->Number->format($this->data['WeightBasedRate']['min_weight'], array('places' => 2, 'escape' => false, 'decimals' => '.',));
-                        echo $unitForWeight . " - ";
-                        echo $this->Number->format($this->data['WeightBasedRate']['max_weight'], array('places' => 2, 'escape' => false, 'decimals' => '.',)) . $unitForWeight;
+          		        echo "From " , $this->Number->format($this->data['WeightBasedRate']['displayed_min_weight'], array('places' => 2, 'escape' => false, 'decimals' => '.', 'before'=>''));
+                        echo $unitForWeight , " - ";
+                        echo $this->Number->format($this->data['WeightBasedRate']['displayed_max_weight'], array('places' => 2, 'escape' => false, 'decimals' => '.', 'before'=>'')) , $unitForWeight;
                         
          		        //echo 'From ' . range($this->data['WeightBasedRate']['min_weight']) . $unitForWeight . ' to ' . $this->data['WeightBasedRate']['max_weight'] .$unitForWeight;
          	        ?>

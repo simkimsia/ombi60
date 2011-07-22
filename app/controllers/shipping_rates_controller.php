@@ -31,7 +31,7 @@ class ShippingRatesController extends AppController {
 		
 		
 		if (!empty($this->data)) {
-			
+			$this->log($this->data);
 			if ($this->ShippingRate->saveAll($this->data)) {
 				$this->Session->setFlash(__('The shipping rate has been saved', true), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));

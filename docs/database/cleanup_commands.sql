@@ -50,9 +50,11 @@ TRUNCATE TABLE users;
 TRUNCATE TABLE casual_surfers;
 TRUNCATE TABLE recurring_payment_profiles;
 TRUNCATE TABLE invoices;
+/*
 TRUNCATE TABLE `aros_acos`;
 TRUNCATE TABLE aros;
 TRUNCATE TABLE `acos`;
+*/
 TRUNCATE TABLE `cancellations`;
 TRUNCATE TABLE `saved_themes`;
 TRUNCATE TABLE `paydollar_transactions`;
@@ -75,10 +77,10 @@ TRUNCATE TABLE `links`;
 TRUNCATE TABLE `link_lists`;
 TRUNCATE TABLE `logs`;
 
-
+/*
 INSERT INTO aros (model, foreign_key, alias, lft, rght) VALUES 
 ('Group', 1, 'administrators', 1, 2),
 ('Group', 2, 'editors', 3, 4),
 ('Group', 3, 'merchants', 5, 6),
 ('Group', 4, 'customers', 7, 8),
-('Group', 5, 'casual', 9, 10);
+('Group', 5, 'casual', 9, 10);*/

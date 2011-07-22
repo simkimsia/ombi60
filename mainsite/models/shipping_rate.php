@@ -3,6 +3,7 @@ class ShippingRate extends AppModel {
 	var $name = 'ShippingRate';
 	var $displayField = 'name';
 	
+	
 	var $actsAs    = array(
 			       'UnitSystemConvertible' => array(
 					'weight_fields' =>array(
@@ -13,6 +14,7 @@ class ShippingRate extends AppModel {
 					
 								),
 			       );
+	
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -75,6 +77,7 @@ class ShippingRate extends AppModel {
 		);
 	}
 	
+	
 	/**
 	 * For unit conversion
 	 * */
@@ -92,26 +95,7 @@ class ShippingRate extends AppModel {
 		return $results;
 	}
 	
-	/**
-	 * For unit conversion
-	 * */
-	function beforeSave() {
-		
-                $unit = Shop::get('ShopSetting.unit_system');
-		
-		foreach ($this->data as $key => $val) {
-			if (isset($val[$this->alias])) {
-				$this->data[$key] = $this->convertForSave($val, $unit);
-			}
-			if ($key == $this->alias) {
-				$resultingProductArray = $this->convertForSave(array($key => $this->data[$key]), $unit);
-				$this->data[$key] = $resultingProductArray[$key];
-			}
-		}
-		
-		
-		return true;
-	}
+	 
 
 }
 ?>

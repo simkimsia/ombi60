@@ -175,7 +175,7 @@ class Webpage extends AppModel {
 		// form the new fields and values
 		$fields = array('Link.route' =>$route,
 				'Link.model' =>$model,
-				'Link.action'=>$action);
+				'Link.action'=>$handle);
 		
 		// prepare the fields by wrapping the values in quotes
 		App::import('Lib', 'StringManipulator');

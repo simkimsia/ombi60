@@ -173,8 +173,9 @@ class Merchant extends AppModel {
 			if ($result) {
 				// standard weight
 				$shippedData = array();
-				$shippedData['WeightBasedRate']['min_weight'] = 10;
-				$shippedData['WeightBasedRate']['max_weight'] = 20;
+				$shippedData['WeightBasedRate']['displayed_min_weight'] = 10;
+				$shippedData['WeightBasedRate']['displayed_max_weight'] = 20;
+				$shippedData['WeightBasedRate']['unit'] = 'kg';
 				$shippedData['ShippingRate']['price'] = 10;
 				$shippedData['ShippingRate']['shipped_to_country_id'] = $shippedToCountry->id;
 				$shippedData['ShippingRate']['name'] = 'Standard Shipping';
@@ -184,8 +185,9 @@ class Merchant extends AppModel {
 				
 				// heavy duty
 				$shippedData = array();
-				$shippedData['WeightBasedRate']['min_weight'] = 20;
-				$shippedData['WeightBasedRate']['max_weight'] = 50;
+				$shippedData['WeightBasedRate']['displayed_min_weight'] = 20;
+				$shippedData['WeightBasedRate']['displayed_max_weight'] = 50;
+				$shippedData['WeightBasedRate']['unit'] = 'kg';
 				$shippedData['ShippingRate']['price'] = 25;
 				$shippedData['ShippingRate']['shipped_to_country_id'] = $shippedToCountry->id;
 				$shippedData['ShippingRate']['name'] = 'Heavy Duty';
@@ -237,7 +239,7 @@ class Merchant extends AppModel {
 		
 		// now we set up the shopfront page and other pages
 		$webpage = ClassRegistry::init('Webpage');
-		
+		$webpage->recursive = -1;
 		$homePage = array(
 		             'title'=>'Welcome',
 				     'content'=>'<div>
@@ -293,18 +295,22 @@ class Merchant extends AppModel {
 						'handle'=>'terms-of-service');
 		
 		
-		$pageData = array('Webpage'=>array($homePage, $aboutUsPage, $tosPage));
+		$pageData = array('Webpage'=>array('homePage'=>$homePage,
+						   'aboutUsPage'=>$aboutUsPage,
+						   'tosPage' => $tosPage));
+		$pageIDs = array();
 		
-		$webpage->create();
-		$result = $webpage->saveAll($pageData['Webpage']);
-		
-		if (!$result) {
-			$datasource->rollback($this);
-			return false;
+		foreach($pageData['Webpage'] as $pageName => $page) {
+			$webpage->create();
+			$result = $webpage->save($page);
+			if (!$result) {
+				$datasource->rollback($this);
+				return false;
+			}
+			$pageIDs[$pageName] = $webpage->id;
 		}
 		
 		// now we set up the links
-		
 		$this->Shop->LinkList->create();
 		$linkListData = array(
 			'LinkList' => array(
@@ -320,7 +326,9 @@ class Merchant extends AppModel {
 				      'route'	=> '/pages/about-us',
 				      'model'	=> '/pages/',
 				      'action'	=> 'about-us',
-				      'order'	=> '1'),
+				      'order'	=> '1',
+				      'parent_model' => 'Webpage',
+				      'parent_id' => $pageIDs['aboutUsPage']),
 				array('name'	=> 'Catalogue',
 				      'route'	=> '/collections/all',
 				      'model'	=> '/collections/all',
@@ -329,7 +337,9 @@ class Merchant extends AppModel {
 				      'route'	=> '/blogs/news' ,
 				      'model'	=> '/blogs/',
 				      'action'	=> $shopBlog['Blog']['short_name'],
-				      'order'	=> '3'),
+				      'order'	=> '3',
+				      'parent_model' => 'Blog',
+				      'parent_id' => $blog->id),
 				array('name'	=> 'Cart',
 				      'route'	=> '/cart',
 				      'model'	=> '/cart',
@@ -354,12 +364,16 @@ class Merchant extends AppModel {
 				      'route'	=> '/pages/terms-of-service',
 				      'model'	=> '/pages/',
 				      'action'	=> 'terms-of-service',
-				      'order'	=> '0'),
+				      'order'	=> '0',
+				      'parent_model' => 'Webpage',
+				      'parent_id' => $pageIDs['tosPage']),
 				array('name'	=> 'About Us',
 				      'route'	=> '/pages/about-us',
 				      'model'	=> '/pages/',
 				      'action'	=> 'about-us',
-				      'order'	=> '1'),
+				      'order'	=> '1',
+				      'parent_model' => 'Webpage',
+				      'parent_id' => $pageIDs['aboutUsPage'])
 				
 				));
 		

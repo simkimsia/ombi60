@@ -846,15 +846,15 @@ class Product extends AppModel {
 		$this->Link->recursive = -1;
 		
 		// get the new handle 
-		$handle = $this->data['Product']['handle'];
+		$handle = isset($this->data['Product']['handle']) ? $this->data['Product']['handle'] : '';
 		$model 	= '/products/';
-		
+	
 		// form the new route
 		$route  = $model . $handle;
 		// form the new fields and values
 		$fields = array('Link.route' =>$route,
 				'Link.model' =>$model,
-				'Link.action'=>$action);
+				'Link.action'=>$handle);
 		
 		// prepare the fields by wrapping the values in quotes
 		App::import('Lib', 'StringManipulator');

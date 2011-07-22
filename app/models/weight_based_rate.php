@@ -110,7 +110,6 @@ class WeightBasedRate extends AppModel {
 	function beforeSave() {
 		
                 $unit = Shop::get('ShopSetting.unit_system');
-		
 		foreach ($this->data as $key => $val) {
 			if (isset($val[$this->alias])) {
 				$this->data[$key] = $this->convertForSave($val, $unit);

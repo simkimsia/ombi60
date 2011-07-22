@@ -64,27 +64,6 @@ class ShippedToCountry extends AppModel {
 		
 		return $results;
 	}
-	
-	/**
-	 * For unit conversion
-	 * */
-	function beforeSave() {
-		
-                $unit = Shop::get('ShopSetting.unit_system');
-		
-		foreach ($this->data as $key => $val) {
-			if (isset($val[$this->alias])) {
-				$this->data[$key] = $this->convertForSave($val, $unit);
-			}
-			if ($key == $this->alias) {
-				$resultingProductArray = $this->convertForSave(array($key => $this->data[$key]), $unit);
-				$this->data[$key] = $resultingProductArray[$key];
-			}
-		}
-		
-		
-		return true;
-	}
 
 }
 ?>

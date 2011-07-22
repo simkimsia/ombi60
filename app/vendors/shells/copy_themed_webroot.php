@@ -39,7 +39,7 @@ class CopyThemedWebrootShell extends Shell {
         
         private function clean_themed() {
                 
-                $result = false;
+                $result = true;
                 
                 $path = VIEWS . 'themed';
                 

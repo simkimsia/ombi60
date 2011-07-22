@@ -8,6 +8,7 @@ if ($shippingRate['PriceBasedRate']['id'] > 0) {
         }
         echo $output;
 } else if ($shippingRate['WeightBasedRate']['id'] > 0) {
+        //$this->log($shippingRate);
         echo $this->Number->format($shippingRate['WeightBasedRate']['displayed_min_weight'], array('places' => 2, 'before' => FALSE, 'escape' => false, 'decimals' => '.',));
         echo $unitForWeight . " - ";
         echo $this->Number->format($shippingRate['WeightBasedRate']['displayed_max_weight'], array('places' => 2, 'before' => FALSE, 'escape' => false, 'decimals' => '.',)) . $unitForWeight;

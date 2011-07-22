@@ -36,6 +36,34 @@ class ShippedToCountry extends AppModel {
 			'counterQuery' => ''
 		),
 	);
+	
+	var $actsAs    = array(
+			       'UnitSystemConvertible' => array(
+					'weight_fields' =>array(
+						'min_weight',
+						'max_weight',
+							),
+					'model_name' => 'WeightBasedRate',
+					
+								),
+			       );
+	
+	/**
+	 * For unit conversion
+	 * */
+	function afterFind($results, $primary) {
+		
+                $unit = Shop::get('ShopSetting.unit_system');
+		
+		foreach ($results as $key => $val) {
+			if (isset($val['WeightBasedRate'])) {
+				$results[$key] = $this->convertForDisplay($val, $unit);
+			}
+		}
+		
+		
+		return $results;
+	}
 
 }
 ?>
