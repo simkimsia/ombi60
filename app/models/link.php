@@ -53,6 +53,7 @@ class Link extends AppModel {
 			
 		}
 		
+		
 		// only for create
 		if (!isset($this->data[$this->alias]['id'])) {
 			$this->recursive = -1;

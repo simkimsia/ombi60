@@ -76,7 +76,7 @@ class ProductGroup extends AppModel {
 	 * we avoid the use of many images for retrieving lots of products
 	 * */
 	function getTemplateVariable($productsInGroups=array(), $multiple = true) {
-		
+		App::import('Lib', 'ArrayToIterator');
 		$results = array();
 		
 		if (!$multiple) $productsInGroups = array($productsInGroups);
@@ -96,10 +96,26 @@ class ProductGroup extends AppModel {
 					   
 					);
 			
-			$result['products'] = isset($group['Product']) ? Product::getTemplateVariable($group['Product']) : array();
-			$result['products_count'] = count($result['products']);
+			
+			if (isset($group['Product'])) {
+				$result['products'] = Product::getTemplateVariable($group['Product']);	
+			} else {
+				$result['products'] = (TWIG_ITERATOR) ? ArrayToIterator::array2Iterator(array()) : array();
+			}
+			
+			
+			if ($result['products']  instanceof IteratorForTwig){
+				$result['products_count'] = $result['products']->getSize();
+			} else{
+				$result['products_count'] = count($result['products']);
+			}
+			
 			
 			$results[$result['underscore_handle']] = $result;
+		}
+		
+		if ($multiple && TWIG_ITERATOR) {
+			$results = ArrayToIterator::array2Iterator($results);
 		}
 		
 		if (!$multiple && !empty($results)) {
@@ -338,7 +354,7 @@ class ProductGroup extends AppModel {
 		
 		$viewByProductType 	= ($handle == 'types');
 		$viewByVendor 		= ($handle == 'vendors');
-		$vendorOrTypeIndicated 	= (isset($params['named']['q']));
+		$vendorOrTypeIndicated 	= (isset($params['q']));
 		
 		// we have 2 situations
 		// situation 1 is for automatic collections like a particular vendor or type
@@ -396,8 +412,8 @@ class ProductGroup extends AppModel {
 	 * */
 	private function getAutomaticCollectionByUrl($handle, $params) {
 		
-		if (isset($params['named']['q'])) {
-			$nameInParams = $params['named']['q'];			
+		if (isset($params['q'])) {
+			$nameInParams = $params['q'];			
 		} else {
 			return false;	
 		}
@@ -514,11 +530,23 @@ class ProductGroup extends AppModel {
 	 * assumed that the products you want to paginate are visible
 	 * assumed that the conditions BEFORE invoking this will ensure the products are within a single shop
 	 * */
-	private function prepCommonProductPaginate() {
-		$productPaginate = array('conditions'=>array('AND' => array('Product.visible'=>true) ));
+	private function prepCommonProductPaginate($visibleOrAll = VISIBLE_ENTITY) {
+		if ($visibleOrAll == VISIBLE_ENTITY) {
+			$productPaginate = array('conditions'=>array('AND' => array('Product.visible'=>true) ));	
+		} else if ($visibleOrAll == HIDDEN_ENTITY) {
+			$productPaginate = array('conditions'=>array('AND' => array('Product.visible'=>true) ));	
+		} else if ($visibleOrAll == HIDDEN_AND_VISIBLE_ENTITY){
+			// do nothing for conditions so that we can retrieve ALL the products
+			// regardless of HIDDEN or VISIBLE
+		}
+		
 		
 		$productPaginate['contain'] = array('Variant' => array(
-								'order'=>'Variant.order ASC'
+								'order'=>'Variant.order ASC',
+								'VariantOption' => array(
+									'fields' => array('id', 'value', 'field'),
+									'order'  => 'VariantOption.order ASC',
+								)
 							),
 						   'ProductImage'=>array(
 								'fields' => array('filename'),

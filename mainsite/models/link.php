@@ -12,7 +12,28 @@ class Link extends AppModel {
 			'fields' => '',
 			'order' => '',
 			'counterCache' => true,
-		)
+		),
+		'Blog' => array(
+			'className' => 'Blog',
+			'foreignKey' => 'parent_id',
+			'conditions' => array('Link.parent_model'=>'Blog'),
+			'fields' => '',
+			'order' => '',
+		),
+		'Product' => array(
+			'className' => 'Product',
+			'foreignKey' => 'parent_id',
+			'conditions' => array('Link.parent_model'=>'Product'),
+			'fields' => '',
+			'order' => '',
+		),
+		'Webpage' => array(
+			'className' => 'Webpage',
+			'foreignKey' => 'parent_id',
+			'conditions' => array('Link.parent_model'=>'Webpage'),
+			'fields' => '',
+			'order' => '',
+		),
 	);
 	
 	function beforeValidate() {
@@ -34,9 +55,9 @@ class Link extends AppModel {
 		
 		
 		// only for create
-		if (!isset($this->data['Link']['id'])) {
+		if (!isset($this->data[$this->alias]['id'])) {
 			$this->recursive = -1;
-			$this->data['Link']['order'] = $this->find('count', array('conditions'=>array('Link.link_list_id'=>$this->data['Link']['link_list_id'])));
+			$this->data[$this->alias]['order'] = $this->find('count', array('conditions'=>array($this->alias.'.link_list_id'=>$this->data[$this->alias]['link_list_id'])));
 			$this->recursive = 0;	
 		}
 		
@@ -135,5 +156,60 @@ class Link extends AppModel {
 		$data = $this->beforeSaveAll($data);
 		return parent::saveAll($data, $options);
 	}
+	
+	/**
+	 * for use in templates for shopfront pages
+	 * */
+	function getTemplateVariable($links=array(), $multiple = true) {
+		
+		$results = array();
+		
+		if (!$multiple) $links = array($links);
+		
+		foreach($links as $key=>$link) {
+			$link = isset($link['Link']) ? $link['Link'] : $link;
+			$result = array('id' => $link['id'],
+					'title' => $link['name'],
+					'url' => $link['route'],
+					);
+			
+			
+			$results[] = $result;
+		}
+		
+		if ($multiple && TWIG_ITERATOR) {
+			App::import('Lib', 'ArrayToIterator');
+			$results = ArrayToIterator::array2Iterator($results);
+		}
+		
+		if (!$multiple && !empty($results[0])) {
+			return $results[0];
+		} else if (!$multiple && empty($results[0])) {
+			return array();
+		}
+		
+		return $results;
+	}
+	
+	/**
+	 * override the original updateAll
+	 * if it comes from Webpage, Product, Blog,
+	 * then the $parentModel is set as 'Webpage', etc
+	 * 
+	
+	function deleteAll($fields, $conditions = true, $parentModel = false) {
+		$parentModels = array('Blog', 'Webpage', 'Product');
+		
+		$updateCounterCacheInLinkLists = in_array($parentModel, $parentModels);
+				
+		if ($updateCounterCacheInLinkLists) {
+			// get all the parent linklists id
+		}
+		parent::updateAll($fields, $conditions);
+		if ($updateCounterCacheInLinkLists) {
+			// now update all the parent linklists id
+		}
+	}
+	 **/
 }
 ?>

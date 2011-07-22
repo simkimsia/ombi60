@@ -999,6 +999,8 @@ class Product extends AppModel {
 							'fields'=> array('ProductsInGroup.product_group_id')
 							));
 		
+		
+		
 		/**
 		 * Array
 			(

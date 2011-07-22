@@ -165,6 +165,8 @@ class Post extends AppModel {
 	
 	function beforeSave($options) {
 		
+		// assuming we do not do a saveAll for Post
+		// or a saveAll from its parent model Blog
 		$setBlogHandle = (empty($this->data['Post']['blog_handle']));
 		
 		if ($setBlogHandle) {

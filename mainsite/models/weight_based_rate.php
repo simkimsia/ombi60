@@ -13,6 +13,17 @@ class WeightBasedRate extends AppModel {
 		)
 	);
 	
+	var $actsAs    = array(
+			       'UnitSystemConvertible' => array(
+					'weight_fields' =>array(
+						'min_weight',
+						'max_weight',
+							),
+					'model_name' => 'WeightBasedRate',
+					
+								),
+			       );
+	
 	var $validate = array(
 		
 		'min_weight' => array(
@@ -64,15 +75,56 @@ class WeightBasedRate extends AppModel {
 	
 	function afterSave($created) {
 		if (isset($this->data[$this->alias])) {
+			$unit = $this->data['WeightBasedRate']['unit'];
 			$message = '';
-			if (isset($this->data['WeightBasedRate']['min_weight']) && !empty($this->data['WeightBasedRate']['max_weight'])) {
-				$message = 'From ' . $this->data['WeightBasedRate']['min_weight'] . 'kg to ' . $this->data['WeightBasedRate']['max_weight'] . 'kg';
-			} else if (isset($this->data['WeightBasedRate']['min_weight'])) {
-				$message = 'From ' . $this->data['WeightBasedRate']['min_weight'] . 'kg and above';
+			if (isset($this->data['WeightBasedRate']['displayed_min_weight']) && !empty($this->data['WeightBasedRate']['displayed_max_weight'])) {
+				$message = 'From ' . $this->data['WeightBasedRate']['displayed_min_weight'] . $unit . ' to ' . $this->data['WeightBasedRate']['displayed_max_weight'] . $unit;
+			} else if (isset($this->data['WeightBasedRate']['displayed_min_weight'])) {
+				$message = 'From ' . $this->data['WeightBasedRate']['displayed_min_weight'] . $unit . ' and above';
 			}
 			$this->ShippingRate->id = $this->data['WeightBasedRate']['shipping_rate_id'];
 			$this->ShippingRate->saveField('description', $message);
 		}
 	}
+	
+	/**
+	 * For unit conversion
+	 * */
+	function afterFind($results, $primary) {
+		
+                $unit = Shop::get('ShopSetting.unit_system');
+		
+		foreach ($results as $key => $val) {
+			if (isset($val['WeightBasedRate'])) {
+				$results[$key] = $this->convertForDisplay($val, $unit);
+			}
+		}
+		
+		
+		return $results;
+	}
+	
+	/**
+	 * For unit conversion
+	 * */
+	function beforeSave() {
+		
+                $unit = Shop::get('ShopSetting.unit_system');
+		
+		foreach ($this->data as $key => $val) {
+			if (isset($val[$this->alias])) {
+				$this->data[$key] = $this->convertForSave($val, $unit);
+			}
+			if ($key == $this->alias) {
+				$resultingProductArray = $this->convertForSave(array($key => $this->data[$key]), $unit);
+				$this->data[$key] = $resultingProductArray[$key];
+			}
+		}
+		
+		
+		return true;
+	}
+	
+	
 }
 ?>

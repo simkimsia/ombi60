@@ -23,6 +23,16 @@ class Product extends AppModel {
 			       'Containable',
 			       'Visible.Visible',
 			       'Handleize.Handleable',
+			       'ManyToManyCountable.ManyToManyCountable' => array(
+				'LinkList'=>array(
+					'className' 	=> 'LinkList',
+					'joinModel' 	=> 'Link',
+					'foreignKey'	=> 'parent_id',
+					'associationForeignKey'	=> 'link_list_id',
+					'unique'	=> true,
+					'counterCache'  => 'link_count',
+					'foreignScope' => array('Link.parent_model' => 'Product'),
+					)),
 			       'Many2manyCounterCache'=> array('VisibleProductInGroup'=>array(
 								'className' 	=> 'ProductGroup',
 								'joinModel' 	=> 'ProductsInGroup',
@@ -47,6 +57,8 @@ class Product extends AppModel {
 	var $recursive = -1;
 	
 	var $imagesToDelete = array();
+	
+	var $optionModel = '';
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
@@ -118,29 +130,16 @@ class Product extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'CartItem' => array(
-			'className' => 'CartItem',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
+		'Link' => array(
+			'className' => 'Link',
+			'foreignKey' => 'parent_id',
+			'dependent' => true,
+			'conditions' => array('Link.parent_model' => 'Product'),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
-			'exclusive' => false,
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'OrderLineItem' => array(
-			'className' => 'OrderLineItem',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => false,
+			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
@@ -201,6 +200,7 @@ class Product extends AppModel {
 	public function __construct($id=false,$table=null,$ds=null) {
 		parent::__construct($id,$table,$ds);
 		$this->createVirtualFieldForUrl();
+		
 	}
 	
 	
@@ -210,13 +210,44 @@ class Product extends AppModel {
 	function afterFind($results, $primary) {
 		
                 $unit = Shop::get('ShopSetting.unit_system');
-		
-		foreach ($results as $key => $val) {
-			if (isset($val['Product'])) {
-				$results[$key] = $this->convertForDisplay($val, $unit);
+		if ($primary) {
+			foreach ($results as $key => $val) {
+				
+				if (isset($val['Product'])) {
+					$results[$key] = $this->convertForDisplay($val, $unit, $primary);
+				}
+				/** this is for the Products In Custom Collection **/
+				if (isset($val['ProductsInGroup'])) {
+					// we assume Containable was used to retrieve the records
+					/**
+					 * [ProductsInGroup] => Array
+						(
+						    [0] => Array
+							(
+							    [id] => 1
+							    [product_id] => 4
+							    [product_group_id] => 2
+							)
+					
+						    [1] => Array
+							(
+							    [id] => 2
+							    [product_id] => 4
+							    [product_group_id] => 3
+							)
+					
+						) */
+					$groups = Set::extract('ProductsInGroup.{n}.product_group_id', $val);
+					$results[$key]['Product']['selected_collections'] = $groups;
+				}
 			}
-			/** this is for the Products In Custom Collection **/
-			if (isset($val['ProductsInGroup'])) {
+			
+		} else {
+			
+			// in this case, we do not get back a {n}.{ModelName}.{field} format for results
+			// we got back an array of {field} directly
+			$results = $this->convertForDisplay($results, $unit, $primary);
+			if (isset($results['ProductsInGroup'])) {
 				// we assume Containable was used to retrieve the records
 				/**
 				 * [ProductsInGroup] => Array
@@ -236,11 +267,10 @@ class Product extends AppModel {
 						)
 				
 					) */
-				$groups = Set::extract('ProductsInGroup.{n}.product_group_id', $val);
-				$results[$key]['Product']['selected_collections'] = $groups;
+				$groups = Set::extract('ProductsInGroup.{n}.product_group_id', $results);
+				$results['selected_collections'] = $groups;
 			}
 		}
-		
 		
 		return $results;
 	}
@@ -284,27 +314,22 @@ class Product extends AppModel {
 		return FULL_BASE_URL;
 		
 	}
+	
+	/**
+	 * Prepares data for a newly created Product and the associated models.
+	 * The newly created Product will have 1 Variant and its list of VariantOption created as well.
+	 *
+	 * @param array $data The associative array with the following expected indices:
+	 * Product, ProductImage, Variant.
+	 * The Product index points to an array of Product data fields.
+	 * The ProductImage and Variant indices point to lists of ProductImage and Variant.
+	 * A list of VariantOption is expected in each element of the Variant list.
+	 *
+	 * @return boolean Returns true if the newly created Product and associated models are saved. False otherwise.
+	 * 
+	 **/
 
 	function createDetails($data = NULL) {
-
-		$image = $this->ProductImage;
-
-		if (!empty($data['ProductImage']) AND is_array($data['ProductImage'])) {
-			$firstValidImage = true;
-			foreach ($data['ProductImage'] as $key => $value) {
-				if (is_array($value) AND ($value[$image->defaultNameForImage]['error'] === UPLOAD_ERR_NO_FILE)) {
-					unset($data['ProductImage'][$key]);
-				} elseif ($firstValidImage) {
-					// we make the first image for this new product its default cover
-					$data['ProductImage'][$key]['cover'] = true;
-					$firstValidImage                     = false;
-				}
-			}
-
-			if (empty($data['ProductImage'])) {
-				unset($data['ProductImage']);
-			}
-		}
 		
 		$variantTitle = VARIANT_DEFAULT_TITLE;
 		$variantOptions = array();
@@ -327,7 +352,7 @@ class Product extends AppModel {
 		$data['Variant'][0]['order'] = 0;
 
 		$result = $this->saveAll($data, array('validate'=>'first',
-						      'atomic' => false));
+						      'atomic' => true));
 		
 		// now we need to save the variant options
 		if ($result) {
@@ -341,7 +366,7 @@ class Product extends AppModel {
 		
 		return $result;
 
-	}
+	}//end createDetails()
 	
 	function duplicate($id = NULL, $parentIDs = array()) {
 		// this product model is copied but NOT recursively.
@@ -478,10 +503,280 @@ class Product extends AppModel {
 		
         }
 	
+	/**
+	 *
+	 * Update the VariantOptions belonging to a Product.
+	 * Option field names may be changed. Option may be deleted if that option has only 1 possible value.
+	 * 
+	 * 
+	 * @param array $data Product array.
+	 * 
+	 * Expected values are $data['Product']['new_options'], (optional)
+	 * $data['Product']['options'],$data['Product']['id'],
+	 * (both compulsory) are expected.
+	 *
+	 * $data['Product']['new_options'] is a numerically indexed array
+	 * [0] => array[
+			[field] => title/style/custom/...
+			[custom_field] => whatever the custom field
+			[value] => the default value
+		 ],
+	   [1] => array[
+		...
+		],
+	   ...
+		 
+	 * $data['Product']['options'] is an associative indexed array
+	 * the index is the original field name
+	 * ['size'] => array[
+	 * 		[new_custom_field] => batteries, // if we want to rename the custom field
+			[new_field] => color, // if we want to rename the field, this will be different from the index
+			[delete] => 1, // if we wish to remove this option, this will be set as delete = 1
+			[order] => 0, // the original order value 
+		 ],
+	   [title] => array[
+		...
+		],
+	   ...
+	   
+	   **/
+	function updateOptions($data) {
+		$currentOptions = !empty($data['Product']['options']) ? $data['Product']['options'] : array();
+		$newOptions 	= !empty($data['Product']['new_options']) ? $data['Product']['new_options'] : array();
+		
+		// extract only deleted current options
+		$deleteCurrentOptions = array();
+		$validCurrentOptions = array();
+		foreach($currentOptions as $originalField => $option) {
+			if (!empty($option['delete']) && $option['delete'] == 1) {
+				$deleteCurrentOptions[$originalField] = $option;
+			} else {
+				$validCurrentOptions[$originalField] = $option;
+			}
+		}
+		
+		// we need to have at least 1 Product Option
+		if (!empty($data['Product']['id']) && (!empty($validCurrentOptions) || !empty($newOptions))) {
+			$productID = $data['Product']['id'];
+			// retrieve all the current Product Variants
+			$variantIDs = $this->Variant->find('list', array('conditions'=>array('Variant.product_id' => $productID),
+								         'fields'    =>array('Variant.id')));
+			
+			/**
+			 * the order is very important!!
+			 * we need to allow new options which in case are the same as the old option fields
+			 **/
+			// delete any current options
+			$this->deleteAllOptions($deleteCurrentOptions, $variantIDs);
+			// add new Product options
+			$this->addNewProductOptions($productID, $newOptions, $variantIDs);
+			// rename any current options
+			$this->renameOptionFields($validCurrentOptions, $variantIDs);
+			
+		}
+		
+	}//end updateOptions()
+	
+	/**
+	 *
+	 * Rename multiple fields of product options.
+	 *
+	 * @param array $currentOptions An associative array for current options
+	 * the indices are the original field names.
+	 * @param array $variantIDs A numerically indexed array for valid Variant IDs
+	 *
+	 * @return boolean True if successful. False otherwise.
+	 **/
+	function renameOptionFields($currentOptions=array(), $variantIDs = array()) {
+		
+		
+		if (!empty($variantIDs) && !empty($currentOptions)) {
+			
+			$currentOptionsData = array();
+			$optionModel = $this->Variant->VariantOption;
+			$optionModel->recursive = -1;
+			$result = true;
+			foreach($currentOptions as $originalField => $option) {
+				$field = ($option['new_field'] == 'custom' && !empty($option['custom_new_field'])) ? $option['custom_new_field'] : $option['new_field'];
+				$fieldsToUpdate = array('VariantOption.field'=>"'" . $field . "'");
+				$conditions = array('VariantOption.field '=>$originalField,
+						    'VariantOption.variant_id'   =>$variantIDs);
+				
+				$result = $result && $optionModel->updateAll($fieldsToUpdate, $conditions);
+				
+			}
+			
+			return $result;	
+			
+		}
+		return false;
+	}
+	
+	/**
+	 *
+	 * Delete multiple product options.
+	 *
+	 * @param array $options An associative array for options to be deleted
+	 * the indices are the original field names. 
+	 * @param array $variantIDs A numerically indexed array for valid Variant IDs
+	 *
+	 * @return boolean True if successful. False otherwise.
+	 **/
+	function deleteAllOptions($options=array(), $variantIDs = array()) {
+		
+		
+		if (!empty($variantIDs) && !empty($options)) {
+			$optionModel = $this->Variant->VariantOption;
+			$optionModel->recursive = -1;
+			
+			$fields = array_keys($options);
+			
+			$conditions = array('VariantOption.field'=>$fields,
+					    'VariantOption.variant_id'   =>$variantIDs);
+				
+			return $optionModel->deleteAll($conditions);
+			
+		}
+		return false;
+	}
+	
+	/**
+	 *
+	 * Add new product options. Basically find all Variants of this Product.
+	 * Add in the option field, option value for all these Variants.
+	 * 
+	 * If add just 1 option, then wrap that option into an array
+	 * 
+	 * @param integer $productID the Product id which we want to add new options to
+	 * @param array $newOptions A numerically indexed array for new options
+	 * @param array $variantIDs A numerically indexed array for valid Variant IDs
+	 *
+	 * @return boolean Return true if successful save. False otherwise.
+	 **/
+	function addNewProductOptions($productID, $newOptions=array(), $variantIDs = array()) {
+		
+		
+		
+		if ($productID > 0 && !empty($newOptions)) {
+			
+			if (empty($variantIDs)) {
+				$variantIDs = $this->Variant->find('list', array('conditions'=>array('Variant.product_id' => $productID),
+								         'fields'    =>array('Variant.id')));
+			
+			}
+			
+			// form the new options
+			$newOptionData = array();
+			$nextOrder = $this->getNextOptionOrder($productID);
+			
+			foreach($newOptions as $key=>$option) {
+				$field = ($option['field'] == 'custom' && !empty($option['custom_field'])) ? $option['custom_field'] : $option['field'];
+				$value = $option['value'];
+				foreach($variantIDs as $variantID) {
+					$newOptionData[] = array('variant_id'	=>$variantID,
+								 'value'	=>$value,
+								 'field'	=>$field,
+								 'order'	=>$nextOrder);
+					
+				}
+				// increment the nextOrder
+				$nextOrder++;
+			}
+			// saveAll the VariantOption
+			return $this->Variant->VariantOption->saveAll($newOptionData);
+			
+		}
+		return false;
+		
+	}//end addNewProductOptions
+	
+	/**
+	 * get the next Option order by Product id
+	 * if currently the maximum order is 1, then the result should be 2.
+	 *
+	 * @param integer $productID Product id
+	 * @return mixed False if not valid, otherwise returns the next order no.
+	 **/
+	function getNextOptionOrder($productID = false) {
+		$optionModel = $this->Variant->VariantOption;
+		$optionModel->recursive = -1;
+		
+		$optionModel->Behaviors->attach('Linkable.Linkable');
+		
+		$nextOrder = $optionModel->find('first', array(	'conditions'=>array('Product.id'=>$productID),
+									'link'=>array('Variant'=>array(
+											'Product'=>array('fields'=>array('Product.id')),
+											'fields'=>array('Variant.id', 'Variant.product_id')),
+											
+									      ),
+								'fields'=>array('MAX(VariantOption.order) as next_order')
+							)
+						);
+		
+		
+		/**
+		 *
+		 * $nextOrder gives back an
+		 * array (
+			[0] => Array
+			(
+			   [next_order] => 1
+			),
+			[Variant] => Array
+			(
+			    [id] => 2
+			    [product_id] => 7
+			),
+			[Product] => Array
+			(
+			    [id] => 7
+			)
+		 )
+		 * 
+		**/
+		
+		
+		// cannot use !empty because possible to get 0
+		// 0 is defined as empty
+		if (isset($nextOrder['0']['next_order']) && is_numeric($nextOrder['0']['next_order'])) {
+			return intval($nextOrder['0']['next_order']) + 1;
+			
+		}
+		
+		return false;
+	}//end getNextOptionOrder()
+	
 	function afterSave($created) {
 		
-		/** set up the product image **/
-		$conditions = array(
+		/**
+		 * for products admin_edit ONLY
+		 * we need to affect the Variant Options where applicable
+		 * provided that Product.options is not empty AND Product.edit_options is 1 AND
+		 * this is not a brand new Product
+		 * using updateOptions function
+		 * 
+		 **/
+		$oldProductOptionsSet 	= !empty($this->data['Product']['options']);
+		$editOptionsSet		= !empty($this->data['Product']['edit_options']) && ($this->data['Product']['edit_options'] == 1);
+		$updateOptions 		=  ($oldProductOptionsSet AND !$created AND $editOptionsSet);
+		
+		if ($updateOptions) {
+			$this->updateOptions($this->data);
+		}
+		
+		/**
+		 * for products admin_add and admin_edit
+		 * we need to save the images from $_FILES
+		 * for $created, we need to also mark the first file as cover image
+		 **/
+		$this->ProductImage->saveFILESAsProductImages($this->id, $created);
+		
+		/**
+		 * check if any images were marked as cover
+		 * if no cover image, we will randomly assign one
+		**/
+		if (!$created) {
+			$conditions = array(
 			      'conditions' => array('OR' =>
 							array (
 								array('ProductImage.cover'=>true),
@@ -491,21 +786,23 @@ class Product extends AppModel {
 			      'link'=>array('ProductImage'),
 			      'fields'=>array('Product.id', 'ProductImage.id'),
 			      );
-		$conditions['conditions']['AND'] = array('Product.id' => $this->id);
-		
-		$results = $this->find('all', $conditions);
-		if (empty($results)) {
-			$this->ProductImage->recursive = -1;
-			$topImage = $this->ProductImage->find('all', array('conditions'=>array('product_id'=>$this->id),
-							       'fields'=>array('ProductImage.id'),
-							       'limit'=>1));
+			$conditions['conditions']['AND'] = array('Product.id' => $this->id);
 			
-			$this->ProductImage->chooseAsCoverImage($topImage[0]['ProductImage']['id'], $this->id);
+			$imagesMarkedAsCover = $this->find('all', $conditions);
+			$noCoverImageForProduct = empty($imagesMarkedAsCover);
+			if ($noCoverImageForProduct) {
+				$this->ProductImage->recursive = -1;
+				$topImage = $this->ProductImage->find('all', array('conditions'=>array('product_id'=>$this->id),
+								       'fields'=>array('ProductImage.id'),
+								       'limit'=>1));
+				
+				$this->ProductImage->chooseAsCoverImage($topImage[0]['ProductImage']['id'], $this->id);
+			}	
 		}
 		/** end of product images **/
 		
 		
-		/** update cart_items weight and price **/
+		/** update cart_items weight and price 
 		if (!$created) {
 			if (isset($this->data['Product']['price']) &&
 			    isset($this->data['Product']['weight'])) {
@@ -526,7 +823,7 @@ class Product extends AppModel {
 				
 			}
 		}
-		
+		**/
 		
 		/** end of cart_items weight and price **/
 		
@@ -541,43 +838,128 @@ class Product extends AppModel {
 		$product['id'] 	= $this->id;
 		$this->smartUpdateProductsInGroup($product);
 		
+		$this->updateProductLinks();
+		
+	}
+	
+	private function updateProductLinks() {
+		$this->Link->recursive = -1;
+		
+		// get the new handle 
+		$handle = $this->data['Product']['handle'];
+		$model 	= '/products/';
+		
+		// form the new route
+		$route  = $model . $handle;
+		// form the new fields and values
+		$fields = array('Link.route' =>$route,
+				'Link.model' =>$model,
+				'Link.action'=>$action);
+		
+		// prepare the fields by wrapping the values in quotes
+		App::import('Lib', 'StringManipulator');
+		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
+		
+		// meant only for all the ProductLinks belonging to this Product
+		$conditions = array('Link.parent_id'=>$this->id,
+				    'Link.parent_model'=>'Product');
+		
+		return $this->Link->updateAll($fields, $conditions);
+		
 	}
 	
 	/**
 	 * for use in templates for shopfront pages
 	 * */
 	function getTemplateVariable($products=array(), $multiple = true) {
-		
+		App::import('Lib', 'ArrayToIterator');
 		$results = array();
 		
 		if (!$multiple) $products = array($products);
 		
 		foreach($products as $key=>$product) {
 			
-			$images = Set::extract('ProductImage.{n}.filename', $product);
-			$variants = Set::extract('Variant.{n}', $product);
+			/**
+			 * prepare ProductImage first;
+			 **/
+			if (!empty($product['ProductImage'])) {
+				$images = Set::extract('ProductImage.{n}.filename', $product);	
+			} else {
+				$images = array();
+			}
 			
-			$result = array('id' => $product['Product']['id'],
-					   'title' => $product['Product']['title'],
-					   'code' => $product['Product']['code'],
-					   'description' => $product['Product']['description'],
-					   'price' => $product['Product']['price'],
-					   'handle' => $product['Product']['handle'],
-					   'underscore_handle' => str_replace('-', '_', $product['Product']['handle']),
-					   'url' => $product['Product']['url'],
-					   
-					   'weight' => $product['Product']['weight'],
-					   );
+			/**
+			 * Vendor
+			 **/
+			$vendor = (!empty($product['Vendor'])) ? $product['Vendor'] : array();
+			
+			/**
+			 * Variants
+			 **/
+			if (!empty($product['Variant'])) {
+				$variants =  Variant::getTemplateVariable($product['Variant']);
+			} else {
+				$variants = (TWIG_ITERATOR) ? ArrayToIterator::array2Iterator(array()) : array();
+			}
+			
+			/* Collections */
+			if (!empty($product['ProductsInGroup']) ) {
+				$collections = ProductGroup::getTemplateVariable($product['ProductsInGroup']);
+			} else {				
+				$collections = (TWIG_ITERATOR) ? ArrayToIterator::array2Iterator(array()) : array();
+			}
+			
+			/* store the original variants. needed for deriving Product Options */
+			$originalVariants = (!empty($product['Variant']))  ? $product['Variant'] : array();
+			
+			/* now we isolate Product data */
+			$product = isset($product['Product']) ? $product['Product'] : $product;
+			
+			/* preparing Product options first */
+			if (empty($product['options'])) {
+				if (!empty($originalVariants)) {
+					$product['options'] = Product::extractProductOptions(array('Variant'=>$originalVariants));	
+				} else {
+					$product['options'] = array();
+				}
+			}
+			
+			$options = array_keys($product['options']);
+			if (TWIG_ITERATOR) {
+				$options = ArrayToIterator::array2Iterator($options);	
+			}
 			
 			
-			$result['images'] = $images;
-			$result['cover_image'] = isset($images[0]) ? $images[0] : '';
-			$result['vendor'] = isset($product['Vendor']['title']) ? $product['Vendor']['title'] : '';
-			$result['variants'] = Variant::getTemplateVariable($variants);
+			/* now we build  the template variable */
+			$result = array('id' => $product['id'],
+					'title' => $product['title'],
+					'code' => $product['code'],
+					'description' => $product['description'],
+					'price' => $product['price'],
+					'handle' => $product['handle'],
+					'underscore_handle' => str_replace('-', '_', $product['handle']),
+					'url' => $product['url'],
+					'weight' => $product['weight'],
+					);
 			
-			$result['collections'] = isset($product['ProductsInGroup']) ? ProductGroup::getTemplateVariable($product['ProductsInGroup']) : array();
+			/*
+			  assign the peripheral data back into Product Template Variable
+			  eg, ProductImage, Vendor, Product options, Variant, Collection
+			*/
+			$result['images'] 	= (TWIG_ITERATOR) ? ArrayToIterator::array2Iterator($images) : $images;
+			$result['cover_image'] 	= isset($images[0]) ? $images[0] : '';
+			
+			$result['vendor'] 	= !empty($vendor['title']) ? $vendor['title'] : '';			
+			$result['variants']	= $variants;
+			$result['collections'] 	= $collections;
+			
+			$result['options']	= $options;
 			
 			$results[$result['underscore_handle']] = $result;
+		}
+		
+		if ($multiple && TWIG_ITERATOR) {
+			$results = ArrayToIterator::array2Iterator($results);
 		}
 		
 		if (!$multiple && !empty($results)) {
@@ -589,9 +971,23 @@ class Product extends AppModel {
 		return $results;
 	}
 	
-	function saveIntoCollections ($id, $customCollections = array()) {
+	/**
+	 *
+	 * Product of $id joins a list of ProductGroups/Collections whose ids are listed in $newCollections.
+	 * 
+	 * Any Collection or ProductGroup which this Product is linked with PRIOR to this function
+	 * will be delinked AFTER this function is called.
+	 * 
+	 * if Product of $id ProductGroups not listed in $newCollections are automatically 
+	 *
+	 * @param int $id id of Product 
+	 * @param array $newCollections List of ProductGroup ids which the said Product wants to join ONLY.
+	 *
+	 * Returns true if successful. False otherwise.
+	 **/
+	function saveIntoCollections ($id, $newCollections = array()) {
 		/**
-		if (empty($customCollections)) {
+		if (empty($newCollections)) {
 			return true;
 		}
 		**/
@@ -641,13 +1037,13 @@ class Product extends AppModel {
 		
 		
 		// do some array_diff to get new records
-		$newRecords = array_diff($customCollections, $existingGroups);
+		$newRecords = array_diff($newCollections, $existingGroups);
 		
 		// do some array_diff to get deleted records
-		$deletedRecords = array_diff($existingGroups, $customCollections);
+		$deletedRecords = array_diff($existingGroups, $newCollections);
 		
 		// combined union of the unique values
-		$unionRecords = array_unique(array_merge($customCollections, $existingGroups));
+		$unionRecords = array_unique(array_merge($newCollections, $existingGroups));
 		
 		// check if we need to insert new records
 		// AND/OR delete old records
@@ -884,6 +1280,178 @@ class Product extends AppModel {
 		$this->updateCounterCacheForM2M('AllProductInGroup', 	 $smartCollectionIDs);
 		return $result;
 	}
+        
+        /**
+         * This function does a DEEP $this->find('first') 
+         * supplying a Product that is visible with all the Product fields
+         * with a full list of Variant, ProductImage, ProductsInGroup, Vendor, ProductType.
+         * 
+         * Each Variant contains a list of VariantOption.
+         * Each ProductsInGroup contains the ProductGroup this Product belongs to.
+         * ProductImage only contains the filename and the cover image is the first in the list.
+         *
+         * Product will also have an options which will give a list of options that is extracted using
+         * $this->extractProductOptions
+         * 
+         * @params integer $id Product Id
+         * 
+         * @return array of product info as explained above
+         * */
+        public function getDetails($id) {
+		
+		$shopId = Shop::get('Shop.id');
+		
+                $productFound = $this->find('first', array('conditions'=>array('Product.visible' => true,
+                                                                               'Product.id'=>$id,
+                                                                               'Product.shop_id'=>$shopId),
+                                                            'contain' => array('Variant' => array(
+                                                                                        'conditions' => array('Variant.product_id' => $id),
+                                                                                        'order'=>'Variant.order ASC',
+                                                                                        'VariantOption' => array(
+                                                                                                'fields' => array('id', 'value', 'field', 'variant_id'),
+                                                                                                'order'  => 'VariantOption.order ASC',
+                                                                                        )
+                                                                                ),
+                                                                               'ProductImage'=>array(
+                                                                                        'fields' => array('filename'),
+                                                                                        'order'=>array('ProductImage.cover DESC'),
+                                                                                ),
+                                                                                'ProductsInGroup'=>array(
+                                                                                        'fields' => array('id', 'product_id'),
+                                                                                        'ProductGroup'=>array(
+                                                                                                'fields' => array('id', 
+                                                                                                                  'title', 'handle',
+                                                                                                                  'description', 'visible_product_count',
+                                                                                                                  'url', 'vendor_count', 'type'),
+                                                                                                )
+                                                                                        )
+                                                                                ),
+                                                             'link' => array('Vendor' => array('fields' => 'title'),
+                                                                             'ProductType' => array('fields' => 'title'),
+                                                                        ),
+                                                                ));
+		
+		// extract the unique VariantOptions for the Product
+		$productOptions = $this->extractProductOptions($productFound);
+		
+		// format the numerically indexed VariantOptions
+		// into an associative array using the "field" as index
+		$productFound = $this->formatVariantOptionKey($productFound);
+		
+		// insert the options into the Product
+		$validProduct 		  = !empty($productFound) && !empty($productFound['Product']['id']);
+		$validProductOptions 	  = !empty($productOptions);
+		$insertOptionsIntoProduct = $validProduct AND $validProductOptions;
+		
+		if ($insertOptionsIntoProduct) {
+			$productFound['Product']['options'] = $productOptions;
+		}
 
-
+                return $productFound;
+	
+        }//end getDetails()
+	
+	
+	/**
+	 * Extracts the list of VariantOption associated with a single Product
+	 *
+	 * @param array $productDetails The full details of this Product in array format.
+	 * $this->getDetails gives you such full details.
+	 *
+	 * @return array An array of option data. Maximum length is 3.
+	 * the array returned will be in this format
+	 *
+	 * array[
+	 * 	// first VariantOption
+		// the field name Size is used as index
+	 *      ['Size'] => array[
+	 *      	option_ids => array(16, 17, 19), // the VariantOption ids that have the same field and belong to the same Product via Variant
+			values_in_string => 'Medium, Large', // the values delimited by commas
+			values => array('Medium', 'Large'), // the values in array format
+			
+	 *      	]
+	 *      // second VariantOption
+		// the field name Title is used as index
+		['Title'] => array[
+	 *      	option_ids => array(20, 21, 23), // the VariantOption ids that have the same field and belong to the same Product via Variant
+			values_in_string => 'Pink, Purple', // the values delimited by commas
+			values => array('Pink', 'Purple'), // the values in array format
+			
+	 *      	]
+		....
+	 *      
+	 *	]
+	 * 
+	 **/
+	public function extractProductOptions($productDetails = array()) {
+		
+		$variants = Set::extract('Variant.{n}.VariantOption', $productDetails);
+		
+                $voption = array();
+                
+                if (!empty($variants)) {                        
+                        foreach ($variants as $variantOptions) {
+                                if (!empty($variantOptions)) {
+                                        foreach ($variantOptions as $variantOption) {
+                                                $fieldName 	= $variantOption['field'];
+						$optionValue 	= $variantOption['value'];
+						$optionId 	= $variantOption['id'];
+						// if no such field, we create it and store the appropriate option id and value
+						if (!isset($voption[$fieldName])) {
+							$voption[$fieldName] = array('values'	 =>array($optionValue),
+										     'option_ids'=>array($optionId));
+						} else {
+							// check if we have stored this value and store it if not existent
+							if (!in_array($optionValue, $voption[$fieldName]['values'])) {
+								$voption[$fieldName]['values'][] = $optionValue;
+							}
+							// check if we have stored this option id and store it if not existent
+							if (!in_array($optionId, $voption[$fieldName]['option_ids'])) {
+								$voption[$fieldName]['option_ids'][] = $optionId;
+							}
+						}
+                                        }
+                                }
+                        }
+			
+			$isOptionsValid = !empty($voption);
+			
+			
+			if ($isOptionsValid) {
+				// implode the array of values into string delimited by comma
+				// for every single possible option field
+				foreach($voption as $fieldName => $option) {
+					if (!empty($option['values'])) {
+						// convert all the values into string
+						$voption[$fieldName]['values_in_string'] = implode(', ', $option['values']);		
+					}
+				}
+			}
+                }
+                return $voption;
+	}//end extractProductOptions
+	
+	/**
+	 * Each Variant in Product has a list of VariantOptions. Basically it is a
+	 * numerically-indexed array. So we are going to change this into an associative array.
+	 * This associative array will use the "field" as the index
+	 *
+	 * @param array $productDetails Full details of Product generated by getDetails()
+	 * @return array $productDetails which will have the index for VariantOptions changed for all its Variants
+	 * 
+	 * */
+	function formatVariantOptionKey($productDetails = array()) {
+		
+		if (!empty($productDetails['Variant']) && is_array($productDetails['Variant'])) {
+			foreach ($productDetails['Variant'] as $key =>$variant) {
+				if (!empty($variant['VariantOption']) && is_array($variant['VariantOption'])) {
+					$productDetails['Variant'][$key]['VariantOption'] = Set::combine($variant['VariantOption'], '{n}.field', '{n}');
+				} 
+			}
+		}
+		
+		return $productDetails;
+	}
+	
+	
 }//end class

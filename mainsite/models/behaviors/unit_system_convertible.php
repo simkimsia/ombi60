@@ -77,9 +77,10 @@ class UnitSystemConvertibleBehavior extends ModelBehavior {
 	 * @access public
 	 * @return boolean
 	 */
-	public function convertForDisplay($Model, $dataArray=array(), $unit = null) {
+	public function convertForDisplay(&$Model, $dataArray=array(), $unit = null, $primary=true) {
 		/** check for the model used for the conversion **/
 		$alias = $Model->alias;
+		
 		if ($this->settings[$Model->alias]['model_name']!= null) {
 			$alias = $this->settings[$Model->alias]['model_name'];
 			$this->settings[$alias] = $this->settings[$Model->alias];
@@ -101,32 +102,46 @@ class UnitSystemConvertibleBehavior extends ModelBehavior {
 			return $dataArray;
 		}
 		
-		$weight_exists = array_key_exists('weight', $dataArray[$alias]);
-		$height_exists = array_key_exists('height', $dataArray[$alias]);
-		$length_exists = array_key_exists('length', $dataArray[$alias]);
+		// this is crucial since we have different find results
+		// works in conjunction with code in lower part
+		// Ctrl + F for afterFind special consideration
+		$mainPrimaryDataArray = ($primary) ? $dataArray[$alias] : $dataArray;
+		
+		$weight_exists = array_key_exists('weight', $mainPrimaryDataArray);
+		$height_exists = array_key_exists('height', $mainPrimaryDataArray);
+		$length_exists = array_key_exists('length', $mainPrimaryDataArray);
 		
 		App::import('Helper', 'Number');
                 $number = new NumberHelper();
 		
 		if ($weight_exists) {
-			$result_weight = $dataArray[$alias]['weight'] * $weightMultiplier;
-                        $dataArray[$alias]['displayed_weight'] = $number->precision($result_weight, 1);
+			$result_weight = $mainPrimaryDataArray['weight'] * $weightMultiplier;
+                        $mainPrimaryDataArray['displayed_weight'] = $number->precision($result_weight, 1);
 			
                 } 
 		
 		if ($height_exists) {
-			$result_height = $dataArray[$alias]['height'] * $lengthMultiplier;
-                        $dataArray[$alias]['displayed_height'] = $number->precision($result_height, 1);
+			$result_height = $mainPrimaryDataArray['height'] * $lengthMultiplier;
+                        $mainPrimaryDataArray['displayed_height'] = $number->precision($result_height, 1);
 			
                 }
 		
 		if ($length_exists) {
-			$result_length = $dataArray[$alias]['length'] * $lengthMultiplier;
-                        $dataArray[$alias]['displayed_length'] = $number->precision($result_length, 1);
+			$result_length = $mainPrimaryDataArray['length'] * $lengthMultiplier;
+                        $mainPrimaryDataArray['displayed_length'] = $number->precision($result_length, 1);
                 }
 		
 		// for the other weight fields
-		$dataArray = $this->convertOtherWeightFieldsForDisplay($alias, $dataArray, $weightMultiplier);
+		$mainPrimaryDataArray = $this->convertOtherWeightFieldsForDisplay($alias, $mainPrimaryDataArray, $weightMultiplier);
+		
+		// this is crucial since we have different find results
+		// this works in conjunction with line 106.
+		// Ctrl + F for afterFind special consideration
+		if ($primary) {
+			$dataArray[$alias]  = $mainPrimaryDataArray;
+		} else {
+			$dataArray = $mainPrimaryDataArray;
+		}
 		
 		return $dataArray;
 	}
@@ -141,10 +156,10 @@ class UnitSystemConvertibleBehavior extends ModelBehavior {
 		
 		foreach($this->settings[$alias]['weight_fields'] as $weightField){
 			// does the field exist?
-			$field_exists = array_key_exists($weightField, $dataArray[$alias]);
+			$field_exists = array_key_exists($weightField, $dataArray);
 			if ($field_exists) {
-				$result_weight = $dataArray[$alias][$weightField] * $weightMultiplier;
-				$dataArray[$alias]['displayed_' . $weightField] = $number->precision($result_weight, 1);
+				$result_weight = $dataArray[$weightField] * $weightMultiplier;
+				$dataArray['displayed_' . $weightField] = $number->precision($result_weight, 1);
 			}
 		}
 		
@@ -193,7 +208,7 @@ class UnitSystemConvertibleBehavior extends ModelBehavior {
 	 * @access public
 	 * @return boolean
 	 */
-	public function convertForSave($Model, $dataArray=array(), $unit = null) {
+	public function convertForSave(&$Model, $dataArray=array(), $unit = null) {
 		
 		/** check for the model used for the conversion **/
 		$alias = $Model->alias;

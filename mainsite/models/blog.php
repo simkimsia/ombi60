@@ -17,7 +17,22 @@ class Blog extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+		),
+		'Link' => array(
+			'className' => 'Link',
+			'foreignKey' => 'parent_id',
+			'dependent' => true,
+			'conditions' => array('Link.parent_model' => 'Blog'),
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+	
+		
 	);
 	
 	var $belongsTo = array(
@@ -42,7 +57,18 @@ class Blog extends AppModel {
 			),
 			    'Handleize.Handleable'=>array(
 				'handleFieldName' => 'short_name'
-							  ));
+							  ),
+			    'ManyToManyCountable.ManyToManyCountable' => array(
+				'LinkList'=>array(
+					'className' 	=> 'LinkList',
+					'joinModel' 	=> 'Link',
+					'foreignKey'	=> 'parent_id',
+					'associationForeignKey'	=> 'link_list_id',
+					'unique'	=> true,
+					'counterCache'  => 'link_count',
+					'foreignScope' => array('Link.parent_model' => 'Blog'),
+					))
+			    );
 	
 	
 	public function __construct($id=false,$table=null,$ds=null) {
@@ -54,27 +80,36 @@ class Blog extends AppModel {
 	 * for use in templates for shopfront pages
 	 * */
 	function getTemplateVariable($blogs=array(), $multiple = true) {
-		
+		App::import('Lib', 'ArrayToIterator');
 		$results = array();
 		
 		if (!$multiple) $blogs = array($blogs);
 		
 		foreach($blogs as $key=>$blog) {
+			// prepare articles
+			$articles = isset($blog['Post']) ? Post::getTemplateVariable($blog['Post']) : array();
 			
-			$result = array('id' => $blog['Blog']['id'],
-					   'title' => $blog['Blog']['title'],
-					   
-					   'handle' => $blog['Blog']['short_name'],
-					   'underscore_handle' => str_replace('-', '_', $blog['Blog']['short_name']),
-					   'url' => $blog['Blog']['url'],
-					   'all_articles_count' => $blog['Blog']['visible_post_count'],
-					   
+			$blog = !empty($blog['Blog']) ? $blog['Blog'] : $blog;
+			$result = array('id' => $blog['id'],
+					   'title' => $blog['title'],
+					   'handle' => $blog['short_name'],
+					   'underscore_handle' => str_replace('-', '_', $blog['short_name']),
+					   'url' => $blog['url'],
+					   'all_articles_count' => $blog['visible_post_count'],
 					   );
 			
-			$result['articles'] = isset($blog['Post']) ? Post::getTemplateVariable($blog['Post']) : array();
-			$result['articles_count'] = count($result['articles']);
+			$result['articles'] = $articles;
+			if ($articles instanceof IteratorForTwig){
+				$result['articles_count'] = $articles->getSize();
+			} else{
+				$result['articles_count'] = count($result['articles']);
+			}
 			
 			$results[$result['underscore_handle']] = $result;
+		}
+		
+		if ($multiple && TWIG_ITERATOR) {
+			$results = ArrayToIterator::array2Iterator($results);
 		}
 		
 		if (!$multiple && !empty($results)) {
@@ -85,6 +120,57 @@ class Blog extends AppModel {
 		
 		return $results;
 	}
+	
+	function afterSave($created) {
+		$this->updateBlogLinks();
+		$this->updateHandlesInArticles();
+	}
+	
+	private function updateHandlesInArticles() {
+		$this->Post->recursive = -1;
+		// get the new handle 
+		$handle = $this->data['Blog']['short_name'];
+		
+		// form the new fields and values
+		$fields = array('Post.blog_handle' =>$handle);
+		
+		// prepare the fields by wrapping the values in quotes
+		App::import('Lib', 'StringManipulator');
+		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
+		
+		// meant only for all the BlogLinks belonging to this Blog
+		$conditions = array('Post.blog_id'=>$this->id);
+		
+		return $this->Post->updateAll($fields, $conditions);
+		
+	}
+	
+	private function updateBlogLinks() {
+		$this->Link->recursive = -1;
+		
+		// get the new handle 
+		$handle = $this->data['Blog']['short_name'];
+		$model 	= '/blogs/';
+		$action = $handle;
+		
+		// form the new route
+		$route  = $model . $handle;
+		// form the new fields and values
+		$fields = array('Link.route' =>$route,
+				'Link.model' =>$model,
+				'Link.action'=>$action);
+		
+		// prepare the fields by wrapping the values in quotes
+		App::import('Lib', 'StringManipulator');
+		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
+		
+		// meant only for all the Links belonging to this Blog
+		$conditions = array('Link.parent_id'=>$this->id,
+				    'Link.parent_model'=>'Blog');
+		
+		return $this->Link->updateAll($fields, $conditions);
+	}
+	
 
 }
 ?>

@@ -55,7 +55,7 @@ class ProductImage extends AppModel {
 		)
 	);
 	
-	function make_this_cover($id = null, $product_id = null) {
+	function chooseAsCoverImage($id = null, $product_id = null) {
 		if (!$id) {
 			if (!$this->id) {
 				return false;
@@ -170,42 +170,50 @@ class ProductImage extends AppModel {
 		
 		return $file;
 	}
-
-  
-  function saveProductImage($product_id, $edit = false) {
-    if (!empty($_FILES)) {
-          $tmp = array();
-          
-          foreach ($_FILES['product_images'] as $key => $valueArray) {
-              $i=0;
-              foreach ($valueArray as $value) {
-                  //Only consider first 4 photos
-                  if ($i < 4) {
-                      $tmp[$i][$key] = $value;
-                      $i++;
-                  }
-              }
-          }           
-          $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
-          $i = 0;
-          foreach ($tmp as $tempFile) {
-              $name = $tempFile['name'];
-              $str = strtolower(substr(strrchr($tempFile['name'], '.'), 1));
-              
-              if (in_array($str, $allowedExtensions)) {
-                  $this->create();
-                  $data = array('ProductImage'=>array('filename'=>$tempFile,
-                                          'product_id' => $product_id,));
-
-                  $result = $this->save($data);   
-
-                  if ($result != false && $i++ == 0 && !$edit) {
-                      $this->make_this_cover($this->id, $product_id);
-                  }    
-              }
-          }
-      }
-  }//end saveProductImage()
+	
+	/**
+	 * @param int $product_id the id of the product which we are going to save
+	 * these images to
+	 * @param boolean $brandNewProductCreated Set as true if this product associated with
+	 * the images is a newly created product. This is so that the first file is automatically set as cover
+	 **/
+	function saveFILESAsProductImages($product_id, $brandNewProductCreated = true) {
+		
+		if (!empty($_FILES)) {
+			
+			$tmp = array();
+			
+			foreach ($_FILES['product_images'] as $key => $valueArray) {
+				$i=0;
+				foreach ($valueArray as $value) {
+					//Only consider first 4 photos
+					if ($i < 4) {
+						$tmp[$i][$key] = $value;
+						$i++;
+					}
+				}
+			}           
+			$allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
+			$i = 0;
+			foreach ($tmp as $tempFile) {
+				$name = $tempFile['name'];
+				$str = strtolower(substr(strrchr($tempFile['name'], '.'), 1));
+				
+				if (in_array($str, $allowedExtensions)) {
+					$this->create();
+					$data = array('ProductImage'=>array('filename'=>$tempFile,
+								'product_id' => $product_id,));
+		      
+					$result = $this->save($data);   
+		      
+					if ($result != false && $i++ == 0 && $brandNewProductCreated) {
+						$this->chooseAsCoverImage($this->id, $product_id);
+					}    
+				}
+			}
+			
+		  }
+	}//end saveFILESAsProductImages()
 
 
 }
