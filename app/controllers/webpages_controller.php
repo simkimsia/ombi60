@@ -28,10 +28,7 @@ class WebpagesController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		
-		$webpage = $this->Webpage->find('first',
-				array('conditions'=>array(
-					'handle'=>$handle,
-					'shop_id'=>Shop::get('Shop.id'))));
+		$webpage = $this->Webpage->getDetails($handle);
 		
 		if ($webpage == false) {
 			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
@@ -77,12 +74,11 @@ class WebpagesController extends AppController {
 			$this->Session->setFlash(__('Invalid webpage', true), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
+		$webpage = $this->Webpage->getDetails($id, HIDDEN_AND_VISIBLE_ENTITY);
 		
-		$this->Webpage->unbindModel( array('hasMany' => array('PageLink')) );
-		$this->set('webpage', $this->Webpage->read(null, $id));
 		$authors = $this->Webpage->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
 
-		$this->set(compact('authors'));
+		$this->set(compact('authors', 'webpage'));
 	}
 	
 	function admin_toggle($id = false) {
@@ -147,8 +143,7 @@ class WebpagesController extends AppController {
 			}
 		}
 		if (empty($this->data)) {
-			$this->Webpage->unbindModel( array('hasMany' => array('PageLink')) );
-			$this->data = $this->Webpage->read(null, $id);
+			$this->data = $this->Webpage->getDetails($id);
 		}
 
 		$authors = $this->Webpage->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));

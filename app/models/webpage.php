@@ -114,6 +114,56 @@ class Webpage extends AppModel {
 		return $results;
 	}
 	
+	/**
+         * This function does a DEEP $this->find('first') 
+         * supplying a Webpage that is with all the Webpage fields
+         * with Author
+         * 
+         * @param mixed $idOrHandle Product Id or Handle
+         * @param integer $visibleOrAll 3 possible CONSTANT values VISIBLE_ENTITY, HIDDEN_ENTITY, or HIDDEN_AND_VISIBLE_ENTITY  
+         * @return array of webpage info as explained above
+         * */
+        public function getDetails($idOrHandle = '', $visibleOrAll = VISIBLE_ENTITY) {
+		
+		$shopId = Shop::get('Shop.id');
+		
+		$conditions = array('Webpage.shop_id' => $shopId);
+		
+		if ($visibleOrAll == VISIBLE_ENTITY) {
+			$conditions['Webpage.visible'] = true;
+		} elseif ($visibleOrAll == HIDDEN_ENTITY) {
+			$conditions['Webpage.visible'] = false;
+		}
+		
+		if (is_numeric($idOrHandle)) {
+			$conditions['Webpage.id'] = $idOrHandle;
+		} elseif (is_string($idOrHandle)) {
+			$conditions['Webpage.handle'] = $idOrHandle;
+		} else {
+			return false;
+		}
+		
+		$this->recursive = -1;
+		$this->Behaviors->attach('Linkable.Linkable');
+		
+                $webpage = $this->find('first', array(
+						'conditions'=>$conditions,
+						'link' => array(
+							'Author' => array(
+								'fields' => array(
+									'Author.full_name',
+									'Author.id',
+									'Author.name_to_call')
+							),
+						
+						),
+						));
+		
+		
+		
+		return $webpage;
+	}
+	
 	function afterSave($created) {
 		$this->Link->recursive = -1;
 		

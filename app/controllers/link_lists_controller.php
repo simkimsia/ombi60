@@ -39,10 +39,11 @@ class LinkListsController extends AppController {
 			} else {
 				$this->Session->setFlash(__('The linklist could not be saved. Please, try again.', true));
 			}
-			$this->redirect(array('controller' => 'links',
+			
+		}
+		$this->redirect(array('controller' => 'links',
 					      'admin' => true,
 					      'action' => 'index'));
-		}
 		
 	}
 
