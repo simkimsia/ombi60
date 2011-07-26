@@ -483,8 +483,9 @@ class ProductsController extends AppController {
 		
 		
 		if (!$handle) {
-			$this->Session->setFlash(__('Invalid product', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'index'));
+			$this->cakeError('error404',array(array('url'=>'/',
+								'viewVars' =>$this->viewVars,
+								)));
 		}
 		
 		// to retrieve the shop id based on the url
@@ -545,16 +546,14 @@ class ProductsController extends AppController {
 		
 		// check for handle
 		if (!$handle) {
-			$this->Session->setFlash(__('Invalid product group', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect('/');
+			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 		
 		// this will retrieve the collection details as well as the conditions needed for pagination of Product
 		$collection = $this->Product->ProductsInGroup->ProductGroup->getByUrl($handle, $this->params4GETAndNamed);
 		
 		if ($collection == false) {
-			$this->Session->setFlash(__('No such product group for this shop', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect('/');
+			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 
 		// assign the conditions for the pagination of Product

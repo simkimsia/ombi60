@@ -24,8 +24,7 @@ class WebpagesController extends AppController {
 		
 		if (!$handle) {
 			
-			$this->Session->setFlash(__('Invalid webpage', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'index'));
+			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 		
 		$webpage = $this->Webpage->getDetails($handle);

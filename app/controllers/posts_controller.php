@@ -31,8 +31,7 @@ class PostsController extends AppController {
 
 	function view($short_name = false, $id = false, $slug = false) {
 		if (!$short_name || !$id) {
-			$this->Session->setFlash(sprintf(__('Invalid %s', true), 'post'));
-			$this->redirect(array('action' => 'index'));
+			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 		
 		$this->Post->Behaviors->attach('Linkable.Linkable');
@@ -47,6 +46,10 @@ class PostsController extends AppController {
 									 'Blog.short_name')));
 		
 		
+		
+		if ($post == false) {
+			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
+		}
 		
 		$blog = Blog::getTemplateVariable($post['Blog'], false);
 		$article = Post::getTemplateVariable($post, false);
@@ -65,16 +68,14 @@ class PostsController extends AppController {
 	function index($short_name = false) {
 		
 		if (!$short_name) {
-			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect('/');
+			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 		$this->Post->Blog->recursive = -1;
 		$blog = $this->Post->Blog->find('first', array('conditions'=>array('Blog.short_name' => $short_name,
 						    				   'Blog.shop_id'=>Shop::get('Shop.id'))));
 		
 		if (!$blog) {
-			$this->Session->setFlash(__('Invalid blog', true), 'default', array('class'=>'flash_failure'));
-			$this->redirect('/');
+			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 		
 		$this->paginate = array('conditions'=>array('Post.blog_id'=>$blog['Blog']['id'],
@@ -88,6 +89,10 @@ class PostsController extends AppController {
 		$all_post_ids = Set::extract('{n}.Post.id', $posts);
 		
 		$blog['Post'] = $this->Post->find('all', array('conditions'=>array('Post.id'=>$all_post_ids)));
+		
+		if (empty($blog['Post'] )) {
+			$blog['Post'] = array();
+		}
 		
 		$blog = Blog::getTemplateVariable($blog, false);
 		
