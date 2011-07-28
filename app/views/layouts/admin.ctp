@@ -31,7 +31,9 @@
 		echo $this->Html->css('base');
 		echo $this->Html->css('spree2shop.jquery.tools');
 		echo $this->Html->css('admin');
+		//echo $this->Html->css('multirow-checkbox-menu');
 		echo $this->Html->script('ops/admin');
+		//echo $this->Html->script('simpleweb/jquery.multirowcheckboxmenu');
 		
 		
 		if ($this->name = 'SavedThemes') {

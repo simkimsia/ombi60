@@ -21,7 +21,7 @@
     ?>
     <?php echo $this->element('action_buttons', array('modelName' => 'Webpage', 'deleteConfirm' => sprintf(__('Are you sure you want to delete this page?', true)), 'deleteURL' => ''));?>
     
-	<table cellpadding="0" cellspacing="0" class="products-table">
+	<table cellpadding="0" cellspacing="0" class="products-table" id="webpages-table">
 	    <tr>
 		        <th>&nbsp;</th>
 			    <th><?php echo $this->Paginator->sort('title');?></th>
@@ -31,15 +31,22 @@
 	    $i = 0;
 	    foreach ($webpages as $webpage):
 		    $class = null;
+		    $hidden = (!$webpage['Webpage']['visible']) ;
+		    $hiddenCheckboxClass = '';
+		    if ($hidden) {
+		      $hiddenCheckboxClass = ' hidden';
+		    }
 		    if ($i++ % 2 == 0) {
 			    $class = ' class="altrow"';
 		    }
 	    ?>
 	    <tr<?php echo $class;?>>
-		    <td width="5%" align="center"><?php echo $form->input('check_box_id', array('value' => $webpage['Webpage']['id'], 'class' => 'checkbox_check', 'type' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>
+		    <td width="5%" align="center"><?php echo $form->input('check_box_id', array('value' => $webpage['Webpage']['id'], 'class' => 'checkbox_check' . $hiddenCheckboxClass, 'type' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>
 		    <td width="60%">
           <?php echo $this->Html->link($webpage['Webpage']['title'], array('action' => 'view', $webpage['Webpage']['id'])); 
-            if (!$webpage['Webpage']['visible']) { ?>
+            
+	      if ($hidden) {
+	      ?>
                 <span class="hidden_gray">Hidden</span>
           <?php } ?>
             </td>
