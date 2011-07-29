@@ -29,37 +29,49 @@ echo $this->Html->css('multirow-checkbox-menu');
  
                         $('div.deleteButton').click(
 				function() {
-					return confirm('Delete selected webpages?');
+					if (confirm('Delete selected webpages?')) {
+						$('#WebpageMenuAction').attr('value', 'Delete');
+						$(this).closest("form").submit();
+					}
 				});
 			
 			$('div.menuMoreActions').checkboxMenu({
-				menuItemClick: function(text, count) { 
-					if (text == 'Publish') {
-						
-						
+				menuItemClick: function(text, count) {
+					
+					var publishAction = text.match(/published/i);
+					var hideAction = text.match(/hidden/i);
+					
+					if (publishAction) {
+						$('#WebpageMenuAction').attr('value', 'Publish');
 					}
-					if (text == 'Hide') {
-						
+					
+					if (hideAction) {
+						$('#WebpageMenuAction').attr('value', 'Hide');
 					}
+					$(this).closest("form").submit();
 					
 				}});
 			
 		});
 	</script>
 
-	<div class="menuSelectAll multiRowCheckboxMenu"> 
-		<input id="selectAction" class="actionItem" type="submit" name="action" value="All" /> 
-		<input id="deselectAction" class="actionItem" type="submit" name="action" value="None" />
-		<input id="selectVisibleAction" class="actionItem" type="submit" name="action" value="Published" />
-		<input id="selectHiddenAction" class="actionItem" type="submit" name="action" value="Hidden" /> 
-	</div>
-	
-	<div class="deleteButton">Delete</div>
-	
-	<div class="menuMoreActions multiRowCheckboxMenu actionMenu"> 
-		<input class="selected" type="submit" name="action" value="More" /> 
-		<input id="publishAction" class="actionItem" type="submit" name="action" value="Mark as Published" />
-		<input id="hideAction" class="actionItem" type="submit" name="action" value="Mark as Hidden" />
-	</div>
+	<?php echo $this->Form->create('Webpage', array('action'=>'menu_action', 'class'=>'menuActions')); ?>
+    
+		<div class="menuSelectAll multiRowCheckboxMenu"> 
+			<input id="selectAction" class="actionItem" type="submit" name="action" value="All" /> 
+			<input id="deselectAction" class="actionItem" type="submit" name="action" value="None" />
+			<input id="selectVisibleAction" class="actionItem" type="submit" name="action" value="Published" />
+			<input id="selectHiddenAction" class="actionItem" type="submit" name="action" value="Hidden" /> 
+		</div>
+		
+		<div class="deleteButton">Delete</div>
+		
+		<div class="menuMoreActions multiRowCheckboxMenu actionMenu"> 
+			<input class="selected" type="submit" name="action" value="More" /> 
+			<input id="publishAction" class="actionItem" type="submit" name="action" value="Mark as Published" />
+			<input id="hideAction" class="actionItem" type="submit" name="action" value="Mark as Hidden" />
+		</div>
+		
+		<?php echo $this->Form->input('menu_action', array('type'=>'hidden')); ?>
 
 <?php echo $this->element('pagination', array('modelName' => $modelName));?>

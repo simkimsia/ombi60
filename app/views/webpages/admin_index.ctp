@@ -19,7 +19,9 @@
     <?php
     if (!empty($webpages)) {
     ?>
-    <?php echo $this->element('action_buttons', array('modelName' => 'Webpage', 'deleteConfirm' => sprintf(__('Are you sure you want to delete this page?', true)), 'deleteURL' => ''));?>
+    <?php
+    
+    echo $this->element('action_buttons', array('modelName' => 'Webpage', 'deleteConfirm' => sprintf(__('Are you sure you want to delete this page?', true)), 'deleteURL' => ''));?>
     
 	<table cellpadding="0" cellspacing="0" class="products-table" id="webpages-table">
 	    <tr>
@@ -29,7 +31,7 @@
 	    </tr>
 	    <?php
 	    $i = 0;
-	    foreach ($webpages as $webpage):
+	    foreach ($webpages as $key=>$webpage):
 		    $class = null;
 		    $hidden = (!$webpage['Webpage']['visible']) ;
 		    $hiddenCheckboxClass = '';
@@ -41,7 +43,7 @@
 		    }
 	    ?>
 	    <tr<?php echo $class;?>>
-		    <td width="5%" align="center"><?php echo $form->input('check_box_id', array('value' => $webpage['Webpage']['id'], 'class' => 'checkbox_check' . $hiddenCheckboxClass, 'type' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>
+		    <td width="5%" align="center"><?php echo $form->checkbox('Webpage.selected.'.$key, array('value' => $webpage['Webpage']['id'], 'class' => 'checkbox_check' . $hiddenCheckboxClass, 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>
 		    <td width="60%">
           <?php echo $this->Html->link($webpage['Webpage']['title'], array('action' => 'view', $webpage['Webpage']['id'])); 
             
@@ -68,17 +70,16 @@
     <?php
     }
     ?>
-	
+   
 
 <div class="blogs">
 	<h2><?php __('Blogs');?></h2>
 	<p>A blogs is a series of articles for content that changes frequently such as news and updates about your shop.</p>
 	<table cellpadding="0" cellspacing="0" class="products-table">
 	<tr>
-		
-			<th><?php __('Title');?></th>
-			<th class="text_center"><?php __('Modified');?></th>
-			<th class="actions text_center"><?php __('Actions');?></th>
+	      <th><?php __('Title');?></th>
+	      <th class="text_center"><?php __('Modified');?></th>
+	      <th class="actions text_center"><?php __('Actions');?></th>
 	</tr>
 	<?php
 	$i = 0;

@@ -123,3 +123,11 @@ div.multiRowCheckboxMenu ul li:hover {
 	cursor: pointer;
 	color: #fff;
 }
+
+form.menuActions {
+	width: auto;
+}
+
+form.menuActions div{
+	clear: none;
+}

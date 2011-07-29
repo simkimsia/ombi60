@@ -164,6 +164,53 @@ class Webpage extends AppModel {
 		return $webpage;
 	}
 	
+	function handleMenuAction($data) {
+		$resultArray = array('message'=>'No valid actions selected',
+				     'success'=>false);
+		
+		switch($data['Webpage']['menu_action']) {
+			case 'Delete' :
+				$resultArray['success'] = $this->deleteSelected($data['Webpage']['selected']);
+				$resultArray['message'] = ($resultArray['success']) ? 'Selected pages are successfully deleted' : 'Error';
+				break;
+				
+			case 'Publish' :
+				$resultArray['success'] = $this->publishSelected($data['Webpage']['selected']);
+				$resultArray['message'] = ($resultArray['success']) ? 'Selected pages are successfully published' : 'Error';
+				break;
+				
+			case 'Hide' :
+				$resultArray['success'] = $this->hideSelected($data['Webpage']['selected']);
+				$resultArray['message'] = ($resultArray['success']) ? 'Selected pages are successfully hidden' : 'Error';
+				break;
+			
+		}
+		
+		return $resultArray;
+	}
+	
+	function deleteSelected($selected = array()) {
+		$selected = array_unique($selected);
+		return $this->deleteAll(array('Webpage.id'=>$selected,
+					      'Webpage.shop_id'=>Shop::get('Shop.id')));
+	}
+	
+	function publishSelected($selected = array()) {
+		$this->recursive = -1;
+		$selected = array_unique($selected);
+		return $this->updateAll(array('Webpage.visible'=>true),
+					array('Webpage.id' => $selected,
+					      'Webpage.shop_id'=>Shop::get('Shop.id')));
+	}
+	
+	function hideSelected($selected = array()) {
+		$this->recursive = -1;
+		$selected = array_unique($selected);
+		return $this->updateAll(array('Webpage.visible'=>0),
+					array('Webpage.id' => $selected,
+					      'Webpage.shop_id'=>Shop::get('Shop.id')));
+	}
+	
 	function afterSave($created) {
 		$this->Link->recursive = -1;
 		

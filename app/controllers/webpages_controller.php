@@ -14,7 +14,8 @@ class WebpagesController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->allow('view', 'shopfront', 'frontpage');
 	
-		if ($this->action == 'admin_toggle') {
+		if ($this->action == 'admin_toggle' ||
+		    $this->action == 'admin_menu_action') {
 			$this->Security->enabled = false;
 		}
 		
@@ -126,6 +127,16 @@ class WebpagesController extends AppController {
 		$authors = $this->Webpage->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
 
 		$this->set(compact('authors'));
+	}
+	
+	function admin_menu_action() {
+		$resultArray = $this->Webpage->handleMenuAction($this->data);
+		if ($resultArray['success']) {
+			$this->Session->setFlash(__($resultArray['message'], true), 'default', array('class'=>'flash_success'));	
+		} else {
+			$this->Session->setFlash(__($resultArray['message'], true), 'default', array('class'=>'flash_failure'));	
+		}
+		$this->redirect(array('action' => 'index'));
 	}
 
 	function admin_edit($id = null) {

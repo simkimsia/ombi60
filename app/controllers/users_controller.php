@@ -187,6 +187,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Webpages/admin_view');
 		$this->Acl->allow($group, 'controllers/Webpages/admin_index');
 		$this->Acl->allow($group, 'controllers/Webpages/admin_toggle');
+		$this->Acl->allow($group, 'controllers/Webpages/admin_menu_action');
 		
 		$this->log('blogs');
 		$this->Acl->allow($group, 'controllers/Blogs/admin_add');
