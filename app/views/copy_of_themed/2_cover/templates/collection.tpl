@@ -4,7 +4,7 @@
 	{{ collection.description }}{% endif %}
 </div>
 <!-- END EXCERPT -->
-<!-- START PRODUCTS -->{% if collection.products.size > 0 %}
+<!-- START PRODUCTS -->{% if collection.products|length > 0 %}
 <ul id="products" class="clear">{% for key, product in collection.products %}
 	<!-- START PRODUCT {{ forloop.index }} -->
 	<li{{ cycle (['', '', ' class="end"'], key) }}>
