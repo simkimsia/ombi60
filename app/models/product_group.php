@@ -92,6 +92,7 @@ class ProductGroup extends AppModel {
 					   'url' => $group['ProductGroup']['url'],
 					   'all_products_count' => $group['ProductGroup']['visible_product_count'],
 					   
+					   
 					   'vendor_count' => $group['ProductGroup']['vendor_count'],
 					   
 					);
@@ -393,7 +394,7 @@ class ProductGroup extends AppModel {
 							  'description'		=> 'All Products',
 							  'handle' 		=> 'all',
 							  'url'    		=> '/collections/all',
-							  'all_product_count'	=> Shop::get('Shop.visible_product_count'),
+							  'visible_product_count' => Shop::get('Shop.visible_product_count'),
 							  'vendor_count'	=> Shop::get('Shop.vendor_count')));
 		
 		
