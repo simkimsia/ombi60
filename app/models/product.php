@@ -352,7 +352,7 @@ class Product extends AppModel {
 		$data['Variant'][0]['order'] = 0;
 
 		$result = $this->saveAll($data, array('validate'=>'first',
-						      'atomic' => true));
+						      'atomic' => false));
 		
 		// now we need to save the variant options
 		if ($result) {
