@@ -43,7 +43,7 @@
 
         // dynamic css
          Router::connect('/css/:theme_name.css',
-                    array('controller' => 'css',
+                    array('controller' => 'redirect_files',
                         'action' => 'theme'),
                     array('pass' => array('theme_name'),
                         'theme_name' => '[a-zA-Z0-9\-_]+'
