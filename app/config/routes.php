@@ -41,7 +41,13 @@
         Router::connect('/pages/*', array('controller' => 'webpages', 'action' => 'view'));
 
 
-        
+        // dynamic css
+         Router::connect('/css/:theme_name.css',
+                    array('controller' => 'css',
+                        'action' => 'theme'),
+                    array('pass' => array('theme_name'),
+                        'theme_name' => '[a-zA-Z0-9\-_]+'
+                ));
 
         // product links
         Router::connect('/products/:handle',
