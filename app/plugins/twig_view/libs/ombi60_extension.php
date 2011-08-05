@@ -284,7 +284,19 @@ function ombi60PutProductUrlWithinCollection($product_url, $collection) {
  */
 class Ombi60_Twig_Extension extends Twig_Extension
 {
-	
+    /**
+     * Returns a list of functions to add to the existing list.
+     *
+     * @return array An array of functions
+     */
+    public function getFunctions()
+    {
+        return array(
+            // {% for value in slice(values, limit, offset) %}
+            'slice' => new Twig_Function_Method($this, 'slice'),
+        );
+    }
+
     /**
      * Returns a list of filters to add to the existing list.
      *
@@ -314,6 +326,18 @@ class Ombi60_Twig_Extension extends Twig_Extension
 	    'within' => new Twig_Filter_Function('ombi60PutProductUrlWithinCollection'),
 	    'snippets_url' => new Twig_Filter_Function('ombi60SnippetsUrl'),
         );
+    }
+
+    /**
+     * @param array $array
+     * @param int   $limit
+     * @param int   $offset
+     *
+     * @return array
+     */
+    public function slice($array, $limit = null, $offset = 0)
+    {
+        return array_slice($array, $offset, $limit, true);
     }
 
     /**
