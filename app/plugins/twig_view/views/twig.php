@@ -23,6 +23,9 @@ App::import('Vendor', 'TwigView.TwigAutoloader', array(
 ));
 Twig_Autoloader::register();
 
+// overwrite Twig_Environment classe
+App::import('Lib', 'TwigView.Ombi60Environment');
+
 // overwrite twig classes (thanks to autoload, no problem)
 App::import('Lib', 'TwigView.TransNode');
 App::import('Lib', 'TwigView.TokenparserTrans');
@@ -48,7 +51,9 @@ App::import('Lib', 'TwigView.CoreExtension');
  * @subpackage app.views.twig
  */
 class TwigView extends View {
-	
+    // The folder theme name in views folder
+    const THEME_FOLDER = 'themed';
+
 	public $ext = '.tpl';
 	
 	/**
@@ -68,7 +73,12 @@ class TwigView extends View {
 	 * Load Twig
 	 */
 	function __construct(&$controller, $register = true) {
+		parent::__construct($controller, $register);
 		
+		if (isset($controller->theme)) {
+			$this->theme =& $controller->theme;
+		}
+
 		// just collecting for str_replace
 		$this->templatePaths = array(
 			APP.'views',
@@ -79,14 +89,23 @@ class TwigView extends View {
 		$loader = new Twig_Loader_Filesystem(APP.'views');
 		
 		// setup twig and go.
-		$this->Twig = new Twig_Environment($loader, array(
-			'cache' => TWIG_VIEW_CACHE,
-			'charset' => strtolower(Configure::read('App.encoding')),
+		$twigEnvironmentOptions = array(
+			'cache'       => TWIG_VIEW_CACHE,
+			'charset'     => strtolower(Configure::read('App.encoding')),
 			'auto_reload' => (bool) Configure::read('debug'),
-			'debug' => (bool) Configure::read('debug'),
-			'autoescape' => false
-		));;
-		
+			'debug'       => (bool) Configure::read('debug'),
+			'autoescape'  => false,
+		);
+
+        // If a theme is used set theme_folder and theme name options
+        if (isset($this->theme)) {
+            $twigEnvironmentOptions['theme_folder'] = self::THEME_FOLDER;
+            $twigEnvironmentOptions['theme']        = $this->theme;
+        }
+
+        // Used Ombi60_Twig_Environment instead of Twig_Environment
+        $this->Twig = new Ombi60_Twig_Environment($loader, $twigEnvironmentOptions);
+
 		// overwrite some stuff
 		$this->Twig->addExtension(new CoreExtension);
 		
@@ -107,11 +126,6 @@ class TwigView extends View {
 		
 		// activate ombi60 filters
 		$this->Twig->addExtension(new Ombi60_Twig_Extension);
-		
-		parent::__construct($controller, $register);
-		
-		if (isset($controller->theme))
-			$this->theme =& $controller->theme;
 			
 		$this->ext = '.tpl';
 	}
@@ -332,9 +346,9 @@ class TwigView extends View {
 				if (strpos($paths[$i], DS . 'plugins' . DS) === false
 					&& strpos($paths[$i], DS . 'libs' . DS . 'view') === false) {
 						if ($plugin) {
-							$themePaths[] = $paths[$i] . 'themed'. DS . $this->theme . DS . 'plugins' . DS . $plugin . DS;
+							$themePaths[] = $paths[$i] . self::THEME_FOLDER . DS . $this->theme . DS . 'plugins' . DS . $plugin . DS;
 						}
-						$themePaths[] = $paths[$i] . 'themed'. DS . $this->theme . DS;
+						$themePaths[] = $paths[$i] . self::THEME_FOLDER . DS . $this->theme . DS;
 					}
 			}
 			$paths = array_merge($themePaths, $paths);
