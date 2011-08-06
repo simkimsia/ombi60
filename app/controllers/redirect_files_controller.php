@@ -18,11 +18,27 @@ class RedirectFilesController extends AppController {
 	}
 	
 	function theme($theme_name) {
-		$this->viewPath = 'webroot/css';
-		$this->layout = false;
+		$this->viewPath = 'webroot/assets';
 		
-		// this sets the variable value
-		$this->set('myTwigColorVariable', 'red');
+		// we do not want debug info to show up inside the css file
+		// hence we used the ajax layout which will set the debug mode to 0
+		$this->layout = 'ajax';
+		
+		$shopid = Shop::get('Shop.id');
+		$shopThemeFolder = $shopid . '_cover';
+		$json_data_file = APP.DS.'views'.DS.'themed'.DS.$shopThemeFolder.DS.'config'.DS.'settings_data.json';
+		
+		$json_data = array();
+		
+		if (file_exists($json_data_file)) {
+			
+			$json_data = json_decode(file_get_contents($json_data_file), true);
+		}
+		
+		if (isset($json_data['current'])) {
+			// this sets the variable value
+			$this->set('settings', $json_data['current']);	
+		}
 		
 		$this->render($theme_name);
 	}
