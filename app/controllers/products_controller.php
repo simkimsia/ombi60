@@ -126,9 +126,20 @@ class ProductsController extends AppController {
 		if ($this->action == 'admin_toggle' ||
 		    $this->action == 'admin_edit'   ||
 		    $this->action == 'admin_add_variant' ||
-		    $this->action == 'admin_edit_variant') {
+		    $this->action == 'admin_edit_variant' ||
+		    $this->action == 'admin_menu_action') {
 			$this->Security->enabled = false;
 		}
+	}
+	
+	function admin_menu_action() {
+		$resultArray = $this->Product->handleMenuAction($this->data);
+		if ($resultArray['success']) {
+			$this->Session->setFlash(__($resultArray['message'], true), 'default', array('class'=>'flash_success'));	
+		} else {
+			$this->Session->setFlash(__($resultArray['message'], true), 'default', array('class'=>'flash_failure'));	
+		}
+		$this->redirect(array('action' => 'index'));
 	}
 	
 	function checkout() {

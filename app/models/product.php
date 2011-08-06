@@ -1453,5 +1453,52 @@ class Product extends AppModel {
 		return $productDetails;
 	}
 	
+	function handleMenuAction($data) {
+		$resultArray = array('message'=>'No valid actions selected',
+				     'success'=>false);
+		
+		switch($data['Product']['menu_action']) {
+			case 'Delete' :
+				$resultArray['success'] = $this->deleteSelected($data['Product']['selected']);
+				$resultArray['message'] = ($resultArray['success']) ? 'Selected products are successfully deleted' : 'Error';
+				break;
+				
+			case 'Publish' :
+				$resultArray['success'] = $this->publishSelected($data['Product']['selected']);
+				$resultArray['message'] = ($resultArray['success']) ? 'Selected products are successfully published' : 'Error';
+				break;
+				
+			case 'Hide' :
+				$resultArray['success'] = $this->hideSelected($data['Product']['selected']);
+				$resultArray['message'] = ($resultArray['success']) ? 'Selected products are successfully hidden' : 'Error';
+				break;
+			
+		}
+		
+		return $resultArray;
+	}
+	
+	function deleteSelected($selected = array()) {
+		$selected = array_unique($selected);
+		return $this->deleteAll(array('Product.id'=>$selected,
+					      'Product.shop_id'=>Shop::get('Shop.id')));
+	}
+	
+	function publishSelected($selected = array()) {
+		$this->recursive = -1;
+		$selected = array_unique($selected);
+		return $this->updateAll(array('Product.visible'=>true),
+					array('Product.id' => $selected,
+					      'Product.shop_id'=>Shop::get('Shop.id')));
+	}
+	
+	function hideSelected($selected = array()) {
+		$this->recursive = -1;
+		$selected = array_unique($selected);
+		return $this->updateAll(array('Product.visible'=>0),
+					array('Product.id' => $selected,
+					      'Product.shop_id'=>Shop::get('Shop.id')));
+	}
+	
 	
 }//end class

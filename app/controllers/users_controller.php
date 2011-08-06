@@ -89,6 +89,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Products/admin_add_variant');
 		$this->Acl->allow($group, 'controllers/Products/admin_edit_variant');
 		$this->Acl->allow($group, 'controllers/Products/admin_delete_variant');
+		$this->Acl->allow($group, 'controllers/Products/admin_menu_action');
 		
 		// collections
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_add_smart');

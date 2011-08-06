@@ -1,8 +1,8 @@
 <div class="webpages">
-  <div class="text_center">
-    <h2>
-      <?php __('Blogs & Pages'); ?>
-    </h2>
+	<div class="text_center">
+	<h2>
+	<?php __('Blogs & Pages'); ?>
+	</h2>
       <?php 
         echo $this->Html->link(__('Create new Blog', true), array('controller'=>'blogs','action' => 'add'));
         echo ' | '. $this->Html->link(__('Create new Page', true), array('action' => 'add'));
@@ -26,8 +26,8 @@
 	<table cellpadding="0" cellspacing="0" class="products-table" id="webpages-table">
 	    <tr>
 		        <th>&nbsp;</th>
-			    <th><?php echo $this->Paginator->sort('title');?></th>
-			    <th class="text_center"><?php echo $this->Paginator->sort('modified');?></th>
+			<th><?php echo $this->Paginator->sort('title');?></th>
+			<th class="text_center"><?php echo $this->Paginator->sort('modified');?></th>
 	    </tr>
 	    <?php
 	    $i = 0;

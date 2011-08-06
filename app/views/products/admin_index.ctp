@@ -5,26 +5,7 @@
     <?php echo $this->Html->link(__('Add New Product', true), array('action' => 'add')); ?></li>
 </div>
 <br />
-<?php echo $this->Form->create('Product', array('url' => array('controller' => 'products', 'action' => 'index', 'admin' => 'true'), 'id'=>'filters')); ?>
-<table cellpadding="0" cellspacing="0" class="product-search">
-    <tr>                
-        <th><?php __('Title')?></th>
-        <th><?php __('Price'); ?></th>
-        <th><?php __('Status'); ?></th>
-        <th></th>
-    </tr>
-    <tr>                
-        <td><?php echo $this->Form->input('Product.title', array('label'=>false)); ?></td>
-        <td><?php echo $this->Form->input('Product.price', array('label'=>false)); ?></td>
-        <td><?php echo $this->Form->input('Product.visible', array('options' => array('1'=>'Published', '0'=>'Hidden'),
-                                      'empty' => 'Any status',
-                                      'label' => false)); ?></td>
-                <td>
-                    <button type="submit" name="data[filter]" value="filter">Filter</button>
-                    <button type="submit" name="data[reset]" value="reset">Reset</button>
-                </td>
-        </tr>
-</table>        
+
 <span class='paginator-top'>
 <?php
 echo $paginator->counter(array(
@@ -45,8 +26,13 @@ if ($paginator->params['paging']['Product']['pageCount'] > 1) {
 ?>
 <br/>
 <br/>
-<table cellpadding="0" cellspacing="0" class="products-table">
+<?php
+echo $this->element('action_buttons', array('modelName' => 'Product'));
+?>
+
+<table cellpadding="0" cellspacing="0" class="products-table" id="products-table">
 	<tr>
+		<th>&nbsp;</th>
 		<th class="product-header"><?php echo $paginator->sort(__('Product', true), 'title'); ?></th>
 		<th style="text-align: center;"><?php echo $paginator->sort('visible');?></th>
 		<th class="actions" style="text-align: center;"><?php __('Actions');?></th>
@@ -54,13 +40,19 @@ if ($paginator->params['paging']['Product']['pageCount'] > 1) {
 
 <?php
 $i = 0;
-foreach ($products as $product):
+foreach ($products as $key=>$product):
+	$hidden = (!$product['Product']['visible']) ;
+	$hiddenCheckboxClass = '';
+	if ($hidden) {
+	        $hiddenCheckboxClass = ' hidden';
+	}
 	$class = null;
 	if ($i++ % 2 == 0) {
 		$class = ' class="altrow"';
 	}
 ?>
-	<tr<?php echo $class;?>>		
+	<tr<?php echo $class;?>>
+		<td width="5%" align="center"><?php echo $this->Form->checkbox('Product.selected.'.$key, array('value' => $product['Product']['id'], 'class' => 'checkbox_check' . $hiddenCheckboxClass, 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>
 		<td>
 		  <span class="photo">
 		    <?php
