@@ -380,6 +380,13 @@ class ProductGroup extends AppModel {
 		
 	}
 	
+	
+	public function getAllRegularVisible() {
+		// we want to retrieve all regular collections, smart or custom
+		// that are visible
+		// including their ProductsInGroup, Products, ProductImages
+	}
+	
 	/*
 	 * get ALL products provided no automatic and regular collections match the handle 'all'
 	 * */

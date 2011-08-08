@@ -330,13 +330,29 @@ class Ombi60_Twig_Extension extends Twig_Extension
 
     /**
      * @param array $array
-     * @param int   $limit
+     * @param mixed $limit either the actual limit or the associative array
      * @param int   $offset
      *
      * @return array
      */
+    /*
     public function slice($array, $limit = null, $offset = 0)
     {
+        return array_slice($array, $offset, $limit, true);
+    }*/
+    public function slice($array, $limit = null, $offset=0)
+    {
+	if (is_array($limit)) {
+		$limitOffset = $limit;
+		if (isset($limitOffset['limit'])) {
+			$limit = intval($limitOffset['limit']);
+		}
+		
+		if (isset($limitOffset['offset'])) {
+			$offset = intval($limitOffset['offset']);
+		}
+	}
+	
         return array_slice($array, $offset, $limit, true);
     }
 
