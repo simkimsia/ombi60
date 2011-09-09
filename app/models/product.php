@@ -158,7 +158,7 @@ class Product extends AppModel {
 			'counterQuery' => ''
 		),
 		'Variant' => array(
-			'className' => 'Variant',
+			'className' => 'VariantModel',
 			'foreignKey' => 'product_id',
 			'dependent' => true,
 			'conditions' => '',

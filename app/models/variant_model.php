@@ -1,6 +1,10 @@
 <?php
-class Variant extends AppModel {
+class VariantModel extends AppModel {
 	var $name = 'Variant';
+	
+	var $alias = 'Variant';
+	var $useTable = 'variants';
+	
 	var $displayField = 'title';
 	
 	
