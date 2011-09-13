@@ -14,7 +14,7 @@
  * @license MIT License
  */
 if (!defined('TWIG_VIEW_CACHE')) {
-	define('TWIG_VIEW_CACHE', APP.'plugins'.DS.'twig_view'.DS.'tmp'.DS.'views');
+	define('TWIG_VIEW_CACHE', APP.'Plugin'.DS.'TwigView'.DS.'tmp'.DS.'views');
 }
 
 // Load Twig Lib and start auto loader
@@ -81,12 +81,12 @@ class TwigView extends View {
 
 		// just collecting for str_replace
 		$this->templatePaths = array(
-			APP.'views',
-			ROOT.DS.'cake'.DS.'libs'.DS.'view'
+			APP . 'View',
+			ROOT . DS . 'lib' . DS .  'Cake'. DS . 'View'
 		);
 		
 		// we always look in APP, this includes error templates.
-		$loader = new Twig_Loader_Filesystem(APP.'views');
+		$loader = new Twig_Loader_Filesystem(APP . 'View');
 		
 		// setup twig and go.
 		$twigEnvironmentOptions = array(

@@ -32,7 +32,13 @@
  * @subpackage    cake.cake.libs.model
  */
 class AppModel extends Model {
-    
+
+/**
+ * Behaviors
+ *
+ * @var array
+ */
+    public $actsAs = array('Containable');
     
     var $arrayPlaceHolder = array();
     
