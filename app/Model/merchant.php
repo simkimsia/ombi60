@@ -64,7 +64,7 @@ class Merchant extends AppModel {
 			return false;
 		}
 		
-		$this->Behaviors->attach('Linkable.Linkable');
+		$this->Behaviors->load('Linkable.Linkable');
 		$this->User->Behaviors->attach('Linkable.Linkable');
 		
 		return $this->find('first', array('conditions'=>array('Merchant.user_id'=>$id),

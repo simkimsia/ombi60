@@ -81,14 +81,14 @@ class AppController extends Controller {
 		$this->Auth->logoutRedirect = '/admin/login';
 
 		// this is to set the default layout for admin pages
-		if ($this->RequestHandler->isAjax() == false) {
+		if ($this->request->is('ajax') == false) {
 			$this->layout = 'admin';
 		}
 
 
         } else {
 	    
-		$this->layout = 'theme';	
+		$this->layout = 'theme';
 	}
 
         // allow non users to access register and login actions only.
@@ -248,29 +248,26 @@ class AppController extends Controller {
 		    ));
 		
 		$blogs = Blog::getTemplateVariable($blogs);
-		
 		$this->set('blogs', $blogs);
 		
 		// fetch the pages
 		$this->loadModel('Webpage');
 		$this->Webpage->recursive = -1;
-		
-		$this->Webpage->Behaviors->attach('Linkable.Linkable');
 
-        $pages = $this->Webpage->find('all', array(
-          'conditions' => array(
-                'Webpage.shop_id' => $shopId,
-                'Webpage.visible' => true),
-//          'link' => array(
-//              'Author' => array(
-                  //'class' => 'User',
-//                  'fields' => array('Author.name_to_call', 'Author.id')))
-        ));
-		
+		$this->Webpage->Behaviors->load('Linkable.Linkable');
+
+		$pages = $this->Webpage->find('all', array(
+			'conditions'=>array(
+				'Webpage.shop_id'=>$shopId,
+				'Webpage.visible'=>true),
+			'link' => array(
+				'Author' => array(
+				'fields' => array(
+					'Author.name_to_call', 'Author.id')))));
+
 		$pages = Webpage::getTemplateVariable($pages);
 		$this->set('pages', $pages);
-		
-		
+
 		// get Shop template
 		$shopTemplate = Shop::getTemplateVariable();
 		
@@ -280,7 +277,6 @@ class AppController extends Controller {
 		// and also any other ombi60 stats
 		
 		$this->set('content_for_header', $content_for_header);
-		
 	}
 	/**
 	 *end Cookies

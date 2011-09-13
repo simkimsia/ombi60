@@ -363,7 +363,7 @@ class ProductGroupsController extends AppController {
 		$this->set('view', true);
 		$this->set('smart_collection_id', $smart_collection_id);
 		if ($this->ProductGroup->saveSmartCollectionCondition($this->request->data, $smart_collection_id)) {
-			if ($this->RequestHandler->isAjax()) {
+			if ($this->request->is('ajax')) {
 				$this->layout = 'ajax';
 			}
 			$this->__getSmartCollection($smart_collection_id);

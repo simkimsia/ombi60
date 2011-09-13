@@ -138,7 +138,7 @@ class Customer extends AppModel {
 		
 		$this->recursive = -1;
 		$this->User->recursive = -1;
-		$this->Behaviors->attach('Linkable.Linkable');
+		$this->Behaviors->load('Linkable.Linkable');
 		$this->User->Behaviors->attach('Linkable.Linkable');
 		
 		$customer = $this->find('first', array('conditions'=>array('Customer.shop_id'=>$data['Customer']['shop_id'],

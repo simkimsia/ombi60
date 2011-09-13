@@ -132,7 +132,7 @@ class SavedThemesController extends AppController {
 			 * workaround to allow ajax to bypass stringent validations
 			 * since ajaxhelper does NOT work with multipart file upload
 			 **/
-			if ($this->RequestHandler->isAjax()) {
+			if ($this->request->is('ajax')) {
 				$this->request->data = $this->addDummyCss($this->request->data);
 			}
 			
