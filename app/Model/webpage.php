@@ -144,7 +144,7 @@ class Webpage extends AppModel {
 		}
 		
 		$this->recursive = -1;
-		$this->Behaviors->attach('Linkable.Linkable');
+		$this->Behaviors->load('Linkable.Linkable');
 		
                 $webpage = $this->find('first', array(
 						'conditions'=>$conditions,
@@ -158,12 +158,9 @@ class Webpage extends AppModel {
 						
 						),
 						));
-		
-		
-		
 		return $webpage;
 	}
-	
+
 	function handleMenuAction($data) {
 		$resultArray = array('message'=>'No valid actions selected',
 				     'success'=>false);
@@ -235,10 +232,5 @@ class Webpage extends AppModel {
 		$this->Link->updateAll($fields, $conditions);
 		
 	}
-	
-	
-	
-	
-	
+
 }
-?>

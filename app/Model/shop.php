@@ -330,7 +330,7 @@ class Shop extends AppModel {
 		$this->Domain->recursive = -1;
 		$this->ShopSetting->recursive = -1;
 		
-		$this->Behaviors->attach('Linkable.Linkable');
+		$this->Behaviors->load('Linkable.Linkable');
 		
 		$result = $this->find(
 				      'first',
@@ -446,7 +446,7 @@ class Shop extends AppModel {
 	function afterSave($created) {
 
                 $this->recursive = -1;
-		$this->Behaviors->attach('Containable');
+		$this->Behaviors->load('Containable');
 			
 		$shop = $this->find('first', array('conditions'=>array('Shop.id'=>$this->id),
 							'contain'=>array('FeaturedSavedTheme')));

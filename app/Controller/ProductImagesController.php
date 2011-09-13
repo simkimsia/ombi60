@@ -105,7 +105,7 @@ class ProductImagesController extends AppController {
 		
 		$this->set('errors', array());
 		
-		if ($this->RequestHandler->isAjax() == false) {
+		if ($this->request->is('ajax') == false) {
 			// standard view to render
 			$this->render('admin_list_by_product');
 		} else {

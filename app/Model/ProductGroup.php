@@ -173,7 +173,7 @@ class ProductGroup extends AppModel {
 		// in case there is no conditions, we go and get the conditions!
 		if (!$conditionsExist) {
 			$this->recursive = -1;
-			$this->Behaviors->attach('Containable');
+			$this->Behaviors->load('Containable');
 			$smartCollection = $this->find('first', array('conditions'=>array('ProductGroup.id'=>$smartCollectionId, 'ProductGroup.type'=>SMART_COLLECTION),
 								      'contain'   =>array('SmartCollectionCondition')));
 		}
@@ -465,7 +465,7 @@ class ProductGroup extends AppModel {
 	private function getRegularCollectionByUrl($handle, $visibleOrAll = VISIBLE_ENTITY) {
 		
 		$this->recursive = -1;
-		$this->Behaviors->attach('Containable');
+		$this->Behaviors->load('Containable');
 		
 		// to retrieve the shop id based on the url
 		// see app_controller code and shop model code

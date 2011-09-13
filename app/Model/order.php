@@ -199,7 +199,7 @@ class Order extends AppModel {
 		
 		
 		// attach Linkable behavior
-		$this->Behaviors->attach('Linkable.Linkable');
+		$this->Behaviors->load('Linkable.Linkable');
 		$this->Customer->Behaviors->attach('Linkable.Linkable');
 		$this->Customer->User->Behaviors->attach('Linkable.Linkable');
 		$this->DeliveryAddress->Behaviors->attach('Linkable.Linkable');
@@ -219,7 +219,7 @@ class Order extends AppModel {
 			
 			$this->OrderLineItem->recursive = -1;
 			$this->OrderLineItem->Behaviors->attach('Containable');
-			$this->Behaviors->attach('Containable');
+			$this->Behaviors->load('Containable');
 			
 			$findConditionsArray['contain'][] = 'OrderLineItem';
 			

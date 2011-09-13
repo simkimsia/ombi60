@@ -213,7 +213,7 @@ class Cart extends AppModel {
 	}
 	
 	function findByHash($hash, $step = 1) {
-		$this->Behaviors->attach('Containable');
+		$this->Behaviors->load('Containable');
 		
 		$this->contain('CartItem');
 		
@@ -468,7 +468,7 @@ class Cart extends AppModel {
 			return false;
 		}
 		
-		$this->Behaviors->attach('Linkable.Linkable');
+		$this->Behaviors->load('Linkable.Linkable');
 		
 		return $this->CartItem->find('count', array('conditions'=>
 						   array('Cart.user_id'=>$user_id,
@@ -501,7 +501,7 @@ class Cart extends AppModel {
 			}
 		}
 		
-		$this->Behaviors->attach('Containable');
+		$this->Behaviors->load('Containable');
 		$this->recursive = -1;
 		
 		// to be used for the find statement
