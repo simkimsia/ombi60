@@ -8,7 +8,7 @@ class Product extends AppModel {
 			       'Copyable.Copyable' => array(
 					'habtm' => false,
 					'recursive' => false,),
-			       'log.Logable',
+			       'Log.Logable',
 			       'UnitSystemConvertible',
 			       'Handleize.Sluggable'=> array(
 					'fields' => 'title',

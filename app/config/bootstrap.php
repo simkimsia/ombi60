@@ -49,6 +49,7 @@
  *
  */
 
+CakePlugin::loadAll();
 
 /**
  *
