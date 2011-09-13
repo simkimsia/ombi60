@@ -19,7 +19,7 @@ class CartItem extends AppModel {
 		),
 
 		'AssociatedVariant' => array(
-			'className' => 'Variant',
+			'className' => 'VariantModel',
 			'foreignKey' => 'variant_id',
 			'conditions' => '',
 			'fields' => '',

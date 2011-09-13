@@ -16,7 +16,7 @@ class OrderLineItem extends AppModel {
 		),
 
 		'Variant' => array(
-			'className' => 'Variant',
+			'className' => 'VariantModel',
 			'foreignKey' => 'variant_id',
 			'conditions' => '',
 			'fields' => '',
