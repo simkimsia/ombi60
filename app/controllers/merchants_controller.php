@@ -13,15 +13,15 @@ class MerchantsController extends AppController {
 
 		$this->overrideAuth();
 
-		if ($this->action == 'register') {
+		if ($this->request->action == 'register') {
 
 			// because Security component is turned on
 			// hence need to disable any hidden fields that is auto changed by jQuery
 			$this->Security->disabledFields[] = 'Shop.primary_domain';
 
 			// in case the merchant did not turn on Js,
-			if (empty($this->data['Shop']['primary_domain'])) {
-				$this->data['Shop']['primary_domain'] = 'http://' . $this->data['Shop']['subdomain'] . '.myspree2shop.com';
+			if (empty($this->request->data['Shop']['primary_domain'])) {
+				$this->request->data['Shop']['primary_domain'] = 'http://' . $this->request->data['Shop']['subdomain'] . '.myspree2shop.com';
 			}
 
 
@@ -29,8 +29,8 @@ class MerchantsController extends AppController {
 
 		// add in the extra validation for merchant login
 		// ensure that it is the right shop that they want to login to.
-		if ($this->RequestHandler->isPost() AND $this->action == 'login') {
-			$this->Auth->userScope = array('Merchant.shop_id' => $this->data['Merchant']['shop_id']);
+		if ($this->RequestHandler->isPost() AND $this->request->action == 'login') {
+			$this->Auth->userScope = array('Merchant.shop_id' => $this->request->data['Merchant']['shop_id']);
 		}
 
 	}
@@ -48,7 +48,7 @@ class MerchantsController extends AppController {
 		$this->Auth->autoRedirect = false;
 
 		// override the default login error message
-		$this->Auth->loginError = __("Login failed. Invalid email or password or web address.", true);
+		$this->Auth->loginError = __("Login failed. Invalid email or password or web address.");
 
 		$this->Auth->loginAction    = '/admin/login';
 		$this->Auth->loginRedirect  = '/admin';
@@ -60,25 +60,25 @@ class MerchantsController extends AppController {
 	 **/
 	function register() {
 
-		$this->set('title_for_layout', __('Signup',true));
+		$this->set('title_for_layout', __('Signup'));
 
 
 		if ($this->RequestHandler->isPost()) {
 
 			// hash the confirm password field so that the comparison can be done successfully
 			// password is automatically hashed by the Auth component
-			$this->data['User']['password_confirm'] = $this->Auth->password($this->data['User']['password_confirm']);
+			$this->request->data['User']['password_confirm'] = $this->Auth->password($this->request->data['User']['password_confirm']);
 
-			if ($this->Merchant->signupNewAccount($this->data)) {
-				$this->Session->setFlash(__('You\'ve successfully registered.',true));
+			if ($this->Merchant->signupNewAccount($this->request->data)) {
+				$this->Session->setFlash(__('You\'ve successfully registered.'));
 
 			} else {
-				$this->Session->setFlash(__('Sorry, the information you\'ve entered is incorrect.',true));
+				$this->Session->setFlash(__('Sorry, the information you\'ve entered is incorrect.'));
 			}
 
 			// regardless of success, we must blank out the password fields because we only have the hashed versions
-			$this->data['User']['password_confirm'] = NULL;
-			$this->data['User']['password']         = NULL;
+			$this->request->data['User']['password_confirm'] = NULL;
+			$this->request->data['User']['password']         = NULL;
 
 		}
 
@@ -89,7 +89,7 @@ class MerchantsController extends AppController {
 
 	function admin_login() {
 
-		$this->set('title_for_layout', __('Merchant Login',true));
+		$this->set('title_for_layout', __('Merchant Login'));
 
 
 		// to retrieve the shop id based on the url
@@ -100,13 +100,13 @@ class MerchantsController extends AppController {
 		if ($this->Auth->user()) {
 			
 			// this code is for the remember me when Merchant first logs in and chooses the remember me
-			if (!empty($this->data) & $this->data['User']['remember_me']) {
-				$cookie = array('email'    => $this->data['User']['email'],
-						'password' => $this->data['User']['password'],);
+			if (!empty($this->request->data) & $this->request->data['User']['remember_me']) {
+				$cookie = array('email'    => $this->request->data['User']['email'],
+						'password' => $this->request->data['User']['password'],);
 				
 				$this->updateCookie();
 				
-				unset($this->data['User']['remember_me']);
+				unset($this->request->data['User']['remember_me']);
 				
 			}
 			
@@ -115,7 +115,7 @@ class MerchantsController extends AppController {
 			
 		}
 		
-		if (empty($this->data)) {
+		if (empty($this->request->data)) {
 
 			$cookie = $this->Cookie->read('Auth.User');
 
@@ -179,25 +179,25 @@ class MerchantsController extends AppController {
 	 **/
 	function admin_edit() {
 
-		$this->set('title_for_layout', sprintf(__('Edit %s\'s profile',true),User::get('User.name_to_call')));
+		$this->set('title_for_layout', sprintf(__('Edit %s\'s profile'),User::get('User.name_to_call')));
 
 
-		if (empty($this->data)) {
+		if (empty($this->request->data)) {
 			$languages = $this->Merchant->User->Language->find('list');
-			$this->data = User::getInstance();
+			$this->request->data = User::getInstance();
 			$this->set(compact('languages'));
 			return;
 		}
-		if (isset($this->data['User']['password'])) {
-			$this->data['User']['password_confirm'] = $this->Auth->password($this->data['User']['password_confirm']);
+		if (isset($this->request->data['User']['password'])) {
+			$this->request->data['User']['password_confirm'] = $this->Auth->password($this->request->data['User']['password_confirm']);
 		}
-		if ($this->Merchant->updateProfile($this->data)) {
+		if ($this->Merchant->updateProfile($this->request->data)) {
 			$this->updateSession();
-			$this->Session->setFlash(__('Your profile has been saved',true), 'modal', array('class' => 'modal success'));
+			$this->Session->setFlash(__('Your profile has been saved'), 'modal', array('class' => 'modal success'));
 			$this->redirect('/admin');
 		}
 
-		$this->Session->setFlash(__('Your profile could not be saved. Please, try again.', true));
+		$this->Session->setFlash(__('Your profile could not be saved. Please, try again.'));
 
 	}
 	
@@ -225,7 +225,7 @@ class MerchantsController extends AppController {
 	 **/
 	function platform_view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Merchant', true));
+			$this->Session->setFlash(__('Invalid Merchant'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('merchant', $this->Merchant->read(null, $id));
@@ -236,19 +236,19 @@ class MerchantsController extends AppController {
 	 **/
 	function platform_edit() {
 
-		if (empty($this->data)) {
+		if (empty($this->request->data)) {
 			$id = Merchant::get('id');
 
-			$this->data = $this->Merchant->read(null, $id);
+			$this->request->data = $this->Merchant->read(null, $id);
 			return;
 		}
 
-		if ($this->Merchant->save($this->data)) {
-			$this->Session->setFlash(__('Your profile has been saved', true));
+		if ($this->Merchant->save($this->request->data)) {
+			$this->Session->setFlash(__('Your profile has been saved'));
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->Session->setFlash(__('Your profile could not be saved. Please, try again.', true));
+		$this->Session->setFlash(__('Your profile could not be saved. Please, try again.'));
 
 	}
 
@@ -257,14 +257,14 @@ class MerchantsController extends AppController {
 	 **/
 	function platform_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Merchant', true));
+			$this->Session->setFlash(__('Invalid id for Merchant'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Merchant->delete($id)) {
-			$this->Session->setFlash(__('Merchant deleted', true));
+			$this->Session->setFlash(__('Merchant deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('The Merchant could not be deleted. Please, try again.', true));
+		$this->Session->setFlash(__('The Merchant could not be deleted. Please, try again.'));
 		$this->redirect(array('action' => 'index'));
 	}
 

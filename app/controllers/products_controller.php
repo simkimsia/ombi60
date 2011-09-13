@@ -67,18 +67,18 @@ class ProductsController extends AppController {
 		
 
 		// this is to allow admin_upload to work with Session component
-		if ($this->action=='admin_upload') {
+		if ($this->request->action=='admin_upload') {
 			
-                        $this->Session->id($this->params['url']['sess']);
+                        $this->Session->id($this->request->params['url']['sess']);
 			$this->Session->start();
 			
 		}
 		
 		// this is to override the cookie user id for products checkout for
 		// crossing custom domains
-		if(($this->action == 'checkout') AND (!empty($this->params['url']['ss']))) {
+		if(($this->request->action == 'checkout') AND (!empty($this->request->params['url']['ss']))) {
 			
-			$uuid = $this->params['url']['ss'];
+			$uuid = $this->request->params['url']['ss'];
 			$siteTransfer = ClassRegistry::init('SiteTransfer');
 			$data = $siteTransfer->findById($uuid);
 			$this->Session->id($data['SiteTransfer']['sess_id']);
@@ -100,12 +100,12 @@ class ProductsController extends AppController {
 				   'checkout', 'view_by_group');
 
 		
-		if ($this->action == 'view_cart' OR
-		    $this->action == 'view' OR
-		    $this->action == 'index'){
+		if ($this->request->action == 'view_cart' OR
+		    $this->request->action == 'view' OR
+		    $this->request->action == 'index'){
 			
 			// set the class for the overallcontainer
-			$this->set('classForContainer', $this->configureContainerClass($this->name, $this->action));
+			$this->set('classForContainer', $this->configureContainerClass($this->name, $this->request->action));
 		}
 		
 		// this is to allow the jquery to change the elements that control the file upload.
@@ -116,28 +116,28 @@ class ProductsController extends AppController {
 		
 		$this->checkoutLink = Router::url('/', true);
 		
-		if (($this->action == 'admin_index')
-		    OR ($this->action == 'admin_add')
-		    OR ($this->action == 'checkout')
+		if (($this->request->action == 'admin_index')
+		    OR ($this->request->action == 'admin_add')
+		    OR ($this->request->action == 'checkout')
 		    ) {
 			$this->Security->validatePost = false;
 		}
 		
-		if ($this->action == 'admin_toggle' ||
-		    $this->action == 'admin_edit'   ||
-		    $this->action == 'admin_add_variant' ||
-		    $this->action == 'admin_edit_variant' ||
-		    $this->action == 'admin_menu_action') {
+		if ($this->request->action == 'admin_toggle' ||
+		    $this->request->action == 'admin_edit'   ||
+		    $this->request->action == 'admin_add_variant' ||
+		    $this->request->action == 'admin_edit_variant' ||
+		    $this->request->action == 'admin_menu_action') {
 			$this->Security->enabled = false;
 		}
 	}
 	
 	function admin_menu_action() {
-		$resultArray = $this->Product->handleMenuAction($this->data);
+		$resultArray = $this->Product->handleMenuAction($this->request->data);
 		if ($resultArray['success']) {
-			$this->Session->setFlash(__($resultArray['message'], true), 'default', array('class'=>'flash_success'));	
+			$this->Session->setFlash(__($resultArray['message']), 'default', array('class'=>'flash_success'));	
 		} else {
-			$this->Session->setFlash(__($resultArray['message'], true), 'default', array('class'=>'flash_failure'));	
+			$this->Session->setFlash(__($resultArray['message']), 'default', array('class'=>'flash_failure'));	
 		}
 		$this->redirect(array('action' => 'index'));
 	}
@@ -154,7 +154,7 @@ class ProductsController extends AppController {
 		
 		if ($this->RequestHandler->isPost()) {
 			$shopId = Shop::get('Shop.id');
-			$count = $this->data['Product']['products_count'];
+			$count = $this->request->data['Product']['products_count'];
 			
 			if ($count > 0) {
 				
@@ -165,10 +165,10 @@ class ProductsController extends AppController {
 				$postFields['userId'] = $userId;
 				$postFields['cancelURL'] = Router::url(array('controller'=>'products', 'action'=>'view_cart'), true);
 				
-				if(isset($this->params['form']['checkoutBtn'])) {
+				if(isset($this->request->params['form']['checkoutBtn'])) {
 					// user clicked the submit button named proceedToCheckout... so we'll do that
 					$postFields['paypal'] = 0;
-				} else if (isset($this->params['form']['checkout'])) {
+				} else if (isset($this->request->params['form']['checkout'])) {
 					$postFields['paypal'] = 1;
 					$paypal = true;
 				}
@@ -202,7 +202,7 @@ class ProductsController extends AppController {
 				}
 				
 			}
-			$this->Session->setFlash(__('You need to have products in your cart', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('You need to have products in your cart'), 'default', array('class'=>'flash_failure'));
 		}
 		
 		$this->redirect(array('action'=>'view_cart'));
@@ -311,8 +311,8 @@ class ProductsController extends AppController {
 		// need to check for POST and the Update button
 		// update button is named as update (singular)
 		// the update_x is to work with input type="image" for the update button
-		$updateButtonUsed 	= isset($this->params['form']['update']);
-		$updateImageButtonUsed 	= isset($this->params['form']['update_x']);
+		$updateButtonUsed 	= isset($this->request->params['form']['update']);
+		$updateImageButtonUsed 	= isset($this->request->params['form']['update_x']);
 		$updateButtonTriggered	= $updateButtonUsed OR $updateImageButtonUsed;
 		
 		if ($updateButtonTriggered) {
@@ -322,8 +322,8 @@ class ProductsController extends AppController {
 		
 		
 		
-		$checkoutButtonUsed 		= isset($this->params['form']['checkout']);
-		$checkoutImageButtonUsed 	= isset($this->params['form']['checkout_x']);
+		$checkoutButtonUsed 		= isset($this->request->params['form']['checkout']);
+		$checkoutImageButtonUsed 	= isset($this->request->params['form']['checkout_x']);
 		$checkoutButtonTriggered	= $checkoutButtonUsed OR $checkoutImageButtonUsed;
 		
 		
@@ -450,7 +450,7 @@ class ProductsController extends AppController {
 
 	function admin_view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Product', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$product_id = $id;
@@ -480,7 +480,7 @@ class ProductsController extends AppController {
 		$uploadifySettings = array('browseButtonId' => 'fileInput',
                                          'script' => Router::url("/admin/products/upload/".$product_id, true),
                                          'auto' => true,
-                                                                       'buttonText' => __('Choose File', true),
+                                                                       'buttonText' => __('Choose File'),
                                          'onComplete' => true,);
 		    
 		
@@ -582,9 +582,9 @@ class ProductsController extends AppController {
 		$domainPagePath = Router::url('/collections/'.$handle.'/', true);
 		
 		// check for any sorting or ordering parameters
-		$sort = isset($this->params['named']['sort']) ? $this->params['named']['sort'] : 'created';
+		$sort = isset($this->request->params['named']['sort']) ? $this->request->params['named']['sort'] : 'created';
 		
-		$order = isset($this->params['named']['direction']) ? $this->params['named']['direction'] : 'desc';
+		$order = isset($this->request->params['named']['direction']) ? $this->request->params['named']['direction'] : 'desc';
 
 		$this->set(compact('sort', 'order', 'domainPagePath', 'collection'));
 		
@@ -602,17 +602,17 @@ class ProductsController extends AppController {
 		if ($this->RequestHandler->isPost()) {
 
 			$this->Product->create();
-			if ($this->Product->createDetails($this->data)) {
+			if ($this->Product->createDetails($this->request->data)) {
 			
 				$id = $this->Product->getLastInsertId();
 		
 				//$this->Product->ProductImage->saveFILESAsProductImages($product_id); //This will save product images
 			
-				$this->Session->setFlash(__('Product has been saved', true), 'default', array('class'=>'flash_success'));
+				$this->Session->setFlash(__('Product has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			
 			} else {
-				$this->Session->setFlash(__('Product could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('Product could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 			
 			
@@ -676,7 +676,7 @@ class ProductsController extends AppController {
 			$this->Product->updateCounterCacheForM2MMain($id, array(), false);	
 		}
 		
-		if ($this->params['isAjax']) {
+		if ($this->request->params['isAjax']) {
 			
 			$this->layout = 'json';
 			if ($result) {
@@ -694,9 +694,9 @@ class ProductsController extends AppController {
 				
 		} else {
 			if ($result) {
-				$this->Session->setFlash(__('Product status has been changed', true), 'default', array('class'=>'flash_success'));
+				$this->Session->setFlash(__('Product status has been changed'), 'default', array('class'=>'flash_success'));
 			} else {
-				$this->Session->setFlash(__('Product status could not be changed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('Product status could not be changed. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 			$this->redirect(array('action' => 'index'));
 		}
@@ -705,23 +705,23 @@ class ProductsController extends AppController {
 	
 	function admin_edit($id = null) {
    
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid Product', true), 'default', array('class'=>'flash_failure'));
+		if (!$id && empty($this->request->data)) {
+			$this->Session->setFlash(__('Invalid Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
    
-		if (!empty($this->data)) {		  
-			if ($this->Product->save($this->data)) {
-				$this->Session->setFlash(__('The Product has been saved', true), 'default', array('class'=>'flash_success'));
+		if (!empty($this->request->data)) {		  
+			if ($this->Product->save($this->request->data)) {
+				$this->Session->setFlash(__('The Product has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Product could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('The Product could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		}
 
-		if (empty($this->data)) {
+		if (empty($this->request->data)) {
                         // get the product details
-                        $this->data = $this->Product->getDetails($id); //This action gets complete product information
+                        $this->request->data = $this->Product->getDetails($id); //This action gets complete product information
 			
 		}
 
@@ -746,27 +746,27 @@ class ProductsController extends AppController {
 	
 	function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Product', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Product->delete($id)) {
-			$this->Session->setFlash(__('Product deleted', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Product deleted'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('The Product could not be deleted. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+		$this->Session->setFlash(__('The Product could not be deleted. Please, try again.'), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('action' => 'index'));
 	}
 
 	function admin_duplicate($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Product', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Product->duplicate($id)) {
-			$this->Session->setFlash(__('Product duplicated', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Product duplicated'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('The Product could not be duplicated. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+		$this->Session->setFlash(__('The Product could not be duplicated. Please, try again.'), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('action' => 'index'));
 	}
 
@@ -779,7 +779,7 @@ class ProductsController extends AppController {
 
 	function platform_view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Product', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('product', $this->Product->read(null, $id));
@@ -787,46 +787,46 @@ class ProductsController extends AppController {
 
 	function platform_add() {
 		if ($this->RequestHandler->isPost()) {
-			$this->Product->set($this->data);
+			$this->Product->set($this->request->data);
 
-			if ($this->Product->save($this->data)) {
-				$this->Session->setFlash(__('The Product has been saved', true), 'default', array('class'=>'flash_success'));
+			if ($this->Product->save($this->request->data)) {
+				$this->Session->setFlash(__('The Product has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Product could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('The Product could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		}
 		$this->set('errors', $this->Product->invalidFields());
 	}
 
 	function platform_edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid Product', true), 'default', array('class'=>'flash_failure'));
+		if (!$id && empty($this->request->data)) {
+			$this->Session->setFlash(__('Invalid Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->Product->save($this->data)) {
-				$this->Session->setFlash(__('The Product has been saved', true), 'default', array('class'=>'flash_success'));
+		if (!empty($this->request->data)) {
+			if ($this->Product->save($this->request->data)) {
+				$this->Session->setFlash(__('The Product has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Product could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('The Product could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Product->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->Product->read(null, $id);
 		}
 	}
 
 	function platform_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Product', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Product->delete($id)) {
-			$this->Session->setFlash(__('Product deleted', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Product deleted'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('The Product could not be deleted. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+		$this->Session->setFlash(__('The Product could not be deleted. Please, try again.'), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('action' => 'index'));
 	}
 	
@@ -835,7 +835,7 @@ class ProductsController extends AppController {
 		$id = !empty($_POST['id']) ? $_POST['id'] : false;
 		
 		if(!$id) {
-			$this->Session->setFlash(__('Invalid id for Product', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect($this->referer());
 		}
 		
@@ -848,10 +848,10 @@ class ProductsController extends AppController {
 		}
 		
 		if($this->addToCart($id, $qty)) {
-			$this->Session->setFlash(__('Product added to cart', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Product added to cart'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'view_cart'));
 		}
-		$this->Session->setFlash(__('The Product could not be added to cart. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+		$this->Session->setFlash(__('The Product could not be added to cart. Please, try again.'), 'default', array('class'=>'flash_failure'));
 		$this->redirect($this->referer());
 	}
 	
@@ -864,15 +864,15 @@ class ProductsController extends AppController {
 	function delete_from_cart($id = false, $cart_id = false) {
 		
 		if(!($id) OR !($cart_id)) {
-			$this->Session->setFlash(__('Invalid id for Product', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'view_cart'));
 		}
 		
 		if($this->deleteFromCart($id, $cart_id)) {
-			$this->Session->setFlash(__('Product removed from cart', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Product removed from cart'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'view_cart'));
 		}
-		$this->Session->setFlash(__('The Product could not be removed from cart. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+		$this->Session->setFlash(__('The Product could not be removed from cart. Please, try again.'), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('action' => 'view_cart'));
 	}
 	
@@ -929,10 +929,10 @@ class ProductsController extends AppController {
 		$products = "";
 		$product_group_id = "";
 	  
-		if (!empty($this->data)) {
-			if (isset($this->data['Product']['title'])) {
-				$title = addslashes(trim($this->data['Product']['title']));
-				$product_group_id = (int)$this->data['Product']['product_group_id'];
+		if (!empty($this->request->data)) {
+			if (isset($this->request->data['Product']['title'])) {
+				$title = addslashes(trim($this->request->data['Product']['title']));
+				$product_group_id = (int)$this->request->data['Product']['product_group_id'];
 				$conditions = array(
 					       'Product.title LIKE "%'.$title.'%"',
 					       'Product.shop_id' => Shop::get('Shop.id'),
@@ -948,7 +948,7 @@ class ProductsController extends AppController {
 		$this->set(compact('products', 'product_group_id'));
 		
 		
-		$this->render('admin_product_search', 'ajax',ELEMENTS.'/admin_product_search.ctp');
+		$this->render('admin_product_search', 'ajax',APP . 'View' . DS . 'Elements' . DS.'/admin_product_search.ctp');
 	       
 	}//end admin_search()
         
@@ -960,7 +960,7 @@ class ProductsController extends AppController {
          * @return array of options
          * */
         public function admin_remove_variant_option($id) {
-                if ($this->params['isAjax']) {
+                if ($this->request->params['isAjax']) {
                         $this->layout = "";
                 }
                 if ($this->Product->Variant->VariantOption->delete($id)) {
@@ -972,18 +972,18 @@ class ProductsController extends AppController {
 	
 	public function admin_add_variant($productId = false) {
 		if(!($productId)) {
-			$this->Session->setFlash(__('Invalid id for Product', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'admin_index'));
 		}
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Product->Variant->create();
 			
-			$this->data['Variant']['product_id'] = $productId;
+			$this->request->data['Variant']['product_id'] = $productId;
 			
-			if ($this->Product->Variant->saveAll($this->data))	{
-				$this->Session->setFlash(__('Variant added', true), 'default', array('class'=>'flash_success'));	
+			if ($this->Product->Variant->saveAll($this->request->data))	{
+				$this->Session->setFlash(__('Variant added'), 'default', array('class'=>'flash_success'));	
 			} else {
-				$this->Session->setFlash(__('Adding new Variant failed', true), 'default', array('class'=>'flash_failure'));	
+				$this->Session->setFlash(__('Adding new Variant failed'), 'default', array('class'=>'flash_failure'));	
 			}
 			$this->redirect($this->referer());	
 		}
@@ -993,17 +993,17 @@ class ProductsController extends AppController {
 	public function admin_edit_variant($productId = false, $variantId = false) {
 		
 		if(!($variantId) || !($productId)) {
-			$this->Session->setFlash(__('Invalid id for Product or Variant', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for Product or Variant'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'admin_index'));
 		}
 		
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			
-			if ($this->Product->Variant->saveAll($this->data))	{
-				$this->Session->setFlash(__('Variant edited successfully', true), 'default', array('class'=>'flash_success'));
+			if ($this->Product->Variant->saveAll($this->request->data))	{
+				$this->Session->setFlash(__('Variant edited successfully'), 'default', array('class'=>'flash_success'));
 				
 			} else {
-				$this->Session->setFlash(__('Update Variant failed', true), 'default', array('class'=>'flash_failure'));	
+				$this->Session->setFlash(__('Update Variant failed'), 'default', array('class'=>'flash_failure'));	
 			}
 			
 			$this->redirect($this->referer());	
@@ -1013,15 +1013,15 @@ class ProductsController extends AppController {
 	
 	public function admin_delete_variant($productId = false, $variantId = false) {
 		if(!($variantId) || !($productId)) {
-			$this->Session->setFlash(__('Invalid id for Product or Variant', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for Product or Variant'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'admin_index'));
 		}
 			
 		if ($this->Product->Variant->delete($variantId))	{
-			$this->Session->setFlash(__('Variant deleted successfully', true), 'default', array('class'=>'flash_success'));
+			$this->Session->setFlash(__('Variant deleted successfully'), 'default', array('class'=>'flash_success'));
 			
 		} else {
-			$this->Session->setFlash(__('Deleting Variant failed', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Deleting Variant failed'), 'default', array('class'=>'flash_failure'));
 		}
 		
 		$this->redirect($this->referer());	

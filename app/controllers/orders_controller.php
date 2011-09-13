@@ -45,17 +45,17 @@ class OrdersController extends AppController {
 
 		$this->Auth->allow('checkout', 'checkout_step_1', 'success',  'pay', 'updatePrices');
 		
-		if ($this->action == 'admin_index') {
+		if ($this->request->action == 'admin_index') {
 			$this->Security->validatePost = false;
 		}
 		
-		if(($this->action == 'checkout') AND (!empty($this->params['url']['uuid']))) {
+		if(($this->request->action == 'checkout') AND (!empty($this->request->params['url']['uuid']))) {
 			
-			$uuid = $this->params['url']['uuid'];
+			$uuid = $this->request->params['url']['uuid'];
 			$siteTransfer = ClassRegistry::init('SiteTransfer');
 			$data = $siteTransfer->findById($uuid);
 			$this->Session->id($data['SiteTransfer']['sess_id']);
-			$this->Session->write('Shop.' . $this->params['shop_id'] . '.PayPalResult.TOKEN', $data['SiteTransfer']['paypal_token']);
+			$this->Session->write('Shop.' . $this->request->params['shop_id'] . '.PayPalResult.TOKEN', $data['SiteTransfer']['paypal_token']);
 			// if session read write fails for paymentoption then need to re-evaluate this.
 			$siteTransfer->delete($uuid);
 			
@@ -118,7 +118,7 @@ class OrdersController extends AppController {
 	function admin_view($id = null) {
 		
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Order', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index',
 					      'admin' => true));
 		}
@@ -135,7 +135,7 @@ class OrdersController extends AppController {
 		}
 		
 		if (!$this->checkCorrectShop($order['Order']['shop_id'])) {
-			$this->Session->setFlash(__('You do not have the permission to view this order', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('You do not have the permission to view this order'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index',
 					      'admin' => true));
 		}
@@ -145,7 +145,7 @@ class OrdersController extends AppController {
 	
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Order', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('order', $this->Order->read(null, $id));
@@ -154,13 +154,13 @@ class OrdersController extends AppController {
 	
 
 	function add() {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Order->create();
-			if ($this->Order->save($this->data)) {
-				$this->Session->setFlash(__('Order has been saved', true), 'default', array('class'=>'flash_success'));
+			if ($this->Order->save($this->request->data)) {
+				$this->Session->setFlash(__('Order has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('Order could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('Order could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		}
 	}
@@ -168,8 +168,8 @@ class OrdersController extends AppController {
 	function checkout($shopId, $hash) {
 		$cart = $this->Order->Customer->User->Cart;
 		
-		$uuid = !empty($this->params['url']['uuid']);
-		$paypal = isset($this->params['url']['paypal']);
+		$uuid = !empty($this->request->params['url']['uuid']);
+		$paypal = isset($this->request->params['url']['paypal']);
 		$comingFromPayPalSite = ($uuid AND $paypal);
 		
 		$customerId = 0;
@@ -192,8 +192,8 @@ class OrdersController extends AppController {
 				$this->Session->write('Shop.' . $shopId . '.checkoutRedirectPass', false);
 				$this->Session->delete('Auth.redirect');
 			} else {
-				$this->Session->write('Shop.' . $shopId . '.checkoutRedirect', FULL_BASE_URL . $this->here);
-				$this->Session->write('Auth.redirect', FULL_BASE_URL . $this->here);
+				$this->Session->write('Shop.' . $shopId . '.checkoutRedirect', FULL_BASE_URL . $this->request->here);
+				$this->Session->write('Auth.redirect', FULL_BASE_URL . $this->request->here);
 				
 				$this->redirect(array('controller'=>'customers',
 						      'action'    => 'login'));	
@@ -262,7 +262,7 @@ class OrdersController extends AppController {
 				$this->set('totalAmountWithShipping', $cartData['Cart']['amount']);
 			}
 			
-		} else if (!empty($this->data) AND $this->RequestHandler->isPost()) {
+		} else if (!empty($this->request->data) AND $this->RequestHandler->isPost()) {
 			
 			// redirection will take place within this function if successful
 			// actually none of the 3 params are used except for shopId
@@ -271,8 +271,8 @@ class OrdersController extends AppController {
 					 'hash'=>$hash,
 					 );
 			
-			if($this->data['Order']['fixed_delivery'] > 0) {
-				$options['delivery_address_id'] = $this->data['Order']['fixed_delivery'];
+			if($this->request->data['Order']['fixed_delivery'] > 0) {
+				$options['delivery_address_id'] = $this->request->data['Order']['fixed_delivery'];
 			}
 		
 			$this->syncAddressCustomerOrder($options);
@@ -305,18 +305,18 @@ class OrdersController extends AppController {
 		
 		// only for invalid customers, do we set the customer_id to 0
 		if ($validCustomer) {
-			$this->data['Order']['customer_id'] = User::get('Customer.id');
-			$this->data['User']['email'] = User::get('User.email');
+			$this->request->data['Order']['customer_id'] = User::get('Customer.id');
+			$this->request->data['User']['email'] = User::get('User.email');
 		} else {
-			$this->data['Order']['customer_id'] = 0;
-			$this->data['User']['email'] = $GECDFields['EMAIL'];
+			$this->request->data['Order']['customer_id'] = 0;
+			$this->request->data['User']['email'] = $GECDFields['EMAIL'];
 		}
 		
-		$this->data['DeliveryAddress']['same'] = true;
-		$this->data['Order']['shop_id'] = $shopId;
-		$this->data['Customer']['shop_id'] = $shopId;
+		$this->request->data['DeliveryAddress']['same'] = true;
+		$this->request->data['Order']['shop_id'] = $shopId;
+		$this->request->data['Customer']['shop_id'] = $shopId;
 		
-		$this->data['Cart']['hash'] = $hash;
+		$this->request->data['Cart']['hash'] = $hash;
 		
 		$country = ClassRegistry::init('Country');
 		$country->recursive = -1;
@@ -327,13 +327,13 @@ class OrdersController extends AppController {
 			$countryId = $deliveredCountry['Country']['id'];
 		}
 		
-		$this->data['BillingAddress'][0]['full_name'] = $GECDFields['SHIPTONAME'];
-		$this->data['BillingAddress'][0]['address'] = $GECDFields['SHIPTOSTREET'];
-		$this->data['BillingAddress'][0]['city']    = $GECDFields['SHIPTOCITY'];
-		$this->data['BillingAddress'][0]['region'] = isset($GECDFields['SHIPTOSTATE']) ? $GECDFields['SHIPTOSTATE'] : '';
-		$this->data['BillingAddress'][0]['zip_code'] = $GECDFields['SHIPTOZIP'];
-		$this->data['BillingAddress'][0]['country'] = $countryId;
-		$this->data['BillingAddress'][0]['type'] = BILLING;
+		$this->request->data['BillingAddress'][0]['full_name'] = $GECDFields['SHIPTONAME'];
+		$this->request->data['BillingAddress'][0]['address'] = $GECDFields['SHIPTOSTREET'];
+		$this->request->data['BillingAddress'][0]['city']    = $GECDFields['SHIPTOCITY'];
+		$this->request->data['BillingAddress'][0]['region'] = isset($GECDFields['SHIPTOSTATE']) ? $GECDFields['SHIPTOSTATE'] : '';
+		$this->request->data['BillingAddress'][0]['zip_code'] = $GECDFields['SHIPTOZIP'];
+		$this->request->data['BillingAddress'][0]['country'] = $countryId;
+		$this->request->data['BillingAddress'][0]['type'] = BILLING;
 		
 		return $countryId;
 	}
@@ -356,12 +356,12 @@ class OrdersController extends AppController {
 		// instantiate the Cart model
 		$cart = $this->Order->Customer->User->Cart;
 		// this chunk of if-else statement is to determine customer id
-		if ($this->data['Order']['customer_id'] > 0) {
-			$customerId = $this->data['Order']['customer_id'];
+		if ($this->request->data['Order']['customer_id'] > 0) {
+			$customerId = $this->request->data['Order']['customer_id'];
 			$this->Order->Customer->id = $customerId;
 		} else {
 			// check database for existing customer
-			$customerId = $this->Order->Customer->getExistingByShopIdAndEmail($this->data);
+			$customerId = $this->Order->Customer->getExistingByShopIdAndEmail($this->request->data);
 			
 		}
 		
@@ -379,9 +379,9 @@ class OrdersController extends AppController {
 		} else {
 			
 			// duplicate the delivery address if same as billing address
-			if ($this->data['DeliveryAddress']['same']) {
-				$this->data['DeliveryAddress'] = $this->data['BillingAddress'];
-				$this->data['DeliveryAddress'][0]['type'] = DELIVERY;
+			if ($this->request->data['DeliveryAddress']['same']) {
+				$this->request->data['DeliveryAddress'] = $this->request->data['BillingAddress'];
+				$this->request->data['DeliveryAddress'][0]['type'] = DELIVERY;
 			}
 			
 			
@@ -389,14 +389,14 @@ class OrdersController extends AppController {
 			// if customer is existing in database
 			if ($customerId){
 				// retrieve addresses from database	
-				$billingAddressId = $this->Order->Customer->getExistingBillingAddress($this->data);
+				$billingAddressId = $this->Order->Customer->getExistingBillingAddress($this->request->data);
 				
-				$deliveryAddressId = $this->Order->Customer->getExistingDeliveryAddress($this->data);
+				$deliveryAddressId = $this->Order->Customer->getExistingDeliveryAddress($this->request->data);
 				
 				// if billing address does not exist in database, we will create new billing address
 				if (!$billingAddressId) {
 					
-					if ($this->Order->Customer->setNewBillingAddress($this->data)) {
+					if ($this->Order->Customer->setNewBillingAddress($this->request->data)) {
 						$billingAddressId = $this->Order->Customer->BillingAddress->id;
 					} else {
 						$result = false;
@@ -405,7 +405,7 @@ class OrdersController extends AppController {
 				
 				// if delivery address does not exist in database, we will create new delivery address
 				if (!$deliveryAddressId AND $billingAddressId) {
-					if ($this->Order->Customer->setNewDeliveryAddress($this->data)) {
+					if ($this->Order->Customer->setNewDeliveryAddress($this->request->data)) {
 						$deliveryAddressId = $this->Order->Customer->DeliveryAddress->id;
 					} else {
 						$result = false;
@@ -416,15 +416,15 @@ class OrdersController extends AppController {
 				
 			} else {
 				// we need to have a fullname for the user, so we take it from the billing address
-				$this->data['User']['full_name'] = $this->data['BillingAddress'][0]['full_name'];
-				$this->data['User']['name_to_call'] = $this->data['BillingAddress'][0]['full_name'];
+				$this->request->data['User']['full_name'] = $this->request->data['BillingAddress'][0]['full_name'];
+				$this->request->data['User']['name_to_call'] = $this->request->data['BillingAddress'][0]['full_name'];
 				// because we need to create brand new User so we need to create random password
-				$this->data['User']['password'] = $this->Auth->password($this->RandomString->generate());
+				$this->request->data['User']['password'] = $this->Auth->password($this->RandomString->generate());
 				// hackish code to pass the shop id into the uniqueEmailInShop validator
 				// read first few lines of uniqueEmailInShop method in User model
-				$this->data['User']['shop_id'] = $this->data['Customer']['shop_id'];
+				$this->request->data['User']['shop_id'] = $this->request->data['Customer']['shop_id'];
 				
-				$result = $this->Order->Customer->signupNewAccountDuringCheckout($this->data);
+				$result = $this->Order->Customer->signupNewAccountDuringCheckout($this->request->data);
 				$customerId = $this->Order->Customer->id;
 				$billingAddressId = $this->Order->Customer->BillingAddress->field('id');
 				$deliveryAddressId = $this->Order->Customer->DeliveryAddress->field('id');
@@ -434,7 +434,7 @@ class OrdersController extends AppController {
 		
 		// if at this point in time, we get a $result == false, it means something went wrong prior.
 		if (!$result) {
-			$this->Session->setFlash(__('The Order could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('The Order could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			
 		} else {
 		
@@ -450,7 +450,7 @@ class OrdersController extends AppController {
 			$orderDetails['delivery_address_id'] = $deliveryAddressId;
 			
 			// we fix the contact email on the order based on the email supplied in the form.
-			$orderDetails['contact_email'] = (isset($this->data['User']['email'])) ? $this->data['User']['email'] : '';
+			$orderDetails['contact_email'] = (isset($this->request->data['User']['email'])) ? $this->request->data['User']['email'] : '';
 				
 			// now we get the cart data again
 			$cartData = $cart->findByHash($hash);
@@ -485,10 +485,10 @@ class OrdersController extends AppController {
 						      'hash' => $orderHash,
 						      'shop_id' => $shopId));
 				
-				$this->Session->setFlash(__('The Order has been saved', true), 'default', array('class'=>'flash_success'));
+				$this->Session->setFlash(__('The Order has been saved'), 'default', array('class'=>'flash_success'));
 				
 			} else {
-				$this->Session->setFlash(__('The Order could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('The Order could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 			
 		}
@@ -523,8 +523,8 @@ class OrdersController extends AppController {
 	
 	function success($shop_id = null) {
 		
-		$paypal = isset($this->params['url']['paypal']);
-		$tokenValueOn = isset($this->params['url']['token']);
+		$paypal = isset($this->request->params['url']['paypal']);
+		$tokenValueOn = isset($this->request->params['url']['token']);
 		$shops_payment_module_id = $this->Order->Shop->getPayPalShopsPaymentModuleId($shop_id);
 		
 		/** this is for PPEC at Payment pt ONLY **/
@@ -551,7 +551,7 @@ class OrdersController extends AppController {
 				// extract payerid, payeremail, payername, other info to update paypal_payers
 				$paypalPayer = $this->Order->Payment->PaypalPayersPayment->PaypalPayer->saveAfterGECD($PayPalRequestSet['GECDResult']);
 				
-				$tokenValue = $this->params['url']['token'];
+				$tokenValue = $this->request->params['url']['token'];
 				
 				
 				// call the DECP to complete the transaction for PPEC at Payment point
@@ -619,7 +619,7 @@ class OrdersController extends AppController {
 		$this->set('link', $link);
 	}
 	
-	// expect $this->params to have cart_id, order_id, shipping_rate_id
+	// expect $this->request->params to have cart_id, order_id, shipping_rate_id
 	function updatePrices() {
 		
 		$successJSON = false;
@@ -628,24 +628,24 @@ class OrdersController extends AppController {
 		$this->layout = 'json';
 		
 		// validate for cart_id, order_id, shipping_rate_id
-		if (!array_key_exists('cart_id', $this->params['form']) ||
-		    !array_key_exists('order_id', $this->params['form']) ||
-		    !array_key_exists('shipping_rate_id', $this->params['form'])
+		if (!array_key_exists('cart_id', $this->request->params['form']) ||
+		    !array_key_exists('order_id', $this->request->params['form']) ||
+		    !array_key_exists('shipping_rate_id', $this->request->params['form'])
 		    ) {
 			$successJSON = false;
-			$contents['reason'] = __('Invalid parameters', true);
-		} else if ($this->params['isAjax']) {
-			$data = $this->Order->Cart->updatePricesInCartAndOrder($this->params['form']['cart_id'], $this->params['form']['order_id']);
+			$contents['reason'] = __('Invalid parameters');
+		} else if ($this->request->params['isAjax']) {
+			$data = $this->Order->Cart->updatePricesInCartAndOrder($this->request->params['form']['cart_id'], $this->request->params['form']['order_id']);
 			
 			if ($data) {
-				$price = $this->Order->Shop->ShippedToCountry->ShippingRate->field('price', array('id'=>$this->params['form']['shipping_rate_id']));
+				$price = $this->Order->Shop->ShippedToCountry->ShippingRate->field('price', array('id'=>$this->request->params['form']['shipping_rate_id']));
 				$successJSON = true;
 				App::import('Helper', 'Number');
 				$number = new NumberHelper();
 				$contents['totalAmountWithShipping'] = $number->currency($data['Order']['amount'] + $price, 'SGD');
 				
 			} else {
-				$contents['reason'] = __('Cannot update prices', true);
+				$contents['reason'] = __('Cannot update prices');
 			}
 			
 			
@@ -775,7 +775,7 @@ class OrdersController extends AppController {
 			$forPayPalAtCheckout = (($sessionHash == $hash) AND ($PayPalRequest != false));
 			
 			// get the price of shipping rate selected
-			/** at this point the $this->data is this
+			/** at this point the $this->request->data is this
 			 *(
 				[_Token] => Array
 				    (
@@ -804,23 +804,23 @@ class OrdersController extends AppController {
 			    **/
 			$shippingRateId = 0;
 			$rate = false;
-			if (isset($this->data['Shipment']['shipping_rate_id'])) {
-				$shippingRateId = $this->data['Shipment']['shipping_rate_id'];
+			if (isset($this->request->data['Shipment']['shipping_rate_id'])) {
+				$shippingRateId = $this->request->data['Shipment']['shipping_rate_id'];
 			}
 			
 			if ($shippingRateId > 0) {
-				$rate = $this->Order->Shop->ShippedToCountry->ShippingRate->read(null, $this->data['Shipment']['shipping_rate_id']);
+				$rate = $this->Order->Shop->ShippedToCountry->ShippingRate->read(null, $this->request->data['Shipment']['shipping_rate_id']);
 				
 			} 
 			
 			if (isset($rate['ShippingRate'])) {
-				$this->data['ShippingRate'] = $rate['ShippingRate'];
+				$this->request->data['ShippingRate'] = $rate['ShippingRate'];
 			}
 			
 			
 			// for payment option point
-			$payment 	 = $this->data['Payment']['shops_payment_module_id'];
-			$this->Order->id = $this->data['Payment']['order_id'];
+			$payment 	 = $this->request->data['Payment']['shops_payment_module_id'];
+			$this->Order->id = $this->request->data['Payment']['order_id'];
 			
 			if ($forPayPalAtCheckout) {
 				
@@ -918,8 +918,8 @@ class OrdersController extends AppController {
 				$PayPalRequest['Payments'][0]['amt'] = $totalAmt;
 				
 				// now set the invnum for PPEC from Checkout Point
-				if (isset($this->data['Order']['order_no'])) {
-					$PayPalRequest['Payments'][0]['invnum'] = substr($this->data['Order']['order_no'], 0, 127);
+				if (isset($this->request->data['Order']['order_no'])) {
+					$PayPalRequest['Payments'][0]['invnum'] = substr($this->request->data['Order']['order_no'], 0, 127);
 				}
 				
 				//$this->log($PayPalRequest);
@@ -932,18 +932,18 @@ class OrdersController extends AppController {
 				if ($result['ACK'] == 'Success') {
 					
 					$paymentStatus = PAYMENT_PAID;
-					$this->data['Payment']['transaction_id_from_gateway'] = $result['PAYMENTS'][0]['TRANSACTIONID'];
-					$this->data['Payment']['gateway_name'] = 'Paypal Express Checkout at Checkout';
-					$this->data['Payment']['token_from_gateway'] = $result['TOKEN'];
-					$this->data['Payment']['ordertime_from_gateway'] = $result['PAYMENTS'][0]['ORDERTIME'];
-					$this->data['Payment']['currencycode_from_gateway'] = $result['PAYMENTS'][0]['CURRENCYCODE'];
-					$this->data['Payment']['feeamt_from_gateway'] = $result['PAYMENTS'][0]['FEEAMT'];
-					$this->data['Payment']['settleamt_from_gateway'] = $result['PAYMENTS'][0]['SETTLEAMT'];
-					$this->data['Payment']['taxamt_from_gateway'] = $result['PAYMENTS'][0]['TAXAMT'];
-					$this->data['Payment']['exchangerate_from_gateway'] = $result['PAYMENTS'][0]['EXCHANGERATE'];
-					$this->data['Payment']['paymentstatus_from_gateway'] = $result['PAYMENTS'][0]['PAYMENTSTATUS'];
-					$this->data['Payment']['pendingreason_from_gateway'] = $result['PAYMENTS'][0]['PENDINGREASON'];
-					$this->data['Payment']['reasoncode_from_gateway'] = $result['PAYMENTS'][0]['REASONCODE'];
+					$this->request->data['Payment']['transaction_id_from_gateway'] = $result['PAYMENTS'][0]['TRANSACTIONID'];
+					$this->request->data['Payment']['gateway_name'] = 'Paypal Express Checkout at Checkout';
+					$this->request->data['Payment']['token_from_gateway'] = $result['TOKEN'];
+					$this->request->data['Payment']['ordertime_from_gateway'] = $result['PAYMENTS'][0]['ORDERTIME'];
+					$this->request->data['Payment']['currencycode_from_gateway'] = $result['PAYMENTS'][0]['CURRENCYCODE'];
+					$this->request->data['Payment']['feeamt_from_gateway'] = $result['PAYMENTS'][0]['FEEAMT'];
+					$this->request->data['Payment']['settleamt_from_gateway'] = $result['PAYMENTS'][0]['SETTLEAMT'];
+					$this->request->data['Payment']['taxamt_from_gateway'] = $result['PAYMENTS'][0]['TAXAMT'];
+					$this->request->data['Payment']['exchangerate_from_gateway'] = $result['PAYMENTS'][0]['EXCHANGERATE'];
+					$this->request->data['Payment']['paymentstatus_from_gateway'] = $result['PAYMENTS'][0]['PAYMENTSTATUS'];
+					$this->request->data['Payment']['pendingreason_from_gateway'] = $result['PAYMENTS'][0]['PENDINGREASON'];
+					$this->request->data['Payment']['reasoncode_from_gateway'] = $result['PAYMENTS'][0]['REASONCODE'];
 					
 				} else if ($result['ACK'] == 'Failure') {
 					
@@ -998,8 +998,8 @@ class OrdersController extends AppController {
 				$Payments[0]['shiptocountrycode'] = substr($deliveryAddress['Country']['iso'], 0, 2);
 							
 				// now set the invnum for PPEC from Payment Point.
-				if (isset($this->data['Order']['order_no'])) {
-					$Payments[0]['invnum'] = substr($this->data['Order']['order_no'], 0, 127);
+				if (isset($this->request->data['Order']['order_no'])) {
+					$Payments[0]['invnum'] = substr($this->request->data['Order']['order_no'], 0, 127);
 				}
 				
 				$options = array('payments'=>$Payments,
@@ -1011,8 +1011,8 @@ class OrdersController extends AppController {
 						);
 				
 				// now set the email for PPEC from Payment Point
-				if (isset($this->data['Order']['contact_email'])) {
-					$options['email'] = substr($this->data['Order']['contact_email'], 0, 127);
+				if (isset($this->request->data['Order']['contact_email'])) {
+					$options['email'] = substr($this->request->data['Order']['contact_email'], 0, 127);
 				}
 				
 				$orderStatus = ORDER_OPENED;
@@ -1031,16 +1031,16 @@ class OrdersController extends AppController {
 				} 
 				
 				// assign unique paypal transaction id to the payment
-				$this->data['Payment']['token_from_gateway'] = $PayPalResult['TOKEN'];
-				$this->data['Payment']['gateway_name']       = 'Paypal Express Checkout at Payment';
+				$this->request->data['Payment']['token_from_gateway'] = $PayPalResult['TOKEN'];
+				$this->request->data['Payment']['gateway_name']       = 'Paypal Express Checkout at Payment';
 				
 				
-				$this->data['Order']['status'] = $orderStatus;
-				$this->data['Payment']['status'] =  $paymentStatus;
+				$this->request->data['Order']['status'] = $orderStatus;
+				$this->request->data['Payment']['status'] =  $paymentStatus;
 				
 				
 				// save payment and shipment data as incomplete for payment
-				$result = $this->Order->savePaymentAndShipment($this->data);
+				$result = $this->Order->savePaymentAndShipment($this->request->data);
 				
 				if ($result) {
 					// we need to write in the order id that is processed by paypalec at payment point
@@ -1060,12 +1060,12 @@ class OrdersController extends AppController {
 			
 			// all payment modes will reach this part except for
 			// PPEC at Payment Point
-			$this->data['Order']['status'] = $orderStatus;
-			$this->data['Payment']['status'] =  $paymentStatus;
+			$this->request->data['Order']['status'] = $orderStatus;
+			$this->request->data['Payment']['status'] =  $paymentStatus;
 			
-			if ($this->Order->savePaymentAndShipment($this->data)) {
+			if ($this->Order->savePaymentAndShipment($this->request->data)) {
 				
-				$this->Session->setFlash(__('Order has been saved', true), 'default', array('class'=>'flash_success'));
+				$this->Session->setFlash(__('Order has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'success',
 						      'controller' => 'orders',
 						      'shop_id' => $shop_id));

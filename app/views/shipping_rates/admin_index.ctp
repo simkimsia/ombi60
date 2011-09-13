@@ -26,7 +26,7 @@ table tr:nth-child(2n) td {
 }
 </style>
 <div>
-    <div class="text_center"><h2><?php __('Shipping');?></h2></div>	
+    <div class="text_center"><h2><?php echo __('Shipping');?></h2></div>	
     <table cellpadding="0" cellspacing="0" class="products-table">
         <?php
         $i = 0;
@@ -65,7 +65,7 @@ table tr:nth-child(2n) td {
 	                echo $this->Number->format($shippingRate['ShippingRate']['price'], array('places' => 2, 'escape' => false, 'decimals' => '.',)) . " SGD";
 	                ?></td>
 	                <td class="actions other_td">		
-		                <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $shippingRate['ShippingRate']['id']), null, sprintf(__('Are you sure you want to delete %s for %s?', true), $shippingRate['ShippingRate']['name'], $displayCountryTitle)); ?>
+		                <?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $shippingRate['ShippingRate']['id']), null, sprintf(__('Are you sure you want to delete %s for %s?'), $shippingRate['ShippingRate']['name'], $displayCountryTitle)); ?>
 	                </td>
                 </tr>
             <?php

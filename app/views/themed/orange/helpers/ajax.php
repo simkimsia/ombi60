@@ -540,7 +540,7 @@ class AjaxHelper extends AppHelper {
  * @return boolean True if the current request is a Prototype Ajax update call
  */
 	function isAjax() {
-		return (isset($this->params['isAjax']) && $this->params['isAjax'] === true);
+		return (isset($this->request->params['isAjax']) && $this->request->params['isAjax'] === true);
 	}
 /**
  * Creates a draggable element.  For a reference on the options for this function,

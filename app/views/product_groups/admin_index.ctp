@@ -2,16 +2,16 @@
 <div class="collections">
   <div class="text_center">
     <h2>
-      <?php __('Product Collections'); ?>
+      <?php echo __('Product Collections'); ?>
     </h2>
       <?php 
-        echo $this->Html->link(__('Create new Smart Collection', true), array('action' => 'add_smart'));
-        echo ' | '. $this->Html->link(__('Create new Custom Collection', true), array('action' => 'add_custom'));
+        echo $this->Html->link(__('Create new Smart Collection'), array('action' => 'add_smart'));
+        echo ' | '. $this->Html->link(__('Create new Custom Collection'), array('action' => 'add_custom'));
       ?>
 
   </div>
   <div class="list-smart-collections">
-	<h2><?php __('Smart Collections');?></h2>
+	<h2><?php echo __('Smart Collections');?></h2>
   <p>A smart collection is a collection of products that is based on certain rules.</p>
   <p>Examples: A collection where all the products are of a particular vendor, a collection where the prices are above a certain price</p>
   
@@ -77,13 +77,13 @@
 	
 
 <div class="blogs">
-	<h2><?php __('Custom Collections');?></h2>
+	<h2><?php echo __('Custom Collections');?></h2>
 	<p>A custom collection is a collection where you hand-pick the products to form a collection</p>
 	<table cellpadding="0" cellspacing="0" class="products-table">
 	<tr>
 		
-			<th><?php __('Title');?></th>
-			<th class="text_center"><?php __('Modified');?></th>
+			<th><?php echo __('Title');?></th>
+			<th class="text_center"><?php echo __('Modified');?></th>
 			<!--<th class="actions text_center"><?php //__('Actions');?></th>-->
 	</tr>
 	<?php
@@ -98,7 +98,7 @@
 	<tr<?php echo $class;?>>
 		
 		<td width="33%">
-		<?php echo $this->Html->link(__($collection['ProductGroup']['title'], true), array('action' => 'view_custom', $collection['ProductGroup']['id'])); ?>
+		<?php echo $this->Html->link(__($collection['ProductGroup']['title']), array('action' => 'view_custom', $collection['ProductGroup']['id'])); ?>
       <?php
 
         echo "<br />";

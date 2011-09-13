@@ -1,6 +1,6 @@
 <?php echo $this->element('admin_scripts'); ?>
 <div>
-	<h2 class="text_center"><?php __('Domains');?></h2>
+	<h2 class="text_center"><?php echo __('Domains');?></h2>
 	<div id="domain_intro_text">
 	    <strong>Domains</strong>
 	    <br>
@@ -14,18 +14,18 @@
 	
 	<?php
 	//echo $this->Paginator->counter(array(
-	//'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+	//'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%')
 	//));
 	?>
 
 	<!--<div class="paging">
-		<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+		<?php echo $this->Paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
 	 | 	<?php echo $this->Paginator->numbers();?>
  |
-		<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+		<?php echo $this->Paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
 	</div>-->
 	<div class="background_gray">
-    	<?php echo $this->Html->link(sprintf(__('Add a domain that you own', true)), "#", array('onclick' => 'showNewDomainForm();return false;', 'class' => 'link_class', 'id' => 'add_domain',)); ?>
+    	<?php echo $this->Html->link(sprintf(__('Add a domain that you own')), "#", array('onclick' => 'showNewDomainForm();return false;', 'class' => 'link_class', 'id' => 'add_domain',)); ?>
 	<?php
 	echo $this->element('add_domain', array('shopId' => $shopId));
 	?>

@@ -25,7 +25,7 @@
 		<td class="actions">
 			
 			
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $shippingRate['ShippingRate']['id']), null, sprintf(__('Are you sure you want to delete %s for %s?', true), $shippingRate['ShippingRate']['name'], $displayCountryTitle)); ?>
+			<?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $shippingRate['ShippingRate']['id']), null, sprintf(__('Are you sure you want to delete %s for %s?'), $shippingRate['ShippingRate']['name'], $displayCountryTitle)); ?>
 		</td>
 	</tr>
 	

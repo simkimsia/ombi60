@@ -1,8 +1,8 @@
 <fieldset>
-        <legend><?php __('Options');?></legend>
+        <legend><?php echo __('Options');?></legend>
         <div id="variants">
             <?php
-            $productOptions = !empty($this->data['Product']['options']) ? $this->data['Product']['options']: array();
+            $productOptions = !empty($this->request->data['Product']['options']) ? $this->request->data['Product']['options']: array();
             
             // we need to set this hidden field so that the options will definitely be updated
             echo $this->Form->input('Product.edit_options', array('type'=>'hidden',
@@ -28,7 +28,7 @@
             <div class="clear"></div>
         </div>
         <?php
-            echo $this->Html->link('Add another option', 'javascript: void(0);', array('id' => 'plus', 'style' => ife((count($productOptions) < 3), 'display: block', 'display: none;')));
+            echo $this->Html->link('Add another option', 'javascript: void(0);', array('id' => 'plus', 'style' => empty((count($productOptions) < 3)) ? 'display: block' : 'display: none;'));
         ?>
 </fieldset>        
 

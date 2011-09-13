@@ -19,13 +19,13 @@
       <?php
       $trashPic = $this->Html->image('trash.gif');
       
-      echo $this->Html->link($trashPic, array('controller' => 'product_images', 'action' => 'delete_me', 'id'=>$id, 'product_id'=>$productImage['ProductImage']['product_id']), array('confirm' => sprintf(__('Are you sure you want to delete %s?', true), $productImage['ProductImage']['filename']), 'class' => 'delete_image', 'escape' => false));
+      echo $this->Html->link($trashPic, array('controller' => 'product_images', 'action' => 'delete_me', 'id'=>$id, 'product_id'=>$productImage['ProductImage']['product_id']), array('confirm' => sprintf(__('Are you sure you want to delete %s?'), $productImage['ProductImage']['filename']), 'class' => 'delete_image', 'escape' => false));
       
       if ($productImage['ProductImage']['cover']) {
-        echo '<span class="make_cover">' . __('Cover Image', true) . '</span>'; //$this->Html->image('tick.gif');
+        echo '<span class="make_cover">' . __('Cover Image') . '</span>'; //$this->Html->image('tick.gif');
         
       } else {
-        echo $this->Html->link(__('Make Cover', true),
+        echo $this->Html->link(__('Make Cover'),
             array('controller' => 'product_images', 'action' => 'make_this_cover', 'admin' => true, 'id'=>$id, 'product_id' => $productImage['ProductImage']['product_id']),
             array('escape' => false, 'class' => 'make_cover')); 
       }

@@ -49,8 +49,8 @@ class PaymentsController extends AppController {
 	}
 	
 	function admin_update_settings() {
-		if (!empty($this->data) AND $this->RequestHandler->isPost()) {
-			$this->Payment->ShopsPaymentModule->saveAll($this->data['ShopsPaymentModule']);
+		if (!empty($this->request->data) AND $this->RequestHandler->isPost()) {
+			$this->Payment->ShopsPaymentModule->saveAll($this->request->data['ShopsPaymentModule']);
 			$this->redirect(array('action'=>'index',
 					      'controller'=>'payments',
 					      'admin'=>true));
@@ -60,11 +60,11 @@ class PaymentsController extends AppController {
 	function admin_add_paypal_payment() {
 		
 		// attach the word paypal infront
-		$this->data['PaypalPaymentModule']['name'] = 'Paypal ' . $this->data['PaypalPaymentModule']['name'];
+		$this->request->data['PaypalPaymentModule']['name'] = 'Paypal ' . $this->request->data['PaypalPaymentModule']['name'];
 		
-		$this->data['ShopsPaymentModule']['payment_module_id'] = PAYPAL_PAYMENT_MODULE;
-		$this->data['ShopsPaymentModule']['shop_id'] = Shop::get('Shop.id');
-		$this->data['ShopsPaymentModule']['display_name'] = $this->data['PaypalPaymentModule']['name'];
+		$this->request->data['ShopsPaymentModule']['payment_module_id'] = PAYPAL_PAYMENT_MODULE;
+		$this->request->data['ShopsPaymentModule']['shop_id'] = Shop::get('Shop.id');
+		$this->request->data['ShopsPaymentModule']['display_name'] = $this->request->data['PaypalPaymentModule']['name'];
 		
 		$paymentModuleInShop = $this->Payment->ShopsPaymentModule;
 		$paymentModule = $paymentModuleInShop->PaymentModule;
@@ -73,10 +73,10 @@ class PaymentsController extends AppController {
 		$paymentModuleInShop->create();
 		
 		
-		if ($paymentModuleInShop->saveAll($this->data)) {
-			$this->Session->setFlash(__('Paypal payment has been activated', true), 'default', array('class'=>'flash_success'));
+		if ($paymentModuleInShop->saveAll($this->request->data)) {
+			$this->Session->setFlash(__('Paypal payment has been activated'), 'default', array('class'=>'flash_success'));
 		} else {
-			$this->Session->setFlash(__('Paypal payment could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Paypal payment could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 		}
 		
 		$this->redirect(array('action'=>'index'));
@@ -84,9 +84,9 @@ class PaymentsController extends AppController {
 	
 	function admin_add_custom_payment() {
 		
-		$this->data['ShopsPaymentModule']['payment_module_id'] = CUSTOM_PAYMENT_MODULE;
-		$this->data['ShopsPaymentModule']['shop_id'] = Shop::get('Shop.id');
-		$this->data['ShopsPaymentModule']['display_name'] = $this->data['CustomPaymentModule']['name'];
+		$this->request->data['ShopsPaymentModule']['payment_module_id'] = CUSTOM_PAYMENT_MODULE;
+		$this->request->data['ShopsPaymentModule']['shop_id'] = Shop::get('Shop.id');
+		$this->request->data['ShopsPaymentModule']['display_name'] = $this->request->data['CustomPaymentModule']['name'];
 		
 		$paymentModuleInShop = $this->Payment->ShopsPaymentModule;
 		$paymentModule = $paymentModuleInShop->PaymentModule;
@@ -95,10 +95,10 @@ class PaymentsController extends AppController {
 		$paymentModuleInShop->create();
 		
 		
-		if ($paymentModuleInShop->saveAll($this->data)) {
-			$this->Session->setFlash(__('Custom payment has been saved', true), 'default', array('class'=>'flash_success'));
+		if ($paymentModuleInShop->saveAll($this->request->data)) {
+			$this->Session->setFlash(__('Custom payment has been saved'), 'default', array('class'=>'flash_success'));
 		} else {
-			$this->Session->setFlash(__('Custom payment  could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Custom payment  could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 		}
 		
 		$this->redirect(array('action'=>'index'));
@@ -106,7 +106,7 @@ class PaymentsController extends AppController {
 	
 	function admin_edit_paypal_payment($id = false) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		
@@ -116,10 +116,10 @@ class PaymentsController extends AppController {
 		$paypalPaymentModuleInShop = $paymentModuleInShop->PaypalPaymentModule;
 		
 		$paypalPaymentModuleInShop->id = $id;
-		if ($paypalPaymentModuleInShop->save($this->data)) {
-			$this->Session->setFlash(__('Custom payment has been saved', true), 'default', array('class'=>'flash_success'));
+		if ($paypalPaymentModuleInShop->save($this->request->data)) {
+			$this->Session->setFlash(__('Custom payment has been saved'), 'default', array('class'=>'flash_success'));
 		} else {
-			$this->Session->setFlash(__('Custom payment  could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Custom payment  could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 		}
 		
 		$this->redirect(array('action'=>'index'));
@@ -127,7 +127,7 @@ class PaymentsController extends AppController {
 	
 	function admin_edit_custom_payment($id = false) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		
@@ -137,17 +137,17 @@ class PaymentsController extends AppController {
 		$customPaymentModuleInShop = $paymentModuleInShop->CustomPaymentModule;
 		
 		// set up the parent id for edit data for both parent and child at same time
-		$paymentModuleInShop->id = $this->data['CustomPaymentModule']['shop_payment_module_id'];
+		$paymentModuleInShop->id = $this->request->data['CustomPaymentModule']['shop_payment_module_id'];
 		// set up the child id for edit data for both parent and child at same time
-		$this->data['CustomPaymentModule']['id'] = $id;
+		$this->request->data['CustomPaymentModule']['id'] = $id;
 		// set up the parent id for edit data for both parent and child at same time
-		$this->data['ShopsPaymentModule']['id'] = $this->data['CustomPaymentModule']['shop_payment_module_id'];
-		$this->data['ShopsPaymentModule']['display_name'] = $this->data['CustomPaymentModule']['name'];
+		$this->request->data['ShopsPaymentModule']['id'] = $this->request->data['CustomPaymentModule']['shop_payment_module_id'];
+		$this->request->data['ShopsPaymentModule']['display_name'] = $this->request->data['CustomPaymentModule']['name'];
 		
-		if ($paymentModuleInShop->saveAll($this->data)) {
-			$this->Session->setFlash(__('Custom payment has been saved', true), 'default', array('class'=>'flash_success'));
+		if ($paymentModuleInShop->saveAll($this->request->data)) {
+			$this->Session->setFlash(__('Custom payment has been saved'), 'default', array('class'=>'flash_success'));
 		} else {
-			$this->Session->setFlash(__('Custom payment  could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Custom payment  could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 		}
 		
 		$this->redirect(array('action'=>'index'));
@@ -155,7 +155,7 @@ class PaymentsController extends AppController {
 	
 	function admin_delete_custom_payment($id = false) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		
@@ -164,9 +164,9 @@ class PaymentsController extends AppController {
 		$paymentModuleInShop->id = $id;
 		
 		if ($paymentModuleInShop->delete()) {
-			$this->Session->setFlash(__('Custom payment has been removed', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Custom payment has been removed'), 'default', array('class'=>'flash_failure'));
 		} else {
-			$this->Session->setFlash(__('Custom payment  could not be removed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Custom payment  could not be removed. Please, try again.'), 'default', array('class'=>'flash_failure'));
 		}
 		
 		$this->redirect(array('action'=>'index'));

@@ -20,15 +20,15 @@
         <h2>
           <?php echo $product['Product']['title']; ?>
         </h2>
-        <?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $product['Product']['id'])); ?>
+        <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $product['Product']['id'])); ?>
         &nbsp;|&nbsp;
-          <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $product['Product']['id']), null, sprintf(__('Are you sure you want to delete this product?', true), $product['Product']['id'])); ?>&nbsp;|&nbsp;
-          <?php echo $this->Html->link(__('Back to Products', true), array('action' => 'index')); ?>
+          <?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $product['Product']['id']), null, sprintf(__('Are you sure you want to delete this product?'), $product['Product']['id'])); ?>&nbsp;|&nbsp;
+          <?php echo $this->Html->link(__('Back to Products'), array('action' => 'index')); ?>
   </div>
   <div style="float:left; margin-right: 10px; width: 58%;">
     <div id="description">
       <fieldset>
-        <legend><?php __('Description');?></legend>
+        <legend><?php echo __('Description');?></legend>
         
           <?php echo $product['Product']['description']; ?>
       </fieldset>
@@ -37,13 +37,13 @@
       <fieldset>
           <legend>Properties</legend>
 
-            <label><?php __('SKU Code', false);?></label>
+            <label><?php echo __('SKU Code', false);?></label>
             <div class="property-info"><?php echo (($product['Product']['code']!="") ? $product['Product']['code'] : '');?></div>
             <div class="clear"></div>
-            <label><?php __('Price', false);?></label>
+            <label><?php echo __('Price', false);?></label>
             <div class="property-info"><?php echo (($product['Product']['price']!="") ? $product['Product']['price'] : '');?></div>
             <div class="clear"></div>
-            <label><?php __('Weight', false);?></label>
+            <label><?php echo __('Weight', false);?></label>
             <div class="property-info"><?php echo (($product['Product']['weight']!="") ? $product['Product']['weight'] : '');?></div>
             <div class="clear"></div>
             <?php 
@@ -51,7 +51,7 @@
                 if (!empty($product['Product']['options'])) {
                         foreach ($product['Product']['options'] as $field => $option) :
 	    ?>
-				<label><?php __($field, false);?></label>
+				<label><?php echo __($field, false);?></label>
 				<div class="property-info"><?php echo $option['values_in_string'];?></div>
 				<div class="clear"></div>                    
             <?php
@@ -65,7 +65,7 @@
      </div>
      <div id="collection">
         <fieldset>
-          <legend><?php __('Collection', false);?></legend>
+          <legend><?php echo __('Collection', false);?></legend>
             <ul>
               
               <?php
@@ -76,7 +76,7 @@
                   <?php
 		  $collection = $collection['ProductGroup'];
 		  $action = ($collection['type'] == SMART_COLLECTION) ? 'view_smart' : 'view_custom';
-		  echo $this->Html->link(__($collection['title'], true), array('action' => $action, $collection['id'])); ?>
+		  echo $this->Html->link(__($collection['title']), array('action' => $action, $collection['id'])); ?>
                 </li>
                 
               <?php endforeach; endif;?>
@@ -87,7 +87,7 @@
   </div>
   <div style="float:left;width: 41%;">
     <fieldset>
-          <legend><?php __('Product Images');?></legend>
+          <legend><?php echo __('Product Images');?></legend>
     <div id="product-image">
         <ul id="product_images-list" class="product_image-thumbs">    
             <?php echo $this->element('product_images_ajax_list');?>
@@ -123,7 +123,7 @@
     <div class="clear"></div>
     <div id="visibility">
       <fieldset>
-        <legend><?php __('Product Visibility');?></legend>
+        <legend><?php echo __('Product Visibility');?></legend>
         <?php 
             echo $this->Form->input('Product.visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'selected' => $product['Product']['visible'])); 
             ?>

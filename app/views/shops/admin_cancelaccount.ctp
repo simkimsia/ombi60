@@ -2,7 +2,7 @@
 	
 <?php echo $this->Form->create('Shop');?>
 	<fieldset>
- 		<legend><?php __('Cancel Account');?></legend>
+ 		<legend><?php echo __('Cancel Account');?></legend>
 	<?php
                 $reasons = array('Choose another provider'=>'Choose another provider',
                                  'Stop business' => 'Stop business',

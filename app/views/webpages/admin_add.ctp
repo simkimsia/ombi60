@@ -1,12 +1,12 @@
 <div class="webpages">
       <div class="text_center">
-        <h2><?php __('Add your New Page');?></h2>
-        <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'webpages','action' => 'index')); ?>
+        <h2><?php echo __('Add your New Page');?></h2>
+        <?php echo $this->Html->link(__('Cancel'), array('controller'=>'webpages','action' => 'index')); ?>
     </div>
 
 <?php echo $this->Form->create('Webpage');?>
 	<fieldset>
- 		<legend><?php __('New page'); ?></legend>
+ 		<legend><?php echo __('New page'); ?></legend>
 	<?php
 	
 	$this->TinyMce->editor(array(
@@ -21,13 +21,13 @@
 	
 		echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=>Shop::get('Shop.id')));
 		echo $this->Form->input('title');
-		echo $this->Form->input('content', array('label' => __('Write your page', true)));
+		echo $this->Form->input('content', array('label' => __('Write your page')));
 	
 	?>
 	</fieldset>
 	<fieldset>
- 		<legend><?php __('Properties'); ?></legend>
- 		<label><?php __('Page Visibility');?></label>
+ 		<legend><?php echo __('Properties'); ?></legend>
+ 		<label><?php echo __('Page Visibility');?></label>
  		<span class="hint">If you want to hide this page from your clients, choose hidden.</span> 		
     <?php 
       echo $this->Form->input('visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false)); 
@@ -35,8 +35,8 @@
     ?>
   </fieldset>
   <div class="submit">
-    <?php echo $this->Form->submit(__('Create page', true), array('div' => false));?> &nbsp;<?php __('or'); ?>&nbsp;
-    <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'webpages','action' => 'index')); ?>
+    <?php echo $this->Form->submit(__('Create page'), array('div' => false));?> &nbsp;<?php echo __('or'); ?>&nbsp;
+    <?php echo $this->Html->link(__('Cancel'), array('controller'=>'webpages','action' => 'index')); ?>
   </div>
   <?php echo $this->Form->end(); ?>
 </div>

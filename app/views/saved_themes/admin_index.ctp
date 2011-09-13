@@ -17,9 +17,9 @@
 	
 </div>
 <div class="actions">
-	<h3><?php __('Actions'); ?></h3>
+	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('New Saved Theme', true), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('New Saved Theme'), array('action' => 'add')); ?></li>
 		
 		
 		
@@ -29,7 +29,7 @@
 <script>
 	var intervalId = '';
 	
-	var currentUrl = '<?php echo $this->here . '/index/page:'; ?>';
+	var currentUrl = '<?php echo $this->request->here . '/index/page:'; ?>';
 	
 	var newUrl = '';
 

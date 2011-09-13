@@ -22,7 +22,7 @@
                                                         ));*/
 ?>
 	<fieldset class="right">
- 		<legend><?php __('Product Images');?></legend>
+ 		<legend><?php echo __('Product Images');?></legend>
 	    <div>
             <?php
 	            echo $this->Form->input('product_id', array('type'=>'hidden', 'value'=>$product_id, 'div' => FALSE));
@@ -60,7 +60,7 @@
 				               'complete' => "afterDelete(request.responseText);",
 				               'escape' => false,
 				               'indicator' => 'busy-indicator',
-				               'confirm' => sprintf(__('Are you sure you want to delete %s?', true), 'fakefilename')));
+				               'confirm' => sprintf(__('Are you sure you want to delete %s?'), 'fakefilename')));
         ?>
     </div>
 <script type="text/javascript" language="javascript">

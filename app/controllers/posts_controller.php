@@ -23,7 +23,7 @@ class PostsController extends AppController {
 		parent::beforeFilter();
 		
 		$this->Auth->allow('view', 'index');
-		if ($this->action == 'admin_toggle') {
+		if ($this->request->action == 'admin_toggle') {
 			$this->Security->enabled = false;
 		}
 	}
@@ -106,7 +106,7 @@ class PostsController extends AppController {
 
 	function admin_view($blog_id = false, $id = false) {
 		if (!$blog_id || !$id) {
-			$this->Session->setFlash(__('Invalid post', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid post'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('controller'=>'webpages',
 					      'action' => 'index'));
 		}
@@ -122,20 +122,20 @@ class PostsController extends AppController {
 	function admin_add($blog_id = false) {
 		
 		if (!$blog_id) {
-			$this->Session->setFlash(__('Invalid post', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid post'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('controller'=>'webpages',
 					      'action' => 'index'));
 		}
 		
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Post->create();
-			if ($this->Post->save($this->data)) {
-				$this->Session->setFlash(__('The post has been saved', true), 'default', array('class'=>'flash_success'));
+			if ($this->Post->save($this->request->data)) {
+				$this->Session->setFlash(__('The post has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('controller'=>'blogs',
 						      'action' => 'view',
 						      $blog_id));
 			} else {
-				$this->Session->setFlash(__('The post could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('The post could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		}
 		
@@ -146,26 +146,26 @@ class PostsController extends AppController {
 	}
 
 	function admin_edit($blog_id = false, $id = false) {
-		if ((!$blog_id || !$id) && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid post', true), 'default', array('class'=>'flash_failure'));
+		if ((!$blog_id || !$id) && empty($this->request->data)) {
+			$this->Session->setFlash(__('Invalid post'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('controller'=>'webpages',
 					      'action' => 'index'));
 		}
 		
-		if (!empty($this->data)) {
-			if ($this->Post->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->Post->save($this->request->data)) {
 				
-				$this->Session->setFlash(__('The post has been saved', true), 'default', array('class'=>'flash_success'));
+				$this->Session->setFlash(__('The post has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('controller'=>'blogs',
 						      'action' => 'view',
 						      $blog_id));
 			} else {
-				$this->Session->setFlash(__('The post could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('The post could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		}
 		
-		if (empty($this->data)) {
-			$this->data = $this->Post->find('first', array('conditions'=>array('Post.id'=>$id,
+		if (empty($this->request->data)) {
+			$this->request->data = $this->Post->find('first', array('conditions'=>array('Post.id'=>$id,
 									     'Post.blog_id'=>$blog_id)));
 		}
 		
@@ -175,17 +175,17 @@ class PostsController extends AppController {
 
 	function admin_delete($blog_id = false, $id = false) {
 		if (!$blog_id || !$id) {
-			$this->Session->setFlash(__('Invalid id for post', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for post'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('controller'=>'webpages',
 					      'action' => 'index'));
 		}
 		if ($this->Post->delete($id)) {
-			$this->Session->setFlash(__('Post deleted', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Post deleted'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('controller'=>'blogs',
 						      'action' => 'view',
 						      $blog_id));
 		}
-		$this->Session->setFlash(__('Post was not deleted', true), 'default', array('class'=>'flash_failure'));
+		$this->Session->setFlash(__('Post was not deleted'), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('controller'=>'blogs',
 						      'action' => 'view',
 						      $blog_id));
@@ -199,7 +199,7 @@ class PostsController extends AppController {
 			$this->Post->updatePublishedAt($id);
 		}
 		
-		if ($this->params['isAjax']) {
+		if ($this->request->params['isAjax']) {
 			
 			$this->layout = 'json';
 			if ($result) {
@@ -217,9 +217,9 @@ class PostsController extends AppController {
 				
 		} else {
 			if ($result) {
-				$this->Session->setFlash(__('Post status has been changed', true), 'default', array('class'=>'flash_success'));
+				$this->Session->setFlash(__('Post status has been changed'), 'default', array('class'=>'flash_success'));
 			} else {
-				$this->Session->setFlash(__('Post status could not be changed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('Post status could not be changed. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 			// the view is wrong without blog_id
 			$this->redirect(array('action' => 'view'));

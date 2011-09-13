@@ -1,8 +1,8 @@
 <?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');?>
 <div>
-    <?php $displayCountryTitle = ($this->data['Country']['name'] !== null) ? $this->data['Country']['printable_name'] : 'Rest of World'; ?>
-    <div class="text_center"><h2><?php __('Shipping to '.$displayCountryTitle);?></h2>
-        <a href="javascript: void(0)" onclick="toggleEditForm();return false;" id="view_edit"><?php __('Edit') ?></a>|
+    <?php $displayCountryTitle = ($this->request->data['Country']['name'] !== null) ? $this->request->data['Country']['printable_name'] : 'Rest of World'; ?>
+    <div class="text_center"><h2><?php echo __('Shipping to '.$displayCountryTitle);?></h2>
+        <a href="javascript: void(0)" onclick="toggleEditForm();return false;" id="view_edit"><?php echo __('Edit') ?></a>|
         <?php
         echo $html->link('All Shipping Rates', array(
                                                 'controller' => 'shipping_rates',
@@ -10,7 +10,7 @@
                                                 'admin'=>true));
         echo "|";
         ?>
-        <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->data['ShippingRate']['id']), null, sprintf(__('Are you sure you want to delete %s for %s?', true), $this->data['ShippingRate']['name'], $displayCountryTitle)); ?>
+        <?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $this->request->data['ShippingRate']['id']), null, sprintf(__('Are you sure you want to delete %s for %s?'), $this->request->data['ShippingRate']['name'], $displayCountryTitle)); ?>
     </div>	
 <?php echo $this->Form->create('ShippingRate', array('url'=>array('action'=>'edit',
 								                      'controller'=>'shipping_rates',
@@ -27,40 +27,40 @@
 		
 	<div id="details">
 	    <fieldset>
-     		<legend><?php __('View this '.$legend_text.' rate'); ?></legend>
+     		<legend><?php echo __('View this '.$legend_text.' rate'); ?></legend>
      		<ul class="shipping-view">
      		    <li>
      	        <?php
      		        echo $this->Form->label('Name');
-     		        echo $this->data['ShippingRate']['name']; 
+     		        echo $this->request->data['ShippingRate']['name']; 
      	        ?>
      		    </li>
-     		    <?php if (array_key_exists('WeightBasedRate', $this->data)) { ?>
+     		    <?php if (array_key_exists('WeightBasedRate', $this->request->data)) { ?>
      		        <li>
          		    <?php
          		        echo $this->Form->label('Weight Range');
-          		        echo "From " , $this->Number->format($this->data['WeightBasedRate']['displayed_min_weight'], array('places' => 2, 'escape' => false, 'decimals' => '.', 'before'=>''));
+          		        echo "From " , $this->Number->format($this->request->data['WeightBasedRate']['displayed_min_weight'], array('places' => 2, 'escape' => false, 'decimals' => '.', 'before'=>''));
                         echo $unitForWeight , " - ";
-                        echo $this->Number->format($this->data['WeightBasedRate']['displayed_max_weight'], array('places' => 2, 'escape' => false, 'decimals' => '.', 'before'=>'')) , $unitForWeight;
+                        echo $this->Number->format($this->request->data['WeightBasedRate']['displayed_max_weight'], array('places' => 2, 'escape' => false, 'decimals' => '.', 'before'=>'')) , $unitForWeight;
                         
-         		        //echo 'From ' . range($this->data['WeightBasedRate']['min_weight']) . $unitForWeight . ' to ' . $this->data['WeightBasedRate']['max_weight'] .$unitForWeight;
+         		        //echo 'From ' . range($this->request->data['WeightBasedRate']['min_weight']) . $unitForWeight . ' to ' . $this->request->data['WeightBasedRate']['max_weight'] .$unitForWeight;
          	        ?>
          		    </li>
     		    <?php } ?>
-		        <?php if (array_key_exists('PriceBasedRate', $this->data)) { ?>
+		        <?php if (array_key_exists('PriceBasedRate', $this->request->data)) { ?>
 		            <li>
 		            <?php
 		                echo $this->Form->label('Order Subtotal Range');
 		            ?>
-		            <?php if ( $this->data['PriceBasedRate']['max_price'] !== null) echo 'From $' . $this->data['PriceBasedRate']['min_price'] . ' SDG to $' . $this->data['PriceBasedRate']['max_price']."SGD"; ?>
+		            <?php if ( $this->request->data['PriceBasedRate']['max_price'] !== null) echo 'From $' . $this->request->data['PriceBasedRate']['min_price'] . ' SDG to $' . $this->request->data['PriceBasedRate']['max_price']."SGD"; ?>
 			
-			        <?php if ( $this->data['PriceBasedRate']['max_price'] == null) echo 'From ' . $this->Number->currency($this->data['PriceBasedRate']['min_price']) . ' SGD and more';?>
+			        <?php if ( $this->request->data['PriceBasedRate']['max_price'] == null) echo 'From ' . $this->Number->currency($this->request->data['PriceBasedRate']['min_price']) . ' SGD and more';?>
 		            </li>
 		        <?php } ?>
      		    <li>
      		    <?php
      		        echo $this->Form->label('Price to ship');
-     		        echo $this->Number->currency($this->data['ShippingRate']['price']);
+     		        echo $this->Number->currency($this->request->data['ShippingRate']['price']);
      	        ?>
      		    </li>
      		    
@@ -70,11 +70,11 @@
 		
 	<div id="editForm" style="display:none">
 	    <fieldset>
-     		<legend><?php __('Edit this '.$legend_text.' rate'); ?></legend>
+     		<legend><?php echo __('Edit this '.$legend_text.' rate'); ?></legend>
      		<ul class="shipping-view">
      		    <li>
      	        <?php
-     	            $id = $this->data['ShippingRate']['id'];		
+     	            $id = $this->request->data['ShippingRate']['id'];		
 		            echo $this->Form->input('ShippingRate.shipped_to_country_id', array('type'=>'hidden'));
 		            echo $this->Form->input('ShippingRate.id', array('type'=>'hidden'));
 		            ?>
@@ -84,7 +84,7 @@
 		            </div>
      		    </li>
      		    <?php
-     		    if (array_key_exists('WeightBasedRate', $this->data)) { 
+     		    if (array_key_exists('WeightBasedRate', $this->request->data)) { 
 		            ?>
 		            <li>
 		                <strong>Weight</strong>&nbsp;&nbsp;<span class="hint"> only applies to orders with a total weight</span>
@@ -106,7 +106,7 @@
 		        }
      		    ?>
     
-		        <?php if (array_key_exists('PriceBasedRate', $this->data)) { ?>
+		        <?php if (array_key_exists('PriceBasedRate', $this->request->data)) { ?>
 		            <li>
 		                <strong>Purchase range</strong>&nbsp;&nbsp;<span class="hint"> (before discounts and taxes)</span>
 		                <div>
@@ -136,7 +136,7 @@
      		    </li>
      		</ul>
 		</fieldset>
-	<?php echo $this->Form->submit(__('Update', true), array('div' => FALSE));?>&nbsp;or&nbsp;<a href="javascript: void(0)" onclick="toggleEditForm();return false;"><?php __('Cancel') ?></a>
+	<?php echo $this->Form->submit(__('Update'), array('div' => FALSE));?>&nbsp;or&nbsp;<a href="javascript: void(0)" onclick="toggleEditForm();return false;"><?php echo __('Cancel') ?></a>
 	</div>
     <?php echo $this->Form->end();?>
 </div>

@@ -22,7 +22,7 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php __('OMBI60: Open My Business in 60 Seconds:'); ?>
+		<?php echo __('OMBI60: Open My Business in 60 Seconds:'); ?>
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
@@ -37,7 +37,7 @@
 		
 		
 		if ($this->name = 'SavedThemes') {
-			if ($this->action = 'admin_edit') {
+			if ($this->request->action = 'admin_edit') {
 				echo $this->Html->css('overlay-apple');
 			}
 			
@@ -64,7 +64,7 @@
 				</ul>
 			</div>
 		</div>
-		<?php if ($this->params['action'] != 'admin_login') { ?>
+		<?php if ($this->request->params['action'] != 'admin_login') { ?>
 		<div id="barwrapper">
 			<div id="contentbar">
 			<div id="barleft">
@@ -78,7 +78,7 @@
 					$marketingSelected = '';
 					$navigationSelected = '';
 					
-					switch($this->params['controller']) {
+					switch($this->request->params['controller']) {
 						case 'orders' :
 						$ordersSelected = ' class=selected ';
 						break;
@@ -140,7 +140,7 @@
 		</div>
 		<div id="footer">
 			<?php /*echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt'=> __('OMBI60: Open My Business in 60 Seconds', true), 'border' => '0')),
+					$this->Html->image('cake.power.gif', array('alt'=> __('OMBI60: Open My Business in 60 Seconds'), 'border' => '0')),
 					'http://www.cakephp.org/',
 					array('target' => '_blank', 'escape' => false)
 				);*/

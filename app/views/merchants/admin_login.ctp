@@ -5,7 +5,7 @@
 	echo $this->Form->create('Merchant', array('action' => 'login'));
 ?>
 	<fieldset>
- 		<legend><?php __('Login');?></legend>
+ 		<legend><?php echo __('Login');?></legend>
 	<?php
 		echo $this->Form->input('User.email');
 		echo $this->Form->input('User.password');

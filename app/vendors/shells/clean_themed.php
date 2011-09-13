@@ -10,7 +10,7 @@ class CleanThemedShell extends Shell {
         
         function main() {
                 
-                $path = VIEWS . 'themed';
+                $path = APP . 'View' . DS . 'themed';
                 
                 $themedFolder = new Folder($path);
                 

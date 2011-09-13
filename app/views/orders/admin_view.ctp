@@ -11,14 +11,14 @@ echo "</pre>";*/
 <div>
     <div class="text_center">
       <h2>
-        <?php __('Overview of order #'.$order['Order']['order_no']); ?>
+        <?php echo __('Overview of order #'.$order['Order']['order_no']); ?>
       </h2>
       <?php 
-        echo $this->Html->link(__('Contact Customer', true), 'javascript:void(0)');
-        echo ' | '. $this->Html->link(__('Attach note', true), 'javascript: void(0)');
-        echo ' | '. $this->Html->link(__('Export', true), 'javascript: void(0)');
-        echo ' | '. $this->Html->link(__('Print', true), 'javascript: void(0)');
-        echo ' | '. $this->Html->link(__('Close this order', true), 'javascript: void(0)');
+        echo $this->Html->link(__('Contact Customer'), 'javascript:void(0)');
+        echo ' | '. $this->Html->link(__('Attach note'), 'javascript: void(0)');
+        echo ' | '. $this->Html->link(__('Export'), 'javascript: void(0)');
+        echo ' | '. $this->Html->link(__('Print'), 'javascript: void(0)');
+        echo ' | '. $this->Html->link(__('Close this order'), 'javascript: void(0)');
       ?>
     </div>
     
@@ -37,7 +37,7 @@ echo "</pre>";*/
                             <?php echo $order['User']['email']; ?>        
                         </li>
                         <li>
-                            <?php __('Did not agree to marketing');?>    
+                            <?php echo __('Did not agree to marketing');?>    
                         </li>
                     </ul>                  
                     <div style="clear: both;">&nbsp;</div>
@@ -46,7 +46,7 @@ echo "</pre>";*/
             <div style="clear: both;">&nbsp;</div>
             <div>
                 <div class="order_info_div">
-                    <h1><strong><?php  __('Delivery Address');?></strong></h1>
+                    <h1><strong><?php echo __('Delivery Address');?></strong></h1>
                     <ul class="order_customer_info">
                         <li>
                             <?php echo $order['DeliveryAddress']['full_name']; ?>
@@ -67,7 +67,7 @@ echo "</pre>";*/
                 </div>
 
                 <div class="order_info_div">
-                    <h1><strong><?php  __('Billing Address');?></strong></h1>
+                    <h1><strong><?php echo __('Billing Address');?></strong></h1>
                     <ul class="order_customer_info">
                         <li>
                             <?php echo $order['BillingAddress']['full_name']; ?>
@@ -173,7 +173,7 @@ echo "</pre>";*/
                     ?>
 	                    <tr<?php echo $class;?>>
 		                    <td>
-			                    <?php echo $this->Html->link(__($lineItem['product_title'], true),
+			                    <?php echo $this->Html->link(__($lineItem['product_title']),
 						                         array('admin'=>true,
 							                       'controller' => 'products',
 							                       'action' => 'view',
@@ -243,7 +243,7 @@ echo "</pre>";*/
                         <tr><td colspan="4" class="background_none" style="background: none;"><hr /></td></tr>
                         <tr>
                             <td style="background: none;">&nbsp;</td>
-                            <td colspan=2 class="text_right" style="background: none;"><?php __('Total');?></td>
+                            <td colspan=2 class="text_right" style="background: none;"><?php echo __('Total');?></td>
                             <td class="text_right" style="background: none;">
                                 <?php
                              	$options = array(

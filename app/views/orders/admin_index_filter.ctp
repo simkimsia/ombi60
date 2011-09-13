@@ -24,7 +24,7 @@
     ?>
             <tr<?php echo $class;?>>
                     <td>
-                            <?php echo $this->Html->link(__('#' . $order['Order']['order_no'], true), array('action' => 'view', $order['Order']['id'])); ?>
+                            <?php echo $this->Html->link(__('#' . $order['Order']['order_no']), array('action' => 'view', $order['Order']['id'])); ?>
                             
                     </td>
             </tr>
@@ -33,7 +33,7 @@
 </table>
 <?php echo $this->Form->end(); ?>
 <div class="paging">
-    <?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class' => 'disabled'));?>
+    <?php echo $this->Paginator->prev('<< '.__('previous'), array(), null, array('class' => 'disabled'));?>
     <?php echo $this->Paginator->numbers();?>
-    <?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' =>' disabled'));?>
+    <?php echo $this->Paginator->next(__('next').' >>', array(), null, array('class' =>' disabled'));?>
 </div>

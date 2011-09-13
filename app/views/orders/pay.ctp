@@ -70,7 +70,7 @@
 	<?php
 	if ($totalAmount != $totalAmountWithShipping) {
 		echo '<div id="totalAmount">';
-		echo __('Including shipping for ',true) . $this->Number->currency($totalAmount, '$');
+		echo __('Including shipping for ') . $this->Number->currency($totalAmount, '$');
 		echo '</div>';
 	}
 	?>

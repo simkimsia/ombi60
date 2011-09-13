@@ -1,7 +1,7 @@
 <div class="products form">
 <?php echo $this->Form->create('Product');?>
 	<fieldset>
- 		<legend><?php __('Edit Product');?></legend>
+ 		<legend><?php echo __('Edit Product');?></legend>
 	<?php
 		$this->TinyMce->editor(array(
 			'theme' => 'advanced',

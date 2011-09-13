@@ -45,7 +45,7 @@
  * **/
 
 
-class PermissionComponent extends Object {
+class PermissionComponent extends Component {
  
  
 /**
@@ -185,7 +185,7 @@ class PermissionComponent extends Object {
 							      "$modelName.shop_id"=>$shopIdUserHas)));
 				if ($count == 0) {
 					
-					$controller->Session->setFlash(__($this->errorMessage, true), 'default', array('class'=>'flash_failure'));
+					$controller->Session->setFlash(__($this->errorMessage), 'default', array('class'=>'flash_failure'));
 					$controller->redirect($this->redirect);
 				}
 			}	
@@ -238,7 +238,7 @@ class PermissionComponent extends Object {
 					);
 				if ($count == 0) {
 					
-					$controller->Session->setFlash(__($this->errorMessage, true), 'default', array('class'=>'flash_failure'));
+					$controller->Session->setFlash(__($this->errorMessage), 'default', array('class'=>'flash_failure'));
 					$controller->redirect($this->redirect);
 				}
 			}	

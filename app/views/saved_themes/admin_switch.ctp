@@ -7,7 +7,7 @@
 <div id = "SavedThemeAdminAddFormDiv" class="savedThemes form">
 <?php echo $this->Form->create('SavedTheme');?>
 	<fieldset>
- 		<legend><?php __('Themes available'); ?></legend>
+ 		<legend><?php echo __('Themes available'); ?></legend>
 	<?php
 		
 	echo $this->Form->input('id', array('type'=>'hidden',

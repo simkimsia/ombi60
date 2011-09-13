@@ -1,6 +1,6 @@
 <div id="checkout_warning">
     <?php echo $html->image('lock.gif', array('class' => 'margin_right_5'));?>
-    <span class="font_bold"><?php __('You are using our secure server ');?></span>
+    <span class="font_bold"><?php echo __('You are using our secure server ');?></span>
 </div>
 <div class="clear">&nbsp;</div>
 <div class="checkout_products">

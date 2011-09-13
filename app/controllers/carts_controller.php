@@ -29,40 +29,40 @@ class CartsController extends AppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid Cart', true));
+			$this->Session->setFlash(__('Invalid Cart'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('cart', $this->Cart->read(null, $id));
 	}
 	
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid Cart', true));
+		if (!$id && empty($this->request->data)) {
+			$this->Session->setFlash(__('Invalid Cart'));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->Cart->save($this->data)) {
-				$this->Session->setFlash(__('The Cart has been saved', true));
+		if (!empty($this->request->data)) {
+			if ($this->Cart->save($this->request->data)) {
+				$this->Session->setFlash(__('The Cart has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Cart could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The Cart could not be saved. Please, try again.'));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Cart->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->Cart->read(null, $id);
 		}
 	}
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Cart', true));
+			$this->Session->setFlash(__('Invalid id for Cart'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Cart->delete($id)) {
-			$this->Session->setFlash(__('Cart deleted', true));
+			$this->Session->setFlash(__('Cart deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('The Cart could not be deleted. Please, try again.', true));
+		$this->Session->setFlash(__('The Cart could not be deleted. Please, try again.'));
 		$this->redirect(array('action' => 'index'));
 	}
 

@@ -14,8 +14,8 @@ class WebpagesController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->allow('view', 'shopfront', 'frontpage');
 	
-		if ($this->action == 'admin_toggle' ||
-		    $this->action == 'admin_menu_action') {
+		if ($this->request->action == 'admin_toggle' ||
+		    $this->request->action == 'admin_menu_action') {
 			$this->Security->enabled = false;
 		}
 		
@@ -71,7 +71,7 @@ class WebpagesController extends AppController {
 
 	function admin_view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid webpage', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid webpage'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$webpage = $this->Webpage->getDetails($id, HIDDEN_AND_VISIBLE_ENTITY);
@@ -85,7 +85,7 @@ class WebpagesController extends AppController {
 		
 		$result = $this->Webpage->toggle($id, 'visible');
 		
-		if ($this->params['isAjax']) {
+		if ($this->request->params['isAjax']) {
 			
 			$this->layout = 'json';
 			if ($result) {
@@ -103,23 +103,23 @@ class WebpagesController extends AppController {
 				
 		} else {
 			if ($result) {
-				$this->Session->setFlash(__('Webpage status has been changed', true), 'default', array('class'=>'flash_success'));
+				$this->Session->setFlash(__('Webpage status has been changed'), 'default', array('class'=>'flash_success'));
 			} else {
-				$this->Session->setFlash(__('Webpage status could not be changed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('Webpage status could not be changed. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 			$this->redirect(array('action' => 'index'));
 		}
 	}
 
 	function admin_add() {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			
 			$this->Webpage->create();
-			if ($this->Webpage->save($this->data)) {
-				$this->Session->setFlash(__('The webpage has been saved', true), 'default', array('class'=>'flash_success'));
+			if ($this->Webpage->save($this->request->data)) {
+				$this->Session->setFlash(__('The webpage has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The webpage could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('The webpage could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		}
 
@@ -130,30 +130,30 @@ class WebpagesController extends AppController {
 	}
 	
 	function admin_menu_action() {
-		$resultArray = $this->Webpage->handleMenuAction($this->data);
+		$resultArray = $this->Webpage->handleMenuAction($this->request->data);
 		if ($resultArray['success']) {
-			$this->Session->setFlash(__($resultArray['message'], true), 'default', array('class'=>'flash_success'));	
+			$this->Session->setFlash(__($resultArray['message']), 'default', array('class'=>'flash_success'));	
 		} else {
-			$this->Session->setFlash(__($resultArray['message'], true), 'default', array('class'=>'flash_failure'));	
+			$this->Session->setFlash(__($resultArray['message']), 'default', array('class'=>'flash_failure'));	
 		}
 		$this->redirect(array('action' => 'index'));
 	}
 
 	function admin_edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid webpage', true), 'default', array('class'=>'flash_failure'));
+		if (!$id && empty($this->request->data)) {
+			$this->Session->setFlash(__('Invalid webpage'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->Webpage->save($this->data)) {
-				$this->Session->setFlash(__('The webpage has been saved', true), 'default', array('class'=>'flash_success'));
+		if (!empty($this->request->data)) {
+			if ($this->Webpage->save($this->request->data)) {
+				$this->Session->setFlash(__('The webpage has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The webpage could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('The webpage could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Webpage->getDetails($id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->Webpage->getDetails($id);
 		}
 
 		$authors = $this->Webpage->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
@@ -163,14 +163,14 @@ class WebpagesController extends AppController {
 
 	function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for webpage', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for webpage'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Webpage->delete($id)) {
-			$this->Session->setFlash(__('webpage deleted', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('webpage deleted'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('webpage was not deleted', true), 'default', array('class'=>'flash_failure'));
+		$this->Session->setFlash(__('webpage was not deleted'), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('action' => 'index'));
 	}
 

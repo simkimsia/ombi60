@@ -30,7 +30,7 @@ echo $this->Form->create(null,array('url' => $url,'class' => 'variant', 'type'=>
 		
 		echo $this->Form->input('Variant.order', array('type'=>'hidden', 'value'=>$variant_count));
 	  ?>
-          <p class="sb"><span class="note highlight-alt"><?php echo __('Your customers will select this new variant by the following',true);?>:</span></p>
+          <p class="sb"><span class="note highlight-alt"><?php echo __('Your customers will select this new variant by the following');?>:</span></p>
           <?php } ?>
                <?php 
                 $i=1;
@@ -40,7 +40,7 @@ echo $this->Form->create(null,array('url' => $url,'class' => 'variant', 'type'=>
 			
 			foreach($variant_list['Product']['options'] as $field => $options) {
 				$key = $i - 1;
-				echo $this->Form->input("VariantOption.$key.value",array('label' => __(ucfirst($field),true),'size' => '30','div' => array('class' => "variant_fields variant_option_$i"),'value' => isset($variant_detail['VariantOption'][$field]['value']) ?  "{$variant_detail['VariantOption'][$field]['value']}" : ""));
+				echo $this->Form->input("VariantOption.$key.value",array('label' => __(ucfirst($field)),'size' => '30','div' => array('class' => "variant_fields variant_option_$i"),'value' => isset($variant_detail['VariantOption'][$field]['value']) ?  "{$variant_detail['VariantOption'][$field]['value']}" : ""));
 				echo $this->Form->input("VariantOption.$key.field",array('type' => 'hidden', 'value' => $field));
 				echo $this->Form->input("VariantOption.$key.order",array('type' => 'hidden', 'value' => $key));
 				if ($editVariant) {
@@ -63,20 +63,20 @@ echo $this->Form->create(null,array('url' => $url,'class' => 'variant', 'type'=>
       <!-- more product information -->
       <tr class="divider variant_div">
         <td>        
-          <?php echo $this->Form->input("Variant.sku_code",array("label" => __("SKU",true)." <span class=\"note\">".__("Stock Keeping Unit",true)."</span>","size" => "20","style" => "width:auto;","class" => "variant_more_options","value" => (isset($variant_detail['sku_code'])) ? $variant_detail['sku_code'] : ''));?>
+          <?php echo $this->Form->input("Variant.sku_code",array("label" => __("SKU")." <span class=\"note\">".__("Stock Keeping Unit")."</span>","size" => "20","style" => "width:auto;","class" => "variant_more_options","value" => (isset($variant_detail['sku_code'])) ? $variant_detail['sku_code'] : ''));?>
         </td>
         <td>
         
           
-           <?php echo $this->Form->input("Variant.price",array("label" => __("Selling price",true),"size" => "8","style" => "width:auto;","after" => __("USD",true),"class" => "variant_more_options","value" => isset($variant_detail['price']) ?  $variant_detail['price'] : ''));?>
+           <?php echo $this->Form->input("Variant.price",array("label" => __("Selling price"),"size" => "8","style" => "width:auto;","after" => __("USD"),"class" => "variant_more_options","value" => isset($variant_detail['price']) ?  $variant_detail['price'] : ''));?>
         </td>
         <td>
          
-            <?php echo $this->Form->input("Variant.compare_with_price",array("label" => __("Compare at price",true)." <span class=\"note\">(".__("optional",true).")</span>","after" => __("USD",true),"size" => "8","style" => "width:auto;","class" => "variant_more_options","value" => isset($variant_detail['compare_with_price']) ? $variant_detail['compare_with_price'] : ''));?>
+            <?php echo $this->Form->input("Variant.compare_with_price",array("label" => __("Compare at price")." <span class=\"note\">(".__("optional").")</span>","after" => __("USD"),"size" => "8","style" => "width:auto;","class" => "variant_more_options","value" => isset($variant_detail['compare_with_price']) ? $variant_detail['compare_with_price'] : ''));?>
         </td>
         <td>
          
-            <?php echo $this->Form->input("Variant.displayed_weight",array('label' => __('Weight',true),'size' => '8','style' => 'width:auto;','class' => 'variant_more_options',"after" => __("lbs",true),"value" => isset($variant_detail['displayed_weight']) ? $variant_detail['displayed_weight'] : '')); ?>
+            <?php echo $this->Form->input("Variant.displayed_weight",array('label' => __('Weight'),'size' => '8','style' => 'width:auto;','class' => 'variant_more_options',"after" => __("lbs"),"value" => isset($variant_detail['displayed_weight']) ? $variant_detail['displayed_weight'] : '')); ?>
         </td>
       </tr>
       <!-- end more product information -->
@@ -94,11 +94,11 @@ echo $this->Form->create(null,array('url' => $url,'class' => 'variant', 'type'=>
                       <tbody>
                       <tr class="no-border">
                         <td class="right" >
-                            <label for="variant-new-requires-shipping"><?php echo __('Require a shipping address',true);?></label>
+                            <label for="variant-new-requires-shipping"><?php echo __('Require a shipping address');?></label>
                         </td>
                         <td>
                       
-                          <?php echo $this->Form->input('Variant.shipping_required',array('value' => 1,'label' => false,'div' => false,'after' => '<span class="hint">'.__('not needed for services or digital goods',true).'</span>','checked' => !empty($variant_detail['shipping_required']) ? true : false ));?>
+                          <?php echo $this->Form->input('Variant.shipping_required',array('value' => 1,'label' => false,'div' => false,'after' => '<span class="hint">'.__('not needed for services or digital goods').'</span>','checked' => !empty($variant_detail['shipping_required']) ? true : false ));?>
                           
                           
                         </td>
@@ -114,15 +114,15 @@ echo $this->Form->create(null,array('url' => $url,'class' => 'variant', 'type'=>
 	echo '<div class="submit group-actions">';
 	if ($addNewVariant) {
 	   
-	   echo $this->Form->submit(__('Create Variant', true), array('div' => FALSE));
-	   echo ' or ' . $this->Html->link(__('Cancel', true),'javascript: void(0);', array('onclick' => '$(".variant_form").hide();$(".new-variant-link").show()')); 
+	   echo $this->Form->submit(__('Create Variant'), array('div' => FALSE));
+	   echo ' or ' . $this->Html->link(__('Cancel'),'javascript: void(0);', array('onclick' => '$(".variant_form").hide();$(".new-variant-link").show()')); 
 	} else {
 	   
-	   echo $this->Form->submit(__('Update', true), array('div' => FALSE));
+	   echo $this->Form->submit(__('Update'), array('div' => FALSE));
 	   $formid = 'row-edit-details-'.$variant_detail['id'];
        $id = $variant_detail['id'];
 	  /* echo "<script type='text/JavaScript'> var formid = <? echo $formid; ?></script> "; */
-	   echo ' or ' . $this->Html->link(__('Cancel', true),'javascript: void(0);', array('onclick' => "hideEditForm('$formid', '$id')")); 
+	   echo ' or ' . $this->Html->link(__('Cancel'),'javascript: void(0);', array('onclick' => "hideEditForm('$formid', '$id')")); 
 	}
 	
 	echo '</div>';

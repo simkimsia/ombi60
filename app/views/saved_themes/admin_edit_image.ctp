@@ -12,10 +12,10 @@
 	<?php
 		
 		
-		echo $this->Html->link(__('Delete', true), array('action' => 'delete_image',
+		echo $this->Html->link(__('Delete'), array('action' => 'delete_image',
 								 'folder_name' => $folder_name,
 								 'image' => $image,
-								 'id' => $id), null, sprintf(__('Are you sure you want to delete %s?', true), $image));
+								 'id' => $id), null, sprintf(__('Are you sure you want to delete %s?'), $image));
 
 		echo '<a href="#" id="renameImage">Rename</a>';
 				

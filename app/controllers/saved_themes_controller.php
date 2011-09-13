@@ -23,14 +23,14 @@ class SavedThemesController extends AppController {
 		 * because of Auth default settings do not work for Merchant, hence alot of fields need to be overridden.
 		 **/
 		
-		if ($this->action == 'admin_add' OR $this->action == 'admin_edit') {
+		if ($this->request->action == 'admin_add' OR $this->request->action == 'admin_edit') {
 			$this->Security->disabledFields[] = 'SavedTheme.cssName';
 		}
 
 		// allow non users to access register and login actions only.
 		//$this->Auth->allow('admin_settings');
 		
-		if ($this->action == 'admin_add') {
+		if ($this->request->action == 'admin_add') {
 			$this->Security->validatePost = false;
 		}
 	
@@ -51,7 +51,7 @@ class SavedThemesController extends AppController {
 	
 		$this->set('savedThemes', $this->paginate());
 		
-		if ($this->params['isAjax']) {
+		if ($this->request->params['isAjax']) {
 			$this->layout = 'ajax';
 			$this->render('themes_ajax_list');
 		} else {
@@ -67,7 +67,7 @@ class SavedThemesController extends AppController {
 
 	function admin_view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid saved theme', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid saved theme'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('savedTheme', $this->SavedTheme->read(null, $id));
@@ -90,20 +90,20 @@ class SavedThemesController extends AppController {
 		
 		$savedThemeId = Shop::get('Shop.saved_theme_id');
 		
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			// switch the theme
-			if ($this->data['SavedTheme']['original_theme_id']!=$this->data['SavedTheme']['theme_id']) {
+			if ($this->request->data['SavedTheme']['original_theme_id']!=$this->request->data['SavedTheme']['theme_id']) {
 				$this->SavedTheme->id = $savedThemeId;
-				$result = $this->SavedTheme->switchTheme($this->data);
+				$result = $this->SavedTheme->switchTheme($this->request->data);
 				if ($result) {
-					$this->Session->setFlash(__('Theme has been saved', true), 'default', array('class'=>'flash_success'));
+					$this->Session->setFlash(__('Theme has been saved'), 'default', array('class'=>'flash_success'));
 					// change Session or cache to reflect new theme
 				} else {
-					$this->Session->setFlash(__('Theme could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+					$this->Session->setFlash(__('Theme could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 				}
 			}
 		} else {
-			$this->data = $this->SavedTheme->read(null, $savedThemeId);
+			$this->request->data = $this->SavedTheme->read(null, $savedThemeId);
 		}
 		
 		
@@ -122,7 +122,7 @@ class SavedThemesController extends AppController {
 		// usually because of the need to upload images using uploadify hence
 		// we need ajax to first create the Saved Theme in order to have a proper folder
 		// for uploadify to upload the pics to
-		if ($this->params['isAjax']) {
+		if ($this->request->params['isAjax']) {
 			
 			$this->layout = 'json';
 			$successJSON = false;
@@ -133,21 +133,21 @@ class SavedThemesController extends AppController {
 			 * since ajaxhelper does NOT work with multipart file upload
 			 **/
 			if ($this->RequestHandler->isAjax()) {
-				$this->data = $this->addDummyCss($this->data);
+				$this->request->data = $this->addDummyCss($this->request->data);
 			}
 			
 			$this->SavedTheme->create();
-			if ($this->SavedTheme->save($this->data)) {
-				$this->Session->setFlash(__('The saved theme has been saved', true), 'default', array('class'=>'flash_success'));
+			if ($this->SavedTheme->save($this->request->data)) {
+				$this->Session->setFlash(__('The saved theme has been saved'), 'default', array('class'=>'flash_success'));
 				
 				$successJSON = true;
-				$contents = array('folder_name' => Shop::get('Shop.id') . '_' . $this->data['SavedTheme']['name'],
+				$contents = array('folder_name' => Shop::get('Shop.id') . '_' . $this->request->data['SavedTheme']['name'],
 						       'id' => $this->SavedTheme->id);
 				
 				
 			} else {
-				$this->SavedTheme->deleteThemeFolderAfterFailSave($this->data['SavedTheme']['name']);
-				$this->Session->setFlash(__('The saved theme could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->SavedTheme->deleteThemeFolderAfterFailSave($this->request->data['SavedTheme']['name']);
+				$this->Session->setFlash(__('The saved theme could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 				
 				$contents['reason'] = $this->SavedTheme->validationErrors;
 			}
@@ -160,10 +160,10 @@ class SavedThemesController extends AppController {
 		// When there ARE images, this will be activated at the very last step to upload the
 		// css file OR simply to redirect back to the index page
 		} else if ($this->RequestHandler->isPost()) {
-			$uploadifyUsed = ($this->data['SavedTheme']['alt_id'] > 0);
+			$uploadifyUsed = ($this->request->data['SavedTheme']['alt_id'] > 0);
 			
-			$turnedOn = $this->data['SavedTheme']['cssName'];
-			$submittedFile = $this->data['SavedTheme']['submittedfile'];
+			$turnedOn = $this->request->data['SavedTheme']['cssName'];
+			$submittedFile = $this->request->data['SavedTheme']['submittedfile'];
 			
 			$cssFileUsed = isset($submittedFile) &&
 					isset($submittedFile['error']) &&
@@ -172,10 +172,10 @@ class SavedThemesController extends AppController {
 			$cssCodeUsed = !$cssFileUsed;
 					
 			if ($uploadifyUsed AND $cssFileUsed) {
-				$this->data['SavedTheme']['id'] = $this->data['SavedTheme']['alt_id'];
+				$this->request->data['SavedTheme']['id'] = $this->request->data['SavedTheme']['alt_id'];
 				
-				if ($this->SavedTheme->save($this->data)) {
-					$this->Session->setFlash(__('The saved theme has been saved', true), 'default', array('class'=>'flash_success'));
+				if ($this->SavedTheme->save($this->request->data)) {
+					$this->Session->setFlash(__('The saved theme has been saved'), 'default', array('class'=>'flash_success'));
 				} else {
 					$errMsg = 'Error with your css file.';
 					foreach ($this->SavedTheme->validationErrors as $field=>$errorMsg) {
@@ -183,26 +183,26 @@ class SavedThemesController extends AppController {
 					}
 					$link = Router::url(array('controller'=>'saved_themes', 'action'=>'edit', 'admin'=>true, $this->SavedTheme->id));
 					$msg = $errMsg . ' Edit your css <a href="'.$link.'">here</a>';
-					$this->Session->setFlash(__($msg, true), 'default', array('class'=>'flash_failure'));
+					$this->Session->setFlash(__($msg), 'default', array('class'=>'flash_failure'));
 				}
 				
 				$this->redirect(array('action' => 'index'));
 				
 			} else if ($uploadifyUsed AND $cssCodeUsed) {
-				$this->Session->setFlash(__('The saved theme has been saved', true), 'default', array('class'=>'flash_success'));
+				$this->Session->setFlash(__('The saved theme has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->SavedTheme->create();	
 			}
 			
-			if ($this->SavedTheme->save($this->data)) {
-				$this->Session->setFlash(__('The saved theme has been saved', true), 'default', array('class'=>'flash_success'));
+			if ($this->SavedTheme->save($this->request->data)) {
+				$this->Session->setFlash(__('The saved theme has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 				
 			} else {
 				
-				$this->SavedTheme->deleteThemeFolderAfterFailSave($this->data['SavedTheme']['name']);
-				$this->Session->setFlash(__('The saved theme could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->SavedTheme->deleteThemeFolderAfterFailSave($this->request->data['SavedTheme']['name']);
+				$this->Session->setFlash(__('The saved theme could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 				
 			}
 			
@@ -246,29 +246,29 @@ class SavedThemesController extends AppController {
 
 	function admin_edit($id = null) {
 		
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid saved theme', true), 'default', array('class'=>'flash_failure'));
+		if (!$id && empty($this->request->data)) {
+			$this->Session->setFlash(__('Invalid saved theme'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		
 		//to change name and description
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			
-			$this->data['SavedTheme']['skipCssCheck'] = true;
-			if ($this->SavedTheme->save($this->data)) {
-				$this->Session->setFlash(__('The saved theme has been saved', true), 'default', array('class'=>'flash_success'));
+			$this->request->data['SavedTheme']['skipCssCheck'] = true;
+			if ($this->SavedTheme->save($this->request->data)) {
+				$this->Session->setFlash(__('The saved theme has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->SavedTheme->revertFolderNameAfterUnsuccessfulUpdate();
-				$this->Session->setFlash(__('The saved theme could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('The saved theme could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		} else if ($this->RequestHandler->isGet()) {
-			$this->data = $this->SavedTheme->read(null, $id);
+			$this->request->data = $this->SavedTheme->read(null, $id);
 		}
 		
-		$folder_name = $this->data['SavedTheme']['folder_name'];
+		$folder_name = $this->request->data['SavedTheme']['folder_name'];
 		
-		$images = $this->SavedTheme->fetchImages($this->data['SavedTheme']['folder_name']);
+		$images = $this->SavedTheme->fetchImages($this->request->data['SavedTheme']['folder_name']);
 		
 		$uploadifySettings = array('browseButtonId' => 'fileInput',
 					   'script' => Router::url('/admin/saved_themes/upload', true),
@@ -283,34 +283,34 @@ class SavedThemesController extends AppController {
 
 	function admin_delete($id = null) {
 		$contents = array();
-		if ($this->params['isAjax']) {
+		if ($this->request->params['isAjax']) {
 			$this->layout = 'json';
 			$successJSON = false;
 		}
 		
 		if (!$id) {
-			if ($this->params['isAjax']) {
-				$contents['reason'] = __('Invalid id for saved theme', true);
+			if ($this->request->params['isAjax']) {
+				$contents['reason'] = __('Invalid id for saved theme');
 			} else {
-				$this->Session->setFlash(__('Invalid id for saved theme', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('Invalid id for saved theme'), 'default', array('class'=>'flash_failure'));
 				$this->redirect(array('action'=>'index'));	
 			}
 		}
 		
 		
 		if ($this->SavedTheme->delete($id)) {
-			if ($this->params['isAjax']) {
+			if ($this->request->params['isAjax']) {
 				$successJSON = true;
 				$contents['id'] = $id;
 			} else {
-				$this->Session->setFlash(__('Saved theme deleted', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('Saved theme deleted'), 'default', array('class'=>'flash_failure'));
 				$this->redirect(array('action'=>'index'));	
 			}
 		} else {
-			if ($this->params['isAjax']) {
-				$contents['reason'] = __('Saved theme was not deleted', true);
+			if ($this->request->params['isAjax']) {
+				$contents['reason'] = __('Saved theme was not deleted');
 			} else {
-				$this->Session->setFlash(__('Saved theme was not deleted', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('Saved theme was not deleted'), 'default', array('class'=>'flash_failure'));
 				$this->redirect(array('action' => 'index'));
 			}
 		}
@@ -331,8 +331,8 @@ class SavedThemesController extends AppController {
 			
 		} else if ($this->RequestHandler->isPost()) {
 			
-			$path = VIEWS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img' . DS;
-			$newImage = $this->data['Image']['name'];
+			$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img' . DS;
+			$newImage = $this->request->data['Image']['name'];
 			if (strcasecmp($newImage, $image)!= 0) {
 				// copy file
 				$file = new File($path . $image);
@@ -353,19 +353,19 @@ class SavedThemesController extends AppController {
 			
 		if (!$id) {
 			
-			$this->Session->setFlash(__('Invalid id for saved theme', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for saved theme'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action'=>'index'));	
 			
 		}
 		
 		
 		if ($this->SavedTheme->feature($id)) {
-			$this->Session->setFlash(__('Theme For Shopfront changed', true), 'default', array('class'=>'flash_success'));
+			$this->Session->setFlash(__('Theme For Shopfront changed'), 'default', array('class'=>'flash_success'));
 			$this->redirect(array('action'=>'index'));	
 			
 		} else {
 			
-			$this->Session->setFlash(__('Theme For Shopfront NOT changed', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Theme For Shopfront NOT changed'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 			
 		}
@@ -376,7 +376,7 @@ class SavedThemesController extends AppController {
 			
 		if ($this->RequestHandler->isGet()) {
 			
-			$path = VIEWS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img' . DS;
+			$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img' . DS;
 			
 			// find file
 			$file = new File($path . $image);
@@ -387,7 +387,7 @@ class SavedThemesController extends AppController {
 	}
 	
 	function admin_edit_css($id = null, $folder_name) {
-		$path = VIEWS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'css' . DS . 'style.css';
+		$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'css' . DS . 'style.css';
 		$file = new File($path);
 		
 		if ($this->RequestHandler->isGet()) {
@@ -401,7 +401,7 @@ class SavedThemesController extends AppController {
 			
 		} else if ($this->RequestHandler->isPost()) {
 			
-			$newContent = $this->data['Css']['contents'];
+			$newContent = $this->request->data['Css']['contents'];
 			
 			$file->write($newContent);
 				

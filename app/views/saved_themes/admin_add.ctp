@@ -11,7 +11,7 @@
 <div id = "SavedThemeAdminAddFormDiv" class="savedThemes form">
 <?php echo $this->Form->create('SavedTheme', array('type' => 'file'));?>
 	<fieldset>
- 		<legend><?php __('Admin Add Saved Theme'); ?></legend>
+ 		<legend><?php echo __('Admin Add Saved Theme'); ?></legend>
 	<?php
 		
 		echo 'Upload your css ';
@@ -62,10 +62,10 @@ echo $this->Ajax->submit('Submit', $options);
 echo $this->Form->end();?>
 </div>
 <div class="actions">
-	<h3><?php __('Actions'); ?></h3>
+	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Html->link(__('List Saved Themes', true), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('List Saved Themes'), array('action' => 'index'));?></li>
 		
 	</ul>
 </div>

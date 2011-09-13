@@ -11,7 +11,7 @@
                                                         ));
 ?>
 	<fieldset>
- 		<legend><?php __('Add Product');?></legend>
+ 		<legend><?php echo __('Add Product');?></legend>
 	<?php
 
 		echo $this->Form->input('ProductImage.0.filename', array('type' => 'file', 'class'=>'multi'));

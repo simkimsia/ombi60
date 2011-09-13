@@ -11,7 +11,7 @@ echo $this->Html->script(array('smart_collections/admin'), array('inline' => fal
   <?php //echo $this->Form->input('SmartCollectionId', array('type' => 'hidden', 'value' => $smart_collection['SmartCollection']['id'], 'id' => 'SmartCollectionId'));?>
 
 <fieldset>
-  <legend><?php __('Set your conditions'); ?></legend>
+  <legend><?php echo __('Set your conditions'); ?></legend>
   <span class="hint">You can add as many conditions as you need by using the buttons on the right.</span>
   <div style="clear: both;"></div>
   <div id="setCondition">

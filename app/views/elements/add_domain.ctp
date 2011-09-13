@@ -1,6 +1,6 @@
 <div id="add_domain_div" style="display: none;" class="margin_top_15">
     <div style="display:none;" id="show_error"></div>
-    <?php __('Enter your domain below');?>
+    <?php echo __('Enter your domain below');?>
     <br />
 <?php
     echo $this->Form->create('Domain', array('action' => 'add', 'id' => 'domain_form'));

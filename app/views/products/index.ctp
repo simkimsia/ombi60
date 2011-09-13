@@ -28,15 +28,15 @@
 				<div class="contentcategory">Category 1</div>
 				<div id="resultsetbar"><div id="resultsettext"><?php
 			echo $this->Paginator->counter(array(
-			'format' => __('Showing %start% - %end% of %count% items', true)
+			'format' => __('Showing %start% - %end% of %count% items')
 			));
 		?></div>
 					
 		<?php
 		
 			
-			$sort = isset($this->params['named']['sort']) ? $this->params['named']['sort'] : 'created';
-			$order = isset($this->params['named']['direction']) ? $this->params['named']['direction'] : 'desc';
+			$sort = isset($this->request->params['named']['sort']) ? $this->request->params['named']['sort'] : 'created';
+			$order = isset($this->request->params['named']['direction']) ? $this->request->params['named']['direction'] : 'desc';
 			
 			
 			$optionSelected = 'created';
@@ -119,9 +119,9 @@
 			<div class="categorybottom">
 			
 				<div class="paging">
-					<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+					<?php echo $paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
 				 | 	<?php echo $paginator->numbers();?>
-					<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+					<?php echo $paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
 				</div>
 				
 				<!--				

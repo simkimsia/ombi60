@@ -1,15 +1,15 @@
 
 <div class="products index">
-<h2 align="center" class="product-heading"><?php __('Products');?></h2>
+<h2 align="center" class="product-heading"><?php echo __('Products');?></h2>
 <div class="product-add">
-    <?php echo $this->Html->link(__('Add New Product', true), array('action' => 'add')); ?></li>
+    <?php echo $this->Html->link(__('Add New Product'), array('action' => 'add')); ?></li>
 </div>
 <br />
 
 <span class='paginator-top'>
 <?php
 echo $paginator->counter(array(
-'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%')
 ));
 ?>
 </span>
@@ -17,9 +17,9 @@ echo $paginator->counter(array(
 if ($paginator->params['paging']['Product']['pageCount'] > 1) {
 ?> 
 <span class="top-paging">
-    <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+    <?php echo $paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
  |  <?php echo $paginator->numbers();?>
-    <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+    <?php echo $paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
 </span>
 <?php 
 } 
@@ -33,9 +33,9 @@ echo $this->element('action_buttons', array('modelName' => 'Product'));
 <table cellpadding="0" cellspacing="0" class="products-table" id="products-table">
 	<tr>
 		<th>&nbsp;</th>
-		<th class="product-header"><?php echo $paginator->sort(__('Product', true), 'title'); ?></th>
+		<th class="product-header"><?php echo $paginator->sort(__('Product'), 'title'); ?></th>
 		<th style="text-align: center;"><?php echo $paginator->sort('visible');?></th>
-		<th class="actions" style="text-align: center;"><?php __('Actions');?></th>
+		<th class="actions" style="text-align: center;"><?php echo __('Actions');?></th>
 	</tr>
 
 <?php
@@ -67,9 +67,9 @@ foreach ($products as $key=>$product):
 		<td align="center" style="text-align: center;">
 		<?php 
 			if (1 == $product['Product']['visible']) {
-			    $status = __('Published', true);
+			    $status = __('Published');
 			} else {
-			    $status = __('Hidden', true);    
+			    $status = __('Hidden');    
 			}        
 		?>	
 		  
@@ -78,9 +78,9 @@ foreach ($products as $key=>$product):
 					       array('class' => 'product-status')); ?>
 		</td>
 		<td class="actions" style="text-align: center;">	
-			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $product['Product']['id'])); ?>
-			<?php echo $this->Html->link(__('Duplicate', true), array('action' => 'duplicate', $product['Product']['id'])); ?>
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $product['Product']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $product['Product']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $product['Product']['id'])); ?>
+			<?php echo $this->Html->link(__('Duplicate'), array('action' => 'duplicate', $product['Product']['id'])); ?>
+			<?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $product['Product']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $product['Product']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>     
@@ -89,9 +89,9 @@ foreach ($products as $key=>$product):
 <?php
 if ($paginator->params['paging']['Product']['pageCount'] > 1) {
 ?> 
-    <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+    <?php echo $paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
  |  <?php echo $paginator->numbers();?>
-    <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+    <?php echo $paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
 </div>
 <?php
 }

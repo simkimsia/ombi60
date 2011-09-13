@@ -14,7 +14,7 @@ class LinkListsController extends AppController {
 	function beforeFilter() {
 		parent::beforeFilter();
 		
-		if ($this->action== 'admin_edit') {
+		if ($this->request->action== 'admin_edit') {
 			$this->Security->validatePost = false;
 		}
 	
@@ -25,19 +25,19 @@ class LinkListsController extends AppController {
 	 * we need to saveAll for the entire list rather than individual links
 	 * */
 	function admin_edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid linklist', true));
+		if (!$id && empty($this->request->data)) {
+			$this->Session->setFlash(__('Invalid linklist'));
 			$this->redirect(array('controller' => 'links',
 					      'admin' => true,
 					      'action' => 'index'));
 		}
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			
-			if ($this->LinkList->saveAll($this->data)) {
-				$this->Session->setFlash(__('The linklist has been saved', true));
+			if ($this->LinkList->saveAll($this->request->data)) {
+				$this->Session->setFlash(__('The linklist has been saved'));
 				
 			} else {
-				$this->Session->setFlash(__('The linklist could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The linklist could not be saved. Please, try again.'));
 			}
 			
 		}

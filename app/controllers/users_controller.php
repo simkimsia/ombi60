@@ -10,23 +10,23 @@ class UsersController extends AppController {
 	function beforeFilter() {
 		//parent::beforeFilter();
 
-		if ($this->action == 'platform_login') {
+		if ($this->request->action == 'platform_login') {
 			$this->Auth->loginRedirect = '/platform/users';
 		}
 		
-		if ($this->action == 'initDB') {
+		if ($this->request->action == 'initDB') {
 			$this->Auth->allow('initDB');
 		}
 
 	}
 
 	function parentNode() {
-		if (!$this->id && empty($this->data)) {
+		if (!$this->id && empty($this->request->data)) {
 			return null;
 		}
-		$data = $this->data;
+		$data = $this->request->data;
 
-		if (empty($this->data)) {
+		if (empty($this->request->data)) {
 			$data = $this->read();
 		}
 

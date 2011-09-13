@@ -245,7 +245,7 @@ class JavascriptHelper extends AppHelper {
 
 			$url = $this->webroot($url);
 			$timestampEnabled = (
-				(Configure::read('Asset.timestamp') === true && Configure::read() > 0) ||
+				(Configure::read('Asset.timestamp') === true && Configure::read('debug') > 0) ||
 				Configure::read('Asset.timestamp') === 'force'
 			);
 
@@ -654,7 +654,7 @@ class JavascriptHelper extends AppHelper {
 				$val = 'null';
 			break;
 			case (is_bool($val)):
-				$val = ife($val, 'true', 'false');
+				$val = empty($val) ? 'true' : 'false';
 			break;
 			case (is_int($val)):
 				$val = $val;

@@ -1,5 +1,5 @@
 <?php ?>
-<ul class="addMultiple" style="margin-bottom: 0px; <?php echo ife(isset($show), 'display: block;', 'display: none')?>;">
+<ul class="addMultiple" style="margin-bottom: 0px; <?php echo empty(isset($show)) ? 'display: block;' : 'display: none'?>;">
     <li class="selectOpts">
         <table cellpadding="0" cellspacing="0">
             <tr>

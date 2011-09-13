@@ -43,7 +43,7 @@ class CustomersController extends AppController {
 	 **/
 	function register() {
 
-		$this->set('title_for_layout', __('Signup', true));
+		$this->set('title_for_layout', __('Signup'));
 		
 		// to retrieve the shop id based on the url
 		// set inside the hidden value of the login form
@@ -53,11 +53,11 @@ class CustomersController extends AppController {
 
 			// hash the confirm password field so that the comparison can be done successfully
 			// password is automatically hashed by the Auth component
-			$this->data['User']['password_confirm'] = $this->Auth->password($this->data['User']['password_confirm']);
+			$this->request->data['User']['password_confirm'] = $this->Auth->password($this->request->data['User']['password_confirm']);
 			
 			/*
-			if($this->Recaptcha->valid($this->params['form'])) {
-				if ($this->Customer->signupNewAccount($this->data)) {
+			if($this->Recaptcha->valid($this->request->params['form'])) {
+				if ($this->Customer->signupNewAccount($this->request->data)) {
 					$this->Session->setFlash('You\'ve successfully registered.', 'default', array('class'=>'flash_success'));
 
 				} else {
@@ -68,17 +68,17 @@ class CustomersController extends AppController {
 			  }
 			*/
 			
-				if ($this->Customer->signupNewAccount($this->data)) {
-					$this->Session->setFlash(__('You\'ve successfully registered.',true), 'default', array('class'=>'flash_success'));
+				if ($this->Customer->signupNewAccount($this->request->data)) {
+					$this->Session->setFlash(__('You\'ve successfully registered.'), 'default', array('class'=>'flash_success'));
 
 				} else {
-					$this->Session->setFlash(__('Sorry, the information you\'ve entered is incorrect.',true), 'default', array('class'=>'flash_failure'));
+					$this->Session->setFlash(__('Sorry, the information you\'ve entered is incorrect.'), 'default', array('class'=>'flash_failure'));
 				}
 				
 				
 			// regardless of success, we must blank out the password fields because we only have the hashed versions
-			$this->data['User']['password_confirm'] = NULL;
-			$this->data['User']['password']         = NULL;
+			$this->request->data['User']['password_confirm'] = NULL;
+			$this->request->data['User']['password']         = NULL;
 
 		}
 
@@ -88,7 +88,7 @@ class CustomersController extends AppController {
 	}
 
 	function login() {
-		$this->set('title_for_layout', __('Customer Login',true));
+		$this->set('title_for_layout', __('Customer Login'));
 		
 		$shopId = Shop::get('Shop.id');
 		
@@ -110,9 +110,9 @@ class CustomersController extends AppController {
 				
 				$this->logoutFunction();	
 			} else if ($this->RequestHandler->isPost()) {
-				if(isset($this->params['form']['loginBtn'])) {
+				if(isset($this->request->params['form']['loginBtn'])) {
 					// proceed as normal for login -> checkout process
-				} else if (isset($this->params['form']['checkoutBtn'])) {
+				} else if (isset($this->request->params['form']['checkoutBtn'])) {
 					// need to clear cookies for user id
 					$this->Cookie->delete('User.id');
 					

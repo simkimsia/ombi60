@@ -2,7 +2,7 @@
 <?php echo $this->Form->create('ProductGroup', array('url' => array('action' => 'edit_smart', $data['ProductGroup']['id']), ));?>
   <?php echo $this->Form->input('id', array('value' => $data['ProductGroup']['id']))?>
   <fieldset>
-    <legend><?php __('Edit Smart Collection'); ?></legend>
+    <legend><?php echo __('Edit Smart Collection'); ?></legend>
   <?php
   
   $this->TinyMce->editor(array(
@@ -22,24 +22,24 @@
     $label = $this->Form->label('handle', 'Permalink/handle');
     $textbox = $this->Form->text('ProductGroup.handle', array('class' => 'small', 'value' => $data['ProductGroup']['handle']));
     $prefix = Router::url('/collections/', true);
-    $suffix = ' ( ' . $this->Html->link(__('What is this?', true), '#') . ' )';
+    $suffix = ' ( ' . $this->Html->link(__('What is this?'), '#') . ' )';
     echo $this->Html->div('input text', $label.$prefix.$textbox. $suffix ,array(), true);
     
-    echo $this->Form->input('description', array('label' => __('Write description of collection', true), 'value' => $data['ProductGroup']['description']));
+    echo $this->Form->input('description', array('label' => __('Write description of collection'), 'value' => $data['ProductGroup']['description']));
   ?>
   </fieldset>
   
   <fieldset>
-    <legend><?php __('Properties', FALSE)?></legend>
-      <span class="hint"><?php __("If you don't want this smart collection to show up on your store front you can set its visibility to hidden.", FALSE);?></span>
+    <legend><?php echo __('Properties', FALSE)?></legend>
+      <span class="hint"><?php echo __("If you don't want this smart collection to show up on your store front you can set its visibility to hidden.", FALSE);?></span>
       <div style="clear: both;"></div>
       <?php
         echo $this->Form->input('ProductGroup.visible', array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false, 'value' => $data['ProductGroup']['visible']));        
       ?>
   </fieldset><fieldset>
     <div class="submit">
-      <?php echo $this->Form->submit(__('Edit Smart Collection', true), array('div' => false));?> &nbsp;<?php __('or'); ?>&nbsp;
-      <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'product_groups','action' => 'index'), array('onclick' => "return edit();")); ?>
+      <?php echo $this->Form->submit(__('Edit Smart Collection'), array('div' => false));?> &nbsp;<?php echo __('or'); ?>&nbsp;
+      <?php echo $this->Html->link(__('Cancel'), array('controller'=>'product_groups','action' => 'index'), array('onclick' => "return edit();")); ?>
     </div>
   </fieldset>
 

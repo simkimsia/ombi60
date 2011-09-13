@@ -5,7 +5,7 @@
 		
 		<!-- <th><?php //echo $this->Paginator->sort('always_redirect_here');?></th> -->
 		<th><?php echo $this->Paginator->sort('Working?');?></th>
-		<th class="actions" style="text-align: center"><?php __('Actions');?></th>
+		<th class="actions" style="text-align: center"><?php echo __('Actions');?></th>
 </tr>
 <?php
 $i = 0;
@@ -28,7 +28,7 @@ foreach ($domains as $domain):
 		
 		<?php
 			if (!$domain['Domain']['primary']) {
-				echo $this->Html->link(__('Make this primary domain', true), array('action' => 'make_this_primary',
+				echo $this->Html->link(__('Make this primary domain'), array('action' => 'make_this_primary',
 												   'controller' => 'domains',
 												   'admin' => true,
 												   'id' => $domain['Domain']['id'],
@@ -37,7 +37,7 @@ foreach ($domains as $domain):
 		?>
 		<?php
 			if ($domain['Domain']['domain'] != $mainUrl OR !$domain['Domain']['shop_web_address']) {
-				echo $this->Html->link(__('Delete', true), array('action' => 'delete', $domain['Domain']['id']), array('confirm' => 'Are you sure you want to delete this domain?'));
+				echo $this->Html->link(__('Delete'), array('action' => 'delete', $domain['Domain']['id']), array('confirm' => 'Are you sure you want to delete this domain?'));
 			}
 		?>
 	</td>

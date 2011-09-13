@@ -27,7 +27,7 @@ class ProductGroupsController extends AppController {
 	  
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-		if ($this->action == 'admin_toggle' ||  $this->action == 'admin_add_smart' ) {
+		if ($this->request->action == 'admin_toggle' ||  $this->request->action == 'admin_add_smart' ) {
 			$this->Security->enabled = false;
 		}
 	}
@@ -58,7 +58,7 @@ class ProductGroupsController extends AppController {
 
 	function admin_view_smart($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid smart collection', true));
+			$this->Session->setFlash(__('Invalid smart collection'));
 			$this->redirect($this->refer());
 		      }
 		$this->__getSmartCollection($id);
@@ -67,24 +67,24 @@ class ProductGroupsController extends AppController {
 
 	function admin_add_smart() {
 		//First we check whether data is posted?
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$i = 0;
 			foreach ($_POST['fields'] as $field) {
-				$this->data['SmartCollectionCondition'][$i]['field'] = $field;
+				$this->request->data['SmartCollectionCondition'][$i]['field'] = $field;
 				$i++;
 			}
 			$i = 0;
 			foreach ($_POST['relations'] as $relation) {
-				$this->data['SmartCollectionCondition'][$i]['relation'] = $relation;
+				$this->request->data['SmartCollectionCondition'][$i]['relation'] = $relation;
 				$i++;
 			}
 			$i = 0;
 			foreach ($_POST['conditions'] as $condition) {
-				$this->data['SmartCollectionCondition'][$i]['condition'] = $condition;
+				$this->request->data['SmartCollectionCondition'][$i]['condition'] = $condition;
 				$i++;
 			}
-			$this->data['ProductGroup']['type'] = SMART_COLLECTION;
-			if ((bool)$this->ProductGroup->createSmartCollection($this->data)) {
+			$this->request->data['ProductGroup']['type'] = SMART_COLLECTION;
+			if ((bool)$this->ProductGroup->createSmartCollection($this->request->data)) {
 				$this->redirect(array(
 						 'controller' => 'product_groups',
 						 'admin'      => true,
@@ -98,26 +98,26 @@ class ProductGroupsController extends AppController {
 	function admin_edit_smart($id = null) {
 		
 		if (!$id) {
-		  $this->Session->setFlash(__('Invalid smart collection', true));
+		  $this->Session->setFlash(__('Invalid smart collection'));
 		  $this->redirect($this->refer());
 		}
-		if (!empty($this->data)) {
-			$this->data['ProductGroup']['type'] = SMART_COLLECTION;
+		if (!empty($this->request->data)) {
+			$this->request->data['ProductGroup']['type'] = SMART_COLLECTION;
 			
-			if ($this->ProductGroup->save($this->data)) {
+			if ($this->ProductGroup->save($this->request->data)) {
 				$this->redirect(array('action' => 'admin_view_smart', $id));
 			} else {
-				$this->Session->setFlash(__('Unable to save smart collection', true));
+				$this->Session->setFlash(__('Unable to save smart collection'));
 			}
 		}
-		$this->data = $this->__getSmartCollection($id);
+		$this->request->data = $this->__getSmartCollection($id);
 		$this->set('view', true);
 	}
 	
 	function admin_view_custom($id = null) {
     
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid product group', true));
+			$this->Session->setFlash(__('Invalid product group'));
 			$this->redirect(array('action' => 'index'));
 		}
 		
@@ -143,15 +143,15 @@ class ProductGroupsController extends AppController {
 	
 	function admin_add_custom() {
 	  
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			// set the type to custom
-			$this->data['ProductGroup']['type'] = CUSTOM_COLLECTION;
+			$this->request->data['ProductGroup']['type'] = CUSTOM_COLLECTION;
 			$this->ProductGroup->create();
-			if ($this->ProductGroup->save($this->data)) {
-				$this->Session->setFlash(__('The product group has been saved', true));
+			if ($this->ProductGroup->save($this->request->data)) {
+				$this->Session->setFlash(__('The product group has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product group could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The product group could not be saved. Please, try again.'));
 			}
 		}
 		
@@ -193,7 +193,7 @@ class ProductGroupsController extends AppController {
 		} 
 		$this->layout = '';
 		$this->autoRender = false;
-		$this->render('admin_product_group_list', 'ajax',ELEMENTS.'/admin_product_group_list.ctp');
+		$this->render('admin_product_group_list', 'ajax',APP . 'View' . DS . 'Elements' . DS.'/admin_product_group_list.ctp');
 	   
 	}
 	
@@ -228,28 +228,28 @@ class ProductGroupsController extends AppController {
 		$this->layout = '';
 		$this->autoRender = false;
 		$this->render('admin_product_group_list',
-			      'ajax',ELEMENTS.'/admin_product_group_list.ctp');
+			      'ajax',APP . 'View' . DS . 'Elements' . DS.'/admin_product_group_list.ctp');
 	   	    	    
 	}
 	
 	function admin_edit_custom($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid product group', true));
+		if (!$id && empty($this->request->data)) {
+			$this->Session->setFlash(__('Invalid product group'));
 			$this->redirect(array('action' => 'index'));
 		}
 		
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			// set the type to custom
-			$this->data['ProductGroup']['type'] = CUSTOM_COLLECTION;
-			if ($this->ProductGroup->save($this->data)) {
-				$this->Session->setFlash(__('The product group has been saved', true));
+			$this->request->data['ProductGroup']['type'] = CUSTOM_COLLECTION;
+			if ($this->ProductGroup->save($this->request->data)) {
+				$this->Session->setFlash(__('The product group has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product group could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The product group could not be saved. Please, try again.'));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->ProductGroup->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->ProductGroup->read(null, $id);
 		}
 		
 		$product_group = $this->ProductGroup->read(null, $id);
@@ -274,14 +274,14 @@ class ProductGroupsController extends AppController {
 
 	function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for product group', true));
+			$this->Session->setFlash(__('Invalid id for product group'));
 			$this->redirect(array('action'=>'index'));
 		}
 		
 		if ($this->ProductGroup->delete($id)) {
-			$this->Session->setFlash(__('Product group deleted', true));
+			$this->Session->setFlash(__('Product group deleted'));
 		} else {
-			$this->Session->setFlash(__('Product group was not deleted', true));	
+			$this->Session->setFlash(__('Product group was not deleted'));	
 		}
 		
 		$this->redirect(array('action' => 'index'));
@@ -291,7 +291,7 @@ class ProductGroupsController extends AppController {
 		
 		$result = $this->ProductGroup->toggle($id, 'visible');
 		
-		if ($this->params['isAjax']) {
+		if ($this->request->params['isAjax']) {
 			
 			$this->layout = 'json';
 			if ($result) {
@@ -309,9 +309,9 @@ class ProductGroupsController extends AppController {
 				
 		} else {
 			if ($result) {
-				$this->Session->setFlash(__('Collection status has been changed', true), 'default', array('class'=>'flash_success'));
+				$this->Session->setFlash(__('Collection status has been changed'), 'default', array('class'=>'flash_success'));
 			} else {
-				$this->Session->setFlash(__('Collection status could not be changed. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('Collection status could not be changed. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 			$this->redirect(array('action' => 'index'));
 		}
@@ -329,7 +329,7 @@ class ProductGroupsController extends AppController {
 	
 	function admin_remove_condition($condition_id = null, $smart_collection_id = null) {
 		if (!$condition_id) {
-			$this->Session->setFlash(__('Invalid smart collection', true));
+			$this->Session->setFlash(__('Invalid smart collection'));
 			$this->redirect($this->refer());
 		}
 	    
@@ -344,17 +344,17 @@ class ProductGroupsController extends AppController {
 	function admin_save_condition() {
 		$i = 0;
 		foreach ($_POST['fields'] as $field) {
-			$this->data['SmartCollectionCondition'][$i]['field'] = $field;
+			$this->request->data['SmartCollectionCondition'][$i]['field'] = $field;
 			$i++;
 		}
 		$i = 0;
 		foreach ($_POST['relations'] as $relation) {
-			$this->data['SmartCollectionCondition'][$i]['relation'] = $relation;
+			$this->request->data['SmartCollectionCondition'][$i]['relation'] = $relation;
 			$i++;
 		}
 		$i = 0;
 		foreach ($_POST['conditions'] as $condition) {
-			$this->data['SmartCollectionCondition'][$i]['condition'] = $condition;
+			$this->request->data['SmartCollectionCondition'][$i]['condition'] = $condition;
 			$i++;
 		} 
 		$smart_collection_id = $_POST['smart_collection_id'];
@@ -362,7 +362,7 @@ class ProductGroupsController extends AppController {
 		
 		$this->set('view', true);
 		$this->set('smart_collection_id', $smart_collection_id);
-		if ($this->ProductGroup->saveSmartCollectionCondition($this->data, $smart_collection_id)) {
+		if ($this->ProductGroup->saveSmartCollectionCondition($this->request->data, $smart_collection_id)) {
 			if ($this->RequestHandler->isAjax()) {
 				$this->layout = 'ajax';
 			}

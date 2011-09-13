@@ -30,18 +30,18 @@
                             <td>                            
                                 <select name="data[Product][options][<?php echo $field; ?>][new_field]" onchange="checkCustom(this.value, '<?php echo $field;?>');" class="OptName">';
                         
-                                        <option <?php echo ife(($field == "title"), 'selected="selected"', "");?> <?php echo ife((in_array("title", $selectedFields) || $field === "title"), "", 'disabled=true')?> value="title"><?php __('Title')?></option>
-                                        <option <?php echo ife(($field == "color"), 'selected="selected"', "");?> <?php echo ife((in_array("color", $selectedFields) || $field === "color"), "", 'disabled=true')?> value="color"><?php __('Color')?></option>
-                                        <option <?php echo ife(($field == "style"), 'selected="selected"', "");?> <?php echo ife((in_array("style", $selectedFields) || $field === "style"), "", 'disabled=true')?> value="style"><?php __('Style')?></option>
-                                        <option <?php echo ife(($field == "size"), 'selected="selected"', "");?> <?php echo ife((in_array("size", $selectedFields) || $field === "size"), "", 'disabled=true')?> value="size"><?php __('Size')?></option>
-                                        <option <?php echo ife(($field == "material"), 'selected="selected"', "");?> <?php echo ife((in_array("material", $selectedFields) || $field === "material"), "", 'disabled=true')?> value="material"><?php __('Material')?></option>
-                                        <option <?php echo ife($customField, 'selected="selected"', "");?> value="custom" ><?php __('Custom')?></option>
+                                        <option <?php echo empty(($field == "title"), 'selected="selected"', "");?> <?php echo ife((in_array("title", $selectedFields) || $field === "title")) ? "" : 'disabled=true')?> value="title"><?php echo __('Title'?></option>
+                                        <option <?php echo empty(($field == "color"), 'selected="selected"', "");?> <?php echo ife((in_array("color", $selectedFields) || $field === "color")) ? "" : 'disabled=true')?> value="color"><?php echo __('Color'?></option>
+                                        <option <?php echo empty(($field == "style"), 'selected="selected"', "");?> <?php echo ife((in_array("style", $selectedFields) || $field === "style")) ? "" : 'disabled=true')?> value="style"><?php echo __('Style'?></option>
+                                        <option <?php echo empty(($field == "size"), 'selected="selected"', "");?> <?php echo ife((in_array("size", $selectedFields) || $field === "size")) ? "" : 'disabled=true')?> value="size"><?php echo __('Size'?></option>
+                                        <option <?php echo empty(($field == "material"), 'selected="selected"', "");?> <?php echo ife((in_array("material", $selectedFields) || $field === "material")) ? "" : 'disabled=true')?> value="material"><?php echo __('Material'?></option>
+                                        <option <?php echo empty($customField) ? 'selected="selected"' : "");?> value="custom" ><?php echo __('Custom'?></option>
                                 </select>
                                 <!--<input type="hidden" id="ProductOptions<?php //echo Inflector::camelize(str_replace(' ', '_', $field)); ?>Delete" name="data[Product][options][<?php //echo $field; ?>][delete]" value="0" id="deleteOption_<?php //echo $field;?>" />-->
                                 <input type="hidden" name="data[Product][options][<?php echo $field; ?>][delete]" value="0" id="deleteOption_<?php echo $field;?>" />
                             </td>
                             <td style="<?php echo $customFieldDisplay; ?>" style="width: 30%;" id="showCustom_<?php echo $field;?>"><input type="text" name="data[Product][options][<?php echo $field; ?>][custom_new_field]"
-                                                                                                                                                                      value="<?php echo ife($customField, $field, '');?>"/></td>
+                                                                                                                                                                      value="<?php echo empty($customField) ? $field : '';?>"/></td>
                         </tr>
                     
                     </table>
@@ -72,7 +72,7 @@
             </ul>
             
         </li>
-        <li style="display: none" id="<?php echo "undo_".$field?>"><div style="padding: 5px; text-align: right;" ><?php __(ucfirst($field) . " will be deleted "); echo $this->Html->link('undo', 'javascript: void(0);', array('class' => 'undo', 'escape' => false, 'id' => 'aundo_'.$field));?></div></li>                 
+        <li style="display: none" id="<?php echo "undo_".$field?>"><div style="padding: 5px; text-align: right;" ><?php echo __(ucfirst($field) . " will be deleted "); echo $this->Html->link('undo', 'javascript: void(0);', array('class' => 'undo', 'escape' => false, 'id' => 'aundo_'.$field));?></div></li>                 
     <?php
         endforeach;
     ?>

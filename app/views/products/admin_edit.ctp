@@ -11,10 +11,10 @@
 ?>
 <?php echo $this->Html->script('variant_options', array('inline' => false));?>
 <div>
-<div class="text_center"><h2><?php __($this->Form->value('Product.title'));?></h2>
-    <?php echo $this->Html->link(__('Duplicate', true), array('action' => 'duplicate', $this->Form->value('Product.id'))); ?>|
-    <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Product.id')), null, sprintf(__('Are you sure you want to delete this product?', true))); ?>|
-    <?php echo $this->Html->link(__('Cancel', true), array('action' => 'index', 'admin' => true));?>
+<div class="text_center"><h2><?php echo __($this->Form->value('Product.title'));?></h2>
+    <?php echo $this->Html->link(__('Duplicate'), array('action' => 'duplicate', $this->Form->value('Product.id'))); ?>|
+    <?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $this->Form->value('Product.id')), null, sprintf(__('Are you sure you want to delete this product?'))); ?>|
+    <?php echo $this->Html->link(__('Cancel'), array('action' => 'index', 'admin' => true));?>
 </div>
 <?php
 	echo $this->element('errors', array('errors' => $errors));
@@ -23,7 +23,7 @@
 	echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=> User::get('Merchant.shop_id')));
 ?>
 	<fieldset>
- 		<legend><?php __('Edit this Product');?></legend>
+ 		<legend><?php echo __('Edit this Product');?></legend>
 	<?php
 	
 	
@@ -45,7 +45,7 @@
 		$label = $this->Form->label('handle', 'Permalink/handle');
 		$textbox = $this->Form->text('Product.handle', array('class' => 'small'));
 		$prefix = Router::url('/products/', true);
-		$suffix = ' ( ' . $this->Html->link(__('What is this?', true), '#') . ' )';
+		$suffix = ' ( ' . $this->Html->link(__('What is this?'), '#') . ' )';
 		echo $this->Html->div('input text', $label.$prefix.$textbox. $suffix ,array(), true);
 		
 		echo $this->Form->input('description');
@@ -55,14 +55,14 @@
 
 	</fieldset>
 	<fieldset class="left">
-	<legend><?php __('Properties'); ?></legend>
+	<legend><?php echo __('Properties'); ?></legend>
 	
         <?php echo $this->element('variant_options');?>
 
 	</fieldset>
         
 	<fieldset class="right">
-		<legend><?php __('Collections'); ?></legend>
+		<legend><?php echo __('Collections'); ?></legend>
 		<?php echo $this->Form->input('Product.selected_collections',
 					 array('type' => 'select',
 					       'multiple' => 'checkbox',
@@ -71,8 +71,8 @@
 	
 <?php
 	echo '<div class="submit">';
-	echo $this->Form->submit(__('Update Product', true), array('div' => FALSE));
-	echo ' or ' . $this->Html->link(__('Cancel', true), array('action' => 'index', 'admin' => true)); 
+	echo $this->Form->submit(__('Update Product'), array('div' => FALSE));
+	echo ' or ' . $this->Html->link(__('Cancel'), array('action' => 'index', 'admin' => true)); 
 	echo '</div>';
 	echo $this->Form->end();
 ?>
@@ -88,7 +88,7 @@
         ?>
 <?php echo $this->element('add_variant_option', array('voptions' => $voptions));?>
 
-<?php echo $this->element('list_of_variants',array('variant_list' => $this->data));?>
+<?php echo $this->element('list_of_variants',array('variant_list' => $this->request->data));?>
 </div>
 
 

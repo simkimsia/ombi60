@@ -1,5 +1,5 @@
 <div>
-<h2 align="center"><?php __('Orders');?></h2>
+<h2 align="center"><?php echo __('Orders');?></h2>
 <?php echo $this->Form->create('Order', array('url' => array('controller' => 'orders', 'action' => 'index', 'admin' => 'true'), 'id'=>'filters')); ?>
 <table cellpadding="0" cellspacing="0" class="search-filters">
 	<tr>
@@ -32,16 +32,16 @@
 <span class='paginator-top'>
 <?php
 echo $this->Paginator->counter(array(
-'format' => __('Showing %current% orders out of %count% total. Page %page% of %pages%.', true)
+'format' => __('Showing %current% orders out of %count% total. Page %page% of %pages%.')
 ));
 ?></span>
 <?php
 if ($paginator->params['paging']['Order']['pageCount'] > 1) {
 ?> 
 <span class="top-paging">
-    <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+    <?php echo $paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
  |  <?php echo $paginator->numbers();?>
-    <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+    <?php echo $paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
 </span>
 <?php 
 } 
@@ -68,7 +68,7 @@ foreach ($orders as $order):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $this->Html->link(__('#' . $order['Order']['order_no'], true), array('action' => 'view', $order['Order']['id'])); ?>
+			<?php echo $this->Html->link(__('#' . $order['Order']['order_no']), array('action' => 'view', $order['Order']['id'])); ?>
 			
 		</td>
 		<td>
@@ -96,9 +96,9 @@ foreach ($orders as $order):
 <?php
 if ($paginator->params['paging']['Order']['pageCount'] > 1) {
 ?> 
-    <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+    <?php echo $paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
  |  <?php echo $paginator->numbers();?>
-    <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+    <?php echo $paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
 </div>
 <?php
 }

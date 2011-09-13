@@ -67,7 +67,7 @@ class VisibleBehavior extends ModelBehavior {
 
 			// Check if given field exists
 			if (!$model->hasField($field)) {
-				trigger_error(sprintf(__d('visible', 'VisibleBehavior Error: The field "%s" doesn\'t exists in the model "%s".', true), $field, $model->alias), E_USER_WARNING);
+				trigger_error(sprintf(__d('visible', 'VisibleBehavior Error: The field "%s" doesn\'t exists in the model "%s".'), $field, $model->alias), E_USER_WARNING);
 			}
 
 			

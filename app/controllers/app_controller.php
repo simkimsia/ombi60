@@ -64,7 +64,7 @@ class AppController extends Controller {
 	 * merge the named params and the get params into a single array
 	 * with the GET params taking precedence
 	 **/
-	$this->params4GETAndNamed = array_merge($this->params['named'], $this->params['url']);
+	$this->params4GETAndNamed = array_merge($this->request->params['named'], $this->request->params['url']);
 
         /**
          *Configure AuthComponent
@@ -74,7 +74,7 @@ class AppController extends Controller {
 	$this->Auth->fields = array('username' => 'email', 'password' => 'password');
         $this->Auth->authorize = 'actions';
 
-        if (isset($this->params['admin'])) {
+        if (isset($this->request->params['admin'])) {
 		$this->Auth->loginAction = '/admin/login';
 		$this->Auth->loginRedirect = '/admin';
 		$this->Auth->logoutRedirect = '/admin/login';
@@ -155,7 +155,7 @@ class AppController extends Controller {
 	$this->set('shop_setting', $shopSetting);
 	
 	
-	if(!isset($this->params['admin'])) {	
+	if(!isset($this->request->params['admin'])) {	
 		
 		$userIdInSession = $this->Session->read('User.id');
 		$this->log('what ever is the session over here' . $this->Session->read('User'));
@@ -287,7 +287,7 @@ class AppController extends Controller {
 	$userAuth = $this->Session->check('Auth.User');
 	
 	// if admin User Auth more important
-	if(isset($this->params['admin'])) {
+	if(isset($this->request->params['admin'])) {
 		if ($userAuth) {
 			$userAuth = $this->Session->read('Auth');
 			User::store($userAuth);	
@@ -344,7 +344,7 @@ class AppController extends Controller {
 	    $this->cakeError('noSuchDomain');
 	} else {
 	
-	    if(!isset($this->params['admin'])) {
+	    if(!isset($this->request->params['admin'])) {
 		$cart = ClassRegistry::init('Cart');
 		$cartItemsCount = $cart->getCartItemsCountByCustomerId(User::get('User.id'));
 		$this->set('cartItemsCount', $cartItemsCount);
@@ -356,7 +356,7 @@ class AppController extends Controller {
 	$localhostDomain = (strpos(FULL_BASE_URL, '.localhost') > 0);
 	
 	// if its admin or an ssl action, we want to force SSL on production or staging server
-	if ((isset($this->params['admin']) && !$localhostDomain) || (!$localhostDomain && array_key_exists($this->params['controller'], $this->sslActions) && in_array($this->params['action'], $this->sslActions[$this->params['controller']]))) {
+	if ((isset($this->request->params['admin']) && !$localhostDomain) || (!$localhostDomain && array_key_exists($this->request->params['controller'], $this->sslActions) && in_array($this->request->params['action'], $this->sslActions[$this->request->params['controller']]))) {
 	    $this->Security->blackHoleCallback = 'forceSSL';
 	    $this->Security->requireSecure();
 	}
@@ -370,7 +370,7 @@ class AppController extends Controller {
     }
     
     function forceSSL() {
-	$this->redirect('https://' . env('SERVER_NAME') . $this->here);
+	$this->redirect('https://' . env('SERVER_NAME') . $this->request->here);
     }
     
     protected function checkUrlAgainstDomain($fullBaseUrl, $httpDomainInDB) {
@@ -475,12 +475,12 @@ class AppController extends Controller {
     
     	function admin_change_active_status($id = null, $product_id = null) {
 		if (!$id OR !$product_id) {
-			$this->Session->setFlash(__('Invalid id for ProductImage', true));
+			$this->Session->setFlash(__('Invalid id for ProductImage'));
 			$this->redirect(array('action' => 'index'));
 		}
 
 		if ($this->ProductImage->change_active_status($id)) {
-			$this->Session->setFlash(__('ProductImage status changed', true));
+			$this->Session->setFlash(__('ProductImage status changed'));
 			$this->redirect(array('controller' => 'products',
 					 'action' => 'edit',
 					 'admin' => true,
@@ -488,7 +488,7 @@ class AppController extends Controller {
 					 '#' => 'images'
 					));
 		}
-		$this->Session->setFlash(__('The status of ProductImage could not be changed. Please, try again.', true));
+		$this->Session->setFlash(__('The status of ProductImage could not be changed. Please, try again.'));
 		$this->redirect(array('action' => 'index'));
 	}
 	
@@ -537,7 +537,7 @@ class AppController extends Controller {
 				       );
 		
 		$controller 	= $this->name;
-		$action 	= $this->action;
+		$action 	= $this->request->action;
 		
 		$validControllers = array_keys($publicActions);
 		

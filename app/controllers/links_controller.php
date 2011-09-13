@@ -8,7 +8,7 @@ class LinksController extends AppController {
 	function beforeFilter() {
 		parent::beforeFilter();
 		
-		if ($this->action== 'admin_edit' || $this->action == 'admin_add') {
+		if ($this->request->action== 'admin_edit' || $this->request->action == 'admin_add') {
 			$this->Security->validatePost = false;
 		}
 	
@@ -55,7 +55,7 @@ class LinksController extends AppController {
 	 * */
 	function admin_order($listId) {
 		
-		if ($this->params['isAjax']) {
+		if ($this->request->params['isAjax']) {
 				
 			// the $_POST data is expected to be 2011-01-10 11:07:36 Error: Array
 			//(
@@ -87,9 +87,9 @@ class LinksController extends AppController {
 				
 		} else {
 			if ($result) {
-				$this->Session->setFlash(__('The link has been saved', true));
+				$this->Session->setFlash(__('The link has been saved'));
 			} else {
-				$this->Session->setFlash(__('The link could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The link could not be saved. Please, try again.'));
 			}
 			$this->redirect(array('action' => 'index'));
 		}
@@ -204,13 +204,13 @@ class LinksController extends AppController {
 	function admin_add() {
 		$result = false;
 		
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			
 			$this->Link->create();
-			$result = $this->Link->save($this->data);
+			$result = $this->Link->save($this->request->data);
 		}
 		
-		if ($this->params['isAjax']) {
+		if ($this->request->params['isAjax']) {
 				
 			$this->layout = 'json';
 			if ($result) {
@@ -240,9 +240,9 @@ class LinksController extends AppController {
 				
 		} else {
 			if ($result) {
-				$this->Session->setFlash(__('The link has been saved', true));
+				$this->Session->setFlash(__('The link has been saved'));
 			} else {
-				$this->Session->setFlash(__('The link could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The link could not be saved. Please, try again.'));
 			}
 			$this->redirect(array('action' => 'index'));
 		}
@@ -259,13 +259,13 @@ class LinksController extends AppController {
 
 	function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for link', true));
+			$this->Session->setFlash(__('Invalid id for link'));
 			$this->redirect(array('action'=>'index'));
 		}
 		
 		$result = $this->Link->delete($id);
 		
-		if ($this->params['isAjax']) {
+		if ($this->request->params['isAjax']) {
 				
 			$this->layout = 'json';
 			if ($result) {
@@ -285,9 +285,9 @@ class LinksController extends AppController {
 		} else {
 			
 			if($result) {
-				$this->Session->setFlash(__('Successfully delete', true));
+				$this->Session->setFlash(__('Successfully delete'));
 			} else {
-				$this->Session->setFlash(__('Unable to delete', true));
+				$this->Session->setFlash(__('Unable to delete'));
 			}
 			$this->redirect(array('action' => 'index'));
 		}

@@ -57,7 +57,7 @@
 		
 		echo $this->Form->error('SavedTheme.folder_name');
 		echo $this->Form->input('name');
-		echo $this->Form->input('original_name', array('type'=>'hidden', 'value'=>$this->data['SavedTheme']['name']));
+		echo $this->Form->input('original_name', array('type'=>'hidden', 'value'=>$this->request->data['SavedTheme']['name']));
 		
 		echo $this->Form->input('description');
 		
@@ -78,10 +78,10 @@
 
 
 <div class="actions">
-	<h3><?php __('Actions'); ?></h3>
+	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('SavedTheme.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('SavedTheme.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Saved Themes', true), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $this->Form->value('SavedTheme.id')), null, sprintf(__('Are you sure you want to delete # %s?'), $this->Form->value('SavedTheme.id'))); ?></li>
+		<li><?php echo $this->Html->link(__('List Saved Themes'), array('action' => 'index'));?></li>
 		
 	</ul>
 </div>

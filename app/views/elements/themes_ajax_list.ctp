@@ -17,7 +17,7 @@
 						     array('complete' => "afterDelete(request.responseText);",
 							   'escape' => false,
 							   'indicator' => 'busy-indicator',
-							   'confirm' => sprintf(__('Are you sure you want to delete %s?', true), $savedTheme['SavedTheme']['name'])));
+							   'confirm' => sprintf(__('Are you sure you want to delete %s?'), $savedTheme['SavedTheme']['name'])));
 			
 			echo $this->Html->link($this->Html->image('edit-theme.gif'),
 						array('controller' => 'saved_themes', 'action' => 'edit', 'admin' => true, $id),

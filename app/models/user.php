@@ -195,7 +195,7 @@ class User extends AppModel {
 			$instance[0] =& $user;
 		}
 		if (!$instance) {
-			//trigger_error(__("User not set.", true), E_USER_WARNING);
+			//trigger_error(__("User not set."), E_USER_WARNING);
 			$user = false;
 			return $user;
 		}

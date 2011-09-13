@@ -96,9 +96,9 @@
                 </td>
                 
                 <td class="actions">
-                        <?php echo $this->Ajax->link(__('Delete', true),
+                        <?php echo $this->Ajax->link(__('Delete'),
 							     array('action' => 'delete', $linkId),
-							     array('confirm'=> sprintf(__('Are you sure you want to delete this link?', true)),
+							     array('confirm'=> sprintf(__('Are you sure you want to delete this link?')),
 								   'complete' => "afterDeleteLink('$linkId', request.responseText);")
 							     ); ?>
                         

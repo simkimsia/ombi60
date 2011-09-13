@@ -1,7 +1,7 @@
 <div class="orders form">
 <?php echo $form->create('Order');?>
 	<fieldset>
- 		<legend><?php __('Add Order');?></legend>
+ 		<legend><?php echo __('Add Order');?></legend>
 	<?php
 		echo $form->input('shop_id');
 		echo $form->input('customer_id');
@@ -17,6 +17,6 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('List Orders', true), array('action' => 'index'));?></li>
+		<li><?php echo $html->link(__('List Orders'), array('action' => 'index'));?></li>
 	</ul>
 </div>

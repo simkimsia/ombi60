@@ -20,9 +20,9 @@ class ThemesController extends AppController {
 		 **/
 
 		// allow non users to access register and login actions only.
-		//$this->Auth->allow($this->action);
+		//$this->Auth->allow($this->request->action);
 		
-		if($this->action == 'admin_settings')  {
+		if($this->request->action == 'admin_settings')  {
 			$this->Security->enabled = false;
 		}
 	
@@ -50,10 +50,10 @@ class ThemesController extends AppController {
 	  $asset_folder_url = DS.'theme'.DS.$data['SavedTheme']['folder_name'].DS.'assets'.DS;
 	  
 	  
-	  if (isset($this->data) && !empty($this->data)) {
-	    //print_r($this->data);
+	  if (isset($this->request->data) && !empty($this->request->data)) {
+	    //print_r($this->request->data);
 	   
-	    $this->Theme->set($this->data);	  
+	    $this->Theme->set($this->request->data);	  
 	    if ($this->Theme->saveTemplateSettings($savedThemeId)) {
 	       $this->Session->setFlash('Settings saved successfully.');
 	    } else {

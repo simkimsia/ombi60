@@ -1,6 +1,6 @@
 <div>
   <fieldset>
-    <legend><?php __(count($products). " Products in this collection"); ?></legend>
+    <legend><?php echo __(count($products). " Products in this collection"); ?></legend>
     <?php
       if (count($products) > 0) {
         ?>
@@ -35,7 +35,7 @@
                       <?php echo $this->Html->link($product['Product']['title'],array('controller' => 'products','action' => 'view',$product['Product']['id'],'admin' => true),array('class' => '')); ?>
                       <?php 
                         if (0 == $product['Product']['visible']) {
-                            ?><span style="background: #CCCCCC"><?php __('Hidden', true);    ?></span><?php
+                            ?><span style="background: #CCCCCC"><?php echo __('Hidden');    ?></span><?php
                             
                         }        
                       ?>  

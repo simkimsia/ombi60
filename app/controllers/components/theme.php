@@ -1,5 +1,5 @@
 <?php
-class ThemeComponent extends Object {
+class ThemeComponent extends Component {
  
  
 /**

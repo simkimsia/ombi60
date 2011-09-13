@@ -6,7 +6,7 @@ class FlashMessageShell extends Shell {
         
         function main() {
                 
-                $path = CONTROLLERS;
+                $path = APP . 'Controller' . DS;
                 
                 
                 $controllerFolder = new Folder($path);
@@ -15,7 +15,7 @@ class FlashMessageShell extends Shell {
                 
                 foreach($arrayOfControllerFiles as $file) {
         
-                        $file = new File(CONTROLLERS . $file);
+                        $file = new File(APP . 'Controller' . DS . $file);
                         $this->out('Checking '. $file->name());
                         
                         $contents = $file->read();

@@ -8,7 +8,7 @@
         
         echo '<tr class="add-link-tr"><td class="new-link link-name border_none">';
         echo $this->Form->input('Link.name', array('div'=>false,
-                                                   'style'=>'width:auto;', 'label' => __('Name of new link', true)));
+                                                   'style'=>'width:auto;', 'label' => __('Name of new link')));
         echo '</td>';
         
         echo '<td class="new-link link-route border_none">';

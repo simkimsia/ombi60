@@ -1,7 +1,7 @@
 <div class="giftCards form">
 <?php echo $this->Form->create('GiftCard');?>
 	<fieldset>
- 		<legend><?php __('Edit Gift Card'); ?></legend>
+ 		<legend><?php echo __('Edit Gift Card'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('recipient');
@@ -16,19 +16,19 @@
 		echo $this->Form->input('gc_design_id');
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit', true));?>
+<?php echo $this->Form->end(__('Submit'));?>
 </div>
 <div class="actions">
-	<h3><?php __('Actions'); ?></h3>
+	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('GiftCard.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('GiftCard.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Gift Cards', true), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $this->Form->value('GiftCard.id')), null, sprintf(__('Are you sure you want to delete # %s?'), $this->Form->value('GiftCard.id'))); ?></li>
+		<li><?php echo $this->Html->link(__('List Gift Cards'), array('action' => 'index'));?></li>
 		
 		
-		<li><?php echo $this->Html->link(__('List Gift Card Types', true), array('controller' => 'gift_card_types', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Gift Card Type', true), array('controller' => 'gift_card_types', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Gc Designs', true), array('controller' => 'gc_designs', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Gc Design', true), array('controller' => 'gc_designs', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Gift Card Types'), array('controller' => 'gift_card_types', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Gift Card Type'), array('controller' => 'gift_card_types', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Gc Designs'), array('controller' => 'gc_designs', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Gc Design'), array('controller' => 'gc_designs', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

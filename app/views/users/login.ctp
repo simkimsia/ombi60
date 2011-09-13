@@ -5,7 +5,7 @@
 	echo $form->create('User', array('action' => 'login'));
 ?>
 	<fieldset>
- 		<legend><?php __('Login');?></legend>
+ 		<legend><?php echo __('Login');?></legend>
 	<?php
 		echo $form->input('User.email');
 		echo $form->input('User.password');

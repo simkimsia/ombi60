@@ -3,8 +3,8 @@
 ?>
 
 <div>
-<div class="text_center"><h2><?php __('General Settings');?></h2>
-    <?php //echo $this->Html->link(__('Cancel', true), array('action' => 'index', 'admin' => true));?>
+<div class="text_center"><h2><?php echo __('General Settings');?></h2>
+    <?php //echo $this->Html->link(__('Cancel'), array('action' => 'index', 'admin' => true));?>
 </div>
 <?php
 	echo $this->element('errors', array('errors' => $errors));
@@ -13,7 +13,7 @@
 	echo $this->Form->input('ShopSetting.shop_id', array('type'=>'hidden', 'value'=>$shopSetting['ShopSetting']['shop_id']));
 ?>
 	<fieldset>
- 		<!--<legend><?php __('Edit Settings');?></legend>-->
+ 		<!--<legend><?php echo __('Edit Settings');?></legend>-->
 	<?php
         
                 echo $this->Form->input('ShopSetting.timezone', array('type' => 'select',
@@ -41,7 +41,7 @@
         
         <div id="money-format-div">
         <fieldset>
-        <legend><?php __('Formatting');?></legend>
+        <legend><?php echo __('Formatting');?></legend>
 	
 	<?php
     echo $this->Form->input('ShopSetting.money_in_html', array(

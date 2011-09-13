@@ -23,9 +23,9 @@
 		</div>
 		<table cellpadding="0" cellspacing="0">
 			<tr id="headerbar">
-				<td colspan="2" class="cartitemname"><?php __('Item');?></td>
-				<td class="cartquantity"><?php __('Quantity');?></td>
-				<td class="cartprice"><?php __('Price');?></td>
+				<td colspan="2" class="cartitemname"><?php echo __('Item');?></td>
+				<td class="cartquantity"><?php echo __('Quantity');?></td>
+				<td class="cartprice"><?php echo __('Price');?></td>
 				<td class="cartremove">X</td>
 			</tr>
 			<?php

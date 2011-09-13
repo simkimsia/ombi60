@@ -359,7 +359,7 @@ class Shop extends AppModel {
 			$instance[0] =& $shop;
 		}
 		if (!$instance) {
-			//trigger_error(__("Shop not set.", true), E_USER_WARNING);
+			//trigger_error(__("Shop not set."), E_USER_WARNING);
 			$shop = false;
 			return $shop;
 		}

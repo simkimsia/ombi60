@@ -11,7 +11,7 @@ class PaydollarTransactionsController extends AppController {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		
-		if(isset($this->Security) && $this->action == 'datafeed') {
+		if(isset($this->Security) && $this->request->action == 'datafeed') {
 			$this->Security->enabled = false;
 		}
 

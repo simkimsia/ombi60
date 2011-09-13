@@ -38,7 +38,7 @@
 ?>
 
 <div class="">
-	<h2 class="text_center"><?php __('Navigation & Menu Links');?></h2>
+	<h2 class="text_center"><?php echo __('Navigation & Menu Links');?></h2>
 	<div id="domain_intro_text">
 	    <strong>Link Lists</strong>
 	    <br>
@@ -87,7 +87,7 @@
 		?>
 		
 		<tr>	
-			<th width="42%"><?php echo __('Name of link', true);?></th>
+			<th width="42%"><?php echo __('Name of link');?></th>
 			<th width="45%"><?php echo 'Route';?></th>
 			
 		</tr>
@@ -141,7 +141,7 @@
 		<tr>	
 			<td colspan="3">';
 		
-		echo $this->Form->input('LinkList.name', array('value'=>$listName, 'label' => __('Name of link list', true)));
+		echo $this->Form->input('LinkList.name', array('value'=>$listName, 'label' => __('Name of link list')));
 		
 				
 		echo '
@@ -256,9 +256,9 @@
 			</td>
 			
 			<td class="actions">
-				<?php echo $this->Ajax->link(__('Delete', true),
+				<?php echo $this->Ajax->link(__('Delete'),
 							     array('action' => 'delete', $linkId),
-							     array('confirm'=> sprintf(__('Are you sure you want to delete this link?', true)),
+							     array('confirm'=> sprintf(__('Are you sure you want to delete this link?')),
 								   'complete' => "afterDeleteLink('$linkId', request.responseText);")
 							     ); ?>
 				

@@ -36,9 +36,9 @@ if (isset($variant_list) && !empty($variant_list) && is_array($variant_list)) { 
    }
     }
    ?>
-   <th> <?php echo __('SKU',true);?> </th>
-   <th> <?php echo __('Price',true)." <span class=\"note\">".__("USD",true)."</span>";?> </th>
-   <th> <?php echo __('In Stock',true); ?> </th>
+   <th> <?php echo __('SKU');?> </th>
+   <th> <?php echo __('Price')." <span class=\"note\">".__("USD")."</span>";?> </th>
+   <th> <?php echo __('In Stock'); ?> </th>
    <th> &nbsp; </th>
  
     
@@ -80,7 +80,7 @@ if (isset($variant_list) && !empty($variant_list) && is_array($variant_list)) { 
       } ?>
       </td>
       <td> ∞</td>
-      <td> <?php echo $this->Html->link(__("Edit",true),"javascript: void(0);",array("onclick" => "showEditForm({$variant['id']})"));?> </td>
+      <td> <?php echo $this->Html->link(__("Edit"),"javascript: void(0);",array("onclick" => "showEditForm({$variant['id']})"));?> </td>
     </tr>
      <!-- row edit form -->
     <tr id="row-edit-details-<?php echo $variant['id'];?>" style="display:none;">
@@ -105,7 +105,7 @@ if (isset($variant_list) && !empty($variant_list) && is_array($variant_list)) { 
   <td colspan="<?php echo (count($variant_list['Product']['options']) + 5); ?>">
    
    <p onclick="$('.new-variant-link').hide(); $('#new_variant').show(); $('.variant_option_1').select(); return false;">          
-          <?php echo $this->Html->link(__('Create new variant',true),'javascript: void(0);',array('class' => "new-variant-link"));?>
+          <?php echo $this->Html->link(__('Create new variant'),'javascript: void(0);',array('class' => "new-variant-link"));?>
    </p>
   
   </td>
@@ -118,7 +118,7 @@ if (isset($variant_list) && !empty($variant_list) && is_array($variant_list)) { 
 <div id="new_variant" class="variant_form" style="display:none;">
 <fieldset>
 
-<h3> <?php echo __('New Variant',true);?> </h3>
+<h3> <?php echo __('New Variant');?> </h3>
   <?php echo $this->element('variant_edit_form',array('variant_detail' => array(),
                                                       'variant_list'   => $variant_list,
                                                       'variant_count'  => count($variant_list['Variant']))); ?>

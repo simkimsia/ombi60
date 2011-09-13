@@ -1,10 +1,10 @@
 <?php // ?>
 <?php
 /*echo "<pre>";
-print_r($this->params);
+print_r($this->request->params);
 echo "</pre>";*/
 //die;
-/*if ($this->params['isAjax']=="") {
+/*if ($this->request->params['isAjax']=="") {
   echo $this->Html->script(array('jquery/jquery-1.4.2.min', 'ajaxupload'));
 }*/
 ?>
@@ -32,13 +32,13 @@ echo "</pre>";*/
 						     array('complete' => "afterDelete(request.responseText);",
 							   'escape' => false,
 							   'indicator' => 'busy-indicator',
-							   'confirm' => sprintf(__('Are you sure you want to delete %s?', true), $productImage['ProductImage']['filename'])));
+							   'confirm' => sprintf(__('Are you sure you want to delete %s?'), $productImage['ProductImage']['filename'])));
 			
 			if ($productImage['ProductImage']['cover']) {
-				echo '<span class="make_cover">' . __('Cover Image', true) . '</span>'; //$this->Html->image('tick.gif');
+				echo '<span class="make_cover">' . __('Cover Image') . '</span>'; //$this->Html->image('tick.gif');
 				
 			} else {
-				echo $this->Html->link(__('Make Cover', true),
+				echo $this->Html->link(__('Make Cover'),
 						array('controller' => 'product_images', 'action' => 'make_this_cover', 'admin' => true, 'id'=>$id, 'product_id' => $productImage['ProductImage']['product_id']),
 						array('escape' => false, 'class' => 'make_cover'));	
 			}

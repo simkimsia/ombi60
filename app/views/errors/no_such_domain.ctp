@@ -13,12 +13,12 @@
 ?>
 <h2><?php echo $name; ?></h2>
 <p class="error">
-	<strong><?php __('Error'); ?>: </strong>
+	<strong><?php echo __('Error'); ?>: </strong>
 	<?php
-            printf(__('The requested address %s was not found on this server.', true), "<strong>'{$message}'</strong>");
+            printf(__('The requested address %s was not found on this server.'), "<strong>'{$message}'</strong>");
             echo '<br />';
             $signupLink = $this->Html->link('here', $signup);
-            printf(__('If you want to have your own store with this url %s, sign up %s', true), "<strong>'{$url}'</strong>", $signupLink);
+            printf(__('If you want to have your own store with this url %s, sign up %s'), "<strong>'{$url}'</strong>", $signupLink);
         ?>
         
 </p>

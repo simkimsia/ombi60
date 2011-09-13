@@ -1,8 +1,8 @@
 <?php 
 	if (1 == $product['Product']['visible']) {
-	    $status = __('Published', true);
+	    $status = __('Published');
 	} else {
-	    $status = __('Hidden', true);    
+	    $status = __('Hidden');    
 	}        
 ?>	
 		  

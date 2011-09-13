@@ -1,9 +1,9 @@
 <div class="internal_forms">
     <div class="text_center">
-        <h1><?php __($this->Form->value('Blog.name'));?></h1>
-        <?php echo $this->Html->link(__('View', true), array('controller'=>'blogs','action' => 'view', $this->Form->value('Blog.id'))); ?>|
-        <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Blog.id')), null, sprintf(__('Are you sure you want to delete this blog?', true), $this->Form->value('Blog.id'))); ?>|
-        <?php echo $this->Html->link(__('Back to Blogs', true), array('controller'=>'webpages','action' => 'index')); ?>
+        <h1><?php echo __($this->Form->value('Blog.name'));?></h1>
+        <?php echo $this->Html->link(__('View'), array('controller'=>'blogs','action' => 'view', $this->Form->value('Blog.id'))); ?>|
+        <?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $this->Form->value('Blog.id')), null, sprintf(__('Are you sure you want to delete this blog?'), $this->Form->value('Blog.id'))); ?>|
+        <?php echo $this->Html->link(__('Back to Blogs'), array('controller'=>'webpages','action' => 'index')); ?>
     </div>
 
 
@@ -15,8 +15,8 @@
                                         ));?>
 <?php echo $this->Form->input('id');?>
 	<fieldset>
- 		<legend><?php __('Edit this Blog'); ?></legend>
- 		<label><?php __('Title');?></label>
+ 		<legend><?php echo __('Edit this Blog'); ?></legend>
+ 		<label><?php echo __('Title');?></label>
     	<?php echo $this->Form->input('name', array('label' => FALSE, 'div' => FALSE,));?>
     	<br />
 	    <?php
@@ -28,8 +28,8 @@
 
 	    ?>
 	</fieldset>
-<?php echo $this->Form->submit(__('Update', true), array('div' => FALSE,));?>&nbsp;OR&nbsp;
-<?php echo $this->Html->link(__('Cancel', true), array('controller'=>'webpages','action' => 'index')); ?>
+<?php echo $this->Form->submit(__('Update'), array('div' => FALSE,));?>&nbsp;OR&nbsp;
+<?php echo $this->Html->link(__('Cancel'), array('controller'=>'webpages','action' => 'index')); ?>
 <?php echo $this->Form->end();?>
 </div>
 

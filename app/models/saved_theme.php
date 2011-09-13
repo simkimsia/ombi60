@@ -110,11 +110,11 @@ class SavedTheme extends AppModel {
 	}
 	
 	private function constructCssPath($themeName) {
-		return VIEWS . 'themed' . DS . $themeName . DS . 'webroot' . DS . 'css' . DS . 'style.css';
+		return APP . 'View' . DS . 'themed' . DS . $themeName . DS . 'webroot' . DS . 'css' . DS . 'style.css';
 	}
 	
 	function constructImagePath($themeName, $imageName = '') {
-		return VIEWS . 'themed' . DS . $themeName . DS . 'webroot' . DS . 'img' . DS . $imageName;
+		return APP . 'View' . DS . 'themed' . DS . $themeName . DS . 'webroot' . DS . 'img' . DS . $imageName;
 	}
 	
 	function existFolderToRename($check){
@@ -226,7 +226,7 @@ class SavedTheme extends AppModel {
 	}
 	
 	function fetchImages($folder_name) {
-		$path = VIEWS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img';
+		$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img';
 		
 		$dir = new Folder($path);
 		
@@ -391,7 +391,7 @@ class SavedTheme extends AppModel {
 		$temp = new File($saveAs, true, 0775);
 		
 		if (!$temp->write($file->read())) {
-			$results = __d('meio_upload', 'Problems in the copy of the file.', true);
+			$results = __d('meio_upload', 'Problems in the copy of the file.');
 		
 		}
 		$file->close();

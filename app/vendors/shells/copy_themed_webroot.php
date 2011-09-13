@@ -41,7 +41,7 @@ class CopyThemedWebrootShell extends Shell {
                 
                 $result = true;
                 
-                $path = VIEWS . 'themed';
+                $path = APP . 'View' . DS . 'themed';
                 
                 $themedFolder = new Folder($path);
                 
@@ -135,8 +135,8 @@ class CopyThemedWebrootShell extends Shell {
         
         private function copy_files() {
                 
-                $from   = VIEWS . 'copy_of_themed';
-                $to     = VIEWS . 'themed';
+                $from   = APP . 'View' . DS . 'copy_of_themed';
+                $to     = APP . 'View' . DS . 'themed';
                 
                 // copy themed
                 $result = $this->copy_folder_recursively($to, $from);
@@ -145,7 +145,7 @@ class CopyThemedWebrootShell extends Shell {
                 }
                 
                 
-                $from   = VIEWS . 'copy_of_webroot' ;
+                $from   = APP . 'View' . DS . 'copy_of_webroot' ;
                 $to     = ROOT . DS . 'app' . DS . 'webroot' . DS. 'uploads';
                 
                 // copy webroot/uploads/products

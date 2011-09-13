@@ -19,22 +19,22 @@ class ShopsController extends AppController {
 	
 	function admin_general_settings() {
 		
-		if (!empty($this->data)) {
-			if ($this->Shop->ShopSetting->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->Shop->ShopSetting->save($this->request->data)) {
 				
 				// updating Session and Shop static class
 				$currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
 				$this->Session->write('CurrentShop', $currentShop);
 				Shop::store($currentShop);
 				
-				$this->Session->setFlash(__('General Settings have been saved', true), 'default', array('class'=>'flash_success'));
+				$this->Session->setFlash(__('General Settings have been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'admin_general_settings'));
 			} else {
-				$this->Session->setFlash(__('General Settings could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('General Settings could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		}
 		
-		if (empty($this->data)) {
+		if (empty($this->request->data)) {
 			$this->Shop->ShopSetting->recursive = -1;
 			$shopSetting = $this->Shop->ShopSetting->find('first', array('conditions'=>array('ShopSetting.shop_id'=>Shop::get('Shop.id'))));
 			$this->set(compact('shopSetting'));
@@ -53,7 +53,7 @@ class ShopsController extends AppController {
 	function admin_cancelaccount() {
 
 		// display a form for cancelling account.
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			// cancel account
 			$shopId = Shop::get('Shop.id');
 			$this->Shop->id = $shopId;
@@ -99,14 +99,14 @@ class ShopsController extends AppController {
 			if($result) {
 				
 				// create cancellation records
-				$this->data['Cancellation']['shop_id'] = $shopId;
-				$this->data['Cancellation']['user_id'] = User::get('User.id');
+				$this->request->data['Cancellation']['shop_id'] = $shopId;
+				$this->request->data['Cancellation']['user_id'] = User::get('User.id');
 				
 				$cancellation = ClassRegistry::init('Cancellation');
 				
 				$cancellation->create();
 				
-				$cancellation->save($this->data);
+				$cancellation->save($this->request->data);
 				
 				// reset the cache for current shop
 				$shop = $this->Shop->find('first', array('conditions'=>array('Shop.id'=>$shopId)));

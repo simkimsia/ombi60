@@ -1,7 +1,7 @@
 <div class="merchants form">
 <?php echo $form->create('Merchant');?>
 	<fieldset>
- 		<legend><?php __('Edit Merchant');?></legend>
+ 		<legend><?php echo __('Edit Merchant');?></legend>
 	<?php
 		echo $form->input('full_name');
 		echo $form->input('name_to_call');

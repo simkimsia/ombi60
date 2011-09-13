@@ -4,7 +4,7 @@
 	
 <?php echo $this->Form->create('Merchant');?>
 	<fieldset>
- 		<legend><?php __('Profile');?></legend>
+ 		<legend><?php echo __('Profile');?></legend>
 	<?php
 		echo $this->Form->input('User.full_name');
 		echo $this->Form->input('User.name_to_call');

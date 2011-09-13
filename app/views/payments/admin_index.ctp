@@ -2,7 +2,7 @@
 echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
 ?>
 <div>
-    <div class="text_center"><h2><?php __('Payments');?></h2></div>
+    <div class="text_center"><h2><?php echo __('Payments');?></h2></div>
 
     <div class="payments">
         <div class="payment_left">
@@ -29,14 +29,14 @@ echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jqu
                     <li class="payment_name"><span>Using method:<strong> <?php echo $paypalPaymentModule['PaypalPaymentModule']['name'];?></strong></span></li>
                     <li class="payment_edit"><span><a href="#" onclick="toggleEditForm('<?php echo $id; ?>', 'paypal');return false;">edit</a></span></li>
                     <li class="payment_turn_off"><?php
-                     echo $this->Html->link(__('Turn Off', true),
+                     echo $this->Html->link(__('Turn Off'),
 				           array(
 					    'controller' => 'payments',
 					       'action' => 'delete_custom_payment',
 					       'admin' => true,
 					         $id),
 				           array('class'=>'actions'),
-				           __('Are you sure you want to turn off this payment method?', true)); 
+				           __('Are you sure you want to turn off this payment method?')); 
                     ?></li>
                 </ul>
             <div class="clear">&nbsp;</div>
@@ -168,14 +168,14 @@ echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jqu
                             <li class="payment_name"><span>Using method:<strong> <?php echo $paymentModule['CustomPaymentModule']['name'];?></strong></span></li>
                             <li class="payment_edit"><span><a href="#" onclick="toggleEditForm('<?php echo $id; ?>', 'custom');return false;">edit</a></span></li>
                             <li class="payment_turn_off"><?php
-                             echo $this->Html->link(__('Turn Off', true),
+                             echo $this->Html->link(__('Turn Off'),
 				                   array(
 					            'controller' => 'payments',
 					               'action' => 'delete_custom_payment',
 					               'admin' => true,
 					                 $id),
 				                   array('class'=>'actions'),
-				                   __('Are you sure you want to turn off this payment method?', true)); 
+				                   __('Are you sure you want to turn off this payment method?')); 
                             ?></li>
                         </ul>
                     </div>

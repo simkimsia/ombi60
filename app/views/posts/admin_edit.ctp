@@ -1,16 +1,16 @@
 <div class="webpages main-container-div">
     <div class="text_center">
-      <h2><?php echo $this->data['Post']['title']; ?></h2>
-      <?php echo $this->Html->link(__('View', true), array('action' => 'view', $this->Form->value('Blog.id'), $this->Form->value('Post.id'))); ?>|
-        <?php echo $this->Html->link(__('All articles', true), array('controller' => 'blogs', 'action' => 'view', $this->Form->value('Blog.id'))); ?>|
-          <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Post.id')), null, sprintf(__('Are you sure you want to delete this post?', true))); ?>
+      <h2><?php echo $this->request->data['Post']['title']; ?></h2>
+      <?php echo $this->Html->link(__('View'), array('action' => 'view', $this->Form->value('Blog.id'), $this->Form->value('Post.id'))); ?>|
+        <?php echo $this->Html->link(__('All articles'), array('controller' => 'blogs', 'action' => 'view', $this->Form->value('Blog.id'))); ?>|
+          <?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $this->Form->value('Post.id')), null, sprintf(__('Are you sure you want to delete this post?'))); ?>
     </div>
     <?php echo $this->Form->create('Post', array('url'=>Router::url(array('controller'=>'posts',
 							      'action'=>'edit',
 							      'blog_id'=>$blog_id,
-							      'id'=>$this->data['Post']['id']),true)));?>
+							      'id'=>$this->request->data['Post']['id']),true)));?>
 	<fieldset>
- 		<legend><?php __('Edit this article'); ?></legend>
+ 		<legend><?php echo __('Edit this article'); ?></legend>
 	<?php
 	
 	$this->TinyMce->editor(array(
@@ -30,8 +30,8 @@
 		echo $this->Form->input('title');
   $label = $this->Form->label('handle', 'Permalink/handle');
 		$textbox = $this->Form->text('Post.slug', array('class' => 'small'));
-		$prefix = Router::url('/blogs/'.$this->data['Blog']['short_name'].'/'.$this->data['Post']['id'].'-', true);		
-        $suffix = ' ( ' . $this->Html->link(__('What is this?', true), '#') . ' )';
+		$prefix = Router::url('/blogs/'.$this->request->data['Blog']['short_name'].'/'.$this->request->data['Post']['id'].'-', true);		
+        $suffix = ' ( ' . $this->Html->link(__('What is this?'), '#') . ' )';
 		echo $this->Html->div('input text', $label.$prefix.$textbox. $suffix ,array(), true);
 		echo $this->Form->input('content', array('label' => 'Write your own article'));
 		
@@ -40,8 +40,8 @@
 	?>
 	</fieldset>
 	<fieldset>
- 		<legend><?php __('Properties'); ?></legend>
- 		<label><?php __('Article Visibility');?></label>
+ 		<legend><?php echo __('Properties'); ?></legend>
+ 		<label><?php echo __('Article Visibility');?></label>
  		<span class="hint">If you want to hide this article from your clients, choose hidden.</span>
  		
     <?php
@@ -50,8 +50,8 @@
     ?>
   </fieldset>
   <div class="submit">
-    <?php echo $this->Form->submit(__('Update', true), array('div' => false));?> &nbsp;<?php __('or'); ?>&nbsp;
-    <?php echo $this->Html->link(__('Cancel', true), array('controller'=>'blogs','action' => 'view', $this->Form->value('Blog.id'))); ?>
+    <?php echo $this->Form->submit(__('Update'), array('div' => false));?> &nbsp;<?php echo __('or'); ?>&nbsp;
+    <?php echo $this->Html->link(__('Cancel'), array('controller'=>'blogs','action' => 'view', $this->Form->value('Blog.id'))); ?>
   </div>
   <?php echo $this->Form->end();?>
 </div>
@@ -62,19 +62,19 @@
 <!--<div class="posts">
     <div class="text_center">
         <h2>
-          <?php echo $this->data['Post']['title']; ?>
+          <?php echo $this->request->data['Post']['title']; ?>
         </h2>
-        <?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $post['Blog']['id'], $post['Post']['id'])); ?>|
-        <?php echo $this->Html->link(__('All articles', true), array('controller' => 'blogs', 'action' => 'view', $post['Blog']['id'])); ?>|
-          <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $post['Post']['id']), null, sprintf(__('Are you sure you want to delete this post?', true), $post['Page']['id'])); ?>
+        <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $post['Blog']['id'], $post['Post']['id'])); ?>|
+        <?php echo $this->Html->link(__('All articles'), array('controller' => 'blogs', 'action' => 'view', $post['Blog']['id'])); ?>|
+          <?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $post['Post']['id']), null, sprintf(__('Are you sure you want to delete this post?'), $post['Page']['id'])); ?>
   </div>
   
 <?php echo $this->Form->create('Post', array('url'=>Router::url(array('controller'=>'posts',
 							  'action'=>'edit',
 							  'blog_id'=>$blog_id,
-							  'id'=>$this->data['Post']['id']),true)));?>
+							  'id'=>$this->request->data['Post']['id']),true)));?>
 	<fieldset>
- 		<legend><?php __('Admin Edit Post'); ?></legend>
+ 		<legend><?php echo __('Admin Edit Post'); ?></legend>
 	<?php
 	
 	$this->TinyMce->editor(array(
@@ -95,20 +95,20 @@
 		
 		$label = $this->Form->label('handle', 'Permalink/handle');
 		$textbox = $this->Form->text('Post.slug');
-		$prefix = Router::url('/blogs/'.$this->data['Blog']['short_name'].'/'.$this->data['Post']['id'].'-', true);
+		$prefix = Router::url('/blogs/'.$this->request->data['Blog']['short_name'].'/'.$this->request->data['Post']['id'].'-', true);
 		echo $this->Html->div('input text', $label.$prefix.$textbox ,array(), true);
 		
 		echo $this->Form->input('body');
 		
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit', true));?>
+<?php echo $this->Form->end(__('Submit'));?>
 </div>
 <div class="actions">
-	<h3><?php __('Actions'); ?></h3>
+	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', 'id'=>$this->Form->value('Post.id'), 'blog_id'=>$this->Form->value('Post.blog_id')), null, sprintf(__('Are you sure you want to delete %s?', true), $this->Form->value('Post.title'))); ?></li>
+		<li><?php echo $this->Html->link(__('Delete'), array('action' => 'delete', 'id'=>$this->Form->value('Post.id'), 'blog_id'=>$this->Form->value('Post.blog_id')), null, sprintf(__('Are you sure you want to delete %s?'), $this->Form->value('Post.title'))); ?></li>
 		
 	</ul>
 </div>-->

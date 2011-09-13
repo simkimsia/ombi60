@@ -24,7 +24,7 @@ class DomainsController extends AppController {
 
 	function admin_view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid domain', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid domain'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('domain', $this->Domain->read(null, $id));
@@ -32,15 +32,15 @@ class DomainsController extends AppController {
 
 	function admin_add() {
 	    $result = true;
-		if (!empty($this->data)) {
-		    if (!empty($this->data['Domain']['domain'])) {
-		        $this->data['Domain']['domain'] = 'http://' . $this->data['Domain']['domain'];
+		if (!empty($this->request->data)) {
+		    if (!empty($this->request->data['Domain']['domain'])) {
+		        $this->request->data['Domain']['domain'] = 'http://' . $this->request->data['Domain']['domain'];
 			
 			    $this->Domain->create();
-			    if (!$this->Domain->save($this->data)) {
+			    if (!$this->Domain->save($this->request->data)) {
 			        $result = false;
 			    }
-			    if ($this->params['isAjax']) {
+			    if ($this->request->params['isAjax']) {
 			
 			        $this->layout = 'json';
 			        if ($result) {
@@ -77,34 +77,34 @@ class DomainsController extends AppController {
 		
 		
 		if (!$id OR !$shopId) {
-			$this->Session->setFlash(__('Invalid id for domain', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for domain'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
 
 		if ($this->Domain->make_this_primary($id, $shopId)) {
-			$this->Session->setFlash(__('Domain now primary', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Domain now primary'), 'default', array('class'=>'flash_failure'));
 
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('This domain could not be primary. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+		$this->Session->setFlash(__('This domain could not be primary. Please, try again.'), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('action' => 'index'));
 	}
 
 	function admin_edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid domain', true), 'default', array('class'=>'flash_failure'));
+		if (!$id && empty($this->request->data)) {
+			$this->Session->setFlash(__('Invalid domain'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->Domain->save($this->data)) {
-				$this->Session->setFlash(__('The domain has been saved', true), 'default', array('class'=>'flash_success'));
+		if (!empty($this->request->data)) {
+			if ($this->Domain->save($this->request->data)) {
+				$this->Session->setFlash(__('The domain has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The domain could not be saved. Please, try again.', true), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(__('The domain could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Domain->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->Domain->read(null, $id);
 		}
 		$shops = $this->Domain->Shop->find('list');
 		$this->set(compact('shops'));
@@ -112,7 +112,7 @@ class DomainsController extends AppController {
 
 	function admin_delete($id = false) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for domain', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Invalid id for domain'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action'=>'index'));
 		}
 		
@@ -133,12 +133,12 @@ class DomainsController extends AppController {
 		
 		if ($merchantAllowed) {
 			if ($this->Domain->delete($id)) {
-				$this->Session->setFlash(__('Domain deleted', true), 'default', array('class'=>'flash_success'));
+				$this->Session->setFlash(__('Domain deleted'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action'=>'index'));
 			}
-			$this->Session->setFlash(__('Domain was not deleted', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Domain was not deleted'), 'default', array('class'=>'flash_failure'));
 		} else {
-			$this->Session->setFlash(__('You are not authorized to delete this domain', true), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('You are not authorized to delete this domain'), 'default', array('class'=>'flash_failure'));
 		}
 		
 		$this->redirect(array('action' => 'index'));

@@ -4,7 +4,7 @@ if ($shippingRate['PriceBasedRate']['id'] > 0) {
         if ($shippingRate['PriceBasedRate']['max_price'] != null) {
                 $output .= ' - ' . $this->Number->currency($shippingRate['PriceBasedRate']['max_price']);
         } else {
-                $output = __('Minimum', true) . ' ' . $output;
+                $output = __('Minimum') . ' ' . $output;
         }
         echo $output;
 } else if ($shippingRate['WeightBasedRate']['id'] > 0) {

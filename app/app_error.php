@@ -55,7 +55,7 @@ class AppError extends ErrorHandler {
 		
 		$this->controller->set(array(
 			'code' => '404',
-			'name' => __('Not Found', true),
+			'name' => __('Not Found'),
 			'message' => h($url),
 			'base' => $this->controller->base,
 			'page_title' => 'Page Not Found',

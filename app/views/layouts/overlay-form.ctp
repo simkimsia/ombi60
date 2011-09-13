@@ -22,7 +22,7 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php __('OMBI60: Open My Business in 60 Seconds:'); ?>
+		<?php echo __('OMBI60: Open My Business in 60 Seconds:'); ?>
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
