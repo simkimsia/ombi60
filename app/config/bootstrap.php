@@ -54,7 +54,7 @@
  *
  *  Production Mode
  **/
-Configure::write('debug', 0);
+Configure::write('debug', 2);
 
 /**
  * dependent on database having a groups table and the id for
