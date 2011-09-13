@@ -24,6 +24,6 @@ foreach ($toolbarState as $panelName => $panel) {
 		'plugin' => $panel['plugin']
 	));
 }
-echo $javascript->object($panels);
+echo $this->Javascript->object($panels);
 Configure::write('debug', 0);
 ?>

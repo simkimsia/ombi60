@@ -1,8 +1,8 @@
 <?php $this->set('documentData', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/')); ?>
 <?php $this->set('channelData', array(
-		'title_for_layout' => __("Log", true),
+		'title_for_layout' => __("Log"),
 		'link' => $this->Html->url('/', true),
-		'description' => __("Log of most recent events.", true),
+		'description' => __("Log of most recent events."),
 		'language' => 'en-us')); ?>
 <?php App::import('Sanitize'); ?>
 <?php foreach ($logs as $a_log) : ?>

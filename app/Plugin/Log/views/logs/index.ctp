@@ -1,10 +1,10 @@
 <?php ?>
-<h2><?php __('Application Activity'); ?></h2>
+<h2><?php echo __('Application Activity'); ?></h2>
 <table id="recent-activity" class="table" cellpadding="0" cellspacing="0">
 	<thead class="hide">
 		<tr>
-		  <td><?php __('Date'); ?></td>
-			<td><?php __('Description'); ?></td>
+		  <td><?php echo __('Date'); ?></td>
+			<td><?php echo __('Description'); ?></td>
 		</tr>
 	</thead>
 	<tbody>
