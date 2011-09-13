@@ -257,13 +257,13 @@ class AppController extends Controller {
 		$this->Webpage->Behaviors->load('Linkable.Linkable');
 
 		$pages = $this->Webpage->find('all', array(
-			'conditions'=>array(
-				'Webpage.shop_id'=>$shopId,
-				'Webpage.visible'=>true),
-			'link' => array(
+			'contain' => array(
 				'Author' => array(
-				'fields' => array(
-					'Author.name_to_call', 'Author.id')))));
+					'fields' => array(
+						'Author.name_to_call', 'Author.id'))),
+			'conditions'=>array(
+				'Webpage.shop_id' => $shopId,
+				'Webpage.visible' => true)));
 
 		$pages = Webpage::getTemplateVariable($pages);
 		$this->set('pages', $pages);
