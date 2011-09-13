@@ -8,7 +8,16 @@ class ThemeComponent extends Component {
  * */
 
 	var $actions = array();
-	
+
+/**
+ * Constructor.
+ *
+ */
+	public function __construct(ComponentCollection $collection, $settings = array()) {
+		parent::__construct($collection, $settings);
+        $this->actions = (empty($settings['actions'])) ? $this->actions : (array) $settings['actions'];
+
+	}
 	
 /**
  * Initialize function
@@ -17,10 +26,9 @@ class ThemeComponent extends Component {
  * @param controller object $controller
  * @param array $settings
  */     
-	function initialize(&$controller, $settings=array()) {
+	function initialize(Controller $controller) {
 		
-		$this->actions = (empty($settings['actions'])) ? $this->actions : (array) $settings['actions'];
-	
+
 		
 	}
 	
@@ -35,7 +43,7 @@ class ThemeComponent extends Component {
  *
  * @param controller object $controller 
  */     
-	function startup(&$controller) {
+	function startup(Controller $controller) {
 		
 		if (in_array($controller->action, $this->actions) || empty($this->actions)) {
 		
