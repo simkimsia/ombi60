@@ -40,7 +40,7 @@ class AppController extends Controller {
         'Session',
         'Security',
         'RequestHandler',
-        'DebugKit.Toolbar',
+//        'DebugKit.Toolbar',
         'Cookie',
         'RandomString.RandomString',
         'Theme',
@@ -54,8 +54,9 @@ class AppController extends Controller {
                        //'products' => array('checkout'),
 	                  );
     
-    var $view = 'TwigView.Twig';
-    
+//    var $view = 'TwigView.Twig';
+    var $viewClass = 'TwigView.Twig';
+
     var $params4GETAndNamed = array();
     
     function beforeFilter() {
@@ -64,7 +65,7 @@ class AppController extends Controller {
 	 * merge the named params and the get params into a single array
 	 * with the GET params taking precedence
 	 **/
-	$this->params4GETAndNamed = array_merge($this->request->params['named'], $this->request->params['url']);
+     $this->params4GETAndNamed = array_merge($this->request->params['named'], $this->request->params['url']);
 
         /**
          *Configure AuthComponent
@@ -361,8 +362,9 @@ class AppController extends Controller {
 	
 	// set the weight unit for shop
 	App::import('Helper', 'Constant');
-	$constantHelper = new ConstantHelper();
-	$unitForWeight = $constantHelper->displayUnitForWeight();
+//@todo fix this helper call
+	$constantHelper = new ConstantHelper(new View($this));
+//	$unitForWeight = $constantHelper->displayUnitForWeight();
 	$this->set('unitForWeight', $unitForWeight);
 	
     }
