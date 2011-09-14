@@ -291,7 +291,7 @@ class JavascriptHelper extends AppHelper {
  * @return string Escaped string.
  */
 	function escapeString($string) {
-		App::import('Core', 'Multibyte');
+		App::uses('Multibyte', 'I18n');
 		$escape = array("\r\n" => "\n", "\r" => "\n");
 		$string = str_replace(array_keys($escape), array_values($escape), $string);
 		return $this->_utf8ToHex($string);
