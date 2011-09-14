@@ -67,10 +67,18 @@ class AppController extends Controller {
 			$this->request->params['url'] = array();
 		}
 		$this->params4GETAndNamed = array_merge($this->request->params['named'], $this->request->params['url']);
-
-		// need to override the default field names to email and password
-		$this->Auth->fields = array('username' => 'email', 'password' => 'password');
-		$this->Auth->authorize = 'actions';
+		$this->Auth->authenticate = array(
+	        	'Form' => array(
+	        		'fields' => array('username' => 'email', 'password' => 'password'), 
+					'userModel' => 'AppUser', 
+					'scope' => array('AppUser.active' => 1)
+				),
+		);
+		$this->Auth->loginRedirect = array('controller' => 'shops', 'action' => 'index');
+		$this->Auth->loginAction = array('controller' => 'customers', 'action' => 'login');
+		$this->Auth->authError = __("Sorry, you can't access the page requested", true);
+		
+		//$this->Auth->authorize = 'actions';
 
 		if (isset($this->request->params['admin'])) {
 			$this->Auth->loginAction = '/admin/login';

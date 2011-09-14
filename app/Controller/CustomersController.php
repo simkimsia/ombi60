@@ -84,11 +84,9 @@ class CustomersController extends AppController {
 	}
 
 	function login() {
-		//debug($this->Auth->password('password'));
 		$this->set('title_for_layout', __('Customer Login'));
 
 		$shopId = Shop::get('Shop.id');
-debug('TEST 2');
 		// to retrieve the shop id based on the url
 		// set inside the hidden value of the login form
 		$this->set('shop_id', $shopId);
@@ -100,10 +98,8 @@ debug('TEST 2');
 			if (!$this->Session->check('Auth.User')) {
 				$this->render('login_for_checkout');
 			}
-debug('TEST 3');
 			if ($this->request->is('get')) {
 				// if come from orders/checkout we kill the Auth
-				debug('TEST 3-1');
 				$this->logoutFunction();
 			} else if ($this->request->is('post')) {
 				if(isset($this->request->params['form']['loginBtn'])) {
@@ -111,7 +107,6 @@ debug('TEST 3');
 				} else if (isset($this->request->params['form']['checkoutBtn'])) {
 					// need to clear cookies for user id
 					$this->Cookie->delete('User.id');
-debug('TEST 4');
 					// kill the session by storing
 					$this->Session->delete('Auth.redirect');
 					// declare in Session its a pass
@@ -131,32 +126,30 @@ debug('TEST 4');
 									'hash' => $cart['Cart']['hash'],
 									'shop_id' => $shopId), true);
 					$this->logoutFunction();
-					debug('TEST 5');
 					$this->redirect($redirect);
 				}
 			}
 		}
 
 		// successfully login
-		debug('TEST 5');
-		debug($this->request->data);
-		if ($this->Auth->user()) {
-			debug('TEST 5-1');
+		if ($this->request->is('post')) {
+			if ($this->Auth->login() &&$this->Auth->user()) {
 			// retrieve current id from Cookie
-			$userIdInCookie = $this->Cookie->read('User.id');
-			// take current cart of Casual Surfer and dump them for logged in Customer
-			$loggedInUserId = $this->Auth->user('id');
-			$this->Customer->User->CasualSurfer->convertCartForCustomerLogin($userIdInCookie, $loggedInUserId);
-			$this->Cookie->write('User.id', $loggedInUserId);
-			$this->updateSession();
-
-			if ($comingFromOrdersCheckout) {
-				// if come from orders/checkout we kill the session storing
-				$this->Session->delete('Shop.' . $shopId . '.checkoutRedirect');
-				// declare in Session its a pass
-				$this->Session->write('Shop.' . $shopId . '.checkoutRedirectPass', true);
+				$userIdInCookie = $this->Cookie->read('User.id');
+				// take current cart of Casual Surfer and dump them for logged in Customer
+				$loggedInUserId = $this->Auth->user('id');
+				$this->Customer->User->CasualSurfer->convertCartForCustomerLogin($userIdInCookie, $loggedInUserId);
+				$this->Cookie->write('User.id', $loggedInUserId);
+				$this->updateSession();
+	
+				if ($comingFromOrdersCheckout) {
+					// if come from orders/checkout we kill the session storing
+					$this->Session->delete('Shop.' . $shopId . '.checkoutRedirect');
+					// declare in Session its a pass
+					$this->Session->write('Shop.' . $shopId . '.checkoutRedirectPass', true);
+				}
+				$this->redirect($this->Auth->redirect());
 			}
-			$this->redirect($this->Auth->redirect());
 		}
 	}
 
