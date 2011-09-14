@@ -15,7 +15,9 @@
  * @version 2.1
  * @lastmodified 2010-01-03
  */
-App::import('Core', array('File', 'Folder'));
+//App::import('Core', array('File', 'Folder'));
+App::uses('Folder', 'Utility');
+App::uses('File', 'Utility');
 
 class MeioUploadBehavior extends ModelBehavior {
 /**

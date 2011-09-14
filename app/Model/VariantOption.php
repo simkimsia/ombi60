@@ -5,7 +5,7 @@ class VariantOption extends AppModel {
 
 	var $belongsTo = array(
 		'Variant' => array(
-			'className' => 'Variant',
+			'className' => 'VariantModel',
 			'foreignKey' => 'variant_id',
 			'conditions' => '',
 			'fields' => '',
