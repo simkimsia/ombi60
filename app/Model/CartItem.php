@@ -194,7 +194,7 @@ class CartItem extends AppModel {
 			
 			
 			$result['product'] = !empty($item['Product']) ? Product::getTemplateVariable($item, false) : array();
-			$result['variant'] = !empty($item['AssociatedVariant']) ? Variant::getTemplateVariable($item['AssociatedVariant'], false) : array();
+			$result['variant'] = !empty($item['AssociatedVariant']) ? VariantModel::getTemplateVariable($item['AssociatedVariant'], false) : array();
 			
 			// we get the latest product and variant title where possible
 			// we also collect the sku from variant

@@ -897,7 +897,7 @@ class Product extends AppModel {
 			 * Variants
 			 **/
 			if (!empty($product['Variant'])) {
-				$variants =  Variant::getTemplateVariable($product['Variant']);
+				$variants =  VariantModel::getTemplateVariable($product['Variant']);
 			} else {
 				$variants = (TWIG_ITERATOR) ? ArrayToIterator::array2Iterator(array()) : array();
 			}

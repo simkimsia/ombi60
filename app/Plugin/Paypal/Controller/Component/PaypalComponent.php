@@ -18,9 +18,9 @@ class PaypalComponent extends Component {
         }
         
         //called before Controller::beforeFilter()
-        function initialize(&$controller, $settings = array()) {
+        function initialize($controller) {
                 // saving the controller reference for later use
-                $this->controller =& $controller;
+                $this->controller = $controller;
         }
         
         
