@@ -27,27 +27,27 @@ class AjaxHelper extends AppHelper {
  *
  * @var array
  */
-	var $helpers = array('Html', 'Javascript', 'Form');
+	public $helpers = array('Html', 'Javascript', 'Form');
 /**
  * HtmlHelper instance
  *
  * @var HtmlHelper
  * @access public
  */
-	var $Html = null;
+	public $Html = null;
 /**
  * JavaScriptHelper instance
  *
  * @var JavaScriptHelper
  * @access public
  */
-	var $Javascript = null;
+	public $Javascript = null;
 /**
  * Names of Javascript callback functions.
  *
  * @var array
  */
-	var $callbacks = array(
+	public $callbacks = array(
 		'beforeSend', 'complete', 'error', 'success', 'dataFilter'
 	);
 /**
@@ -55,7 +55,7 @@ class AjaxHelper extends AppHelper {
  *
  * @var array
  */
-	var $ajaxOptions = array(
+	public $ajaxOptions = array(
 		'after', 'async', 'before', 'confirm', 'condition', 'contentType',
 		'form', 'beforeSend', 'complete', 'error',
 		'success', 'parameters',
@@ -68,7 +68,7 @@ class AjaxHelper extends AppHelper {
  *
  * @var array
  */
-	var $dragOptions = array(
+	public $dragOptions = array(
         'addClasses', 'appendTo', 'axis', 'cancel', 'connectToSortable', 'containment', 
         'cursor', 'cursorAt', 'delay', 'distance', 'grid', 'handle', 'helper', 'iframeFix', 
         'opacity', 'refreshPositions', 'revert', 'revertDuration', 'scope', 'scroll', 
@@ -80,7 +80,7 @@ class AjaxHelper extends AppHelper {
  *
  * @var array
  */
-	var $dropOptions = array(
+	public $dropOptions = array(
 		'accept', 'activeClass', 'addClasses', 'greedy', 'hoverClass', 'scope', 'tolerance',
 		'activate', 'deactivate', 'over', 'out', 'drop'
 	);
@@ -89,7 +89,7 @@ class AjaxHelper extends AppHelper {
  *
  * @var array
  */
-	var $sortOptions = array(
+	public $sortOptions = array(
         'appendTo', 'axis', 'cancel', 'connectWith', 'containment', 'cursor', 'cursorAt', 'delay', 
         'distance', 'dropOnEmpty', 'forceHelperSize', 'forcePlaceholderSize', 'grid', 'handle', 
         'helper', 'items', 'opacity', 'placeholder', 'revert', 'scroll', 'scrollSensitivity', 
@@ -102,7 +102,7 @@ class AjaxHelper extends AppHelper {
  *
  * @var array
  */
-	var $sliderOptions = array(
+	public $sliderOptions = array(
 		'animate', 'max', 'min', 'change', 'orientation', 'range', 'slide', 'start', 'step', 
 		'stop', 'value', 'values'
 	);
@@ -111,7 +111,7 @@ class AjaxHelper extends AppHelper {
  *
  * @var array
  */
-	var $editorOptions = array(
+	public $editorOptions = array(
         'method', 'callback', 'name', 'id', 'submitdata', 'type', 'rows', 'cols', 'height', 
         'width', 'loadurl', 'loadtype', 'loadtext', 'loaddata', 'data', 'indicator', 'tooltip', 
         'event', 'submit', 'cancel', 'cssclass', 'style', 'select', 'placeholder', 'onblur', 
@@ -122,7 +122,7 @@ class AjaxHelper extends AppHelper {
  *
  * @var array
  */
-	var $autoCompleteOptions = array(
+	public $autoCompleteOptions = array(
 	    'autoFill', 'cacheLength', 'delay', 'extraParams', 'formatItem', 'formatMatch', 
 	    'formatResult', 'highlight', 'matchCase', 'matchContains', 'matchSubset', 'max', 
 	    'minChars', 'multiple', 'multipleSeparator', 'mustMatch', 'scroll', 'scrollHeight', 

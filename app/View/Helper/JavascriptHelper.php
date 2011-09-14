@@ -26,7 +26,7 @@ class JavascriptHelper extends AppHelper {
  * @var boolean
  * @access public
  */
-	var $useNative = false;
+	public $useNative = false;
 /**
  * If true, automatically writes events to the end of a script or to an external JavaScript file
  * at the end of page execution
@@ -34,21 +34,21 @@ class JavascriptHelper extends AppHelper {
  * @var boolean
  * @access public
  */
-	var $enabled = true;
+	public $enabled = true;
 /**
  * Indicates whether <script /> blocks should be written 'safely,' i.e. wrapped in CDATA blocks
  *
  * @var boolean
  * @access public
  */
-	var $safe = false;
+	public $safe = false;
 /**
  * HTML tags used by this helper.
  *
  * @var array
  * @access public
  */
-	var $tags = array(
+	public $tags = array(
 		'javascriptstart' => '<script type="text/javascript">',
 		'javascriptend' => '</script>',
 		'javascriptblock' => '<script type="text/javascript">%s</script>',
