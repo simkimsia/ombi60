@@ -13,7 +13,9 @@
  * @lastmodified 2010-05-17
  */
 App::import('Behavior', 'MeioUpload.MeioUpload');
-App::import('Core', array('File', 'Folder'));
+//App::import('Core', array('File', 'Folder'));
+App::uses('Folder', 'Utility');
+App::uses('File', 'Utility');
 
 class MeioDuplicateBehavior extends MeioUploadBehavior {
 

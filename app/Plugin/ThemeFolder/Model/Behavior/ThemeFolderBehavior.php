@@ -143,7 +143,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 		return $success;
 	}
 	
-	function fileExists ($filename, $parent_folder, $sort = true, $exceptions = false, $full_path = false) {
+	function fileExists($filename, $parent_folder, $sort = true, $exceptions = false, $full_path = false) {
 		$dir = new Folder();
 		$dir->cd($parent_folder);
 		

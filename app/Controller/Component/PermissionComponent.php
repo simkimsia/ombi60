@@ -84,7 +84,7 @@ class PermissionComponent extends Component {
 	var $errorMessage = 'You do not have permissions for this ';
 	
 	var $modelName = '';
-	
+
 /**
  * Initialize function
  *
@@ -92,8 +92,8 @@ class PermissionComponent extends Component {
  * @param controller object $controller
  * @param array $settings
  */     
-	function initialize(&$controller, $settings=array()) {
-		
+	function initialize($controller) {
+        $settings = $this->settings;
 		$this->actionsWithPrimaryKey = (empty($settings['actionsWithPrimaryKey'])) ? $this->actionsWithPrimaryKey : $settings['actionsWithPrimaryKey'];
 		$this->actionsWithShopId = (empty($settings['actionsWithShopId'])) ? $this->actionsWithShopId : $settings['actionsWithShopId'];
 		
@@ -123,7 +123,7 @@ class PermissionComponent extends Component {
  *
  * @param controller object $controller 
  */     
-	function startup(&$controller) {
+	function startup($controller) {
 		
 		$shopIdUserHas = User::get('Merchant.shop_id');
 		
@@ -140,7 +140,7 @@ class PermissionComponent extends Component {
 	
 	}
 	
-	private function checkForValidShopIdInData(&$controller, $shopIdUserHas) {
+	private function checkForValidShopIdInData($controller, $shopIdUserHas) {
 		if (in_array($controller->action, $this->actionsWithShopId)) {
 			$validData = !empty($controller->data);
 			$modelName = $this->modelName;
@@ -155,7 +155,7 @@ class PermissionComponent extends Component {
 		}
 	}
 	
-	private function checkForValidPrimaryKeyInAction(&$controller, $shopIdUserHas) {
+	private function checkForValidPrimaryKeyInAction($controller, $shopIdUserHas) {
 		
 		// e.g. for admin/account_children/edit/1
 		$actionForChildModel = in_array($controller->action, $this->actionsWithPrimaryKey);
@@ -192,7 +192,7 @@ class PermissionComponent extends Component {
 		}
 	}
 	
-	private function checkForValidPrimaryForeignKeyInAction(&$controller, $shopIdUserHas) {
+	private function checkForValidPrimaryForeignKeyInAction($controller, $shopIdUserHas) {
 		
 		
 		// e.g. for admin/account_children/1/account_grand_children/edit/37
