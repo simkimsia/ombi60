@@ -111,7 +111,7 @@ class ProductsController extends AppController {
 		// this is to allow the jquery to change the elements that control the file upload.
 		$image = $this->Product->ProductImage;
 
-		$this->Security->disabledFields[] = $image->name . '.' . $image->defaultNameForImage;
+		$this->Security->unlockedFields[] = $image->name . '.' . $image->defaultNameForImage;
 		
 		
 		$this->checkoutLink = Router::url('/', true);
@@ -152,7 +152,7 @@ class ProductsController extends AppController {
 		$cart = $this->cartModel->getLiveCartByCustomerId($userId, true);
 		$postFields = array();
 		
-		if ($this->RequestHandler->isPost()) {
+		if ($this->request->is('post')) {
 			$shopId = Shop::get('Shop.id');
 			$count = $this->request->data['Product']['products_count'];
 			
@@ -599,7 +599,7 @@ class ProductsController extends AppController {
 		
 		$this->set('title_for_layout', 'Add Product');
 		
-		if ($this->RequestHandler->isPost()) {
+		if ($this->request->is('post')) {
 
 			$this->Product->create();
 			if ($this->Product->createDetails($this->request->data)) {
@@ -786,7 +786,7 @@ class ProductsController extends AppController {
 	}
 
 	function platform_add() {
-		if ($this->RequestHandler->isPost()) {
+		if ($this->request->is('post')) {
 			$this->Product->set($this->request->data);
 
 			if ($this->Product->save($this->request->data)) {

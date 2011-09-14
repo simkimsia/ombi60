@@ -67,7 +67,7 @@ class OrdersController extends AppController {
 		**/
 		
 		// for checkout page
-		$this->Security->disabledFields[] = 'Order.fixed_delivery';
+		$this->Security->unlockedFields[] = 'Order.fixed_delivery';
 
 	
 	}
@@ -262,7 +262,7 @@ class OrdersController extends AppController {
 				$this->set('totalAmountWithShipping', $cartData['Cart']['amount']);
 			}
 			
-		} else if (!empty($this->request->data) AND $this->RequestHandler->isPost()) {
+		} else if (!empty($this->request->data) AND $this->request->is('post')) {
 			
 			// redirection will take place within this function if successful
 			// actually none of the 3 params are used except for shopId
@@ -761,7 +761,7 @@ class OrdersController extends AppController {
 					   'totalAmount', 'totalAmountWithShipping',
 					   'defaultShipment', 'defaultPayment', 'payPalShopsPaymentModuleId'));
 			
-		} else if ($this->RequestHandler->isPost()) {
+		} else if ($this->request->is('post')) {
 			
 			$orderStatus = ORDER_OPENED;
 			$paymentStatus = PAYMENT_INITIATED;

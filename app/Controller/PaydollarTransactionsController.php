@@ -25,7 +25,7 @@ class PaydollarTransactionsController extends AppController {
 		
 		Configure::write('debug', 0);
 		
-		if($this->RequestHandler->isPost()) {
+		if($this->request->is('post')) {
 			
 			$PayDollarConfig = array('Sandbox' => Configure::read('paydollar.sandbox'),
                          'APIMerchantID' => Configure::read('paydollar.api.merchantid'),

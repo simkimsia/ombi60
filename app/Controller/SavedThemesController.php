@@ -24,7 +24,7 @@ class SavedThemesController extends AppController {
 		 **/
 		
 		if ($this->request->action == 'admin_add' OR $this->request->action == 'admin_edit') {
-			$this->Security->disabledFields[] = 'SavedTheme.cssName';
+			$this->Security->unlockedFields[] = 'SavedTheme.cssName';
 		}
 
 		// allow non users to access register and login actions only.
@@ -159,7 +159,7 @@ class SavedThemesController extends AppController {
 		// When there is NO images, just a normal POST will create the Saved Theme
 		// When there ARE images, this will be activated at the very last step to upload the
 		// css file OR simply to redirect back to the index page
-		} else if ($this->RequestHandler->isPost()) {
+		} else if ($this->request->is('post')) {
 			$uploadifyUsed = ($this->request->data['SavedTheme']['alt_id'] > 0);
 			
 			$turnedOn = $this->request->data['SavedTheme']['cssName'];
@@ -329,7 +329,7 @@ class SavedThemesController extends AppController {
 			
 			$this->set(compact('folder_name', 'image', 'imageUrl', 'id'));
 			
-		} else if ($this->RequestHandler->isPost()) {
+		} else if ($this->request->is('post')) {
 			
 			$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img' . DS;
 			$newImage = $this->request->data['Image']['name'];
@@ -399,7 +399,7 @@ class SavedThemesController extends AppController {
 			
 			$this->set(compact('folder_name', 'id', 'contents'));
 			
-		} else if ($this->RequestHandler->isPost()) {
+		} else if ($this->request->is('post')) {
 			
 			$newContent = $this->request->data['Css']['contents'];
 			

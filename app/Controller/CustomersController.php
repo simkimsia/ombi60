@@ -49,7 +49,7 @@ class CustomersController extends AppController {
 		// set inside the hidden value of the login form
 		$this->set('shop_id', Shop::get('Shop.id'));
 		
-		if ($this->RequestHandler->isPost()) {
+		if ($this->request->is('post')) {
 
 			// hash the confirm password field so that the comparison can be done successfully
 			// password is automatically hashed by the Auth component
@@ -109,7 +109,7 @@ class CustomersController extends AppController {
 				// if come from orders/checkout we kill the Auth
 				
 				$this->logoutFunction();	
-			} else if ($this->RequestHandler->isPost()) {
+			} else if ($this->request->is('post')) {
 				if(isset($this->request->params['form']['loginBtn'])) {
 					// proceed as normal for login -> checkout process
 				} else if (isset($this->request->params['form']['checkoutBtn'])) {

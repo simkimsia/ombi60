@@ -20,7 +20,7 @@ class ProductImagesController extends AppController {
 		// this is to allow the jquery to change the elements that control the file upload.
 		$image = $this->ProductImage;
 		
-		$this->Security->disabledFields[] = $image->name . '.' . $image->defaultNameForImage;
+		$this->Security->unlockedFields[] = $image->name . '.' . $image->defaultNameForImage;
 		
 	}
 	

@@ -52,7 +52,6 @@ class UnitSystemConvertibleBehavior extends ModelBehavior {
  * @param array $config Config array
  * @access public
  * @return boolean
- * @todo fix the MVC violations
  */
 	public function setup($Model, $config = array()) {
 		$this->settings[$Model->alias] = array_merge($this->defaults, $config);

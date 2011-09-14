@@ -49,7 +49,7 @@ class PaymentsController extends AppController {
 	}
 	
 	function admin_update_settings() {
-		if (!empty($this->request->data) AND $this->RequestHandler->isPost()) {
+		if (!empty($this->request->data) AND $this->request->is('post')) {
 			$this->Payment->ShopsPaymentModule->saveAll($this->request->data['ShopsPaymentModule']);
 			$this->redirect(array('action'=>'index',
 					      'controller'=>'payments',

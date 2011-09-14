@@ -17,7 +17,7 @@ class MerchantsController extends AppController {
 
 			// because Security component is turned on
 			// hence need to disable any hidden fields that is auto changed by jQuery
-			$this->Security->disabledFields[] = 'Shop.primary_domain';
+			$this->Security->unlockedFields[] = 'Shop.primary_domain';
 
 			// in case the merchant did not turn on Js,
 			if (empty($this->request->data['Shop']['primary_domain'])) {
@@ -29,7 +29,7 @@ class MerchantsController extends AppController {
 
 		// add in the extra validation for merchant login
 		// ensure that it is the right shop that they want to login to.
-		if ($this->RequestHandler->isPost() AND $this->request->action == 'login') {
+		if ($this->request->is('post') AND $this->request->action == 'login') {
 			$this->Auth->userScope = array('Merchant.shop_id' => $this->request->data['Merchant']['shop_id']);
 		}
 
@@ -63,7 +63,7 @@ class MerchantsController extends AppController {
 		$this->set('title_for_layout', __('Signup'));
 
 
-		if ($this->RequestHandler->isPost()) {
+		if ($this->request->is('post')) {
 
 			// hash the confirm password field so that the comparison can be done successfully
 			// password is automatically hashed by the Auth component
