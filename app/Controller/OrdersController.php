@@ -180,7 +180,7 @@ class OrdersController extends AppController {
 		// otherwise treat as casual and carry on as normal.
 		// works only for coming from cart/view page
 		if ($this->checkUserIdForCustomer() &&
-		    $this->RequestHandler->isGet() &&
+		    $this->request->is('get') &&
 		    !$comingFromPayPalSite) {
 			// force login
 			$pass = false;
@@ -206,7 +206,7 @@ class OrdersController extends AppController {
 		$this->Session->write('Shop.' . $shopId . '.checkoutRedirectPass', false);
 		
 		
-		if ($this->RequestHandler->isGet()) {
+		if ($this->request->is('get')) {
 			
 			// set up the countries in the form.
 			$this->set('countries', $this->Order->BillingAddress->Country->find('list'));
@@ -659,7 +659,7 @@ class OrdersController extends AppController {
 	function pay($shop_id, $hash) {
 		
 		$payPalShopsPaymentModuleId = $this->Order->Shop->getPayPalShopsPaymentModuleId($shop_id);
-		if ($this->RequestHandler->isGet()) {
+		if ($this->request->is('get')) {
 			$confirmPage = $this->Session->read('Shop.' .$shop_id. '.confirmPage');
 			
 			$PayPalRequest = $confirmPage['PayPalRequest'];

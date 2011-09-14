@@ -262,7 +262,7 @@ class SavedThemesController extends AppController {
 				$this->SavedTheme->revertFolderNameAfterUnsuccessfulUpdate();
 				$this->Session->setFlash(__('The saved theme could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
-		} else if ($this->RequestHandler->isGet()) {
+		} else if ($this->request->is('get')) {
 			$this->request->data = $this->SavedTheme->read(null, $id);
 		}
 		
@@ -321,7 +321,7 @@ class SavedThemesController extends AppController {
 	}
 	
 	function admin_edit_image($id = null, $folder_name, $image) {
-		if ($this->RequestHandler->isGet()) {
+		if ($this->request->is('get')) {
 			
 			
 			$this->layout = 'overlay-form';
@@ -374,7 +374,7 @@ class SavedThemesController extends AppController {
 	
 	function admin_delete_image($id = null, $folder_name, $image) {
 			
-		if ($this->RequestHandler->isGet()) {
+		if ($this->request->is('get')) {
 			
 			$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img' . DS;
 			
@@ -390,7 +390,7 @@ class SavedThemesController extends AppController {
 		$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'css' . DS . 'style.css';
 		$file = new File($path);
 		
-		if ($this->RequestHandler->isGet()) {
+		if ($this->request->is('get')) {
 			
 			$this->layout = 'overlay-form';
 			

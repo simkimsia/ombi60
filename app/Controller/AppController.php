@@ -40,7 +40,7 @@ class AppController extends Controller {
         'Session',
         'Security',
         'RequestHandler',
-	//        'DebugKit.Toolbar',
+		//'DebugKit.Toolbar',
         'Cookie',
         'RandomString.RandomString',
         'Theme',
@@ -50,26 +50,23 @@ class AppController extends Controller {
 
 	//Allowed controllers with actions
 	public $sslActions = array(
-                       'orders' => array('checkout', 'pay'),
-	//'products' => array('checkout'),
+		'orders' => array('checkout', 'pay'),
+		//'products' => array('checkout'),
 	);
 
-	//    var $view = 'TwigView.Twig';
 	public $viewClass = 'TwigView.Twig';
 
 	public $params4GETAndNamed = array();
 
 	public function beforeFilter() {
-
 		/**
 		 * merge the named params and the get params into a single array
 		 * with the GET params taking precedence
 		 **/
+		if (!isset($this->request->params['url'])) {
+			$this->request->params['url'] = array();
+		}
 		$this->params4GETAndNamed = array_merge($this->request->params['named'], $this->request->params['url']);
-
-		/**
-		 *Configure AuthComponent
-		 **/
 
 		// need to override the default field names to email and password
 		$this->Auth->fields = array('username' => 'email', 'password' => 'password');
@@ -79,13 +76,10 @@ class AppController extends Controller {
 			$this->Auth->loginAction = '/admin/login';
 			$this->Auth->loginRedirect = '/admin';
 			$this->Auth->logoutRedirect = '/admin/login';
-
 			// this is to set the default layout for admin pages
 			if ($this->request->is('ajax') == false) {
 				$this->layout = 'admin';
 			}
-
-
 		} else {
 			 
 			$this->layout = 'theme';
@@ -99,10 +93,6 @@ class AppController extends Controller {
 		}
 
 		/**
-		 *  End of Configure AuthComponent
-		 **/
-
-		/**
 		 *for Acl
 		 **/
 		$this->Auth->actionPath = 'controllers/';
@@ -113,7 +103,6 @@ class AppController extends Controller {
 		// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
 		App::import('Model', 'Shop');
 		$currentShop = $this->Session->read('CurrentShop');
-
 
 		if(empty($currentShop) OR !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain'])) {
 			$this->loadModel('Shop');
@@ -126,14 +115,11 @@ class AppController extends Controller {
 		}
 
 		Shop::store($currentShop);
-		/** setup cookies
-		 * */
 		$shopId = Shop::get('Shop.id');
 		$shopName = Shop::get('Shop.name');
 		$this->Cookie->name = $shopName;
 		$this->Cookie->time = '365 days';
 		$this->Cookie->key  = 'qwRVVJ@#$%2#7435' . $shopId;
-
 
 		/**
 		 * setup the shopName_for_layout
@@ -195,9 +181,6 @@ class AppController extends Controller {
 				$this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
 			}
 
-			//$this->log('user' . $userIdInCookie);
-
-
 			// fetch the main menu of the shop
 			$this->loadModel('LinkList');
 			$this->LinkList->recursive = -1;
@@ -205,16 +188,16 @@ class AppController extends Controller {
 			$this->LinkList->Behaviors->attach('Containable');
 
 			$linklists = $this->LinkList->find('all', array(
-		    'conditions'=>array('LinkList.shop_id'=>$shopId),
-		    'contain'   =>array(
-			'Link'=>array(
-			    'fields'=>array('Link.id',
-					    'Link.name',
-					    'Link.route',
-					    'Link.model',
-					    'Link.action',
-					    'Link.order'),
-			    'order'=>array('Link.order ASC'))),));
+				'conditions'=>array('LinkList.shop_id'=>$shopId),
+				'contain'   =>array(
+				'Link'=>array(
+				'fields'=>array('Link.id',
+					'Link.name',
+					'Link.route',
+					'Link.model',
+					'Link.action',
+					'Link.order'),
+				'order'=>array('Link.order ASC'))),));
 
 			$linklists = LinkList::getTemplateVariable($linklists);
 
@@ -226,15 +209,12 @@ class AppController extends Controller {
 			$this->Blog->Behaviors->attach('Containable');
 
 			$blogs = $this->Blog->find('all', array(
-		    'conditions'=>array('Blog.shop_id'=>$shopId),
-		    'contain'   =>array(
-			'Post'=>array(
-			    'conditions' => array('Post.visible'=>true),
-			    'order' => array('Post.created DESC'),
-			    'limit' => '25',
-			)
-			),
-			));
+				'conditions'=>array('Blog.shop_id'=>$shopId),
+				'contain'   =>array(
+				'Post'=>array(
+					'conditions' => array('Post.visible'=>true),
+					'order' => array('Post.created DESC'),
+					'limit' => '25'))));
 
 			$blogs = Blog::getTemplateVariable($blogs);
 			$this->set('blogs', $blogs);
@@ -270,7 +250,6 @@ class AppController extends Controller {
 		/**
 		 *end Cookies
 		 **/
-
 
 		$userAuth = $this->Session->check('Auth.User');
 

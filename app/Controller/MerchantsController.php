@@ -1,20 +1,20 @@
 <?php
 class MerchantsController extends AppController {
 
-	var $name = 'Merchants';
+	public $name = 'Merchants';
 
-	var $helpers = array('Javascript', 'Ajax',
-			     'Log.Log');
-	
-	function beforeFilter() {
+	public $helpers = array(
+		'Javascript',
+		'Ajax',
+		'Log.Log');
 
+	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 
 		$this->overrideAuth();
 
 		if ($this->request->action == 'register') {
-
 			// because Security component is turned on
 			// hence need to disable any hidden fields that is auto changed by jQuery
 			$this->Security->unlockedFields[] = 'Shop.primary_domain';
@@ -23,8 +23,6 @@ class MerchantsController extends AppController {
 			if (empty($this->request->data['Shop']['primary_domain'])) {
 				$this->request->data['Shop']['primary_domain'] = 'http://' . $this->request->data['Shop']['subdomain'] . '.myspree2shop.com';
 			}
-
-
 		}
 
 		// add in the extra validation for merchant login
@@ -32,7 +30,6 @@ class MerchantsController extends AppController {
 		if ($this->request->is('post') AND $this->request->action == 'login') {
 			$this->Auth->userScope = array('Merchant.shop_id' => $this->request->data['Merchant']['shop_id']);
 		}
-
 	}
 
 	private function overrideAuth() {
@@ -58,10 +55,8 @@ class MerchantsController extends AppController {
 	/**
 	 * Merchants to register a Merchant account
 	 **/
-	function register() {
-
+	public function register() {
 		$this->set('title_for_layout', __('Signup'));
-
 
 		if ($this->request->is('post')) {
 
@@ -87,7 +82,7 @@ class MerchantsController extends AppController {
 
 	}
 
-	function admin_login() {
+	public function admin_login() {
 
 		$this->set('title_for_layout', __('Merchant Login'));
 
@@ -138,46 +133,39 @@ class MerchantsController extends AppController {
 		
 	}
 
-	function admin_logout() {
-
+	public function admin_logout() {
 		$this->Cookie->delete('Auth.User');
 		$this->Cookie->delete('Auth.Merchant');
 		$this->Cookie->delete('Auth.Shop');
 		$this->Session->delete('Auth.Merchant');
 		$this->Session->delete('Auth.Shop');
 		$this->redirect($this->Auth->logout());
-
 	}
 
-	/**
-	 * Merchants admin functions
-	 *
-	 **/
-
-	/**
-	 * Admin dashboard page
-	 **/
-	function admin_index() {
+/**
+ * Admin dashboard page
+ **/
+	public function admin_index() {
 		$this->Merchant->recursive = 0;
 		$this->set('merchants', $this->paginate());
 		$log = ClassRegistry::init('Log.Log');
 		$this->set('logs', $log->find('dashboard'));
 	}
 
-	private function updateSession() {
+	public private function updateSession() {
 		$result = $this->Merchant->retrieveShopUserLanguageByUserId($this->Auth->user('id'));
 		$this->updateAuthSessionKey($result);
 	}
-	
-	private function updateCookie() {
+
+	public private function updateCookie() {
 		$result = $this->Merchant->retrieveShopUserLanguageByUserId($this->Auth->user('id'));
 		$this->updateAuthCookieKey($result);
 	}
 
-	/**
-	 * Edit own profile
-	 **/
-	function admin_edit() {
+/**
+ * Edit own profile
+ **/
+	public function admin_edit() {
 
 		$this->set('title_for_layout', sprintf(__('Edit %s\'s profile'),User::get('User.name_to_call')));
 
@@ -198,32 +186,20 @@ class MerchantsController extends AppController {
 		}
 
 		$this->Session->setFlash(__('Your profile could not be saved. Please, try again.'));
-
 	}
-	
-	
-	
 
-	/**
-	 * End of Merchants admin functions
-	 **/
-
-	/**
-	 * Platform functions
-	 **/
-
-	/**
-	 * get all merchants
-	 **/
-	function platform_index() {
+/**
+ * get all merchants
+ **/
+	public function platform_index() {
 		$this->Merchant->recursive = 0;
 		$this->set('merchants', $this->paginate());
 	}
 
-	/**
-	 * get 1 merchant view
-	 **/
-	function platform_view($id = null) {
+/**
+ * get 1 merchant view
+ **/
+	public function platform_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Merchant'));
 			$this->redirect(array('action' => 'index'));
@@ -231,10 +207,10 @@ class MerchantsController extends AppController {
 		$this->set('merchant', $this->Merchant->read(null, $id));
 	}
 
-	/**
-	 * edit 1 merchant data
-	 **/
-	function platform_edit() {
+/**
+ * edit 1 merchant data
+ **/
+	public function platform_edit() {
 
 		if (empty($this->request->data)) {
 			$id = Merchant::get('id');
@@ -252,10 +228,10 @@ class MerchantsController extends AppController {
 
 	}
 
-	/**
-	 * delete 1 merchant account
-	 **/
-	function platform_delete($id = null) {
+/**
+ * delete 1 merchant account
+ **/
+	public function platform_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Merchant'));
 			$this->redirect(array('action' => 'index'));
@@ -268,9 +244,4 @@ class MerchantsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
-	/**
-	 * End of Platform functions
-	 **/
-
 }
-?>
