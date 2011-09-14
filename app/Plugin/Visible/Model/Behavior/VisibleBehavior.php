@@ -33,17 +33,6 @@ class VisibleBehavior extends ModelBehavior {
  */
 	var $__fields = array();
 
-
-
-/**
- * Constructor
- *
- */
-	function __construct() {
-		
-		
-	}
-
 /**
  * Setup the behavior. It stores a reference to the model, merges the default options with the options for each field, and setup the validation rules.
  *
@@ -52,7 +41,7 @@ class VisibleBehavior extends ModelBehavior {
  * @return null
  * @author Sim Kim Sia
  */
-	function setup(&$model, $settings = array()) {
+	function setup($model, $settings = array()) {
 		$this->__fields[$model->alias] = array();
 		foreach ($settings as $field => $options) {
 			// Check if they even PASSED IN parameters
@@ -86,7 +75,7 @@ class VisibleBehavior extends ModelBehavior {
  * @author Sim Kim Sia
  **/
 
-        function toggle(&$model, $id = false, $fieldName = 'visible') {
+        function toggle($model, $id = false, $fieldName = 'visible') {
 		if (!$id) {
 			if (!$model->id) {
 				return false;
@@ -123,7 +112,7 @@ class VisibleBehavior extends ModelBehavior {
  * @author Sim Kim Sia
  **/
 
-        function toggleByConditions(&$model, $conditions = array(), $fieldName = 'visible') {
+        function toggleByConditions($model, $conditions = array(), $fieldName = 'visible') {
 		if (empty($conditions)) {
 			$conditions = array($model->alias . '.id' => $this->id);
 		}

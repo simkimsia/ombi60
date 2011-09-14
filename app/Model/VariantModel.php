@@ -107,7 +107,7 @@ class VariantModel extends AppModel {
 	}
 	
 	function getTemplateVariable($variants=array(), $multiple = true) {
-		App::import('Lib', 'ArrayToIterator');
+		App::uses('ArrayToIterator', 'Lib');
 		$results = array();
 		
 		if (!$multiple) $variants = array($variants);

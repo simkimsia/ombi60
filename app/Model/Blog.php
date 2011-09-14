@@ -80,7 +80,7 @@ class Blog extends AppModel {
 	 * for use in templates for shopfront pages
 	 * */
 	function getTemplateVariable($blogs=array(), $multiple = true) {
-		App::import('Lib', 'ArrayToIterator');
+		App::uses('ArrayToIterator', 'Lib');
 		$results = array();
 		
 		if (!$multiple) $blogs = array($blogs);
@@ -135,7 +135,7 @@ class Blog extends AppModel {
 		$fields = array('Post.blog_handle' =>$handle);
 		
 		// prepare the fields by wrapping the values in quotes
-		App::import('Lib', 'StringManipulator');
+		App::uses('StringManipulator', 'Lib');
 		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
 		
 		// meant only for all the BlogLinks belonging to this Blog
@@ -161,7 +161,7 @@ class Blog extends AppModel {
 				'Link.action'=>$action);
 		
 		// prepare the fields by wrapping the values in quotes
-		App::import('Lib', 'StringManipulator');
+		App::uses('StringManipulator', 'Lib');
 		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
 		
 		// meant only for all the Links belonging to this Blog

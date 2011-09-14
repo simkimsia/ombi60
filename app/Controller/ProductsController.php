@@ -1,6 +1,6 @@
 <?php
 App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
-App::import('Core', 'HttpSocket');
+App::uses('HttpSocket', 'Network/Http');
 
 class ProductsController extends AppController {
 
@@ -274,7 +274,7 @@ class ProductsController extends AppController {
 	
 	private function transferSession() {
 		
-		App::import('Core', 'String');
+		App::uses('String', 'Utility');
 		$data = array();
 		$data['SiteTransfer']['sess_id'] = $this->Session->id();
 		

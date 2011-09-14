@@ -35,7 +35,7 @@ class ConstantHelper extends AppHelper {
 	}
 
 	function displayUnitForWeight() {
-		App::import('Model', 'Shop');
+		App::uses('Shop', 'Model');
 		$unit = Shop::get('ShopSetting.unit_system');
 
 		if ($unit === 'metric') {
@@ -46,7 +46,7 @@ class ConstantHelper extends AppHelper {
 	}
 
 	function displayUnitForLength() {
-		App::import('Model', 'Shop');
+		App::uses('Shop', 'Model');
 		$unit = Shop::get('ShopSetting.unit_system');
 
 		if ($unit === 'metric') {
@@ -61,10 +61,10 @@ class ConstantHelper extends AppHelper {
  * usually used within cakephp admin views
  **/
 	function convertGramsToDisplayedWeight($weight_in_grams, $with_unit = true) {
-		App::import('Model', 'Shop');
+		App::uses('Shop', 'Model');
 		$unit = Shop::get('ShopSetting.unit_system');
 
-		App::import('Helper', 'Number');
+		App::uses('Number', 'View/Helper');
 		$number = new NumberHelper();
 
 		$result_weight = 0.0;

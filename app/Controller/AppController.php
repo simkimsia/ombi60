@@ -101,7 +101,7 @@ class AppController extends Controller {
 		 * */
 
 		// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
-		App::import('Model', 'Shop');
+		App::uses('Shop', 'Model');
 		$currentShop = $this->Session->read('CurrentShop');
 
 		if(empty($currentShop) OR !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain'])) {
@@ -128,7 +128,7 @@ class AppController extends Controller {
 
 		$userIdInCookie = null;
 
-		App::import('Model', 'User');
+		App::uses('User', 'Model');
 		$this->loadModel('User');
 
 		$shopSetting = $currentShop['ShopSetting'];
@@ -171,7 +171,7 @@ class AppController extends Controller {
 			}
 
 			if (!$userIdInCookieIsLegit) {
-				App::import('Model', 'CasualSurfer');
+				App::uses('CasualSurfer', 'Model');
 				$this->loadModel('CasualSurfer');
 					
 				$randomPassword = $this->Auth->password($this->RandomString->generate());
@@ -328,7 +328,7 @@ class AppController extends Controller {
 		}
 
 		// set the weight unit for shop
-		App::import('Helper', 'Constant');
+		App::uses('Constant', 'View/Helper');
 		//@todo fix this helper call
 		$constantHelper = new ConstantHelper(new View($this));
 		$unitForWeight = $constantHelper->displayUnitForWeight();
@@ -358,7 +358,7 @@ class AppController extends Controller {
 	}
 
 	protected function createCasualInCookie() {
-		App::import('Model', 'CasualSurfer');
+		App::uses('CasualSurfer', 'Model');
 		$this->loadModel('CasualSurfer');
 
 		// create new casual surfer

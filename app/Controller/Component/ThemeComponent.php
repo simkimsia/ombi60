@@ -18,19 +18,7 @@ class ThemeComponent extends Component {
         $this->actions = (empty($settings['actions'])) ? $this->actions : (array) $settings['actions'];
 
 	}
-	
-/**
- * Initialize function
- *
- *
- * @param controller object $controller
- * @param array $settings
- */     
-	function initialize(Controller $controller) {
-		
 
-		
-	}
 	
  
  
@@ -76,7 +64,7 @@ class ThemeComponent extends Component {
 			}
 			
 			$controller->theme = !empty($currentShop['FeaturedSavedTheme']['folder_name']) ? $currentShop['FeaturedSavedTheme']['folder_name'] : 'blue-white';
-			
+			    
 		}
 	
 	

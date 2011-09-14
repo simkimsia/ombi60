@@ -76,7 +76,7 @@ class ProductGroup extends AppModel {
 	 * we avoid the use of many images for retrieving lots of products
 	 * */
 	function getTemplateVariable($productsInGroups=array(), $multiple = true) {
-		App::import('Lib', 'ArrayToIterator');
+		App::uses('ArrayToIterator', 'Lib');
 		$results = array();
 		
 		if (!$multiple) $productsInGroups = array($productsInGroups);

@@ -226,7 +226,7 @@ class User extends AppModel {
 	 *  )
 	 *
 	 **/
-	function get($fieldName) {
+	public static function get($fieldName) {
 		$_user =& User::getInstance();
 		
 		if (!$_user) {
