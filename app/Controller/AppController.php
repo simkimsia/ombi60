@@ -65,7 +65,9 @@ class AppController extends Controller {
 	 * merge the named params and the get params into a single array
 	 * with the GET params taking precedence
 	 **/
-     $this->params4GETAndNamed = array_merge($this->request->params['named'], $this->request->params['url']);
+       // @todo check $this->request->params['url'] in cake2
+     //$this->params4GETAndNamed = array_merge($this->request->params['named'], $this->request->params['url']);
+     $this->params4GETAndNamed = $this->request->params['named'];
 
         /**
          *Configure AuthComponent
@@ -362,9 +364,9 @@ class AppController extends Controller {
 	
 	// set the weight unit for shop
 	App::import('Helper', 'Constant');
-//@todo fix this helper call
+//@todo remove this helper call
 	$constantHelper = new ConstantHelper(new View($this));
-//	$unitForWeight = $constantHelper->displayUnitForWeight();
+	$unitForWeight = $constantHelper->displayUnitForWeight();
 	$this->set('unitForWeight', $unitForWeight);
 	
     }

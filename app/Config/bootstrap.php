@@ -239,13 +239,13 @@ define('DEFAULT_LANGUAGE', 'eng');
  * this is to include the Zend Framework files i need for Zend_Lucene
  **/
 
-ini_set('include_path', ini_get('include_path') . ':' . CAKE_CORE_INCLUDE_PATH . DS . '/vendors');
-function __autoload($path) {
-if (substr($path, 0, 5) == 'Zend_') {
-include str_replace('_', '/', $path) . '.php';
-}
-return $path;
-}
+//ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . CAKE_CORE_INCLUDE_PATH . DS . 'vendors');
+// function __autoload($path) {
+// if (substr($path, 0, 5) == 'Zend_') {
+// include str_replace('_', '/', $path) . '.php';
+// }
+// return $path;
+// }
 
 /**
  * this is to allow getting ip addresses by domains

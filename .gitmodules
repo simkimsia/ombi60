@@ -1,3 +1,27 @@
 [submodule "app/Plugin/DebugKit"]
 	path = app/Plugin/DebugKit
 	url = git://github.com/cakephp/debug_kit.git
+[submodule "vendors/dbunit"]
+	path = vendors/dbunit
+	url = git://github.com/sebastianbergmann/dbunit.git
+[submodule "vendors/php-code-coverage"]
+	path = vendors/php-code-coverage
+	url = git://github.com/sebastianbergmann/php-code-coverage.git
+[submodule "vendors/php-file-iterator"]
+	path = vendors/php-file-iterator
+	url = git://github.com/sebastianbergmann/php-file-iterator.git
+[submodule "vendors/php-text-template"]
+	path = vendors/php-text-template
+	url = git://github.com/sebastianbergmann/php-text-template.git
+[submodule "vendors/php-timer"]
+	path = vendors/php-timer
+	url = git://github.com/sebastianbergmann/php-timer.git
+[submodule "vendors/php-token-stream"]
+	path = vendors/php-token-stream
+	url = git://github.com/sebastianbergmann/php-token-stream.git
+[submodule "vendors/phpunit-mock-objects"]
+	path = vendors/phpunit-mock-objects
+	url = git://github.com/sebastianbergmann/phpunit-mock-objects.git
+[submodule "vendors/phpunit-selenium"]
+	path = vendors/phpunit-selenium
+	url = git://github.com/sebastianbergmann/phpunit-selenium.git
