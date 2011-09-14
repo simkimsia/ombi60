@@ -20,7 +20,10 @@ function ombi60MoneyWithCurrency($price) {
         App::import('Model', 'Shop');
 	$money = Shop::get('ShopSetting.money_in_html_with_currency');
 	App::import('Helper', 'Number');
-	$number = new NumberHelper(new View(new Controller(new CakeRequest())));
+    if (empty($view)) {
+        $view = new View(new Controller(new CakeRequest()));
+    }
+    $number = new NumberHelper($view);
 	
 	if (strpos($money, '{{amount}}') !== false) {
 		$price = $number->precision($price, 2);
@@ -37,7 +40,10 @@ function ombi60Money($price) {
         App::import('Model', 'Shop');
 	$money = Shop::get('ShopSetting.money_in_html');
 	App::import('Helper', 'Number');
-	$number = new NumberHelper(new View(new Controller(new CakeRequest())));
+    if (empty($view)) {
+        $view = new View(new Controller(new CakeRequest()));
+    }
+    $number = new NumberHelper($view);
 	
 	if (strpos($money, '{{amount}}') !== false) {
 		$price = $number->precision($price, 2);
@@ -104,8 +110,12 @@ function ombi60SnippetsUrl($filename) {
 function ombi60AssetUrl($filename) {
 	// we need to use HtmlHelper existing in cakephp currently
 	// in future we may use cdn otherwise or whatever
-	App::import('Helper', 'Html');
-	$htmlHelper = new HtmlHelper(new View(new Controller(new CakeRequest())));
+    App::import('Helper', 'Html');
+    $view = Configure::read('Twig.View');
+    if (empty($view)) {
+        $view = new View(new Controller(new CakeRequest()));
+    }
+    $htmlHelper = new HtmlHelper($view);
 	
 	// we need to set the theme as well
 	App::import('Model', 'Shop');
@@ -135,7 +145,9 @@ function ombi60AssetUrl($filename) {
 		}
 		$url = $htmlHelper->assetTimestamp($htmlHelper->webroot($filename));
 		
-		return '/' . $url;
+        if (substr($url, 0, 1) != '/')
+            $url = '/' . $url;
+		return $url;
 	}
 	
 	
@@ -164,7 +176,9 @@ function ombi60AssetUrl($filename) {
 		
 		$url = $htmlHelper->assetTimestamp($htmlHelper->webroot($filename));
 		
-		return '/' . $url;
+        if (substr($url, 0, 1) != '/')
+            $url = '/' . $url;
+		return $url;
 	}
 }
 
@@ -194,7 +208,10 @@ function ombi60LinkTo($title, $url, $titleAttribute="") {
 	// we need to use HtmlHelper existing in cakephp currently
 	// in future we may use cdn otherwise or whatever
 	App::import('Helper', 'Html');
-	$htmlHelper = new HtmlHelper(new View(new Controller(new CakeRequest())));
+    if (empty($view)) {
+        $view = new View(new Controller(new CakeRequest()));
+    }
+    $htmlHelper = new HtmlHelper($view);
 	
 	return $htmlHelper->link($title, $url, array('title'=>$titleAttribute));
 }
@@ -249,8 +266,11 @@ function ombi60WeightWithUnit($weight_in_grams) {
 	$unit = Shop::get('ShopSetting.unit_system');
 	
 	App::import('Helper', 'Number');
-	$number = new NumberHelper(new View(new Controller(new CakeRequest())));
-	
+    if (empty($view)) {
+        $view = new View(new Controller(new CakeRequest()));
+    }
+    $number = new NumberHelper($view);
+
 	$result_weight = 0.0;
 	if ($unit === 'metric') {
 		$result_weight =  $weight_in_grams * 0.001;

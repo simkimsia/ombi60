@@ -176,7 +176,7 @@ class TwigView extends View {
 
 			$data = array_merge($___dataForView, $helpers);	
 			$data['_view'] = $this;
-			
+			Configure::write('Twig.View', $this);
 			try {
 				$relativeFn = str_replace($this->templatePaths, '', $___viewFn);
 				$template = $this->Twig->loadTemplate($relativeFn);
