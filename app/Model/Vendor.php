@@ -1,10 +1,10 @@
 <?php
 class Vendor extends AppModel {
-	var $name = 'Vendor';
-	var $displayField = 'title';
+	public $name = 'Vendor';
+	public $displayField = 'title';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -14,7 +14,7 @@ class Vendor extends AppModel {
 		)
 	);
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'Product' => array(
 			'className' => 'Product',
 			'foreignKey' => 'vendor_id',
@@ -30,7 +30,7 @@ class Vendor extends AppModel {
 		)
 	);
 	
-	var $actsAs = array('Handleize.Sluggable'=> array(
+	public $actsAs = array('Handleize.Sluggable'=> array(
 				'fields' => 'title',
 				'scope' => array('shop_id'),
 				'conditions' => false,

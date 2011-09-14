@@ -1,14 +1,14 @@
 <?php
 class GiftCardsController extends AppController {
 
-	var $name = 'GiftCards';
+	public $name = 'GiftCards';
 
-	function index() {
+	public function index() {
 		$this->GiftCard->recursive = 0;
 		$this->set('giftCards', $this->paginate());
 	}
 
-	function view($id = null) {
+	public function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid gift card'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -16,7 +16,7 @@ class GiftCardsController extends AppController {
 		$this->set('giftCard', $this->GiftCard->read(null, $id));
 	}
 
-	function add() {
+	public function add() {
 		if (!empty($this->request->data)) {
 			$this->GiftCard->create();
 			if ($this->GiftCard->save($this->request->data)) {
@@ -32,7 +32,7 @@ class GiftCardsController extends AppController {
 		$this->set(compact('shops', 'giftCardTypes', 'gcDesigns'));
 	}
 
-	function edit($id = null) {
+	public function edit($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid gift card'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -54,7 +54,7 @@ class GiftCardsController extends AppController {
 		$this->set(compact('shops', 'giftCardTypes', 'gcDesigns'));
 	}
 
-	function delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for gift card'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action'=>'index'));
@@ -66,12 +66,12 @@ class GiftCardsController extends AppController {
 		$this->Session->setFlash(__('Gift card was not deleted'), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('action' => 'index'));
 	}
-	function admin_index() {
+	public function admin_index() {
 		$this->GiftCard->recursive = 0;
 		$this->set('giftCards', $this->paginate());
 	}
 
-	function admin_view($id = null) {
+	public function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid gift card'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -79,7 +79,7 @@ class GiftCardsController extends AppController {
 		$this->set('giftCard', $this->GiftCard->read(null, $id));
 	}
 
-	function admin_add() {
+	public function admin_add() {
 		if (!empty($this->request->data)) {
 			$this->GiftCard->create();
 			if ($this->GiftCard->save($this->request->data)) {
@@ -95,7 +95,7 @@ class GiftCardsController extends AppController {
 		$this->set(compact('shops', 'giftCardTypes', 'gcDesigns'));
 	}
 
-	function admin_edit($id = null) {
+	public function admin_edit($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid gift card'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -117,7 +117,7 @@ class GiftCardsController extends AppController {
 		$this->set(compact('shops', 'giftCardTypes', 'gcDesigns'));
 	}
 
-	function admin_delete($id = null) {
+	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for gift card'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action'=>'index'));

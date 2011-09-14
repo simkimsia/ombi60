@@ -1,10 +1,10 @@
 <?php
 class Product extends AppModel {
 
-	var $name = 'Product';
+	public $name = 'Product';
 
 	// to make it easy for pagination of products, use Linkable and grab 1 product and its 1 cover image
-	var $actsAs    = array('Linkable.Linkable',
+	public $actsAs    = array('Linkable.Linkable',
 			       'Copyable.Copyable' => array(
 					'habtm' => false,
 					'recursive' => false,),
@@ -54,14 +54,14 @@ class Product extends AppModel {
 								)
 							  ),
 			       );
-	var $recursive = -1;
+	public $recursive = -1;
 	
-	var $imagesToDelete = array();
+	public $imagesToDelete = array();
 	
-	var $optionModel = '';
+	public $optionModel = '';
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -116,7 +116,7 @@ class Product extends AppModel {
 		
 	);
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'ProductImage' => array(
 			'className' => 'ProductImage',
 			'foreignKey' => 'product_id',
@@ -187,7 +187,7 @@ class Product extends AppModel {
 	);
 	
 	
-	var $validate = array(
+	public $validate = array(
 			      'title' => array(
 					'notEmpty' => array(
 						'rule' => 'notEmpty',
@@ -207,7 +207,7 @@ class Product extends AppModel {
 	/**
 	 * For unit conversion
 	 * */
-	function afterFind($results, $primary) {
+	public function afterFind($results, $primary) {
 		
                 $unit = Shop::get('ShopSetting.unit_system');
 		if ($primary) {
@@ -278,7 +278,7 @@ class Product extends AppModel {
 	/**
 	 * For unit conversion
 	 * */
-	function beforeSave() {
+	public function beforeSave() {
 		
                 $unit = Shop::get('ShopSetting.unit_system');
 		
@@ -299,7 +299,7 @@ class Product extends AppModel {
 	 * will return the product url based on id
 	 * otherwise return the shop url
 	 * **/
-	function getProductUrl($id = false) {
+	public function getProductUrl($id = false) {
 		
 		if (!$id) {
 			$id = $this->id;
@@ -329,7 +329,7 @@ class Product extends AppModel {
 	 * 
 	 **/
 
-	function createDetails($data = NULL) {
+	public function createDetails($data = NULL) {
 		
 		$variantTitle = VARIANT_DEFAULT_TITLE;
 		$variantOptions = array();
@@ -368,7 +368,7 @@ class Product extends AppModel {
 
 	}//end createDetails()
 	
-	function duplicate($id = NULL, $parentIDs = array()) {
+	public function duplicate($id = NULL, $parentIDs = array()) {
 		// this product model is copied but NOT recursively.
 		$result = $this->copy($id);
 
@@ -464,7 +464,7 @@ class Product extends AppModel {
 	
 	// did this callback to ensure images of products are also deleted
 	// first assign class variable imagesToDelete with list of filenames
-	function beforeDelete($cascade) {
+	public function beforeDelete($cascade) {
                 
 		$images = $this->ProductImage->find('all', array('conditions'=>array('product_id'=>$this->id),
 						       'fields'=>array('ProductImage.id', 'ProductImage.filename')));
@@ -476,7 +476,7 @@ class Product extends AppModel {
         
 	// same motive as beforeDelete
 	// this will do the actual deletion using unlink
-        function afterDelete() {
+     	public function afterDelete() {
                 
 		// secure way of finding out the possible thumbnail folder names
 		// basically i pr($this->ProductImage->Behaviors) in order to get this.
@@ -540,7 +540,7 @@ class Product extends AppModel {
 	   ...
 	   
 	   **/
-	function updateOptions($data) {
+	public function updateOptions($data) {
 		$currentOptions = !empty($data['Product']['options']) ? $data['Product']['options'] : array();
 		$newOptions 	= !empty($data['Product']['new_options']) ? $data['Product']['new_options'] : array();
 		
@@ -587,7 +587,7 @@ class Product extends AppModel {
 	 *
 	 * @return boolean True if successful. False otherwise.
 	 **/
-	function renameOptionFields($currentOptions=array(), $variantIDs = array()) {
+	public function renameOptionFields($currentOptions=array(), $variantIDs = array()) {
 		
 		
 		if (!empty($variantIDs) && !empty($currentOptions)) {
@@ -622,7 +622,7 @@ class Product extends AppModel {
 	 *
 	 * @return boolean True if successful. False otherwise.
 	 **/
-	function deleteAllOptions($options=array(), $variantIDs = array()) {
+	public function deleteAllOptions($options=array(), $variantIDs = array()) {
 		
 		
 		if (!empty($variantIDs) && !empty($options)) {
@@ -653,7 +653,7 @@ class Product extends AppModel {
 	 *
 	 * @return boolean Return true if successful save. False otherwise.
 	 **/
-	function addNewProductOptions($productID, $newOptions=array(), $variantIDs = array()) {
+	public function addNewProductOptions($productID, $newOptions=array(), $variantIDs = array()) {
 		
 		
 		
@@ -697,7 +697,7 @@ class Product extends AppModel {
 	 * @param integer $productID Product id
 	 * @return mixed False if not valid, otherwise returns the next order no.
 	 **/
-	function getNextOptionOrder($productID = false) {
+	public function getNextOptionOrder($productID = false) {
 		$optionModel = $this->Variant->VariantOption;
 		$optionModel->recursive = -1;
 		
@@ -746,7 +746,7 @@ class Product extends AppModel {
 		return false;
 	}//end getNextOptionOrder()
 	
-	function afterSave($created) {
+	public function afterSave($created) {
 		
 		/**
 		 * for products admin_edit ONLY
@@ -871,7 +871,7 @@ class Product extends AppModel {
 	/**
 	 * for use in templates for shopfront pages
 	 * */
-	function getTemplateVariable($products=array(), $multiple = true) {
+	public function getTemplateVariable($products=array(), $multiple = true) {
 		App::uses('ArrayToIterator', 'Lib');
 		$results = array();
 		
@@ -985,7 +985,7 @@ class Product extends AppModel {
 	 *
 	 * Returns true if successful. False otherwise.
 	 **/
-	function saveIntoCollections ($id, $newCollections = array()) {
+	public function saveIntoCollections ($id, $newCollections = array()) {
 		/**
 		if (empty($newCollections)) {
 			return true;
@@ -1120,7 +1120,7 @@ class Product extends AppModel {
 		return true;
 	}
 	
-	function updateCounterCacheForM2MMain($id, $groupIds=array(), $updateAllCount=true) {
+	public function updateCounterCacheForM2MMain($id, $groupIds=array(), $updateAllCount=true) {
 		if (empty($groupIds)) {
 			$associations = $this->ProductsInGroup->find('all', array(
 							'conditions'=> array('ProductsInGroup.product_id' => $id),
@@ -1440,7 +1440,7 @@ class Product extends AppModel {
 	 * @return array $productDetails which will have the index for VariantOptions changed for all its Variants
 	 * 
 	 * */
-	function formatVariantOptionKey($productDetails = array()) {
+	public function formatVariantOptionKey($productDetails = array()) {
 		
 		if (!empty($productDetails['Variant']) && is_array($productDetails['Variant'])) {
 			foreach ($productDetails['Variant'] as $key =>$variant) {
@@ -1453,7 +1453,7 @@ class Product extends AppModel {
 		return $productDetails;
 	}
 	
-	function handleMenuAction($data) {
+	public function handleMenuAction($data) {
 		$resultArray = array('message'=>'No valid actions selected',
 				     'success'=>false);
 		
@@ -1478,13 +1478,13 @@ class Product extends AppModel {
 		return $resultArray;
 	}
 	
-	function deleteSelected($selected = array()) {
+	public function deleteSelected($selected = array()) {
 		$selected = array_unique($selected);
 		return $this->deleteAll(array('Product.id'=>$selected,
 					      'Product.shop_id'=>Shop::get('Shop.id')));
 	}
 	
-	function publishSelected($selected = array()) {
+	public function publishSelected($selected = array()) {
 		$this->recursive = -1;
 		$selected = array_unique($selected);
 		return $this->updateAll(array('Product.visible'=>true),
@@ -1492,7 +1492,7 @@ class Product extends AppModel {
 					      'Product.shop_id'=>Shop::get('Shop.id')));
 	}
 	
-	function hideSelected($selected = array()) {
+	public function hideSelected($selected = array()) {
 		$this->recursive = -1;
 		$selected = array_unique($selected);
 		return $this->updateAll(array('Product.visible'=>0),

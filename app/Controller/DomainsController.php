@@ -1,18 +1,18 @@
 <?php
 class DomainsController extends AppController {
 
-	var $name = 'Domains';
+	public $name = 'Domains';
 	
-	var $helpers = array('Ajax', 'Javascript', 'Number');
+	public $helpers = array('Ajax', 'Javascript', 'Number');
 	
-	function beforeFilter() {
+	public function beforeFilter() {
 
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 	
 	}
 
-	function admin_index() {
+	public function admin_index() {
 		$this->Domain->recursive = 0;
 		$mainUrl = Shop::get('Shop.primary_domain');
 		$this->set('mainUrl', $mainUrl);
@@ -22,7 +22,7 @@ class DomainsController extends AppController {
 		$this->set('shopId', $shopId);
 	}
 
-	function admin_view($id = null) {
+	public function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid domain'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -30,7 +30,7 @@ class DomainsController extends AppController {
 		$this->set('domain', $this->Domain->read(null, $id));
 	}
 
-	function admin_add() {
+	public function admin_add() {
 	    $result = true;
 		if (!empty($this->request->data)) {
 		    if (!empty($this->request->data['Domain']['domain'])) {
@@ -73,7 +73,7 @@ class DomainsController extends AppController {
 		$this->set(compact('shopId'));
 	}
 	
-	function admin_make_this_primary($id = false, $shopId = false) {
+	public function admin_make_this_primary($id = false, $shopId = false) {
 		
 		
 		if (!$id OR !$shopId) {
@@ -90,7 +90,7 @@ class DomainsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
-	function admin_edit($id = null) {
+	public function admin_edit($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid domain'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -110,7 +110,7 @@ class DomainsController extends AppController {
 		$this->set(compact('shops'));
 	}
 
-	function admin_delete($id = false) {
+	public function admin_delete($id = false) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for domain'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action'=>'index'));

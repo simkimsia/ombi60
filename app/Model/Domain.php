@@ -1,14 +1,14 @@
 <?php
 class Domain extends AppModel {
 	
-	var $name = 'Domain';
+	public $name = 'Domain';
 
-	var $displayField = 'domain';
+	public $displayField = 'domain';
 
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -19,7 +19,7 @@ class Domain extends AppModel {
 
 	);
 
-	var $validate = array(
+	public $validate = array(
 			         'title' => array(
 					             'isUnique' => array(
                          		                'rule' => 'isUnique',
@@ -32,7 +32,7 @@ class Domain extends AppModel {
 							    )
 			        );
 	
-	function make_this_primary($id = null, $shopId = null) {
+	public function make_this_primary($id = null, $shopId = null) {
 		
 		if (!$id) {
 			if (!$this->id) {

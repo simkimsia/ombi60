@@ -1,10 +1,10 @@
 <?php
 class Link extends AppModel {
-	var $name = 'Link';
-	var $displayField = 'name';
+	public $name = 'Link';
+	public $displayField = 'name';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'LinkList' => array(
 			'className' => 'LinkList',
 			'foreignKey' => 'link_list_id',
@@ -36,7 +36,7 @@ class Link extends AppModel {
 		),
 	);
 	
-	function beforeValidate() {
+	public function beforeValidate() {
 		
 		if (isset($this->data['Link']['model']) &&
 		    isset($this->data['Link']['action']) &&
@@ -63,7 +63,7 @@ class Link extends AppModel {
 		
 	}
 	
-	function convertLink($url) {
+	public function convertLink($url) {
 		$url = strtolower($url);
 		if (strpos($url, 'http') === false) {
 			return 'http://' . $url;
@@ -85,7 +85,7 @@ class Link extends AppModel {
 	)
 	 * 
 	 * */
-	function saveOrder($data=array(), $listId) {
+	public function saveOrder($data=array(), $listId) {
 		
 		if (!is_array($data) || empty($data) || !is_numeric($listId) || $listId <= 0) {
 			return false;
@@ -128,7 +128,7 @@ class Link extends AppModel {
 	
 	// before any saveAll for LinkList or Link
 	// we want to 
-	function beforeSaveAll($data) {
+	public function beforeSaveAll($data) {
 		
 		if (isset($data['Link'])) {
 			foreach($data['Link'] as $key=>$link) {
@@ -152,7 +152,7 @@ class Link extends AppModel {
 		
 	}
 	
-	function saveAll($data = null, $options = array()) {
+	public function saveAll($data = null, $options = array()) {
 		$data = $this->beforeSaveAll($data);
 		return parent::saveAll($data, $options);
 	}
@@ -160,7 +160,7 @@ class Link extends AppModel {
 	/**
 	 * for use in templates for shopfront pages
 	 * */
-	function getTemplateVariable($links=array(), $multiple = true) {
+	public function getTemplateVariable($links=array(), $multiple = true) {
 		
 		$results = array();
 		
@@ -197,7 +197,7 @@ class Link extends AppModel {
 	 * then the $parentModel is set as 'Webpage', etc
 	 * 
 	
-	function deleteAll($fields, $conditions = true, $parentModel = false) {
+	public function deleteAll($fields, $conditions = true, $parentModel = false) {
 		$parentModels = array('Blog', 'Webpage', 'Product');
 		
 		$updateCounterCacheInLinkLists = in_array($parentModel, $parentModels);

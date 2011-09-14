@@ -1,9 +1,9 @@
 <?php
 class Cancellation extends AppModel {
-	var $name = 'Cancellation';
+	public $name = 'Cancellation';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',

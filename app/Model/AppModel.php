@@ -39,16 +39,16 @@ class AppModel extends Model {
  * @var array
  */
     public $actsAs = array('Containable');
-    
-    var $arrayPlaceHolder = array();
+
+	public $arrayPlaceHolder = array();
+
     
     /**
     *
     * Custom validator method for comparing 2 fields
     *
     **/
-   function identicalFieldValues( $field=array(), $compare_field=null )  
-   { 
+	public function identicalFieldValues( $field=array(), $compare_field=null ) { 
         foreach( $field as $key => $value ){ 
             $v1 = $value; 
             $v2 = $this->data[$this->name][ $compare_field ];                  
@@ -61,16 +61,14 @@ class AppModel extends Model {
         } 
         return TRUE; 
    }
-   
-   
+
    /**
     * Returns the validation error messages for the registration/login form
     *
     * @return array An array of error messages with the field as key eg: [fieldName] => error_message
     * 
     **/
-   function getAllValidationErrors() 
-   { 
+	public function getAllValidationErrors() {
            $currentModelErrors = $this->validationErrors;
            $associatedModelErrors = array();
            
@@ -92,31 +90,25 @@ class AppModel extends Model {
            
            // then we put in the validation errors of the associated models
            return $registerFormErrors;
-   }
-   
-    /**
-     * useful way to get something to be top of array
-     **/
-    
-    
-    function shiftToTop($key) {
+	}
+
+/**
+ * useful way to get something to be top of array
+ **/
+	public function shiftToTop($key) {
         
         $cmp = sorter($key);
         
         return uksort($this->arrayPlaceHolder, $cmp);
         
     }
-    
 }
 
 function sorter($key) { 
-    return function ($a, $b) use ($key) {
-        
-            if ($a === $b) return 0;
-            if ($a === $key) return -1;
-            if ($b === $key) return 1;
-            return strnatcmp($a, $b);
-    };
+	return function ($a, $b) use ($key) {
+		if ($a === $b) return 0;
+		if ($a === $key) return -1;
+		if ($b === $key) return 1;
+		return strnatcmp($a, $b);
+	};
 }
-
-?>

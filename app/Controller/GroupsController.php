@@ -1,13 +1,13 @@
 <?php
 class GroupsController extends AppController {
 
-	var $name = 'Groups';
+	public $name = 'Groups';
 
-	var $helpers = array('Html', 'Form', 'Session');
+	public $helpers = array('Html', 'Form', 'Session');
 
-	var $actsAs = array('Acl' => array('type' => 'requester'));
+	public $actsAs = array('Acl' => array('type' => 'requester'));
 
-	function parentNode() {
+	public function parentNode() {
 		return null;
 	}
 

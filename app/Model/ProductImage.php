@@ -1,7 +1,7 @@
 <?php
 class ProductImage extends AppModel {
 
-	var $name = 'ProductImage';
+	public $name = 'ProductImage';
 
 	/**
 	 *
@@ -9,9 +9,9 @@ class ProductImage extends AppModel {
 	 *
 	 * set this variable to work in conjunction with MeioUpload and Product model
 	 **/
-	var $defaultNameForImage = 'filename';
+	public $defaultNameForImage = 'filename';
 
-	var $actsAs = array(
+	public $actsAs = array(
 		// for uploading of image,
 		'MeioDuplicate.MeioDuplicate' => array(
 			'filename' => array(
@@ -42,9 +42,9 @@ class ProductImage extends AppModel {
 	 * to make it easy for pagination of products,
 	 * we use Linkable and hence set this to -1
 	  */
-	var $recursive = -1;
+	public $recursive = -1;
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Product' => array(
 			'className' => 'Product',
 			'foreignKey' => 'product_id',
@@ -55,7 +55,7 @@ class ProductImage extends AppModel {
 		)
 	);
 	
-	function chooseAsCoverImage($id = null, $product_id = null) {
+	public function chooseAsCoverImage($id = null, $product_id = null) {
 		if (!$id) {
 			if (!$this->id) {
 				return false;
@@ -90,7 +90,7 @@ class ProductImage extends AppModel {
 		return $result;
 	}
 	
-        function createMultipleForExistingProduct($data = null, $product_id = null, $count = 0) {
+     	public function createMultipleForExistingProduct($data = null, $product_id = null, $count = 0) {
 		if ($count == 0) {
 			$count = $this->find('count', array(
 				'conditions' => array('ProductImage.product_id' => $product_id,
@@ -147,7 +147,7 @@ class ProductImage extends AppModel {
 
 	}
 	
-	function convertTypeBasedOnExtension($file) {
+	public function convertTypeBasedOnExtension($file) {
 		
 		$types = array('.jpg' =>'image/jpeg',
 			       '.jpeg' =>'image/pjpeg',
@@ -177,7 +177,7 @@ class ProductImage extends AppModel {
 	 * @param boolean $brandNewProductCreated Set as true if this product associated with
 	 * the images is a newly created product. This is so that the first file is automatically set as cover
 	 **/
-	function saveFILESAsProductImages($product_id, $brandNewProductCreated = true) {
+	public function saveFILESAsProductImages($product_id, $brandNewProductCreated = true) {
 		
 		if (!empty($_FILES)) {
 			

@@ -1,9 +1,9 @@
 <?php
 class Address extends AppModel {
 
-	var $name = 'Address';
+	public $name = 'Address';
 	
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Customer' => array(
 			'className' => 'Customer',
 			'foreignKey' => 'customer_id',
@@ -20,7 +20,7 @@ class Address extends AppModel {
 		),
 	);
 	
-	var $hasMany = array(
+	public $hasMany = array(
 		'DeliveredOrder' => array(
 			'className' => 'Order',
 			'foreignKey' => 'delivery_address_id',
@@ -40,7 +40,7 @@ class Address extends AppModel {
 		
 	);
 	
-	function getAllByCustomer($customer_id, $type) {
+	public function getAllByCustomer($customer_id, $type) {
 		return $this->find('all', array('conditions'=>array('customer_id'=>$customer_id,
 								    'type' => $type)));
 	}

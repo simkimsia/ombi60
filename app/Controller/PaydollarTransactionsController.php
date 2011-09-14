@@ -2,12 +2,12 @@
 App::import('Vendor', 'PayDollar', array('file'=>'paydollar'.DS.'includes'.DS.'paydollar.nvp.class.php'));
 class PaydollarTransactionsController extends AppController {
 
-	var $name = 'PaydollarTransactions';
+	public $name = 'PaydollarTransactions';
 	
-	var $components = array('Paydollar.Paydollar');
+	public $components = array('Paydollar.Paydollar');
 
 
-	function beforeFilter() {
+	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		
@@ -19,7 +19,7 @@ class PaydollarTransactionsController extends AppController {
 		$this->Auth->allow('datafeed');
 	}
 	
-	function datafeed() {
+	public function datafeed() {
 		
 		$this->autoRender = false;
 		

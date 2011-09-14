@@ -1,10 +1,10 @@
 <?php
 class PaydollarTransaction extends AppModel {
-	var $name = 'PaydollarTransaction';
-	var $displayField = 'payref';
+	public $name = 'PaydollarTransaction';
+	public $displayField = 'payref';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Invoice' => array(
 			'className' => 'Invoice',
 			'foreignKey' => 'ref',

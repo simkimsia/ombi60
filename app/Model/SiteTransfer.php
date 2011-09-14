@@ -1,5 +1,5 @@
 <?php
 class SiteTransfer extends AppModel {
-    var $name = 'SiteTransfer';
+	public $name = 'SiteTransfer';
 }
 ?>

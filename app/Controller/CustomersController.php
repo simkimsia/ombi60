@@ -1,15 +1,15 @@
 <?php
 class CustomersController extends AppController {
 
-	var $name = 'Customers';
+	public $name = 'Customers';
 
-	var $helpers = array('Html', 'Form', 'Session');
+	public $helpers = array('Html', 'Form', 'Session');
 
 	//var $helpers = array('Html', 'Form', 'Session', 'Recaptcha');
 
 	//var $components = array('Session', 'Recaptcha');
 
-	function beforeFilter() {
+	public function beforeFilter() {
 
 		/*
 		 //public & private keys for reCAPTCHA
@@ -38,7 +38,7 @@ class CustomersController extends AppController {
 	/**
 	 * Customers to register a Customers account
 	 **/
-	function register() {
+	public function register() {
 
 		$this->set('title_for_layout', __('Signup'));
 
@@ -83,7 +83,7 @@ class CustomersController extends AppController {
 
 	}
 
-	function login() {
+	public function login() {
 		$this->set('title_for_layout', __('Customer Login'));
 
 		$shopId = Shop::get('Shop.id');
@@ -162,7 +162,7 @@ class CustomersController extends AppController {
 		$this->Session->delete('Shop.' . Shop::get('Shop.id') . '.cart');
 	}
 
-	function logout() {
+	public function logout() {
 		$this->logoutFunction();
 		$this->redirect($this->Auth->logout());
 

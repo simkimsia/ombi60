@@ -1,16 +1,15 @@
 <?php
 class AddressesController extends AppController {
 
-	var $name = 'Addresses';
+	public $name = 'Addresses';
 
-	var $helpers = array('Html', 'Form', 'Session');
+	public $helpers = array('Html', 'Form', 'Session');
 
-	var $components = array('Session');
+	public $components = array('Session');
 
-	function index() {
+	public function index() {
 		$this->Address->recursive = 0;
 		$this->set('addresses', $this->paginate());
 	}
 
 }
-?>

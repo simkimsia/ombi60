@@ -1,8 +1,8 @@
 <?php
 class SmartCollectionCondition extends AppModel {
 
-	var $name = 'SmartCollectionCondition';
-	var $validate = array(
+	public $name = 'SmartCollectionCondition';
+	public $validate = array(
 		
 		'field' => array('notempty'),
 		'relation' => array('notempty'),
@@ -10,7 +10,7 @@ class SmartCollectionCondition extends AppModel {
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'ProductGroup' => array(
 			'className' => 'ProductGroup',
 			'foreignKey' => 'smart_collection_id',

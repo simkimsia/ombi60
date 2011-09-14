@@ -1,12 +1,12 @@
 <?php
 class Post extends AppModel {
-	var $name = 'Post';
-	var $displayField = 'title';
+	public $name = 'Post';
+	public $displayField = 'title';
 	
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $validate = array(
+	public $validate = array(
 		'title' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
@@ -22,7 +22,7 @@ class Post extends AppModel {
 	);
 
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Blog' => array(
 			'className' => 'Blog',
 			'foreignKey' => 'blog_id',
@@ -49,7 +49,7 @@ class Post extends AppModel {
 		)
 	);
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'Comment' => array(
 			'className' => 'Comment',
 			'foreignKey' => 'post_id',
@@ -65,7 +65,7 @@ class Post extends AppModel {
 		)
 	);
 	
-	var $actsAs = array('Handleize.Sluggable'=> array(
+	public $actsAs = array('Handleize.Sluggable'=> array(
 				'fields' => 'title',
 				'scope' => array('shop_id'),
 				'conditions' => false,
@@ -86,7 +86,7 @@ class Post extends AppModel {
 		$this->createUrlForArticle();
 	}
 	
-	function createUrlForArticle() {
+	public function createUrlForArticle() {
                 
                 $controller = 'blogs';
                 $action = 'view';
@@ -104,7 +104,7 @@ class Post extends AppModel {
 	/**
 	 * use this method ONLY after toggle!!
 	 **/
-	function updatePublishedAt($id) {
+	public function updatePublishedAt($id) {
 		
 		return $this->updateAll(
 			// fields to change
@@ -120,7 +120,7 @@ class Post extends AppModel {
 	/**
 	 * for use in templates for shopfront pages
 	 * */
-	function getTemplateVariable($articles=array(), $multiple = true) {
+	public function getTemplateVariable($articles=array(), $multiple = true) {
 		
 		$results = array();
 		
@@ -163,7 +163,7 @@ class Post extends AppModel {
 		return $results;
 	}
 	
-	function beforeSave($options) {
+	public function beforeSave($options) {
 		
 		// assuming we do not do a saveAll for Post
 		// or a saveAll from its parent model Blog

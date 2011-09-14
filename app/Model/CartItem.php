@@ -1,13 +1,13 @@
 <?php
 class CartItem extends AppModel {
 
-	var $name = 'CartItem';
+	public $name = 'CartItem';
 	
-	var $displayField = 'product_title';
+	public $displayField = 'product_title';
 	
-	var $actsAs = array('Visible.Visible',);
+	public $actsAs = array('Visible.Visible',);
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Cart' => array(
 			'className' => 'Cart',
 			'foreignKey' => 'cart_id',
@@ -42,7 +42,7 @@ class CartItem extends AppModel {
 		);
 	}
 	
-	function beforeSave() {
+	public function beforeSave() {
 		
 		// placeholder for current data
 		$data = $this->data;
@@ -87,7 +87,7 @@ class CartItem extends AppModel {
 		return true;
 	}
 	
-	function afterFind($results, $primary) {
+	public function afterFind($results, $primary) {
 		if (is_array($results)) {
 			
 			
@@ -121,7 +121,7 @@ class CartItem extends AppModel {
 		return $results;
 	}
 	
-	function refreshCart($data) {
+	public function refreshCart($data) {
 		
 		// anticipating
 		//Array
@@ -155,7 +155,7 @@ class CartItem extends AppModel {
 	/**
 	 * update all the existing cart items prices and weights
 	 * */
-	function updatePricesAndWeights($variant_id, $newPrice, $newCurrency, $newWeight) {
+	public function updatePricesAndWeights($variant_id, $newPrice, $newCurrency, $newWeight) {
 		
 		// first we get all the affected cart_items
 		$items = $this->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
@@ -177,7 +177,7 @@ class CartItem extends AppModel {
 	/**
 	 * for use in templates for shopfront pages
 	 * */
-	function getTemplateVariable($items=array()) {
+	public function getTemplateVariable($items=array()) {
 		
 		$results = array();
 		

@@ -1,9 +1,9 @@
 <?php
 class Webpage extends AppModel {
-	var $name         = 'Webpage';
-	var $displayField = 'title';
+	public $name         = 'Webpage';
+	public $displayField = 'title';
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -27,7 +27,7 @@ class Webpage extends AppModel {
 		),
 	);
 	
-	var $hasMany = array(
+	public $hasMany = array(
 		
 		'Link' => array(
 			'className' => 'Link',
@@ -44,7 +44,7 @@ class Webpage extends AppModel {
 		),
 	);
 	
-	var $actsAs = array('Handleize.Sluggable'=> array(
+	public $actsAs = array('Handleize.Sluggable'=> array(
 				'fields' => 'title',
 				'scope' => array('shop_id'),
 				'conditions' => false,
@@ -69,7 +69,7 @@ class Webpage extends AppModel {
 				),
 			);
 	
-	var $linklists = array();
+	public $linklists = array();
 	
 	public function __construct($id=false,$table=null,$ds=null) {
 		parent::__construct($id,$table,$ds);
@@ -79,7 +79,7 @@ class Webpage extends AppModel {
 	/**
 	 * for use in templates for shopfront pages
 	 * */
-	function getTemplateVariable($pages=array(), $multiple = true) {
+	public function getTemplateVariable($pages=array(), $multiple = true) {
 		
 		$results = array();
 		
@@ -161,7 +161,7 @@ class Webpage extends AppModel {
 		return $webpage;
 	}
 
-	function handleMenuAction($data) {
+	public function handleMenuAction($data) {
 		$resultArray = array('message'=>'No valid actions selected',
 				     'success'=>false);
 		
@@ -186,13 +186,13 @@ class Webpage extends AppModel {
 		return $resultArray;
 	}
 	
-	function deleteSelected($selected = array()) {
+	public function deleteSelected($selected = array()) {
 		$selected = array_unique($selected);
 		return $this->deleteAll(array('Webpage.id'=>$selected,
 					      'Webpage.shop_id'=>Shop::get('Shop.id')));
 	}
 	
-	function publishSelected($selected = array()) {
+	public function publishSelected($selected = array()) {
 		$this->recursive = -1;
 		$selected = array_unique($selected);
 		return $this->updateAll(array('Webpage.visible'=>true),
@@ -200,7 +200,7 @@ class Webpage extends AppModel {
 					      'Webpage.shop_id'=>Shop::get('Shop.id')));
 	}
 	
-	function hideSelected($selected = array()) {
+	public function hideSelected($selected = array()) {
 		$this->recursive = -1;
 		$selected = array_unique($selected);
 		return $this->updateAll(array('Webpage.visible'=>0),
@@ -208,7 +208,7 @@ class Webpage extends AppModel {
 					      'Webpage.shop_id'=>Shop::get('Shop.id')));
 	}
 	
-	function afterSave($created) {
+	public function afterSave($created) {
 		$this->Link->recursive = -1;
 		
 		// get the new handle 

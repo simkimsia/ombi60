@@ -1,10 +1,10 @@
 <?php
 class PaypalPaymentModule extends AppModel {
-	var $name = 'PaypalPaymentModule';
-	var $displayField = 'name';
+	public $name = 'PaypalPaymentModule';
+	public $displayField = 'name';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'ShopsPaymentModule' => array(
 			'className' => 'ShopsPaymentModule',
 			'foreignKey' => 'shop_payment_module_id',
@@ -14,7 +14,7 @@ class PaypalPaymentModule extends AppModel {
 		)
 	);
 	
-	var $validate = array(
+	public $validate = array(
 		'shop_payment_module_id' => array(
 			'isUnique' => array(
 				'rule' => 'isUnique',

@@ -1,11 +1,11 @@
 <?php
 class Merchant extends AppModel {
 
-	var $name = 'Merchant';
+	public $name = 'Merchant';
 	
 	
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -39,7 +39,7 @@ class Merchant extends AppModel {
 	 * @return boolean True so that the save operation can continue
 	 *
 	 **/
-	function beforeSave($options = array()) {
+	public function beforeSave($options = array()) {
 		if (empty($this->data['Merchant']['id']) AND empty($this->data['Merchant']['owner'])) {
 			$this->data['Merchant']['owner'] = true;
 		}
@@ -53,13 +53,13 @@ class Merchant extends AppModel {
 	
 	
 
-	function updateProfile($data = NULL) {
+	public function updateProfile($data = NULL) {
 		$data['User']['group_id'] = MERCHANTS;
 		return $this->saveAll($data, array('validate'=>'first'));
 	}
 	
 	
-	function retrieveShopUserLanguageByUserId($id = false) {
+	public function retrieveShopUserLanguageByUserId($id = false) {
 		if (!$id) {
 			return false;
 		}

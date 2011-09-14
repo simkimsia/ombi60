@@ -1,16 +1,16 @@
 <?php
 class Cart extends AppModel {
-	var $name = 'Cart';
+	public $name = 'Cart';
 	
-	var $recursive = -1;
+	public $recursive = -1;
 	
-	var $actsAs    = array('Linkable.Linkable',
+	public $actsAs    = array('Linkable.Linkable',
 			       'Copyable.Copyable' => array(
 					'habtm' => false,
 					'recursive' => false,)
 			       );
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		// the reason why we assign Cart to User instead of Customer
 		// is because we allow CasualSurfer to also use Cart
 		// Customer are defined as people who have checked out at least once.
@@ -33,7 +33,7 @@ class Cart extends AppModel {
 		
 	);
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'CartItem' => array(
 			'className' => 'CartItem',
 			'foreignKey' => 'cart_id',
@@ -62,7 +62,7 @@ class Cart extends AppModel {
 		),
 	);
 	
-	var $validate = array(
+	public $validate = array(
 		'user_id' => array(
 			'oneLiveCartPerCustomer' => array(
 				'rule' => 'oneLiveCartPerCustomer',
@@ -78,7 +78,7 @@ class Cart extends AppModel {
 		
 	);
 	
-	function forCustomerOrCasual($check){
+	public function forCustomerOrCasual($check){
 		
 		
 		$count = $this->User->find('count', array('conditions' => array('OR' => array(array('User.group_id' => CUSTOMERS),
@@ -91,7 +91,7 @@ class Cart extends AppModel {
 	}
 	
 	
-	function oneLiveCartPerCustomer($check){
+	public function oneLiveCartPerCustomer($check){
 		
 		$oneLiveCartPerCustomer = true;
 		
@@ -121,7 +121,7 @@ class Cart extends AppModel {
 	 * array([shop_id] => compulsory_value,
 	 * 	 [user_id] => compulsory_value,
 	 **/
-	function prepareCartData($productsInCart, $options = array()) {
+	public function prepareCartData($productsInCart, $options = array()) {
 		
 		$defaultOptions = array('user_id' => 0);
 		
@@ -212,7 +212,7 @@ class Cart extends AppModel {
 		return false;
 	}
 	
-	function findByHash($hash, $step = 1) {
+	public function findByHash($hash, $step = 1) {
 		$this->Behaviors->load('Containable');
 		
 		$this->contain('CartItem');
@@ -236,7 +236,7 @@ class Cart extends AppModel {
 	 * array([shop_id] => compulsory_value,
 	 * 	 [user_id] => compulsory_value,
 	 **/
-	function prepareCartDataForPaypalExpressCheckout($order_items, $options = array()) {
+	public function prepareCartDataForPaypalExpressCheckout($order_items, $options = array()) {
 		
 		$defaultOptions = array('user_id' => 0);
 		
@@ -284,7 +284,7 @@ class Cart extends AppModel {
 		return false;
 	}
 	
-	function makeHash($data) {
+	public function makeHash($data) {
 		if (!empty($data['Cart'])) {
 			// we shall standardize to this method of hashing.
 			$shop     = 'shop_' . $data['Cart']['shop_id'];
@@ -302,7 +302,7 @@ class Cart extends AppModel {
 		return false;
 	}
 
-	function beforeSave() {
+	public function beforeSave() {
 		$id = 0;
 		
 		if (isset($this->data[$this->alias]['id'])) {
@@ -322,7 +322,7 @@ class Cart extends AppModel {
 		
 	}
 	
-	function afterSave($created) {
+	public function afterSave($created) {
 		
 		// hashcode created for newly created cart
 		if ($created) {
@@ -336,7 +336,7 @@ class Cart extends AppModel {
 		
 	}
 	
-	function updateLiveCartOnUser() {
+	public function updateLiveCartOnUser() {
 		// update the users table on the latest live cart id
 		$userID 	= User::get('User.id');
 		$latestCartID 	= $this->getLiveCartIDByUserID(User::get('User.id'));
@@ -348,11 +348,11 @@ class Cart extends AppModel {
 		}
 	}
 	
-	function afterDelete() {
+	public function afterDelete() {
 		$this->updateLiveCartOnUser();
 	}
 	
-	function getLiveCartIDByUserID($userID) {
+	public function getLiveCartIDByUserID($userID) {
 		$this->recursive = -1;
 		$cart = $this->find('first', array('conditions'=>
 						   array('Cart.user_id'=>$userID,
@@ -365,7 +365,7 @@ class Cart extends AppModel {
 		return 0;
 	}
 	
-	function sqlUpdatePriceWeightCurrencyShippingStats($id = false) {
+	public function sqlUpdatePriceWeightCurrencyShippingStats($id = false) {
 		if (!$id) {
 			return false;
 		}
@@ -387,7 +387,7 @@ class Cart extends AppModel {
 	}
 
 	
-	function getShippingRequired($id = false) {
+	public function getShippingRequired($id = false) {
 		if (!$id) {
 			return false;
 		}
@@ -463,7 +463,7 @@ class Cart extends AppModel {
 		
 	}
 	
-	function getCartItemsCountByCustomerId($user_id = false) {
+	public function getCartItemsCountByCustomerId($user_id = false) {
 		if (!$user_id) {
 			return false;
 		}
@@ -480,7 +480,7 @@ class Cart extends AppModel {
 						   ));
 	}
 	
-	function getLiveCartByCustomerId($user_id = false, $variantIdAsKey = false, $viewCart = false) {
+	public function getLiveCartByCustomerId($user_id = false, $variantIdAsKey = false, $viewCart = false) {
 		if (!$user_id) {
 			return false;
 		}
@@ -626,7 +626,7 @@ class Cart extends AppModel {
 	/**
 	 * $productsAndQuantities expect an array with product_id as key and quantity as value
 	 * */
-	function addProductForCustomer($user_id, $productsAndQuantities = array()) {
+	public function addProductForCustomer($user_id, $productsAndQuantities = array()) {
 		
 		if(!$user_id || empty($productsAndQuantities)) {
 			return false;
@@ -768,7 +768,7 @@ class Cart extends AppModel {
 		
 	}
 
-	function updatePricesInCartAndOrder($id = false, $order_id = false) {
+	public function updatePricesInCartAndOrder($id = false, $order_id = false) {
 		
 		$this->id = $id;	
 		
@@ -874,7 +874,7 @@ class Cart extends AppModel {
 		
 	}
 	
-	function transferCartFromUserToAnother($old_user_id, $new_user_id) {
+	public function transferCartFromUserToAnother($old_user_id, $new_user_id) {
 		$cart = $this->getLiveCartByCustomerId($old_user_id, true);
 		
 		$productAndQuantities = array();
@@ -895,7 +895,7 @@ class Cart extends AppModel {
 	/**
 	 * for use in templates for shopfront pages
 	 * */
-	function getTemplateVariable($cart) {
+	public function getTemplateVariable($cart) {
 		
 		$result = array('item_count' => $cart['Cart']['cart_item_count'],
 				
@@ -922,7 +922,7 @@ class Cart extends AppModel {
 	 * @param array $cartItems a numerically indexed array of cart items.
 	 * @return boolean Returns true if at least 1 such Item. False otherwise.
 	 * */
-	function checkCartItemForRequiredShipping($cartItems = array()) {
+	public function checkCartItemForRequiredShipping($cartItems = array()) {
 		
 		foreach($cartItems as $item) {
 			if (isset($item['requires_shipping']) && $item['requires_shipping'] == true) {
@@ -937,7 +937,7 @@ class Cart extends AppModel {
 		
 	}
 	
-	function afterFind($results, $primary) {
+	public function afterFind($results, $primary) {
 		if (is_array($results)) {
 			
 			
@@ -974,7 +974,7 @@ class Cart extends AppModel {
 	 * and we assume the order of the CartItem is always in terms of CartItem.id
 	 * 
 	 **/
-	function editQuantities() {
+	public function editQuantities() {
 		
 		$postData = $_POST;
 		
@@ -1036,7 +1036,7 @@ class Cart extends AppModel {
 	 * @param int $variant_id the id of the variant we want to change quantity
 	 * @param int $new_quantity the new quantity must be non-negative
 	 **/
-	function changeQuantityFor1Item($variant_id, $new_quantity) {
+	public function changeQuantityFor1Item($variant_id, $new_quantity) {
 		// for verifying purposes
 		$userId = User::get('User.id');
 		

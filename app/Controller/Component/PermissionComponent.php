@@ -53,13 +53,13 @@ class PermissionComponent extends Component {
  * if empty array, apply to all actions.
  * */
 
-	var $actionsWithPrimaryKey = array('admin_edit',
+	public $actionsWithPrimaryKey = array('admin_edit',
 			     'admin_delete',
 			     'admin_view',
 			     'admin_toggle',
 			     );
 	
-	var $actionsWithShopId = array('admin_add');
+	public $actionsWithShopId = array('admin_add');
 	
 	
 	/**
@@ -68,7 +68,7 @@ class PermissionComponent extends Component {
 			'admin_view_',
 			'admin_toggle_'));
 	**/
-	var $prefixActionsWithPrimaryForeignKey = array();
+	public $prefixActionsWithPrimaryForeignKey = array();
 		
 		
 	/**
@@ -76,14 +76,14 @@ class PermissionComponent extends Component {
 			'admin_index_',
 			));
 	**/
-	var $prefixActionsWithPrimaryKey = array();
+	public $prefixActionsWithPrimaryKey = array();
 	
-	var $redirect = array('action'=>'index',
+	public $redirect = array('action'=>'index',
 			      'admin' => true);
 	
-	var $errorMessage = 'You do not have permissions for this ';
+	public $errorMessage = 'You do not have permissions for this ';
 	
-	var $modelName = '';
+	public $modelName = '';
 
 /**
  * Initialize function
@@ -92,7 +92,7 @@ class PermissionComponent extends Component {
  * @param controller object $controller
  * @param array $settings
  */     
-	function initialize($controller) {
+	public function initialize($controller) {
         $settings = $this->settings;
 		$this->actionsWithPrimaryKey = (empty($settings['actionsWithPrimaryKey'])) ? $this->actionsWithPrimaryKey : $settings['actionsWithPrimaryKey'];
 		$this->actionsWithShopId = (empty($settings['actionsWithShopId'])) ? $this->actionsWithShopId : $settings['actionsWithShopId'];
@@ -123,7 +123,7 @@ class PermissionComponent extends Component {
  *
  * @param controller object $controller 
  */     
-	function startup($controller) {
+	public function startup($controller) {
 		
 		$shopIdUserHas = User::get('Merchant.shop_id');
 		

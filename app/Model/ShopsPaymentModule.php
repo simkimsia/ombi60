@@ -1,13 +1,13 @@
 <?php
 class ShopsPaymentModule extends AppModel {
-	var $name = 'ShopsPaymentModule';
+	public $name = 'ShopsPaymentModule';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $displayField = 'display_name';
+	public $displayField = 'display_name';
 
-	var $actsAs = array('Linkable.Linkable');
+	public $actsAs = array('Linkable.Linkable');
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -24,7 +24,7 @@ class ShopsPaymentModule extends AppModel {
 		)
 	);
 	
-	var $hasOne = array(
+	public $hasOne = array(
 		'CustomPaymentModule' => array(
 			'className' => 'CustomPaymentModule',
 			'foreignKey' => 'shop_payment_module_id',
@@ -43,7 +43,7 @@ class ShopsPaymentModule extends AppModel {
 		),
 	);
 	
-	var $hasMany = array(
+	public $hasMany = array(
 		
 		'Payment' => array(
 			'className' => 'Payment',
@@ -55,7 +55,7 @@ class ShopsPaymentModule extends AppModel {
 		),
 	);
 	
-	var $validate = array(
+	public $validate = array(
 		'payment_module_id' => array(
 			'onlyOnePaypalPerShop' => array(
 				'rule' => array('onlyOnePaypalPerShop'),
@@ -70,7 +70,7 @@ class ShopsPaymentModule extends AppModel {
 	
 	
 	
-	function onlyOnePaypalPerShop($check) {
+	public function onlyOnePaypalPerShop($check) {
 		if (isset($this->data[$this->alias]['shop_id']) &&
 		    isset($this->data[$this->alias]['payment_module_id'])) {
 			

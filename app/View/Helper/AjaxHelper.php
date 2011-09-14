@@ -198,7 +198,7 @@ class AjaxHelper extends AppHelper {
  *
  * @return string				HTML code for link to remote action
  */
-	function link($title, $href = null, $options = array(), $confirm = null, $escapeTitle = true) {
+	public function link($title, $href = null, $options = array(), $confirm = null, $escapeTitle = true) {
 		if (!isset($href)) {
 			$href = $title;
 		}
@@ -235,7 +235,7 @@ class AjaxHelper extends AppHelper {
  * @return string html code for link to remote action
  * @see AjaxHelper::link() for docs on options parameter.
  */
-	function remoteFunction($options) {
+	public function remoteFunction($options) {
 		if (isset($options['update'])) {
 		    if (isset($options['position'])){
 		        $position = $options['position'];
@@ -298,7 +298,7 @@ class AjaxHelper extends AppHelper {
  * @return string Javascript code
  * @see AjaxHelper::link()
  */
-	function remoteTimer($options = null) {
+	public function remoteTimer($options = null) {
 		$frequency = (isset($options['frequency'])) ? $options['frequency'] * 1000 : 10;
 		$callback = $this->remoteFunction($options);
 		$rand = intval(mt_rand());
@@ -327,7 +327,7 @@ class AjaxHelper extends AppHelper {
  * @return string JavaScript/HTML code
  * @see AjaxHelper::link()
  */
-	function form($params = null, $type = 'post', $options = array()) {
+	public function form($params = null, $type = 'post', $options = array()) {
 		$model = false;
 		if (is_array($params)) {
 			extract($params, EXTR_OVERWRITE);
@@ -365,7 +365,7 @@ class AjaxHelper extends AppHelper {
  * @return string Ajaxed input button
  * @see AjaxHelper::form()
  */
-	function submit($title = 'Submit', $options = array()) {
+	public function submit($title = 'Submit', $options = array()) {
 		$htmlOptions = $this->__getHtmlOptions($options);
 		$htmlOptions['value'] = $title;
 
@@ -411,7 +411,7 @@ class AjaxHelper extends AppHelper {
  * @param array $options ajax options
  * @return string ajax script
  */
-	function observeField($field, $options = array()) {
+	public function observeField($field, $options = array()) {
 		if (!isset($options['with'])) {
 		    $options['with'] = "$('#$field').serialize()";
 		}
@@ -431,7 +431,7 @@ class AjaxHelper extends AppHelper {
  * @param array $options ajax options
  * @return string ajax script
  */
-	function observeForm($form, $options = array()) {
+	public function observeForm($form, $options = array()) {
 		if (!isset($options['with'])) {
 			$options['with'] = "$('#$form').serialize()";
 		}
@@ -450,7 +450,7 @@ class AjaxHelper extends AppHelper {
  * @return string Ajax script
  * check out http://docs.jquery.com/Plugins/Autocomplete
  */
-	function autoComplete($field, $url = "", $options = array()) {
+	public function autoComplete($field, $url = "", $options = array()) {
 		$var = '';
 		if (isset($options['var'])) {
 			$var = 'var ' . $options['var'] . ' = ';
@@ -503,7 +503,7 @@ class AjaxHelper extends AppHelper {
  * @param string $id options for javascript
  * @return string HTML code
  */
-	function div($id, $options = array()) {
+	public function div($id, $options = array()) {
 		if (env('HTTP_X_UPDATE') != null) {
 			$this->Javascript->enabled = false;
 			$divs = explode(' ', env('HTTP_X_UPDATE'));
@@ -523,7 +523,7 @@ class AjaxHelper extends AppHelper {
  * @param string $id The DOM ID of the element
  * @return string HTML code
  */
-	function divEnd($id) {
+	public function divEnd($id) {
 		if (env('HTTP_X_UPDATE') != null) {
 			$divs = explode(' ', env('HTTP_X_UPDATE'));
 			if (in_array($id, $divs)) {
@@ -540,7 +540,7 @@ class AjaxHelper extends AppHelper {
  *
  * @return boolean True if the current request is a Prototype Ajax update call
  */
-	function isAjax() {
+	public function isAjax() {
 		return (isset($this->request->params['isAjax']) && $this->request->params['isAjax'] === true);
 	}
 /**
@@ -551,7 +551,7 @@ class AjaxHelper extends AppHelper {
  * @param array $options
  * @return unknown
  */
-	function drag($id, $options = array()) {
+	public function drag($id, $options = array()) {
 		$var = '';
 		if (isset($options['var'])) {
 			$var = 'var ' . $options['var'] . ' = ';
@@ -590,7 +590,7 @@ class AjaxHelper extends AppHelper {
  * @param array $options
  * @return string
  */
-	function drop($id, $options = array()) {
+	public function drop($id, $options = array()) {
 		$var = '';
 		if (isset($options['var'])) {
 			$var = 'var ' . $options['var'] . ' = ';
@@ -621,7 +621,7 @@ class AjaxHelper extends AppHelper {
  * @param array $ajaxOptions
  * @return string JavaScript block to create a droppable element
  */
-	function dropRemote($id, $options = array(), $ajaxOptions = array()) {
+	public function dropRemote($id, $options = array(), $ajaxOptions = array()) {
 		$var = '';
 		if (isset($options['var'])) {
 			$var = 'var ' . $options['var'] . ' = ';
@@ -655,7 +655,7 @@ class AjaxHelper extends AppHelper {
  * @param array $options Array of options to control the slider
  * @link          http://docs.jquery.com/UI/Slider
  */
-	function slider($id, $options = array()) {
+	public function slider($id, $options = array()) {
 		if (isset($options['var'])) {
 			$var = 'var ' . $options['var'] . ' = ';
 			unset($options['var']);
@@ -689,7 +689,7 @@ class AjaxHelper extends AppHelper {
  * @link          http://www.appelsiini.net/projects/jeditable
  */
  //TODO
-	function editor($id, $url, $options = array()) {
+	public function editor($id, $url, $options = array()) {
 		$url = $this->url($url);
 		
 		if (isset($options['ajaxoptions'])){
@@ -758,7 +758,7 @@ class AjaxHelper extends AppHelper {
  * @param array $options Array of options to control sort.
  * @link          http://docs.jquery.com/UI/Sortable
  */
-	function sortable($id, $options = array()) {
+	public function sortable($id, $options = array()) {
 		if (isset($options['var'])) {
 			$var = 'var ' . $options['var'] . ' = ';
 			unset($options['var']);
@@ -810,7 +810,7 @@ class AjaxHelper extends AppHelper {
  * @param array $options Set of options
  * @access private
  */
-	function __optionsForAjax($options) {
+	public function __optionsForAjax($options) {
 	    if (isset($options['indicator'])) {
 			if (isset($options['beforeSend'])) {
 				$loading = $options['beforeSend'];
@@ -871,7 +871,7 @@ class AjaxHelper extends AppHelper {
  * @return array Array of html options
  * @access private
  */
-	function __getHtmlOptions($options, $extra = array()) {
+	public function __getHtmlOptions($options, $extra = array()) {
 		foreach (array_merge($this->ajaxOptions, $this->callbacks, $extra) as $key) {
 			if (isset($options[$key])) {
 				unset($options[$key]);
@@ -886,7 +886,7 @@ class AjaxHelper extends AppHelper {
  * @param array $acceptable	Array of legal keys in this options context
  * @return string	String of Javascript array definition
  */
-	function _buildOptions($options, $acceptable) {
+	public function _buildOptions($options, $acceptable) {
 		if (is_array($options)) {
 			$out = array();
 
@@ -917,7 +917,7 @@ class AjaxHelper extends AppHelper {
  * @return array Options with their callbacks properly set
  * @access protected
  */
-	function _buildCallbacks($options) {
+	public function _buildCallbacks($options) {
 		$callbacks = array();
 
 		foreach ($this->callbacks as $callback) {
@@ -958,7 +958,7 @@ class AjaxHelper extends AppHelper {
 		return $callbacks;
 	}
 	
-	function _buildUICallbacks($options, $ui_calbacks = array()) {	
+	public function _buildUICallbacks($options, $ui_calbacks = array()) {	
 		$callbacks = array();
 		foreach ($ui_calbacks as $callback) {
 		    if (isset($options[$callback])) {
@@ -978,7 +978,7 @@ class AjaxHelper extends AppHelper {
  * @access private
  * @return array
  */
-	function _optionsToString($options, $stringOpts = array()) {
+	public function _optionsToString($options, $stringOpts = array()) {
 		foreach ($stringOpts as $option) {
 			$hasOption = (
 				isset($options[$option]) && !empty($options[$option]) &&
@@ -1004,7 +1004,7 @@ class AjaxHelper extends AppHelper {
  * @access public
  */
  //TODO Moze jednak to kiedys naprawics
-	function afterRender() {
+	public function afterRender() {
 		if (env('HTTP_X_UPDATE') != null && !empty($this->__ajaxBuffer)) {
 			@ob_end_clean();
 

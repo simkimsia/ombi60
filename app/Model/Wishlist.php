@@ -1,9 +1,9 @@
 <?php
 class Wishlist extends AppModel {
 
-	var $name = 'Wishlist';
+	public $name = 'Wishlist';
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Customer' => array(
 			'className' => 'Customer',
 			'foreignKey' => 'customer_id',

@@ -250,7 +250,7 @@ define('DEFAULT_LANGUAGE', 'eng');
 /**
  * this is to allow getting ip addresses by domains
  **/
-        function getAddrByHost($host, $timeout = 3) {
+	function getAddrByHost($host, $timeout = 3) {
 		$host = str_replace('http://', '', $host);
 		
 		$query = `nslookup -timeout=$timeout -retry=1 $host`;
@@ -264,6 +264,3 @@ define('DEFAULT_LANGUAGE', 'eng');
 // debug(APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php');
    require_once  APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php';
     Twig_Autoloader::register();
-
-
-?>

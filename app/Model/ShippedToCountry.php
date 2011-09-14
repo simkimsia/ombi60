@@ -1,9 +1,9 @@
 <?php
 class ShippedToCountry extends AppModel {
-	var $name = 'ShippedToCountry';
+	public $name = 'ShippedToCountry';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Country' => array(
 			'className' => 'Country',
 			'foreignKey' => 'country_id',
@@ -20,7 +20,7 @@ class ShippedToCountry extends AppModel {
 		)
 	);
 	
-	var $hasMany = array(
+	public $hasMany = array(
 
 		'ShippingRate' => array(
 			'className' => 'ShippingRate',
@@ -37,7 +37,7 @@ class ShippedToCountry extends AppModel {
 		),
 	);
 	
-	var $actsAs    = array(
+	public $actsAs    = array(
 			       'UnitSystemConvertible' => array(
 					'weight_fields' =>array(
 						'min_weight',
@@ -51,7 +51,7 @@ class ShippedToCountry extends AppModel {
 	/**
 	 * For unit conversion
 	 * */
-	function afterFind($results, $primary) {
+	public function afterFind($results, $primary) {
 		
                 $unit = Shop::get('ShopSetting.unit_system');
 		

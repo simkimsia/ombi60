@@ -1,14 +1,14 @@
 <?php
 class VariantModel extends AppModel {
-	var $name = 'Variant';
+	public $name = 'Variant';
 	
-	var $alias = 'Variant';
-	var $useTable = 'variants';
+	public $alias = 'Variant';
+	public $useTable = 'variants';
 	
-	var $displayField = 'title';
+	public $displayField = 'title';
 	
 	
-	var $actsAs = array('UnitSystemConvertible'=>array(''),
+	public $actsAs = array('UnitSystemConvertible'=>array(''),
 			    'Copyable.Copyable' => array(
 					'recursive' => true));
 	
@@ -16,7 +16,7 @@ class VariantModel extends AppModel {
 
 
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Product' => array(
 			'className' => 'Product',
 			'foreignKey' => 'product_id',
@@ -26,7 +26,7 @@ class VariantModel extends AppModel {
 		)
 	);
 	
-	var $hasMany = array(
+	public $hasMany = array(
 		'CartItem' => array(
 			'className' => 'CartItem',
 			'foreignKey' => 'variant_id',
@@ -74,7 +74,7 @@ class VariantModel extends AppModel {
 	/**
 	 * For unit conversion
 	 * */
-	function beforeSave() {
+	public function beforeSave() {
 		
                 $unit = Shop::get('ShopSetting.unit_system');
 		
@@ -106,7 +106,7 @@ class VariantModel extends AppModel {
 		return true;
 	}
 	
-	function getTemplateVariable($variants=array(), $multiple = true) {
+	public function getTemplateVariable($variants=array(), $multiple = true) {
 		App::uses('ArrayToIterator', 'Lib');
 		$results = array();
 		
@@ -149,7 +149,7 @@ class VariantModel extends AppModel {
 		return $results;
 	}
 	
-	function afterSave($created) {
+	public function afterSave($created) {
 		if (!$created) {
 			if (isset($this->data['Variant']['price']) &&
 			    isset($this->data['Variant']['weight'])) {
@@ -175,7 +175,7 @@ class VariantModel extends AppModel {
 	/**
 	 * for unit conversion
 	 **/
-	function afterFind($results, $primary) {
+	public function afterFind($results, $primary) {
 		$unit = Shop::get('ShopSetting.unit_system');
 		if ($primary) {
 			

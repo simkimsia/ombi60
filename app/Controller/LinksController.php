@@ -1,11 +1,11 @@
 <?php
 class LinksController extends AppController {
 
-	var $name = 'Links';
+	public $name = 'Links';
 	
-	var $helpers = array('Javascript', 'Ajax');
+	public $helpers = array('Javascript', 'Ajax');
 	
-	function beforeFilter() {
+	public function beforeFilter() {
 		parent::beforeFilter();
 		
 		if ($this->request->action== 'admin_edit' || $this->request->action == 'admin_add') {
@@ -14,7 +14,7 @@ class LinksController extends AppController {
 	
 	}
 	
-	function admin_index() {
+	public function admin_index() {
 		
 		$shopId = Shop::get('Shop.id');
 		
@@ -53,7 +53,7 @@ class LinksController extends AppController {
 	 * there is no need to disable security
 	 * because we are not using data to transmit the POST data
 	 * */
-	function admin_order($listId) {
+	public function admin_order($listId) {
 		
 		if ($this->request->params['isAjax']) {
 				
@@ -201,7 +201,7 @@ class LinksController extends AppController {
 		
 	}
 
-	function admin_add() {
+	public function admin_add() {
 		$result = false;
 		
 		if (!empty($this->request->data)) {
@@ -257,7 +257,7 @@ class LinksController extends AppController {
 		
 	}
 
-	function admin_delete($id = null) {
+	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for link'));
 			$this->redirect(array('action'=>'index'));

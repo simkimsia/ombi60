@@ -1,9 +1,9 @@
 <?php
 class Theme extends AppModel {
-	var $name         = 'Theme';
-	var $displayField = 'name';
+	public $name         = 'Theme';
+	public $displayField = 'name';
 
-	var $hasMany = array(
+	public $hasMany = array(
 		
 		'SavedTheme' => array(
 			'className' => 'SavedTheme',

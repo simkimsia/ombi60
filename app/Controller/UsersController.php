@@ -231,7 +231,7 @@ class UsersController extends AppController {
 
 	}
 
-	function platform_index() {
+	public function platform_index() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}
@@ -245,7 +245,7 @@ class UsersController extends AppController {
  * @access public *
  * @return void
  * */
-	function afterSave($created) {
+	public function afterSave($created) {
 		if (!$created) {
 			$parent = $this->parentNode();
 			$parent = $this->node($parent);

@@ -1,11 +1,11 @@
 <?php
 class Group extends AppModel {
 
-	var $name = 'Group';
+	public $name = 'Group';
 
-	var $displayField = 'name';
+	public $displayField = 'name';
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'User' => array(
 			'className' => 'User',
 			'foreignKey' => 'group_id',
@@ -21,11 +21,10 @@ class Group extends AppModel {
 		)
 	);
 
-	var $actsAs = array('Acl' => 'requester');
+	public $actsAs = array('Acl' => 'requester');
 
-	function parentNode() {
+	public function parentNode() {
 		return null;
 	}
 
 }
-?>

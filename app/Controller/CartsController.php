@@ -4,15 +4,15 @@ App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.
 
 class CartsController extends AppController {
 
-	var $name = 'Carts';
+	public $name = 'Carts';
 	
-	var $checkoutLink = '';
+	public $checkoutLink = '';
 	
-	var $helpers = array('Html', 'Form', 'Session');
+	public $helpers = array('Html', 'Form', 'Session');
 
-	var $components = array('Session', 'Paypal.Paypal','RandomString.RandomString',);
+	public $components = array('Session', 'Paypal.Paypal','RandomString.RandomString',);
 	
-	function beforeFilter() {
+	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 
@@ -22,12 +22,12 @@ class CartsController extends AppController {
 		
 	}
 
-	function index() {
+	public function index() {
 		$this->Cart->recursive = 0;
 		$this->set('carts', $this->paginate());
 	}
 
-	function view($id = null) {
+	public function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Cart'));
 			$this->redirect(array('action' => 'index'));
@@ -35,7 +35,7 @@ class CartsController extends AppController {
 		$this->set('cart', $this->Cart->read(null, $id));
 	}
 	
-	function edit($id = null) {
+	public function edit($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Cart'));
 			$this->redirect(array('action' => 'index'));
@@ -53,7 +53,7 @@ class CartsController extends AppController {
 		}
 	}
 
-	function delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Cart'));
 			$this->redirect(array('action' => 'index'));

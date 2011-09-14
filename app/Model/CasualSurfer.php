@@ -1,9 +1,9 @@
 <?php
 class CasualSurfer extends AppModel {
-	var $name = 'CasualSurfer';
+	public $name = 'CasualSurfer';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -20,14 +20,14 @@ class CasualSurfer extends AppModel {
 		)
 	);
 	
-	function beforeSave($options = array()) {
+	public function beforeSave($options = array()) {
 		
 		$this->data['User']['group_id'] = CASUAL;
 		return true;
 
 	}
 	
-	function convertCartForCustomerLogin($currentIdInCookie, $loggedInUserId) {
+	public function convertCartForCustomerLogin($currentIdInCookie, $loggedInUserId) {
 		
 		$exists = $this->find('count', array('conditions'=>array('CasualSurfer.user_id'=>$currentIdInCookie)));
 		
@@ -50,7 +50,7 @@ class CasualSurfer extends AppModel {
 		return false;
 	}
 	
-	function createNew($randomEmail, $randomPassword) {
+	public function createNew($randomEmail, $randomPassword) {
 		$this->create();
 		$this->User->create();
 		

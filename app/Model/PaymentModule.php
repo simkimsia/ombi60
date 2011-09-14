@@ -1,9 +1,9 @@
 <?php
 class PaymentModule extends AppModel {
-	var $name = 'PaymentModule';
-	var $displayField = 'name';
+	public $name = 'PaymentModule';
+	public $displayField = 'name';
 	
-	var $hasMany = array(
+	public $hasMany = array(
 		
 		'ShopsPaymentModule' => array(
 			'className' => 'ShopsPaymentModule',

@@ -1,9 +1,9 @@
 <?php
 class WeightBasedRate extends AppModel {
-	var $name = 'WeightBasedRate';
+	public $name = 'WeightBasedRate';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'ShippingRate' => array(
 			'className' => 'ShippingRate',
 			'foreignKey' => 'shipping_rate_id',
@@ -13,7 +13,7 @@ class WeightBasedRate extends AppModel {
 		)
 	);
 	
-	var $actsAs    = array(
+	public $actsAs    = array(
 			       'UnitSystemConvertible' => array(
 					'weight_fields' =>array(
 						'min_weight',
@@ -24,7 +24,7 @@ class WeightBasedRate extends AppModel {
 								),
 			       );
 	
-	var $validate = array(
+	public $validate = array(
 		
 		'min_weight' => array(
 			'numeric' => array(
@@ -48,7 +48,7 @@ class WeightBasedRate extends AppModel {
 		),
 	);
 	
-	function biggerThanMinWeight($check) {
+	public function biggerThanMinWeight($check) {
 		if (is_null($check['max_weight']) OR empty($check['max_weight'])) {
 			return true;
 		}
@@ -61,7 +61,7 @@ class WeightBasedRate extends AppModel {
 		return false;
 	}
 	
-	function positiveOrNull($check) {
+	public function positiveOrNull($check) {
 		if (is_null($check['max_weight']) OR empty($check['max_weight'])) {
 			return true;
 		}
@@ -73,7 +73,7 @@ class WeightBasedRate extends AppModel {
 		return false;
 	}
 	
-	function afterSave($created) {
+	public function afterSave($created) {
 		if (isset($this->data[$this->alias])) {
 			$unit = $this->data['WeightBasedRate']['unit'];
 			$message = '';
@@ -90,7 +90,7 @@ class WeightBasedRate extends AppModel {
 	/**
 	 * For unit conversion
 	 * */
-	function afterFind($results, $primary) {
+	public function afterFind($results, $primary) {
 		
                 $unit = Shop::get('ShopSetting.unit_system');
 		
@@ -107,7 +107,7 @@ class WeightBasedRate extends AppModel {
 	/**
 	 * For unit conversion
 	 * */
-	function beforeSave() {
+	public function beforeSave() {
 		
                 $unit = Shop::get('ShopSetting.unit_system');
 		foreach ($this->data as $key => $val) {

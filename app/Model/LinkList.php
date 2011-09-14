@@ -1,10 +1,10 @@
 <?php
 class LinkList extends AppModel {
-	var $name = 'LinkList';
-	var $displayField = 'name';
+	public $name = 'LinkList';
+	public $displayField = 'name';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -14,7 +14,7 @@ class LinkList extends AppModel {
 		)
 	);
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'Link' => array(
 			'className' => 'Link',
 			'foreignKey' => 'link_list_id',
@@ -30,7 +30,7 @@ class LinkList extends AppModel {
 		)
 	);
 	
-	var $actsAs = array('Handleize.Sluggable'=> array(
+	public $actsAs = array('Handleize.Sluggable'=> array(
 				'fields' => 'name',
 				'scope' => array('shop_id'),
 				'conditions' => false,
@@ -42,7 +42,7 @@ class LinkList extends AppModel {
 			),
 			    'Handleize.Handleable');
 	
-	function saveAll($data = null, $options = array()) {
+	public function saveAll($data = null, $options = array()) {
 		$data = $this->Link->beforeSaveAll($data);
 		return parent::saveAll($data, $options);
 	}
@@ -55,7 +55,7 @@ class LinkList extends AppModel {
 	/**
 	 * for use in templates for shopfront pages
 	 * */
-	function getTemplateVariable($linklists=array(), $multiple = true) {
+	public function getTemplateVariable($linklists=array(), $multiple = true) {
 		App::uses('ArrayToIterator', 'Lib');
 		$results = array();
 		

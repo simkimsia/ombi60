@@ -445,7 +445,7 @@ class AppController extends Controller {
 
 	}
 
-	function admin_change_active_status($id = null, $product_id = null) {
+	public function admin_change_active_status($id = null, $product_id = null) {
 		if (!$id OR !$product_id) {
 			$this->Session->setFlash(__('Invalid id for ProductImage'));
 			$this->redirect(array('action' => 'index'));
@@ -484,7 +484,7 @@ class AppController extends Controller {
 		return '';
 	}
 
-	function beforeRender() {
+	public function beforeRender() {
 		$this->setViewPathForTwig();
 	}
 

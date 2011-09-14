@@ -1,11 +1,11 @@
 <?php
 class BlogsController extends AppController {
 
-	var $name = 'Blogs';
+	public $name = 'Blogs';
 	
-	var $view = 'Theme';
+	public $view = 'Theme';
 	
-	var $components = array('Permission' =>
+	public $components = array('Permission' =>
 				array('redirect' =>
 					array('controller'=>'webpages',
 					      'action'    => 'index',
@@ -15,7 +15,7 @@ class BlogsController extends AppController {
 	
 	
 	
-	function beforeFilter() {
+	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		if ($this->request->action == 'admin_edit') {
@@ -25,13 +25,13 @@ class BlogsController extends AppController {
 	}
 
 	
-	function admin_index() {
+	public function admin_index() {
 		$this->Blog->recursive = 0;
 		$this->paginate = array('conditions'=>array('Blog.shop_id'=>Shop::get('Shop.id')));
 		$this->set('blogs', $this->paginate());
 	}
 
-	function admin_view($id = null) {
+	public function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid blog'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -50,7 +50,7 @@ class BlogsController extends AppController {
 		$this->set(compact('blog', 'posts'));	
 	}
 
-	function admin_add() {
+	public function admin_add() {
 		if (!empty($this->request->data)) {
 			$this->Blog->create();
 			if ($this->Blog->save($this->request->data)) {
@@ -63,7 +63,7 @@ class BlogsController extends AppController {
 		}
 	}
 
-	function admin_edit($id = null) {
+	public function admin_edit($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid blog'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('controller'=>'webpages',
@@ -84,7 +84,7 @@ class BlogsController extends AppController {
 		}
 	}
 
-	function admin_delete($id = null) {
+	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for blog'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('controller'=>'webpages',

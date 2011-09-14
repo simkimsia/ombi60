@@ -1,11 +1,11 @@
 <?php
 class Order extends AppModel {
 
-	var $name = 'Order';
+	public $name = 'Order';
 	
-	var $actsAs = array('Filter.Filter');
+	public $actsAs = array('Filter.Filter');
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -46,7 +46,7 @@ class Order extends AppModel {
 
 	
 	
-	var $hasMany = array(
+	public $hasMany = array(
 		'OrderLineItem' => array(
 			'className' => 'OrderLineItem',
 			'foreignKey' => 'order_id',
@@ -88,7 +88,7 @@ class Order extends AppModel {
 	 * 	 [amount] => compulsory_value
 	 * 	 [order_no] => optional_value,)
 	 **/
-	function convertCart($cartData, $options = array()) {
+	public function convertCart($cartData, $options = array()) {
 		
 		$defaultOptions = array('customer_id' => 0,
 					'billing_address_id' => 0,
@@ -138,13 +138,13 @@ class Order extends AppModel {
 		return false;
 	}
 	
-	function removeCart($cart_id) {
+	public function removeCart($cart_id) {
 		$cart = ClassRegistry::init('Cart'); 
 		return $cart->delete($cart_id);
 	}
 	
 	
-	function beforeSave() {
+	public function beforeSave() {
 		
 		// for brand new orders we want to create unique hash
 		if (empty($this->data['Order']['id']) AND empty($this->id)) {
@@ -186,7 +186,7 @@ class Order extends AppModel {
 		return strVal(intVal($order_no) + 1);
 	}
 	
-	function getDetailed($id, $lineItems = true) {
+	public function getDetailed($id, $lineItems = true) {
 		if (!$id) {
 			return false;
 		}
@@ -230,7 +230,7 @@ class Order extends AppModel {
 		return $order;
 	}
 	
-	function getShippingRequired($id = false) {
+	public function getShippingRequired($id = false) {
 		if (!$id) {
 			return false;
 		}
@@ -255,14 +255,14 @@ class Order extends AppModel {
 	}
 
 	
-	function afterSave($created) {
+	public function afterSave($created) {
 		if ($created) {
 			$this->Customer->User->Cart->id = $this->data['Order']['cart_id'];
 			$this->Customer->User->Cart->saveField('order_id', $this->id);
 		}
 	}
 	
-	function saveForCheckoutStep1($data) {
+	public function saveForCheckoutStep1($data) {
 		
 		$result = $this->saveAll($data);
 		if ($result) {
@@ -275,7 +275,7 @@ class Order extends AppModel {
 		
 	}
 	
-	function savePaymentAndShipment($data) {
+	public function savePaymentAndShipment($data) {
 		// assume $data contains order_id for the Payment and Shipment arrays
 		// assume $data contains ShippingRate id
 		// assume $data is in the form array('Payment'=>array('payment_module_id'=>3),) etc
@@ -348,7 +348,7 @@ class Order extends AppModel {
 		
 	}
 	
-	function updatePrices($id = false, $cartData = array()) {
+	public function updatePrices($id = false, $cartData = array()) {
 		$this->id = $id;
 		
 		if (!$this->id) {

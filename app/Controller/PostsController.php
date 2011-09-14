@@ -1,16 +1,16 @@
 <?php
 class PostsController extends AppController {
 
-	var $name = 'Posts';
+	public $name = 'Posts';
 	
-	var $helpers = array('Javascript',
+	public $helpers = array('Javascript',
 			     'Ajax',
 			     'TinyMce.TinyMce',
 			     'Text');
 	
-	var $view = 'TwigView.Twig';
+	public $view = 'TwigView.Twig';
 	
-	var $components = array(
+	public $components = array(
 				'Theme' => array(
 					'actions'=>array(
 						'index',
@@ -18,7 +18,7 @@ class PostsController extends AppController {
 				),
 				'TimeZone.TimeZone',);
 
-	function beforeFilter() {
+	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		
@@ -29,7 +29,7 @@ class PostsController extends AppController {
 	}
 
 
-	function view($short_name = false, $id = false, $slug = false) {
+	public function view($short_name = false, $id = false, $slug = false) {
 		if (!$short_name || !$id) {
 			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
@@ -65,7 +65,7 @@ class PostsController extends AppController {
 		
 	}
 	
-	function index($short_name = false) {
+	public function index($short_name = false) {
 		
 		if (!$short_name) {
 			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
@@ -104,7 +104,7 @@ class PostsController extends AppController {
 	
 	
 
-	function admin_view($blog_id = false, $id = false) {
+	public function admin_view($blog_id = false, $id = false) {
 		if (!$blog_id || !$id) {
 			$this->Session->setFlash(__('Invalid post'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('controller'=>'webpages',
@@ -119,7 +119,7 @@ class PostsController extends AppController {
 		
 	}
 
-	function admin_add($blog_id = false) {
+	public function admin_add($blog_id = false) {
 		
 		if (!$blog_id) {
 			$this->Session->setFlash(__('Invalid post'), 'default', array('class'=>'flash_failure'));
@@ -145,7 +145,7 @@ class PostsController extends AppController {
 		$this->set(compact('blog_id', 'authors', 'blog_name'));
 	}
 
-	function admin_edit($blog_id = false, $id = false) {
+	public function admin_edit($blog_id = false, $id = false) {
 		if ((!$blog_id || !$id) && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid post'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('controller'=>'webpages',
@@ -173,7 +173,7 @@ class PostsController extends AppController {
 		$this->set(compact('authors', 'blog_id'));
 	}
 
-	function admin_delete($blog_id = false, $id = false) {
+	public function admin_delete($blog_id = false, $id = false) {
 		if (!$blog_id || !$id) {
 			$this->Session->setFlash(__('Invalid id for post'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('controller'=>'webpages',
@@ -191,7 +191,7 @@ class PostsController extends AppController {
 						      $blog_id));
 	}
 	
-	function admin_toggle($id = false) {
+	public function admin_toggle($id = false) {
 		
 		$result = $this->Post->toggle($id, 'visible');
 		

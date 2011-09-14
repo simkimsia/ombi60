@@ -1,10 +1,10 @@
 <?php
 class ShippingRate extends AppModel {
-	var $name = 'ShippingRate';
-	var $displayField = 'name';
+	public $name = 'ShippingRate';
+	public $displayField = 'name';
 	
 	
-	var $actsAs    = array(
+	public $actsAs    = array(
 			       'UnitSystemConvertible' => array(
 					'weight_fields' =>array(
 						'min_weight',
@@ -18,7 +18,7 @@ class ShippingRate extends AppModel {
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $hasOne = array(
+	public $hasOne = array(
 		'PriceBasedRate' => array(
 			'className' => 'PriceBasedRate',
 			'foreignKey' => 'shipping_rate_id',
@@ -37,7 +37,7 @@ class ShippingRate extends AppModel {
 		)
 	);
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'ShippedToCountry' => array(
 			'className' => 'ShippedToCountry',
 			'foreignKey' => 'shipped_to_country_id',
@@ -47,7 +47,7 @@ class ShippingRate extends AppModel {
 		),
 	);
 	
-	var $validate = array(
+	public $validate = array(
 		'name' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
@@ -81,7 +81,7 @@ class ShippingRate extends AppModel {
 	/**
 	 * For unit conversion
 	 * */
-	function afterFind($results, $primary) {
+	public function afterFind($results, $primary) {
 		
                 $unit = Shop::get('ShopSetting.unit_system');
 		

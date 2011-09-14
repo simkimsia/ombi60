@@ -1,11 +1,11 @@
 <?php
 class OrderLineItem extends AppModel {
 
-	var $name = 'OrderLineItem';
+	public $name = 'OrderLineItem';
 
-	var $displayField = 'product_title';
+	public $displayField = 'product_title';
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Order' => array(
 			'className' => 'Order',
 			'foreignKey' => 'order_id',

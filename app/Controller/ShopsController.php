@@ -3,21 +3,21 @@ App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.
 App::import('Vendor', 'PayDollar', array('file'=>'paydollar'.DS.'includes'.DS.'paydollar.nvp.class.php'));
 class ShopsController extends AppController {
 
-	var $name = 'Shops';
+	public $name = 'Shops';
 
 	//var $helpers = array('Html', 'Form', 'Session');
 
-	var $components = array('Paypal.Paypal',
+	public $components = array('Paypal.Paypal',
 				'Paydollar.Paydollar');
 
 
-	function beforeFilter() {
+	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		
 	}
 	
-	function admin_general_settings() {
+	public function admin_general_settings() {
 		
 		if (!empty($this->request->data)) {
 			if ($this->Shop->ShopSetting->save($this->request->data)) {
@@ -43,14 +43,14 @@ class ShopsController extends AppController {
 	}
 	
 
-	function admin_account() {
+	public function admin_account() {
 
 		// display a list of stuff like pricing, usage, team members, etc
 		
 
 	}
 
-	function admin_cancelaccount() {
+	public function admin_cancelaccount() {
 
 		// display a form for cancelling account.
 		if (!empty($this->request->data)) {

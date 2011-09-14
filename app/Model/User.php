@@ -1,8 +1,8 @@
 <?php
 class User extends AppModel {
-	var $name = 'User';
+	public $name = 'User';
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Group' => array(
 			'className' => 'Group',
 			'foreignKey' => 'group_id',
@@ -30,7 +30,7 @@ class User extends AppModel {
 
 	);
 	
-	var $hasMany = array(
+	public $hasMany = array(
 		'Post' => array(
 			'className' => 'Post',
 			'foreignKey' => 'author_id',
@@ -73,7 +73,7 @@ class User extends AppModel {
 		
 	);
 
-	var $hasOne = array(
+	public $hasOne = array(
 
 		'Customer' => array(
 			'className' => 'Customer',
@@ -107,11 +107,11 @@ class User extends AppModel {
 
 	);
 
-	var $actsAs = array('Acl' => 'requester', 'Filter.Filter');
+	public $actsAs = array('Acl' => 'requester', 'Filter.Filter');
 
-	var $recursive = -1;
+	public $recursive = -1;
 
-	var $validate = array(
+	public $validate = array(
 		'password' => array(
 			'minLength' => array(
 				'rule' => array('minLength', '8'),
@@ -168,7 +168,7 @@ class User extends AppModel {
 	 *
 	 * retrieve the group of User
 	 **/
-	function parentNode() {
+	public function parentNode() {
 		if (!$this->id && empty($this->data)) {
 			return null;
 		}
@@ -189,7 +189,7 @@ class User extends AppModel {
 	 * http://github.com/mcurry/cakephp_static_user/
 	 *
 	 **/
-	function &getInstance($user = null) {
+	public function &getInstance($user = null) {
 		static $instance = array();
 		if ($user) {
 			$instance[0] =& $user;
@@ -202,7 +202,7 @@ class User extends AppModel {
 		return $instance[0];
 	}
 
-	function store($user) {
+	public function store($user) {
 		if (empty($user)) {
 			return false;
 		}
@@ -259,7 +259,7 @@ class User extends AppModel {
 	 *
 	 **/
 	
-	function uniqueEmailInShop( $field=array() )  
+	public function uniqueEmailInShop( $field=array() )  
 	{ 
 		$shopId = Shop::get('Shop.id');
 		// if no such shopId, most probably is at the register page

@@ -1,10 +1,10 @@
 <?php
 class Blog extends AppModel {
-	var $name = 'Blog';
-	var $displayField = 'title';
+	public $name = 'Blog';
+	public $displayField = 'title';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'Post' => array(
 			'className' => 'Post',
 			'foreignKey' => 'blog_id',
@@ -35,7 +35,7 @@ class Blog extends AppModel {
 		
 	);
 	
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -45,7 +45,7 @@ class Blog extends AppModel {
 		),
 	);
 	
-	var $actsAs = array('Handleize.Sluggable'=> array(
+	public $actsAs = array('Handleize.Sluggable'=> array(
 				'fields' => 'title',
 				'scope' => array('shop_id'),
 				'conditions' => false,
@@ -79,7 +79,7 @@ class Blog extends AppModel {
 	/**
 	 * for use in templates for shopfront pages
 	 * */
-	function getTemplateVariable($blogs=array(), $multiple = true) {
+	public function getTemplateVariable($blogs=array(), $multiple = true) {
 		App::uses('ArrayToIterator', 'Lib');
 		$results = array();
 		
@@ -121,7 +121,7 @@ class Blog extends AppModel {
 		return $results;
 	}
 	
-	function afterSave($created) {
+	public function afterSave($created) {
 		$this->updateBlogLinks();
 		$this->updateHandlesInArticles();
 	}

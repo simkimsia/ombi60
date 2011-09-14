@@ -3,7 +3,7 @@ App::uses('AppHelper', 'View/Helper');
 
 class ConstantHelper extends AppHelper {
 
-	function displayPayment($constantValue) {
+	public function displayPayment($constantValue) {
 		switch($constantValue) {
 			case PAYMENT_ABANDONED :
 				return 'Abandoned';
@@ -21,7 +21,7 @@ class ConstantHelper extends AppHelper {
 		}
 	}
 
-	function displayFulfillment($constantValue) {
+	public function displayFulfillment($constantValue) {
 		switch($constantValue) {
 			case FULFILLMENT_FULFILLED :
 				return 'Fulfilled';
@@ -36,7 +36,7 @@ class ConstantHelper extends AppHelper {
 		}
 	}
 
-	function displayUnitForWeight() {
+	public function displayUnitForWeight() {
 		App::uses('Shop', 'Model');
 		$unit = Shop::get('ShopSetting.unit_system');
 
@@ -47,7 +47,7 @@ class ConstantHelper extends AppHelper {
 		}
 	}
 
-	function displayUnitForLength() {
+	public function displayUnitForLength() {
 		App::uses('Shop', 'Model');
 		$unit = Shop::get('ShopSetting.unit_system');
 
@@ -62,7 +62,7 @@ class ConstantHelper extends AppHelper {
  * the more or less equivalent of WeightWithUnit in ombi60Twig Extension
  * usually used within cakephp admin views
  **/
-	function convertGramsToDisplayedWeight($weight_in_grams, $with_unit = true) {
+	public function convertGramsToDisplayedWeight($weight_in_grams, $with_unit = true) {
 		App::uses('Shop', 'Model');
 		$unit = Shop::get('ShopSetting.unit_system');
 

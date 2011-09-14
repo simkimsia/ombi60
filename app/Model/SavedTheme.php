@@ -1,22 +1,22 @@
 <?php
 class SavedTheme extends AppModel {
-	var $name = 'SavedTheme';
-	var $displayField = 'name';
+	public $name = 'SavedTheme';
+	public $displayField = 'name';
 	
-	var $maxSizeOfCss = 2097152;
+	public $maxSizeOfCss = 2097152;
 	
-	var $folderPath = '';
+	public $folderPath = '';
 	
-	var $failedUploadedImages = array();
+	public $failedUploadedImages = array();
 	
-	var $successUploadedImages = array();
+	public $successUploadedImages = array();
 	
-	var $actsAs = array('ThemeFolder.ThemeFolder' =>
+	public $actsAs = array('ThemeFolder.ThemeFolder' =>
 				array('folderNameField' => 'folder_name',
 				      'validateOn' => true)
 			    );
 	
-	var $validate = array(
+	public $validate = array(
 			      'folder_name' => array(
 					'checkForExistingFolder' => array(
 						'rule' => 'existFolder',
@@ -61,7 +61,7 @@ class SavedTheme extends AppModel {
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -78,7 +78,7 @@ class SavedTheme extends AppModel {
 		)
 	);
 	
-	function compulsoryCss($check=array()) {
+	public function compulsoryCss($check=array()) {
 		// we ALLOW either the css file itself or the css code in textarea
 		// that depends on which one was turned on.
 		// if a field is turned on, and it is non empty return true
@@ -113,11 +113,11 @@ class SavedTheme extends AppModel {
 		return APP . 'View' . DS . 'themed' . DS . $themeName . DS . 'webroot' . DS . 'css' . DS . 'style.css';
 	}
 	
-	function constructImagePath($themeName, $imageName = '') {
+	public function constructImagePath($themeName, $imageName = '') {
 		return APP . 'View' . DS . 'themed' . DS . $themeName . DS . 'webroot' . DS . 'img' . DS . $imageName;
 	}
 	
-	function existFolderToRename($check){
+	public function existFolderToRename($check){
 		if (isset($this->data['SavedTheme']['original_folder_name']) AND
 		    $this->data['SavedTheme']['original_folder_name'] !=  $this->data['SavedTheme']['folder_name']) {
 			return $this->existFolder($check);
@@ -126,7 +126,7 @@ class SavedTheme extends AppModel {
 		
 	}
 	
-	function beforeValidate() {
+	public function beforeValidate() {
 		if (isset($this->data['SavedTheme']['switch'])) {
 				
 			return true;
@@ -148,7 +148,7 @@ class SavedTheme extends AppModel {
 	}
 	
 	// this is called AFTER the SUCCESS of beforeSave in the ThemeFolder behavior
-	function beforeSave() {
+	public function beforeSave() {
 		
 		$success = false;
 		
@@ -209,7 +209,7 @@ class SavedTheme extends AppModel {
 		return $success;
 	}
 	
-	function revertFolderNameAfterUnsuccessfulUpdate() {
+	public function revertFolderNameAfterUnsuccessfulUpdate() {
 		$oldThemeName = $this->data['SavedTheme']['original_name'];
 		$newThemeName = $this->data['SavedTheme']['name'];
 		if ($oldThemeName == null OR $newThemeName == null) {
@@ -225,7 +225,7 @@ class SavedTheme extends AppModel {
 		return $success;
 	}
 	
-	function fetchImages($folder_name) {
+	public function fetchImages($folder_name) {
 		$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img';
 		
 		$dir = new Folder($path);
@@ -236,7 +236,7 @@ class SavedTheme extends AppModel {
 	}
 	
 	
-	function deleteThemeFolderAfterFailSave($themeFolderName = null) {
+	public function deleteThemeFolderAfterFailSave($themeFolderName = null) {
 		
 		if ($themeFolderName == null) {
 			return false;
@@ -269,7 +269,7 @@ class SavedTheme extends AppModel {
 	* @param $data Array
 	* @return boolean
 	*/
-	function uploadCheckUploadError($data = array()) {
+	public function uploadCheckUploadError($data = array()) {
 		
 		// this is for just admin_edit because we ONLY want to validate for name and description
 		if (isset($this->data[$this->name]['skipCssCheck']) AND $this->data[$this->name]['skipCssCheck']) {
@@ -296,7 +296,7 @@ class SavedTheme extends AppModel {
 	 * @return boolean
 	 * @author Vinicius Mendes
 	 */
-	function uploadCheckMaxSize($data = array()) {
+	public function uploadCheckMaxSize($data = array()) {
 		
 		// this is for just admin_edit because we ONLY want to validate for name and description
 		if (isset($this->data[$this->name]['skipCssCheck']) AND $this->data[$this->name]['skipCssCheck']) {
@@ -324,7 +324,7 @@ class SavedTheme extends AppModel {
 	 * @return boolean
 	 * @author Vinicius Mendes
 	 */
-	function uploadCheckInvalidMime($data = array()) {
+	public function uploadCheckInvalidMime($data = array()) {
 		
 		// this is for just admin_edit because we ONLY want to validate for name and description
 		if (isset($this->data[$this->name]['skipCssCheck']) AND $this->data[$this->name]['skipCssCheck']) {
@@ -351,7 +351,7 @@ class SavedTheme extends AppModel {
 	* @return boolean
 	* @author Vinicius Mendes
 	*/
-	function uploadCheckInvalidExt($data = array()) {
+	public function uploadCheckInvalidExt($data = array()) {
 		
 		// this is for just admin_edit because we ONLY want to validate for name and description
 		if (isset($this->data[$this->name]['skipCssCheck']) AND $this->data[$this->name]['skipCssCheck']) {
@@ -381,7 +381,7 @@ class SavedTheme extends AppModel {
 		return true;
 	}
 	
-	function copyFileFromTemp($tmpName, $saveAs, $checkForUploadedFile = true) {
+	public function copyFileFromTemp($tmpName, $saveAs, $checkForUploadedFile = true) {
 		
 		$results = true;
 		if (!is_uploaded_file($tmpName) && $checkForUploadedFile) {
@@ -400,7 +400,7 @@ class SavedTheme extends AppModel {
 		return $results;
 	}
 	
-	function read($fields = null, $id = null) {
+	public function read($fields = null, $id = null) {
 		$data = parent::read($fields, $id);
 		
 		if ($id == null) {
@@ -416,7 +416,7 @@ class SavedTheme extends AppModel {
 		return $data;
 	}
 	
-	function beforeDelete($cascade) {
+	public function beforeDelete($cascade) {
 		// this is to remove the theme folder BEFORE we delete database entry
 		// we need to first retrieve folder name
 		$this->data = $this->read(null, $this->id);
@@ -424,7 +424,7 @@ class SavedTheme extends AppModel {
 		
 	}
 	
-	function featureNewThemeAfterDelete($id = null) {
+	public function featureNewThemeAfterDelete($id = null) {
 		$featuredThemeId = Shop::get('saved_theme_id');
 		$shopId = Shop::get('Shop.id');
 		
@@ -435,7 +435,7 @@ class SavedTheme extends AppModel {
 		return true;
 	}
 	
-	function switchTheme($data) {
+	public function switchTheme($data) {
 		
 		$theme = ClassRegistry::init('Theme');
 		
@@ -462,7 +462,7 @@ class SavedTheme extends AppModel {
 		return $result;
 	}
 	
-	function feature($id = null) {
+	public function feature($id = null) {
 		$shopId = Shop::get('Shop.id');
 		
 		if (!$id) {
@@ -496,7 +496,7 @@ class SavedTheme extends AppModel {
 		return $result;
 	}
 	
-	function folderOrFileExists ($filename, $parent_folder, $sort = true, $exceptions = false, $full_path = false) {		
+	public function folderOrFileExists ($filename, $parent_folder, $sort = true, $exceptions = false, $full_path = false) {		
 		$dir = new Folder();
 		$dir->cd($parent_folder);
 		

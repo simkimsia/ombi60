@@ -1,12 +1,12 @@
 <?php
 class ShippingRatesController extends AppController {
 
-	var $name = 'ShippingRates';
+	public $name = 'ShippingRates';
 	
-	var $helpers = array('Ajax', 'Javascript', 'Number');
+	public $helpers = array('Ajax', 'Javascript', 'Number');
 
 	
-	function admin_index() {
+	public function admin_index() {
 		$this->ShippingRate->recursive = 0;
 		
 		$shopId = Shop::get('Shop.id');
@@ -23,7 +23,7 @@ class ShippingRatesController extends AppController {
 		$this->set(compact('shippingRates'));
 	}
 
-	function admin_edit($based = 'price-based-shipping', $id = null) {
+	public function admin_edit($based = 'price-based-shipping', $id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid shipping rate'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -80,7 +80,7 @@ class ShippingRatesController extends AppController {
 		
 	}
 	
-	function admin_add_price_based($country_id) {
+	public function admin_add_price_based($country_id) {
 		$result = true;
 		
 		if (!empty($this->request->data) && is_numeric($country_id)) {
@@ -120,7 +120,7 @@ class ShippingRatesController extends AppController {
 		
 	}
 	
-	function admin_add_weight_based($country_id) {
+	public function admin_add_weight_based($country_id) {
 		if (!empty($this->request->data)&& is_numeric($country_id)) {
 			
 			$result = true;
@@ -161,7 +161,7 @@ class ShippingRatesController extends AppController {
 
 	
 
-	function admin_delete($id = null) {
+	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for shipping rate'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action'=>'index'));

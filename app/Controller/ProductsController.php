@@ -4,12 +4,12 @@ App::uses('HttpSocket', 'Network/Http');
 
 class ProductsController extends AppController {
 
-	var $name = 'Products';
+	public $name = 'Products';
 	
-	var $helpers = array('Javascript', 'Ajax',
+	public $helpers = array('Javascript', 'Ajax',
 			     'TinyMce.TinyMce', 'Text');
 	
-	var $components = array('Permission'=>array(
+	public $components = array('Permission'=>array(
 					'prefixActionsWithPrimaryForeignKey' => array(
 						'Variant'=>array('admin_edit_variant',
 								 'admin_delete_variant')),
@@ -51,12 +51,12 @@ class ProductsController extends AppController {
 				
 				);
 	
-	var $view = 'TwigView.Twig';
+	public $view = 'TwigView.Twig';
 	
-	var $cartModel = '';
-	var $cartItemModel = '';
+	public $cartModel = '';
+	public $cartItemModel = '';
 
-	function beforeFilter() {
+	public function beforeFilter() {
 		/**
 		 * initialize the cartModel and cartItemModel
 		 * **/
@@ -132,7 +132,7 @@ class ProductsController extends AppController {
 		}
 	}
 	
-	function admin_menu_action() {
+	public function admin_menu_action() {
 		$resultArray = $this->Product->handleMenuAction($this->request->data);
 		if ($resultArray['success']) {
 			$this->Session->setFlash(__($resultArray['message']), 'default', array('class'=>'flash_success'));	
@@ -142,7 +142,7 @@ class ProductsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
-	function checkout() {
+	public function checkout() {
 		// flag for paypal express checkout
 		$paypal = false;
 		$uuid = '';
@@ -286,7 +286,7 @@ class ProductsController extends AppController {
 		
 	}
 	
-	function change_qty_for_1_item_in_cart($variant_id = 0) {
+	public function change_qty_for_1_item_in_cart($variant_id = 0) {
 		
 		$paramExist = !empty($this->params4GETAndNamed['quantity']);
 		
@@ -306,7 +306,7 @@ class ProductsController extends AppController {
 		return $continue;
 	}
 	
-	function view_cart() {
+	public function view_cart() {
 		
 		// need to check for POST and the Update button
 		// update button is named as update (singular)
@@ -422,7 +422,7 @@ class ProductsController extends AppController {
 		$this->render('cart');
 	}
 	
-	function admin_index() {
+	public function admin_index() {
 		
 		$shop_id = Shop::get('Shop.id');
 		
@@ -448,7 +448,7 @@ class ProductsController extends AppController {
 	}
 	
 
-	function admin_view($id = null) {
+	public function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -490,7 +490,7 @@ class ProductsController extends AppController {
 
 	}
 
-	function view($handle = false) {
+	public function view($handle = false) {
 		
 		
 		if (!$handle) {
@@ -553,7 +553,7 @@ class ProductsController extends AppController {
 	}
 	
 	
-	function view_by_group($handle = false) {
+	public function view_by_group($handle = false) {
 		
 		// check for handle
 		if (!$handle) {
@@ -595,7 +595,7 @@ class ProductsController extends AppController {
 	}
 
 
-	function admin_add() {
+	public function admin_add() {
 		
 		$this->set('title_for_layout', 'Add Product');
 		
@@ -631,7 +631,7 @@ class ProductsController extends AppController {
 	/**
 	 * should be called by ONLY uploadify plugin
 	 **/
-	function admin_upload($id = null) {
+	public function admin_upload($id = null) {
 	
 		$this->layout = 'json';
 		$successJSON = false;
@@ -667,7 +667,7 @@ class ProductsController extends AppController {
 		
 	}
 	
-	function admin_toggle($id = false) {
+	public function admin_toggle($id = false) {
 		
 		$result = $this->Product->toggle($id, 'visible');
 		
@@ -703,7 +703,7 @@ class ProductsController extends AppController {
 		
 	}
 	
-	function admin_edit($id = null) {
+	public function admin_edit($id = null) {
    
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Product'), 'default', array('class'=>'flash_failure'));
@@ -744,7 +744,7 @@ class ProductsController extends AppController {
 	
 	
 	
-	function admin_delete($id = null) {
+	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -757,7 +757,7 @@ class ProductsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
-	function admin_duplicate($id = null) {
+	public function admin_duplicate($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -770,14 +770,14 @@ class ProductsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
-	function platform_index() {
+	public function platform_index() {
 
 		$this->Product->recursive = 0;
 		$this->set('products', $this->paginate());
 
 	}
 
-	function platform_view($id = null) {
+	public function platform_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -785,7 +785,7 @@ class ProductsController extends AppController {
 		$this->set('product', $this->Product->read(null, $id));
 	}
 
-	function platform_add() {
+	public function platform_add() {
 		if ($this->request->is('post')) {
 			$this->Product->set($this->request->data);
 
@@ -799,7 +799,7 @@ class ProductsController extends AppController {
 		$this->set('errors', $this->Product->invalidFields());
 	}
 
-	function platform_edit($id = null) {
+	public function platform_edit($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -817,7 +817,7 @@ class ProductsController extends AppController {
 		}
 	}
 
-	function platform_delete($id = null) {
+	public function platform_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -831,7 +831,7 @@ class ProductsController extends AppController {
 	}
 	
 	
-	function add_to_cart() {
+	public function add_to_cart() {
 		$id = !empty($_POST['id']) ? $_POST['id'] : false;
 		
 		if(!$id) {
@@ -861,7 +861,7 @@ class ProductsController extends AppController {
 		
 	}
 	
-	function delete_from_cart($id = false, $cart_id = false) {
+	public function delete_from_cart($id = false, $cart_id = false) {
 		
 		if(!($id) OR !($cart_id)) {
 			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));

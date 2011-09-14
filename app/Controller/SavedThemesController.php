@@ -4,11 +4,11 @@
  */
 class SavedThemesController extends AppController {
 
-	var $name = 'SavedThemes';
+	public $name = 'SavedThemes';
 	
-	var $helpers = array('Javascript', 'Ajax');
+	public $helpers = array('Javascript', 'Ajax');
 	
-	function beforeFilter() {
+	public function beforeFilter() {
 		
 		/*
 		//public & private keys for reCAPTCHA
@@ -37,7 +37,7 @@ class SavedThemesController extends AppController {
 	}
 
 
-	function admin_index() {
+	public function admin_index() {
 		$this->SavedTheme->recursive = -1;
 		
 		$limit = 4;
@@ -65,7 +65,7 @@ class SavedThemesController extends AppController {
 		//$this->render('/themes/admin_index');
 	}
 
-	function admin_view($id = null) {
+	public function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid saved theme'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -86,7 +86,7 @@ class SavedThemesController extends AppController {
 		return $data;
 	}
 	
-	function admin_switch() {
+	public function admin_switch() {
 		
 		$savedThemeId = Shop::get('Shop.saved_theme_id');
 		
@@ -116,7 +116,7 @@ class SavedThemesController extends AppController {
 		$this->set(compact('themes', 'theme_id', 'savedThemeId'));
 	}
 
-	function admin_add() {
+	public function admin_add() {
 		
 		// for handling ajax request.
 		// usually because of the need to upload images using uploadify hence
@@ -222,7 +222,7 @@ class SavedThemesController extends AppController {
 	/**
 	 * should be called by ONLY uploadify plugin
 	 **/
-	function admin_upload() {
+	public function admin_upload() {
 		
 		if (!empty($_FILES)) {
 			$tempFile = $_FILES['Filedata']['tmp_name'];
@@ -244,7 +244,7 @@ class SavedThemesController extends AppController {
 		$this->autoRender = false;
 	}
 
-	function admin_edit($id = null) {
+	public function admin_edit($id = null) {
 		
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid saved theme'), 'default', array('class'=>'flash_failure'));
@@ -281,7 +281,7 @@ class SavedThemesController extends AppController {
 				   'uploadifySettings'));
 	}
 
-	function admin_delete($id = null) {
+	public function admin_delete($id = null) {
 		$contents = array();
 		if ($this->request->params['isAjax']) {
 			$this->layout = 'json';
@@ -320,7 +320,7 @@ class SavedThemesController extends AppController {
 		
 	}
 	
-	function admin_edit_image($id = null, $folder_name, $image) {
+	public function admin_edit_image($id = null, $folder_name, $image) {
 		if ($this->request->is('get')) {
 			
 			
@@ -349,7 +349,7 @@ class SavedThemesController extends AppController {
 		
 	}
 	
-	function admin_feature($id = null) {
+	public function admin_feature($id = null) {
 			
 		if (!$id) {
 			
@@ -372,7 +372,7 @@ class SavedThemesController extends AppController {
 		
 	}
 	
-	function admin_delete_image($id = null, $folder_name, $image) {
+	public function admin_delete_image($id = null, $folder_name, $image) {
 			
 		if ($this->request->is('get')) {
 			
@@ -386,7 +386,7 @@ class SavedThemesController extends AppController {
 		$this->redirect(array('action'=>'edit', 'admin'=>true,$id));
 	}
 	
-	function admin_edit_css($id = null, $folder_name) {
+	public function admin_edit_css($id = null, $folder_name) {
 		$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'css' . DS . 'style.css';
 		$file = new File($path);
 		

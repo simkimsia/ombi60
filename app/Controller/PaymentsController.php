@@ -1,18 +1,18 @@
 <?php
 class PaymentsController extends AppController {
 
-	var $name = 'Payments';
+	public $name = 'Payments';
 
-	var $helpers = array('Html', 'Form', 'Session');
+	public $helpers = array('Html', 'Form', 'Session');
 
-	var $components = array('Session');
+	public $components = array('Session');
 	
-	function beforeFilter() {
+	public function beforeFilter() {
 		parent::beforeFilter();
 		
 	}
 	
-	function admin_index() {
+	public function admin_index() {
 		
 		$paymentModuleInShop = $this->Payment->ShopsPaymentModule;
 		
@@ -48,7 +48,7 @@ class PaymentsController extends AppController {
 		
 	}
 	
-	function admin_update_settings() {
+	public function admin_update_settings() {
 		if (!empty($this->request->data) AND $this->request->is('post')) {
 			$this->Payment->ShopsPaymentModule->saveAll($this->request->data['ShopsPaymentModule']);
 			$this->redirect(array('action'=>'index',
@@ -57,7 +57,7 @@ class PaymentsController extends AppController {
 		}
 	}
 	
-	function admin_add_paypal_payment() {
+	public function admin_add_paypal_payment() {
 		
 		// attach the word paypal infront
 		$this->request->data['PaypalPaymentModule']['name'] = 'Paypal ' . $this->request->data['PaypalPaymentModule']['name'];
@@ -82,7 +82,7 @@ class PaymentsController extends AppController {
 		$this->redirect(array('action'=>'index'));
 	}
 	
-	function admin_add_custom_payment() {
+	public function admin_add_custom_payment() {
 		
 		$this->request->data['ShopsPaymentModule']['payment_module_id'] = CUSTOM_PAYMENT_MODULE;
 		$this->request->data['ShopsPaymentModule']['shop_id'] = Shop::get('Shop.id');
@@ -104,7 +104,7 @@ class PaymentsController extends AppController {
 		$this->redirect(array('action'=>'index'));
 	}
 	
-	function admin_edit_paypal_payment($id = false) {
+	public function admin_edit_paypal_payment($id = false) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -125,7 +125,7 @@ class PaymentsController extends AppController {
 		$this->redirect(array('action'=>'index'));
 	}
 	
-	function admin_edit_custom_payment($id = false) {
+	public function admin_edit_custom_payment($id = false) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -153,7 +153,7 @@ class PaymentsController extends AppController {
 		$this->redirect(array('action'=>'index'));
 	}
 	
-	function admin_delete_custom_payment($id = false) {
+	public function admin_delete_custom_payment($id = false) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));

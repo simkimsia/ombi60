@@ -1,7 +1,7 @@
 <?php
 class PageType extends AppModel {
 
-	var $name = 'PageType';
+	public $name = 'PageType';
 
 }
 ?>

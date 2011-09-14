@@ -1,12 +1,12 @@
 <?php
 class Customer extends AppModel {
 
-	var $name = 'Customer';
+	public $name = 'Customer';
 	
-	var $actsAs = array('Filter.Filter');
+	public $actsAs = array('Filter.Filter');
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -29,7 +29,7 @@ class Customer extends AppModel {
 		),
 	);
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'Order' => array(
 			'className' => 'Order',
 			'foreignKey' => 'customer_id',
@@ -71,7 +71,7 @@ class Customer extends AppModel {
 		)
 	);
 
-	var $hasAndBelongsToMany = array(
+	public $hasAndBelongsToMany = array(
 		'Product' => array(
 			'className' => 'Product',
 			'joinTable' => 'wishlists',
@@ -95,7 +95,7 @@ class Customer extends AppModel {
 	 * @return array An array of error messages with the field as key eg: [fieldName] => error_message
 	 *
 	 **/
-	function getAllValidationErrors()
+	public function getAllValidationErrors()
 	{
 		$merchantErrors = $this->validationErrors;
 		$shopErrors     = $this->Shop->validationErrors;
@@ -114,13 +114,13 @@ class Customer extends AppModel {
 		return array_merge($registerFormErrors, $shopErrors, $userErrors);
 	}
 
-	function signupNewAccount($data = NULL) {
+	public function signupNewAccount($data = NULL) {
 		$data['User']['group_id'] = CUSTOMERS;
 		
 		return $this->saveAll($data, array('validate'=>'first'));
 	}
 	
-	function signupNewAccountDuringCheckout($data = NULL) {
+	public function signupNewAccountDuringCheckout($data = NULL) {
 		$data['User']['group_id'] = CUSTOMERS;
 		
 		// this is to ensure that ONLY customer related data is created here.
@@ -134,7 +134,7 @@ class Customer extends AppModel {
 		return $this->saveAll($data, array('validate'=>'first'));
 	}
 	
-	function getExistingByShopIdAndEmail($data = NULL) {
+	public function getExistingByShopIdAndEmail($data = NULL) {
 		
 		$this->recursive = -1;
 		$this->User->recursive = -1;
@@ -154,19 +154,19 @@ class Customer extends AppModel {
 		return $customer['Customer']['id'];
 	}
 		
-	function getExistingBillingAddress($data = NULL) {
+	public function getExistingBillingAddress($data = NULL) {
 		
 		return $this->getExistingAddress($data, BILLING);
 		
 	}
 	
-	function getExistingDeliveryAddress($data = NULL) {
+	public function getExistingDeliveryAddress($data = NULL) {
 		
 		return $this->getExistingAddress($data, DELIVERY);
 		
 	}
 	
-	function duplicateBillingAddressFromDeliveryAddress($deliveryAddressId) {
+	public function duplicateBillingAddressFromDeliveryAddress($deliveryAddressId) {
 		$deliveryAddress = $this->DeliveryAddress->read(null, $deliveryAddressId);
 		
 		// unset the id
@@ -227,10 +227,10 @@ class Customer extends AppModel {
 		
 	}
 	
-	function setNewBillingAddress($data = NULL) {
+	public function setNewBillingAddress($data = NULL) {
 		return $this->setNewAddress($data, BILLING);
 	}
-	function setNewDeliveryAddress($data = NULL) {
+	public function setNewDeliveryAddress($data = NULL) {
 		return $this->setNewAddress($data, DELIVERY);
 	}
 	

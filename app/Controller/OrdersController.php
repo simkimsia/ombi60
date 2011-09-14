@@ -2,11 +2,11 @@
 App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
 class OrdersController extends AppController {
 
-	var $name = 'Orders';
+	public $name = 'Orders';
 
-	var $helpers = array('Html', 'Form', 'Session', 'Time', 'Number');
+	public $helpers = array('Html', 'Form', 'Session', 'Time', 'Number');
 
-	var $components = array('Permission',
+	public $components = array('Permission',
 				'Session', 'Paypal.Paypal', 'RandomString.RandomString', 'Filter.Filter' => array(
 					'actions' => array('index', 'admin_index'),
 					'defaults' => array(),
@@ -37,7 +37,7 @@ class OrdersController extends AppController {
 				);
 	
 	
-	function beforeFilter() {
+	public function beforeFilter() {
 
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
@@ -72,16 +72,16 @@ class OrdersController extends AppController {
 	
 	}
 	
-	function paypal() {
+	public function paypal() {
 		$this->render('paypalcheckout');
 	}
 
-	function index() {
+	public function index() {
 		$this->Order->recursive = 0;
 		$this->set('orders', $this->paginate());
 	}
 	
-	function admin_index() {
+	public function admin_index() {
 		
 		$shop_id = Shop::get('Shop.id');
 		
@@ -115,7 +115,7 @@ class OrdersController extends AppController {
 		return ($shopId === $order_shop_id);
 	}
 	
-	function admin_view($id = null) {
+	public function admin_view($id = null) {
 		
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
@@ -143,7 +143,7 @@ class OrdersController extends AppController {
 		$this->set(compact('order', 'module_name'));
 	}
 	
-	function view($id = null) {
+	public function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -153,7 +153,7 @@ class OrdersController extends AppController {
 	
 	
 
-	function add() {
+	public function add() {
 		if (!empty($this->request->data)) {
 			$this->Order->create();
 			if ($this->Order->save($this->request->data)) {
@@ -165,7 +165,7 @@ class OrdersController extends AppController {
 		}
 	}
 	
-	function checkout($shopId, $hash) {
+	public function checkout($shopId, $hash) {
 		$cart = $this->Order->Customer->User->Cart;
 		
 		$uuid = !empty($this->request->params['url']['uuid']);
@@ -521,7 +521,7 @@ class OrdersController extends AppController {
 	}
 	
 	
-	function success($shop_id = null) {
+	public function success($shop_id = null) {
 		
 		$paypal = isset($this->request->params['url']['paypal']);
 		$tokenValueOn = isset($this->request->params['url']['token']);
@@ -620,7 +620,7 @@ class OrdersController extends AppController {
 	}
 	
 	// expect $this->request->params to have cart_id, order_id, shipping_rate_id
-	function updatePrices() {
+	public function updatePrices() {
 		
 		$successJSON = false;
 		$contents = array();
@@ -656,7 +656,7 @@ class OrdersController extends AppController {
 		
 	}
 	
-	function pay($shop_id, $hash) {
+	public function pay($shop_id, $hash) {
 		
 		$payPalShopsPaymentModuleId = $this->Order->Shop->getPayPalShopsPaymentModuleId($shop_id);
 		if ($this->request->is('get')) {

@@ -1,9 +1,9 @@
 <?php
 class Payment extends AppModel {
-	var $name = 'Payment';
+	public $name = 'Payment';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'ShopsPaymentModule' => array(
 			'className' => 'ShopsPaymentModule',
 			'foreignKey' => 'shops_payment_module_id',
@@ -20,7 +20,7 @@ class Payment extends AppModel {
 		)
 	);
 	
-	var $hasOne = array(
+	public $hasOne = array(
 		'PaypalPayersPayment' => array(
 			'className' => 'PaypalPayersPayment',
 			'foreignKey' => 'payment_id',
@@ -37,7 +37,7 @@ class Payment extends AppModel {
 	);
 	
 	
-	var $validate = array(
+	public $validate = array(
 		/*
 		'token_from_gateway' => array(
 			'uniqueToken' => array(
@@ -50,7 +50,7 @@ class Payment extends AppModel {
 	
 	);
 	
-	function uniqueToken($check) {
+	public function uniqueToken($check) {
 		
 		$transaction_idIsOn = isset($this->data[$this->alias]['token_from_gateway']);
 		$gatewayOn = isset($this->data[$this->alias]['gateway_name']);
@@ -80,7 +80,7 @@ class Payment extends AppModel {
 	}
 	
 	
-	function completeByTransaction($shops_payment_module_id, $transaction_id) {
+	public function completeByTransaction($shops_payment_module_id, $transaction_id) {
 		
 		return $this->updateAll(array('completed'=>1),
 					array('transaction_id_from_gateway' => "'" . $transaction_id . "'",

@@ -1,7 +1,7 @@
 <?php
 class ShopSetting extends AppModel {
-	var $name = 'ShopSetting';
-	var $validate = array(
+	public $name = 'ShopSetting';
+	public $validate = array(
 		'checkout_language' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
@@ -15,7 +15,7 @@ class ShopSetting extends AppModel {
 	);
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',

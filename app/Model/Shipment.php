@@ -1,10 +1,10 @@
 <?php
 class Shipment extends AppModel {
-	var $name = 'Shipment';
-	var $displayField = 'name';
+	public $name = 'Shipment';
+	public $displayField = 'name';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Order' => array(
 			'className' => 'Order',
 			'foreignKey' => 'order_id',

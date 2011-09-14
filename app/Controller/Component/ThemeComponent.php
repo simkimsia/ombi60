@@ -7,7 +7,7 @@ class ThemeComponent extends Component {
  * if empty array, apply to all actions.
  * */
 
-	var $actions = array();
+	public $actions = array();
 
 /**
  * Constructor.
@@ -31,7 +31,7 @@ class ThemeComponent extends Component {
  *
  * @param controller object $controller 
  */     
-	function startup(Controller $controller) {
+	public function startup(Controller $controller) {
 		
 		if (in_array($controller->action, $this->actions) || empty($this->actions)) {
 		

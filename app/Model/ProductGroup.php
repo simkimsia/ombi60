@@ -1,10 +1,10 @@
 <?php
 class ProductGroup extends AppModel {
-	var $name = 'ProductGroup';
-	var $displayField = 'title';
+	public $name = 'ProductGroup';
+	public $displayField = 'title';
 	
 	
-	var $validate = array(
+	public $validate = array(
                    'title' => array('notempty'),
                   );
 	
@@ -13,7 +13,7 @@ class ProductGroup extends AppModel {
 
 
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
 			'foreignKey' => 'shop_id',
@@ -23,7 +23,7 @@ class ProductGroup extends AppModel {
 		)
 	);
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'ProductsInGroup' => array(
 			'className' => 'ProductsInGroup',
 			'foreignKey' => 'product_group_id',
@@ -52,7 +52,7 @@ class ProductGroup extends AppModel {
 		),
 	);
 	
-	var $actsAs = array('Handleize.Sluggable'=> array(
+	public $actsAs = array('Handleize.Sluggable'=> array(
 				'fields' => 'title',
 				'scope' => array('shop_id'),
 				'conditions' => false,
@@ -75,7 +75,7 @@ class ProductGroup extends AppModel {
 	 * for use in templates for shopfront pages
 	 * we avoid the use of many images for retrieving lots of products
 	 * */
-	function getTemplateVariable($productsInGroups=array(), $multiple = true) {
+	public function getTemplateVariable($productsInGroups=array(), $multiple = true) {
 		App::uses('ArrayToIterator', 'Lib');
 		$results = array();
 		
@@ -220,7 +220,7 @@ class ProductGroup extends AppModel {
 	* 
 	* @return boolean true on successfull execution and false in failure
 	*/
-	function saveSmartCollectionCondition($data, $smart_collection_id = null) {
+	public function saveSmartCollectionCondition($data, $smart_collection_id = null) {
 		$error = false;
 		
 		if (!empty($data['SmartCollectionCondition']) && is_array($data['SmartCollectionCondition'])) {
@@ -332,7 +332,7 @@ class ProductGroup extends AppModel {
 	*
 	* @return boolean true on successfull execution and false in failure
 	*/
-	function __validateSmartCollectionCondition($data) {
+	public function __validateSmartCollectionCondition($data) {
 		if (!empty($data) && is_array($data)) {
 			foreach ($data as $value) {
 				if ($value['condition'] =="" || $value['condition'] == null) {

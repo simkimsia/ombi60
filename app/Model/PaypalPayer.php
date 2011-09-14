@@ -1,9 +1,9 @@
 <?php
 class PaypalPayer extends AppModel {
-	var $name = 'PaypalPayer';
+	public $name = 'PaypalPayer';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'PaypalPayersPayment' => array(
 			'className' => 'PaypalPayersPayment',
 			'foreignKey' => 'paypal_payer_id',
@@ -19,7 +19,7 @@ class PaypalPayer extends AppModel {
 		)
 	);
 	
-	function saveAfterGECD($GECDFields) {
+	public function saveAfterGECD($GECDFields) {
 		// the Gecdfields
 		//$this->log('the gecd fields');
 		//$this->log($GECDFields);

@@ -275,7 +275,7 @@ class CopyableBehavior extends ModelBehavior {
 	 */
 	private function __verifyContainable($Model) {
 		if (!$Model->Behaviors->attached('Containable')) {
-			return $Model->Behaviors->attach('Containable');
+			return $Model->Behaviors->load('Containable');
 		}
 				
 		return true;

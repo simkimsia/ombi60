@@ -1,22 +1,22 @@
 <?php
 class RedirectFilesController extends AppController {
 
-	var $name = 'RedirectFiles';
+	public $name = 'RedirectFiles';
 	
-	var $uses = array();
+	public $uses = array();
 
-	var $helpers = array('Javascript', 'Ajax',
+	public $helpers = array('Javascript', 'Ajax',
 			     'TinyMce.TinyMce', 'Text');
 	
-	var $view = 'TwigView.Twig';
+	public $view = 'TwigView.Twig';
 
-	function beforeFilter() {
+	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		$this->Auth->allow('theme');
 	}
 	
-	function theme($theme_name) {
+	public function theme($theme_name) {
 		$this->viewPath = 'webroot/assets';
 		
 		// we do not want debug info to show up inside the css file

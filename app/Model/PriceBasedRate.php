@@ -1,9 +1,9 @@
 <?php
 class PriceBasedRate extends AppModel {
-	var $name = 'PriceBasedRate';
+	public $name = 'PriceBasedRate';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'ShippingRate' => array(
 			'className' => 'ShippingRate',
 			'foreignKey' => 'shipping_rate_id',
@@ -13,7 +13,7 @@ class PriceBasedRate extends AppModel {
 		)
 	);
 	
-	var $validate = array(
+	public $validate = array(
 		
 		'min_price' => array(
 			'numeric' => array(
@@ -38,7 +38,7 @@ class PriceBasedRate extends AppModel {
 	);
 	
 	
-	function biggerThanMinPrice($check) {
+	public function biggerThanMinPrice($check) {
 		if (is_null($check['max_price']) OR empty($check['max_price'])) {
 			return true;
 		}
@@ -51,7 +51,7 @@ class PriceBasedRate extends AppModel {
 		return false;
 	}
 	
-	function positiveOrNull($check) {
+	public function positiveOrNull($check) {
 		
 		if (is_null($check['max_price']) OR empty($check['max_price'])) {
 			return true;
@@ -64,7 +64,7 @@ class PriceBasedRate extends AppModel {
 		return false;
 	}
 	
-	function afterSave($created) {
+	public function afterSave($created) {
 		if (isset($this->data[$this->alias])) {
 			$message = '';
 			if (isset($this->data['PriceBasedRate']['min_price']) && !empty($this->data['PriceBasedRate']['max_price'])) {

@@ -1,10 +1,10 @@
 <?php
 class Language extends AppModel {
-	var $name = 'Language';
-	var $displayField = 'name';
+	public $name = 'Language';
+	public $displayField = 'name';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'User' => array(
 			'className' => 'User',
 			'foreignKey' => 'language_id',

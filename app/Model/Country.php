@@ -1,10 +1,10 @@
 <?php
 class Country extends AppModel {
-	var $name = 'Country';
-	var $displayField = 'printable_name';
+	public $name = 'Country';
+	public $displayField = 'printable_name';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $hasMany = array(
+	public $hasMany = array(
 		
 		'ShippedToCountry' => array(
 			'className' => 'ShippedToCountry',

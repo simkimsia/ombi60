@@ -1,15 +1,15 @@
 <?php
 class WebpagesController extends AppController {
 
-	var $name = 'Webpages';
+	public $name = 'Webpages';
 	
-	var $components = array('Permission');
+	public $components = array('Permission');
 	
-	var $helpers = array('Javascript',
+	public $helpers = array('Javascript',
 			     'Ajax',
 			     'TinyMce.TinyMce');
 
-	function beforeFilter() {
+	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		$this->Auth->allow('view', 'shopfront', 'frontpage');
@@ -21,7 +21,7 @@ class WebpagesController extends AppController {
 		
 	}
 
-	function view($handle = false) {
+	public function view($handle = false) {
 		
 		if (!$handle) {
 			
@@ -45,13 +45,13 @@ class WebpagesController extends AppController {
 
 	// this is where the / will get routed to
 	// this is supposed to use the index.tpl inside pages folder within the theme
-	function frontpage() {
+	public function frontpage() {
 		
 		$this->set('page_title', 'Welcome'); // this is hardcoded for index page
 		$this->render('index');
 	}
 	
-	function admin_index() {
+	public function admin_index() {
 		$this->Webpage->recursive = 0;
 		
 		$shopid = Shop::get('Shop.id');
@@ -69,7 +69,7 @@ class WebpagesController extends AppController {
 		$this->set(compact('blogs', 'webpages'));
 	}
 
-	function admin_view($id = null) {
+	public function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid webpage'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -81,7 +81,7 @@ class WebpagesController extends AppController {
 		$this->set(compact('authors', 'webpage'));
 	}
 	
-	function admin_toggle($id = false) {
+	public function admin_toggle($id = false) {
 		
 		$result = $this->Webpage->toggle($id, 'visible');
 		
@@ -111,7 +111,7 @@ class WebpagesController extends AppController {
 		}
 	}
 
-	function admin_add() {
+	public function admin_add() {
 		if (!empty($this->request->data)) {
 			
 			$this->Webpage->create();
@@ -129,7 +129,7 @@ class WebpagesController extends AppController {
 		$this->set(compact('authors'));
 	}
 	
-	function admin_menu_action() {
+	public function admin_menu_action() {
 		$resultArray = $this->Webpage->handleMenuAction($this->request->data);
 		if ($resultArray['success']) {
 			$this->Session->setFlash(__($resultArray['message']), 'default', array('class'=>'flash_success'));	
@@ -139,7 +139,7 @@ class WebpagesController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
-	function admin_edit($id = null) {
+	public function admin_edit($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid webpage'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
@@ -161,7 +161,7 @@ class WebpagesController extends AppController {
 		$this->set(compact('authors'));
 	}
 
-	function admin_delete($id = null) {
+	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for webpage'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action'=>'index'));

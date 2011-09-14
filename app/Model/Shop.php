@@ -1,9 +1,9 @@
 <?php
 class Shop extends AppModel {
 
-	var $name = 'Shop';
+	public $name = 'Shop';
 
-	var $validate = array(
+	public $validate = array(
 		'primary_domain' => array(
 			'isUnique' => array(
 				'rule' => 'isUnique',
@@ -34,7 +34,7 @@ class Shop extends AppModel {
 		),
 	);
 
-	var $hasMany = array(
+	public $hasMany = array(
 		
 		'RecurringPaymentProfile' => array(
 			'className' => 'RecurringPaymentProfile',
@@ -255,7 +255,7 @@ class Shop extends AppModel {
 		
 	);
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		
 		'FeaturedSavedTheme' => array(
 			'className' => 'SavedTheme',
@@ -267,7 +267,7 @@ class Shop extends AppModel {
 		),
 	);
 	
-	var $hasOne = array(
+	public $hasOne = array(
 		'ShopSetting' => array(
 			'className' => 'ShopSetting',
 			'foreignKey' => 'shop_id',
@@ -283,7 +283,7 @@ class Shop extends AppModel {
 		)
 	);
 	
-	function beforeValidate() {
+	public function beforeValidate() {
 		
 		// for localhost we will NOT validate for url
 		if(strpos(FULL_BASE_URL, '.localhost')) {
@@ -300,7 +300,7 @@ class Shop extends AppModel {
 	 * Custom validator method to validate
 	 *
 	 **/
-	function validateWebAddress($fields = array())
+	public function validateWebAddress($fields = array())
 	{
 		$shopErrors = $this->validationErrors;
 
@@ -319,7 +319,7 @@ class Shop extends AppModel {
 	 * Given a url seek out the corresponding shop
 	 * Returns boolean false if no such shop
 	 * */
-	function getByDomain($url) {
+	public function getByDomain($url) {
 		
 		// to allow https url we need to do replacement where necessary.
 		$url = strtolower($url);
@@ -353,7 +353,7 @@ class Shop extends AppModel {
 	 * http://github.com/mcurry/cakephp_static_user/
 	 *
 	 **/
-	function &getInstance($shop = null) {
+	public function &getInstance($shop = null) {
 		static $instance = array();
 		if ($shop) {
 			$instance[0] =& $shop;
@@ -366,7 +366,7 @@ class Shop extends AppModel {
 		return $instance[0];
 	}
 
-	function store($shop) {
+	public function store($shop) {
 		if (empty($shop)) {
 			return false;
 		}
@@ -390,7 +390,7 @@ class Shop extends AppModel {
 	 *  )
 	 *
 	 **/
-	function get($fieldName) {
+	public function get($fieldName) {
 		$_shop =& Shop::getInstance();
 
 		$pathArray      = explode('.', $fieldName);
@@ -415,7 +415,7 @@ class Shop extends AppModel {
 	}
 	
 	
-	function getTemplateVariable() {
+	public function getTemplateVariable() {
 		$shopInstance = Shop::getInstance();
 		$shop = array('name' => $shopInstance['Shop']['name'],
 			      'url'  => $shopInstance['Shop']['url'] . '/',
@@ -443,7 +443,7 @@ class Shop extends AppModel {
 	 *
 	 * afterSave callback saving shop and theme data into cache under the key Shop8 for shop of id 8
 	 * */
-	function afterSave($created) {
+	public function afterSave($created) {
 
                 $this->recursive = -1;
 		$this->Behaviors->load('Containable');
@@ -457,7 +457,7 @@ class Shop extends AppModel {
 		return true;
 	}
 	
-	function getPaypalExpressOn($shopId) {
+	public function getPaypalExpressOn($shopId) {
 		if ($shopId > 0) {
 			$this->ShopsPaymentModule->recursive = -1;
 			$paymentModule = $this->ShopsPaymentModule->find('first',
@@ -478,7 +478,7 @@ class Shop extends AppModel {
 	/**
 	 * check if the current base is the same as the shop's main domain
 	 **/
-	function isCurrentBaseThisDomain($mainUrl) {
+	public function isCurrentBaseThisDomain($mainUrl) {
                 $baseHost = '';
                 if (strpos(FULL_BASE_URL, 'http://') === 0) {
 			
@@ -492,7 +492,7 @@ class Shop extends AppModel {
                 
 	}
 	
-	function getPayPalShopsPaymentModuleId($shopId = 0) {
+	public function getPayPalShopsPaymentModuleId($shopId = 0) {
 		if ($shopId == 0) {
 			$shopId = $this->id;
 		}
@@ -514,7 +514,7 @@ class Shop extends AppModel {
 		return false;
 	}
 	
-	function getAccountEmailPaypal($shopId = 0) {
+	public function getAccountEmailPaypal($shopId = 0) {
 		if ($shopId > 0) {
 			$this->ShopsPaymentModule->recursive = -1;
 			$this->ShopsPaymentModule->Behaviors->attach('Linkable.Linkable');
@@ -536,7 +536,7 @@ class Shop extends AppModel {
 		return '';
 	}
 	
-	function getAllMerchantUsersInList($id = false, $fields=array(), $sort = true) {
+	public function getAllMerchantUsersInList($id = false, $fields=array(), $sort = true) {
 		if (!$id) {
 			return false;
 		}

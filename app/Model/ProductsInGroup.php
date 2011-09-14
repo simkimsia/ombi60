@@ -1,11 +1,11 @@
 <?php
 class ProductsInGroup extends AppModel {
-	var $name = 'ProductsInGroup';
+	public $name = 'ProductsInGroup';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	
 
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'Product' => array(
 			'className' => 'Product',
 			'foreignKey' => 'product_id',

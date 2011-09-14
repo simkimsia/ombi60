@@ -1,9 +1,9 @@
 <?php
 class LinkListsController extends AppController {
 
-	var $name = 'LinkLists';
+	public $name = 'LinkLists';
 	
-	var $components = array('Permission' =>
+	public $components = array('Permission' =>
 				array('redirect' =>
 					array('controller'=> 'links',
 					      'action' 	  => 'index',
@@ -11,7 +11,7 @@ class LinkListsController extends AppController {
 					))
 				);
 	
-	function beforeFilter() {
+	public function beforeFilter() {
 		parent::beforeFilter();
 		
 		if ($this->request->action== 'admin_edit') {
@@ -24,7 +24,7 @@ class LinkListsController extends AppController {
 	 *
 	 * we need to saveAll for the entire list rather than individual links
 	 * */
-	function admin_edit($id = null) {
+	public function admin_edit($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid linklist'));
 			$this->redirect(array('controller' => 'links',

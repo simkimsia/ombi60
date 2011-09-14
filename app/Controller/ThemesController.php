@@ -1,10 +1,10 @@
 <?php
 class ThemesController extends AppController {
 
-	var $name = 'Themes';
-	var $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax','settingsform');
+	public $name = 'Themes';
+	public $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax','settingsform');
 	
-	function beforeFilter() {
+	public function beforeFilter() {
 		
 		/*
 		//public & private keys for reCAPTCHA
@@ -28,7 +28,7 @@ class ThemesController extends AppController {
 	
 	}
 	
-	function admin_index() {
+	public function admin_index() {
 		$this->Theme->SavedTheme->recursive = 0;
 
 		$this->paginate = array(
@@ -38,7 +38,7 @@ class ThemesController extends AppController {
 
 	}
 	
-	function admin_settings() {
+	public function admin_settings() {
 	 
 	  $savedThemeId = Shop::get('Shop.saved_theme_id');
 	  
