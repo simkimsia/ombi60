@@ -35,15 +35,15 @@
 class AppController extends Controller {
 
 	public $components = array(
-        'Auth',
-        'Acl',
-        'Session',
-        'Security',
-        'RequestHandler',
+		'Auth',
+		'Acl',
+		'Session',
+		'Security',
+		'RequestHandler',
 		//'DebugKit.Toolbar',
-        'Cookie',
-        'RandomString.RandomString',
-        'Theme',
+		'Cookie',
+		'RandomString.RandomString',
+		'Theme',
 	);
 
 	public $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax');
@@ -59,6 +59,7 @@ class AppController extends Controller {
 	public $params4GETAndNamed = array();
 
 	public function beforeFilter() {
+		//debug($this->Session->read());
 		/**
 		 * merge the named params and the get params into a single array
 		 * with the GET params taking precedence
@@ -67,18 +68,17 @@ class AppController extends Controller {
 			$this->request->params['url'] = array();
 		}
 		$this->params4GETAndNamed = array_merge($this->request->params['named'], $this->request->params['url']);
+
 		$this->Auth->authenticate = array(
-	        	'Form' => array(
-	        		'fields' => array('username' => 'email', 'password' => 'password'), 
-					'userModel' => 'AppUser', 
-					'scope' => array('AppUser.active' => 1)
-				),
-		);
+				AuthComponent::ALL => array(
+					'userModel' => 'User',
+					'fields' => array(
+						'username' => 'email',
+						'password' => 'password')));
+
 		$this->Auth->loginRedirect = array('controller' => 'shops', 'action' => 'index');
 		$this->Auth->loginAction = array('controller' => 'customers', 'action' => 'login');
-		$this->Auth->authError = __("Sorry, you can't access the page requested", true);
-		
-		//$this->Auth->authorize = 'actions';
+		$this->Auth->authError = __('Sorry, you can\'t access the page requested', true);
 
 		if (isset($this->request->params['admin'])) {
 			$this->Auth->loginAction = '/admin/login';
@@ -89,7 +89,6 @@ class AppController extends Controller {
 				$this->layout = 'admin';
 			}
 		} else {
-			 
 			$this->layout = 'theme';
 		}
 
@@ -103,7 +102,12 @@ class AppController extends Controller {
 		/**
 		 *for Acl
 		 **/
-		$this->Auth->actionPath = 'controllers/';
+		//$this->Auth->actionPath = 'controllers/';
+		$this->Auth->authorize = array(
+			'Actions' => array(
+				'actionPath' => 'controllers/'),
+			//'Controller'
+			);
 		/**
 		 * end of Acl
 		 * */
@@ -181,23 +185,17 @@ class AppController extends Controller {
 			if (!$userIdInCookieIsLegit) {
 				App::uses('CasualSurfer', 'Model');
 				$this->loadModel('CasualSurfer');
-					
 				$randomPassword = $this->Auth->password($this->RandomString->generate());
 				$randomEmail = $this->RandomString->generate() . '@ombi60.com';
 				$userIdInCookie = $this->CasualSurfer->createNew($randomEmail, $randomPassword);
-					
 				$this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
 			}
 
 			// fetch the main menu of the shop
 			$this->loadModel('LinkList');
-			$this->LinkList->recursive = -1;
-
-			$this->LinkList->Behaviors->attach('Containable');
-
 			$linklists = $this->LinkList->find('all', array(
 				'conditions'=>array('LinkList.shop_id'=>$shopId),
-				'contain'   =>array(
+				'contain' =>array(
 				'Link'=>array(
 				'fields'=>array('Link.id',
 					'Link.name',
@@ -212,10 +210,6 @@ class AppController extends Controller {
 			$this->set('linklists', $linklists);
 
 			$this->loadModel('Blog');
-			$this->Blog->recursive = -1;
-
-			$this->Blog->Behaviors->attach('Containable');
-
 			$blogs = $this->Blog->find('all', array(
 				'conditions'=>array('Blog.shop_id'=>$shopId),
 				'contain'   =>array(
@@ -223,14 +217,12 @@ class AppController extends Controller {
 					'conditions' => array('Post.visible'=>true),
 					'order' => array('Post.created DESC'),
 					'limit' => '25'))));
-
 			$blogs = Blog::getTemplateVariable($blogs);
 			$this->set('blogs', $blogs);
 
 			// fetch the pages
 			$this->loadModel('Webpage');
 			$this->Webpage->recursive = -1;
-
 			$this->Webpage->Behaviors->load('Linkable.Linkable');
 
 			$pages = $this->Webpage->find('all', array(
@@ -291,21 +283,16 @@ class AppController extends Controller {
 		}
 
 		$locale_name = User::get('Language.locale_name');
-
 		if (!$this->Session->check('Config.language')) {
-
 			if (!$locale_name ||  !isset($locale_name) || empty($locale_name)) {
 				$this->Session->write('Config.language', DEFAULT_LANGUAGE);
-					
 			} else {
 				$this->Session->write('Config.language', $locale_name);
-					
 			}
 		} else {
 			$currentLang =$this->Session->read('Config.language');
 			if (!empty($locale_name) && $locale_name != $currentLang) {
 				$this->Session->write('Config.language', $locale_name);
-					
 			}
 		}
 
@@ -314,7 +301,6 @@ class AppController extends Controller {
 
 
 		$denied = $currentShop['Shop']['deny_access'];
-
 		if ($denied) {
 			$this->cakeError('noSuchDomain');
 		} else {
@@ -323,7 +309,6 @@ class AppController extends Controller {
 				$cart = ClassRegistry::init('Cart');
 				$cartItemsCount = $cart->getCartItemsCountByCustomerId(User::get('User.id'));
 				$this->set('cartItemsCount', $cartItemsCount);
-
 			}
 		}
 
@@ -337,7 +322,7 @@ class AppController extends Controller {
 
 		// set the weight unit for shop
 		App::uses('ConstantHelper', 'View/Helper');
-		//@todo fix this helper call
+		//@todo fix this helper call, its a MVC violation
 		$constantHelper = new ConstantHelper(new View($this));
 		$unitForWeight = $constantHelper->displayUnitForWeight();
 		$this->set('unitForWeight', $unitForWeight);

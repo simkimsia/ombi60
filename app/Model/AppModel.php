@@ -42,7 +42,6 @@ class AppModel extends Model {
 
 	public $arrayPlaceHolder = array();
 
-    
     /**
     *
     * Custom validator method for comparing 2 fields

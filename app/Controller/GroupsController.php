@@ -11,6 +11,4 @@ class GroupsController extends AppController {
 		return null;
 	}
 
-	
 }
-?>

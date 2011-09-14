@@ -131,10 +131,10 @@ class CustomersController extends AppController {
 			}
 		}
 
-		// successfully login
 		if ($this->request->is('post')) {
-			if ($this->Auth->login() &&$this->Auth->user()) {
-			// retrieve current id from Cookie
+			$this->request->data['User']['password'] = $this->Auth->password($this->request->data['User']['password']);
+			if ($this->Auth->login($this->request->data['User']) && $this->Auth->user()) {
+
 				$userIdInCookie = $this->Cookie->read('User.id');
 				// take current cart of Casual Surfer and dump them for logged in Customer
 				$loggedInUserId = $this->Auth->user('id');
@@ -149,6 +149,8 @@ class CustomersController extends AppController {
 					$this->Session->write('Shop.' . $shopId . '.checkoutRedirectPass', true);
 				}
 				$this->redirect($this->Auth->redirect());
+			} else {
+				unset($this->request->data['User']['password']);
 			}
 		}
 	}
