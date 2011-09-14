@@ -1,4 +1,5 @@
 <?php
+App::uses('AppHelper', 'View/Helper');
 class SettingsformHelper extends AppHelper {
 
 	public $helpers = array('Form','Html');

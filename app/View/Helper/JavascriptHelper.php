@@ -1,4 +1,5 @@
 <?php
+App::uses('AppHelper', 'View/Helper');
 /* SVN FILE: $Id$ */
 /**
  * Javascript Helper class file.

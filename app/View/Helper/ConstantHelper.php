@@ -1,4 +1,6 @@
 <?php
+App::uses('AppHelper', 'View/Helper');
+
 class ConstantHelper extends AppHelper {
 
 	function displayPayment($constantValue) {
