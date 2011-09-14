@@ -76,7 +76,7 @@ class AppError extends ErrorHandler {
 	
 	private function getTheme() {
 		
-		App::import('Model', 'Shop');
+		App::uses('Shop', 'Model');
 		
 		// retrieve the theme name to view pages with
 		$shopId = Shop::get('Shop.id');
