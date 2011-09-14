@@ -328,7 +328,7 @@ class AppController extends Controller {
 		}
 
 		// set the weight unit for shop
-		App::uses('Constant', 'View/Helper');
+		App::uses('ConstantHelper', 'View/Helper');
 		//@todo fix this helper call
 		$constantHelper = new ConstantHelper(new View($this));
 		$unitForWeight = $constantHelper->displayUnitForWeight();
