@@ -90,7 +90,7 @@ class Payment extends AppModel {
 
 			WHERE payments.transaction_id_from_gateway = "%1$s" AND shops_payment_module_id = %2$d';
 		
-		App::import('Sanitize');
+		App::uses('Sanitize', 'Utility');
 		$shops_payment_module_id = Sanitize::escape($shops_payment_module_id);
 		$transaction_id = Sanitize::escape($transaction_id);
 		$escapedSql = sprintf($sql, $transaction_id, $shops_payment_module_id);

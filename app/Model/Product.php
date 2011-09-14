@@ -857,7 +857,7 @@ class Product extends AppModel {
 				'Link.action'=>$handle);
 		
 		// prepare the fields by wrapping the values in quotes
-		App::import('Lib', 'StringManipulator');
+		App::uses('StringManipulator', 'Lib');
 		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
 		
 		// meant only for all the ProductLinks belonging to this Product
@@ -872,7 +872,7 @@ class Product extends AppModel {
 	 * for use in templates for shopfront pages
 	 * */
 	function getTemplateVariable($products=array(), $multiple = true) {
-		App::import('Lib', 'ArrayToIterator');
+		App::uses('ArrayToIterator', 'Lib');
 		$results = array();
 		
 		if (!$multiple) $products = array($products);
@@ -1182,7 +1182,7 @@ class Product extends AppModel {
 	 *  that is the list of conditions without SmartCollectionCondition index present
 	 * */
 	private function evaluateAgainstSmartConditions($product, $conditionalArrays) {
-		App::import('Lib', 'StringManipulator');
+		App::uses('StringManipulator', 'Lib');
 		$ok = true;
 		
 		foreach($conditionalArrays as $conditionalArray) {

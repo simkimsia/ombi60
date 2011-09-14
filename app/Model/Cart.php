@@ -379,7 +379,7 @@ class Cart extends AppModel {
 
 			WHERE carts.id = %1$d';
 		
-		App::import('Sanitize');
+		App::uses('Sanitize', 'Utility');
 		$id = Sanitize::escape($id);
 		$escapedSql = sprintf($sql, $id);
 		

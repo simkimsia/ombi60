@@ -101,7 +101,7 @@ class Webpage extends AppModel {
 		}
 		
 		if ($multiple && TWIG_ITERATOR) {
-			App::import('Lib', 'ArrayToIterator');
+			App::uses('ArrayToIterator', 'Lib');
 			$results = ArrayToIterator::array2Iterator($results);
 		}
 		
@@ -222,7 +222,7 @@ class Webpage extends AppModel {
 				'Link.action'=>$handle);
 		
 		// prepare the fields by wrapping the values in quotes
-		App::import('Lib', 'StringManipulator');
+		App::uses('StringManipulator', 'Lib');
 		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
 		
 		// meant only for all the Links belonging to this Webpage
