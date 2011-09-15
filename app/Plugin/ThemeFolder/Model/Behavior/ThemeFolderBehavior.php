@@ -37,7 +37,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 		if (!isset($this->settings[$Model->alias])) {
 			$this->settings[$Model->alias] = array(
 				'chmod' => 0775,
-				'themePath' => APP . 'View' . DS . 'themed' . DS,
+				'themePath' => APP . 'View' . DS . 'Themed' . DS,
 				'folderNameField' => 'name',
 				'defaultFolderName' => 'default'
 			);

@@ -52,7 +52,7 @@ App::import('Lib', 'TwigView.CoreExtension');
  */
 class TwigView extends View {
     // The folder theme name in views folder
-    const THEME_FOLDER = 'themed';
+    const THEME_FOLDER = 'Themed';
 
 	public $ext = '.tpl';
 	

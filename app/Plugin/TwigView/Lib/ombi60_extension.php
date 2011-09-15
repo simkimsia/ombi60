@@ -92,7 +92,7 @@ function ombi60SnippetsUrl($filename) {
 	
 		
 	if ($filename[0] !== '/') {
-		$filename = 'themed' . DS. $theme . DS . SNIPPETS_URL . $filename;
+		$filename = 'Themed' . DS. $theme . DS . SNIPPETS_URL . $filename;
 	}
 	
 	if (strpos($filename, '?') === false) {

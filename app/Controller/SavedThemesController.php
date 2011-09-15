@@ -331,7 +331,7 @@ class SavedThemesController extends AppController {
 			
 		} else if ($this->request->is('post')) {
 			
-			$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img' . DS;
+			$path = APP . 'View' . DS . 'Themed' . DS . $folder_name . DS . 'webroot' . DS . 'img' . DS;
 			$newImage = $this->request->data['Image']['name'];
 			if (strcasecmp($newImage, $image)!= 0) {
 				// copy file
@@ -376,7 +376,7 @@ class SavedThemesController extends AppController {
 			
 		if ($this->request->is('get')) {
 			
-			$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img' . DS;
+			$path = APP . 'View' . DS . 'Themed' . DS . $folder_name . DS . 'webroot' . DS . 'img' . DS;
 			
 			// find file
 			$file = new File($path . $image);
@@ -387,7 +387,7 @@ class SavedThemesController extends AppController {
 	}
 	
 	public function admin_edit_css($id = null, $folder_name) {
-		$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'css' . DS . 'style.css';
+		$path = APP . 'View' . DS . 'Themed' . DS . $folder_name . DS . 'webroot' . DS . 'css' . DS . 'style.css';
 		$file = new File($path);
 		
 		if ($this->request->is('get')) {

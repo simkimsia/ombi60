@@ -26,8 +26,8 @@ class Theme extends AppModel {
     
    
     $data = $this->SavedTheme->read(null,$savedThemeId);
-	  $folderPath = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'webroot'.DS.'assets';
-	   $json_data_file = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings_data.json'; 
+	  $folderPath = APP.DS.'View'.DS.'Themed'.DS.$data['SavedTheme']['folder_name'].DS.'webroot'.DS.'assets';
+	   $json_data_file = APP.DS.'View'.DS.'Themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings_data.json'; 
 	  if (!$this->__uploadFiles($folderPath)) {
        return false;        
     }

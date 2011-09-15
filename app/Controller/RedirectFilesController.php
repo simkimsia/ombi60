@@ -25,7 +25,7 @@ class RedirectFilesController extends AppController {
 		
 		$shopid = Shop::get('Shop.id');
 		$shopThemeFolder = $shopid . '_cover';
-		$json_data_file = APP.DS.'views'.DS.'themed'.DS.$shopThemeFolder.DS.'config'.DS.'settings_data.json';
+		$json_data_file = APP.DS.'View'.DS.'Themed'.DS.$shopThemeFolder.DS.'config'.DS.'settings_data.json';
 		
 		$json_data = array();
 		

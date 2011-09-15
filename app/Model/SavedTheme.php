@@ -110,11 +110,11 @@ class SavedTheme extends AppModel {
 	}
 	
 	private function constructCssPath($themeName) {
-		return APP . 'View' . DS . 'themed' . DS . $themeName . DS . 'webroot' . DS . 'css' . DS . 'style.css';
+		return APP . 'View' . DS . 'Themed' . DS . $themeName . DS . 'webroot' . DS . 'css' . DS . 'style.css';
 	}
 	
 	public function constructImagePath($themeName, $imageName = '') {
-		return APP . 'View' . DS . 'themed' . DS . $themeName . DS . 'webroot' . DS . 'img' . DS . $imageName;
+		return APP . 'View' . DS . 'Themed' . DS . $themeName . DS . 'webroot' . DS . 'img' . DS . $imageName;
 	}
 	
 	public function existFolderToRename($check){
@@ -226,7 +226,7 @@ class SavedTheme extends AppModel {
 	}
 	
 	public function fetchImages($folder_name) {
-		$path = APP . 'View' . DS . 'themed' . DS . $folder_name . DS . 'webroot' . DS . 'img';
+		$path = APP . 'View' . DS . 'Themed' . DS . $folder_name . DS . 'webroot' . DS . 'img';
 		
 		$dir = new Folder($path);
 		

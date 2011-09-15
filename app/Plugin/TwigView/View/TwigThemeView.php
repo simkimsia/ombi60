@@ -32,9 +32,9 @@ class TwigThemeView extends TwigView {
 				if (strpos($paths[$i], DS . 'plugins' . DS) === false
 					&& strpos($paths[$i], DS . 'libs' . DS . 'view') === false) {
 						if ($plugin) {
-							$themePaths[] = $paths[$i] . 'themed'. DS . $this->theme . DS . 'plugins' . DS . $plugin . DS;
+							$themePaths[] = $paths[$i] . 'Themed'. DS . $this->theme . DS . 'plugins' . DS . $plugin . DS;
 						}
-						$themePaths[] = $paths[$i] . 'themed'. DS . $this->theme . DS;
+						$themePaths[] = $paths[$i] . 'Themed'. DS . $this->theme . DS;
 					}
 			}
 			$paths = array_merge($themePaths, $paths);

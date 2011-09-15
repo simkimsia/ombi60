@@ -44,10 +44,10 @@ class ThemesController extends AppController {
 	  
 	  
 	  $data = $this->Theme->SavedTheme->read(null,$savedThemeId);
-	  $settings_html = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings.html';
-	  $uploadFolderPath = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'webroot'.DS.'assets';
-	  $json_data_file = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings_data.json'; 
-	  $asset_folder_url = DS.'theme'.DS.$data['SavedTheme']['folder_name'].DS.'assets'.DS;
+	  $settings_html = APP.DS.'View'.DS.'Themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings.html';
+	  $uploadFolderPath = APP.DS.'View'.DS.'Themed'.DS.$data['SavedTheme']['folder_name'].DS.'webroot'.DS.'assets';
+	  $json_data_file = APP.DS.'View'.DS.'Themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings_data.json'; 
+	  $asset_folder_url = DS.'Theme'.DS.$data['SavedTheme']['folder_name'].DS.'assets'.DS;
 	  
 	  
 	  if (isset($this->request->data) && !empty($this->request->data)) {
