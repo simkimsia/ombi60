@@ -213,7 +213,7 @@
                               'product_id' => '[0-9]+',
                               )); 
       // this is for the removal of images for product. format as above route
-        /**/
+        
         
         // this is for the ajax edit of images for saved_themes
         
@@ -269,9 +269,8 @@
                               'id' => '[0-9]+',
                               'product_id' => '[0-9]+',
                               ));
-        /**
-         *blogs & pages
-         ***/
+        /// blogs & pages
+        
         Router::connect('/admin/blogs/:blog_id/posts/add',
                         array('controller' => 'posts',
                               'action' => 'add',
@@ -365,9 +364,8 @@
                               'id' => '[0-9]+',
                              ));
         
-        /**
-         * admin domains
-         * */
+        /// admin domains
+         
         Router::connect('/admin/domains/make_primary/:id-:shopId',
                         array('controller' => 'domains',
                               'action' => 'make_this_primary',
@@ -379,9 +377,8 @@
                         ));
     
     
-        /**
-         * checkout app links
-         **/
+        /// checkout app links
+         
 
 
     
@@ -432,8 +429,8 @@
                               'shop_id' => '[0-9]+')
                         );
         
-        /** webpages for blogs and pages
-         * */
+        /// webpages for blogs and pages
+         
         Router::connect('/admin/pages',
                         array('controller' => 'webpages',
                               'admin'      => true,
@@ -445,9 +442,8 @@
                               'admin'      => true,
                               ));
         
-        /**
-         * admin link lists
-         **/
+        /// admin link lists
+         
         Router::connect('/admin/links/edit/*',
                         array('controller' => 'link_lists',
                               'action'     => 'edit',
@@ -459,4 +455,18 @@
                               'action' => 'general_settings',
                               'admin'=>true));
 
+
+/**
+ * Load all plugin routes.  See the CakePlugin documentation on 
+ * how to customize the loading of plugin routes.
+ */
+	CakePlugin::routes();
+
+/**
+ * Load the CakePHP default routes. Remove this if you do not want to use
+ * the built-in default routes.
+ */
+	require CAKE . 'Config' . DS . 'routes.php';
+
 ?>
+

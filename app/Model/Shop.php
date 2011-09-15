@@ -366,7 +366,7 @@ class Shop extends AppModel {
 		return $instance[0];
 	}
 
-	public function store($shop) {
+	public static function store($shop) {
 		if (empty($shop)) {
 			return false;
 		}
@@ -390,7 +390,7 @@ class Shop extends AppModel {
 	 *  )
 	 *
 	 **/
-	public function get($fieldName) {
+	public static function get($fieldName) {
 		$_shop =& Shop::getInstance();
 
 		$pathArray      = explode('.', $fieldName);

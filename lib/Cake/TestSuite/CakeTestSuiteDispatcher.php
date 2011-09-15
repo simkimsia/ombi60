@@ -138,6 +138,7 @@ class CakeTestSuiteDispatcher {
 
 		if (@include 'PHPUnit' . DS . 'Autoload.php') {
 			$found = true;
+			debug(1);
 		}
 
 		if (!$found) {
@@ -148,7 +149,9 @@ class CakeTestSuiteDispatcher {
 			}
 
 			if ($path && ini_set('include_path', $path . PATH_SEPARATOR . ini_get('include_path'))) {
+			debug(2);
 				$found = include 'PHPUnit' . DS . 'Autoload.php';
+			debug($path);
 			}
 		}
 		if ($found) {

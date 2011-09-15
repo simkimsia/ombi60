@@ -1,4 +1,8 @@
 <?php
+
+App::uses('AppModel', 'Model');
+App::uses('Model', 'Model');
+
 class Address extends AppModel {
 
 	public $name = 'Address';

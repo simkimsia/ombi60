@@ -1,6 +1,9 @@
 <?php
 App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
 App::import('Vendor', 'PayDollar', array('file'=>'paydollar'.DS.'includes'.DS.'paydollar.nvp.class.php'));
+/**
+ * @property Shop Shop
+ */
 class ShopsController extends AppController {
 
 	public $name = 'Shops';
