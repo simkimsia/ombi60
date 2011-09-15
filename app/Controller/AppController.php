@@ -32,6 +32,16 @@
  * @subpackage    cake.cake.libs.controller
  * @link http://book.cakephp.org/view/957/The-App-Controller
  */
+/**
+ * @property Webpage Webpage
+ * @property Blog Blog
+ * @property LinkList LinkList
+ * @property User User
+ * @property Shop Shop
+ * @property RandomStringComponent RandomString
+ * @property CasualSurfer CasualSurfer
+ * @property ProductImage ProductImage
+ */
 class AppController extends Controller {
 
 	public $components = array(
@@ -40,7 +50,7 @@ class AppController extends Controller {
         'Session',
         'Security',
         'RequestHandler',
-	    //'DebugKit.Toolbar',
+	    'DebugKit.Toolbar',
         'Cookie',
         'RandomString.RandomString',
         'Theme',
@@ -70,7 +80,7 @@ class AppController extends Controller {
 		$this->Auth->authenticate = array(
 	        	'Form' => array(
 	        		'fields' => array('username' => 'email', 'password' => 'password'), 
-					'userModel' => 'User', 
+					'userModel' => 'User',
 					'scope' => array('User.status' => 1)
 				),
 		);

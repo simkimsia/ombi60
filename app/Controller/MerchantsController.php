@@ -152,12 +152,12 @@ class MerchantsController extends AppController {
 		$this->set('logs', $log->find('dashboard'));
 	}
 
-	public private function updateSession() {
+	private function updateSession() {
 		$result = $this->Merchant->retrieveShopUserLanguageByUserId($this->Auth->user('id'));
 		$this->updateAuthSessionKey($result);
 	}
 
-	public private function updateCookie() {
+	private function updateCookie() {
 		$result = $this->Merchant->retrieveShopUserLanguageByUserId($this->Auth->user('id'));
 		$this->updateAuthCookieKey($result);
 	}

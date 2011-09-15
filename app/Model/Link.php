@@ -159,8 +159,8 @@ class Link extends AppModel {
 	
 	/**
 	 * for use in templates for shopfront pages
-	 * */
-	public function getTemplateVariable($links=array(), $multiple = true) {
+	 **/
+	public static function getTemplateVariable($links=array(), $multiple = true) {
 		
 		$results = array();
 		

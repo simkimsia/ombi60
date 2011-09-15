@@ -55,7 +55,7 @@ class LinkList extends AppModel {
 	/**
 	 * for use in templates for shopfront pages
 	 * */
-	public function getTemplateVariable($linklists=array(), $multiple = true) {
+	public static function getTemplateVariable($linklists=array(), $multiple = true) {
 		App::uses('ArrayToIterator', 'Lib');
 		$results = array();
 		

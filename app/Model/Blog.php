@@ -79,7 +79,7 @@ class Blog extends AppModel {
 	/**
 	 * for use in templates for shopfront pages
 	 * */
-	public function getTemplateVariable($blogs=array(), $multiple = true) {
+	public static function getTemplateVariable($blogs=array(), $multiple = true) {
 		App::uses('ArrayToIterator', 'Lib');
 		$results = array();
 		

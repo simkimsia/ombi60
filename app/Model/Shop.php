@@ -415,7 +415,7 @@ class Shop extends AppModel {
 	}
 	
 	
-	public function getTemplateVariable() {
+	public static function getTemplateVariable() {
 		$shopInstance = Shop::getInstance();
 		$shop = array('name' => $shopInstance['Shop']['name'],
 			      'url'  => $shopInstance['Shop']['url'] . '/',

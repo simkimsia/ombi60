@@ -202,7 +202,7 @@ class User extends AppModel {
 		return $instance[0];
 	}
 
-	public function store($user) {
+	public static function store($user) {
 		if (empty($user)) {
 			return false;
 		}
