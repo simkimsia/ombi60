@@ -70,8 +70,8 @@ class AppController extends Controller {
 		$this->Auth->authenticate = array(
 	        	'Form' => array(
 	        		'fields' => array('username' => 'email', 'password' => 'password'), 
-					'userModel' => 'AppUser', 
-					'scope' => array('AppUser.active' => 1)
+					'userModel' => 'User', 
+					'scope' => array('User.status' => 1)
 				),
 		);
 		$this->Auth->loginRedirect = array('controller' => 'shops', 'action' => 'index');

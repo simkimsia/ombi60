@@ -419,7 +419,7 @@ class OrdersController extends AppController {
 				$this->request->data['User']['full_name'] = $this->request->data['BillingAddress'][0]['full_name'];
 				$this->request->data['User']['name_to_call'] = $this->request->data['BillingAddress'][0]['full_name'];
 				// because we need to create brand new User so we need to create random password
-				$this->request->data['User']['password'] = $this->Auth->password($this->RandomString->generate());
+				$this->request->data['User']['password'] = AuthComponent::password($this->RandomString->generate());
 				// hackish code to pass the shop id into the uniqueEmailInShop validator
 				// read first few lines of uniqueEmailInShop method in User model
 				$this->request->data['User']['shop_id'] = $this->request->data['Customer']['shop_id'];
