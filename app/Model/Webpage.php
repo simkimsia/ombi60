@@ -79,7 +79,7 @@ class Webpage extends AppModel {
 	/**
 	 * for use in templates for shopfront pages
 	 * */
-	public function getTemplateVariable($pages=array(), $multiple = true) {
+	public static function getTemplateVariable($pages=array(), $multiple = true) {
 		
 		$results = array();
 		

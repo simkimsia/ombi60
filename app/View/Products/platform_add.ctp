@@ -50,9 +50,9 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit Product'), array('action' => 'edit', $product['Product']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete Product'), array('action' => 'delete', $product['Product']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $product['Product']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Products'), array('action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('New Product'), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Edit Product'), array('action' => 'edit', $product['Product']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Delete Product'), array('action' => 'delete', $product['Product']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $product['Product']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List Products'), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Product'), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

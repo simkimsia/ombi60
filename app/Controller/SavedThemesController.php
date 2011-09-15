@@ -43,13 +43,13 @@ class SavedThemesController extends AppController {
 		$limit = 4;
 		$shopId = User::get('Merchant.shop_id');
 		
-		$this->paginate = array(
+		$this->Paginator->paginate = array(
 			      'conditions' => array('SavedTheme.shop_id' => $shopId),
 			      'limit' => $limit,
 			      'order' => 'SavedTheme.featured desc'
 			      );
 	
-		$this->set('savedThemes', $this->paginate());
+		$this->set('savedThemes', $this->Paginator->paginate());
 		
 		if ($this->request->params['isAjax']) {
 			$this->layout = 'ajax';

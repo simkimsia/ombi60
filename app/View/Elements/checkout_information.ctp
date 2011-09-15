@@ -1,5 +1,5 @@
 <div id="checkout_warning">
-    <?php echo $html->image('lock.gif', array('class' => 'margin_right_5'));?>
+    <?php echo $this->Html->image('lock.gif', array('class' => 'margin_right_5'));?>
     <span class="font_bold"><?php echo __('You are using our secure server ');?></span>
 </div>
 <div class="clear">&nbsp;</div>
@@ -9,7 +9,7 @@
         <ul>
             <li>
                 <div class="left product_thumb">
-                    <?php echo $html->image('no-image.jpeg', array('class' => 'product_image'));?>
+                    <?php echo $this->Html->image('no-image.jpeg', array('class' => 'product_image'));?>
                 </div>
                 <div class="left product_thumb">
                     <span class="font_bold">Product 1</span>
@@ -20,7 +20,7 @@
             </li>
             <li>
                 <div class="left product_thumb">
-                    <?php echo $html->image('no-image.jpeg', array('class' => 'product_image'));?>
+                    <?php echo $this->Html->image('no-image.jpeg', array('class' => 'product_image'));?>
                 </div>
                 <div class="left product_thumb">
                     <span class="font_bold">Product 1</span>
@@ -31,7 +31,7 @@
             </li>
             <li>
                 <div class="left product_thumb">
-                    <?php echo $html->image('no-image.jpeg', array('class' => 'product_image'));?>
+                    <?php echo $this->Html->image('no-image.jpeg', array('class' => 'product_image'));?>
                 </div>
                 <div class="left product_thumb">
                     <span class="font_bold">Product 1</span>

@@ -1,5 +1,5 @@
 <?php 
-if ($paginator->params['paging'][$modelName]['pageCount'] > 1) {
+if ($this->Paginator->params['paging'][$modelName]['pageCount'] > 1) {
 ?>
     
         <div>

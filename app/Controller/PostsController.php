@@ -78,13 +78,13 @@ class PostsController extends AppController {
 			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 		
-		$this->paginate = array('conditions'=>array('Post.blog_id'=>$blog['Blog']['id'],
+		$this->Paginator->paginate = array('conditions'=>array('Post.blog_id'=>$blog['Blog']['id'],
 							    'Post.visible'=>true),
 					'order' => array('Post.created DESC'),
 					'fields' => array('Post.id',
 							  'Post.blog_id'));
 		
-		$posts = $this->paginate();
+		$posts = $this->Paginator->paginate();
 		
 		$all_post_ids = Set::extract('{n}.Post.id', $posts);
 		

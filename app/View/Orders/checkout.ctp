@@ -97,7 +97,7 @@
 <?php echo $this->Form->submit('Continue to next step', array('div' => FALSE));?>
 &nbsp;or&nbsp;
 <?php
-echo $html->link('return to store', array('controller' => 'products'));
+echo $this->Html->link('return to store', array('controller' => 'products'));
 ?>
 <?php echo $this->Form->end();?>
 

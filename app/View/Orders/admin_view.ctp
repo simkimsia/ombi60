@@ -1,8 +1,8 @@
 <?php 
-echo $html->script('jquery.styledButton.js', array('inline' => FALSE));
-echo $html->script('jquery.action_button.js', array('inline' => FALSE));  
+echo $this->Html->script('jquery.styledButton.js', array('inline' => FALSE));
+echo $this->Html->script('jquery.action_button.js', array('inline' => FALSE));  
 
-echo $html->css('styledButton');
+echo $this->Html->css('styledButton');
 
 /*echo "<pre>";
 print_r($order);
@@ -26,7 +26,7 @@ echo "</pre>";*/
         <div id="order_left">
             <div class="customer_information">
                 <div class="image_div">
-                    <?php echo $html->image('anonymousPerson.jpg', array('alt' => 'Any User', 'style' => "height: 100px; width: 100px;"));?>
+                    <?php echo $this->Html->image('anonymousPerson.jpg', array('alt' => 'Any User', 'style' => "height: 100px; width: 100px;"));?>
                 </div>
                 <div>
                     <ul class="order_customer_info">
@@ -113,7 +113,7 @@ echo "</pre>";*/
                         }
                         ?>
                         
-                        <?php //echo $html->link('Mark as payment received', 'javascript: void(0);');?>
+                        <?php //echo $this->Html->link('Mark as payment received', 'javascript: void(0);');?>
                     </div>
                     <div style="clear: both;"></div>
                 </div>

@@ -50,9 +50,9 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Edit Merchant'), array('action' => 'edit', $merchant['Merchant']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete Merchant'), array('action' => 'delete', $merchant['Merchant']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $merchant['Merchant']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Merchants'), array('action' => 'index')); ?> </li>
-		<li><?php echo $html->link(__('New Merchant'), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Edit Merchant'), array('action' => 'edit', $merchant['Merchant']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Delete Merchant'), array('action' => 'delete', $merchant['Merchant']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $merchant['Merchant']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List Merchants'), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Merchant'), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

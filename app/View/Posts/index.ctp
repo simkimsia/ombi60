@@ -68,8 +68,8 @@
 					
 					/*
 					echo $this->Paginator->counter();
-					echo $paginator->prev('<< Newer ', null, null, array('class' => 'disabled'));
-					echo $paginator->next(' Older >>', null, null, array('class' => 'disabled'));
+					echo $this->Paginator->prev('<< Newer ', null, null, array('class' => 'disabled'));
+					echo $this->Paginator->next(' Older >>', null, null, array('class' => 'disabled'));
 					*/
 					?>
 				

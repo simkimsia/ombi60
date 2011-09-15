@@ -37,7 +37,7 @@ class FilterComponent extends Component {
  * 
  * @var array
  */
-	var $settings = array(
+	var $defaults = array(
 		'actions' => array('index'),
 		'defaults' => array(),
 		'fieldFormatting' => array(
@@ -86,21 +86,21 @@ class FilterComponent extends Component {
  * @return void
  * @access public
  */
-	function initialize(&$controller, $settings = array()) {
+	function initialize($controller) {
+	    $settings = $this->settings;
+		$this->defaults['actions'] = (empty($settings['actions'])) ? $this->defaults['actions'] : (array) $settings['actions'];
 	
-		$this->settings['actions'] = (empty($settings['actions'])) ? $this->settings['actions'] : (array) $settings['actions'];
-	
-		if (in_array($controller->action, $this->settings['actions'])) {
+		if (in_array($controller->action, $this->defaults['actions'])) {
 			$settings['whitelist'] = (empty($settings['whitelist'])) ? array() : (array) $settings['whitelist'];
-			$this->settings = array_merge($this->settings, $settings);
-			$this->paginate = array_merge($this->paginate, $controller->paginate);
+			$this->settings = array_merge($this->defaults, $settings);
+			$this->paginate = array_merge($this->paginate, (array)$controller->Paginator->paginate);
 
 			$this->processAction($controller);
 		}
 	
 	}
 
-	function processAction(&$controller) {
+	function processAction($controller) {
 	
 		if (isset($controller->data['reset']) || isset($controller->data['cancel'])) {
 			$controllerName = Inflector::underscore($controller->name);

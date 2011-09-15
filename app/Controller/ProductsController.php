@@ -426,7 +426,7 @@ class ProductsController extends AppController {
 		
 		$shop_id = Shop::get('Shop.id');
 		
-		$this->paginate = array(
+		$this->Paginator->paginate = array(
 			      'conditions' => array('AND'=> array(
 								  'Product.shop_id' => $shop_id
 								 ),
@@ -441,9 +441,9 @@ class ProductsController extends AppController {
 			      );
 
 		
-		//$this->paginate['conditions']['AND'] = array_merge($this->Filter->paginate['conditions'], array('Product.shop_id' => User::get('Merchant.shop_id')));
+		//$this->Paginator->paginate['conditions']['AND'] = array_merge($this->Filter->paginate['conditions'], array('Product.shop_id' => User::get('Merchant.shop_id')));
 
-		$this->set('products', $this->paginate());
+		$this->set('products', $this->Paginator->paginate());
 
 	}
 	
@@ -467,11 +467,11 @@ class ProductsController extends AppController {
 		// for uploadify
 		// the images list related code
 		// to make paging easier to test, we set as 1 per page.
-		$this->paginate = array('conditions'=>array('ProductImage.product_id'=>$id),
+		$this->Paginator->paginate = array('conditions'=>array('ProductImage.product_id'=>$id),
                                       'order' => 'ProductImage.cover desc',
                                       'limit'=>'10');
 	
-		$productImages = $this->paginate('ProductImage');
+		$productImages = $this->Paginator->paginate('ProductImage');
 		
 		$errors = array();
 		
@@ -531,7 +531,7 @@ class ProductsController extends AppController {
 									));	
 									
 
-		
+		    
 		// must be valid shop
 		$invalidShop = !($shop_id > 0);
 		// product must exist
@@ -568,10 +568,10 @@ class ProductsController extends AppController {
 		}
 
 		// assign the conditions for the pagination of Product
-		$this->paginate = $collection['ProductGroup']['product_paginate'];
+		$this->Paginator->paginate = $collection['ProductGroup']['product_paginate'];
 		
 		// paginate using the parent model Product
-		$products = $this->paginate('Product');
+		$products = $this->Paginator->paginate('Product');
 		
 		// assign the paginated products back into $collection
 		$collection['Product'] = $products;
@@ -773,7 +773,7 @@ class ProductsController extends AppController {
 	public function platform_index() {
 
 		$this->Product->recursive = 0;
-		$this->set('products', $this->paginate());
+		$this->set('products', $this->Paginator->paginate());
 
 	}
 

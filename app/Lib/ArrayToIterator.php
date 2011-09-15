@@ -1,7 +1,7 @@
 <?php
 
 class ArrayToIterator {
-        function array2Iterator($array=array()) {
+        public static function array2Iterator($array=array()) {
                 $iterator = new IteratorForTwig($array);
                 return $iterator;
         }

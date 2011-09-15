@@ -148,7 +148,7 @@ class MerchantsController extends AppController {
  **/
 	public function admin_index() {
 		$this->Merchant->recursive = 0;
-		$this->set('merchants', $this->paginate());
+		$this->set('merchants', $this->Paginator->paginate());
 		$log = ClassRegistry::init('Log.Log');
 		$this->set('logs', $log->find('dashboard'));
 	}
@@ -194,7 +194,7 @@ class MerchantsController extends AppController {
  **/
 	public function platform_index() {
 		$this->Merchant->recursive = 0;
-		$this->set('merchants', $this->paginate());
+		$this->set('merchants', $this->Paginator->paginate());
 	}
 
 /**

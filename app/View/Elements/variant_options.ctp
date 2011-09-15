@@ -28,7 +28,9 @@
             <div class="clear"></div>
         </div>
         <?php
-            echo $this->Html->link('Add another option', 'javascript: void(0);', array('id' => 'plus', 'style' => empty((count($productOptions) < 3)) ? 'display: block' : 'display: none;'));
+            echo $this->Html->link('Add another option', 'javascript: void(0);', array(
+              'id' => 'plus',
+              'style' => (count($productOptions) < 3) ? 'display: block' : 'display: none;'));
         ?>
 </fieldset>        
 

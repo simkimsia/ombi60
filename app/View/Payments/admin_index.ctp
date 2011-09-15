@@ -6,7 +6,7 @@ echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jqu
 
     <div class="payments">
         <div class="payment_left">
-            <?php echo $html->image('paypal_cc.gif', array('alt' => 'Paypal'));?>
+            <?php echo $this->Html->image('paypal_cc.gif', array('alt' => 'Paypal'));?>
         </div>
         <div class="payment_right">
             <div class="service_class">Service: <strong>PayPal</strong></div>
@@ -127,7 +127,7 @@ echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jqu
     </div>
     <div class="payments">
         <div class="payment_left">
-            <?php echo $html->image('custom_payment_method.gif', array('alt' => 'Custom'));?>
+            <?php echo $this->Html->image('custom_payment_method.gif', array('alt' => 'Custom'));?>
         </div>
         <div class="payment_right">
             <div class="service_class">Service: <strong>Custom Payment Methods</strong></div>

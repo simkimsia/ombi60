@@ -24,7 +24,7 @@ class CartsController extends AppController {
 
 	public function index() {
 		$this->Cart->recursive = 0;
-		$this->set('carts', $this->paginate());
+		$this->set('carts', $this->Paginator->paginate());
 	}
 
 	public function view($id = null) {
