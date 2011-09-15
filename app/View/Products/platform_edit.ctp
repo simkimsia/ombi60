@@ -18,7 +18,7 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Delete'), array('action' => 'delete', $this->Form->value('Product.id')), null, sprintf(__('Are you sure you want to delete # %s?'), $this->Form->value('Product.id'))); ?></li>
-		<li><?php echo $html->link(__('List Products'), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $this->Form->value('Product.id')), null, sprintf(__('Are you sure you want to delete # %s?'), $this->Form->value('Product.id'))); ?></li>
+		<li><?php echo $this->Html->link(__('List Products'), array('action' => 'index'));?></li>
 	</ul>
 </div>

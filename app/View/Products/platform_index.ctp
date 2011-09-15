@@ -56,9 +56,9 @@ foreach ($products as $product):
 			<?php echo $product['Product']['visible']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View'), array('action' => 'view', $product['Product']['id'])); ?>
-			<?php echo $html->link(__('Edit'), array('action' => 'edit', $product['Product']['id'])); ?>
-			<?php echo $html->link(__('Delete'), array('action' => 'delete', $product['Product']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $product['Product']['id'])); ?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $product['Product']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $product['Product']['id'])); ?>
+			<?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $product['Product']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $product['Product']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -71,6 +71,6 @@ foreach ($products as $product):
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('New Product'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('New Product'), array('action' => 'add')); ?></li>
 	</ul>
 </div>

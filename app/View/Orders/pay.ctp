@@ -24,7 +24,7 @@
 <div class="gray_background">
     <h2 class="border_bottom">Payment method</h2>
     <div style="margin: 5px;">All transactions are secured and encrypted. We never store credit card information. View our <?php
-    echo $html->link('privacy policy', 'javascript: void(0);', array('title' => 'privacy policy'));
+    echo $this->Html->link('privacy policy', 'javascript: void(0);', array('title' => 'privacy policy'));
     ?> to learn more.</div>
     <div class="show_shipment_option">
     <?php
@@ -58,7 +58,7 @@
     <div class="clear">&nbsp;</div>
 </div>
 <?php echo $this->Form->submit('Complete my purchase', array('div' => FALSE));?>&nbsp;or&nbsp;
-<?php echo $html->link('return to store', array('controller' => 'products'));?>
+<?php echo $this->Html->link('return to store', array('controller' => 'products'));?>
 <?php echo $this->Form->end();?>
 <!--
 <div>

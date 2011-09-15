@@ -7,7 +7,10 @@
     <?php //echo $this->Html->link(__('Cancel'), array('action' => 'index', 'admin' => true));?>
 </div>
 <?php
-	echo $this->element('errors', array('errors' => $errors));
+    if (empty($errors)) {
+        $errors = null;
+    }
+    echo $this->element('errors', array('errors' => $errors));
 	echo $this->Form->create('Shop');
 	echo $this->Form->input('ShopSetting.id', array('type'=>'hidden', 'value'=>$shopSetting['ShopSetting']['id']));
 	echo $this->Form->input('ShopSetting.shop_id', array('type'=>'hidden', 'value'=>$shopSetting['ShopSetting']['shop_id']));

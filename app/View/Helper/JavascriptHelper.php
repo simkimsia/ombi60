@@ -655,7 +655,7 @@ class JavascriptHelper extends AppHelper {
 				$val = 'null';
 			break;
 			case (is_bool($val)):
-				$val = empty($val) ? 'true' : 'false';
+				$val = !empty($val) ? 'true' : 'false';
 			break;
 			case (is_int($val)):
 				$val = $val;

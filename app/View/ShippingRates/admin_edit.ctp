@@ -4,7 +4,7 @@
     <div class="text_center"><h2><?php echo __('Shipping to '.$displayCountryTitle);?></h2>
         <a href="javascript: void(0)" onclick="toggleEditForm();return false;" id="view_edit"><?php echo __('Edit') ?></a>|
         <?php
-        echo $html->link('All Shipping Rates', array(
+        echo $this->Html->link('All Shipping Rates', array(
                                                 'controller' => 'shipping_rates',
                                                 'action' => 'index',
                                                 'admin'=>true));

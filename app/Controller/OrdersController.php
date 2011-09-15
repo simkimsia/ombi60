@@ -81,7 +81,7 @@ class OrdersController extends AppController {
 
 	public function index() {
 		$this->Order->recursive = 0;
-		$this->set('orders', $this->paginate());
+		$this->set('orders', $this->Paginator->paginate());
 	}
 	
 	public function admin_index() {

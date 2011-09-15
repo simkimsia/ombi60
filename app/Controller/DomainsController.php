@@ -17,7 +17,7 @@ class DomainsController extends AppController {
 		$mainUrl = Shop::get('Shop.primary_domain');
 		$this->set('mainUrl', $mainUrl);
         $shopId = User::get('Merchant.shop_id');
-		$this->set('domains', $this->paginate('Domain', array(
+		$this->set('domains', $this->Paginator->paginate('Domain', array(
 								      'Domain.shop_id ' => User::get('Merchant.shop_id')) ));
 		$this->set('shopId', $shopId);
 	}
@@ -153,7 +153,7 @@ class DomainsController extends AppController {
 		
         $shopId = User::get('Merchant.shop_id');
 		
-		return $this->paginate('Domain', array(
+		return $this->Paginator->paginate('Domain', array(
 								      'Domain.shop_id ' => User::get('Merchant.shop_id')) );
 		
 	}

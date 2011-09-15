@@ -56,9 +56,9 @@ foreach ($orders as $order):
 			<?php echo $order['Order']['status']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View'), array('action' => 'view', $order['Order']['id'])); ?>
-			<?php echo $html->link(__('Edit'), array('action' => 'edit', $order['Order']['id'])); ?>
-			<?php echo $html->link(__('Delete'), array('action' => 'delete', $order['Order']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $order['Order']['id'])); ?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $order['Order']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $order['Order']['id'])); ?>
+			<?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $order['Order']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $order['Order']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -71,6 +71,6 @@ foreach ($orders as $order):
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('New Order'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('New Order'), array('action' => 'add')); ?></li>
 	</ul>
 </div>

@@ -1,4 +1,4 @@
-<?php echo $html->script('shipping/shipping_index', array('inline' => FALSE));?>
+<?php echo $this->Html->script('shipping/shipping_index', array('inline' => FALSE));?>
 <style type="text/css">
 table tr:nth-child(2n) td {
     background: none;
