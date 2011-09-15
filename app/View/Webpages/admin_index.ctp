@@ -43,7 +43,7 @@
 		    }
 	    ?>
 	    <tr<?php echo $class;?>>
-		    <td width="5%" align="center"><?php echo $form->checkbox('Webpage.selected.'.$key, array('value' => $webpage['Webpage']['id'], 'class' => 'checkbox_check' . $hiddenCheckboxClass, 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>
+		    <td width="5%" align="center"><?php echo $this->Form->checkbox('Webpage.selected.'.$key, array('value' => $webpage['Webpage']['id'], 'class' => 'checkbox_check' . $hiddenCheckboxClass, 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>
 		    <td width="60%">
           <?php echo $this->Html->link($webpage['Webpage']['title'], array('action' => 'view', $webpage['Webpage']['id'])); 
             
@@ -58,7 +58,7 @@
 	    </table>
 	    
 	    <?php 
-        if ($paginator->params['paging']['Webpage']['pageCount'] > 1) {
+        if ($this->Paginator->params['paging']['Webpage']['pageCount'] > 1) {
         ?>
             <div class="text_center" style="width: 85%;">
                 <?php echo $this->element('pagination', array('modelName' => 'Webpage'));?> 

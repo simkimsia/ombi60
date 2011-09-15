@@ -1,14 +1,14 @@
 <div class="merchants form">
-<?php echo $form->create('Merchant');?>
+<?php echo $this->Form->create('Merchant');?>
 	<fieldset>
  		<legend><?php echo __('Edit Merchant');?></legend>
 	<?php
-		echo $form->input('full_name');
-		echo $form->input('name_to_call');
-		echo $form->input('email');
-		echo $form->input('password');
+		echo $this->Form->input('full_name');
+		echo $this->Form->input('name_to_call');
+		echo $this->Form->input('email');
+		echo $this->Form->input('password');
 		
 	?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end('Submit');?>
 </div>

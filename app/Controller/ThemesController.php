@@ -5,7 +5,7 @@ class ThemesController extends AppController {
 	public $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax','settingsform');
 	
 	public function beforeFilter() {
-		
+        $this->ThemeModel = ClassRegistry::init('Theme');
 		/*
 		//public & private keys for reCAPTCHA
 		$this->Recaptcha->publickey = ""; 
@@ -29,21 +29,21 @@ class ThemesController extends AppController {
 	}
 	
 	public function admin_index() {
-		$this->Theme->SavedTheme->recursive = 0;
+		$this->ThemeModel->SavedTheme->recursive = 0;
 
 		$this->paginate = array(
 			      'conditions' => array('SavedTheme.shop_id' => User::get('Merchant.shop_id')));
 	
-		$this->set('themes', $this->paginate());
+		$this->set('themes', $this->paginate($this->ThemeModel));
 
 	}
 	
 	public function admin_settings() {
 	 
 	  $savedThemeId = Shop::get('Shop.saved_theme_id');
+
 	  
-	  
-	  $data = $this->Theme->SavedTheme->read(null,$savedThemeId);
+	  $data = $this->ThemeModel->SavedTheme->read(null,$savedThemeId);
 	  $settings_html = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings.html';
 	  $uploadFolderPath = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'webroot'.DS.'assets';
 	  $json_data_file = APP.DS.'views'.DS.'themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings_data.json'; 
@@ -53,8 +53,8 @@ class ThemesController extends AppController {
 	  if (isset($this->request->data) && !empty($this->request->data)) {
 	    //print_r($this->request->data);
 	   
-	    $this->Theme->set($this->request->data);	  
-	    if ($this->Theme->saveTemplateSettings($savedThemeId)) {
+	    $this->ThemeModel->set($this->request->data);
+	    if ($this->ThemeModel->saveTemplateSettings($savedThemeId)) {
 	       $this->Session->setFlash('Settings saved successfully.');
 	    } else {
 	       $this->Session->setFlash('Unable to save settings.');

@@ -36,12 +36,12 @@ echo $this->Paginator->counter(array(
 ));
 ?></span>
 <?php
-if ($paginator->params['paging']['Order']['pageCount'] > 1) {
+if ($this->Paginator->params['paging']['Order']['pageCount'] > 1) {
 ?> 
 <span class="top-paging">
-    <?php echo $paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
- |  <?php echo $paginator->numbers();?>
-    <?php echo $paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
+    <?php echo $this->Paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
+ |  <?php echo $this->Paginator->numbers();?>
+    <?php echo $this->Paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
 </span>
 <?php 
 } 
@@ -94,11 +94,11 @@ foreach ($orders as $order):
 </table>
 <div class="bottom-paging">
 <?php
-if ($paginator->params['paging']['Order']['pageCount'] > 1) {
+if ($this->Paginator->params['paging']['Order']['pageCount'] > 1) {
 ?> 
-    <?php echo $paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
- |  <?php echo $paginator->numbers();?>
-    <?php echo $paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
+    <?php echo $this->Paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
+ |  <?php echo $this->Paginator->numbers();?>
+    <?php echo $this->Paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
 </div>
 <?php
 }

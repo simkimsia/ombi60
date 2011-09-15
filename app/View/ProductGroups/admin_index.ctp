@@ -36,7 +36,7 @@
 		    }
 	    ?>
 	    <tr<?php echo $class;?>>
-		    <!--<td width="5%" align="center"><?php //echo $form->input('check_box_id', array('value' => $collection['ProductGroup']['id'], 'class' => 'checkbox_check', 'type' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>-->
+		    <!--<td width="5%" align="center"><?php //echo $this->Form->input('check_box_id', array('value' => $collection['ProductGroup']['id'], 'class' => 'checkbox_check', 'type' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>-->
 		    <td width="60%">
           <?php echo $this->Html->link($smartCollection['ProductGroup']['title'], array('action' => 'view_smart', $smartCollection['ProductGroup']['id'])); 
                 

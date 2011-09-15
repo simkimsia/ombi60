@@ -2,21 +2,21 @@
 <h2><?php echo __('Products');?></h2>
 <p>
 <?php
-echo $paginator->counter(array(
+echo $this->Paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%')
 ));
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('shop_id');?></th>
-	<th><?php echo $paginator->sort('title');?></th>
-	<th><?php echo $paginator->sort('code');?></th>
-	<th><?php echo $paginator->sort('description');?></th>
-	<th><?php echo $paginator->sort('price');?></th>
-	<th><?php echo $paginator->sort('created');?></th>
-	<th><?php echo $paginator->sort('modified');?></th>
-	<th><?php echo $paginator->sort('visible');?></th>
+	<th><?php echo $this->Paginator->sort('id');?></th>
+	<th><?php echo $this->Paginator->sort('shop_id');?></th>
+	<th><?php echo $this->Paginator->sort('title');?></th>
+	<th><?php echo $this->Paginator->sort('code');?></th>
+	<th><?php echo $this->Paginator->sort('description');?></th>
+	<th><?php echo $this->Paginator->sort('price');?></th>
+	<th><?php echo $this->Paginator->sort('created');?></th>
+	<th><?php echo $this->Paginator->sort('modified');?></th>
+	<th><?php echo $this->Paginator->sort('visible');?></th>
 	<th class="actions"><?php echo __('Actions');?></th>
 </tr>
 <?php
@@ -65,9 +65,9 @@ foreach ($products as $product):
 </table>
 </div>
 <div class="paging">
-	<?php echo $paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
+	<?php echo $this->Paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
+ | 	<?php echo $this->Paginator->numbers();?>
+	<?php echo $this->Paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
 </div>
 <div class="actions">
 	<ul>
