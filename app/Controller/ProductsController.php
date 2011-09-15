@@ -531,7 +531,7 @@ class ProductsController extends AppController {
 									));	
 									
 
-		
+		    
 		// must be valid shop
 		$invalidShop = !($shop_id > 0);
 		// product must exist

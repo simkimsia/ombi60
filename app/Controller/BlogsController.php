@@ -40,10 +40,11 @@ class BlogsController extends AppController {
 		$this->Blog->recursive 	      = 0;
 		$blog                         = $this->Blog->read(null, $id);
 		
-		$this->Paginator->paginate['conditions'] = array('Post.blog_id' => $blog['Blog']['id']);
-		$this->Paginator->paginate['order']      = array('Post.created DESC');
-		$this->Paginator->paginate['fields']     = array('Post.id', 'Post.blog_id', 'Post.title',
-						      'Post.created', 'Post.modified', 'Post.visible');
+		$this->Paginator->paginate = array(
+            'conditions' => array('Post.blog_id' => $blog['Blog']['id']),
+		    'order'      => array('Post.created DESC'),
+		    'fields'     => array('Post.id', 'Post.blog_id', 'Post.title',
+						      'Post.created', 'Post.modified', 'Post.visible'));
 		
 		$posts                        = $this->Paginator->paginate('Post');
 
