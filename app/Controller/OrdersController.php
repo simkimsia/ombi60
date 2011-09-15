@@ -1,5 +1,8 @@
 <?php
 App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
+/**
+ * @property mixed Order
+ */
 class OrdersController extends AppController {
 
 	public $name = 'Orders';
@@ -92,7 +95,7 @@ class OrdersController extends AppController {
 		$this->Order->Customer->Behaviors->attach('Linkable.Linkable');
 		$this->Order->Customer->User->Behaviors->attach('Linkable.Linkable');
 		
-		$this->paginate = array(
+		$this->Paginator->paginate = array(
 			      'conditions' => array('Order.shop_id' => $shop_id),
 							
 			      'link'=>array(
@@ -101,9 +104,9 @@ class OrdersController extends AppController {
 			      );
 		
 		// combine the original pagination conditions with the Filter pagination
-		$this->paginate['conditions'] = array_merge($this->Filter->paginate['conditions'], $this->paginate['conditions']);
+		$this->Paginator->paginate['conditions'] = array_merge($this->Filter->paginate['conditions'], $this->Paginator->paginate['conditions']);
 		
-		$orders = $this->paginate();
+		$orders = $this->Paginator->paginate();
 
 		$this->set('orders', $orders);
 		

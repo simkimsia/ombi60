@@ -54,6 +54,7 @@ class AppController extends Controller {
         'Cookie',
         'RandomString.RandomString',
         'Theme',
+        'Paginator',
 	);
 
 	public $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax');

@@ -2,7 +2,7 @@
 class Log extends LogAppModel {
 	var $name = 'Log';
 	var $order = 'Log.created DESC';
-	var $_findMethods = array('dashboard' => true);
+	var $findMethods = array('dashboard' => true);
 	
 	var $belongsTo = array('User');
 
