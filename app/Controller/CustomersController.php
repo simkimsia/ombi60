@@ -47,7 +47,6 @@ class CustomersController extends AppController {
 		$this->set('shop_id', Shop::get('Shop.id'));
 
 		if ($this->request->is('post')) {
-
 			// hash the confirm password field so that the comparison can be done successfully
 			// password is automatically hashed by the Auth component
 			$this->request->data['User']['password_confirm'] = AuthComponent::password($this->request->data['User']['password_confirm']);
@@ -69,6 +68,7 @@ class CustomersController extends AppController {
 
 			if ($this->Customer->signupNewAccount($this->request->data)) {
 				$this->Session->setFlash(__('You\'ve successfully registered.'), 'default', array('class'=>'flash_success'));
+				$this->redirect('/');
 
 			} else {
 				$this->Session->setFlash(__('Sorry, the information you\'ve entered is incorrect.'), 'default', array('class'=>'flash_failure'));
@@ -77,10 +77,10 @@ class CustomersController extends AppController {
 
 			// regardless of success, we must blank out the password fields because we only have the hashed versions
 			$this->request->data['User']['password_confirm'] = NULL;
-			$this->request->data['User']['password'] = NULL;
+			$this->request->data['User']['password'] = NULL; 	
 		}
 
-
+		debug($this->Customer->getAllValidationErrors());
 		$this->set('errors', $this->Customer->getAllValidationErrors());
 
 	}

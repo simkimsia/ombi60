@@ -5,7 +5,7 @@ if (!empty($errors)) { ?>
     
     <ul>
         <?php foreach ($errors as $field => $error) { ?>
-        <li><?php echo $error; ?></li>
+        <li><?php echo $error[0]; ?></li>
         <?php } ?>
     </ul>
 </div>

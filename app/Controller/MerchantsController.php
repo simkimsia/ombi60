@@ -62,8 +62,9 @@ class MerchantsController extends AppController {
 
 			// hash the confirm password field so that the comparison can be done successfully
 			// password is automatically hashed by the Auth component
-			$this->request->data['User']['password_confirm'] = $this->Auth->password($this->request->data['User']['password_confirm']);
-
+			$this->request->data['User']['password_confirm'] = AuthComponent::password($this->request->data['User']['password_confirm']);
+			$this->request->data['User']['password'] = AuthComponent::password($this->request->data['User']['password']);
+			
 			if ($this->Merchant->signupNewAccount($this->request->data)) {
 				$this->Session->setFlash(__('You\'ve successfully registered.'));
 
