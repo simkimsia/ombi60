@@ -93,22 +93,20 @@ class MerchantsController extends AppController {
 		$this->set('shop_id', Shop::get('Shop.id'));
 
 
-		if ($this->Auth->user()) {
-			
-			// this code is for the remember me when Merchant first logs in and chooses the remember me
-			if (!empty($this->request->data) & $this->request->data['User']['remember_me']) {
-				$cookie = array('email'    => $this->request->data['User']['email'],
-						'password' => $this->request->data['User']['password'],);
-				
-				$this->updateCookie();
-				
-				unset($this->request->data['User']['remember_me']);
-				
+		if ($this->request->is('post')) {
+			debug("HOLAAAA");
+			if ($this->Auth->login() &&$this->Auth->user()) {
+				debug("CJAPPPP");
+				// this code is for the remember me when Merchant first logs in and chooses the remember me
+				if (!empty($this->request->data) & $this->request->data['User']['remember_me']) {
+					$cookie = array('email'    => $this->request->data['User']['email'],
+							'password' => $this->request->data['User']['password'],);
+					$this->updateCookie();
+					unset($this->request->data['User']['remember_me']);	
+				}
+				$this->updateSession();
+				$this->redirect($this->Auth->redirect());
 			}
-			
-			$this->updateSession();
-			$this->redirect($this->Auth->redirect());
-			
 		}
 		
 		if (empty($this->request->data)) {
