@@ -34,7 +34,7 @@ class ThemeComponent extends Component {
 	public function startup(Controller $controller) {
 		
 		if (in_array($controller->action, $this->actions) || empty($this->actions)) {
-		
+			App::uses('Shop', 'Model');
 			// retrieve the theme name to view pages with
 			$shopId = Shop::get('Shop.id');
 		
