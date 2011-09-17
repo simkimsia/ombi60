@@ -102,7 +102,7 @@ class FilterComponent extends Component {
 
 	function processAction($controller) {
 	
-		if (isset($controller->data['reset']) || isset($controller->data['cancel'])) {
+		if (isset($controller->request->data['reset']) || isset($controller->request->data['cancel'])) {
 			$controllerName = Inflector::underscore($controller->name);
 			$this->Session->delete('Filter.' . $controllerName . '.' . $controller->action);
 			$controller->redirect(Router::url(array('controller'=>$controllerName, 'action'=>$controller->action),true));
@@ -157,11 +157,11 @@ class FilterComponent extends Component {
 		$controller = $this->_prepareFilter($controller);
 
 		// Set default filter values
-		$controller->data = array_merge($this->settings['defaults'], $controller->data);
+		$controller->request->data = array_merge($this->settings['defaults'], $controller->request->data);
 		$redirectData = array();
 		
-		if (isset($controller->data)) {
-			foreach ($controller->data as $model => $fields) {
+		if (isset($controller->request->data)) {
+			foreach ($controller->request->data as $model => $fields) {
 			
 				$modelFieldNames = array();
 
@@ -200,15 +200,15 @@ class FilterComponent extends Component {
 				
 				// Save model data for redirect
 				if ($this->settings['redirect'] === true) {
-					if (is_array($controller->data[$model]) AND strtolower($model) != '_token') {
-						foreach ($controller->data[$model] as $key => $val) {
+					if (is_array($controller->request->data[$model]) AND strtolower($model) != '_token') {
+						foreach ($controller->request->data[$model] as $key => $val) {
 							$redirectData["$model.$key"] = $val;
 						}	
 					}
 				}
 				// Unset empty model data
 				if (count($fields) == 0) {
-					unset($controller->data[$model]);
+					unset($controller->request->data[$model]);
 				}
 			}
 		}
@@ -355,13 +355,13 @@ class FilterComponent extends Component {
 		
 		$filter = array();
 		
-		if (isset($controller->data)) {
+		if (isset($controller->request->data)) {
 			
-			foreach ($controller->data as $model => $fields) {
+			foreach ($controller->request->data as $model => $fields) {
 				if (is_array($fields)) {
 					foreach ($fields as $key => $field) {
 						if ($field == '') {
-							unset($controller->data[$model][$key]);
+							unset($controller->request->data[$model][$key]);
 						}
 					}
 				}
@@ -369,16 +369,16 @@ class FilterComponent extends Component {
 
 			App::import('Sanitize');
 			$sanitize = new Sanitize();
-			$controller->data = $sanitize->clean($controller->data, array('encode' => false));
+			$controller->request->data = $sanitize->clean($controller->request->data, array('encode' => false));
 
-			$filter = $controller->data;
+			$filter = $controller->request->data;
 		}
 
 		if (empty($filter)) {
 			$filter = $this->_checkParams($controller);
 		}
 
-		$controller->data = $filter;
+		$controller->request->data = $filter;
 
 		return $controller;
 	}
