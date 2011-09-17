@@ -1,2 +1,7 @@
 *.kpf
 /mainsite/tmp
+*.tmproj
+app/tmp/cache/cake*
+.DS_Store
+*.DS_Store
+tags
