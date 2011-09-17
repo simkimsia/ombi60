@@ -4,7 +4,6 @@ class Theme extends AppModel {
 	public $displayField = 'name';
 
 	public $hasMany = array(
-		
 		'SavedTheme' => array(
 			'className' => 'SavedTheme',
 			'foreignKey' => 'theme_id',

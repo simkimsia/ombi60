@@ -52,7 +52,7 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('New %s'), __('Theme')), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('New %s'), __('Theme')), array('action' => 'settings')); ?></li>
 		
 		
 	</ul>

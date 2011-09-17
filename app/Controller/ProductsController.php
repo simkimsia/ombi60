@@ -461,8 +461,7 @@ class ProductsController extends AppController {
 		$shopId = Shop::get('Shop.id');
 		
 		// get the product details
-                $product = $this->Product->getDetails($id); //This action gets complete product information
-		
+        $product = $this->Product->getDetails($id); //This action gets complete product information
 		$this->set(compact('collections', 'product', 'variantOptions'));
 		// for uploadify
 		// the images list related code

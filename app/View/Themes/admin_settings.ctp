@@ -36,7 +36,7 @@
  if (isset($HtmlArray['html']['body']['fieldset']) && is_array($HtmlArray['html']['body']['fieldset']) && !empty($HtmlArray['html']['body']['fieldset'])) {
       echo $this->Form->create('Theme',array('enctype' => 'multipart/form-data'));
 
-        $this->settingsform->init(array('json_data' => $json_data , 'asset_folder_url' => $asset_folder_url));
+        $this->Settingsform->init(array('json_data' => $json_data , 'asset_folder_url' => $asset_folder_url));
       ?>
      
       <?php
@@ -53,7 +53,7 @@
                    }
                    
                    echo "<fieldset>";
-                    echo $this->settingsform->buildTag(0,$fieldset,1);
+                    echo $this->Settingsform->buildTag(0,$fieldset,1);
                  ?>
                
                 </fieldset> 
@@ -70,7 +70,7 @@
                }
                
                echo "<fieldset>";
-                echo $this->settingsform->buildTag(0,$HtmlArray['html']['body']['fieldset'],1);
+                echo $this->Settingsform->buildTag(0,$HtmlArray['html']['body']['fieldset'],1);
              ?>    
            </div>
       <?php            

@@ -2,7 +2,7 @@
 class ThemesController extends AppController {
 
 	public $name = 'Themes';
-	public $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax','settingsform');
+	public $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax','Settingsform');
 	
 	public function beforeFilter() {
         $this->ThemeModel = ClassRegistry::init('Theme');
@@ -41,10 +41,7 @@ class ThemesController extends AppController {
 	public function admin_settings() {
 	 
 	  $savedThemeId = Shop::get('Shop.saved_theme_id');
-
-	  
-	  
-	  $data = $this->Theme->SavedTheme->read(null,$savedThemeId);
+	  $data = $this->ThemeModel->SavedTheme->read(null,$savedThemeId);
 	  $settings_html = APP.DS.'View'.DS.'Themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings.html';
 	  $uploadFolderPath = APP.DS.'View'.DS.'Themed'.DS.$data['SavedTheme']['folder_name'].DS.'webroot'.DS.'assets';
 	  $json_data_file = APP.DS.'View'.DS.'Themed'.DS.$data['SavedTheme']['folder_name'].DS.'config'.DS.'settings_data.json'; 
