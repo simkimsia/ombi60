@@ -12,7 +12,7 @@ class PaydollarTransactionsController extends AppController {
 		parent::beforeFilter();
 		
 		if(isset($this->Security) && $this->request->action == 'datafeed') {
-			$this->Security->enabled = false;
+			$this->Components->disable('Security');
 		}
 
 		

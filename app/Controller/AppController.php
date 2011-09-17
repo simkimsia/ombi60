@@ -88,7 +88,6 @@ class AppController extends Controller {
 		$this->Auth->loginRedirect = array('controller' => 'shops', 'action' => 'index');
 		$this->Auth->loginAction = array('controller' => 'customers', 'action' => 'login');
 		$this->Auth->authError = __("Sorry, you can't access the page requested", true);
-		
 		//$this->Auth->authorize = 'actions';
 
 		if (isset($this->request->params['admin'])) {
@@ -106,7 +105,6 @@ class AppController extends Controller {
 
 		// allow non users to access register and login actions only.
 		$this->Auth->allow('/register', '/admin/login');
-
 		if (Configure::read('Auth.allowAll')) {
 			$this->Auth->allow('*');
 		}
@@ -122,7 +120,6 @@ class AppController extends Controller {
 		// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
 		App::uses('Shop', 'Model');
 		$currentShop = $this->Session->read('CurrentShop');
-
 		if(empty($currentShop) OR !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain'])) {
 			$this->loadModel('Shop');
 			$currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
@@ -130,9 +127,9 @@ class AppController extends Controller {
 		}
 
 		if (!$currentShop) {
-			$this->cakeError('noSuchDomain', array('url'=>FULL_BASE_URL));
+			throw new NotFoundException();
+			//$this->cakeError('noSuchDomain', array('url'=>FULL_BASE_URL));
 		}
-
 		Shop::store($currentShop);
 		$shopId = Shop::get('Shop.id');
 		$shopName = Shop::get('Shop.name');
@@ -149,7 +146,6 @@ class AppController extends Controller {
 
 		App::uses('User', 'Model');
 		$this->loadModel('User');
-
 		$shopSetting = $currentShop['ShopSetting'];
 		$this->set('shop_setting', $shopSetting);
 
@@ -170,7 +166,6 @@ class AppController extends Controller {
 			}
 
 			$userIdInCookieIsLegit = false;
-
 			// need to ensure this userid is legit customer or casual surfer
 			if ($userIdInCookie > 0) {
 				$userArray = $this->User->find('first', array(
@@ -199,7 +194,6 @@ class AppController extends Controller {
 					
 				$this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
 			}
-
 			// fetch the main menu of the shop
 			$this->loadModel('LinkList');
 			$this->LinkList->recursive = -1;
@@ -224,7 +218,6 @@ class AppController extends Controller {
 
 			$this->loadModel('Blog');
 			$this->Blog->recursive = -1;
-
 			$this->Blog->Behaviors->attach('Containable');
 
 			$blogs = $this->Blog->find('all', array(
@@ -255,7 +248,6 @@ class AppController extends Controller {
 
 			$pages = Webpage::getTemplateVariable($pages);
 			$this->set('pages', $pages);
-
 			// get Shop template
 			$shopTemplate = Shop::getTemplateVariable();
 
@@ -269,7 +261,6 @@ class AppController extends Controller {
 		/**
 		 *end Cookies
 		 **/
-
 		$userAuth = $this->Session->check('Auth.User');
 
 		// if admin User Auth more important
@@ -279,7 +270,6 @@ class AppController extends Controller {
 				User::store($userAuth);
 			}
 			// else shd prompt for login inside admin
-
 			// if not in admin pages
 		} else {
 			// we need to allow userIdInCookie to be more important
@@ -302,7 +292,6 @@ class AppController extends Controller {
 		}
 
 		$locale_name = User::get('Language.locale_name');
-
 		if (!$this->Session->check('Config.language')) {
 
 			if (!$locale_name ||  !isset($locale_name) || empty($locale_name)) {
@@ -319,7 +308,6 @@ class AppController extends Controller {
 					
 			}
 		}
-
 		/** check if shop is cancelled
 		 **/
 
@@ -327,7 +315,8 @@ class AppController extends Controller {
 		$denied = $currentShop['Shop']['deny_access'];
 
 		if ($denied) {
-			$this->cakeError('noSuchDomain');
+			throw new NotFoundException();
+			//$this->cakeError('noSuchDomain');
 		} else {
 
 			if(!isset($this->request->params['admin'])) {
@@ -345,14 +334,12 @@ class AppController extends Controller {
 			$this->Security->blackHoleCallback = 'forceSSL';
 			$this->Security->requireSecure();
 		}
-
 		// set the weight unit for shop
 		App::uses('ConstantHelper', 'View/Helper');
 		//@todo fix this helper call
 		$constantHelper = new ConstantHelper(new View($this));
 		$unitForWeight = $constantHelper->displayUnitForWeight();
 		$this->set('unitForWeight', $unitForWeight);
-
 	}
 
 	public function forceSSL() {

@@ -16,7 +16,7 @@ class WebpagesController extends AppController {
 	
 		if ($this->request->action == 'admin_toggle' ||
 		    $this->request->action == 'admin_menu_action') {
-			$this->Security->enabled = false;
+			$this->Components->disable('Security');
 		}
 		
 	}
@@ -24,14 +24,15 @@ class WebpagesController extends AppController {
 	public function view($handle = false) {
 		
 		if (!$handle) {
-			
-			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
+			throw new NotFoundException();
+			//$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 		
 		$webpage = $this->Webpage->getDetails($handle);
 		
 		if ($webpage == false) {
-			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
+			throw new NotFoundException();
+			//$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 		
 		$page = Webpage::getTemplateVariable($webpage, false);

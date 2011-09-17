@@ -93,7 +93,7 @@ class PermissionComponent extends Component {
  * @param array $settings
  */     
 	public function initialize($controller) {
-        $settings = $this->settings;
+		$settings = $this->settings;
 		$this->actionsWithPrimaryKey = (empty($settings['actionsWithPrimaryKey'])) ? $this->actionsWithPrimaryKey : $settings['actionsWithPrimaryKey'];
 		$this->actionsWithShopId = (empty($settings['actionsWithShopId'])) ? $this->actionsWithShopId : $settings['actionsWithShopId'];
 		
@@ -144,14 +144,14 @@ $shopIdUserHas =2;
 	
 	private function checkForValidShopIdInData($controller, $shopIdUserHas) {
 		if (in_array($controller->action, $this->actionsWithShopId)) {
-			$validData = !empty($controller->data);
+			$validData = !empty($controller->request->data);
 			$modelName = $this->modelName;
 			
 			if ($validData) {
-				$shopId = $controller->data[$modelName]['shop_id'];
+				$shopId = $controller->request->data[$modelName]['shop_id'];
 				
 				if ($shopId !== $shopIdUserHas) {
-					$controller->data[$modelName]['shop_id'] = $shopIdUserHas;
+					$controller->request->data[$modelName]['shop_id'] = $shopIdUserHas;
 				}
 			}	
 		}

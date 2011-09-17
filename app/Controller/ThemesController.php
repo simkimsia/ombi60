@@ -23,7 +23,7 @@ class ThemesController extends AppController {
 		//$this->Auth->allow($this->request->action);
 		
 		if($this->request->action == 'admin_settings')  {
-			$this->Security->enabled = false;
+			$this->Components->disable('Security');
 		}
 	
 	}

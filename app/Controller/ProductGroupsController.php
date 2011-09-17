@@ -24,11 +24,10 @@ class ProductGroupsController extends AppController {
 				);
 	
 	public function beforeFilter() {
-	  
-		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
+	 	// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		if ($this->request->action == 'admin_toggle' ||  $this->request->action == 'admin_add_smart' ) {
-			$this->Security->enabled = false;
+			$this->Components->disable('Security');
 		}
 	}
 
@@ -37,19 +36,18 @@ class ProductGroupsController extends AppController {
 		$this->ProductGroup->recursive = 1;
 		$shopId = Shop::get('Shop.id');
 		$customCollections = $this->ProductGroup->find('all', array(
-                                                           'conditions'=>array(
-                                                                          'ProductGroup.type'=>CUSTOM_COLLECTION,
-                                                                          'ProductGroup.shop_id'=>$shopId,
-                                                                         ),
-                                                          ));
+			'conditions'=>array(
+				'ProductGroup.type'=>CUSTOM_COLLECTION,
+				'ProductGroup.shop_id'=>$shopId,
+			),
+		));
 
 		$smartCollections = $this->ProductGroup->find('all', array(
-							   'conditions'=>array(
-                                                                          'ProductGroup.type'=>SMART_COLLECTION,
-                                                                          'ProductGroup.shop_id'=>$shopId,
-                                                                         ),
-                                                           
-                                                        ));
+			'conditions'=>array(
+				'ProductGroup.type'=>SMART_COLLECTION,
+				'ProductGroup.shop_id'=>$shopId,
+			),
+		));
 		
 		$this->set(compact('customCollections', 'smartCollections'));
 	}
