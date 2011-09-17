@@ -999,8 +999,6 @@ class Product extends AppModel {
 							'fields'=> array('ProductsInGroup.product_group_id')
 							));
 		
-		
-		
 		/**
 		 * Array
 			(
@@ -1025,7 +1023,12 @@ class Product extends AppModel {
 			)
 			
 		*/
-		$existingGroups = Set::extract('{n}.ProductsInGroup.product_group_id', $associations);
+		if (!empty($associations)) {
+			$existingGroups = Set::extract('{n}.ProductsInGroup.product_group_id', $associations);
+		} else {
+			$existingGroups = array();
+		}
+		
 		
 
 		/** existingGroups from here and customCollections from the view look like this **/
