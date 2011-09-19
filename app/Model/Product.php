@@ -1300,13 +1300,15 @@ class Product extends AppModel {
          * 
          * @return array of product info as explained above
          * */
-        public function getDetails($id) {
+        public function getDetails($id, $showHidden = false) {
 		
 		$shopId = Shop::get('Shop.id');
-		
-                $productFound = $this->find('first', array('conditions'=>array('Product.visible' => true,
-                                                                               'Product.id'=>$id,
-                                                                               'Product.shop_id'=>$shopId),
+		if ($showHidden) {
+			$conditions = array('Product.id'=>$id, 'Product.shop_id'=>$shopId);
+		} else {
+			$conditions = array('Product.visible' => true, 'Product.id'=>$id, 'Product.shop_id'=>$shopId);
+		}
+		$productFound = $this->find('first', array('conditions' => $conditions,
                                                             'contain' => array('Variant' => array(
                                                                                         'conditions' => array('Variant.product_id' => $id),
                                                                                         'order'=>'Variant.order ASC',

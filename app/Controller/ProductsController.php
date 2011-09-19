@@ -461,7 +461,7 @@ class ProductsController extends AppController {
 		$shopId = Shop::get('Shop.id');
 		
 		// get the product details
-        $product = $this->Product->getDetails($id); //This action gets complete product information
+        $product = $this->Product->getDetails($id, true); //This action gets complete product information
 		$this->set(compact('collections', 'product', 'variantOptions'));
 		// for uploadify
 		// the images list related code
@@ -490,7 +490,6 @@ class ProductsController extends AppController {
 	}
 
 	public function view($handle = false) {
-		
 		
 		if (!$handle) {
 			throw new NotFoundException();
@@ -534,15 +533,12 @@ class ProductsController extends AppController {
 		$invalidShop = !($shop_id > 0);
 		// product must exist
 		$noSuchProduct = ($invalidShop) ? true : empty($productFound['Product']);
-		
-		if (   $invalidShop OR $noSuchProduct) {
+		if ($invalidShop OR $noSuchProduct) {
 			throw new NotFoundException();
 			//$this->cakeError('error404',array(array('url'=>'/','viewVars' =>$this->viewVars,)));
-		
 		}
 
 		$product = Product::getTemplateVariable($productFound, false);
-		
 		$this->set('product', $product);
 		$this->set('page_title', $product['title']); // this is hardcoded for index page
 		$this->render('product');
@@ -681,13 +677,13 @@ class ProductsController extends AppController {
 				
 				$successJSON  = true;
 				$this->set(compact('successJSON'));
-				$this->render('../json/empty');
+				$this->render('../Json/empty');
 			} else {
 				$errors = $this->Product->validationErrors;
 				$successJSON  = false;
 				
 				$this->set(compact('successJSON', 'errors'));
-				$this->render('../json/error');
+				$this->render('../Json/error');
 			}
 				
 		} else {
@@ -964,7 +960,7 @@ class ProductsController extends AppController {
                 if ($this->Product->Variant->VariantOption->delete($id)) {
                         $successJSON  = true;
                         $this->set(compact('successJSON'));
-                        $this->render('../json/empty');
+                        $this->render('../Json/empty');
                 }
         }
 	

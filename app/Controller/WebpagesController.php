@@ -93,13 +93,13 @@ class WebpagesController extends AppController {
 				
 				$successJSON  = true;
 				$this->set(compact('successJSON'));
-				$this->render('../json/empty');
+				$this->render('../Json/empty');
 			} else {
 				$errors = $this->Webpage->validationErrors;
 				$successJSON  = false;
 				
 				$this->set(compact('successJSON', 'errors'));
-				$this->render('../json/error');
+				$this->render('../Json/error');
 			}
 				
 		} else {

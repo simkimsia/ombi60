@@ -7,11 +7,12 @@ class LinksController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		
+		if ($this->request->action== 'admin_order') {
+			$this->Components->disable('Security');
+		}
 		if ($this->request->action== 'admin_edit' || $this->request->action == 'admin_add') {
 			$this->Security->validatePost = false;
 		}
-	
 	}
 	
 	public function admin_index() {
@@ -54,8 +55,7 @@ class LinksController extends AppController {
 	 * because we are not using data to transmit the POST data
 	 * */
 	public function admin_order($listId) {
-		
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 				
 			// the $_POST data is expected to be 2011-01-10 11:07:36 Error: Array
 			//(
@@ -70,19 +70,18 @@ class LinksController extends AppController {
 			
 			$result = $this->Link->saveOrder($_POST['displayrow'], $listId);
 			
-			
 			$this->layout = 'json';
 			if ($result) {
 				
 				$successJSON  = true;
 				$this->set(compact('successJSON'));
-				$this->render('../json/empty');
+				$this->render('../Json/empty');
 			} else {
 				$errors = $this->Link->validationErrors;
 				$successJSON  = false;
 				
 				$this->set(compact('successJSON', 'errors'));
-				$this->render('../json/error');
+				$this->render('../Json/error');
 			}
 				
 		} else {
@@ -235,7 +234,7 @@ class LinksController extends AppController {
 				$successJSON  = false;
 				
 				$this->set(compact('successJSON', 'errors'));
-				$this->render('../json/error');
+				$this->render('../Json/error');
 			}
 				
 		} else {
@@ -272,14 +271,14 @@ class LinksController extends AppController {
 				
 				$successJSON  = true;
 				$this->set(compact('successJSON'));
-				$this->render('../json/empty');
+				$this->render('../Json/empty');
 			} else {
 				
 				$errors = $this->Link->validationErrors;
 				$successJSON  = false;
 				
 				$this->set(compact('successJSON', 'errors'));
-				$this->render('../json/error');
+				$this->render('../Json/error');
 			}
 				
 		} else {
