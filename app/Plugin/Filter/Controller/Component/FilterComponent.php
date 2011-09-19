@@ -113,7 +113,7 @@ class FilterComponent extends Component {
 		
 		foreach ($this->settings['url'] as $key => $value) {
 			
-			$controller->params['named'][$key] = $value;
+			$controller->request->params['named'][$key] = $value;
 			
 		}
 
