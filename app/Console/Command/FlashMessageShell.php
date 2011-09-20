@@ -1,5 +1,8 @@
 <?php
 
+App::uses('Folder', 'Utility');
+App::uses('File', 'Utility');
+
 class FlashMessageShell extends Shell {
         
         var $uses = array();

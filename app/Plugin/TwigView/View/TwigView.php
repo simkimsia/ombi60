@@ -140,7 +140,7 @@ class TwigView extends View {
 	/**
 	 * Render Proxy
 	 */
-	function _render($___viewFn, $___dataForView = array(), $loadHelpers = true) {
+	protected function _render($___viewFn, $___dataForView = array(), $loadHelpers = true) {
 		if ($this->isCake2()) {
 			return $this->_render2x($___viewFn, $___dataForView);
 	 	} else {

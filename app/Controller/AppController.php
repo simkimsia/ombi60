@@ -522,4 +522,18 @@ class AppController extends Controller {
 			}
 		}
 	}
+
+/*
+ @todo implement AppController::cakeError stub
+	function cakeError($method, $messages = array()) {
+        if (file_exists(APP . 'AppError.php')) {
+				include_once (APP . 'AppError.php');
+		}
+
+		if (class_exists('AppError')) {
+			$error = new AppError($method, $messages);
+		}
+		
+	}
+*/
 }

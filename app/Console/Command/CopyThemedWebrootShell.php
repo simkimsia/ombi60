@@ -1,14 +1,48 @@
 <?php
 
-class CleanThemedShell extends Shell {
+App::uses('Folder', 'Utility');
+App::uses('File', 'Utility');
+
+class CopyThemedWebrootShell extends Shell {
         
-        var $uses = array();
+        public $uses = array();
         
-        var $whitelist = array('alt', 'shopify-solo', '2_cover_1',
-                               '2_cover_shopify', 'original_default',
-                               'default', 'blue-white', 'orange');
+        public $whitelist = array('Alt', 'Shopify-solo', '2Cover1',
+                           '2CoverShopify', 'OriginalDefault',
+                           'Default', 'Blue-white', 'Orange');
         
-        function main() {
+        public function main() {
+                
+                $this->out("We shall delete ALL GENERATED themed folders and product images in webroot.\n");
+                
+                $this->out("Before deleting, ensure ownership & files permission for the THEMED folder correct.");
+                
+                $this->out("\nAfter deleting, copy default set of themes and product images.");
+                
+                $this->out("\nAFTER running this,\n1.EMPTY database. \n2.RESTORE staging_copy_w_data.sql in docs/database folder.");
+                
+                $continue = $this->in("\n\nStart deleting current files and copy default files now?", array("yes", "no"), "yes");
+               
+                if ($continue == 'yes') {
+                        $successfullyDeleted = $this->clean_themed();
+                        if ($successfullyDeleted) {
+                                $this->out("\n\nFiles Deleted.\nCopying default files ...");
+                                $this->copy_files();
+                        } else {
+                                $this->error("\n\nSomething is wrong. Please ensure the ownership and files permission for the themed folder is correct.");
+                        }
+                } else {
+                        $this->error("\n\nExiting the program");
+                }
+                
+                $this->out("\n\nDefault theme files and product images copied. \n\nYou MUST NOW DO THIS: \n\n1.EMPTY database. \n2.RESTORE staging_copy_w_data.sql. \n3.Continue with development");
+                
+                
+        }
+        
+        private function clean_themed() {
+                
+                $result = true;
                 
                 $path = APP . 'View' . DS . 'Themed';
                 
@@ -23,11 +57,13 @@ class CleanThemedShell extends Shell {
                         if (!in_array($folderName, $this->whitelist)) {
                                 $folder = new Folder($path . DS . $folderName);
                                 
-                                $folder->delete($path . DS . $folderName);
+                                $result = $folder->delete($path . DS . $folderName);
                                 $this->out($folderName . ' deleted');
                         }
                         
                 }
+                
+                if (!$result) return false;
                 
                 // now we clear the product images in mainsite
                 
@@ -44,9 +80,13 @@ class CleanThemedShell extends Shell {
                 }
                 
                 $this->out('now deleting the product images in APP');
+                
+                
                 $path = ROOT . DS . 'app' . DS . 'webroot' . DS. 'uploads' . DS . 'products' . DS;
        
                 $productImageFolder = new Folder($path);
+                $productImageFolder->delete($path);
+                /*
                 //$arrayOfProductImages = $productImageFolder->find('^default-.*');
                 $arrayOfProductImages = $productImageFolder->find('.*');
                 
@@ -92,9 +132,44 @@ class CleanThemedShell extends Shell {
                         }
                         
                 }
-               
+                */
+                return true;
+        }
+        
+        private function copy_files() {
                 
+                $from   = APP . 'View' . DS . 'copy_of_themed';
+                $to     = APP . 'View' . DS . 'Themed';
+                
+                // copy themed
+                $result = $this->copy_folder_recursively($to, $from);
+                if (!$result) {
+                        $this->error('copying of themed folders FAILED!');   
+                }
+                
+                
+                $from   = APP . 'View' . DS . 'copy_of_webroot' ;
+                $to     = ROOT . DS . 'app' . DS . 'webroot' . DS. 'uploads';
+                
+                // copy webroot/uploads/products
+                $result = $this->copy_folder_recursively($to, $from);
+                if (!$result) {
+                        $this->error('copying of product webroot folders FAILED!');   
+                }
+                
+                return $result;
+        }
+        
+        private function copy_folder_recursively($to, $from) {
+                
+                $themedFolder = new Folder($from);
+                
+                $this->out('now copying folders/files from '.$from.' to ' .$to);
+                $options = array('to'   => $to,
+                                 'from' => $from,
+                                 'mode'=> 0775,
+                                 );
+                return $themedFolder->copy($options);
         }
 }
 
-?>
