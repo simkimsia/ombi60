@@ -17,13 +17,16 @@
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-App::import('Core', 'Controller');
-App::import('Component', 'Acl');
-App::import('Model', 'DbAcl');
+App::uses('Controller', 'Controller');
+App::uses('ComponentCollection', 'Controller');
+App::uses('AclComponent', 'Controller/Component');
+App::uses('Component', 'Controller');
+//App::uses('DbAcl', 'Model');
 
 /**
  * Shell for ACO extras
  *
+ * @property Aco Aco
  * @package		acl_extras
  * @subpackage	acl_extras.vendors.shells
  */
@@ -31,7 +34,7 @@ class AclExtrasShell extends Shell {
 /**
  * Contains instance of AclComponent
  *
- * @var object
+ * @var AclComponent
  * @access public
  */
 	var $Acl;
@@ -72,10 +75,11 @@ class AclExtrasShell extends Shell {
  * @return void
  **/
 	function startup() {
-		$this->Acl =& new AclComponent();
-		$controller = null;
+        $ComponentCollection = new ComponentCollection();
+		$this->Acl = new AclComponent($ComponentCollection);
+		$controller = new Controller(new CakeRequest());
 		$this->Acl->startup($controller);
-		$this->Aco =& $this->Acl->Aco;
+		$this->Aco = $this->Acl->Aco;
 	}
 
 /**
@@ -221,12 +225,13 @@ class AclExtrasShell extends Shell {
  * @return void
  */
 	function _checkMethods($controller, $node, $pluginPath = false) {
-		$className = $controller . 'Controller';
+		$className = $controller;
 		$baseMethods = get_class_methods('Controller');
+        App::uses($className, 'Controller');
 		$actions = get_class_methods($className);
-		$methods = array_diff($actions, $baseMethods);
-		foreach ($methods as $action) {
-			if (strpos($action, '_', 0) === 0) {
+        $methods = array_diff($actions, $baseMethods);
+        foreach ($methods as $action) {
+            if (strpos($action, '_', 0) === 0) {
 				continue;
 			}
 			$path = $this->rootNode . '/' . $pluginPath . $controller . '/' . $action;

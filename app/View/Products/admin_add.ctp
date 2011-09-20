@@ -58,9 +58,9 @@
 		echo $this->Form->input('displayed_weight', array('value'=>'0.0', 'div' => array('class' => 'input text right'), 'class' => 'noclear', 'after' => __(' ' . $unitForWeight)));
 		
 		echo '<strong>Product Options</strong>';
-		echo $this->Form->input('Variant.0.VariantOption.0.field', array('label' => __('Option Field'),'value'=>'Title'));
-		echo $this->Form->input('Variant.0.VariantOption.0.value', array('label' => __('Default Value'), 'value'=>'Default Title'));
-		echo $this->Form->input('Variant.0.VariantOption.0.order', array('type'=>'hidden', 'value'=>'0'));
+		echo $this->Form->input('VariantModel.0.VariantOption.0.field', array('label' => __('Option Field'),'value'=>'Title'));
+		echo $this->Form->input('VariantModel.0.VariantOption.0.value', array('label' => __('Default Value'), 'value'=>'Default Title'));
+		echo $this->Form->input('VariantModel.0.VariantOption.0.order', array('type'=>'hidden', 'value'=>'0'));
 	?>
 	</fieldset>
 	

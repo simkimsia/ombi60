@@ -7,8 +7,8 @@ class CodeShell extends Shell {
 	* @var array
 	*/
 	public $tasks = array(
-		'CodeConvention',
-		'CodeWhitespace'
+		'CodeCheck.CodeConvention',
+		'CodeCheck.CodeWhitespace'
 	);
 
 	/**
@@ -46,14 +46,44 @@ class CodeShell extends Shell {
 			$this->out('whitespace : checks files for leading and trailing whitespace');
 			$this->out('');
 			$this->out('Options:');
-			$this->out('-path    : comma-delimited path list (constants or strings), defaults to APP');
-			$this->out('-exclude : comma-delimited path exclusion list (constants or strings)');
-			$this->out('-mode    : interactive (default) shows errors individually and prompts for change ');
+			$this->out('--path    : comma-delimited path list (constants or strings), defaults to APP');
+			$this->out('--exclude : comma-delimited path exclusion list (constants or strings)');
+			$this->out('--mode    : interactive (default) shows errors individually and prompts for change ');
 			$this->out('           diff                  writes a unified diff to current directory, does not change any files');
 			$this->out('           silent                corrects all errors without prompting');
 			$this->out('-files   : comma-delimited extension list, defaults to php');
 		}
 	}
+
+/**
+ * get the option parser.
+ *
+ * @return void
+ */
+	public function getOptionParser() {
+		$parser = parent::getOptionParser();
+		return 
+		$parser
+            ->addSubcommand('convention', array(
+                        'help' => __d('cake_console', 'checks code for CakePHP conventions'),
+                        'parser' => $this->CodeConvention->getOptionParser()
+                    ))
+//            ->addSubcommand('whitespace', array(
+//                        'help' => __d('cake_console', 'checks files for leading and trailing whitespace'),
+//                        'parser' => $this->CodeWhitespace->getOptionParser()
+//                    ))
+			->addOption('mode', array(
+				'help' => "interactive (default) shows errors individually and prompts for change\n           diff                  writes a unified diff to current directory, does not change any files\n           silent                corrects all errors without prompting"))
+			->addOption('files', array(
+				'help' => 'comma-delimited extension list, defaults to php'))
+			->addOption('exclude', array(
+				'help' => 'comma-delimited path exclusion list (constants or strings)'))
+			->addOption('path', array(
+				'help' => 'comma-delimited path list (constants or strings), defaults to APP'))
+                
+        ;
+    }
+
 
 	public function meant($in, $params) {
 		$meant = array();
