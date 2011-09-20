@@ -47,7 +47,7 @@ class ShopsPaymentModule extends AppModel {
 		
 		'Payment' => array(
 			'className' => 'Payment',
-			'foreignKey' => 'payment_module_id',
+			'foreignKey' => 'shops_payment_module_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',

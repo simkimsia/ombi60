@@ -9,7 +9,11 @@ class PaymentsController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		
+		if ($this->action == 'admin_add_paypal_payment' ||
+			$this->action == 'admin_edit_paypal_payment' ) {
+			$this->Security->validatePost = false;			
+		}
+
 	}
 	
 	public function admin_index() {
