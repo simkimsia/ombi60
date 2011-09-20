@@ -9,7 +9,12 @@ class PaymentsController extends AppController {
 	
 	function beforeFilter() {
 		parent::beforeFilter();
-		
+		$this->log($this->action);
+		$this->log($this->data);
+		if ($this->action == 'admin_add_paypal_payment') {
+			$this->Security->validatePost = false;			
+		}
+
 	}
 	
 	function admin_index() {
@@ -17,6 +22,8 @@ class PaymentsController extends AppController {
 		$paymentModuleInShop = $this->Payment->ShopsPaymentModule;
 		
 		$currentShopId = Shop::get('Shop.id');
+		
+		$this->log('index');
 		
 		if ($this->RequestHandler->isGet()){
 			$this->Payment->Behaviors->attach('Linkable.Linkable');
@@ -65,6 +72,9 @@ class PaymentsController extends AppController {
 		$this->data['ShopsPaymentModule']['payment_module_id'] = PAYPAL_PAYMENT_MODULE;
 		$this->data['ShopsPaymentModule']['shop_id'] = Shop::get('Shop.id');
 		$this->data['ShopsPaymentModule']['display_name'] = $this->data['PaypalPaymentModule']['name'];
+		
+		$this->log('after rearranging the paypal');
+		$this->log($this->data);
 		
 		$paymentModuleInShop = $this->Payment->ShopsPaymentModule;
 		$paymentModule = $paymentModuleInShop->PaymentModule;
