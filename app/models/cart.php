@@ -520,8 +520,8 @@ class Cart extends AppModel {
 		if ($viewCart) {
 			$containVariantData = array(
 						
-					       'AssociatedVariant' => array(
-						       'order'=>'AssociatedVariant.order ASC',
+					       'CheckedOutVariant' => array(
+						       'order'=>'CheckedOutVariant.order ASC',
 						       'VariantOption' => array(
 							       'fields' => array('id', 'value', 'field'),
 							       'order'  => 'VariantOption.order ASC',
@@ -642,26 +642,28 @@ class Cart extends AppModel {
 		// we go retrieve all the product details to insert into the cart
 		foreach($productsAndQuantities as $variant_id => $quantity) {
 			
-			$variantModel = $this->CartItem->Variant;
+			$variantModel = $this->CartItem->CheckedOutVariant;
 			$variantModel->recursive = -1;
 			$variantModel->Behaviors->attach('Linkable.Linkable');
 			
-			$productVariant = $this->CartItem->Variant->find('first',
-						array('conditions'	=>array('Variant.id' => $variant_id),
-						      'fields'		=>array('Variant.id',
-										'Variant.price',
-										'Variant.currency',
-										'Variant.shipping_required',
-										'Variant.weight',
-										'Variant.product_id',
-										'Variant.title'),
+			$checkedOutVariant = $this->CartItem->CheckedOutVariant->find('first',
+						array('conditions'	=>array('CheckedOutVariant.id' => $variant_id),
+						      'fields'		=>array('CheckedOutVariant.id',
+										'CheckedOutVariant.price',
+										'CheckedOutVariant.currency',
+										'CheckedOutVariant.shipping_required',
+										'CheckedOutVariant.weight',
+										'CheckedOutVariant.product_id',
+										'CheckedOutVariant.title'),
 						      'link'		=> array('Product'   => array('fields'=>array('Product.id', 'Product.title')))
 						));
 			
 			// we need to add in quantity so this is an illegal field in Variant model
-			$productVariant['Variant']['quantity'] = $quantity;
-			
-			$arrayOfProducts[] = $productVariant;
+			$checkedOutVariant['CheckedOutVariant']['quantity'] = $quantity;
+			// change the key for Variant data from CheckedOutVariant to Variant
+			$checkedOutVariant['Variant'] = $checkedOutVariant['CheckedOutVariant'];
+			unset($checkedOutVariant['CheckedOutVariant']);
+			$arrayOfProducts[] = $checkedOutVariant;
 		}
 		
 		
@@ -674,7 +676,7 @@ class Cart extends AppModel {
 						      'shop_id' => $shop_id),
 				      'CartItem'=>array(
 					));
-			
+
 			foreach($arrayOfProducts as $product) {
 				$data['CartItem'][] = array('product_id'=>$product['Variant']['product_id'],
 					'variant_id' => $product['Variant']['id'],
