@@ -492,7 +492,7 @@ class ProductsController extends AppController {
 	public function view($handle = false) {
 		
 		if (!$handle) {
-//			throw new NotFoundException();
+			throw new NotFoundException();
 			//$this->cakeError('error404',array(array('url'=>'/','viewVars' =>$this->viewVars,)));
 		}
 		
