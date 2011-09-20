@@ -58,8 +58,8 @@ class Debugger {
  */
 	protected $_templates = array(
 		'log' => array(
-			'trace' => '{:reference} - {:path}, line {:line}',
-			'error' => "{:error} ({:code}): {:description} in [{:file}, line {:line}]"
+			'trace' => '{:reference} - {:path} :{:line}',
+			'error' => "{:error} ({:code}): {:description} in [{:file} :{:line}]"
 		),
 		'js' => array(
 			'error' => '',
@@ -81,7 +81,7 @@ class Debugger {
 			'info' => ''
 		),
 		'base' => array(
-			'traceLine' => '{:reference} - {:path}, line {:line}'
+			'traceLine' => '{:reference} - {:path} :{:line}'
 		),
 		'log' => array(),
 	);
@@ -111,7 +111,7 @@ class Debugger {
 		$e .= '<a href="javascript:void(0);" onclick="document.getElementById(\'{:id}-trace\')';
 		$e .= '.style.display = (document.getElementById(\'{:id}-trace\').style.display == ';
 		$e .= '\'none\' ? \'\' : \'none\');"><b>{:error}</b> ({:code})</a>: {:description} ';
-		$e .= '[<b>{:path}</b>, line <b>{:line}</b>]';
+		$e .= '[<b>{:path}</b> :<b>{:line}</b>]';
 
 		$e .= '<div id="{:id}-trace" class="cake-stack-trace" style="display: none;">';
 		$e .= '{:links}{:info}</div>';
@@ -142,7 +142,7 @@ class Debugger {
 		$this->_templates['js']['code'] .= 'style="display: none;">{:code}</pre>';
 
 		$e = '<pre class="cake-error"><b>{:error}</b> ({:code}) : {:description} ';
-		$e .= '[<b>{:path}</b>, line <b>{:line}]</b></pre>';
+		$e .= '[<b>{:path}</b> :<b>{:line}]</b></pre>';
 		$this->_templates['html']['error'] = $e;
 
 		$this->_templates['html']['context'] = '<pre class="cake-context"><b>Context</b> ';
@@ -360,15 +360,15 @@ class Debugger {
 		}
 
 		if (strpos($path, APP) === 0) {
-			return str_replace(APP, 'APP' . DS, $path);
+			return str_replace(APP, 'APP' . DS . '   ', $path);
 		} elseif (strpos($path, CAKE_CORE_INCLUDE_PATH) === 0) {
-			return str_replace(CAKE_CORE_INCLUDE_PATH, 'CORE', $path);
+			return str_replace(CAKE_CORE_INCLUDE_PATH, 'CORE' . '   ', $path);
 		} elseif (strpos($path, ROOT) === 0) {
-			return str_replace(ROOT, 'ROOT', $path);
+			return str_replace(ROOT, 'ROOT' . '   ', $path);
 		}
 
 		if (strpos($path, CAKE) === 0) {
-			return str_replace($corePath, 'CORE' . DS, $path);
+			return str_replace($corePath, 'CORE' . DS . '   ', $path);
 		}
 		return $path;
 	}

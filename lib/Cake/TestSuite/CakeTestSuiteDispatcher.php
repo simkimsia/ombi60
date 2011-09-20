@@ -138,7 +138,6 @@ class CakeTestSuiteDispatcher {
 
 		if (@include 'PHPUnit' . DS . 'Autoload.php') {
 			$found = true;
-			debug(1);
 		}
 
 		if (!$found) {
@@ -149,9 +148,7 @@ class CakeTestSuiteDispatcher {
 			}
 
 			if ($path && ini_set('include_path', $path . PATH_SEPARATOR . ini_get('include_path'))) {
-			debug(2);
 				$found = include 'PHPUnit' . DS . 'Autoload.php';
-			debug($path);
 			}
 		}
 		if ($found) {
@@ -162,8 +159,7 @@ class CakeTestSuiteDispatcher {
 
 /**
  * Checks for the xdebug extension required to do code coverage. Displays an error
- * if xdebug isn't installed.
- *
+ * if xdebug isn't installed. *
  * @return void
  */
 	function _checkXdebug() {
