@@ -1,4 +1,4 @@
-http://oma.zz/collections/all/products/dummy-product<?php
+<?php
  class RecaptchaComponent extends Component {
 	var $publickey = "";
 	var $privatekey= "";

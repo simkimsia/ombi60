@@ -122,6 +122,8 @@ class VariantModel extends AppModel {
 					'weight'		=> $variant['weight'],
 					'requires_shipping' 	=> $variant['shipping_required'],
 					'compare_with_price' 	=> $variant['compare_with_price'],
+					// hardcode available for testing checkout process
+					'available'				=> 1,
 					);
 			
 			if (!empty($variant['VariantOption'])) {

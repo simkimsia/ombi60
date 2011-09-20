@@ -17,15 +17,18 @@ class CartItem extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-
 		'AssociatedVariant' => array(
 			'className' => 'VariantModel',
+		// this is the Variant selected for purchase
+		// we need to give a different alias so that when we do a view cart
+		// we will be able to select this AND the other variants of the product
+		'CheckedOutVariant' => array(
+			'className' => 'Variant',
 			'foreignKey' => 'variant_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
-		
 		'Product' => array(
 			'className' => 'Product',
 			'foreignKey' => 'product_id',
