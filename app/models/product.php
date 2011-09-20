@@ -940,6 +940,8 @@ class Product extends AppModel {
 					'underscore_handle' => str_replace('-', '_', $product['handle']),
 					'url' => $product['url'],
 					'weight' => $product['weight'],
+					// hardcode this available field to test checkout
+					'available' => 1,
 					);
 			
 			/*
