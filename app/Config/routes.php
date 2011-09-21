@@ -57,14 +57,25 @@
                               'handle' => '[a-zA-Z0-9\-_]+'
                               ));
         
-        // display products by collections
+		//display 1 product WITHIN collection
+		Router::connect('/collections/:handle/products/:product_handle',
+                        array('controller' 	=> 'products',
+                              'action' 		=> 'view_within_group'),
+                        array('pass' 			=> array('handle', 'product_handle'),
+                              'handle' 			=> '[a-zA-Z0-9\-_]+',
+							  'product_handle' 	=> '[a-zA-Z0-9\-_]+',
+                              ));
+
+
+        // display list of products by collections
         Router::connect('/collections/:handle',
                         array('controller' => 'products',
                               'action' => 'view_by_group'),
                         array('pass' => array('handle'),
                               'handle' => '[a-zA-Z0-9\-_]+'
                               ));
-        
+
+
         Router::connect('/collections/:handle/*',
                         array('controller' => 'products',
                               'action' => 'view_by_group'),
