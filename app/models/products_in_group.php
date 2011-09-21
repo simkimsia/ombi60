@@ -84,8 +84,7 @@ class ProductsInGroup extends AppModel {
 			);
 			
 		$record = $this->find('first', $conditions);
-		$this->log('does the find work');
-		$this->log($record);
+		
 		$exists = !empty($record);
 		
 		// if there is no custom collection called all

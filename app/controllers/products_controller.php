@@ -402,11 +402,9 @@ class ProductsController extends AppController {
 		
 		
 		// reassign the products into items
-		$this->log('display productsInCart before converting into theme variables');
-		$this->log($productsInCart);
+
 		$cart = Cart::getTemplateVariable($productsInCart);
-		$this->log('display cart and its items');
-		$this->log($cart);
+
 		$this->set(compact('cart', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
 		
 		$sessionString = '';
