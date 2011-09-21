@@ -16,9 +16,9 @@ class DomainsController extends AppController {
 		$this->Domain->recursive = 0;
 		$mainUrl = Shop::get('Shop.primary_domain');
 		$this->set('mainUrl', $mainUrl);
-        $shopId = User::get('Merchant.shop_id');
+        $shopId = $this->Session->read('CurrentShop.Shop.id');
 		$this->set('domains', $this->Paginator->paginate('Domain', array(
-								      'Domain.shop_id ' => User::get('Merchant.shop_id')) ));
+								      'Domain.shop_id ' => $shopId) ));
 		$this->set('shopId', $shopId);
 	}
 
