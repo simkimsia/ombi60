@@ -1,40 +1,73 @@
 <?php
-/* Post Fixture generated on: 2010-09-02 04:09:19 : 1283395219 */
-class PostFixture extends CakeTestFixture {
-	var $name = 'Post';
+/* Post Fixture generated on: 2011-09-21 16:57:19 : 1316624239 */
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
-		'blog_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
-		'author_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
-		'status' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 2),
-		'title' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100),
-		'slug' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100),
-		'body' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'no_comments' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 4),
-		'allow_comments' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'allow_pingback' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+/**
+ * PostFixture
+ *
+ */
+class PostFixture extends CakeTestFixture {
+
+/**
+ * Fields
+ *
+ * @var array
+ */
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary', 'collate' => NULL, 'comment' => ''),
+		'blog_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10, 'collate' => NULL, 'comment' => ''),
+		'author_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10, 'collate' => NULL, 'comment' => ''),
+		'visible' => array('type' => 'boolean', 'null' => false, 'default' => '1', 'collate' => NULL, 'comment' => ''),
+		'title' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'slug' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 150, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'content' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'no_comments' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 4, 'collate' => NULL, 'comment' => ''),
+		'allow_comments' => array('type' => 'boolean', 'null' => false, 'default' => '1', 'collate' => NULL, 'comment' => ''),
+		'allow_pingback' => array('type' => 'boolean', 'null' => false, 'default' => '1', 'collate' => NULL, 'comment' => ''),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'published' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'blog_handle' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 150, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
-	var $records = array(
+/**
+ * Records
+ *
+ * @var array
+ */
+	public $records = array(
 		array(
-			'id' => 1,
-			'blog_id' => 1,
-			'author_id' => 1,
-			'status' => 1,
-			'title' => 'Lorem ipsum dolor sit amet',
-			'slug' => 'Lorem ipsum dolor sit amet',
-			'body' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-			'no_comments' => 1,
+			'id' => '3',
+			'blog_id' => '3',
+			'author_id' => NULL,
+			'visible' => 1,
+			'title' => 'dscsdcs',
+			'slug' => 'dscsdcs',
+			'content' => '<p>csdcds</p>',
+			'no_comments' => '0',
 			'allow_comments' => 1,
 			'allow_pingback' => 1,
-			'created' => '2010-09-02 04:40:19',
-			'modified' => '2010-09-02 04:40:19'
+			'created' => '2011-09-17 14:40:45',
+			'modified' => '2011-09-17 14:40:45',
+			'published' => NULL,
+			'blog_handle' => 'sdvsdvsdvs'
+		),
+		array(
+			'id' => '4',
+			'blog_id' => '3',
+			'author_id' => NULL,
+			'visible' => 1,
+			'title' => 'asdsad',
+			'slug' => 'asdsad',
+			'content' => '<p>adsada</p>',
+			'no_comments' => '0',
+			'allow_comments' => 1,
+			'allow_pingback' => 1,
+			'created' => '2011-09-17 15:57:34',
+			'modified' => '2011-09-17 15:57:34',
+			'published' => NULL,
+			'blog_handle' => 'sdvsdvsdvs'
 		),
 	);
 }
-?>

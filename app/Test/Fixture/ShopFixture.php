@@ -1,18 +1,36 @@
 <?php
-/* Shop Fixture generated on: 2011-09-21 14:19:59 : 1316614799 */
+/* Shop Fixture generated on: 2011-09-21 16:58:41 : 1316624321 */
 
 /**
  * ShopFixture
  *
  */
 class ShopFixture extends CakeTestFixture {
+
 /**
- * Import
+ * Fields
  *
  * @var array
  */
-	public $import = array('model' => 'Shop');
-
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary', 'collate' => NULL, 'comment' => ''),
+		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'status' => array('type' => 'boolean', 'null' => false, 'default' => '1', 'collate' => NULL, 'comment' => ''),
+		'saved_theme_id' => array('type' => 'integer', 'null' => true, 'default' => '0', 'collate' => NULL, 'comment' => ''),
+		'deny_access' => array('type' => 'boolean', 'null' => true, 'default' => '0', 'collate' => NULL, 'comment' => ''),
+		'url' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'primary_domain' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'permanent_domain' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'email' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'all_product_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 7, 'collate' => NULL, 'comment' => ''),
+		'visible_product_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 7, 'collate' => NULL, 'comment' => ''),
+		'product_group_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 7, 'collate' => NULL, 'comment' => ''),
+		'vendor_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 7, 'collate' => NULL, 'comment' => ''),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+	);
 
 /**
  * Records

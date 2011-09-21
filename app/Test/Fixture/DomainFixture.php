@@ -1,18 +1,27 @@
 <?php
-/* Domain Fixture generated on: 2011-09-21 14:19:47 : 1316614787 */
+/* Domain Fixture generated on: 2011-09-21 16:58:54 : 1316624334 */
 
 /**
  * DomainFixture
  *
  */
 class DomainFixture extends CakeTestFixture {
+
 /**
- * Import
+ * Fields
  *
  * @var array
  */
-	public $import = array('model' => 'Domain');
-
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary', 'collate' => NULL, 'comment' => ''),
+		'domain' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'shop_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'primary' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'collate' => NULL, 'comment' => ''),
+		'always_redirect_here' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'collate' => NULL, 'comment' => ''),
+		'shop_web_address' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'collate' => NULL, 'comment' => ''),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'UniqueDomain' => array('column' => 'domain', 'unique' => 1)),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+	);
 
 /**
  * Records
