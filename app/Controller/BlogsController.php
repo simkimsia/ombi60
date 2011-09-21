@@ -3,7 +3,7 @@ class BlogsController extends AppController {
 
 	public $name = 'Blogs';
 	
-	public $view = 'Theme';
+	public $viewClass = 'Theme';
 	
 	public $components = array('Permission' =>
 				array('redirect' =>
@@ -27,8 +27,9 @@ class BlogsController extends AppController {
 	
 	public function admin_index() {
 		$this->Blog->recursive = 0;
-		$this->Paginator->paginate = array('conditions'=>array('Blog.shop_id'=>Shop::get('Shop.id')));
+		$this->Paginator->settings = array('conditions'=>array('Blog.shop_id'=>Shop::get('Shop.id')));
 		$this->set('blogs', $this->Paginator->paginate());
+		
 	}
 
 	public function admin_view($id = null) {
