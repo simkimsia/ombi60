@@ -543,7 +543,9 @@ class AppController extends Controller {
 							   'index'=>'blog'),
 				       'Products' => array('view'=>'product',
 							   'view_by_group'=>'collection',
-							   'view_cart' => 'cart',)
+							   'view_cart' => 'cart',
+							   'view_within_group'=>'product',
+							)
 				       );
 		
 		$controller 	= $this->name;
