@@ -12,7 +12,7 @@ class BlogsControllerTestCase extends ControllerTestCase {
 	 *
 	 * @var array
 	 */
-	public $fixtures = array('app.blog', 'app.saved_theme', 'app.user', 'app.shop_setting', 'app.shop', 'app.domain');
+	public $fixtures = array('app.blog', 'app.saved_theme', 'app.user', 'app.shop_setting', 'app.shop', 'app.domain', 'app.post', 'app.comment', 'app.link', 'app.link_list', 'app.product', 'app.webpage');
 
 	/**
 	 * setUp method
@@ -41,14 +41,13 @@ class BlogsControllerTestCase extends ControllerTestCase {
 	 */
 	public function testAdminIndex() {
 		$this->controller = $this->generate('Blogs', array(
-			'components' => array('Auth' => array('user'))
+			'methods' => array('forceSSL'), 
+			'components' => array('Auth' => array('user'), 'Security')
 		));
 		$this->testAction('/admin/blogs/index', array('return' => 'contents'));
-		debug($this->contents);
-		die();
-		$this->assertRegexp('#<h2>Courses</h2>#', $this->contents);
-		$this->assertRegexp('#<td>CAKE-101&nbsp;</td>#', $this->contents);
-		$this->assertRegexp('#<td>CAKE-201&nbsp;</td>#', $this->contents);
+		$this->assertRegexp('#<h2>Blogs</h2>#', $this->contents);
+		$this->assertRegexp('#<td>Test&nbsp;</td>#', $this->contents);
+		$this->assertRegexp('#<td>test&nbsp;</td>#', $this->contents);
 	}
 
 	/**
@@ -58,55 +57,47 @@ class BlogsControllerTestCase extends ControllerTestCase {
 	 */
 	public function testAdminView() {
 		$this->controller = $this->generate('Blogs', array(
-			'components' => array('Auth' => array('user'))
+			'methods' => array('forceSSL'), 
+			'components' => array('Auth' => array('user'), 'Security')
 		));
-		$this->testAction('/courses/view/course-1', array('return' => 'contents'));
-		$expected = array('tag' => 'h2', 'content' => 'Course');
-		$this->assertTag($expected, $this->contents);
-
-		$expected = array(
-			'tag' => 'dl',
-			'child' => array(
-				'tag' => 'dd',
-				'content' => 'CAKE-101'
-			),
-			'children' => array(
-				'count' => 10
-			)
-		);
-		$this->assertTag($expected, $this->contents);
-
-		$expected = array(
-			'tag' => 'h3',
-			'content' => 'Students',
-			'ancestor' => array('tag' => 'div')
-		);
-		$this->assertTag($expected, $this->contents);
-
-		$expected = array(
-			'tag' => 'tr',
-			'ancestor' => array(
-				'tag' => 'table',
-				'ancestor' => array('tag' => 'div', 'class' => 'related')
-			),
-			'child' => array(
-				'tag' => 'td',
-				'content' => 'Chuck Norris'
-			)
-		);
+		$this->testAction('/admin/blogs/view/3', array('return' => 'contents'));
+		$expected = array('tag' => 'h2', 'content' => 'Test');
 		$this->assertTag($expected, $this->contents);
 	}
 
 	function testAdminAdd() {
-
+		$this->controller = $this->generate('Blogs', array(
+			'methods' => array('forceSSL'), 
+			'components' => array('Auth' => array('user'), 'Security')
+		));
+		$fixture = new BlogFixture();	
+		$this->controller->request->data['Blog'] = $fixture->records[1];
+		unset($this->controller->request->data['Blog']['id']);
+		$this->assertFlash($this->controller, 'The blog has been saved');
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$this->testAction('/admin/blogs/add', array('data' => $this->controller->request->data, 'method' => 'POST'));
 	}
 
 	function testAdminEdit() {
-
+		$this->controller = $this->generate('Blogs', array(
+					'methods' => array('forceSSL'), 
+					'components' => array('Auth' => array('user'), 'Security')
+		));
+		$fixture = new BlogFixture();
+		$this->controller->request->data['Blog'] = $fixture->records[1];
+		$this->controller->request->data['Blog']['name'] = "Test2";
+		$this->assertFlash($this->controller, 'The blog has been saved');
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$this->testAction('/admin/blogs/edit/3', array('data' => $this->controller->request->data, 'method' => 'POST'));
 	}
 
 	function testAdminDelete() {
-
+		$this->controller = $this->generate('Blogs', array(
+					'methods' => array('forceSSL'), 
+					'components' => array('Auth' => array('user'), 'Security')
+		));
+		$this->assertFlash($this->controller, 'Blog deleted');
+		$this->testAction('/admin/blogs/delete/3');
 	}
 
 }
