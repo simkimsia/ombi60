@@ -19,6 +19,7 @@ class CartItem extends AppModel {
 		),
 		'AssociatedVariant' => array(
 			'className' => 'VariantModel',
+		),
 		// this is the Variant selected for purchase
 		// we need to give a different alias so that when we do a view cart
 		// we will be able to select this AND the other variants of the product
