@@ -46,7 +46,9 @@ class ProductsController extends AppController {
 				'Theme' => array('actions'=>array('view_cart',
 								  'view',
 								  'index',
-								  'view_by_group')),
+								  'view_by_group',
+								  'view_within_group',
+								)),
 				
 				
 				);
@@ -97,7 +99,7 @@ class ProductsController extends AppController {
 		$this->Auth->allow('view', 'index',
 				   'add_to_cart', 'view_cart',
 				   'delete_from_cart', 'change_qty_for_1_item_in_cart',
-				   'checkout', 'view_by_group');
+				   'checkout', 'view_by_group', 'view_within_group');
 
 		
 		if ($this->request->action == 'view_cart' OR
@@ -490,16 +492,36 @@ class ProductsController extends AppController {
 	}
 
 	public function view($handle = false) {
-		
+		$productFound = $this->prepareProductForView($handle);
+
+		$product = Product::getTemplateVariable($productFound, false);
+
+		$this->set('product', $product);
+		$this->set('page_title', $product['title']); // this is hardcoded for index page
+		$this->render('product');
+	}
+
+	/**
+	 *
+	 * Return product that is not yet formatted for theme. 
+	 * Used by view and view_within_group actions
+	 * 
+	 * @param string $handle Handle retrieved from url to get Product
+	 * @return array Array containing data from database representing Product, ProductImage, ProductGroup
+	**/
+	private function prepareProductForView($handle = false) {
+
+
 		if (!$handle) {
-			throw new NotFoundException();
-			//$this->cakeError('error404',array(array('url'=>'/','viewVars' =>$this->viewVars,)));
+			$this->cakeError('error404',array(array('url'=>'/',
+								'viewVars' =>$this->viewVars,
+								)));
 		}
-		
+
 		// to retrieve the shop id based on the url
 		// see app_controller code and shop model code
 		$shop_id = Shop::get('Shop.id');
-		
+
 		// get the product details
 		$productFound = $this->Product->find('first', array('conditions'=>array('Product.visible' => true,
 											'Product.handle'=>$handle,
@@ -526,24 +548,58 @@ class ProductsController extends AppController {
 												)
 											)
 									));	
-									
 
-		    
+
+
 		// must be valid shop
 		$invalidShop = !($shop_id > 0);
 		// product must exist
 		$noSuchProduct = ($invalidShop) ? true : empty($productFound['Product']);
-		if ($invalidShop OR $noSuchProduct) {
-			throw new NotFoundException();
-			//$this->cakeError('error404',array(array('url'=>'/','viewVars' =>$this->viewVars,)));
+
+		if (   $invalidShop OR $noSuchProduct) {
+
+			$this->cakeError('error404',array(array('url'=>'/',
+								'viewVars' =>$this->viewVars,
+								)));
+
+		}
+
+		return $productFound;
+	}
+
+	public function view_within_group($handle = false, $product_handle = false) {
+
+		$shopId = Shop::get('Shop.id');
+
+		$exists = $this->Product->ProductsInGroup->checkProductInCollection($product_handle, $handle, $shopId);
+
+		if (!$exists) {
+			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));			
+		}
+
+		$productFound = $this->prepareProductForView($product_handle);
+
+		// check for handle
+		if (!$handle) {
+			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
+		}
+
+		// this will retrieve the collection details as well as the conditions needed for pagination of Product
+		$collection = $this->Product->ProductsInGroup->ProductGroup->getByUrl($handle, $this->params4GETAndNamed);
+
+		if ($collection == false) {
+			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 
 		$product = Product::getTemplateVariable($productFound, false);
-		$this->set('product', $product);
-		$this->set('page_title', $product['title']); // this is hardcoded for index page
+
+		$collection = ProductGroup::getTemplateVariable($collection, false);
+
+		$this->set(compact('product', 'collection'));
+		$this->set('page_title', $collection['title'] . ' > ' . $product['title']);
 		$this->render('product');
-	}
-	
+
+	}	
 	
 	public function view_by_group($handle = false) {
 		

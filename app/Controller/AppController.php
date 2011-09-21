@@ -215,6 +215,14 @@ class AppController extends Controller {
 			$linklists = LinkList::getTemplateVariable($linklists);
 
 			$this->set('linklists', $linklists);
+			
+			// fetch all collections smart, custom and the collection.all
+			$this->loadModel('ProductGroup');
+			$this->ProductGroup->recursive = -1;
+			
+			$collections = $this->ProductGroup->getAllRegularVisible($shopId);
+			
+			$this->set('collections', $collections);
 
 			$this->loadModel('Blog');
 			$this->Blog->recursive = -1;
@@ -503,7 +511,9 @@ class AppController extends Controller {
 							   'index'=>'blog'),
 				       'Products' => array('view'=>'product',
 							   'view_by_group'=>'collection',
-							   'view_cart' => 'cart',)
+							   'view_cart' => 'cart',
+							   'view_within_group' => 'product',
+							)
 				       );
 		
 		$controller 	= $this->name;

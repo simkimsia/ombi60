@@ -23,30 +23,70 @@ class ProductsInGroup extends AppModel {
 	);
 
   
-  /**
-   * This action is used to get the list of custome collection for this product id
-   * @param integer $productId Product Id
-   */
-  function getProductCustomCollection($productId) {
-    $shopId = Shop::get('Shop.id');
-    $customCollectionsOption = array(
-                                'conditions' => array(
-                                                'ProductsInGroup.product_id' => $productId,
-                                                ),
-                                'contain'    => array(
-                                                 'ProductGroup' => array(
-                                                                    'conditions' => array(
-                                                                                    'ProductGroup.shop_id' => $shopId,
-                                                                                    ),
-                                                                  ),
-                                                ),
-                                'fields'     => array(
-                                                 'ProductGroup.id',
-                                                 'ProductGroup.title',
-                                                ),
-                               );
-    return $this->find('all', $customCollectionsOption);
-  }//end getProductCustomCollection()
+	/**
+	 * Check if this Product belongs to this Regular Collection
+	 * Both Product and Collection are Visible and in the same Shop
+	 * @param $productHandle Handle of Visible Product
+	 * @param $collectionHandle Handle of Visible Collection
+	 * @return boolean Returns true if Visible Product belongs to Visible Collection in same Shop
+	 */
+	public function checkProductInCollection($productHandle, $collectionHandle, $shopId = null) {
+		if ($shopId == null) {
+		   	$shopId = Shop::get('Shop.id');		
+		}
 
+		$this->Product->Behaviors->attach('Containable');
+		$this->Product->recursive = -1;
+
+
+		$this->unbindModel(array(
+			'belongsTo' => array(
+				'Product', 'ProductGroup'
+				)
+			)
+		);
+
+		$this->bindModel(array(
+			'hasOne' => array(
+				'Product' => array(
+					'className' => 'Product',
+					'foreignKey' => false,
+					'conditions' => array(
+						'ProductsInGroup.product_id = Product.id'
+						)
+					),
+				'ProductGroup' => array(
+					'className' => 'ProductGroup',
+					'foreignKey' => false,
+					'conditions' => array(
+						'ProductGroup.id = ProductsInGroup.product_group_id'
+						)
+					)
+				)
+			)
+		);
+
+		$conditions = array(
+
+			'conditions' => array(
+				'Product.shop_id'	=> $shopId,
+				'Product.visible'	=> true,
+				'Product.handle'	=> $productHandle,
+				'ProductGroup.shop_id'	=> $shopId,
+				'ProductGroup.visible'	=> true,
+				'ProductGroup.handle'	=> $collectionHandle,
+	            ),
+			'fields'     => array(
+				'ProductsInGroup.id',
+				'Product.id',
+				'ProductGroup.id',
+				),
+			);
+
+		$record = $this->find('first', $conditions);
+		$this->log('does the find work');
+		$this->log($record);
+		return !empty($record);
+	}//end checkProductInCollection()
 
 }//end class

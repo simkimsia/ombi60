@@ -381,14 +381,57 @@ class ProductGroup extends AppModel {
 	}
 	
 	
-	public function getAllRegularVisible() {
+	/**
+	 * get ALL Collections that are Visible and Regular.
+	 * Include the collections.all
+	 * Will NOT include the Products of each Collection. Only first-level stats of Collection
+	 *
+	 * @param integer $shopId Id of shop which the collections belong to.
+	 * @return array Array of ThemeVariable-formatted Collections
+	 * */	
+	public function getAllRegularVisible($shopId = null) {
 		// we want to retrieve all regular collections, smart or custom
 		// that are visible
-		// including their ProductsInGroup, Products, ProductImages
+		// we will retrieve just normal stats. Will NOT include Products, etc
+
+		$this->recursive = -1;
+
+		if ($shopId == null) {
+			$shopId = Shop::get('Shop.id');
+		}
+
+		$collections = $this->find('all', array(
+		    'conditions'=>array('ProductGroup.shop_id'=>$shopId,
+								'ProductGroup.visible'=>true),
+		));
+
+		$customCollectionCalledAll = Set::extract('/ProductGroup[handle=all]', $collections);
+
+		// since no custom collection set aside for collections.all, we will auto create 1
+		if (empty($customCollectionCalledAll)) {
+			$collectionCalledAll = array('ProductGroup'=>array(
+				'title'					=> 'Products',
+				'description'			=> 'All Products',
+			  	'handle' 				=> 'all',
+				'url'    				=> '/collections/all',
+				'visible_product_count' => Shop::get('Shop.visible_product_count'),		 
+				'vendor_count'			=> Shop::get('Shop.vendor_count')
+			));
+
+			$collections[] = $collectionCalledAll;
+
+		}
+
+		return ProductGroup::getTemplateVariable($collections);
+
+
 	}
-	
-	/*
-	 * get ALL products provided no automatic and regular collections match the handle 'all'
+
+	/**
+	 * 
+	 * get collections.all provided no automatic and regular collections match the handle 'all'
+	 *
+	 * @return array Array containing basic stats for collections.all including the product paginate condition
 	 * */
 	private function getAutomaticCollectionForAll() {
 		
