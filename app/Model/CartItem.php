@@ -17,13 +17,11 @@ class CartItem extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'AssociatedVariant' => array(
-			'className' => 'VariantModel',
 		// this is the Variant selected for purchase
 		// we need to give a different alias so that when we do a view cart
 		// we will be able to select this AND the other variants of the product
 		'CheckedOutVariant' => array(
-			'className' => 'Variant',
+			'className' => 'VariantModel',
 			'foreignKey' => 'variant_id',
 			'conditions' => '',
 			'fields' => '',
@@ -197,7 +195,7 @@ class CartItem extends AppModel {
 			
 			
 			$result['product'] = !empty($item['Product']) ? Product::getTemplateVariable($item, false) : array();
-			$result['variant'] = !empty($item['AssociatedVariant']) ? VariantModel::getTemplateVariable($item['AssociatedVariant'], false) : array();
+			$result['variant'] = !empty($item['CheckedOutVariant']) ? VariantModel::getTemplateVariable($item['CheckedOutVariant'], false) : array();
 			
 			// we get the latest product and variant title where possible
 			// we also collect the sku from variant
