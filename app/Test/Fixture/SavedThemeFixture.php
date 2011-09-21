@@ -1,34 +1,36 @@
 <?php
-/* SavedTheme Fixture generated on: 2010-08-02 10:08:26 : 1280738846 */
+/* SavedTheme Fixture generated on: 2011-09-21 15:30:24 : 1316619024 */
+
+/**
+ * SavedThemeFixture
+ *
+ */
 class SavedThemeFixture extends CakeTestFixture {
-	var $name = 'SavedTheme';
+/**
+ * Import
+ *
+ * @var array
+ */
+	public $import = array('model' => 'SavedTheme');
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
-		'description' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'author' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'modified' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'folder_name' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'shop_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
-		'theme_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
 
-	var $records = array(
+/**
+ * Records
+ *
+ * @var array
+ */
+	public $records = array(
 		array(
-			'id' => 1,
-			'name' => 'Lorem ipsum dolor sit amet',
-			'description' => 'Lorem ipsum dolor sit amet',
-			'author' => 'Lorem ipsum dolor sit amet',
-			'created' => '2010-08-02 10:47:26',
-			'modified' => '2010-08-02 10:47:26',
-			'folder_name' => 'Lorem ipsum dolor sit amet',
-			'shop_id' => 1,
-			'theme_id' => 1
+			'id' => '1',
+			'name' => 'default',
+			'description' => 'default',
+			'author' => 'Barry Allen',
+			'created' => '2011-07-08 11:54:47',
+			'modified' => '2011-07-08 11:54:47',
+			'folder_name' => '2Cover',
+			'shop_id' => '2',
+			'theme_id' => '3',
+			'featured' => 1
 		),
 	);
 }
-?>
