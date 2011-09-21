@@ -26,17 +26,15 @@ class ProductsInGroup extends AppModel {
 	/**
 	 * Check if this Product belongs to this Regular Collection
 	 * Both Product and Collection are Visible and in the same Shop
-	 * @param $productHandle Handle of Visible Product
-	 * @param $collectionHandle Handle of Visible Collection
+	 * @param string $productHandle Handle of Visible Product
+	 * @param string $collectionHandle Handle of Visible Collection
+	 * @param integer $shopId Optional. Id of Shop. Default is null. We will search by current shop
 	 * @return boolean Returns true if Visible Product belongs to Visible Collection in same Shop
 	 */
 	function checkProductInCollection($productHandle, $collectionHandle, $shopId = null) {
 		if ($shopId == null) {
 		   	$shopId = Shop::get('Shop.id');		
 		}
-		
-		$this->Product->Behaviors->attach('Containable');
-		$this->Product->recursive = -1;
 		
 		
 		$this->unbindModel(array(
@@ -78,15 +76,42 @@ class ProductsInGroup extends AppModel {
                 ),
 			'fields'     => array(
 				'ProductsInGroup.id',
+				
 				'Product.id',
 				'ProductGroup.id',
+				
 				),
 			);
 			
 		$record = $this->find('first', $conditions);
 		$this->log('does the find work');
 		$this->log($record);
-		return !empty($record);
+		$exists = !empty($record);
+		
+		// if there is no custom collection called all
+		// and the url is collections/all/products/product-handle
+		// we need to search within products
+		$searchWithinCollectionAll = (!$exists && $collectionHandle == 'all');
+		
+		if ($searchWithinCollectionAll) {
+			$conditions = array(
+				'conditions' => array(
+					'Product.shop_id'	=> $shopId,
+					'Product.visible'	=> true,
+					'Product.handle'	=> $productHandle,
+	                ),
+				'fields'     => array(
+					'Product.id',
+					),
+			);
+			
+			$record = $this->Product->find('first', $conditions);
+			
+			return !empty($record);
+		}
+		
+		return $exists;
+		
 	}//end checkProductInCollection()
 
 
