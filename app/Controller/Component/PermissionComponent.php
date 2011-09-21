@@ -146,9 +146,8 @@ $shopIdUserHas =2;
 		if (in_array($controller->action, $this->actionsWithShopId)) {
 			$validData = !empty($controller->request->data);
 			$modelName = $this->modelName;
-			
 			if ($validData) {
-				$shopId = $controller->request->data[$modelName]['shop_id'];
+				$shopId = (isset($controller->request->data[$modelName]['shop_id']) ? $controller->request->data[$modelName]['shop_id'] : 0);
 				
 				if ($shopId !== $shopIdUserHas) {
 					$controller->request->data[$modelName]['shop_id'] = $shopIdUserHas;
