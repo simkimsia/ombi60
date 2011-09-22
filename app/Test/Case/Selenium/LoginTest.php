@@ -20,7 +20,7 @@ class WebTest extends PHPUnit_Extensions_SeleniumTestCase
     public function testLogin() {
     	$this->open('http://shop001.ombi60.localhost/admin');
     	$this->type('id=UserEmail', 'owner@shop001.com');
-    	$this->type('id=UserPassword', '5597701');
+    	$this->type('id=UserPassword', 'password');
     	$this->clickAndWait('css=input[type="submit"]');
     	$this->assertTitle('OMBI60: Open My Business in 60 Seconds: Merchants');
     }
