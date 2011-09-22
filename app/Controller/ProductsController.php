@@ -288,24 +288,32 @@ class ProductsController extends AppController {
 		
 	}
 	
+	/**
+	 * 
+	 * Update quantity for single item in Cart
+	 *
+	 * @param integer $variant_id Id of the variant 
+	 * @return void
+	**/
 	public function change_qty_for_1_item_in_cart($variant_id = 0) {
-		
-		$paramExist = !empty($this->params4GETAndNamed['quantity']);
-		
-		if (!$paramExist) return false;
-		
-		$variantIsPositive 	= is_numeric($variant_id) && ($variant_id > 0);
-		
-		$quantity 		= $this->params4GETAndNamed['quantity'];
-		$qtyIsNonNegative 	= is_numeric($quantity) && ($quantity >= 0);
-		
-		$continue = $variantIsPositive && $qtyIsNonNegative;
-			
-		if ($continue) {
-			return $this->cartModel->changeQuantityFor1Item($variant_id, $quantity);
+
+		$paramExist = !is_blank($this->params4GETAndNamed['quantity']);
+
+		if ($paramExist) {
+			$variantIsPositive 	= is_numeric($variant_id) && ($variant_id > 0);
+
+			$quantity 			= $this->params4GETAndNamed['quantity'];
+			$qtyIsNonNegative 	= is_numeric($quantity) && ($quantity >= 0);
+
+			$continue = $variantIsPositive && $qtyIsNonNegative;
+
+			if ($continue) {
+				$this->cartModel->changeQuantityFor1Item($variant_id, $quantity);
+			}
+
 		}
-		
-		return $continue;
+
+		$this->redirect(array('action' => 'view_cart'));
 	}
 	
 	public function view_cart() {
@@ -315,7 +323,7 @@ class ProductsController extends AppController {
 		// the update_x is to work with input type="image" for the update button
 		$updateButtonUsed 	= isset($this->request->params['form']['update']);
 		$updateImageButtonUsed 	= isset($this->request->params['form']['update_x']);
-		$updateButtonTriggered	= $updateButtonUsed OR $updateImageButtonUsed;
+		$updateButtonTriggered	= ($updateButtonUsed OR $updateImageButtonUsed);
 		
 		if ($updateButtonTriggered) {
 			$this->cartModel->editQuantities();
@@ -905,54 +913,20 @@ class ProductsController extends AppController {
 		$this->redirect($this->referer());
 	}
 	
+	/**
+	 * 
+	 * Add Variant to Cart given the variant id and quantity. 
+	 * Wrapper function that bridges between the public action and the model function that does the lifting.
+	 *
+	 * @param integer $id 
+	 * @param integer $quantity
+	 * @return boolean Returns true if successful.
+	**/
 	private function addToCart($id = null, $quantity = 1) {
 		$cartModel = $this->cartModel;
 		return $cartModel->addProductForCustomer(User::get('User.id'), array($id=>$quantity));
-		
 	}
-	
-	public function delete_from_cart($id = false, $cart_id = false) {
 		
-		if(!($id) OR !($cart_id)) {
-			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'view_cart'));
-		}
-		
-		if($this->deleteFromCart($id, $cart_id)) {
-			$this->Session->setFlash(__('Product removed from cart'), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'view_cart'));
-		}
-		$this->Session->setFlash(__('The Product could not be removed from cart. Please, try again.'), 'default', array('class'=>'flash_failure'));
-		$this->redirect(array('action' => 'view_cart'));
-	}
-	
-	private function deleteFromCart($id = false, $cartId = false) {
-		if (!($id >0) || !($cartId > 0)) {
-			return false;
-		}
-		
-		$userId = User::get('User.id');
-		
-		$validCartItems = $this->cartItemModel->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
-											 'Cart.user_id'=>$userId,
-											 'Cart.id'=>$cartId),
-						  'fields'=>array('CartItem.id')
-					 ));
-		
-		// because $validCartItems is not in a good format to test for value
-		$cartItemIdArray = Set::extract('{n}.CartItem.id', $validCartItems);
-		
-		if (in_array($id, $cartItemIdArray)) {
-			$result = $this->cartItemModel->delete($id);
-			if (count($cartItemIdArray) == 1 && $result) {
-				return $this->cartModel->delete($cartId);
-			}
-		}
-		
-		return false;
-		
-	}
-	
 	private function makeCheckoutAppLink () {
 		if (!empty($this->checkoutLink)) {
 			

@@ -258,6 +258,14 @@ define('DEFAULT_LANGUAGE', 'eng');
 		   return trim($matches[1]);
 		return $host;
 	}
+	
+/**
+ * this is to allow getting ip addresses by domains
+ **/
+	function is_blank($variable) {
+		return (empty($variable) && !is_numeric($variable));
+	}
+
         
         
 
