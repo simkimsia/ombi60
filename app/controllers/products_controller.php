@@ -316,7 +316,7 @@ class ProductsController extends AppController {
 		// the update_x is to work with input type="image" for the update button
 		$updateButtonUsed 	= isset($this->params['form']['update']);
 		$updateImageButtonUsed 	= isset($this->params['form']['update_x']);
-		$updateButtonTriggered	= $updateButtonUsed OR $updateImageButtonUsed;
+		$updateButtonTriggered	= ($updateButtonUsed OR $updateImageButtonUsed);
 		
 		if ($updateButtonTriggered) {
 			$this->cartModel->editQuantities();
