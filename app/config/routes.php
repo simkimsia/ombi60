@@ -161,15 +161,6 @@
                               
                               ));
         
-        Router::connect('/cart/delete/:cart_id-:id',
-                        array('controller' => 'products',
-                              'action' => 'delete_from_cart'
-                              ),
-                        array('pass' => array('id', 'cart_id'),
-                              'id' => '[0-9]+',
-                              'cart_id' => '[0-9]+'
-                              ));
-        
         Router::connect('/cart/add',
                         array('controller' => 'products',
                               'action' => 'add_to_cart',

@@ -239,17 +239,17 @@ define('DEFAULT_LANGUAGE', 'eng');
  **/
 
 ini_set('include_path', ini_get('include_path') . ':' . CAKE_CORE_INCLUDE_PATH . DS . '/vendors');
-function __autoload($path) {
-if (substr($path, 0, 5) == 'Zend_') {
-include str_replace('_', '/', $path) . '.php';
-}
-return $path;
-}
+	function __autoload($path) {
+		if (substr($path, 0, 5) == 'Zend_') {
+			include str_replace('_', '/', $path) . '.php';
+		}
+		return $path;
+	}
 
 /**
  * this is to allow getting ip addresses by domains
  **/
-        function getAddrByHost($host, $timeout = 3) {
+	function getAddrByHost($host, $timeout = 3) {
 		$host = str_replace('http://', '', $host);
 		
 		$query = `nslookup -timeout=$timeout -retry=1 $host`;
@@ -257,11 +257,14 @@ return $path;
 		   return trim($matches[1]);
 		return $host;
 	}
+	
+/**
+ * this is to allow getting ip addresses by domains
+ **/
+		function is_blank($variable) {
+			return (empty($variable) && !is_numeric($variable));
+		}
         
-        
-
-
-
 
 
 ?>
