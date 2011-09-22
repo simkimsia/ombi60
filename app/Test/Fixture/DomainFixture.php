@@ -45,5 +45,14 @@ class DomainFixture extends CakeTestFixture {
 			'always_redirect_here' => 0,
 			'shop_web_address' => 1
 		),
+		array(
+			'id' => '3',
+			'domain' => 'http://localhost2',
+			'shop_id' => '2',
+			'primary' => 0,
+			'always_redirect_here' => 0,
+			'shop_web_address' => 1
+		),
+	
 	);
 }

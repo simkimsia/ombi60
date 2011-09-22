@@ -1,5 +1,5 @@
 <?php
-/* Merchant Fixture generated on: 2011-09-21 18:53:24 : 1316631204 */
+/* Merchant Fixture generated on: 2011-09-22 09:57:02 : 1316685422 */
 
 /**
  * MerchantFixture

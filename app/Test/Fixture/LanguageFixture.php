@@ -13,7 +13,7 @@ class LanguageFixture extends CakeTestFixture {
 	var $records = array(
 		array(
 			'id' => 1,
-			'name' => 'Lorem ipsum dolor sit amet'
+			'name' => 'English'
 		),
 	);
 }
