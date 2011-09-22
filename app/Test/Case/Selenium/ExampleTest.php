@@ -1,7 +1,7 @@
 <?php
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
  
-class WebTest extends PHPUnit_Extensions_SeleniumTestCase
+class ExampleTest extends PHPUnit_Extensions_SeleniumTestCase
 {
     protected function setUp() {
         $this->setBrowser('*firefox');
@@ -23,6 +23,16 @@ class WebTest extends PHPUnit_Extensions_SeleniumTestCase
     	$this->type('id=UserPassword', 'password');
     	$this->clickAndWait('css=input[type="submit"]');
     	$this->assertTitle('OMBI60: Open My Business in 60 Seconds: Merchants');
+    }
+    
+    public function testBlogsIndexView() {
+    	$this->open('http://shop001.ombi60.localhost/admin/blogs/');
+    	$this->type('id=UserEmail', 'owner@shop001.com');
+    	$this->type('id=UserPassword', 'password');
+    	$this->clickAndWait('css=input[type="submit"]');
+    	$this->assertElementPresent('//h2[text()=\'Blogs\']');
+    	$this->assertElementPresent('css=div.blogs');
+    	$this->assertElementPresent('link=New Blog');
     }
     
 }
