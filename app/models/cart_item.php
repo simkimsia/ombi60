@@ -6,6 +6,23 @@ class CartItem extends AppModel {
 	var $displayField = 'product_title';
 	
 	var $actsAs = array('Visible.Visible',);
+	
+	var $validate = array(
+		'cart_id' => array(
+			'rule' 	=> 'uniqueCombi', 
+			'on'	=> 'create'),
+		'variant_id'  => array(
+			'rule' 	=> 'uniqueCombi',
+			'on'	=> 'create')
+	);
+	
+	private function uniqueCombi() {
+		$combi = array(
+			"{$this->alias}.cart_id" => $this->data[$this->alias]['cart_id'],
+			"{$this->alias}.variant_id"  => $this->data[$this->alias]['variant_id']
+		);
+		return $this->isUnique($combi, false);
+	}
 
 	var $belongsTo = array(
 		'Cart' => array(

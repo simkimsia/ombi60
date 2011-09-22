@@ -504,12 +504,17 @@ class Cart extends AppModel {
 		$this->Behaviors->attach('Containable');
 		$this->recursive = -1;
 		
+		if ($viewCart) {
+			// we get minimum quantity of 1 for the cart item
+			$conditionsForCartItem = array('CartItem.product_quantity >='=>1);
+		} else {
+			// we get ALL cart items even if the quantity is ZERO
+			$conditionsForCartItem = array('CartItem.product_quantity >='=>0);
+		}
+		
 		// to be used for the find statement
 		$containableArray = array('CartItem'=>array(
-						// we want only cart items with at least qty 1
-						'conditions'=>array(
-							'CartItem.product_quantity >'=>0),
-						
+						'conditions'=>$conditionsForCartItem,
 						)
 					);
 		
