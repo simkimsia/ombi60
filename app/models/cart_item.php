@@ -5,7 +5,7 @@ class CartItem extends AppModel {
 	
 	var $displayField = 'product_title';
 	
-	var $actsAs = array('Visible.Visible',);
+	var $actsAs = array('Visible.Visible');
 	
 	var $validate = array(
 		'cart_id' => array(
@@ -16,12 +16,15 @@ class CartItem extends AppModel {
 			'on'	=> 'create')
 	);
 	
-	private function uniqueCombi() {
-		$combi = array(
-			"{$this->alias}.cart_id" => $this->data[$this->alias]['cart_id'],
-			"{$this->alias}.variant_id"  => $this->data[$this->alias]['variant_id']
-		);
-		return $this->isUnique($combi, false);
+	public function uniqueCombi() {
+		if (!is_blank($this->data[$this->alias]['variant_id']) ) {
+			$combi = array(
+				"{$this->alias}.cart_id" => $this->data[$this->alias]['cart_id'],
+				"{$this->alias}.variant_id"  => $this->data[$this->alias]['variant_id']
+			);
+			return $this->isUnique($combi, false);	
+		}
+		return true;
 	}
 
 	var $belongsTo = array(

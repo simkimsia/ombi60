@@ -1,8 +1,9 @@
 /*
-SQLyog Community v8.81 
-MySQL - 5.1.41-3ubuntu12.10 : Database - s2s_new
+SQLyog Community v9.20 
+MySQL - 5.5.9 : Database - s2s_new
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -170,8 +171,8 @@ CREATE TABLE `cart_items` (
   `variant_id` int(14) unsigned DEFAULT NULL,
   `variant_title` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_product_cart_id` (`cart_id`,`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `unique_variant_card_index` (`cart_id`,`variant_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `cart_items` */
 
@@ -1094,7 +1095,7 @@ CREATE TABLE `users` (
   `modified` datetime DEFAULT NULL,
   `language_id` int(5) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
