@@ -327,7 +327,7 @@ class ProductsController extends AppController {
 		
 		$checkoutButtonUsed 		= isset($this->params['form']['checkout']);
 		$checkoutImageButtonUsed 	= isset($this->params['form']['checkout_x']);
-		$checkoutButtonTriggered	= $checkoutButtonUsed OR $checkoutImageButtonUsed;
+		$checkoutButtonTriggered	= ($checkoutButtonUsed OR $checkoutImageButtonUsed);
 		
 		
 		if ($checkoutButtonTriggered) {
