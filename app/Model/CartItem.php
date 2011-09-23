@@ -16,7 +16,7 @@ class CartItem extends AppModel {
 			'on'	=> 'create')
 	);
 
-	private function uniqueCombi() {
+	public function uniqueCombi() {
 		$combi = array(
 			"{$this->alias}.cart_id" => $this->data[$this->alias]['cart_id'],
 			"{$this->alias}.variant_id"  => $this->data[$this->alias]['variant_id']
