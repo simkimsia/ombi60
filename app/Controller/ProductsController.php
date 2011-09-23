@@ -129,7 +129,8 @@ class ProductsController extends AppController {
 		    $this->request->action == 'admin_edit'   ||
 		    $this->request->action == 'admin_add_variant' ||
 		    $this->request->action == 'admin_edit_variant' ||
-		    $this->request->action == 'admin_menu_action') {
+		    $this->request->action == 'admin_menu_action'  ||
+		    $this->request->action == 'add_to_cart') {
 			$this->Components->disable('Security');
 		}
 	}
@@ -521,9 +522,8 @@ class ProductsController extends AppController {
 
 
 		if (!$handle) {
-			$this->cakeError('error404',array(array('url'=>'/',
-								'viewVars' =>$this->viewVars,
-								)));
+			throw new NotFoundException();
+			//$this->cakeError('error404',array(array('url'=>'/','viewVars' =>$this->viewVars,)));
 		}
 
 		// to retrieve the shop id based on the url
@@ -566,9 +566,8 @@ class ProductsController extends AppController {
 
 		if (   $invalidShop OR $noSuchProduct) {
 
-			$this->cakeError('error404',array(array('url'=>'/',
-								'viewVars' =>$this->viewVars,
-								)));
+			throw new NotFoundException();
+			//$this->cakeError('error404',array(array('url'=>'/','viewVars' =>$this->viewVars,)));
 
 		}
 
@@ -582,21 +581,24 @@ class ProductsController extends AppController {
 		$exists = $this->Product->ProductsInGroup->checkProductInCollection($product_handle, $handle, $shopId);
 
 		if (!$exists) {
-			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));			
+			throw new NotFoundException();
+			//$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));			
 		}
 
 		$productFound = $this->prepareProductForView($product_handle);
 
 		// check for handle
 		if (!$handle) {
-			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
+			throw new NotFoundException();
+			//$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 
 		// this will retrieve the collection details as well as the conditions needed for pagination of Product
 		$collection = $this->Product->ProductsInGroup->ProductGroup->getByUrl($handle, $this->params4GETAndNamed);
 
 		if ($collection == false) {
-			$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
+			throw new NotFoundException();
+			//$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 
 		$product = Product::getTemplateVariable($productFound, false);
