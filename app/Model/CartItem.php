@@ -7,6 +7,10 @@ class CartItem extends AppModel {
 	
 	public $actsAs = array('Visible.Visible',);
 	
+	/*
+	 * apparently does not work with Cart model lines 677
+	 * where we do a saveAll for brand new Cart
+	 */
 	public $validate = array(
 		'cart_id' => array(
 			'rule' 	=> 'uniqueCombi', 

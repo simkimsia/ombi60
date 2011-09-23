@@ -77,7 +77,7 @@ class AppController extends Controller {
 		if (!isset($this->request->params['url'])) {
 			$this->request->params['url'] = array();
 		}
-		$this->params4GETAndNamed = array_merge($this->request->params['named'], $this->request->params['url']);
+		$this->params4GETAndNamed = array_merge($this->request->params['named'], $this->request->params['url'],$this->request->query);
 		$this->Auth->authenticate = array(
 	        	'Form' => array(
 	        		'fields' => array('username' => 'email', 'password' => 'password'), 
