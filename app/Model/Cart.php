@@ -653,22 +653,18 @@ class Cart extends AppModel {
 			$variantModel->Behaviors->attach('Linkable.Linkable');
 			
 			$checkedOutVariant = $this->CartItem->CheckedOutVariant->find('first',
-						array('conditions'	=>array('CheckedOutVariant.id' => $variant_id),
-						      'fields'		=>array('CheckedOutVariant.id',
-										'CheckedOutVariant.price',
-										'CheckedOutVariant.currency',
-										'CheckedOutVariant.shipping_required',
-										'CheckedOutVariant.weight',
-										'CheckedOutVariant.product_id',
-										'CheckedOutVariant.title'),
+						array('conditions'	=>array('Variant.id' => $variant_id),
+						      'fields'		=>array('Variant.id',
+										'Variant.price',
+										'Variant.currency',
+										'Variant.shipping_required',
+										'Variant.weight',
+										'Variant.product_id',
+										'Variant.title'),
 						      'link'		=> array('Product'   => array('fields'=>array('Product.id', 'Product.title')))
 						));
-			
 			// we need to add in quantity so this is an illegal field in Variant model
-			$checkedOutVariant['CheckedOutVariant']['quantity'] = $quantity;
-			// change the key for Variant data from CheckedOutVariant to Variant
-			$checkedOutVariant['Variant'] = $checkedOutVariant['CheckedOutVariant'];
-			unset($checkedOutVariant['CheckedOutVariant']);
+			$checkedOutVariant['Variant']['quantity'] = $quantity;
 			$arrayOfProducts[] = $checkedOutVariant;
 		}
 		
@@ -699,7 +695,7 @@ class Cart extends AppModel {
 			
 			$this->create();
 			$result = $this->saveAll($data);
-			
+			die();
 			if($result){
 				$this->sqlUpdatePriceWeightCurrencyShippingStats($this->id);
 			}
