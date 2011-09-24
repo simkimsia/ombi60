@@ -71,7 +71,7 @@ class ProductsController extends AppController {
 		// this is to allow admin_upload to work with Session component
 		if ($this->request->action=='admin_upload') {
 			
-                        $this->Session->id($this->request->params['url']['sess']);
+            $this->Session->id($this->request->params['url']['sess']);
 			$this->Session->start();
 			
 		}
@@ -130,7 +130,9 @@ class ProductsController extends AppController {
 		    $this->request->action == 'admin_add_variant' ||
 		    $this->request->action == 'admin_edit_variant' ||
 		    $this->request->action == 'admin_menu_action'  ||
-		    $this->request->action == 'add_to_cart') {
+		    $this->request->action == 'add_to_cart' || 
+			$this->request->action == 'view_cart'
+		) {
 			$this->Components->disable('Security');
 		}
 	}
@@ -317,25 +319,31 @@ class ProductsController extends AppController {
 		$this->redirect(array('action' => 'view_cart'));
 	}
 	
+	/**
+	 * 
+	 * Action for viewing cart. Also handles postback for update cart and checkout.
+	 *
+	 * @param void
+	 * @return void
+	**/
 	public function view_cart() {
 		
 		// need to check for POST and the Update button
 		// update button is named as update (singular)
 		// the update_x is to work with input type="image" for the update button
-		$updateButtonUsed 	= isset($this->request->params['form']['update']);
-		$updateImageButtonUsed 	= isset($this->request->params['form']['update_x']);
+		$updateButtonUsed 		= isset($this->request->data['update']);
+		$updateImageButtonUsed 	= isset($this->request->data['update_x']);
 		$updateButtonTriggered	= ($updateButtonUsed OR $updateImageButtonUsed);
-		
+
 		if ($updateButtonTriggered) {
 			$this->cartModel->editQuantities();
 			$this->redirect(array('action' => 'view_cart'));
 		}
 		
 		
-		
-		$checkoutButtonUsed 		= isset($this->request->params['form']['checkout']);
-		$checkoutImageButtonUsed 	= isset($this->request->params['form']['checkout_x']);
-		$checkoutButtonTriggered	= $checkoutButtonUsed OR $checkoutImageButtonUsed;
+		$checkoutButtonUsed 		= isset($this->request->data['checkout']);
+		$checkoutImageButtonUsed 	= isset($this->request->data['checkout_x']);
+		$checkoutButtonTriggered	= ($checkoutButtonUsed OR $checkoutImageButtonUsed);
 		
 		
 		if ($checkoutButtonTriggered) {
@@ -412,7 +420,7 @@ class ProductsController extends AppController {
 		
 		// reassign the products into items
 		$cart = Cart::getTemplateVariable($productsInCart);
-		$this->log($cart);
+
 		$this->set(compact('cart', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
 		
 		$sessionString = '';

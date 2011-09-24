@@ -7,10 +7,6 @@ class CartItem extends AppModel {
 	
 	public $actsAs = array('Visible.Visible',);
 	
-	/*
-	 * apparently does not work with Cart model lines 677
-	 * where we do a saveAll for brand new Cart
-	 */
 	public $validate = array(
 		'cart_id' => array(
 			'rule' 	=> 'uniqueCombi', 
@@ -20,18 +16,24 @@ class CartItem extends AppModel {
 			'on'	=> 'create')
 	);
 
+	/**
+	 * Custom validation rule for checking uniqueness of composite key for cart_id and variant_id in CartItem
+	 * 
+	 * @param void
+	 * @return boolean Returns true if cart_id and variant_id in $this->data['CartItem'] is indeed unique
+	**/
 	public function uniqueCombi() {
-		$this->log('now we run uniqueCombi');
-		$this->log($this->data);
+		
 		if (isset($this->data[$this->alias]['cart_id'])) {
 			
 			$combi = array(
 				"{$this->alias}.cart_id" => $this->data[$this->alias]['cart_id'],
 				"{$this->alias}.variant_id"  => $this->data[$this->alias]['variant_id']
 			);
-			$this->log('is this unique?');
+			
 			return $this->isUnique($combi, false);			
 		}
+		
 		return true;
 	}
 
