@@ -21,11 +21,18 @@ class CartItem extends AppModel {
 	);
 
 	public function uniqueCombi() {
-		$combi = array(
-			"{$this->alias}.cart_id" => $this->data[$this->alias]['cart_id'],
-			"{$this->alias}.variant_id"  => $this->data[$this->alias]['variant_id']
-		);
-		return $this->isUnique($combi, false);
+		$this->log('now we run uniqueCombi');
+		$this->log($this->data);
+		if (isset($this->data[$this->alias]['cart_id'])) {
+			
+			$combi = array(
+				"{$this->alias}.cart_id" => $this->data[$this->alias]['cart_id'],
+				"{$this->alias}.variant_id"  => $this->data[$this->alias]['variant_id']
+			);
+			$this->log('is this unique?');
+			return $this->isUnique($combi, false);			
+		}
+		return true;
 	}
 
 	public $belongsTo = array(

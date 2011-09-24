@@ -695,7 +695,7 @@ class Cart extends AppModel {
 			
 			$this->create();
 			$result = $this->saveAll($data);
-			die();
+			
 			if($result){
 				$this->sqlUpdatePriceWeightCurrencyShippingStats($this->id);
 			}
