@@ -48,9 +48,12 @@ class AddressTestCase extends CakeTestCase {
  *
  * @return void
  */
-	public function testGetAllByCustomerId() {
-		$result = $this->Address->getAllByCustomerId(0, DELIVERY);
+	public function testGetAllByCustomer() {
+		// negative test
+		$result = $this->Address->getAllByCustomer(0, DELIVERY);
 		$this->assertFalse(!empty($result));
+		
+		// positive test
 		/*
 		$this->assertTrue(!empty($result));
 		$this->assertTrue(!empty($result['Language']));
