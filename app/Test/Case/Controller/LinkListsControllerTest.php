@@ -1,47 +1,52 @@
 <?php
-/* LinkLists Test cases generated on: 2011-07-18 20:07:45 : 1311022665*/
-App::import('Controller', 'LinkLists');
+/* Courses Test cases generated on: 2011-09-01 13:38:15 : 1314884295*/
+App::uses('LinkListsController', 'Controller');
 
-class TestLinkListsController extends LinkListsController {
-	var $autoRender = false;
+/**
+ * CoursesController Test Case
+ *
+ */
+class LinkListsControllerTestCase extends ControllerTestCase {
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 */
+	public $fixtures = array('app.blog', 'app.saved_theme', 'app.user', 'app.shop_setting', 'app.shop', 'app.domain', 'app.post', 'app.comment', 'app.link', 'app.link_list', 'app.product', 'app.webpage');
 
-	function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
+	/**
+	 * setUp method
+	 *
+	 * @return void
+	 */
+	public function setUp() {
+		parent::setUp();
+		$this->controller = $this->generate('LinkLists', array(
+					'methods' => array('forceSSL'), 
+					'components' => array('Auth' => array('user'))
+		));
 	}
-}
 
-class LinkListsControllerTestCase extends CakeTestCase {
-	var $fixtures = array('app.link_list', 'app.shop', 'app.saved_theme', 'app.theme', 'app.shop_setting', 'app.recurring_payment_profile', 'app.invoice', 'app.subscription_plan', 'app.customer', 'app.user', 'app.group', 'app.language', 'app.casual_surfer', 'app.merchant', 'app.post', 'app.blog', 'app.link', 'app.product', 'app.vendor', 'app.product_type', 'app.product_image', 'app.products_in_group', 'app.product_group', 'app.smart_collection_condition', 'app.variant', 'app.cart_item', 'app.cart', 'app.order', 'app.address', 'app.country', 'app.shipped_to_country', 'app.shipping_rate', 'app.price_based_rate', 'app.weight_based_rate', 'app.order_line_item', 'app.payment', 'app.shops_payment_module', 'app.payment_module', 'app.custom_payment_module', 'app.paypal_payment_module', 'app.paypal_payers_payment', 'app.paypal_payer', 'app.shipment', 'app.variant_option', 'app.product_option', 'app.webpage', 'app.comment', 'app.wishlist', 'app.domain');
-
-	function startTest() {
-		$this->LinkLists =& new TestLinkListsController();
-		$this->LinkLists->constructClasses();
-	}
-
-	function endTest() {
-		unset($this->LinkLists);
+	/**
+	 * tearDown method
+	 *
+	 * @return void
+	 */
+	public function tearDown() {
 		ClassRegistry::flush();
+
+		parent::tearDown();
 	}
 
-	function testAdminIndex() {
 
+	public function testAdminEdit() {
+
+		$fixture = new LinkListFixture();
+		$this->controller->request->data['LinkList'] = $fixture->records[1];
+		$this->controller->request->data['LinkList']['name'] = "Main Menu";
+		$this->assertFlash($this->controller, 'The linklist has been saved');
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$this->testAction('/admin/links/edit/3', array('data' => $this->controller->request->data, 'method' => 'POST'));
 	}
-
-	function testAdminView() {
-
-	}
-
-	function testAdminAdd() {
-
-	}
-
-	function testAdminEdit() {
-
-	}
-
-	function testAdminDelete() {
-
-	}
-
 }
 ?>
