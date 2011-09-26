@@ -379,11 +379,7 @@
                         ));
     
     
-        /// checkout app links
-         
-
-
-    
+        // checkout app links
         Router::connect('/orders/:shop_id/:hash/checkout',
                         array('controller' => 'orders',
                               'action' => 'checkout'),
