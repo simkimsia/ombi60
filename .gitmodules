@@ -28,3 +28,6 @@
 [submodule "app/Plugin/TimeZone"]
 	path = app/Plugin/TimeZone
 	url = git@github.com:simkimsia/TimeZone.git
+[submodule "app/Plugin/Handleize"]
+	path = app/Plugin/Handleize
+	url = git@github.com:simkimsia/Handleize.git

@@ -16,11 +16,14 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 			'localhost' => 'http://shop001.ombi60.localhost/',
 			'production'=> 'http://');
 								
-	public $secondsBetweenCommands 	= 0;
+	public $secondsBetweenCommands 	= 1;
 	
 	public $testRange = SELENIUM_TEST_ALL;
+//	public $testRange = SELENIUM_TEST_WHITELIST;
+//	public $testRange = SELENIUM_TEST_NOT_ON_BLACKLIST;
 	
-	public $whiteList = array('testProductsIndex');
+	
+	public $whiteList = array('testHandleizeInDummyProduct');
 	
 	public $blackList = array();
 	
@@ -60,6 +63,30 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		}
 		
 		return true;
+	}
+	
+	/**
+	 *
+	 * Test Handleize Plugin works
+	**/
+	public function testHandleizeInDummyProduct() {
+		if ($this->doNotRunThisTest(__FUNCTION__)) {
+			return;
+		}
+		// go to products edit for dummy product
+		$this->open('admin/products/edit/2');
+		// login
+		$this->type('id=UserEmail', 'owner@shop001.com');
+    	$this->type('id=UserPassword', 'password');
+    	$this->clickAndWait('css=input[type="submit"]');
+		// change the handle for dummy product 
+    	$this->type('id=ProductHandle', 'dummy-productx123');
+    	$this->clickAndWait('css=input[type="submit"][value="Update Product"]');
+    	$this->assertElementValueEquals('css=input[id="ProductHandle"]', 'dummy-productx123');
+		// change back
+    	$this->type('id=ProductHandle', 'dummy-product');
+    	$this->clickAndWait('css=input[type="submit"][value="Update Product"]');
+    	$this->assertElementValueEquals('css=input[id="ProductHandle"]', 'dummy-product');
 	}
  
 	/**
@@ -126,6 +153,35 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
     	$this->assertElementPresent('css=div.products');
     	$this->assertElementPresent('link=Add New Product');
     }
+
+	/**
+	 *
+	 * Test Handleize Plugin works
+	**/
+	public function testHandleizeInDummyProduct() {
+		if ($this->doNotRunThisTest(__FUNCTION__)) {
+			return;
+		}
+		// go to products edit for dummy product
+		$this->open('admin/products/edit/2');
+		// login
+		$this->type('id=UserEmail', 'owner@shop001.com');
+    	$this->type('id=UserPassword', 'password');
+    	$this->clickAndWait('css=input[type="submit"]');
+		// change the handle for dummy product 
+		$this->assertElementPresent('css=input[type="text"][id="ProductHandle"][value="dummy-product"]');
+    	$this->type('id=ProductHandle', 'dummy-productx123');
+    	$this->clickAndWait('css=input[type="submit"][value="Update Product"]');
+		// now we need to go back to edit page to test
+		$this->assertElementPresent('xpath=//div[@id="flashMessage"][@class="flash_success"][contains(text(), "The Product has been saved")]');
+		$this->open('admin/products/edit/2');
+		// now we check 
+		$this->assertElementPresent('css=input[type="text"][id="ProductHandle"][value="dummy-productx123"]');
+		// change back
+    	$this->type('id=ProductHandle', 'dummy-product');
+    	$this->clickAndWait('css=input[type="submit"][value="Update Product"]');
+		$this->assertElementPresent('xpath=//div[@id="flashMessage"][@class="flash_success"][contains(text(), "The Product has been saved")]');
+	}
 
     
 }
