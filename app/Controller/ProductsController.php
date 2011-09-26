@@ -671,7 +671,6 @@ class ProductsController extends AppController {
 
 			$this->Product->create();
 			if ($this->Product->createDetails($this->request->data)) {
-			$this->log('somehow we successfully creaed details');
 				$id = $this->Product->getLastInsertId();
 		
 				//$this->Product->ProductImage->saveFILESAsProductImages($product_id); //This will save product images
