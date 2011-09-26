@@ -178,11 +178,11 @@ class ProductImage extends AppModel {
 	 * the images is a newly created product. This is so that the first file is automatically set as cover
 	 **/
 	public function saveFILESAsProductImages($product_id, $brandNewProductCreated = true) {
-		
+		$this->log('save files as product images 1');
 		if (!empty($_FILES)) {
 			
 			$tmp = array();
-			
+		$this->log('save files as product images 2');			
 			foreach ($_FILES['product_images'] as $key => $valueArray) {
 				$i=0;
 				foreach ($valueArray as $value) {
@@ -190,23 +190,29 @@ class ProductImage extends AppModel {
 					if ($i < 4) {
 						$tmp[$i][$key] = $value;
 						$i++;
+								$this->log('save files as product images 3');
 					}
 				}
 			}           
 			$allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
 			$i = 0;
+					$this->log('save files as product images 4');
 			foreach ($tmp as $tempFile) {
+						$this->log('save files as product images 5');
 				$name = $tempFile['name'];
 				$str = strtolower(substr(strrchr($tempFile['name'], '.'), 1));
 				
 				if (in_array($str, $allowedExtensions)) {
+							$this->log('save files as product images 6');
 					$this->create();
 					$data = array('ProductImage'=>array('filename'=>$tempFile,
 								'product_id' => $product_id,));
-		      
+		      $this->log($data);
 					$result = $this->save($data);   
+							$this->log('save files as product images 7');
 		      
 					if ($result != false && $i++ == 0 && $brandNewProductCreated) {
+								$this->log('save files as product images 8');
 						$this->chooseAsCoverImage($this->id, $product_id);
 					}    
 				}

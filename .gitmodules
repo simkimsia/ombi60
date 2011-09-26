@@ -34,3 +34,6 @@
 [submodule "app/Plugin/Visible"]
 	path = app/Plugin/Visible
 	url = git@github.com:simkimsia/Visible.git
+[submodule "app/Plugin/RandomString"]
+	path = app/Plugin/RandomString
+	url = git@github.com:simkimsia/RandomString.git
