@@ -1034,7 +1034,10 @@ class phpthumb {
 		} else {
 
 			// relative to current directory (any OS)
-			$AbsoluteFilename = $this->config_document_root.dirname(@$_SERVER['PHP_SELF']).DIRECTORY_SEPARATOR.$filename;
+			/**
+			 * due to change in cakephp we need to remove dirname(@$_SERVER['PHP_SELF'])
+			**/
+			$AbsoluteFilename = $this->config_document_root.DIRECTORY_SEPARATOR.$filename;
 			//if (!@file_exists($AbsoluteFilename) && @file_exists(realpath($this->DotPadRelativeDirectoryPath($filename)))) {
 			//	$AbsoluteFilename = realpath($this->DotPadRelativeDirectoryPath($filename));
 			//}
