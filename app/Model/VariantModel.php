@@ -76,7 +76,7 @@ class VariantModel extends AppModel {
 	 * */
 	public function beforeSave() {
 		
-                $unit = Shop::get('ShopSetting.unit_system');
+        $unit = Shop::get('ShopSetting.unit_system');
 		
 		foreach ($this->data as $key => $val) {
 			if (isset($val['Variant'])) {

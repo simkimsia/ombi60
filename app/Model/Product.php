@@ -333,6 +333,7 @@ class Product extends AppModel {
 		
 		$variantTitle = VARIANT_DEFAULT_TITLE;
 		$variantOptions = array();
+		$this->log($data);
 		if (!empty($data['Variant'][0]['VariantOption'])) {
 			$variantTitle = '';
 			// set the order of the 1st variant's options
@@ -353,17 +354,20 @@ class Product extends AppModel {
 
 		$result = $this->saveAll($data, array('validate'=>'first',
 						      'atomic' => false));
-		
+		$this->log('did we succeed??');
+		$this->log($result);
 		// now we need to save the variant options
 		if ($result) {
+			$this->log('test');
 			$variantID = $this->Variant->getLastInsertId();
 			$data['Variant'][0]['id'] = $variantID;
 			
 			$variantData = array('Variant'		=> $data['Variant'][0],
 					     'VariantOption'	=> $variantOptions);
+								$this->log('test111');
 			$result = $this->Variant->saveAll($variantData);
 		}
-		
+		$this->log($result);
 		return $result;
 
 	}//end createDetails()
@@ -829,17 +833,17 @@ class Product extends AppModel {
 		
 		/** Associate this product with custom collections **/
 		$customCollectionsJoined = (!empty($this->data['Product']['selected_collections'])) ? $this->data['Product']['selected_collections'] : array();
-		
+				$this->log('test0');
 		$this->saveIntoCollections($this->id, $customCollectionsJoined);	
 		
-		
+		$this->log('test1');
 		/** update smart collections **/
 		$product 	= $this->data['Product'];
 		$product['id'] 	= $this->id;
 		$this->smartUpdateProductsInGroup($product);
-		
+				$this->log('test2');
 		$this->updateProductLinks();
-		
+				$this->log('test3');		
 	}
 	
 	private function updateProductLinks() {
