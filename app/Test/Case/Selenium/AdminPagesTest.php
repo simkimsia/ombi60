@@ -65,29 +65,6 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		return true;
 	}
 	
-	/**
-	 *
-	 * Test Handleize Plugin works
-	**/
-	public function testHandleizeInDummyProduct() {
-		if ($this->doNotRunThisTest(__FUNCTION__)) {
-			return;
-		}
-		// go to products edit for dummy product
-		$this->open('admin/products/edit/2');
-		// login
-		$this->type('id=UserEmail', 'owner@shop001.com');
-    	$this->type('id=UserPassword', 'password');
-    	$this->clickAndWait('css=input[type="submit"]');
-		// change the handle for dummy product 
-    	$this->type('id=ProductHandle', 'dummy-productx123');
-    	$this->clickAndWait('css=input[type="submit"][value="Update Product"]');
-    	$this->assertElementValueEquals('css=input[id="ProductHandle"]', 'dummy-productx123');
-		// change back
-    	$this->type('id=ProductHandle', 'dummy-product');
-    	$this->clickAndWait('css=input[type="submit"][value="Update Product"]');
-    	$this->assertElementValueEquals('css=input[id="ProductHandle"]', 'dummy-product');
-	}
  
 	/**
 	 * 
@@ -182,6 +159,65 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
     	$this->clickAndWait('css=input[type="submit"][value="Update Product"]');
 		$this->assertElementPresent('xpath=//div[@id="flashMessage"][@class="flash_success"][contains(text(), "The Product has been saved")]');
 	}
+	
+	
+	/**
+	 *
+	 * Test Visible Plugin works
+	**/
+	public function testVisibleInDummyProduct() {
+		if ($this->doNotRunThisTest(__FUNCTION__)) {
+			return;
+		}
+		// go to products index for dummy product
+		$this->open('admin/products');
+		// login
+		$this->type('id=UserEmail', 'owner@shop001.com');
+    	$this->type('id=UserPassword', 'password');
+    	$this->clickAndWait('css=input[type="submit"]');
+		$this->assertElementPresent('xpath=//a[@href="/admin/products/toggle/2"][@class="product-status"][contains(text(), "Published")]');
+		// now we check if status has been changed from Published to Hidden
+		$this->open('admin/products/toggle/2');
+		$this->assertElementPresent('xpath=//div[@id="flashMessage"][@class="flash_success"][contains(text(), "Product status has been changed")]');
+		$this->assertElementPresent('xpath=//a[@href="/admin/products/toggle/2"][@class="product-status"][contains(text(), "Hidden")]');
+		
+		// change back
+		$this->open('admin/products/toggle/2');
+		$this->assertElementPresent('xpath=//div[@id="flashMessage"][@class="flash_success"][contains(text(), "Product status has been changed")]');
+		$this->assertElementPresent('xpath=//a[@href="/admin/products/toggle/2"][@class="product-status"][contains(text(), "Published")]');
+	}
+	
+	
+	/**
+	 *
+	 * Test that Hidden Product is still retrievable for products/edit
+	**/
+	public function testHiddenDummyProductIsEditable() {
+		if ($this->doNotRunThisTest(__FUNCTION__)) {
+			return;
+		}
+		// go to products index for dummy product
+		$this->open('admin/products');
+		// login
+		$this->type('id=UserEmail', 'owner@shop001.com');
+    	$this->type('id=UserPassword', 'password');
+    	$this->clickAndWait('css=input[type="submit"]');
+		$this->assertElementPresent('xpath=//a[@href="/admin/products/toggle/2"][@class="product-status"][contains(text(), "Published")]');
+		// now we check if status has been changed from Published to Hidden
+		$this->open('admin/products/toggle/2');
+		$this->assertElementPresent('xpath=//div[@id="flashMessage"][@class="flash_success"][contains(text(), "Product status has been changed")]');
+		$this->assertElementPresent('xpath=//a[@href="/admin/products/toggle/2"][@class="product-status"][contains(text(), "Hidden")]');
+		
+		// the key assertion
+		$this->open('admin/products/edit/2');
+		$this->assertElementPresent('css=input[type="text"][id="ProductHandle"][value="dummy-product"]');
+		
+		// change back
+		$this->open('admin/products/toggle/2');
+		$this->assertElementPresent('xpath=//div[@id="flashMessage"][@class="flash_success"][contains(text(), "Product status has been changed")]');
+		$this->assertElementPresent('xpath=//a[@href="/admin/products/toggle/2"][@class="product-status"][contains(text(), "Published")]');
+	}
+
 
     
 }

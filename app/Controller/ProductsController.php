@@ -788,9 +788,8 @@ class ProductsController extends AppController {
 		}
 
 		if (empty($this->request->data)) {
-                        // get the product details
-                        $this->request->data = $this->Product->getDetails($id); //This action gets complete product information
-			
+			// get the product details
+			$this->request->data = $this->Product->getDetails($id, true); //This action gets complete product information
 		}
 
 		$product_id = $id;

@@ -31,3 +31,6 @@
 [submodule "app/Plugin/Handleize"]
 	path = app/Plugin/Handleize
 	url = git@github.com:simkimsia/Handleize.git
+[submodule "app/Plugin/Visible"]
+	path = app/Plugin/Visible
+	url = git@github.com:simkimsia/Visible.git
