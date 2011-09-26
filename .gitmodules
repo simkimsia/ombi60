@@ -25,3 +25,6 @@
 [submodule "vendors/phpunit-selenium"]
 	path = vendors/phpunit-selenium
 	url = git://github.com/sebastianbergmann/phpunit-selenium.git
+[submodule "app/Plugin/TimeZone"]
+	path = app/Plugin/TimeZone
+	url = git@github.com:simkimsia/TimeZone.git
