@@ -7,3 +7,4 @@ app/tmp/cache/cake*
 .DS_Store
 *.DS_Store
 tags
+app/webroot/coverage/*
