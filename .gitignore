@@ -8,4 +8,4 @@ app/tmp/cache/cake*
 *.DS_Store
 tags
 app/webroot/coverage/*
-app/Views/themed/2_cover/*
+app/views/themed/2_cover/*
