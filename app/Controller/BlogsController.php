@@ -28,7 +28,7 @@ class BlogsController extends AppController {
 	public function admin_index() {
 		$this->Blog->recursive = 0;
 		$this->Paginator->settings = array('conditions'=>array('Blog.shop_id'=>Shop::get('Shop.id')));
-		$this->set('blogs', $this->Paginator->paginate());
+		$this->set('blogs', $this->paginate());
 		
 	}
 
@@ -41,13 +41,13 @@ class BlogsController extends AppController {
 		$this->Blog->recursive 	      = 0;
 		$blog                         = $this->Blog->read(null, $id);
 		
-		$this->Paginator->paginate = array(
+		$this->paginate = array(
             'conditions' => array('Post.blog_id' => $blog['Blog']['id']),
 		    'order'      => array('Post.created DESC'),
 		    'fields'     => array('Post.id', 'Post.blog_id', 'Post.title',
 						      'Post.created', 'Post.modified', 'Post.visible'));
 		
-		$posts                        = $this->Paginator->paginate('Post');
+		$posts                        = $this->paginate('Post');
 
 		$this->set(compact('blog', 'posts'));	
 	}

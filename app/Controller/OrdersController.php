@@ -81,7 +81,7 @@ class OrdersController extends AppController {
 
 	public function index() {
 		$this->Order->recursive = 0;
-		$this->set('orders', $this->Paginator->paginate());
+		$this->set('orders', $this->paginate());
 	}
 	
 	public function admin_index() {
@@ -95,7 +95,7 @@ class OrdersController extends AppController {
 		$this->Order->Customer->Behaviors->attach('Linkable.Linkable');
 		$this->Order->Customer->User->Behaviors->attach('Linkable.Linkable');
 		
-		$this->Paginator->paginate = array(
+		$this->paginate = array(
 			      'conditions' => array('Order.shop_id' => $shop_id),
 							
 			      'link'=>array(
@@ -104,9 +104,9 @@ class OrdersController extends AppController {
 			      );
 		
 		// combine the original pagination conditions with the Filter pagination
-		$this->Paginator->paginate['conditions'] = array_merge((array)$this->Filter->paginate['conditions'], $this->Paginator->paginate['conditions']);
+		$this->paginate['conditions'] = array_merge((array)$this->Filter->paginate['conditions'], $this->Paginator->paginate['conditions']);
 		
-		$orders = $this->Paginator->paginate();
+		$orders = $this->paginate();
 
 		$this->set('orders', $orders);
 		

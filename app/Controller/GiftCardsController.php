@@ -5,7 +5,7 @@ class GiftCardsController extends AppController {
 
 	public function index() {
 		$this->GiftCard->recursive = 0;
-		$this->set('giftCards', $this->Paginator->paginate());
+		$this->set('giftCards', $this->paginate());
 	}
 
 	public function view($id = null) {
@@ -68,7 +68,7 @@ class GiftCardsController extends AppController {
 	}
 	public function admin_index() {
 		$this->GiftCard->recursive = 0;
-		$this->set('giftCards', $this->Paginator->paginate());
+		$this->set('giftCards', $this->paginate());
 	}
 
 	public function admin_view($id = null) {

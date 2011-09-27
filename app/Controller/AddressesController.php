@@ -9,7 +9,7 @@ class AddressesController extends AppController {
 
 	public function index() {
 		$this->Address->recursive = 0;
-		$this->set('addresses', $this->Paginator->paginate());
+		$this->set('addresses', $this->paginate());
 	}
 
 }

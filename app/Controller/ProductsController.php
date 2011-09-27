@@ -18,31 +18,7 @@ class ProductsController extends AppController {
 								 )),
 					),
 				'Paypal.Paypal',
-				'Filter.Filter'  => array(
-					'actions' => array('admin_index'),
-					'defaults' => array(),
-					'fieldFormatting' => array(
-						'string'	=> "LIKE '%%%s%%'",
-						'text'		=> "LIKE '%%%s%%'",
-						'datetime'	=> "LIKE '%%%s%%'"
-					),
-					'formOptionsDatetime' => array(),
-					'paginatorParams' => array(
-						'page',
-						'sort',
-						'direction',
-						'limit'
-					),
-					'parsed' => false,
-					'redirect' => true,
-					'useTime' => false,
-					'separator' => '/',
-					'rangeSeparator' => '-',
-					'url' => array(),
-					'whitelist' => array(),
-					'useSession'=>true,
-					'complicatedRelation' => array(),
-					),
+				
 				'Theme' => array('actions'=>array('view_cart',
 								  'view',
 								  'index',
@@ -445,24 +421,22 @@ class ProductsController extends AppController {
 		
 		$shop_id = Shop::get('Shop.id');
 		
-		$this->Paginator->paginate = array(
-			      'conditions' => array('AND'=> array(
-								  'Product.shop_id' => $shop_id
-								 ),
-						    'OR' =>
-							array (
-								array('ProductImage.cover'=>true),
-								array('ProductImage.cover'=>null),
-							),
-						    ),
-			      'link'=>array('ProductImage'),
-			      'fields'=>array('Product.*', 'ProductImage.id', 'ProductImage.filename', 'ProductImage.dir'),
-			      );
-
+		$this->log($shop_id);
 		
-		//$this->Paginator->paginate['conditions']['AND'] = array_merge($this->Filter->paginate['conditions'], array('Product.shop_id' => User::get('Merchant.shop_id')));
+		$this->paginate = array(
+			'conditions' => array(
+				'Product.shop_id' => $shop_id
+			),
+			'link'=>array('ProductImage'),
+			'fields'=>array(
+				'Product.*', 
+				'ProductImage.id', 
+				'ProductImage.filename', 
+				'ProductImage.dir'
+			),
+		);
 
-		$this->set('products', $this->Paginator->paginate());
+		$this->set('products', $this->paginate('Product'));
 
 	}
 	
@@ -485,11 +459,11 @@ class ProductsController extends AppController {
 		// for uploadify
 		// the images list related code
 		// to make paging easier to test, we set as 1 per page.
-		$this->Paginator->paginate = array('conditions'=>array('ProductImage.product_id'=>$id),
+		$this->paginate = array('conditions'=>array('ProductImage.product_id'=>$id),
                                       'order' => 'ProductImage.cover desc',
                                       'limit'=>'10');
 	
-		$productImages = $this->Paginator->paginate('ProductImage');
+		$productImages = $this->paginate('ProductImage');
 		
 		$errors = array();
 		
@@ -636,10 +610,10 @@ class ProductsController extends AppController {
 		}
 
 		// assign the conditions for the pagination of Product
-		$this->Paginator->paginate = $collection['ProductGroup']['product_paginate'];
+		$this->paginate = $collection['ProductGroup']['product_paginate'];
 		
 		// paginate using the parent model Product
-		$products = $this->Paginator->paginate('Product');
+		$products = $this->paginate('Product');
 		
 		// assign the paginated products back into $collection
 		$collection['Product'] = $products;
@@ -840,7 +814,7 @@ class ProductsController extends AppController {
 	public function platform_index() {
 
 		$this->Product->recursive = 0;
-		$this->set('products', $this->Paginator->paginate());
+		$this->set('products', $this->paginate());
 
 	}
 

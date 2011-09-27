@@ -31,10 +31,10 @@ class ThemesController extends AppController {
 	public function admin_index() {
 		$this->ThemeModel->SavedTheme->recursive = 0;
 
-		$this->Paginator->paginate = array(
+		$this->paginate = array(
 			      'conditions' => array('SavedTheme.shop_id' => User::get('Merchant.shop_id')));
 	
-		$this->set('themes', $this->Paginator->paginate($this->ThemeModel));
+		$this->set('themes', $this->paginate($this->ThemeModel));
 
 	}
 	

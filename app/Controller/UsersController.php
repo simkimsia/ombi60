@@ -233,7 +233,7 @@ class UsersController extends AppController {
 
 	public function platform_index() {
 		$this->User->recursive = 0;
-		$this->set('users', $this->Paginator->paginate());
+		$this->set('users', $this->paginate());
 	}
 
 /**

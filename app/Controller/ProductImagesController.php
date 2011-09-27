@@ -82,11 +82,11 @@ class ProductImagesController extends AppController {
 			$this->redirect(array('action' => 'index', 'controller' => 'products', 'admin' => true));
 		}
 		// to make paging easier to test, we set as 1 per page.
-		$this->Paginator->paginate = array('limit'=>'3');
+		$this->paginate = array('limit'=>'3');
 
 		$this->set('product_id', $product_id);
 
-		$this->set('productImages', $this->Paginator->paginate('ProductImage', array('ProductImage.product_id'=>$product_id)));
+		$this->set('productImages', $this->paginate('ProductImage', array('ProductImage.product_id'=>$product_id)));
 
 		$this->set('errors', array());
 
@@ -156,11 +156,11 @@ class ProductImagesController extends AppController {
 			if ($this->request->params['isAjax']) {
 				// the images list related code
 				// to make paging easier to test, we set as 1 per page.
-				$this->Paginator->paginate = array('conditions'=>array('ProductImage.product_id'=>$product_id),
+				$this->paginate = array('conditions'=>array('ProductImage.product_id'=>$product_id),
 				      'order' => 'ProductImage.cover desc',
 				      'limit'=>'10');
 					
-				$productImages = $this->Paginator->paginate('ProductImage');
+				$productImages = $this->paginate('ProductImage');
 				$this->set(compact('productImages'));
 				$this->render('/elements/product_images_ajax_list');
 					
@@ -191,11 +191,11 @@ class ProductImagesController extends AppController {
 
 		// the images list related code
 		// to make paging easier to test, we set as 1 per page.
-		$this->Paginator->paginate = array('conditions'=>array('ProductImage.product_id'=>$product_id),
+		$this->paginate = array('conditions'=>array('ProductImage.product_id'=>$product_id),
 		      'order' => 'ProductImage.cover desc',
 		      'limit'=>'10');
 
-		$productImages = $this->Paginator->paginate('ProductImage');
+		$productImages = $this->paginate('ProductImage');
 		$this->set(compact('productImages', 'product_id', 'edit'));
 	}
 
@@ -216,11 +216,11 @@ class ProductImagesController extends AppController {
 			if ($this->request->params['isAjax']) {
 				// the images list related code
 				// to make paging easier to test, we set as 1 per page.
-				$this->Paginator->paginate = array('conditions'=>array('ProductImage.product_id'=>$product_id),
+				$this->paginate = array('conditions'=>array('ProductImage.product_id'=>$product_id),
 				      'order' => 'ProductImage.cover desc',
 				      'limit'=>'10');
 
-				$productImages = $this->Paginator->paginate('ProductImage');
+				$productImages = $this->paginate('ProductImage');
 				$this->set(compact('productImages'));
 				$this->render('/elements/product_images_ajax_list');
 

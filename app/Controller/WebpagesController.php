@@ -56,8 +56,8 @@ class WebpagesController extends AppController {
 		$this->Webpage->recursive = 0;
 		
 		$shopid = Shop::get('Shop.id');
-		$this->Paginator->paginate = array('conditions'=>array('Webpage.shop_id'=>$shopid));
-		$webpages = $this->Paginator->paginate();
+		$this->paginate = array('conditions'=>array('Webpage.shop_id'=>$shopid));
+		$webpages = $this->paginate();
 		
 		$blogModel = $this->Webpage->Shop->Blog;
 		$blogModel->Behaviors->attach('Containable');
