@@ -43,3 +43,6 @@
 [submodule "app/Plugin/MeioDuplicate"]
 	path = app/Plugin/MeioDuplicate
 	url = git@github.com:simkimsia/MeioDuplicate.git
+[submodule "app/Plugin/Copyable"]
+	path = app/Plugin/Copyable
+	url = git@github.com:simkimsia/copyable_behavior.git
