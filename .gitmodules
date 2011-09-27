@@ -40,3 +40,6 @@
 [submodule "app/Vendor/phpThumb"]
 	path = app/Vendor/phpThumb
 	url = git@github.com:simkimsia/phpThumb-for-cakephp-2.0.git
+[submodule "app/Plugin/MeioDuplicate"]
+	path = app/Plugin/MeioDuplicate
+	url = git@github.com:simkimsia/MeioDuplicate.git
