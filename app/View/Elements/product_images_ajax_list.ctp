@@ -35,12 +35,12 @@ echo "</pre>";*/
 							   'confirm' => sprintf(__('Are you sure you want to delete %s?'), $productImage['ProductImage']['filename'])));
 			
 			if ($productImage['ProductImage']['cover']) {
-				echo '<span class="make_cover">' . __('Cover Image') . '</span>'; //$this->Html->image('tick.gif');
+				echo '<span class="product_image_make_cover">' . __('Cover Image') . '</span>'; //$this->Html->image('tick.gif');
 				
 			} else {
 				echo $this->Html->link(__('Make Cover'),
 						array('controller' => 'product_images', 'action' => 'make_this_cover', 'admin' => true, 'id'=>$id, 'product_id' => $productImage['ProductImage']['product_id']),
-						array('escape' => false, 'class' => 'make_cover'));	
+						array('escape' => false, 'class' => 'make_cover product_image_make_cover'));	
 			}
 			
 			?>&nbsp;

@@ -634,7 +634,7 @@ margin: 5px 6px 7px 11px;
 .product_image-thumbs li.right {
     float: right;
 }
-.make_cover {
+.product_image_make_cover {
     font-size: 90%;
     margin-left: 5px;
 }

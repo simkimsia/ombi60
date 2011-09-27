@@ -17,6 +17,10 @@ class ProductImagesController extends AppController {
 		// this is to allow the jquery to change the elements that control the file upload.
 		$image = $this->ProductImage;
 		$this->Security->unlockedFields[] = $image->name . '.' . $image->defaultNameForImage;
+		
+		if ($this->action == 'admin_ajax_product_image_upload') {
+			$this->Components->disable('Security');
+		}
 	}
 
 	private function redirectToProductEdit($product_id = null) {
@@ -141,7 +145,7 @@ class ProductImagesController extends AppController {
 
 	public function admin_make_this_cover($id = null, $product_id = null) {
 		if ($this->request->params['isAjax']) {
-			$this->layout = false;
+			$this->layout = 'ajax';;
 		}
 		if (!$id OR !$product_id) {
 			if ($this->request->params['isAjax']) {
@@ -185,8 +189,8 @@ class ProductImagesController extends AppController {
 			return false;
 		}
 
-		$this->layout = false;
-		$makeCoverAjax = true;
+		$this->layout = 'ajax';
+
 		$this->ProductImage->saveFILESAsProductImages($product_id, $edit);
 
 		// the images list related code

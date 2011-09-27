@@ -425,8 +425,14 @@ class ProductsController extends AppController {
 		
 		$this->paginate = array(
 			'conditions' => array(
-				'Product.shop_id' => $shop_id
-			),
+				'AND' => array(
+					'Product.shop_id' => $shop_id
+				),// end AND
+				'OR' => array(
+					array('ProductImage.cover' => true),
+					array('ProductImage.cover' => null),
+				)// end OR	
+			),// end conditions
 			'link'=>array('ProductImage'),
 			'fields'=>array(
 				'Product.*', 
@@ -436,7 +442,7 @@ class ProductsController extends AppController {
 			),
 		);
 
-		$this->set('products', $this->paginate('Product'));
+		$this->set('products', $this->paginate());
 
 	}
 	
