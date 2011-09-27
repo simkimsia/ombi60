@@ -829,7 +829,8 @@ class ProductsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Product->duplicate($id)) {
-			$this->Session->setFlash(__('Product duplicated'), 'default', array('class'=>'flash_failure'));
+			$this->log('success duplicating product. in file ' . __FILE__ . ' under function name ' . __FUNCTION__ . ' line ' . __LINE__);
+			$this->Session->setFlash(__('Product duplicated'), 'default', array('class'=>'flash_success'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->Session->setFlash(__('The Product could not be duplicated. Please, try again.'), 'default', array('class'=>'flash_failure'));

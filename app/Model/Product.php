@@ -418,7 +418,10 @@ class Product extends AppModel {
 							));
 			
 			$duplicateGroups = Set::extract('{n}.ProductsInGroup.product_group_id', $groups);
-			$this->saveIntoCollections($this->id, $duplicateGroups);
+
+			if (!empty($duplicateGroups)) {
+				$this->saveIntoCollections($this->id, $duplicateGroups);				
+			}
 			
 			// duplicate the variants as well.
 			// first we need to retrieve all the Variants belonging to the original Product
