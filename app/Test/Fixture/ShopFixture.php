@@ -1,5 +1,5 @@
 <?php
-/* Shop Fixture generated on: 2011-09-21 16:58:41 : 1316624321 */
+/* Shop Fixture generated on: 2011-09-28 10:24:55 : 1317205495 */
 
 /**
  * ShopFixture

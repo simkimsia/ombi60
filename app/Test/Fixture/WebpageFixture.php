@@ -1,5 +1,5 @@
 <?php
-/* Webpage Fixture generated on: 2011-09-21 17:22:34 : 1316625754 */
+/* Webpage Fixture generated on: 2011-09-28 10:39:41 : 1317206381 */
 
 /**
  * WebpageFixture
@@ -214,36 +214,6 @@ class WebpageFixture extends CakeTestFixture {
 			'author' => '1',
 			'real_author' => NULL,
 			'handle' => 'terms-of-service',
-			'visible' => 1
-		),
-		array(
-			'id' => '5',
-			'shop_id' => '2',
-			'title' => 'asdad',
-			'content' => '<p>adasda</p>',
-			'created' => '2011-09-16 17:56:35',
-			'modified' => '2011-09-16 17:56:35',
-			'meta_title' => NULL,
-			'meta_keywords' => NULL,
-			'meta_description' => NULL,
-			'author' => '1',
-			'real_author' => NULL,
-			'handle' => 'asdad',
-			'visible' => 1
-		),
-		array(
-			'id' => '6',
-			'shop_id' => '2',
-			'title' => 'vsdvdsvds',
-			'content' => '<p>vsvdsvdsvdsvdsvdsvds</p>',
-			'created' => '2011-09-17 14:39:17',
-			'modified' => '2011-09-17 14:39:17',
-			'meta_title' => NULL,
-			'meta_keywords' => NULL,
-			'meta_description' => NULL,
-			'author' => '1',
-			'real_author' => NULL,
-			'handle' => 'vsdvdsvds',
 			'visible' => 1
 		),
 	);

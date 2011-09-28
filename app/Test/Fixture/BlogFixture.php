@@ -1,5 +1,5 @@
 <?php
-/* Blog Fixture generated on: 2011-09-21 16:58:06 : 1316624286 */
+/* Blog Fixture generated on: 2011-09-28 10:38:36 : 1317206316 */
 
 /**
  * BlogFixture
@@ -34,28 +34,16 @@ class BlogFixture extends CakeTestFixture {
  */
 	public $records = array(
 		array(
-			'id' => '2',
+			'id' => '1',
 			'title' => 'news',
 			'short_name' => 'news',
 			'description' => NULL,
 			'theme' => NULL,
-			'created' => '2011-09-16 17:56:03',
-			'modified' => '2011-09-16 17:56:03',
-			'shop_id' => NULL,
-			'visible_post_count' => '0',
-			'all_post_count' => '0'
-		),
-		array(
-			'id' => '3',
-			'title' => 'Test',
-			'short_name' => 'test',
-			'description' => NULL,
-			'theme' => NULL,
-			'created' => '2011-09-17 14:38:45',
-			'modified' => '2011-09-17 14:38:45',
+			'created' => '2011-07-08 11:54:46',
+			'modified' => '2011-07-08 11:54:46',
 			'shop_id' => '2',
-			'visible_post_count' => '2',
-			'all_post_count' => '2'
+			'visible_post_count' => '1',
+			'all_post_count' => '1'
 		),
 	);
 }

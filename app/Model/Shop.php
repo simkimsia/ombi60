@@ -325,6 +325,33 @@ class Shop extends AppModel {
 		$url = strtolower($url);
 		$url = str_replace('https://', 'http://', $url);
 		
+		$conditions = array('Domain.domain' => $url);
+		return $this->getDataForStoringIntoSingleton($conditions);
+
+		
+	}
+
+	/**
+	 *
+	 * Given a id seek out the corresponding shop
+	 * Returns boolean false if no such shop
+	 * */
+	public function getById($id) {
+		
+		$conditions = array('Shop.id' => $id);
+		return $this->getDataForStoringIntoSingleton($conditions);
+		
+	}
+	
+	/**
+	 *
+	 * The find method that will retrieve the right amount of data to be used by
+	 * Shop::store($data); This method used primarily by $this->getByDomain and getById
+	 * 
+	 * @param array $conditions Conditions used for the find
+	 * @return array Basically the $data to be used in Shop::store
+	 * */
+	private function getDataForStoringIntoSingleton($conditions) {
 		
 		$this->recursive         = -1;
 		$this->Domain->recursive = -1;
@@ -336,7 +363,7 @@ class Shop extends AppModel {
 				      'first',
 				      array(
 					   'link' => array('ShopSetting', 'Domain', ),
-					   'conditions' => array('Domain.domain'=>$url),
+					   'conditions' => $conditions,
 					   'fields' => array('Shop.*', 'Domain.domain', 'Domain.id', 'ShopSetting.*'),
 					   ));
 
@@ -346,6 +373,8 @@ class Shop extends AppModel {
 
 		return false;
 	}
+
+
 
 	/**
 	 * Static user code copied from Super Awesome Advanced CakePhp tips.

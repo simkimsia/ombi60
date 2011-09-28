@@ -145,7 +145,7 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		$this->type('id=UserEmail', 'owner@shop001.com');
     	$this->type('id=UserPassword', 'password');
     	$this->clickAndWait('css=input[type="submit"]');
-		// change the handle for dummy product 
+		// change the handle for dummy product
 		$this->assertElementPresent('css=input[type="text"][id="ProductHandle"][value="dummy-product"]');
     	$this->type('id=ProductHandle', 'dummy-productx123');
     	$this->clickAndWait('css=input[type="submit"][value="Update Product"]');

@@ -1,34 +1,53 @@
 <?php
-/* ProductGroup Fixture generated on: 2011-03-26 08:03:38 : 1301129798 */
-class ProductGroupFixture extends CakeTestFixture {
-	var $name = 'ProductGroup';
+/* ProductGroup Fixture generated on: 2011-09-28 10:26:15 : 1317205575 */
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100),
-		'shop_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'description' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'product_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 7),
-		'handle' => array('type' => 'string', 'null' => true, 'default' => NULL),
-		'vendor_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 7),
+/**
+ * ProductGroupFixture
+ *
+ */
+class ProductGroupFixture extends CakeTestFixture {
+
+/**
+ * Fields
+ *
+ * @var array
+ */
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary', 'collate' => NULL, 'comment' => ''),
+		'title' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'shop_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'description' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'all_product_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 7, 'collate' => NULL, 'comment' => ''),
+		'handle' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 150, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'vendor_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 7, 'collate' => NULL, 'comment' => ''),
+		'visible' => array('type' => 'boolean', 'null' => true, 'default' => '1', 'collate' => NULL, 'comment' => ''),
+		'type' => array('type' => 'boolean', 'null' => true, 'default' => '0', 'collate' => NULL, 'comment' => ''),
+		'visible_product_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 7, 'collate' => NULL, 'comment' => ''),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
-	var $records = array(
+/**
+ * Records
+ *
+ * @var array
+ */
+	public $records = array(
 		array(
-			'id' => 1,
-			'title' => 'Lorem ipsum dolor sit amet',
-			'shop_id' => 1,
-			'created' => '2011-03-26 08:56:38',
-			'modified' => '2011-03-26 08:56:38',
-			'description' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-			'product_count' => 1,
-			'handle' => 'Lorem ipsum dolor sit amet',
-			'vendor_count' => 1
+			'id' => '1',
+			'title' => 'Frontpage',
+			'shop_id' => '2',
+			'created' => '2011-07-08 11:54:48',
+			'modified' => '2011-07-08 11:54:48',
+			'description' => NULL,
+			'all_product_count' => '1',
+			'handle' => 'frontpage',
+			'vendor_count' => '0',
+			'visible' => 1,
+			'type' => 0,
+			'visible_product_count' => '1'
 		),
 	);
 }
-?>

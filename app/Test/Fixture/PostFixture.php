@@ -1,5 +1,5 @@
 <?php
-/* Post Fixture generated on: 2011-09-21 16:57:19 : 1316624239 */
+/* Post Fixture generated on: 2011-09-28 10:38:55 : 1317206335 */
 
 /**
  * PostFixture
@@ -38,36 +38,20 @@ class PostFixture extends CakeTestFixture {
  */
 	public $records = array(
 		array(
-			'id' => '3',
-			'blog_id' => '3',
-			'author_id' => NULL,
+			'id' => '1',
+			'blog_id' => '1',
+			'author_id' => '1',
 			'visible' => 1,
-			'title' => 'dscsdcs',
-			'slug' => 'dscsdcs',
-			'content' => '<p>csdcds</p>',
+			'title' => 'Open for business!',
+			'slug' => 'open-for-business',
+			'content' => 'We are OPEN for business!!',
 			'no_comments' => '0',
 			'allow_comments' => 1,
 			'allow_pingback' => 1,
-			'created' => '2011-09-17 14:40:45',
-			'modified' => '2011-09-17 14:40:45',
+			'created' => '2011-07-08 11:54:46',
+			'modified' => '2011-07-08 11:54:46',
 			'published' => NULL,
-			'blog_handle' => 'sdvsdvsdvs'
-		),
-		array(
-			'id' => '4',
-			'blog_id' => '3',
-			'author_id' => NULL,
-			'visible' => 1,
-			'title' => 'asdsad',
-			'slug' => 'asdsad',
-			'content' => '<p>adsada</p>',
-			'no_comments' => '0',
-			'allow_comments' => 1,
-			'allow_pingback' => 1,
-			'created' => '2011-09-17 15:57:34',
-			'modified' => '2011-09-17 15:57:34',
-			'published' => NULL,
-			'blog_handle' => 'sdvsdvsdvs'
+			'blog_handle' => 'news'
 		),
 	);
 }

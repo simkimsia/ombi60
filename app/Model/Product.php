@@ -209,7 +209,7 @@ class Product extends AppModel {
 	 * */
 	public function afterFind($results, $primary) {
 		
-                $unit = Shop::get('ShopSetting.unit_system');
+        $unit = Shop::get('ShopSetting.unit_system');
 		if ($primary) {
 			foreach ($results as $key => $val) {
 				
