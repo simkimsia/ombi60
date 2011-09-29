@@ -1,5 +1,5 @@
 <?php
-/* Product Fixture generated on: 2011-09-28 10:24:26 : 1317205466 */
+/* Product Fixture generated on: 2011-09-29 02:27:30 : 1317263250 */
 
 /**
  * ProductFixture
@@ -71,6 +71,23 @@ class ProductFixture extends CakeTestFixture {
 			'vendor_id' => '1',
 			'handle' => 'dummy-product',
 			'product_type_id' => '1'
+		),
+		array(
+			'id' => '3',
+			'shop_id' => '2',
+			'title' => 'test product with no pic and no collection',
+			'code' => '',
+			'description' => '<p>test</p>',
+			'price' => '23.0000',
+			'created' => '2011-09-29 02:26:59',
+			'modified' => '2011-09-29 02:26:59',
+			'visible' => 1,
+			'weight' => '2000',
+			'currency' => 'SGD',
+			'shipping_required' => 1,
+			'vendor_id' => '0',
+			'handle' => 'test-product-with-no-pic-and-no-collection',
+			'product_type_id' => '0'
 		),
 	);
 }
