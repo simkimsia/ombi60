@@ -66,7 +66,7 @@ class CartsController extends AppController {
 		}
 		
 		if($this->addToCart($id, $qty)) {
-			$this->Session->setFlash(__('Product added to cart'), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Product added to cart'), 'default', array('class'=>'flash_success'));
 			$this->redirect(array('action' => 'view_cart'));
 		}
 		$this->Session->setFlash(__('The Product could not be added to cart. Please, try again.'), 'default', array('class'=>'flash_failure'));

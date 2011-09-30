@@ -1,5 +1,5 @@
 <?php
-/* Variant Fixture generated on: 2011-09-28 10:27:18 : 1317205638 */
+/* Variant Fixture generated on: 2011-09-30 18:48:08 : 1317408488 */
 
 /**
  * VariantFixture
@@ -60,6 +60,20 @@ class VariantFixture extends CakeTestFixture {
 			'currency' => 'SGD',
 			'shipping_required' => 1,
 			'price' => '0.0000',
+			'order' => '0',
+			'compare_with_price' => NULL
+		),
+		array(
+			'id' => '3',
+			'title' => 'Default Title',
+			'product_id' => '3',
+			'sku_code' => '',
+			'weight' => '2000',
+			'created' => '2011-09-29 02:26:59',
+			'modified' => '2011-09-29 02:26:59',
+			'currency' => 'SGD',
+			'shipping_required' => 1,
+			'price' => '23.0000',
 			'order' => '0',
 			'compare_with_price' => NULL
 		),

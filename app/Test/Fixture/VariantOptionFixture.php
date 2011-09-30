@@ -1,5 +1,5 @@
 <?php
-/* VariantOption Fixture generated on: 2011-09-28 10:27:30 : 1317205650 */
+/* VariantOption Fixture generated on: 2011-09-30 18:48:00 : 1317408480 */
 
 /**
  * VariantOptionFixture
@@ -39,6 +39,13 @@ class VariantOptionFixture extends CakeTestFixture {
 			'id' => '2',
 			'variant_id' => '2',
 			'field' => 'title',
+			'value' => 'Default Title',
+			'order' => '0'
+		),
+		array(
+			'id' => '3',
+			'variant_id' => '3',
+			'field' => 'Title',
 			'value' => 'Default Title',
 			'order' => '0'
 		),
