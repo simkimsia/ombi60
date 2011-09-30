@@ -147,12 +147,12 @@
                         );
         
         Router::connect('/cart',
-                        array('controller' => 'products',
+                        array('controller' => 'carts',
                               'action' => 'view_cart')
                         );
         
         Router::connect('/cart/change/:variant_id',
-                        array('controller' => 'products',
+                        array('controller' => 'carts',
                               'action' => 'change_qty_for_1_item_in_cart'),
                         array('pass' => array('variant_id'),
                               'variant_id' => '[0-9]+',
@@ -160,7 +160,7 @@
                               ));
         
         Router::connect('/cart/add',
-                        array('controller' => 'products',
+                        array('controller' => 'carts',
                               'action' => 'add_to_cart',
                              ));
 

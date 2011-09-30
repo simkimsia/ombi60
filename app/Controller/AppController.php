@@ -505,16 +505,24 @@ class AppController extends Controller {
 		// public actions to be set to templates
 		// capitalize and pluralize the controller apparently
 		// array([controllerName] => array([action]=>templatename))
-		$publicActions = array('Webpages' => array('view'=>'page',
-							   'frontpage'=>'index'),
-				       'Posts'    => array('view'=>'article',
-							   'index'=>'blog'),
-				       'Products' => array('view'=>'product',
-							   'view_by_group'=>'collection',
-							   'view_cart' => 'cart',
-							   'view_within_group' => 'product',
-							)
-				       );
+		$publicActions = array(
+			'Webpages'	=> array(
+				'view'		=> 'page',
+				'frontpage'	=> 'index'
+			),
+			'Posts'		=> array(
+				'view'	=> 'article',
+				'index'	=> 'blog'
+			),
+			'Products'	=> array(
+				'view'				=> 'product',
+				'view_by_group'		=> 'collection',
+				'view_within_group' => 'product',
+			),
+			'Carts' 	=> array(
+				'view_cart'	=> 'cart',
+			)
+		);
 		
 		$controller 	= $this->name;
 		$action 	= $this->request->action;

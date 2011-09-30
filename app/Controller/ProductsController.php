@@ -19,9 +19,8 @@ class ProductsController extends AppController {
 					),
 				'Paypal.Paypal',
 				
-				'Theme' => array('actions'=>array('view_cart',
+				'Theme' => array('actions'=>array(
 								  'view',
-								  'index',
 								  'view_by_group',
 								  'view_within_group',
 								)),
@@ -35,15 +34,6 @@ class ProductsController extends AppController {
 	public $cartItemModel = '';
 
 	public function beforeFilter() {
-		/**
-		 * initialize the cartModel and cartItemModel
-		 * **/
-		$this->cartModel 	= $this->Product->Shop->Cart;
-		$this->cartItemModel 	= $this->cartModel->CartItem;
-		
-		// for uploadify to work, we must ensure that debug set to zero in admin_add and admin_edit
-		
-
 		// this is to allow admin_upload to work with Session component
 		if ($this->request->action=='admin_upload') {
 			
@@ -72,19 +62,13 @@ class ProductsController extends AppController {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		
-		$this->Auth->allow('view', 'index',
-				   'add_to_cart', 'view_cart',
-				   'delete_from_cart', 'change_qty_for_1_item_in_cart',
-				   'checkout', 'view_by_group', 'view_within_group');
+		$this->Auth->allow(
+			'view',
+			'view_by_group', 
+			'view_within_group',
+			'checkout'
+		);
 
-		
-		if ($this->request->action == 'view_cart' OR
-		    $this->request->action == 'view' OR
-		    $this->request->action == 'index'){
-			
-			// set the class for the overallcontainer
-			$this->set('classForContainer', $this->configureContainerClass($this->name, $this->request->action));
-		}
 		
 		// this is to allow the jquery to change the elements that control the file upload.
 		$image = $this->Product->ProductImage;
@@ -105,9 +89,7 @@ class ProductsController extends AppController {
 		    $this->request->action == 'admin_edit'   ||
 		    $this->request->action == 'admin_add_variant' ||
 		    $this->request->action == 'admin_edit_variant' ||
-		    $this->request->action == 'admin_menu_action'  ||
-		    $this->request->action == 'add_to_cart' || 
-			$this->request->action == 'view_cart'
+		    $this->request->action == 'admin_menu_action'  
 		) {
 			$this->Components->disable('Security');
 		}
@@ -267,155 +249,7 @@ class ProductsController extends AppController {
 		
 	}
 	
-	/**
-	 * 
-	 * Update quantity for single item in Cart
-	 *
-	 * @param integer $variant_id Id of the variant 
-	 * @return void
-	**/
-	public function change_qty_for_1_item_in_cart($variant_id = 0) {
-
-		$paramExist = !is_blank($this->params4GETAndNamed['quantity']);
-
-		if ($paramExist) {
-			$variantIsPositive 	= is_numeric($variant_id) && ($variant_id > 0);
-
-			$quantity 			= $this->params4GETAndNamed['quantity'];
-			$qtyIsNonNegative 	= is_numeric($quantity) && ($quantity >= 0);
-
-			$continue = $variantIsPositive && $qtyIsNonNegative;
-
-			if ($continue) {
-				$this->cartModel->changeQuantityFor1Item($variant_id, $quantity);
-			}
-
-		}
-
-		$this->redirect(array('action' => 'view_cart'));
-	}
 	
-	/**
-	 * 
-	 * Action for viewing cart. Also handles postback for update cart and checkout.
-	 *
-	 * @param void
-	 * @return void
-	**/
-	public function view_cart() {
-		
-		// need to check for POST and the Update button
-		// update button is named as update (singular)
-		// the update_x is to work with input type="image" for the update button
-		$updateButtonUsed 		= isset($this->request->data['update']);
-		$updateImageButtonUsed 	= isset($this->request->data['update_x']);
-		$updateButtonTriggered	= ($updateButtonUsed OR $updateImageButtonUsed);
-
-		if ($updateButtonTriggered) {
-			$this->cartModel->editQuantities();
-			$this->redirect(array('action' => 'view_cart'));
-		}
-		
-		
-		$checkoutButtonUsed 		= isset($this->request->data['checkout']);
-		$checkoutImageButtonUsed 	= isset($this->request->data['checkout_x']);
-		$checkoutButtonTriggered	= ($checkoutButtonUsed OR $checkoutImageButtonUsed);
-		
-		
-		if ($checkoutButtonTriggered) {
-			$this->log('checkout button works');
-			$this->redirect(array('action' => 'view_cart'));
-		}
-		
-		
-		$products = array();
-		$shop_id  = Shop::get('Shop.id');
-		
-		// check if shop wants to have paypal option
-		$paypalExpressOn = $this->Product->Shop->getPaypalExpressOn($shop_id);
-		
-		// retrieve live cart of customer
-		$productsInCart = $this->cartModel->getLiveCartByCustomerId(User::get('User.id'), true, true);
-		
-		
-		
-		$paymentAmount = 0.00;
-			
-		$PaymentOrderItems = array();
-		$Payments = array();
-		$currency = '';	
-		
-		$products = (isset($productsInCart['CartItem'])) ? $productsInCart['CartItem'] : array();
-		
-		$prepareSessionForPaypal = !empty($productsInCart) && $paypalExpressOn;
-		
-		if ($prepareSessionForPaypal) {
-		
-			// loop thru the cart inside Session
-			foreach($products as $cart_id => $product) {
-				// total the amount
-				$paymentAmount += $product['product_price'] * number_format($product['product_quantity'],1);
-				
-				// build the item url
-				$itemUrl = $this->Product->getProductUrl($product['product_id']);
-			
-				// build the item
-				$item = $this->Paypal->buildItem(array(
-							       'amt'=>$product['product_price'],
-							       'name'=>$product['product_title'],
-							       'qty'=>$product['product_quantity'],
-							       'number'=>$product['product_id'],
-							       'itemurl'=>$itemUrl,
-							       'itemweightvalue'=>$product['product_weight'],
-							       'itemweightunit'=>'grams'));
-				
-				array_push($PaymentOrderItems, $item);
-				
-				$currency = $product['currency'];
-			}
-			
-			$paymentAmount = number_format($paymentAmount, 2);
-			
-			$Payment = $this->Paypal->buildPayment(array('amt'=>$paymentAmount,
-								     'currencycode'=> $currency,
-								     'itemamt'=>$paymentAmount,
-								     'shippingamt'=>'0.00',
-								     'taxamt'=>'0.00'));
-			
-			$Payment['order_items'] = $PaymentOrderItems;
-			array_push($Payments, $Payment);
-			
-			// save all the payments into session
-			$this->Session->write('Shop.'.$shop_id.'.Payments', $Payments);
-			
-		}
-		
-		$this->Session->write('Shop.' . $shop_id . '.paymentAmount', $paymentAmount);
-		$cart_id = $productsInCart['Cart']['id'];
-		
-		
-		// reassign the products into items
-		$cart = Cart::getTemplateVariable($productsInCart);
-
-		$this->set(compact('cart', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
-		
-		$sessionString = '';
-		$mainUrl = Shop::get('Shop.primary_domain');
-		
-		//$this->log('user id in view_cart ' . User::get('User.id'));
-		
-		// now we are going to pass the session into the database for the crossover for checkout
-		
-		if (!$this->Product->Shop->isCurrentBaseThisDomain($mainUrl)) {
-			// test if we need to send User id over
-			$this->Session->write('User.id', User::get('User.id'));
-			//$this->log('new user id in session write ' . $this->Session->read('User.id'));
-			$sessionString = '?ss='.$this->transferSession();
-		}
-		$this->set('sessionString', $sessionString);
-		
-		$this->render('cart');
-	}
 	
 	public function admin_index() {
 		
@@ -878,43 +712,8 @@ class ProductsController extends AppController {
 	}
 	
 	
-	public function add_to_cart() {
-		$id = !empty($_POST['id']) ? $_POST['id'] : false;
-		
-		if(!$id) {
-			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
-			$this->redirect($this->referer());
-		}
-		
-		$qty = 1;
-		
-		$qtyExists = !empty($_POST['quantity']);
-		$qtyIsPositive = $qtyExists ? is_numeric($_POST['quantity']) AND ($_POST['quantity'] > 0) : false;
-		if ($qtyIsPositive) {
-			$qty = 	$_POST['quantity'];
-		}
-		
-		if($this->addToCart($id, $qty)) {
-			$this->Session->setFlash(__('Product added to cart'), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'view_cart'));
-		}
-		$this->Session->setFlash(__('The Product could not be added to cart. Please, try again.'), 'default', array('class'=>'flash_failure'));
-		$this->redirect($this->referer());
-	}
 	
-	/**
-	 * 
-	 * Add Variant to Cart given the variant id and quantity. 
-	 * Wrapper function that bridges between the public action and the model function that does the lifting.
-	 *
-	 * @param integer $id 
-	 * @param integer $quantity
-	 * @return boolean Returns true if successful.
-	**/
-	private function addToCart($id = null, $quantity = 1) {
-		$cartModel = $this->cartModel;
-		return $cartModel->addProductForCustomer(User::get('User.id'), array($id=>$quantity));
-	}
+
 		
 	private function makeCheckoutAppLink () {
 		if (!empty($this->checkoutLink)) {
