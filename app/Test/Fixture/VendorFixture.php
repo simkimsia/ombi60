@@ -1,5 +1,5 @@
 <?php
-/* Vendor Fixture generated on: 2011-09-28 10:35:26 : 1317206126 */
+/* Vendor Fixture generated on: 2011-09-30 16:10:44 : 1317399044 */
 
 /**
  * VendorFixture

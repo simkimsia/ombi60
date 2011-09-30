@@ -13,10 +13,14 @@ class ProductTestCase extends CakeTestCase {
  *
  * @var array
  */
-	public $fixtures = array('app.product', 'app.saved_theme', 'app.user', 'app.shop_setting', 'app.shop', 'app.domain',
-	'app.link', 'app.link_list', 'app.vendor', 'app.product_type', 'app.product_image', 'app.variant',
-	'app.variant_option', 'app.log', 'app.products_in_group', 'app.product_group', 'smart_collection_condition',
-	'app.blog', 'app.post', 'app.comment', 'app.webpage');
+	public $fixtures = array(
+		'app.product', 'app.saved_theme', 'app.user', 
+		'app.shop_setting', 'app.shop', 'app.domain',
+		'app.link', 'app.link_list', 'app.vendor', 
+		'app.product_type', 'app.product_image', 'app.variant',
+		'app.variant_option', 'app.log', 'app.products_in_group', 
+		'app.product_group', 'smart_collection_condition',
+		'app.blog', 'app.post', 'app.comment', 'app.webpage');
 	
 /**
  * setUp method
