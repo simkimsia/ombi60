@@ -12,7 +12,11 @@ class LinkListsControllerTestCase extends ControllerTestCase {
 	 *
 	 * @var array
 	 */
-	public $fixtures = array('app.blog', 'app.saved_theme', 'app.user', 'app.shop_setting', 'app.shop', 'app.domain', 'app.post', 'app.comment', 'app.link', 'app.link_list', 'app.product', 'app.webpage');
+	public $fixtures = array(
+		'app.blog', 'app.saved_theme', 'app.user', 
+		'app.shop_setting', 'app.shop', 'app.domain', 
+		'app.post', 'app.comment', 'app.link', 
+		'app.link_list', 'app.product', 'app.webpage');
 
 	/**
 	 * setUp method

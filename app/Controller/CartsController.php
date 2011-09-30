@@ -152,7 +152,8 @@ class CartsController extends AppController {
 		$shop_id  = Shop::get('Shop.id');
 		
 		// check if shop wants to have paypal option
-		$paypalExpressOn = $this->Cart->Shop->getPaypalExpressOn($shop_id);
+		//$paypalExpressOn = $this->Cart->Shop->getPaypalExpressOn($shop_id);
+		$paypalExpressOn = false;
 		
 		// retrieve live cart of customer
 		$productsInCart = $this->Cart->getLiveCartByCustomerId(User::get('User.id'), true, true);

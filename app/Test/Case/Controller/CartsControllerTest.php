@@ -1,47 +1,66 @@
 <?php
-/* Carts Test cases generated on: 2010-04-17 12:04:24 : 1271509104*/
-App::import('Controller', 'Carts');
+/* Courses Test cases generated on: 2011-09-01 13:38:15 : 1314884295*/
+App::uses('CartsController', 'Controller');
 
-class TestCartsController extends CartsController {
-	var $autoRender = false;
+/**
+ * CoursesController Test Case
+ *
+ */
+class CartsControllerTestCase extends ControllerTestCase {
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 */
+	public $fixtures = array(
+		'app.cart', 'app.customer', 'app.shop', 
+		'app.merchant', 'app.order', 'app.address', 
+		'app.product', 'app.product_image', 'app.order_line_item', 
+		'app.webpage', 'app.wishlist', 'app.cart_item', 
+		'app.page_type', 'app.user', 'app.group',
+		'app.variant', 'app.variant_option', 'app.products_in_group',
+		'app.product_group', 'app.shop_setting', 'app.domain', 
+		'app.casual_surfer', 'app.link_list', 'app.link', 
+		'app.blog', 'app.post', 'app.comment', 
+		'app.shops_payment_module', 'app.log'
+	);
 
-	function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
+	/**
+	 * setUp method
+	 *
+	 * @return void
+	 */
+	public function setUp() {
+		parent::setUp();
+		$this->controller = $this->generate('Carts', array(
+			'methods' => array('forceSSL'), 
+			'components' => array('Auth' => array('user'), 'Security')
+		));
 	}
-}
 
-class CartsControllerTestCase extends CakeTestCase {
-	var $fixtures = array('app.cart', 'app.customer', 'app.shop', 'app.merchant', 'app.order', 'app.address', 'app.product', 'app.product_image', 'app.order_line_item', 'app.webpage', 'app.wishlist', 'app.cart_item', 'app.page_type', 'app.user', 'app.group', );
-
-	function startTest() {
-		$this->Carts =& new TestCartsController();
-		$this->Carts->constructClasses();
-	}
-
-	function endTest() {
-		unset($this->Carts);
+	/**
+	 * tearDown method
+	 *
+	 * @return void
+	 */
+	public function tearDown() {
 		ClassRegistry::flush();
+
+		parent::tearDown();
 	}
 
-	function testIndex() {
 
+	/**
+	* 
+	* test View Cart 
+	*
+	**/
+	public function testViewCart() {
+
+		$fixture = new CartFixture();
+		
+		$this->testAction('/cart', array('return' => 'contents'));		
+		$this->assertRegexp('#<p id="empty">Your shopping cart is empty#', $this->contents);
 	}
-
-	function testView() {
-
-	}
-
-	function testAdd() {
-
-	}
-
-	function testEdit() {
-
-	}
-
-	function testDelete() {
-
-	}
-
 }
 ?>
