@@ -46,3 +46,6 @@
 [submodule "app/Plugin/Copyable"]
 	path = app/Plugin/Copyable
 	url = git@github.com:simkimsia/copyable_behavior.git
+[submodule "app/Plugin/AclExtras"]
+	path = app/Plugin/AclExtras
+	url = git@github.com:markstory/acl_extras.git
