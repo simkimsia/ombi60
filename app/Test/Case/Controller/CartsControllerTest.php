@@ -110,9 +110,10 @@ class CartsControllerTestCase extends ControllerTestCase {
 	**/
 	public function testChangeQtyFor1ItemInCart() {
 
+		$_SERVER['HTTP_HOST'] = 'http://shop001.ombi60.localhost';
 
-		$result = $this->testAction('/cart/change/3?quantity=0');
-		debug($result);
+		$this->testAction('/cart/change/3?quantity=0');
+		
 		$this->assertEquals($this->headers['Location'], '/cart');
 		
 		$cart = $this->Cart->find('first', array(
@@ -123,6 +124,18 @@ class CartsControllerTestCase extends ControllerTestCase {
 		
 		$this->assertEquals($cart['Cart']['cart_item_count'], 0);
 		
+	}
+	
+	/**
+	* 
+	* test address page of cart checkout
+	*
+	**/
+	public function testAddressPage() {
+
+		$this->testAction('/carts/3', array('return' => 'contents'));		
+		$this->assertRegexp('#address#', $this->contents);
+
 	}
 	
 }

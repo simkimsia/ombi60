@@ -113,6 +113,19 @@ class CartsController extends AppController {
 
 		$this->redirect(array('action' => 'view_cart'));
 	}
+	
+	/**
+	* 
+	* Action for displaying form for collecting addresses.
+	*
+	* @param integer $cart_id Cart id
+	* @param string $cart_hash Unique hash that identifies the cart
+	* @return void
+	*
+	**/
+	public function view($cart_id = false, $cart_hash = false) {
+		
+	}
 
 	/**
 	 * 
@@ -144,6 +157,7 @@ class CartsController extends AppController {
 		if ($checkoutButtonTriggered) {
 			$this->log('checkout button works');
 			$this->redirect(array('action' => 'view_cart'));
+			$this->Cart->
 		}
 		
 		

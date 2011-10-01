@@ -140,28 +140,72 @@
 
         Router::connect('/admin/profile/edit', array('admin' => true,'controller' => 'merchants', 'action' => 'edit'));
         
-        // cart links        
-        Router::connect('/cart/checkout',
-                        array('controller' => 'products',
-                              'action' => 'checkout')
+        // checkout process links      
+  		// checkout process first page to retrieve address
+        Router::connect('/carts/:cart_id/:cart_hash',
+                        array(
+							'controller' 	=> 'carts',
+							'action' 		=> 'view'),
+						array(
+							'pass'			=> array('cart_id', 'cart_hash'),
+							'cart_id'		=> '[0-9]+',
+							'cart_hash'		=> '[a-zA-Z0-9]+'
+							)
+                        );
+
+		// checkout process intermediate page to decide to send browser to pay or complete
+        Router::connect('/orders/:cart_id/:order_hash',
+                        array(
+							'controller' 	=> 'orders',
+							'action' 		=> 'view'),
+						array(
+							'pass'			=> array('cart_id', 'order_hash'),
+							'cart_id'		=> '[0-9]+',
+							'cart_hash'		=> '[a-zA-Z0-9]+'
+							)
+                        );
+
+		// checkout process 2nd page to collect payment mode
+        Router::connect('/orders/:cart_id/:order_hash/pay',
+                        array(
+							'controller' 	=> 'orders',
+							'action' 		=> 'pay'),
+						array(
+							'pass'			=> array('cart_id', 'order_hash'),
+							'cart_id'		=> '[0-9]+',
+							'cart_hash'		=> '[a-zA-Z0-9]+'
+							)
+                        );
+
+		// checkout process indicate that payment is completed
+        Router::connect('/orders/:cart_id/:order_hash/complete',
+                        array(
+							'controller' 	=> 'orders',
+							'action' 		=> 'complete'),
+						array(
+							'pass'			=> array('cart_id', 'order_hash'),
+							'cart_id'		=> '[0-9]+',
+							'cart_hash'		=> '[a-zA-Z0-9]+'
+							)
                         );
         
+		// cart links
         Router::connect('/cart',
-                        array('controller' => 'carts',
-                              'action' => 'view_cart')
+                        array('controller' 	=> 'carts',
+                              'action' 		=> 'view_cart')
                         );
         
         Router::connect('/cart/change/:variant_id',
-                        array('controller' => 'carts',
-                              'action' => 'change_qty_for_1_item_in_cart'),
-                        array('pass' => array('variant_id'),
-                              'variant_id' => '[0-9]+',
+                        array('controller' 	=> 'carts',
+                              'action' 		=> 'change_qty_for_1_item_in_cart'),
+                        array('pass' 		=> array('variant_id'),
+                              'variant_id' 	=> '[0-9]+',
                               
                               ));
         
         Router::connect('/cart/add',
-                        array('controller' => 'carts',
-                              'action' => 'add_to_cart',
+                        array('controller' 	=> 'carts',
+                              'action' 		=> 'add_to_cart',
                              ));
 
         Router::connect('/platform/login', array('platform'=>true, 'controller' => 'users', 'action' => 'login'));
