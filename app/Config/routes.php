@@ -142,50 +142,46 @@
         
         // checkout process links      
   		// checkout process first page to retrieve address
-        Router::connect('/carts/:cart_id/:cart_hash',
+        Router::connect('/carts/:cart_uuid',
                         array(
 							'controller' 	=> 'carts',
 							'action' 		=> 'view'),
 						array(
-							'pass'			=> array('cart_id', 'cart_hash'),
-							'cart_id'		=> '[0-9]+',
-							'cart_hash'		=> '[a-zA-Z0-9]+'
+							'pass'			=> array('cart_uuid'),
+							'cart_uuid'		=> '[a-zA-Z0-9\-_]+'
 							)
                         );
 
 		// checkout process intermediate page to decide to send browser to pay or complete
-        Router::connect('/orders/:cart_id/:order_hash',
+        Router::connect('/orders/:order_uuid',
                         array(
 							'controller' 	=> 'orders',
 							'action' 		=> 'view'),
 						array(
-							'pass'			=> array('cart_id', 'order_hash'),
-							'cart_id'		=> '[0-9]+',
-							'cart_hash'		=> '[a-zA-Z0-9]+'
+							'pass'			=> array('order_uuid'),
+							'order_uuid'		=> '[a-zA-Z0-9\-_]+'
 							)
                         );
 
 		// checkout process 2nd page to collect payment mode
-        Router::connect('/orders/:cart_id/:order_hash/pay',
+        Router::connect('/orders/:order_uuid/pay',
                         array(
 							'controller' 	=> 'orders',
 							'action' 		=> 'pay'),
 						array(
-							'pass'			=> array('cart_id', 'order_hash'),
-							'cart_id'		=> '[0-9]+',
-							'cart_hash'		=> '[a-zA-Z0-9]+'
+							'pass'			=> array('order_uuid'),
+							'order_uuid'		=> '[a-zA-Z0-9\-_]+'
 							)
                         );
 
 		// checkout process indicate that payment is completed
-        Router::connect('/orders/:cart_id/:order_hash/complete',
+        Router::connect('/orders/:order_uuid/complete',
                         array(
 							'controller' 	=> 'orders',
 							'action' 		=> 'complete'),
 						array(
-							'pass'			=> array('cart_id', 'order_hash'),
-							'cart_id'		=> '[0-9]+',
-							'cart_hash'		=> '[a-zA-Z0-9]+'
+							'pass'			=> array('order_uuid'),
+							'order_uuid'		=> '[a-zA-Z0-9\-_]+'
 							)
                         );
         

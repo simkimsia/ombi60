@@ -2,8 +2,7 @@
 SQLyog Community v9.20 
 MySQL - 5.5.9 : Database - s2s_new
 *********************************************************************
-*/
-
+*/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -47,11 +46,9 @@ CREATE TABLE `addresses` (
   `type` tinyint(2) unsigned NOT NULL DEFAULT '1',
   `full_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `addresses` */
-
-insert  into `addresses`(`id`,`address`,`city`,`region`,`zip_code`,`country`,`customer_id`,`type`,`full_name`) values (1,'asd','asd','asd','asd',192,1,1,'asd'),(2,'asd','asd','asd','asd',192,1,2,'asd'),(3,'asd','asd','asd','asd',192,2,1,'asd'),(4,'asd','asd','asd','asd',192,2,2,'asd'),(5,'asd','asd','asd','asd',1,3,1,'asd'),(6,'asd','asd','asd','asd',1,3,2,'asd'),(7,'asd','asd','asd','asd',192,4,1,'asd'),(8,'asd','asd','asd','asd',192,4,2,'asd'),(9,'asd','asd','asd','asd',192,5,1,'asd'),(10,'asd','asd','asd','asd',192,5,2,'asd'),(11,'asd','asd','asd','asd',192,6,1,'asd'),(12,'asd','asd','asd','asd',192,6,2,'asd');
 
 /*Table structure for table `aros` */
 
@@ -156,8 +153,8 @@ CREATE TABLE `cancellations` (
 DROP TABLE IF EXISTS `cart_items`;
 
 CREATE TABLE `cart_items` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cart_id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `cart_id` char(36) NOT NULL,
   `product_id` int(11) NOT NULL,
   `product_price` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `product_quantity` int(4) NOT NULL DEFAULT '1',
@@ -172,7 +169,7 @@ CREATE TABLE `cart_items` (
   `variant_title` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_variant_card_index` (`cart_id`,`variant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `cart_items` */
 
@@ -181,13 +178,12 @@ CREATE TABLE `cart_items` (
 DROP TABLE IF EXISTS `carts`;
 
 CREATE TABLE `carts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` char(36) NOT NULL,
   `shop_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `amount` decimal(10,4) NOT NULL DEFAULT '0.0000',
   `status` tinyint(1) DEFAULT '1',
-  `hash` varchar(255) DEFAULT NULL,
   `total_weight` decimal(10,0) unsigned NOT NULL DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
   `shipped_amount` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
@@ -286,11 +282,9 @@ CREATE TABLE `customers` (
   `shop_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `customers` */
-
-insert  into `customers`(`id`,`identity_code`,`shop_id`,`user_id`) values (1,NULL,3,4),(2,NULL,3,5),(3,NULL,2,3),(4,NULL,2,3),(5,NULL,2,4),(6,NULL,2,5);
 
 /*Table structure for table `domains` */
 
@@ -496,8 +490,8 @@ insert  into `merchants`(`id`,`owner`,`shop_id`,`user_id`) values (1,1,2,1);
 DROP TABLE IF EXISTS `order_line_items`;
 
 CREATE TABLE `order_line_items` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` char(36) NOT NULL,
   `product_id` int(11) NOT NULL,
   `product_price` decimal(10,4) NOT NULL DEFAULT '0.0000',
   `product_quantity` int(4) NOT NULL DEFAULT '1',
@@ -518,7 +512,7 @@ CREATE TABLE `order_line_items` (
 DROP TABLE IF EXISTS `orders`;
 
 CREATE TABLE `orders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` char(36) NOT NULL,
   `shop_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `billing_address_id` int(11) NOT NULL,
@@ -527,8 +521,7 @@ CREATE TABLE `orders` (
   `created` datetime DEFAULT NULL,
   `amount` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `status` int(4) DEFAULT '1',
-  `hash` varchar(255) DEFAULT NULL,
-  `cart_id` int(11) NOT NULL,
+  `cart_id` char(36) NOT NULL,
   `payment_status` tinyint(2) DEFAULT '0',
   `fulfillment_status` tinyint(2) DEFAULT '1',
   `shipped_weight` int(10) unsigned DEFAULT '0',
@@ -612,7 +605,7 @@ DROP TABLE IF EXISTS `payments`;
 CREATE TABLE `payments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `shops_payment_module_id` int(11) unsigned NOT NULL,
-  `order_id` int(11) DEFAULT NULL,
+  `order_id` char(36) NOT NULL,
   `gateway_name` varchar(255) NOT NULL DEFAULT '',
   `transaction_id_from_gateway` varchar(255) DEFAULT NULL,
   `status` tinyint(2) unsigned NOT NULL DEFAULT '0',
@@ -831,11 +824,11 @@ CREATE TABLE `products` (
   `handle` varchar(150) DEFAULT NULL,
   `product_type_id` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`visible`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`,`product_type_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,'dummy',0),(2,2,'Dummy Product',NULL,NULL,'0.0000','2011-07-08 11:54:47','2011-07-08 11:54:47',1,7000,'SGD',1,1,'dummy-product',1);
+insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`visible`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`,`product_type_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,'dummy',0),(2,2,'Dummy Product',NULL,NULL,'0.0000','2011-07-08 11:54:47','2011-07-08 11:54:47',1,7000,'SGD',1,1,'dummy-product',1),(3,2,'test product with no pic and no collection',NULL,'<p>test</p>','23.0000','2011-09-29 02:26:59','2011-09-29 02:26:59',1,2000,'SGD',1,0,'test-product-with-no-pic-and-no-collection',0);
 
 /*Table structure for table `products_in_groups` */
 
@@ -1221,4 +1214,3 @@ CREATE TABLE `wishlists` (
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-

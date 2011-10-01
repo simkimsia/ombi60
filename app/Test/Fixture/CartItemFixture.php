@@ -1,5 +1,5 @@
 <?php
-/* CartItem Fixture generated on: 2011-09-30 17:06:08 : 1317402368 */
+/* CartItem Fixture generated on: 2011-10-01 04:23:26 : 1317443006 */
 
 /**
  * CartItemFixture
@@ -14,7 +14,7 @@ class CartItemFixture extends CakeTestFixture {
  */
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary', 'collate' => NULL, 'comment' => ''),
-		'cart_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'index', 'collate' => NULL, 'comment' => ''),
+		'cart_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'index', 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'product_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
 		'product_price' => array('type' => 'float', 'null' => false, 'default' => '0.0000', 'length' => '10,4', 'collate' => NULL, 'comment' => ''),
 		'product_quantity' => array('type' => 'integer', 'null' => false, 'default' => '1', 'length' => 4, 'collate' => NULL, 'comment' => ''),
@@ -36,5 +36,6 @@ class CartItemFixture extends CakeTestFixture {
  *
  * @var array
  */
-	public $records = array();
+	public $records = array(
+	);
 }

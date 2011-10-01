@@ -71,7 +71,7 @@ class Cart extends AppModel {
 			),
 			'forCustomerOrCasual' => array(
 				'rule' => 'forCustomerOrCasual',
-				'message' => 'Only customers or casual surfers are allowed to have carts',
+				'message' => 'Only registered customers or guests are allowed to have carts',
 				
 			)
 		),
@@ -211,19 +211,6 @@ class Cart extends AppModel {
 		}
 		return false;
 	}
-	
-	public function findByHash($hash, $step = 1) {
-		$this->Behaviors->load('Containable');
-		
-		$this->contain('CartItem');
-		
-		if ($step == 1) {
-			$field = 'Cart.hash';
-		}
-		
-		return $this->find('first', array('conditions' => array($field => $hash)));
-		
-	}
 
 	/**
 	 * this is a very specific operation where it converts the Session data
@@ -284,23 +271,7 @@ class Cart extends AppModel {
 		return false;
 	}
 	
-	public function makeHash($data) {
-		if (!empty($data['Cart'])) {
-			// we shall standardize to this method of hashing.
-			$shop     = 'shop_' . $data['Cart']['shop_id'];
-			$customer = 'user_' . $data['Cart']['user_id'];
-			$cart     = 'cart_' . $this->id;
-			
-			
-			$hash = Security::hash($cart.$shop.$customer.time().'step_1', 'sha1', true);
-			
-			
-			return $this->save(array('hash' => $hash));
 
-		}
-		
-		return false;
-	}
 
 	public function beforeSave() {
 		$id = 0;
@@ -323,13 +294,6 @@ class Cart extends AppModel {
 	}
 	
 	public function afterSave($created) {
-		
-		// hashcode created for newly created cart
-		if ($created) {
-			$this->makeHash($this->data);
-			
-			
-		}
 		
 		$this->sqlUpdatePriceWeightCurrencyShippingStats($this->id);
 		$this->updateLiveCartOnUser();
@@ -370,14 +334,14 @@ class Cart extends AppModel {
 			return false;
 		}
 		
-		$sql = 'UPDATE carts SET amount = (SELECT SUM(product_price*product_quantity) FROM cart_items WHERE cart_id = %1$d),
-				total_weight = (SELECT SUM(product_weight*product_quantity) FROM cart_items WHERE cart_id = %1$d),
-				currency = (SELECT currency FROM cart_items WHERE cart_id = %1$d LIMIT 1),
+		$sql = 'UPDATE carts SET amount = (SELECT SUM(product_price*product_quantity) FROM cart_items WHERE cart_id = \'%1$s\'),
+				total_weight = (SELECT SUM(product_weight*product_quantity) FROM cart_items WHERE cart_id = \'%1$s\'),
+				currency = (SELECT currency FROM cart_items WHERE cart_id = \'%1$s\' LIMIT 1),
 				
-				shipped_amount = IFNULL((SELECT SUM(product_price*product_quantity)  FROM cart_items WHERE cart_id = %1$d AND shipping_required = 1),0),
-				shipped_weight = IFNULL((SELECT SUM(product_weight*product_quantity)  FROM cart_items WHERE cart_id = %1$d AND shipping_required = 1),0)
+				shipped_amount = IFNULL((SELECT SUM(product_price*product_quantity)  FROM cart_items WHERE cart_id = \'%1$s\' AND shipping_required = 1),0),
+				shipped_weight = IFNULL((SELECT SUM(product_weight*product_quantity)  FROM cart_items WHERE cart_id = \'%1$s\' AND shipping_required = 1),0)
 
-			WHERE carts.id = %1$d';
+			WHERE carts.id = \'%1$s\'';
 		
 		App::uses('Sanitize', 'Utility');
 		$id = Sanitize::escape($id);
@@ -633,7 +597,6 @@ class Cart extends AppModel {
 	 * $productsAndQuantities expect an array with product_id as key and quantity as value
 	 * */
 	public function addProductForCustomer($user_id, $productsAndQuantities = array()) {
-		
 		if(!$user_id || empty($productsAndQuantities)) {
 			return false;
 		}
@@ -699,7 +662,7 @@ class Cart extends AppModel {
 			if($result){
 				$this->sqlUpdatePriceWeightCurrencyShippingStats($this->id);
 			}
-			
+
 			return $result;
 			
 		} else {

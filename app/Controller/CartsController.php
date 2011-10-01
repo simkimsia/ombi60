@@ -30,11 +30,12 @@ class CartsController extends AppController {
 		$this->Auth->allow(
 			'add_to_cart',
 			'change_qty_for_1_item_in_cart',
-			'view_cart'
+			'view_cart',
+			'view'
 		);
 		
 		if ($this->request->action == 'add_to_cart' || 
-			$this->request->action == 'view_cart'
+			$this->request->action == 'view_cart'	
 		) {
 			$this->Components->disable('Security');
 		}
@@ -49,6 +50,7 @@ class CartsController extends AppController {
 	* @return void
 	**/
 	public function add_to_cart() {
+
 		$id = !empty($_POST['id']) ? $_POST['id'] : false;
 		
 		if(!$id) {
@@ -118,13 +120,35 @@ class CartsController extends AppController {
 	* 
 	* Action for displaying form for collecting addresses.
 	*
-	* @param integer $cart_id Cart id
-	* @param string $cart_hash Unique hash that identifies the cart
+	* @param integer $cart_uuid Cart id in UUID format
 	* @return void
 	*
 	**/
-	public function view($cart_id = false, $cart_hash = false) {
+	public function view($cart_uuid = false) {
 		
+		if ($this->request->is('get')) {
+			// set up the countries, customerId, shopId in the form.
+			$countries 	= $this->Cart->Order->BillingAddress->Country->find('list');
+			$customerId = User::get('Customer.id');
+			$shopId 	= Shop::get('Shop.id');
+			
+			// get all shipping addresses of this customer
+			$shippingAddresses = array();
+			if ($customerId > 0) {
+				$this->Cart->Order->DeliveryAddress->recursive = -1;
+				$shippingAddresses = $this->Order->DeliveryAddress->getAllByCustomer($customerId, DELIVERY);
+			}
+			
+			// get Cart data
+			$this->Cart->id 			= $cart_uuid;
+			$totalAmountWithShipping 	= $this->Cart->field('amount');
+			// populate view vars
+			$this->set(compact('countries', 'customerId', 'shopId', 'shippingAddresses', 
+				'cart_uuid', 'totalAmountWithShipping')
+			);
+		}
+		
+		$this->layout = 'default';
 	}
 
 	/**
@@ -155,9 +179,10 @@ class CartsController extends AppController {
 		
 		
 		if ($checkoutButtonTriggered) {
-			$this->log('checkout button works');
-			$this->redirect(array('action' => 'view_cart'));
-			$this->Cart->
+			$cart_uuid = User::get('User.live_cart_id');
+			if (!empty($cart_uuid)) {
+				$this->redirect(array('action' => 'view', 'cart_uuid' => $cart_uuid));
+			}
 		}
 		
 		

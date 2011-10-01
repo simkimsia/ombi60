@@ -27,14 +27,9 @@ class User extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-
-	);
-	
-	public $hasMany = array(
-		'Post' => array(
-			'className' => 'Post',
-			'foreignKey' => 'author_id',
-			'dependent' => false,
+		'LiveCart' => array(
+			'className' => 'Cart',
+			'foreignKey' => 'live_cart_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -43,10 +38,14 @@ class User extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		),
-		'Cart' => array(
-			'className' => 'Cart',
-			'foreignKey' => 'customer_id',
+		)
+
+	);
+	
+	public $hasMany = array(
+		'Post' => array(
+			'className' => 'Post',
+			'foreignKey' => 'author_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
@@ -104,6 +103,7 @@ class User extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
+
 
 	);
 
