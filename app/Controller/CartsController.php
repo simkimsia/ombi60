@@ -29,7 +29,6 @@ class CartsController extends AppController {
 		//$this->Auth->allow('checkout', 'paypalExpressCheckout', 'add');
 		$this->Auth->allow(
 			'add_to_cart',
-			'delete_from_cart', 
 			'change_qty_for_1_item_in_cart',
 			'view_cart'
 		);

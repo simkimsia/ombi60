@@ -36,7 +36,11 @@ class CartsControllerTestCase extends ControllerTestCase {
 		parent::setUp();
 		$this->controller = $this->generate('Carts', array(
 			'methods' => array('forceSSL'), 
-			'components' => array('Auth' => array('user'), 'Security')
+			'components' => array(
+				'Auth' => array('user'), 
+				'Security',
+				'Session'
+			)
 		));
 		
 		$this->Shop 	= ClassRegistry::init('Shop');
@@ -88,8 +92,7 @@ class CartsControllerTestCase extends ControllerTestCase {
 	*
 	**/
 	public function testAddToCart() {
-		
-		$fixture = new CartFixture();	
+			
 		$this->controller->request->data['id'] = 3;
 		$this->assertFlash($this->controller, 'Product added to cart');
 		$_SERVER['REQUEST_METHOD'] = 'POST';
@@ -99,5 +102,28 @@ class CartsControllerTestCase extends ControllerTestCase {
 		));
 		
 	}
+	
+	/**
+	* 
+	* test change_qty_for_1_item_in_cart
+	*
+	**/
+	public function testChangeQtyFor1ItemInCart() {
+
+
+		$result = $this->testAction('/cart/change/3?quantity=0');
+		debug($result);
+		$this->assertEquals($this->headers['Location'], '/cart');
+		
+		$cart = $this->Cart->find('first', array(
+			'conditions' => array(
+				'user_id' => 3,
+			)
+		));
+		
+		$this->assertEquals($cart['Cart']['cart_item_count'], 0);
+		
+	}
+	
 }
 ?>
