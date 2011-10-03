@@ -33,7 +33,7 @@ class CasualSurfer extends AppModel {
 		
 		if ($exists AND $loggedInUserId > 0) {
 			
-			$cartOfUnloggedIn = $this->User->Cart->getLiveCartByCustomerId($currentIdInCookie, true);
+			$cartOfUnloggedIn = $this->User->Cart->getLiveCartByUserId($currentIdInCookie, true);
 			
 			$cartOfUnloggedInExists = isset($cartOfUnloggedIn['Cart']) AND is_array($cartOfUnloggedIn['Cart']) AND
 						  isset($cartOfUnloggedIn['CartItem']) AND is_array($cartOfUnloggedIn['CartItem']);

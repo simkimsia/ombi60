@@ -101,7 +101,7 @@ class Cart extends AppModel {
 			($this->data['Cart']['user_id'] > 0);
 			
 		if ($thisCartIsLive) {
-			$existingLiveCart = $this->getLiveCartByCustomerId($this->data['Cart']['user_id']);
+			$existingLiveCart = $this->getLiveCartByUserId($this->data['Cart']['user_id']);
 			
 			$oneLiveCartPerCustomer = !($existingLiveCart);
 		}
@@ -347,7 +347,7 @@ class Cart extends AppModel {
 		App::uses('Sanitize', 'Utility');
 		$id = Sanitize::escape($id);
 		$escapedSql = sprintf($sql, $id);
-		
+
 		return $this->query($escapedSql);
 	}
 
@@ -445,7 +445,19 @@ class Cart extends AppModel {
 						   ));
 	}
 	
-	public function getLiveCartByCustomerId($user_id = false, $variantIdAsKey = false, $viewCart = false) {
+	/**
+	* 
+	* Get Cart data associated with User. Cart data includes CartItem. 
+	* If the data is meant for view cart page (aka cart.tpl in Twig), data includes Product, 
+	* Variant in the alias CheckedOutVariant, ProductImage, 
+	* ProductsInGroup, ProductGroup.
+	*
+	* @param integer $user_id User id
+	* @param boolean $variantIdAsKey. Default is false. Set true if you want to return the CartItem data array using variant_id as key
+	* @param boolean $viewCart. Default is false. Set true if you want to use the data for cart.tpl in Twig
+	* @return array Array of Cart, CartItem data. May include more models data.
+	**/
+	public function getLiveCartByUserId($user_id = false, $variantIdAsKey = false, $viewCart = false) {
 		if (!$user_id) {
 			return false;
 		}
@@ -595,17 +607,21 @@ class Cart extends AppModel {
 		return $cart;
 	}
 	/**
-	 * $productsAndQuantities expect an array with product_id as key and quantity as value
+	 * $productsAndQuantities expect an array with variant_id as key and quantity as value
 	 * */
-	public function addProductForCustomer($user_id, $productsAndQuantities = array()) {
-		if(!$user_id || empty($productsAndQuantities)) {
+	public function addProductForCustomer($user_id = false, $productsAndQuantities = array(), $increment = true) {
+		if (!$user_id) {
+			$user_id = User::get('User.id');
+		}
+		
+		if(empty($productsAndQuantities)) {
 			return false;
 		}
 		// first we get shop id
 		$shop_id = Shop::get('Shop.id');
 		
 		// we go get the unprocessed cart of this customer
-		$cart = $this->getLiveCartByCustomerId($user_id, true);
+		$cart = $this->getLiveCartByUserId($user_id, true);
 		
 		$arrayOfProducts = array();
 		
@@ -684,7 +700,12 @@ class Cart extends AppModel {
 					$cart_item_id = $possibleItem['CartItem']['variant_id'];
 					
 					// we change the quantity, price, currency and title
-					$cart['CartItem'][$cart_item_id]['product_quantity'] += $quantity;
+					if ($increment) {
+						$cart['CartItem'][$cart_item_id]['product_quantity'] += $quantity;
+					} else {
+						$cart['CartItem'][$cart_item_id]['product_quantity'] = $quantity;
+					}
+
 					$cart['CartItem'][$cart_item_id]['product_price'] = $product['Variant']['price'];
 					$cart['CartItem'][$cart_item_id]['product_title'] = $product['Product']['title'];
 					$cart['CartItem'][$cart_item_id]['variant_title'] = $product['Variant']['title'];
@@ -843,7 +864,7 @@ class Cart extends AppModel {
 	}
 	
 	public function transferCartFromUserToAnother($old_user_id, $new_user_id) {
-		$cart = $this->getLiveCartByCustomerId($old_user_id, true);
+		$cart = $this->getLiveCartByUserId($old_user_id, true);
 		
 		$productAndQuantities = array();
 		
@@ -957,7 +978,7 @@ class Cart extends AppModel {
 		$userId = User::get('User.id');
 		
 		// retrieving the cart data again. necessary to avoid overloading the form on cart page
-		$cart 	= $this->getLiveCartByCustomerId($userId, true, false);
+		$cart 	= $this->getLiveCartByUserId($userId, true, false);
 		
 		// retrieving the new quantities in the cart page
 		$newQuantities = (!empty($postData['updates'])) ? $postData['updates'] : array();
@@ -970,25 +991,23 @@ class Cart extends AppModel {
 		if ($cart && !empty($cart['CartItem'])) {
 			// if we really do have new quantities to update with
 			if (!empty($newQuantities)) {
-				// do we REALLY need to update the cart?
-				$needToUpdate = false;
+				
+				$productsAndQuantities = array();
 				
 				foreach($cart['CartItem'] as $variant_id=>$item) {
 					
 					if (!empty($newQuantities)) {
-						
 						$newQty = array_shift($newQuantities);
-						if ($newQty != $item['product_quantity']) {
-							$cart['CartItem'][$variant_id]['product_quantity'] = $newQty;
-							$needToUpdate = true; // at least 1 change means YES we need to update
-						}
-						
+					} else {
+						$newQty = $item['product_quantity'];
 					}
+					
+					$productsAndQuantities = array($variant_id=>$newQty);						
+					
 				}
 				
-				if ($needToUpdate) {
-					return $this->saveAll($cart);
-				}
+				return $this->addProductForCustomer($userId, $productsAndQuantities, false);
+				
 				// since no need to update might as well assume true
 				return true;
 				
@@ -1001,40 +1020,14 @@ class Cart extends AppModel {
 	
 	/**
 	 *
+	 * Alias for addProductForCustomer($user_id, $productsAndQuantities, false)
 	 * @param int $variant_id the id of the variant we want to change quantity
 	 * @param int $new_quantity the new quantity must be non-negative
 	 **/
 	public function changeQuantityFor1Item($variant_id, $new_quantity) {
-		// for verifying purposes
-		$userId = User::get('User.id');
-		
-		// retrieving the cart data again. necessary to avoid overloading the form on cart page
-		$cart 	= $this->getLiveCartByCustomerId($userId, true, false);
-		
-		// if there is actually stored cart items
-		if ($cart && !empty($cart['CartItem'])) {
-			// if we really do have new quantities to update with
-			if (is_numeric($variant_id) && is_numeric($new_quantity) && ($new_quantity >= 0)) {
-				// do we REALLY need to update the cart?
-				$needToUpdate = false;
-				
-				if (!empty($cart['CartItem'][$variant_id])) {
-					if ($new_quantity != $cart['CartItem'][$variant_id]['product_quantity']) {
-						$cart['CartItem'][$variant_id]['product_quantity'] = $new_quantity;
-						$needToUpdate = true; // at least 1 change means YES we need to update
-					}
-				}
-				
-				if ($needToUpdate) {
-					return $this->saveAll($cart);
-				}
-				// since no need to update might as well assume true
-				return true;
-				
-			}
-		}
-		// if no cart might as well return true
-		return true;
+
+		return $this->addProductForCustomer(null, array($variant_id=>$new_quantity), false);
+
 	}
 	
 	public function getItemsWithImages($cart_uuid) {

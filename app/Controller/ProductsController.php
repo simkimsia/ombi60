@@ -112,7 +112,7 @@ class ProductsController extends AppController {
 		
 		$userId = User::get('User.id');
 		
-		$cart = $this->cartModel->getLiveCartByCustomerId($userId, true);
+		$cart = $this->cartModel->getLiveCartByUserId($userId, true);
 		$postFields = array();
 		
 		if ($this->request->is('post')) {

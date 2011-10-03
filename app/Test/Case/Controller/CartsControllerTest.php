@@ -1,5 +1,5 @@
 <?php
-/* Courses Test cases generated on: 2011-09-01 13:38:15 : 1314884295*/
+/* Carts Test cases generated on: 2011-09-01 13:38:15 : 1314884295*/
 App::uses('CartsController', 'Controller');
 App::uses('User', 'Model');
 App::uses('Shop', 'Model');

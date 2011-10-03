@@ -184,7 +184,7 @@ class CartsController extends AppController {
 		$paypalExpressOn = false;
 		
 		// retrieve live cart of customer
-		$productsInCart = $this->Cart->getLiveCartByCustomerId(User::get('User.id'), true, true);
+		$productsInCart = $this->Cart->getLiveCartByUserId(User::get('User.id'), true, true);
 		
 		
 		

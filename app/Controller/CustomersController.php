@@ -121,7 +121,7 @@ class CustomersController extends AppController {
 					$this->Customer->User->Cart->transferCartFromUserToAnother(User::get('User.id'),
 					$newUserId);
 					// we need to retrieve the cart
-					$cart = $this->Customer->User->Cart->getLiveCartByCustomerId($newUserId);
+					$cart = $this->Customer->User->Cart->getLiveCartByUserId($newUserId);
 
 					$redirect = Router::url(array('controller' => 'orders',
 									'action' => 'checkout',
