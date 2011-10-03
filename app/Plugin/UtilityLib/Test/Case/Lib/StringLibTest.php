@@ -19,8 +19,7 @@
  * @version 0.1
  * @lastmodified 2011-10-03 
  */
-//App::uses('StringLib', 'UtilityLib.Lib');
-App::import('Lib', 'UtilityLib.StringLib');
+App::uses('StringLib', 'UtilityLib.Lib');
 
 class StringLibTestCase extends CakeTestCase {
 	
