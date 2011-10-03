@@ -643,7 +643,7 @@ class OrdersController extends AppController {
 			if ($data) {
 				$price = $this->Order->Shop->ShippedToCountry->ShippingRate->field('price', array('id'=>$this->request->params['form']['shipping_rate_id']));
 				$successJSON = true;
-				App::uses('NumberLib', 'Lib');
+				App::uses('NumberLib', 'UtilityLib.Lib');
 				$contents['totalAmountWithShipping'] = NumberLib::currency($data['Order']['amount'] + $price, 'SGD');
 				
 			} else {

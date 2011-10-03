@@ -33,8 +33,8 @@ class NumberLib {
 	* @return float Return a newly formatted number
 	**/
 	public function precision($number, $precision = 3) {
-		$number = new NumberHelper(new View(new Controller()));
-		return $number->precision($val, $precision);
+		$numberHelper = new NumberHelper(new View(new Controller()));
+		return $numberHelper->precision($number, $precision);
 	}
 	
 	/**
@@ -56,9 +56,9 @@ class NumberLib {
 	*
 	* If a non-recognized $currency value is supplied, it is prepended to a USD formatted number. 
 	**/
-	public function currency($number, string $currency= 'USD', $options = array()) {
-		$number = new NumberHelper(new View(new Controller()));
-		return $number->currency($number, $currency, $options);		
+	public function currency($number, $currency= 'USD', $options = array()) {
+		$numberHelper = new NumberHelper(new View(new Controller()));
+		return $numberHelper->currency($number, $currency, $options);		
 	}
         
 }

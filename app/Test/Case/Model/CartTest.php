@@ -159,7 +159,7 @@ class CartTestCase extends CakeTestCase {
 	}
 	
 	private function checkCartResult($resultArray, $expectedQuantity = 1) {
-		App::uses('NumberLib', 'Lib');
+		App::uses('NumberLib', 'UtilityLib.Lib');
 		$amount = NumberLib::precision(23.0000 * $expectedQuantity, 4);
 		
 		$expectedArray = array(
