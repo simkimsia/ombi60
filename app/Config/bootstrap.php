@@ -254,17 +254,7 @@ define('DEFAULT_LANGUAGE', 'eng');
  **/
 	function is_blank($variable) {
 		return (empty($variable) && !is_numeric($variable));
-	}
-
-	function getAddrByHost($host, $timeout = 3) {
-		$host = str_replace('http://', '', $host);
-		
-		$query = `nslookup -timeout=$timeout -retry=1 $host`;
-		if(preg_match('/\nAddress: (.*)\n/', $query, $matches))
-		   return trim($matches[1]);
-		return $host;
-	}
-        
+	}        
 
 // debug(APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php');
    require_once  APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php';

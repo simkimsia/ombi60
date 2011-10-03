@@ -12,7 +12,7 @@ $i = 0;
 
 // get the ip address of main url of shop
 App::uses('HttpLib', 'UtilityLib.Lib');
-$mainIP = getAddrByHost($mainUrl);
+$mainIP = HttpLib::getAddrByHost($mainUrl);
 foreach ($domains as $domain):
 	$class = null;
 	if ($i++ % 2 == 0) {
@@ -24,7 +24,7 @@ foreach ($domains as $domain):
 	<td><?php echo $domain['Domain']['domain']; ?>&nbsp;</td>
 	
 	<!-- <td><?php //echo $domain['Domain']['always_redirect_here'] ? 'YES' : 'NO'; ?>&nbsp;</td> -->
-	<td><?php echo (getAddrByHost($domain['Domain']['domain']) == $mainIP) ? 'YES' : 'NO'; ?>&nbsp;</td>
+	<td><?php echo (HttpLib::getAddrByHost($domain['Domain']['domain']) == $mainIP) ? 'YES' : 'NO'; ?>&nbsp;</td>
 	<td class="actions">
 		
 		<?php
