@@ -184,3 +184,8 @@ Vendor Lib
 ==========
 
 Never ever name vendor class or lib class with numbers inside.
+
+bindModel across unrelated models
+=================================
+
+does not work well with containable

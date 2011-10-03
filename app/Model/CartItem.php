@@ -64,6 +64,20 @@ class CartItem extends AppModel {
 			'fields' => '',
 			'order' => ''
 		)
+		
+	);
+	
+	public $hasOne = array(
+		'CoverImage' => array(
+			'className' => 'ProductImage',
+			'foreignKey' => false,
+			'conditions' => array(
+				'CartItem.product_id = CoverImage.product_id',
+				'CoverImage.cover = 1'
+			)
+		
+		),
+		
 	);
 	
 	public function __construct($id=false,$table=null,$ds=null) {

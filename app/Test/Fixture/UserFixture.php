@@ -60,18 +60,6 @@ class UserFixture extends CakeTestFixture {
 			'modified' => '2011-07-08 11:54:59',
 			'language_id' => '1'
 		),
-		array(
-			'id' => '3',
-			'email' => 'qkn1hyb8@ombi60.com',
-			'password' => '2fbc00af4b041cd1da6873a4ff905118a0edecb5',
-			'group_id' => '5',
-			'full_name' => 'casual',
-			'name_to_call' => 'casual',
-			'last_login_on' => NULL,
-			'status' => 1,
-			'created' => '2011-09-30 16:43:27',
-			'modified' => '2011-09-30 17:01:00',
-			'language_id' => '1'
-		),
+
 	);
 }

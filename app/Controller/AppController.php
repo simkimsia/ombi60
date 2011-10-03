@@ -166,6 +166,16 @@ class AppController extends Controller {
 			}
 
 			$userIdInCookieIsLegit = false;
+			
+			// this is to allow phpunit tests to work properly without
+			// overriding the User singleton
+			if (Configure::read('run_test')) {
+				$userIdSetInTest = User::get('User.id');
+				if ($userIdSetInTest > 0) {
+					$userIdInCookie = $userIdSetInTest;
+				}
+			}
+			
 			// need to ensure this userid is legit customer or casual surfer
 			if ($userIdInCookie > 0) {
 				$userArray = $this->User->find('first', array(

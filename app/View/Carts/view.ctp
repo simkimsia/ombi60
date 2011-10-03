@@ -1,7 +1,20 @@
 <?php
 	echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
 ?>
-<?php echo $this->element('checkout_information', array('is_shipping_included' => FALSE, 'step' => 1));?>
+<?php 
+
+	$totalAmountWithShipping 	= $currentCart['Cart']['amount'];
+	$cart_uuid 					= $currentCart['Cart']['id'];
+
+	echo $this->element('checkout_information', array(
+		'is_shipping_included' => FALSE, 
+		'step' => 1,
+		'cart' => $currentCart,
+	));
+	
+
+	
+?>
 <?php echo $this->Form->create('Order', array('url' => array('controller' => 'carts',
 							     'action' => 'view',
 							     'cart_uuid' => $cart_uuid)));?>

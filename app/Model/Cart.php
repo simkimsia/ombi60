@@ -288,13 +288,12 @@ class Cart extends AppModel {
 			return $value;
 			
 		}
-		
+
 		return true;
 		
 	}
 	
-	public function afterSave($created) {
-		
+	public function afterSave($created) {		
 		$this->sqlUpdatePriceWeightCurrencyShippingStats($this->id);
 		$this->updateLiveCartOnUser();
 		
@@ -302,14 +301,16 @@ class Cart extends AppModel {
 	
 	public function updateLiveCartOnUser() {
 		// update the users table on the latest live cart id
-		$userID 	= User::get('User.id');
-		$latestCartID 	= $this->getLiveCartIDByUserID(User::get('User.id'));
+		$userID 		= User::get('User.id');
+		$latestCartID 	= $this->getLiveCartIDByUserID($userID);
 		$currentCartID 	= User::get('User.live_cart_id');
+		
 		if ($latestCartID != $currentCartID) {
 			$this->User->id = $userID;
 			$result = $this->User->saveField('live_cart_id', $latestCartID);
 			if ($result) User::store($this->User->read(null, $userID ));
 		}
+		
 	}
 	
 	public function afterDelete() {
@@ -655,8 +656,8 @@ class Cart extends AppModel {
 					);	
 			}
 			
-			
 			$this->create();
+
 			$result = $this->saveAll($data);
 			
 			if($result){
@@ -1034,6 +1035,35 @@ class Cart extends AppModel {
 		}
 		// if no cart might as well return true
 		return true;
+	}
+	
+	public function getItemsWithImages($cart_uuid) {
+		
+		$this->CartItem->unbindModel(array(
+			'belongsTo' => array(
+				'Product',
+				'CheckedOutVariant'
+			)
+		));
+		
+		$items = $this->CartItem->find('all', array(
+			'conditions' => array('CartItem.cart_id' => $cart_uuid),
+			'link' => array('Cart', 'CoverImage')
+		));
+
+		$cartData 	= Set::extract('0.Cart', $items);
+		$itemsData 	= array();
+		foreach($items as $key=>$item) {
+			$item['CartItem']['CoverImage'] = $item['CoverImage'];
+			$itemsData[]					= $item['CartItem'];					
+		}
+		$cartData['CartItem'] = $itemsData;
+		$currentCart = array(
+			'Cart' => $cartData,
+			'CartItem' => $itemsData
+		);
+		
+		return $currentCart;
 	}
 	
 	

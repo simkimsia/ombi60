@@ -1,3 +1,6 @@
+<?php
+	$totalAmountWithShipping = $currentCart['Cart']['amount'];
+?>
 <div id="checkout_warning">
     <?php echo $this->Html->image('lock.gif', array('class' => 'margin_right_5'));?>
     <span class="font_bold"><?php echo __('You are using our secure server ');?></span>
@@ -7,39 +10,30 @@
     <div class="products_list_left">
         <span class="youarebuying">You're buying...</span>
         <ul>
+		<?php
+		$items = $currentCart['CartItem'];
+		foreach($items as $key=>$item) :
+			$image = $item['CoverImage'];
+			$imagePath = 'no-image.jpeg';
+			if (!empty($image['filename'])) {
+				$imagePath = '/' . $image['dir'] . '/thumb/small/' . $image['filename'];
+			}
+		?>
             <li>
                 <div class="left product_thumb">
-                    <?php echo $this->Html->image('no-image.jpeg', array('class' => 'product_image'));?>
+                    <?php echo $this->Html->image($imagePath, array('class' => 'product_image'));?>
                 </div>
                 <div class="left product_thumb">
-                    <span class="font_bold">Product 1</span>
+                    <span class="font_bold"><?php echo $item['product_title']; ?></span>
                     <br />
-                    <span>2x $10.00</span>
+                    <span><?php echo $item['product_quantity'] . ' x ' . $item['product_price']; ?></span>
                 </div>
                 <div class="clear"></div>
             </li>
-            <li>
-                <div class="left product_thumb">
-                    <?php echo $this->Html->image('no-image.jpeg', array('class' => 'product_image'));?>
-                </div>
-                <div class="left product_thumb">
-                    <span class="font_bold">Product 1</span>
-                    <br />
-                    <span>2x $10.00</span>
-                </div>
-                <div class="clear"></div>
-            </li>
-            <li>
-                <div class="left product_thumb">
-                    <?php echo $this->Html->image('no-image.jpeg', array('class' => 'product_image'));?>
-                </div>
-                <div class="left product_thumb">
-                    <span class="font_bold">Product 1</span>
-                    <br />
-                    <span>2x $10.00</span>
-                </div>
-                <div class="clear"></div>
-            </li>
+		<?php
+		endforeach;
+		?>
+          
         </ul>
     </div>
     <div class="product_list_right">

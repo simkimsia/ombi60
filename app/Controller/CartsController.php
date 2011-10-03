@@ -58,15 +58,18 @@ class CartsController extends AppController {
 			$this->redirect($this->referer());
 		}
 		
-		$qty = 1;
+		// set $qty as quantities purchased
+		$qty 			= 1;
+		$qtyExists 		= !empty($_POST['quantity']);
+		$qtyIsPositive 	= $qtyExists ? (is_numeric($_POST['quantity']) AND ($_POST['quantity'] > 0)) : false;
 		
-		$qtyExists = !empty($_POST['quantity']);
-		$qtyIsPositive = $qtyExists ? is_numeric($_POST['quantity']) AND ($_POST['quantity'] > 0) : false;
 		if ($qtyIsPositive) {
 			$qty = 	$_POST['quantity'];
 		}
 		
-		if($this->addToCart($id, $qty)) {
+		$addToCartSuccessful = $this->Cart->addProductForCustomer(User::get('User.id'), array($id=>$qty));
+		
+		if($addToCartSuccessful) {
 			$this->Session->setFlash(__('Product added to cart'), 'default', array('class'=>'flash_success'));
 			$this->redirect(array('action' => 'view_cart'));
 		}
@@ -74,19 +77,6 @@ class CartsController extends AppController {
 		$this->redirect($this->referer());
 	}
 	
-
-	/**
-	 * 
-	 * Add Variant to Cart given the variant id and quantity. 
-	 * Wrapper function that bridges between the public action and the model function that does the lifting.
-	 *
-	 * @param integer $id 
-	 * @param integer $quantity
-	 * @return boolean Returns true if successful.
-	**/
-	private function addToCart($id = null, $quantity = 1) {
-		return $this->Cart->addProductForCustomer(User::get('User.id'), array($id=>$quantity));
-	}
 	
 	/**
 	 * 
@@ -140,11 +130,11 @@ class CartsController extends AppController {
 			}
 			
 			// get Cart data
-			$this->Cart->id 			= $cart_uuid;
-			$totalAmountWithShipping 	= $this->Cart->field('amount');
+			$this->Cart->id = $cart_uuid;
+			$currentCart 	= $this->Cart->getItemsWithImages($cart_uuid);
+			
 			// populate view vars
-			$this->set(compact('countries', 'customerId', 'shopId', 'shippingAddresses', 
-				'cart_uuid', 'totalAmountWithShipping')
+			$this->set(compact('countries', 'customerId', 'shopId', 'shippingAddresses', 'currentCart')
 			);
 		}
 		
@@ -159,7 +149,7 @@ class CartsController extends AppController {
 	 * @return void
 	**/
 	public function view_cart() {
-		
+
 		// need to check for POST and the Update button
 		// update button is named as update (singular)
 		// the update_x is to work with input type="image" for the update button
