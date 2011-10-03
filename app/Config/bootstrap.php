@@ -247,17 +247,7 @@ define('DEFAULT_LANGUAGE', 'eng');
 // return $path;
 // }
 
-/**
- * this is to allow getting ip addresses by domains
- **/
-	function getAddrByHost($host, $timeout = 3) {
-		$host = str_replace('http://', '', $host);
-		
-		$query = `nslookup -timeout=$timeout -retry=1 $host`;
-		if(preg_match('/\nAddress: (.*)\n/', $query, $matches))
-		   return trim($matches[1]);
-		return $host;
-	}
+
 	
 /**
  * this is to allow getting ip addresses by domains

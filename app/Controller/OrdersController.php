@@ -643,9 +643,8 @@ class OrdersController extends AppController {
 			if ($data) {
 				$price = $this->Order->Shop->ShippedToCountry->ShippingRate->field('price', array('id'=>$this->request->params['form']['shipping_rate_id']));
 				$successJSON = true;
-				App::uses('NumberHelper', 'View/Helper');
-				$number = new NumberHelper(new View($this));
-				$contents['totalAmountWithShipping'] = $number->currency($data['Order']['amount'] + $price, 'SGD');
+				App::uses('NumberLib', 'Lib');
+				$contents['totalAmountWithShipping'] = NumberLib::currency($data['Order']['amount'] + $price, 'SGD');
 				
 			} else {
 				$contents['reason'] = __('Cannot update prices');

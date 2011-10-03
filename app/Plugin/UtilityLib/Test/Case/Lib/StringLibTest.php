@@ -19,7 +19,8 @@
  * @version 0.1
  * @lastmodified 2011-10-03 
  */
-App::uses('UtilityLib.StringLib', 'Lib');
+//App::uses('StringLib', 'UtilityLib.Lib');
+App::import('Lib', 'UtilityLib.StringLib');
 
 class StringLibTestCase extends CakeTestCase {
 	
@@ -66,7 +67,7 @@ class StringLibTestCase extends CakeTestCase {
 	public function testIterateArrayWrapStringValuesInQuotes() {
 		// empty array, no change
 		$input = array();
-		$this->assertEquals(UtilityLib.StringLib::iterateArrayWrapStringValuesInQuotes($input), $input);
+		$this->assertEquals(StringLib::iterateArrayWrapStringValuesInQuotes($input), $input);
 		
 		// array with 1 string and 1 inner array. no recursion
 		$input 		= array('happy', array('whoopie!!', 'hahaha'));
@@ -87,7 +88,7 @@ class StringLibTestCase extends CakeTestCase {
 	**/
 	public function testStartsWith() {
 
-		$this->assertTrue(UtilityLib.StringLib::startsWith('hello kitty', 'hell', true));
+		$this->assertTrue(StringLib::startsWith('hello kitty', 'hell', true));
 		
 		$this->assertTrue(StringLib::startsWith('hello kitty', 'hell', false));
 		
@@ -107,7 +108,7 @@ class StringLibTestCase extends CakeTestCase {
 	* @return void
 	**/
 	public function testEndsWith() {
-		$this->assertTrue(UtilityLib.StringLib::endsWith('hello kitty', 'tty', true));
+		$this->assertTrue(StringLib::endsWith('hello kitty', 'tty', true));
 		
 		$this->assertTrue(StringLib::endsWith('hello kitty', 'tty', false));
 		
