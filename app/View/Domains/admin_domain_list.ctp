@@ -12,7 +12,7 @@ $i = 0;
 
 // get the ip address of main url of shop
 App::uses('HttpLib', 'UtilityLib.Lib');
-$mainIP = HttpLib::getAddrByHost($mainUrl);
+$mainIP = getAddrByHost($mainUrl);
 foreach ($domains as $domain):
 	$class = null;
 	if ($i++ % 2 == 0) {
