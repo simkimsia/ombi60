@@ -49,3 +49,6 @@
 [submodule "app/Plugin/AclExtras"]
 	path = app/Plugin/AclExtras
 	url = git@github.com:markstory/acl_extras.git
+[submodule "app/Plugin/ClearCache"]
+	path = app/Plugin/ClearCache
+	url = git@github.com:simkimsia/ClearCache.git
