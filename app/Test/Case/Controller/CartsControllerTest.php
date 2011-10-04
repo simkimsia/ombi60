@@ -120,10 +120,9 @@ class CartsControllerTestCase extends ControllerTestCase {
 	*
 	**/
 	public function testChangeQtyFor1ItemInCart() {
-
-		$this->expectRedirect($this->controller, array('action' => 'no_such_action'));
-		$this->testAction('/cart/change/3?quantity=0');
 		
+		$this->testAction('/cart/change/3?quantity=0');
+		$this->assertEquals('/cart', $this->headers['Location']);
 	}
 	
 	/**
