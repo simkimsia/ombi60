@@ -56,18 +56,7 @@
                         array('pass' => array('handle'),
                               'handle' => '[a-zA-Z0-9\-_]+'
                               ));
-
-		//display 1 product WITHIN collection
-		Router::connect('/collections/:handle/products/:product_handle',
-                        array('controller' 	=> 'products',
-                              'action' 		=> 'view_within_group'),
-                        array('pass' 			=> array('handle', 'product_handle'),
-                              'handle' 			=> '[a-zA-Z0-9\-_]+',
-							  'product_handle' 	=> '[a-zA-Z0-9\-_]+',
-                              ));
-
         
-<<<<<<< .merge_file_wGsvPz
 		//display 1 product WITHIN collection
 		Router::connect('/collections/:handle/products/:product_handle',
                         array('controller' 	=> 'products',
@@ -78,8 +67,6 @@
                               ));
 
 
-=======
->>>>>>> .merge_file_SGolv6
         // display list of products by collections
         Router::connect('/collections/:handle',
                         array('controller' => 'products',
@@ -87,21 +74,14 @@
                         array('pass' => array('handle'),
                               'handle' => '[a-zA-Z0-9\-_]+'
                               ));
-<<<<<<< .merge_file_wGsvPz
 
 
-=======
-		
-        
->>>>>>> .merge_file_SGolv6
         Router::connect('/collections/:handle/*',
                         array('controller' => 'products',
                               'action' => 'view_by_group'),
                         array('pass' => array('handle'),
                               'handle' => '[a-zA-Z0-9\-_]+'
                               ));
-
-
         
         // rename product_groups into collections inside admin interface
         Router::connect('/admin/collections',

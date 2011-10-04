@@ -239,7 +239,6 @@ define('DEFAULT_LANGUAGE', 'eng');
  * this is to include the Zend Framework files i need for Zend_Lucene
  **/
 
-<<<<<<< .merge_file_0OzVJ9
 //ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . CAKE_CORE_INCLUDE_PATH . DS . 'vendors');
 // function __autoload($path) {
 // if (substr($path, 0, 5) == 'Zend_') {
@@ -248,42 +247,14 @@ define('DEFAULT_LANGUAGE', 'eng');
 // return $path;
 // }
 
-=======
-ini_set('include_path', ini_get('include_path') . ':' . CAKE_CORE_INCLUDE_PATH . DS . '/vendors');
-	function __autoload($path) {
-		if (substr($path, 0, 5) == 'Zend_') {
-			include str_replace('_', '/', $path) . '.php';
-		}
-		return $path;
-	}
->>>>>>> .merge_file_rT3cIW
 
 	
 /**
  * this is to allow getting ip addresses by domains
  **/
-<<<<<<< .merge_file_0OzVJ9
 	function is_blank($variable) {
 		return (empty($variable) && !is_numeric($variable));
 	}        
-=======
-	function getAddrByHost($host, $timeout = 3) {
-		$host = str_replace('http://', '', $host);
-		
-		$query = `nslookup -timeout=$timeout -retry=1 $host`;
-		if(preg_match('/\nAddress: (.*)\n/', $query, $matches))
-		   return trim($matches[1]);
-		return $host;
-	}
-	
-/**
- * this is to allow getting ip addresses by domains
- **/
-		function is_blank($variable) {
-			return (empty($variable) && !is_numeric($variable));
-		}
-        
->>>>>>> .merge_file_rT3cIW
 
 // debug(APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php');
    require_once  APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php';
