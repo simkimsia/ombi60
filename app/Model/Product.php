@@ -863,8 +863,8 @@ class Product extends AppModel {
 				'Link.action'=>$handle);
 		
 		// prepare the fields by wrapping the values in quotes
-		App::uses('StringManipulator', 'Lib');
-		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
+		App::uses('StringLib', 'UtilityLib.Lib');
+		$fields = StringLib::iterateArrayWrapStringValuesInQuotes($fields);
 		
 		// meant only for all the ProductLinks belonging to this Product
 		$conditions = array('Link.parent_id'=>$this->id,
@@ -1193,7 +1193,7 @@ class Product extends AppModel {
 	 *  that is the list of conditions without SmartCollectionCondition index present
 	 * */
 	private function evaluateAgainstSmartConditions($product, $conditionalArrays) {
-		App::uses('StringManipulator', 'Lib');
+		App::uses('StringLib', 'UtilityLib.Lib');
 		$ok = true;
 		
 		foreach($conditionalArrays as $conditionalArray) {
@@ -1219,11 +1219,11 @@ class Product extends AppModel {
 				  break;
 				case "starts_with":
 				  //Field in Product should start with Value
-				  $ok = StringManipulator::startsWith($fieldInProduct, $value,  false);
+				  $ok = StringLib::startsWith($fieldInProduct, $value,  false);
 				  break;
 				case "ends_with":
 				  //Field in Product should end with value
-				  $ok = StringManipulator::endsWith($fieldInProduct, $value, false);
+				  $ok = StringLib::endsWith($fieldInProduct, $value, false);
 				  break;
 				case "contains":
 				  //Field in Product should contain the value

@@ -222,8 +222,8 @@ class Webpage extends AppModel {
 				'Link.action'=>$handle);
 		
 		// prepare the fields by wrapping the values in quotes
-		App::uses('StringManipulator', 'Lib');
-		$fields = StringManipulator::iterateArrayWrapStringValuesInQuotes($fields);
+		App::uses('StringLib', 'UtilityLib.Lib');
+		$fields = StringLib::iterateArrayWrapStringValuesInQuotes($fields);
 		
 		// meant only for all the Links belonging to this Webpage
 		$conditions = array('Link.parent_id'=>$this->id,
