@@ -37,7 +37,7 @@ class CartsControllerTestCase extends ControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->controller = $this->generate('Carts', array(
-			'methods' => array('forceSSL'), 
+			'methods' => array('redirect', 'forceSSL'), 
 			'components' => array(
 				'Auth' => array('user'), 
 				'Security',
@@ -120,9 +120,9 @@ class CartsControllerTestCase extends ControllerTestCase {
 	*
 	**/
 	public function testChangeQtyFor1ItemInCart() {
-		
+		$this->controller->expects($this->once())->method('redirect')->with(array('action' => 'view_cart'))->will($this->returnValue(true));
 		$this->testAction('/cart/change/3?quantity=0');
-		$this->assertEquals('/cart', $this->headers['Location']);
+		
 	}
 	
 	/**
