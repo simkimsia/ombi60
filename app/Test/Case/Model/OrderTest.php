@@ -91,8 +91,9 @@ class OrderTestCase extends CakeTestCase {
  *
  * @return void
  */
-	public function testShouldGetValidOrderIdUsingCreateFrom() {
+	public function testShouldGenerateValidOrderUsingFunctionCreateForm() {
 				
+		// GIVEN valid order form data
 		$orderFormData = array(
 			// attached inside CartsController/create_order
 			'Order' => array(
@@ -120,10 +121,14 @@ class OrderTestCase extends CakeTestCase {
 			
 		);
 		
+		// WHEN  createForm is executed on the valid order form data
 		$orderId = $this->Order->createFrom($orderFormData);
-		//debug($orderId);
+
+		// THEN we get a valid Order ID
 		$this->assertTrue(is_string($orderId));
+		// AND the Order ID is a 36 char string
 		$this->assertEquals(strlen($orderId), 36);
+		// AND the Order has the correct OrderLineItem
 		
 	}
 	

@@ -255,14 +255,6 @@ class Order extends AppModel {
 		return $shippingRequired;
 		
 	}
-
-	
-	public function afterSave($created) {
-		if ($created) {
-			$this->Customer->User->LiveCart->id = $this->data['Order']['cart_id'];
-			$this->Customer->User->LiveCart->saveField('order_id', $this->id);
-		}
-	}
 	
 	public function saveForCheckoutStep1($data) {
 		
