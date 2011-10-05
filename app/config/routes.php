@@ -142,46 +142,52 @@
         
         // checkout process links      
   		// checkout process first page to retrieve address
-        Router::connect('/carts/:cart_uuid',
+		// we need the shop_id param because we are using a universal checkout page
+		// so we can no longer rely on url and then the Shop singleton to retrieve the shopid
+        Router::connect('/carts/:shop_id/:cart_uuid',
                         array(
 							'controller' 	=> 'carts',
 							'action' 		=> 'view'),
 						array(
-							'pass'			=> array('cart_uuid'),
+							'pass'			=> array('shop_id', 'cart_uuid'),
+							'shop_id'		=> '[0-9]+',
 							'cart_uuid'		=> '[a-zA-Z0-9\-_]+'
 							)
                         );
 
 		// checkout process intermediate page to decide to send browser to pay or complete
-        Router::connect('/orders/:order_uuid',
+        Router::connect('/orders/:shop_id/:order_uuid',
                         array(
 							'controller' 	=> 'orders',
 							'action' 		=> 'view'),
 						array(
-							'pass'			=> array('order_uuid'),
-							'order_uuid'		=> '[a-zA-Z0-9\-_]+'
+							'pass'			=> array('shop_id', 'order_uuid'),
+							'shop_id'		=> '[0-9]+',
+							'order_uuid'	=> '[a-zA-Z0-9\-_]+'
 							)
                         );
 
 		// checkout process 2nd page to collect payment mode
-        Router::connect('/orders/:order_uuid/pay',
+        Router::connect('/orders/:shop_id/:order_uuid/pay',
                         array(
 							'controller' 	=> 'orders',
 							'action' 		=> 'pay'),
 						array(
-							'pass'			=> array('order_uuid'),
-							'order_uuid'		=> '[a-zA-Z0-9\-_]+'
+							'pass'			=> array('shop_id', 'order_uuid'),
+							'shop_id'		=> '[0-9]+',
+							'order_uuid'	=> '[a-zA-Z0-9\-_]+'
 							)
                         );
 
 		// checkout process indicate that payment is completed
-        Router::connect('/orders/:order_uuid/complete',
+        Router::connect('/orders/:shop_id/:order_uuid/complete',
                         array(
 							'controller' 	=> 'orders',
 							'action' 		=> 'complete'),
 						array(
-							'pass'			=> array('order_uuid'),
-							'order_uuid'		=> '[a-zA-Z0-9\-_]+'
+							'pass'			=> array('shop_id', 'order_uuid'),
+							'shop_id'		=> '[0-9]+',
+							'order_uuid'	=> '[a-zA-Z0-9\-_]+'
 							)
                         );
         
