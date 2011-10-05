@@ -173,7 +173,7 @@ class CartsController extends AppController {
 			
 		} 
 		
-		return $this->redirect(array('action'=>'view', 'shop_id' => $shop_id, 'order_uuid' => $order_uuid));
+		return $this->redirect(array('controller'=>'orders', 'action'=>'pay', 'shop_id' => $shop_id, 'order_uuid' => $order_uuid));
 		
 		
 		
