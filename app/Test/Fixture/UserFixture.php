@@ -1,5 +1,5 @@
 <?php
-/* User Fixture generated on: 2011-09-30 18:42:27 : 1317408147 */
+/* User Fixture generated on: 2011-10-05 05:45:45 : 1317793545 */
 
 /**
  * UserFixture
@@ -24,6 +24,7 @@ class UserFixture extends CakeTestFixture {
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
 		'language_id' => array('type' => 'integer', 'null' => true, 'default' => '1', 'length' => 5, 'collate' => NULL, 'comment' => ''),
+		'live_cart_id' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 36, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -45,7 +46,8 @@ class UserFixture extends CakeTestFixture {
 			'status' => 1,
 			'created' => '2011-07-08 11:54:46',
 			'modified' => '2011-07-08 11:54:46',
-			'language_id' => '1'
+			'language_id' => '1',
+			'live_cart_id' => NULL
 		),
 		array(
 			'id' => '2',
@@ -58,8 +60,8 @@ class UserFixture extends CakeTestFixture {
 			'status' => 1,
 			'created' => '2011-07-08 11:54:59',
 			'modified' => '2011-07-08 11:54:59',
-			'language_id' => '1'
+			'language_id' => '1',
+			'live_cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a'
 		),
-
 	);
 }

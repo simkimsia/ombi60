@@ -55,7 +55,7 @@ class CartsController extends AppController {
 		
 		if(!$id) {
 			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
-			$this->redirect($this->referer());
+			return $this->redirect($this->referer());
 		}
 		
 		// set $qty as quantities purchased
@@ -71,10 +71,11 @@ class CartsController extends AppController {
 		
 		if($addToCartSuccessful) {
 			$this->Session->setFlash(__('Product added to cart'), 'default', array('class'=>'flash_success'));
-			$this->redirect(array('action' => 'view_cart'));
+			return $this->redirect(array('action' => 'view_cart'));
+		} else {
+			$this->Session->setFlash(__('The Product could not be added to cart. Please, try again.'), 'default', array('class'=>'flash_failure'));
+			return $this->redirect($this->referer());
 		}
-		$this->Session->setFlash(__('The Product could not be added to cart. Please, try again.'), 'default', array('class'=>'flash_failure'));
-		$this->redirect($this->referer());
 	}
 	
 	
@@ -103,7 +104,7 @@ class CartsController extends AppController {
 
 		}
 
-		$this->redirect(array('action' => 'view_cart'));
+		return $this->redirect(array('action' => 'view_cart'));
 	}
 	
 	/**
@@ -115,8 +116,9 @@ class CartsController extends AppController {
 	*
 	**/
 	public function view($cart_uuid = false) {
-		
+
 		if ($this->request->is('get')) {
+
 			// set up the countries, customerId, shopId in the form.
 			$countries 	= $this->Cart->Order->BillingAddress->Country->find('list');
 			$customerId = User::get('Customer.id');
@@ -132,7 +134,7 @@ class CartsController extends AppController {
 			// get Cart data
 			$this->Cart->id = $cart_uuid;
 			$currentCart 	= $this->Cart->getItemsWithImages($cart_uuid);
-			
+						
 			// populate view vars
 			$this->set(compact('countries', 'customerId', 'shopId', 'shippingAddresses', 'currentCart')
 			);
@@ -159,7 +161,7 @@ class CartsController extends AppController {
 
 		if ($updateButtonTriggered) {
 			$this->Cart->editQuantities();
-			$this->redirect(array('action' => 'view_cart'));
+			return $this->redirect(array('action' => 'view_cart'));
 		}
 		
 		
@@ -167,103 +169,109 @@ class CartsController extends AppController {
 		$checkoutImageButtonUsed 	= isset($this->request->data['checkout_x']);
 		$checkoutButtonTriggered	= ($checkoutButtonUsed OR $checkoutImageButtonUsed);
 		
+		$userId = User::get('User.id');
 		
 		if ($checkoutButtonTriggered) {
-			$cart_uuid = User::get('User.live_cart_id');
+			$cart_uuid = $this->Cart->getLiveCartIDByUserID($userId);
+			
 			if (!empty($cart_uuid)) {
-				$this->redirect(array('action' => 'view', 'cart_uuid' => $cart_uuid));
+				return $this->redirect(array('action' => 'view', 'cart_uuid' => $cart_uuid));
 			}
 		}
 		
+		$normalDisplayForViewCart = !$checkoutButtonTriggered && !$updateButtonTriggered;
 		
-		$products = array();
-		$shop_id  = Shop::get('Shop.id');
-		
-		// check if shop wants to have paypal option
-		//$paypalExpressOn = $this->Cart->Shop->getPaypalExpressOn($shop_id);
-		$paypalExpressOn = false;
-		
-		// retrieve live cart of customer
-		$productsInCart = $this->Cart->getLiveCartByUserId(User::get('User.id'), true, true);
-		
-		
-		
-		$paymentAmount = 0.00;
-			
-		$PaymentOrderItems = array();
-		$Payments = array();
-		$currency = '';	
-		
-		$products = (isset($productsInCart['CartItem'])) ? $productsInCart['CartItem'] : array();
-		
-		$prepareSessionForPaypal = !empty($productsInCart) && $paypalExpressOn;
-		
-		if ($prepareSessionForPaypal) {
-		
-			// loop thru the cart inside Session
-			foreach($products as $cart_id => $product) {
-				// total the amount
-				$paymentAmount += $product['product_price'] * number_format($product['product_quantity'],1);
-				
-				// build the item url
-				$itemUrl = $this->Product->getProductUrl($product['product_id']);
-			
-				// build the item
-				$item = $this->Paypal->buildItem(array(
-							       'amt'=>$product['product_price'],
-							       'name'=>$product['product_title'],
-							       'qty'=>$product['product_quantity'],
-							       'number'=>$product['product_id'],
-							       'itemurl'=>$itemUrl,
-							       'itemweightvalue'=>$product['product_weight'],
-							       'itemweightunit'=>'grams'));
-				
-				array_push($PaymentOrderItems, $item);
-				
-				$currency = $product['currency'];
-			}
-			
-			$paymentAmount = number_format($paymentAmount, 2);
-			
-			$Payment = $this->Paypal->buildPayment(array('amt'=>$paymentAmount,
-								     'currencycode'=> $currency,
-								     'itemamt'=>$paymentAmount,
-								     'shippingamt'=>'0.00',
-								     'taxamt'=>'0.00'));
-			
-			$Payment['order_items'] = $PaymentOrderItems;
-			array_push($Payments, $Payment);
-			
-			// save all the payments into session
-			$this->Session->write('Shop.'.$shop_id.'.Payments', $Payments);
-			
-		}
-		
-		$this->Session->write('Shop.' . $shop_id . '.paymentAmount', $paymentAmount);
-		$cart_id = $productsInCart['Cart']['id'];
-		
-		
-		// reassign the products into items
-		$cart = Cart::getTemplateVariable($productsInCart);
+		if ($normalDisplayForViewCart) {
+			$products = array();
+			$shop_id  = Shop::get('Shop.id');
 
-		$this->set(compact('cart', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
-		
-		$sessionString = '';
-		$mainUrl = Shop::get('Shop.primary_domain');
-		
-		//$this->log('user id in view_cart ' . User::get('User.id'));
-		
-		// now we are going to pass the session into the database for the crossover for checkout
-		
-		if (!$this->Cart->Shop->isCurrentBaseThisDomain($mainUrl)) {
-			// test if we need to send User id over
-			$this->Session->write('User.id', User::get('User.id'));
-			//$this->log('new user id in session write ' . $this->Session->read('User.id'));
-			$sessionString = '?ss='.$this->transferSession();
+			// check if shop wants to have paypal option
+			//$paypalExpressOn = $this->Cart->Shop->getPaypalExpressOn($shop_id);
+			$paypalExpressOn = false;
+
+			// retrieve live cart of customer
+			$productsInCart = $this->Cart->getLiveCartByUserId(User::get('User.id'), true, true);
+
+
+
+			$paymentAmount = 0.00;
+
+			$PaymentOrderItems = array();
+			$Payments = array();
+			$currency = '';	
+
+			$products = (isset($productsInCart['CartItem'])) ? $productsInCart['CartItem'] : array();
+
+			$prepareSessionForPaypal = !empty($productsInCart) && $paypalExpressOn;
+			/*
+			if ($prepareSessionForPaypal) {
+
+				// loop thru the cart inside Session
+				foreach($products as $cart_id => $product) {
+					// total the amount
+					$paymentAmount += $product['product_price'] * number_format($product['product_quantity'],1);
+
+					// build the item url
+					$itemUrl = $this->Product->getProductUrl($product['product_id']);
+
+					// build the item
+					$item = $this->Paypal->buildItem(array(
+								       'amt'=>$product['product_price'],
+								       'name'=>$product['product_title'],
+								       'qty'=>$product['product_quantity'],
+								       'number'=>$product['product_id'],
+								       'itemurl'=>$itemUrl,
+								       'itemweightvalue'=>$product['product_weight'],
+								       'itemweightunit'=>'grams'));
+
+					array_push($PaymentOrderItems, $item);
+
+					$currency = $product['currency'];
+				}
+
+				$paymentAmount = number_format($paymentAmount, 2);
+
+				$Payment = $this->Paypal->buildPayment(array('amt'=>$paymentAmount,
+									     'currencycode'=> $currency,
+									     'itemamt'=>$paymentAmount,
+									     'shippingamt'=>'0.00',
+									     'taxamt'=>'0.00'));
+
+				$Payment['order_items'] = $PaymentOrderItems;
+				array_push($Payments, $Payment);
+
+				// save all the payments into session
+				$this->Session->write('Shop.'.$shop_id.'.Payments', $Payments);
+
+			}
+			*/
+			$this->Session->write('Shop.' . $shop_id . '.paymentAmount', $paymentAmount);
+			$cart_id = $productsInCart['Cart']['id'];
+
+
+			// reassign the products into items
+			$cart = Cart::getTemplateVariable($productsInCart);
+
+			$this->set(compact('cart', 'paypalExpressOn', 'paymentAmount', 'cart_id'));
+
+			$sessionString = '';
+			$mainUrl = Shop::get('Shop.primary_domain');
+
+			//$this->log('user id in view_cart ' . User::get('User.id'));
+
+			// now we are going to pass the session into the database for the crossover for checkout
+
+			if (!$this->Cart->Shop->isCurrentBaseThisDomain($mainUrl)) {
+				// test if we need to send User id over
+				$this->Session->write('User.id', User::get('User.id'));
+				//$this->log('new user id in session write ' . $this->Session->read('User.id'));
+				$sessionString = '?ss='.$this->transferSession();
+			}
+			$this->set('sessionString', $sessionString);
+
+			$this->render('cart');
 		}
-		$this->set('sessionString', $sessionString);
 		
-		$this->render('cart');
 	}
 
 

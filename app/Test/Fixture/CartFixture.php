@@ -1,5 +1,5 @@
 <?php
-/* Cart Fixture generated on: 2011-10-01 04:23:44 : 1317443024 */
+/* Cart Fixture generated on: 2011-10-05 05:56:30 : 1317794190 */
 
 /**
  * CartFixture
@@ -37,5 +37,21 @@ class CartFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+		array(
+			'id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+			'shop_id' => '2',
+			'user_id' => '2',
+			'created' => '2011-10-01 05:16:44',
+			'amount' => '23.0000',
+			'status' => 1,
+			'total_weight' => '2000',
+			'currency' => 'SGD',
+			'shipped_amount' => '23.0000',
+			'shipped_weight' => '2000',
+			'past_checkout_point' => 0,
+			'cart_item_count' => '1',
+			'note' => NULL,
+			'attributes' => NULL
+		),
 	);
 }

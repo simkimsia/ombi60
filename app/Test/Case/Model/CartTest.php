@@ -74,6 +74,18 @@ class CartTestCase extends CakeTestCase {
 
 		parent::tearDown();
 	}
+	
+	private function setUpForEmptyCart() {
+		$this->Cart->query('TRUNCATE table `carts`');
+		$this->Cart->query('TRUNCATE table `cart_items`');
+		$this->User->id = 2;
+		$this->User->saveField('live_cart_id', NULL);
+		
+		$noOfCarts = $this->Cart->find('count', array(
+			'conditions' => array('Cart.user_id' => 2)
+		));
+		$this->assertEquals($noOfCarts, 0);
+	}
 
 /**
  * testMakeThisPrimary method
@@ -83,10 +95,7 @@ class CartTestCase extends CakeTestCase {
 	public function testAddProductForCustomer() {
 
 		// Given that we have non existent carts for User 2
-		$noOfCarts = $this->Cart->find('count', array(
-			'conditions' => array('Cart.user_id' => 2)
-		));
-		$this->assertEquals($noOfCarts, 0);
+		$this->setUpForEmptyCart();
 				
 		// now we add a product to non-existent cart for User 2
 		$addToNonExistentCart = $this->Cart->addProductForCustomer(2, array(3=>1));
@@ -111,11 +120,8 @@ class CartTestCase extends CakeTestCase {
 	public function testChangeQuantityFor1Item() {
 
 		// Given that we have non existent carts for User 2
-		$noOfCarts = $this->Cart->find('count', array(
-			'conditions' => array('Cart.user_id' => 2)
-		));
-		$this->assertEquals($noOfCarts, 0);
-
+		$this->setUpForEmptyCart();
+		
 		// now we add a product to non-existent cart for User 2
 		$addToNonExistentCart = $this->Cart->addProductForCustomer(2, array(3=>1));
 		$this->assertTrue($addToNonExistentCart);
@@ -136,11 +142,9 @@ class CartTestCase extends CakeTestCase {
 * test editQuantities
 **/
 	public function testEditQuantities() {
+		
 		// Given that we have non existent carts for User 2
-		$noOfCarts = $this->Cart->find('count', array(
-			'conditions' => array('Cart.user_id' => 2)
-		));
-		$this->assertEquals($noOfCarts, 0);
+		$this->setUpForEmptyCart();
 
 		// now we add a product to non-existent cart for User 2
 		$addToNonExistentCart = $this->Cart->addProductForCustomer(2, array(3=>1));
@@ -176,8 +180,8 @@ class CartTestCase extends CakeTestCase {
 	            'shipped_weight' => (2000 * $expectedQuantity),
 	            'past_checkout_point' => false,
 	            'cart_item_count' => 1,
-	            'note' => null,
-	            'attributes' => null,
+	            'note' => NULL,
+	            'attributes' => NULL,
 	            'shipping_required' => 1,
 			),
 			'CartItem' => array(

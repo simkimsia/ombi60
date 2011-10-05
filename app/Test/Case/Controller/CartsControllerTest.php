@@ -26,7 +26,7 @@ class CartsControllerTestCase extends ControllerTestCase {
 		'app.casual_surfer', 'app.link_list', 'app.link', 
 		'app.blog', 'app.post', 'app.comment', 
 		'app.shops_payment_module', 'app.log', 'app.saved_theme',
-		'app.vendor', 
+		'app.vendor', 'app.country',
 	);
 
 	/**
@@ -85,18 +85,47 @@ class CartsControllerTestCase extends ControllerTestCase {
 	}
 
 
+	private function setUpForEmptyCart() {
+		$this->Cart->query('TRUNCATE table `carts`');
+		$this->Cart->query('TRUNCATE table `cart_items`');
+		$this->User->id = 2;
+		$this->User->saveField('live_cart_id', NULL);
+		
+		$noOfCarts = $this->Cart->find('count', array(
+			'conditions' => array('Cart.user_id' => 2)
+		));
+		$this->assertEquals($noOfCarts, 0);
+	}
+
 	/**
 	* 
 	* test View Cart 
-	*
+	**/
 	
-	public function testViewCart() {
+	public function testEmptyViewCart() {
+		//Given Cart is empty
+		$this->setUpForEmptyCart();
 		
 		$this->testAction('/cart', array('return' => 'contents'));		
 		$this->assertRegexp('#<p id="empty">Your shopping cart is empty#', $this->contents);
 		
 	}
+	
+	/**
+	* 
+	* test View Cart 
 	**/
+	
+	public function testViewCart() {
+		
+		// Given Cart is NOT empty
+		
+		$this->testAction('/cart', array('return' => 'contents'));		
+		$this->assertRegexp('#name="checkout"#', $this->contents);
+		$this->assertRegexp('#name="update"#', $this->contents);
+		
+	}	
+	
 	/**
 	* 
 	* test add_to_cart action in carts
@@ -126,55 +155,40 @@ class CartsControllerTestCase extends ControllerTestCase {
 	}
 	
 	/**
-	* 
-	* test add to cart
 	*
+	* test checkout button in cart page
 	**/
-	public function testCheckoutPage1() {
-		/*
-		$userId = User::get('User.id');
-
-		$this->controller->request->data['id'] = 3;
-		$this->testAction('/cart/add', array(
-			'data' => $this->controller->request->data, 
-			'method' => 'POST'
-		));
-		
-		$userId = User::get('User.id');
-		$cartId = $this->Cart->getLiveCartIDByUserID($userId);
-		debug($cartId);
-		$this->assertTrue(!empty($cartId));
-*/
-//		$this->testAction('/cart', array('return' => 'contents'));	
-
-//		$this->assertRegexp('#name="checkout"#', $this->contents);
-//		$this->assertRegexp('#name="update"#', $this->contents);
+	public function testCheckoutButtonInCart() {
 		
 		// press the checkout button
-		/*
 		$this->controller->request->data['checkout'] = 1;
+		
+		$cartId = User::get('User.live_cart_id');
+		
+		$this->controller->expects($this->once())->method('redirect')->with(array('action' => 'view', 'cart_uuid' => $cartId))->will($this->returnValue(true));
 		$this->testAction('/cart', array(
 			'data' => $this->controller->request->data, 
 			'method' => 'POST'
 		));
-		**/
-		// test for redirect
-		// currently don't have need to wait for lorenzo answer.
-		// so we hardcode our way into page 1
-		/*
-		$string = 'http://shop001.ombi60.localhost/carts/' . $cartId; ;//. $cartId;
-debug($string);
+		
+	}
+	
+	/**
+	* 
+	* test add to cart
+	*
+	**/
+	public function testCheckoutPage1View() {
+	
+		$string = '/carts/' . User::get('User.live_cart_id');
 
-		$cartId = $this->Cart->getLiveCartIDByUserID($userId);
-		debug($cartId);
-				$cartId = $this->Cart->getLiveCartIDByUserID($userId);
-						debug($cartId);
 		$this->testAction($string, array(
-			'return' => 'contents'
+			'return' => 'contents',
+			'method' => 'GET'
 		));
 
 		$this->assertRegexp('#You are using our secure server#', $this->contents);
-		*/
+		
 	}
 	
 }

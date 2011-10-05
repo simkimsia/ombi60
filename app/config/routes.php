@@ -206,7 +206,7 @@
 
         Router::connect('/platform/login', array('platform'=>true, 'controller' => 'users', 'action' => 'login'));
 
-	Router::connect('/login', array('controller' => 'customers', 'action' => 'login'));
+		Router::connect('/login', array('controller' => 'customers', 'action' => 'login'));
 
         Router::connect('/logout', array('controller' => 'customers', 'action' => 'logout'));
 

@@ -1,5 +1,5 @@
 <?php
-/* CartItem Fixture generated on: 2011-10-01 04:23:26 : 1317443006 */
+/* CartItem Fixture generated on: 2011-10-05 05:56:43 : 1317794203 */
 
 /**
  * CartItemFixture
@@ -37,5 +37,21 @@ class CartItemFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+		array(
+			'id' => '1',
+			'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+			'product_id' => '3',
+			'product_price' => '23.0000',
+			'product_quantity' => '1',
+			'visible' => 1,
+			'product_title' => 'test product with no pic and no collection',
+			'product_weight' => '2000',
+			'currency' => 'SGD',
+			'shipping_required' => 1,
+			'previous_price' => '23.0000',
+			'previous_currency' => 'SGD',
+			'variant_id' => '3',
+			'variant_title' => 'Default Title'
+		),
 	);
 }

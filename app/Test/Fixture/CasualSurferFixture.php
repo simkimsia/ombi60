@@ -1,5 +1,5 @@
 <?php
-/* CasualSurfer Fixture generated on: 2011-09-30 18:42:41 : 1317408161 */
+/* CasualSurfer Fixture generated on: 2011-10-05 05:45:56 : 1317793556 */
 
 /**
  * CasualSurferFixture
@@ -30,11 +30,6 @@ class CasualSurferFixture extends CakeTestFixture {
 			'id' => '1',
 			'shop_id' => '2',
 			'user_id' => '2'
-		),
-		array(
-			'id' => '2',
-			'shop_id' => '2',
-			'user_id' => '3'
 		),
 	);
 }
