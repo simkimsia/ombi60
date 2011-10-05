@@ -285,6 +285,7 @@ class User extends AppModel {
 					$this->Customer->Behaviors->attach('Linkable.Linkable');
 					
 					$count = $this->Customer->find('count', array(
+						'contain' => array('User'),
 						'conditions'=>array(
 							'Customer.shop_id'	=> $shopId,
 							'User.group_id'		=> $group_id,

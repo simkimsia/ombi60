@@ -145,7 +145,9 @@ class Order extends AppModel {
 	
 	
 	public function beforeSave() {
-		
+		if (empty($this->data['Order']['order_no'])) {
+			$this->data['Order']['order_no'] = $this->getNextOrderNo();        
+        }
 		// for brand new orders we want to create unique hash
 		if (empty($this->data['Order']['id']) AND empty($this->id)) {
 			$plain = 'Shop_' . $this->data['Order']['shop_id'] .
@@ -257,8 +259,8 @@ class Order extends AppModel {
 	
 	public function afterSave($created) {
 		if ($created) {
-			$this->Customer->User->Cart->id = $this->data['Order']['cart_id'];
-			$this->Customer->User->Cart->saveField('order_id', $this->id);
+			//$this->Customer->User->Cart->id = $this->data['Order']['cart_id'];
+			//$this->Customer->User->Cart->saveField('order_id', $this->id);
 		}
 	}
 	

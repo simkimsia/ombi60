@@ -149,7 +149,9 @@ class Customer extends AppModel {
 				unset($data[$key]);
 			}
 		}
-		//debug($data);
+		if (isset($data['DeliveryAddress']['same'])) {
+			unset($data['DeliveryAddress']);
+		}
 		return $this->saveAll($data, array('validate'=>'first'));
 	}
 	
