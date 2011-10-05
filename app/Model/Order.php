@@ -259,8 +259,8 @@ class Order extends AppModel {
 	
 	public function afterSave($created) {
 		if ($created) {
-			//$this->Customer->User->Cart->id = $this->data['Order']['cart_id'];
-			//$this->Customer->User->Cart->saveField('order_id', $this->id);
+			$this->Customer->User->LiveCart->id = $this->data['Order']['cart_id'];
+			$this->Customer->User->LiveCart->saveField('order_id', $this->id);
 		}
 	}
 	
@@ -536,7 +536,7 @@ class Order extends AppModel {
 		
 		// if explicitly given different addresses for billing, delivery
 		// then no change in $orderFormData
-		$requestData = $this->makeDeliveryBillingAddressesSameIn($orderFormData);
+		$orderFormData = $this->makeDeliveryBillingAddressesSameIn($orderFormData);
 		
 		if ($buyingDoneByExistingCustomer) {
 			// need to set the id in Customer so that the Address related functions work

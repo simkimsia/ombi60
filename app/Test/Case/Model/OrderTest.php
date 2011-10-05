@@ -93,18 +93,6 @@ class OrderTestCase extends CakeTestCase {
  */
 	public function testShouldGetValidOrderIdUsingCreateFrom() {
 				
-				$count = $this->User->Customer->find('count', array(
-					'conditions'=>array(
-						'Customer.shop_id'	=> 2,
-						'User.group_id'		=> CUSTOMERS,
-						'User.email' 		=> 'fake_customer@gmail.com',
-					),
-					'fields' =>'User.id',
-				));
-				
-				debug($count);
-			//	die();
-				
 		$orderFormData = array(
 			// attached inside CartsController/create_order
 			'Order' => array(
@@ -133,9 +121,9 @@ class OrderTestCase extends CakeTestCase {
 		);
 		
 		$orderId = $this->Order->createFrom($orderFormData);
-		debug($orderId);
+		//debug($orderId);
 		$this->assertTrue(is_string($orderId));
-		$this->assertTrue(strlen($orderId), 36);
+		$this->assertEquals(strlen($orderId), 36);
 		
 	}
 	
