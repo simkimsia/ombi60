@@ -658,7 +658,10 @@ class OrdersController extends AppController {
 		
 	}
 	
-	public function pay($shop_id, $hash) {
+	public function pay($shop_id = false, $order_uuid = false) {
+		
+	}
+	public function pay_orig($shop_id, $hash) {
 		
 		$payPalShopsPaymentModuleId = $this->Order->Shop->getPayPalShopsPaymentModuleId($shop_id);
 		if ($this->request->is('get')) {

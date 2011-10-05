@@ -27,41 +27,6 @@ class CustomerFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
-		array(
-			'id' => '1',
-			'identity_code' => NULL,
-			'shop_id' => '3',
-			'user_id' => '4'
-		),
-		array(
-			'id' => '2',
-			'identity_code' => NULL,
-			'shop_id' => '3',
-			'user_id' => '5'
-		),
-		array(
-			'id' => '3',
-			'identity_code' => NULL,
-			'shop_id' => '2',
-			'user_id' => '3'
-		),
-		array(
-			'id' => '4',
-			'identity_code' => NULL,
-			'shop_id' => '2',
-			'user_id' => '3'
-		),
-		array(
-			'id' => '5',
-			'identity_code' => NULL,
-			'shop_id' => '2',
-			'user_id' => '4'
-		),
-		array(
-			'id' => '6',
-			'identity_code' => NULL,
-			'shop_id' => '2',
-			'user_id' => '5'
-		),
+		
 	);
 }

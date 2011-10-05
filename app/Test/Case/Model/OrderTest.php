@@ -1,74 +1,142 @@
 <?php
-/* Order Test cases generated on: 2010-04-17 12:04:00 : 1271507820*/
-App::import('Model', 'Order');
-require_once('app_model.test.php');
+/* Order Test cases generated on: 2011-09-22 09:25:06 : 1316683506*/
+App::uses('User', 'Model');
+App::uses('Shop', 'Model');
+App::uses('Order', 'Model');
 
-class OrderTestCase extends AppModelTestCase {
-	
+/**
+ * Order Test Case
+ *
+ */
+class OrderTestCase extends CakeTestCase {
+/**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = array(
+		'app.cart', 'app.customer', 'app.shop', 
+		'app.merchant', 'app.order', 'app.address', 
+		'app.product', 'app.product_image', 'app.order_line_item', 
+		'app.webpage', 'app.wishlist', 'app.cart_item', 
+		'app.page_type', 'app.user', 'app.group',
+		'app.variant', 'app.variant_option', 'app.products_in_group',
+		'app.product_group', 'app.shop_setting', 'app.domain', 
+		'app.casual_surfer', 'app.link_list', 'app.link', 
+		'app.blog', 'app.post', 'app.comment', 
+		'app.shops_payment_module', 'app.log', 'app.saved_theme',
+		'app.vendor', 
+	);
 
-	function startTest() {
-		$this->Order =& ClassRegistry::init('Order');
+
+/**
+ * setUp method
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
+
+		$this->Order = ClassRegistry::init('Order');
+		
+		// setting up Shop and User singleton
+		$this->Shop 	= ClassRegistry::init('Shop');
+		$this->User 	= ClassRegistry::init('User');
+		
+		$cachedShopId = Shop::get('Shop.id');
+		
+		if ($cachedShopId != 2) {
+			$testShop = $this->Shop->getById(2);
+			Shop::store($testShop);
+		}
+		
+		$cachedUserId = User::get('User.id');
+		
+		if($cachedUserId != 2) {
+			User::store($this->User->read(null, 2));
+		}
+		// this is to allow User singleton to work properly
+		// look at AppController beforeFilter
+		Configure::write('run_test', true);
+		
 	}
 
-	function endTest() {
+/**
+ * tearDown method
+ *
+ * @return void
+ */
+	public function tearDown() {
 		unset($this->Order);
+		unset($this->Shop);
+		unset($this->User);
 		ClassRegistry::flush();
+
+		parent::tearDown();
 	}
 	
-	function testConvertCart() {
-		// populate the options
-		// set the customer, shop, billing addresses, etc
-		$options = array();
+	private function setUpForEmptyOrder() {
+		$this->Order->query('TRUNCATE table `orders`');
+		$this->Order->query('TRUNCATE table `order_items`');
+		$this->User->id = 2;
 		
-		$options['billing_address_id'] = 1;
-		$options['delivery_address_id'] = 1;
-		$options['customer_id'] = 1;
-		$options['shop_id'] = 1;
-			
-		// product 1 costs $2.3 buy 2 
-		// product 2 costs $3.7 buy 3
-		// check product_fixture.php for details
-		$cartInSession = array(
-				       1 => 2,
-				       2 => 3,
-				       );
-		// convert the cart data to savable order data
-		$data = $this->Order->convertCart($cartInSession, $options);
-		
-		// expected array
-		$expected = array('Order' => array( 'shop_id' => 1,
-						'customer_id' => 1,
-						'billing_address_id' => 1,
-						'delivery_address_id' => 1,
-						'order_no' => '',
-						'amount' => (2 * 2.3) + (3 * 3.7)
-						),
-					'OrderLineItem' => array());
-		// product 1
-		$expected['OrderLineItem'][] = array('product_id' => 1,
-						'product_price' => 2.3,
-						'product_quantity' => 2);
-		
-		// product 2
-		$expected['OrderLineItem'][] = array('product_id' => 2,
-						'product_price' => 3.7,
-						'product_quantity' => 3);
-		
-		$this->assertEqual($expected, $data);
-		
-		// now we will attempt to save the data
-		$this->assertTrue($this->Order->saveAll($data));
-		
-		// we expected the order_no to be 1001
-		$this->assertEqual('1001', $this->Order->field('order_no', array('id'=>$this->Order->id)));
-		
-		// now we will attempt to save the data AGAIN
-		$this->assertTrue($this->Order->saveAll($data));
-		
-		// we expected the order_no to be 1002
-		$this->assertEqual('1002', $this->Order->field('order_no', array('id'=>$this->Order->id)));
-		
+		$noOfOrders = $this->Order->find('count', array(
+			'conditions' => array('Order.user_id' => 2)
+		));
+		$this->assertEquals($noOfOrders, 0);
 	}
 
+/**
+ * testMakeThisPrimary method
+ *
+ * @return void
+ */
+	public function testShouldGetValidOrderIdUsingCreateFrom() {
+				
+				$count = $this->User->Customer->find('count', array(
+					'conditions'=>array(
+						'Customer.shop_id'	=> 2,
+						'User.group_id'		=> CUSTOMERS,
+						'User.email' 		=> 'fake_customer@gmail.com',
+					),
+					'fields' =>'User.id',
+				));
+				
+				debug($count);
+			//	die();
+				
+		$orderFormData = array(
+			// attached inside CartsController/create_order
+			'Order' => array(
+				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+				'shop_id' => '2'
+			),
+			// comes from the actual view
+			'BillingAddress' => array(
+				'0' => array(
+					'full_name' => 'Fake Full Name',
+					'address'	=> '1234 St. Regis View #01-911',
+					'city'		=> 'Singapore',
+					'region'	=> '',
+					'zip_code'	=> '123456',
+					'country'	=> '192',
+					'type'		=> BILLING,
+				)
+			),
+			'DeliveryAddress' => array(
+				'same' => true,
+			),
+			'User' => array(
+				'email' =>  'fake_customer@gmail.com',
+			)
+			
+		);
+		
+		$orderId = $this->Order->createFrom($orderFormData);
+		debug($orderId);
+		$this->assertTrue(is_string($orderId));
+		$this->assertTrue(strlen($orderId), 36);
+		
+	}
+	
 }
-?>

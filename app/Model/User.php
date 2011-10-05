@@ -282,36 +282,45 @@ class User extends AppModel {
 			switch ($group_id) {
 				case CUSTOMERS:
 					
-					
 					$this->Customer->Behaviors->attach('Linkable.Linkable');
 					
-					$count = $this->Customer->find('count', array('conditions'=>array('User.group_id'=>$group_id,
-								       'User.email' => $email,
-								       'Customer.shop_id'=>$shopId),
-								      'fields' =>'User.id',
-						   ));
+					$count = $this->Customer->find('count', array(
+						'conditions'=>array(
+							'Customer.shop_id'	=> $shopId,
+							'User.group_id'		=> $group_id,
+							'User.email' 		=> $email,
+						),
+						'fields' =>'User.id',
+					));
+					
 					break;
+					
 				case MERCHANTS:
-					
-					
+				
 					$this->Merchant->Behaviors->attach('Linkable.Linkable');
 					
-					$count = $this->Merchant->find('count', array('conditions'=>array('User.group_id'=>$group_id,
-								       'User.email' => $email,
-								       'Merchant.shop_id'=>$shopId),
-								      'fields' =>'User.id',
-						   ));
+					$count = $this->Merchant->find('count', array(
+						'conditions'=>array(
+							'User.group_id'		=>$group_id,
+							'User.email' 		=> $email,
+							'Merchant.shop_id'	=>$shopId
+						),
+						'fields' =>'User.id',
+					));
 					break;
 				case CASUAL:
 					
 					
 					$this->CasualSurfer->Behaviors->attach('Linkable.Linkable');
 					
-					$count = $this->CasualSurfer->find('count', array('conditions'=>array('User.group_id'=>$group_id,
-								       'User.email' => $email,
-								       'CasualSurfer.shop_id'=>$shopId),
-								      'fields' =>'User.id',
-						   ));
+					$count = $this->CasualSurfer->find('count', array(
+						'conditions'=>array(
+							'User.group_id'			=>$group_id,
+							'User.email' 			=> $email,
+							'CasualSurfer.shop_id'	=>$shopId
+						),
+						'fields' =>'User.id',
+					));
 					break;
 				
 				default:

@@ -167,8 +167,14 @@ class CartsController extends AppController {
 		
 		if ($this->request->is('post')) {
 			
-			// use the given shop id to re-establish Shop data into session
+			// use the given shop id to re-establish Shop data into Session
 			Shop::store($this->Cart->Shop->getById($shop_id));
+			
+			// we want to avoid displaying the shop id and the cart uuid inside the HTML source
+			// so we need to reinsert them back into the request data
+			$this->request->data['Order']['shop_id'] = $shop_id;
+			$this->request->data['Order']['cart_id'] = $cart_uuid;
+			
 			$order_uuid = $this->Cart->Order->createFrom($this->request->data);
 			
 		} 

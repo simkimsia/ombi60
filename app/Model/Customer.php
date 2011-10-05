@@ -17,15 +17,9 @@ class Customer extends AppModel {
 		'User' => array(
 			'className' => 'User',
 			'foreignKey' => 'user_id',
-			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
+			'order' => ''
 		),
 	);
 
@@ -120,7 +114,31 @@ class Customer extends AppModel {
 		return $this->saveAll($data, array('validate'=>'first'));
 	}
 	
+	/**
+	*
+	* Take in order form data at checkout process and create a brand new Customer User
+	*
+	* @param array $data 
+	* @return boolean Returns true if successful
+	**/
 	public function signupNewAccountDuringCheckout($data = NULL) {
+		
+		// extracting all the various pieces of data from address and forming a 
+		// User data array before we create
+		// we need to have a fullname for the user, so we take it from the billing address
+		$data['User']['full_name'] = $data['BillingAddress'][0]['full_name'];
+		$data['User']['name_to_call'] = $data['BillingAddress'][0]['full_name'];
+		
+		// because we need to create brand new User so we need to create random password
+		App::uses('StringLib', 'UtilityLib.Lib');
+		App::uses('AuthComponent', 'Controller/Component');
+		$data['User']['password'] = AuthComponent::password(StringLib::generateRandom());
+		
+		// hackish code to pass the shop id into the uniqueEmailInShop validator
+		// read first few lines of uniqueEmailInShop method in User model
+		$data['User']['shop_id'] 		= $data['Order']['shop_id'];
+		$data['Customer']['shop_id'] 	= $data['Order']['shop_id'];
+		
 		$data['User']['group_id'] = CUSTOMERS;
 		
 		// this is to ensure that ONLY customer related data is created here.
@@ -131,6 +149,7 @@ class Customer extends AppModel {
 				unset($data[$key]);
 			}
 		}
+		//debug($data);
 		return $this->saveAll($data, array('validate'=>'first'));
 	}
 	
@@ -138,14 +157,26 @@ class Customer extends AppModel {
 		
 		$this->recursive = -1;
 		$this->User->recursive = -1;
-		$this->Behaviors->load('Linkable.Linkable');
+		$this->Behaviors->attach('Linkable.Linkable');
 		$this->User->Behaviors->attach('Linkable.Linkable');
 		
-		$customer = $this->find('first', array('conditions'=>array('Customer.shop_id'=>$data['Customer']['shop_id'],
-							       'User.email'=>$data['User']['email'],
-							       'User.group_id'=>CUSTOMERS),
-						       'link'=>array('User'),
-						       'fields'=>'Customer.id'));
+		if (isset($data['Order']['shop_id'])) {
+			$shopId = $data['Order']['shop_id'];
+		}
+		
+		if (isset($data['User']['email'])) {
+			$userEmail = $data['User']['email'];
+		}
+		
+		$customer = $this->find('first', array(
+			'conditions'=>array(
+				'Customer.shop_id'=>$shopId,
+				'User.email'=>$userEmail,
+				'User.group_id'=>CUSTOMERS
+			),
+			'link'=>array('User'),
+			'fields'=>'Customer.id'
+		));
 		
 		if (empty($customer['Customer']['id'])) {
 			return false;
@@ -227,13 +258,34 @@ class Customer extends AppModel {
 		
 	}
 	
+	/**
+	*
+	* Alias for setNewAddress($data, BILLING)
+	* @param array $data
+	* @return integer Returns the new address id if successful. Otherwise, returns false
+	**/
 	public function setNewBillingAddress($data = NULL) {
 		return $this->setNewAddress($data, BILLING);
 	}
+	
+	/**
+	*
+	* Alias for setNewAddress($data, DELIVERY)
+	* @param array $data
+	* @return integer Returns the new address id if successful. Otherwise, returns false
+	**/	
 	public function setNewDeliveryAddress($data = NULL) {
 		return $this->setNewAddress($data, DELIVERY);
 	}
 	
+	/**
+	*
+	* Returns the new Address id when we create a new address associated with current Customer
+	*
+	* @param array $data 
+	* @param integer $type Either BILLING or DELIVERY 
+	* @return integer Returns the new address id if successful. Otherwise, returns false
+	**/
 	private function setNewAddress($data = NULL, $type = BILLING) {
 		
 		if ($type == BILLING) {
@@ -258,7 +310,9 @@ class Customer extends AppModel {
 			return false;
 		}
 		
-		return $model->save($addressData);
+		$result = $model->save($addressData);
+		if ($result  == false) { return false; }
+		return $model->id;
 	}
 	
 

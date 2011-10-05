@@ -29,7 +29,7 @@ class StringLib {
 	* @param string $input. Input string.
 	* @return string. If string has either a single quote at front or end, it is returned unchanged.
 	**/
-	function wrapStringInQuotes($input) {
+	public function wrapStringInQuotes($input) {
 		$noStartsWithQuote = !self::startsWith($input, "'");
 		$noEndsWithQuote   = !self::endsWith($input, "'");
           
@@ -48,7 +48,7 @@ class StringLib {
 	* @param boolean $recursive. Set true if you want the wrapping to happen at all levels of array. Default false.
 	* @return array. 
 	**/
-	function iterateArrayWrapStringValuesInQuotes($array, $recursive = false) {
+	public function iterateArrayWrapStringValuesInQuotes($array, $recursive = false) {
 		foreach($array as $key=>$value) {
 			if (is_array($value) && $recursive) {
 				$array[$key] = self::iterateArrayWrapStringValuesInQuotes($value);
@@ -70,7 +70,7 @@ class StringLib {
 	* @return boolean. Returns true if substring is at beginning of string
 	*
 	**/
-	function startsWith($haystack,$needle,$case=true) {
+	public function startsWith($haystack,$needle,$case=true) {
 		if($case){return (strcmp(substr($haystack, 0, strlen($needle)),$needle)===0);}
         return (strcasecmp(substr($haystack, 0, strlen($needle)),$needle)===0);
 	}
@@ -85,9 +85,55 @@ class StringLib {
 	* @return boolean. Returns true if substring is at beginning of string
 	*
 	**/
-	function endsWith($haystack,$needle,$case=true) {
+	public function endsWith($haystack,$needle,$case=true) {
         if($case){return (strcmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);}
         return (strcasecmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);
+	}
+	
+	/**
+	 * Random string generator function
+	 *
+	 * This function will randomly generate a password from a given set of characters
+	 *
+	 * @param int = 8, length of the password you want to generate
+	 * @param string = 0123456789abcdefghijklmnopqrstuvwxyz all possible values
+	 * @return string, the password
+	 */     
+	public function generateRandom ($length = 8, $options = array()) {
+		// initialize variables
+		$password 	= "";
+		$i 			= 0;
+        $possible 	= '';
+
+        $numerals = '0123456789';
+        $lowerAlphabet = 'a$bcdefghijklmnopqrstuvwxyz';
+        $upperAlphabet = strtoupper($lowerAlphabet);
+
+        $defaultOptions = array('type'=>'alphanumeric', 'case'=>'mixed');
+
+        $options = array_merge($defaultOptions, $options);
+
+        if ($options['type'] == 'alphanumeric') {
+                $possible = $numerals;
+                if ($options['case'] == 'lower' OR $options['case'] == 'mixed') {
+                        $possible .= $lowerAlphabet;
+                } elseif ($options['case'] == 'upper' OR $options['case'] == 'mixed') {
+                        $possible .= $upperAlphabet;
+                }
+        }
+
+		// add random characters to $password until $length is reached
+		while ($i < $length) {
+			// pick a random character from the possible ones
+			$char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
+
+			// we don't want this character if it's already in the password
+			if (!strstr($password, $char)) { 
+				$password .= $char;
+				$i++;
+			}
+		}
+		return $password;
 	}
 }
 ?>

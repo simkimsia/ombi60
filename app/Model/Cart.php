@@ -376,57 +376,6 @@ class Cart extends AppModel {
 		
 	}
 	
-	/**
-	 * assumption is that the cart items have the cart_item_id as key
-	 **/
-	private function retrieveImagesOfCartItems($cart = array()) {
-		
-		$validCart = isset($cart['CartItem']) AND
-			     is_array($cart['CartItem']) AND
-			     !empty($cart['CartItem']);
-			     
-		if ($validCart) {
-			
-			$product_id_set = Set::extract('/CartItem/product_id', $cart);
-			
-			$images = $this->CartItem->Variant->Product->ProductImage->find('all',
-				    array('conditions' => array('OR' =>
-								array (
-									array('ProductImage.cover'=>true),
-									array('ProductImage.cover'=>null),
-								),
-								'AND' => array('ProductImage.product_id' => array_values($product_id_set))
-							    ),
-				      
-				      'fields'=>array('ProductImage.product_id',
-						      'ProductImage.id',
-						      'ProductImage.filename',
-						      'ProductImage.dir'),
-				      ));
-			
-			
-			foreach($cart['CartItem'] as $key => $cartItem) {
-				foreach($images as $images_key => $image) {
-					if ($image['ProductImage']['product_id'] == $cartItem['product_id']) {
-						$cart['CartItem'][$key]['ProductImage'] = $image['ProductImage'];
-						unset($images[$images_key]);
-						break;
-					}
-					
-				}
-				$imageIsNull = !isset($cart['CartItem'][$key]['ProductImage']) OR
-						!is_array($cart['CartItem'][$key]['ProductImage']);
-				
-				if ($imageIsNull) {
-					$cart['CartItem'][$key]['ProductImage'] = array();
-				}
-			}
-			
-		}
-		
-		return $cart;
-		
-	}
 	
 	public function getCartItemsCountByCustomerId($user_id = false) {
 		if (!$user_id) {
@@ -1030,6 +979,29 @@ class Cart extends AppModel {
 
 	}
 	
+	/**
+	* 
+	* Retrieve Cart data with CartItem data and CoverImage data.
+	* Format of array is
+	* array(
+	* 	'Cart' => array('id'=>'4864-1234-1234-1111'...),
+	*	'CartItem' => array(
+	*		'0' => array(
+	*			'id' => '1'
+	*			'cart_id' => '4864-1234-1234-1111',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*		'1' => array(
+	*			'id' => '2'
+	*			'cart_id' => '4864-1234-1234-1111',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*	)
+	* )
+	*
+	* @param string $cart_uuid Cart id
+	* @return array Returns Cart data with CartItem data and CoverImage data
+	**/
 	public function getItemsWithImages($cart_uuid) {
 		
 		$this->CartItem->unbindModel(array(
