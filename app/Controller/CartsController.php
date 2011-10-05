@@ -110,8 +110,10 @@ class CartsController extends AppController {
 	/**
 	* 
 	* Action for displaying form for collecting addresses.
+	* This is also known as checkout process page 1
 	*
-	* @param integer $cart_uuid Cart id in UUID format
+	* @param integer $shop_id Shop id 
+	* @param string $cart_uuid Cart id in UUID format
 	* @return void
 	*
 	**/
@@ -145,6 +147,21 @@ class CartsController extends AppController {
 		
 		$this->layout = 'default';
 	}
+	
+	/**
+	*
+	* Action for creating order. Only works for POSTBACK
+	* Meant for form in checkout process page 1
+	*
+	* @param integer $shop_id Shop id 
+	* @param string $cart_uuid Cart id in UUID format
+	* @return void
+	*
+	**/
+	public function create_order($shop_id = false, $cart_uuid = false) {
+		
+	}
+
 
 	/**
 	 * 

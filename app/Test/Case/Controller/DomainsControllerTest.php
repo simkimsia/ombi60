@@ -93,9 +93,7 @@ class DomainsControllerTestCase extends ControllerTestCase {
 		$this->assertFlash($this->controller, 'The domain has been saved');
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$this->testAction('/admin/domains/add', array('data' => $this->controller->request->data, 'method' => 'POST'));
-		$this->testAction('/admin/domains/view/4', array('return'=>'contents'));
-		debug($this->contents);
-		die();
+	
 	 }
 
 	function testAdminEdit() {

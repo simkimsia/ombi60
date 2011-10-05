@@ -155,6 +155,20 @@
 							)
                         );
 
+		// action to create an order for a cart
+		// at the same time creating billing, delivery addresses
+		// also convert the Casual Surfer into a Customer
+        Router::connect('/carts/:shop_id/:cart_uuid/create_order',
+                        array(
+							'controller' 	=> 'carts',
+							'action' 		=> 'create_order'),
+						array(
+							'pass'			=> array('shop_id', 'cart_uuid'),
+							'shop_id'		=> '[0-9]+',
+							'cart_uuid'		=> '[a-zA-Z0-9\-_]+'
+							)
+                        );
+
 		// checkout process intermediate page to decide to send browser to pay or complete
         Router::connect('/orders/:shop_id/:order_uuid',
                         array(

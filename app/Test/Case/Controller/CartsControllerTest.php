@@ -191,5 +191,25 @@ class CartsControllerTestCase extends ControllerTestCase {
 		
 	}
 	
+	/**
+	*
+	* /carts/:shop_id/:cart_uuid/create_order should redirect to /orders/:shop_id/:order_uuid/pay
+	*
+	**/
+	public function testCreateOrderShouldRedirectToOrdersPay() {
+		
+		$string = '/carts/2/' . User::get('User.live_cart_id') . '/create_order';
+		
+		$this->controller->expects($this->once())->method('redirect')->with(array('controller' =>'orders', 'action' => 'pay', 'shop_id' => '2', 'order_uuid' => $orderId))->will($this->returnValue(true));
+
+		$this->testAction($string, array(
+			'return' => 'contents',
+			'method' => 'POST'
+		));
+
+		$this->assertRegexp('#You are using our secure server#', $this->contents);
+		
+	}
+	
 }
 ?>
