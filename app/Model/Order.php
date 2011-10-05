@@ -422,6 +422,207 @@ class Order extends AppModel {
 	
 	}
 	
+	/**
+	*
+	* we will expect form data to contain information on customer id, billing address,
+	* delivery address, cart data and create a order marked as 'Abandoned'
+	*
+	* @param array $orderFormData 
+	* @return string Order id in UUID format
+	**/
+	public function createFrom($orderFormData = array()) {
+		return '11111111-1111-1111-1111-111111111111';
+	}
+	
+	/**
+	*
+	* if the request data contains ['Order']['customer_id']
+	* return ['Order']['customer_id']
+	* otherwise we look up database for existing customer id based on email and shop_id
+	* worst case scenario we return false.
+	*
+	* @param array $orderFormData The request data submitted at CartsController/create_order action
+	* @return integer $customer_id Customer id
+	**/
+	public function getCustomerIdFrom($orderFormData = array()) {
+		// this chunk of if-else statement is to determine customer id
+		if ($orderFormData['Order']['customer_id'] > 0) {
+			return $orderFormData['Order']['customer_id'];
+		} else {
+			// check database for existing customer
+			return $this->Customer->getExistingByShopIdAndEmail($this->request->data);
+		}
+	}
+	
+	/**
+	* 
+	* Checks order form data whether delivery address is to be the same as billing.
+	* If so, copies billing address data for delivery address data.
+	* Returns the order form data
+	*
+	* @param array $orderFormData 
+	* @return array Returns the $orderFormData with added information on delivery address
+	**/
+	public function makeDeliveryBillingAddressesSameIn($orderFormData = array()) {
+		if ($orderFormData['DeliveryAddress']['same']) {
+			$orderFormData['DeliveryAddress'] = $orderFormData['BillingAddress'];
+			$orderFormData['DeliveryAddress'][0]['type'] = DELIVERY;
+		}
+		
+		return $orderFormData;
+	}
+	
+	/**
+	*
+	* synchronize Billing and Delivery Addresses
+	*
+	* @param array $options Array containing options such as
+	* @return boolean Returns true if synchronize works
+	*
+	**/
+	public function syncAddressCustomerOrder($options = array()) {
+		// $customerId, $shopId, $hash,
+		$customerId = $options['customer_id'];
+		$shopId = $options['shop_id'];
+		$hash = $options['hash'];
+		
+		$delivery_address_id = isset($options['delivery_address_id']) ? $options['delivery_address_id'] : 0;
+		
+		$result = true;
+		
+		// instantiate the Cart model
+		$cart = $this->Order->Customer->User->Cart;
+		
+		$customerId = $this->getCustomerIdFrom($this->request->data);
+		
+		// use existing delivery address
+		if ($delivery_address_id > 0) {
+			$deliveryAddressId = $delivery_address_id;
+			$this->Order->Customer->id = $customerId;
+			// we go retrieve the delivery address and use its details for billing address
+			$billingAddressId = $this->Order->Customer->duplicateBillingAddressFromDeliveryAddress($delivery_address_id);
+			
+			if (!($deliveryAddressId > 0) OR !($billingAddressId > 0) OR !($customerId >0)) {
+				$result = false;
+			}
+			
+		} else {
+			
+			// duplicate the delivery address if same as billing address
+			$this->request->data = $this->makeDeliveryBillingAddressesSameIn($this->request->data);
+			
+			
+			
+			// if customer is existing in database
+			if ($customerId){
+				// retrieve addresses from database	
+				$billingAddressId = $this->Order->Customer->getExistingBillingAddress($this->request->data);
+				
+				$deliveryAddressId = $this->Order->Customer->getExistingDeliveryAddress($this->request->data);
+				
+				// if billing address does not exist in database, we will create new billing address
+				if (!$billingAddressId) {
+					
+					if ($this->Order->Customer->setNewBillingAddress($this->request->data)) {
+						$billingAddressId = $this->Order->Customer->BillingAddress->id;
+					} else {
+						$result = false;
+					}
+				}
+				
+				// if delivery address does not exist in database, we will create new delivery address
+				if (!$deliveryAddressId AND $billingAddressId) {
+					if ($this->Order->Customer->setNewDeliveryAddress($this->request->data)) {
+						$deliveryAddressId = $this->Order->Customer->DeliveryAddress->id;
+					} else {
+						$result = false;
+					}
+				}
+				
+				
+				
+			} else {
+				// we need to have a fullname for the user, so we take it from the billing address
+				$this->request->data['User']['full_name'] = $this->request->data['BillingAddress'][0]['full_name'];
+				$this->request->data['User']['name_to_call'] = $this->request->data['BillingAddress'][0]['full_name'];
+				// because we need to create brand new User so we need to create random password
+				$this->request->data['User']['password'] = AuthComponent::password($this->RandomString->generate());
+				// hackish code to pass the shop id into the uniqueEmailInShop validator
+				// read first few lines of uniqueEmailInShop method in User model
+				$this->request->data['User']['shop_id'] = $this->request->data['Customer']['shop_id'];
+				
+				$result = $this->Order->Customer->signupNewAccountDuringCheckout($this->request->data);
+				$customerId = $this->Order->Customer->id;
+				$billingAddressId = $this->Order->Customer->BillingAddress->field('id');
+				$deliveryAddressId = $this->Order->Customer->DeliveryAddress->field('id');
+				
+			}	
+		}
+		
+		// if at this point in time, we get a $result == false, it means something went wrong prior.
+		if (!$result) {
+			$this->Session->setFlash(__('The Order could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
+			
+		} else {
+		
+			// since all prepartory work is done, we can now start to save Order data.
+			$orderDetails = array();
+			
+			// store shop and customer ids
+			$orderDetails['shop_id']     = $shopId;
+			$orderDetails['customer_id'] = $customerId;
+	
+			// store the addresses id
+			$orderDetails['billing_address_id']  = $billingAddressId;
+			$orderDetails['delivery_address_id'] = $deliveryAddressId;
+			
+			// we fix the contact email on the order based on the email supplied in the form.
+			$orderDetails['contact_email'] = (isset($this->request->data['User']['email'])) ? $this->request->data['User']['email'] : '';
+				
+			// now we get the cart data again
+			$cartData = $cart->findByHash($hash);
+			
+			$orderDetails['amount'] = $cartData['Cart']['amount'];
+			
+			// convert the cart data to savable order data
+			$data = $this->Order->convertCart($cartData, $orderDetails);
+			
+			// now we save the order for the very first time!
+			$resultSet = 	$this->Order->saveForCheckoutStep1($data);
+			
+			if (is_array($resultSet) AND $resultSet['result']) {
+				// reconsider removing the cart data.
+				// incase user press back button to change address etc.
+				// or halfway user gets DC.
+				//$this->Order->removeCart($cartData['Cart']['id']);
+				
+				$orderHash = $resultSet['hash'];
+				
+				// need PayPalRequest to call DoExpressCheckout API
+				$this->Session->write('Shop.' . $shopId . '.confirmPage', array('PayPalRequest'=>$PayPalRequest,
+												'hash'=>$orderHash,
+												'amount'=>$orderDetails['amount'],
+												'shipped_amount'=>$data['Order']['shipped_amount'],
+												'shipped_weight'=>$data['Order']['shipped_weight'],
+												'shipping_required'=>$data['Order']['shipping_required'],
+												'paypal_payer_id' => $paypalPayerId));
+				
+				$this->redirect(array('action' => 'pay',
+						      'controller' => 'orders',
+						      'hash' => $orderHash,
+						      'shop_id' => $shopId));
+				
+				$this->Session->setFlash(__('The Order has been saved'), 'default', array('class'=>'flash_success'));
+				
+			} else {
+				$this->Session->setFlash(__('The Order could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
+			}
+			
+		}
+		
+	}
+	
+	
 
 }
 ?>

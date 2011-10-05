@@ -31,11 +31,13 @@ class CartsController extends AppController {
 			'add_to_cart',
 			'change_qty_for_1_item_in_cart',
 			'view_cart',
-			'view'
+			'view',
+			'create_order'
 		);
 		
 		if ($this->request->action == 'add_to_cart' || 
-			$this->request->action == 'view_cart'	
+			$this->request->action == 'view_cart'	||
+			$this->request->action == 'create_order'
 		) {
 			$this->Components->disable('Security');
 		}
@@ -159,6 +161,21 @@ class CartsController extends AppController {
 	*
 	**/
 	public function create_order($shop_id = false, $cart_uuid = false) {
+		
+		$this->layout = 'default';
+		$this->autoRender = false;
+		
+		if ($this->request->is('post')) {
+			
+			// use the given shop id to re-establish Shop data into session
+			Shop::store($this->Cart->Shop->getById($shop_id));
+			$order_uuid = $this->Cart->Order->createFrom($this->request->data);
+			
+		} 
+		
+		return $this->redirect(array('action'=>'view', 'shop_id' => $shop_id, 'order_uuid' => $order_uuid));
+		
+		
 		
 	}
 
