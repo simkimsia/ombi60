@@ -115,14 +115,17 @@ class CartsController extends AppController {
 	* @return void
 	*
 	**/
-	public function view($cart_uuid = false) {
+	public function view($shop_id = false, $cart_uuid = false) {
 
 		if ($this->request->is('get')) {
+			
+			// use the given shop id to re-establish Shop data into session
+			Shop::store($this->Cart->Shop->getById($shop_id));
+			$shopId 	= $shop_id;
 
 			// set up the countries, customerId, shopId in the form.
 			$countries 	= $this->Cart->Order->BillingAddress->Country->find('list');
 			$customerId = User::get('Customer.id');
-			$shopId 	= Shop::get('Shop.id');
 			
 			// get all shipping addresses of this customer
 			$shippingAddresses = array();
@@ -170,12 +173,13 @@ class CartsController extends AppController {
 		$checkoutButtonTriggered	= ($checkoutButtonUsed OR $checkoutImageButtonUsed);
 		
 		$userId = User::get('User.id');
+		$shop_id  = Shop::get('Shop.id');
 		
 		if ($checkoutButtonTriggered) {
 			$cart_uuid = $this->Cart->getLiveCartIDByUserID($userId);
 			
 			if (!empty($cart_uuid)) {
-				return $this->redirect(array('action' => 'view', 'cart_uuid' => $cart_uuid));
+				return $this->redirect(array('action' => 'view', 'shop_id' => $shop_id, 'cart_uuid' => $cart_uuid));
 			}
 		}
 		
@@ -183,7 +187,6 @@ class CartsController extends AppController {
 		
 		if ($normalDisplayForViewCart) {
 			$products = array();
-			$shop_id  = Shop::get('Shop.id');
 
 			// check if shop wants to have paypal option
 			//$paypalExpressOn = $this->Cart->Shop->getPaypalExpressOn($shop_id);

@@ -165,7 +165,7 @@ class CartsControllerTestCase extends ControllerTestCase {
 		
 		$cartId = User::get('User.live_cart_id');
 		
-		$this->controller->expects($this->once())->method('redirect')->with(array('action' => 'view', 'cart_uuid' => $cartId))->will($this->returnValue(true));
+		$this->controller->expects($this->once())->method('redirect')->with(array('action' => 'view', 'shop_id' => '2', 'cart_uuid' => $cartId))->will($this->returnValue(true));
 		$this->testAction('/cart', array(
 			'data' => $this->controller->request->data, 
 			'method' => 'POST'
@@ -180,7 +180,7 @@ class CartsControllerTestCase extends ControllerTestCase {
 	**/
 	public function testCheckoutPage1View() {
 	
-		$string = '/carts/' . User::get('User.live_cart_id');
+		$string = '/carts/2/' . User::get('User.live_cart_id');
 
 		$this->testAction($string, array(
 			'return' => 'contents',
