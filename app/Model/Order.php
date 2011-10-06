@@ -143,39 +143,22 @@ class Order extends AppModel {
 		return $cart->delete($cart_id);
 	}
 	
-	
+	/**
+	*
+	* beforeSave Filter
+	* Add in the order_no for newly created order
+	*
+	**/
 	public function beforeSave() {
-		if (empty($this->data['Order']['order_no'])) {
-			$this->data['Order']['order_no'] = $this->getNextOrderNo();        
-        }
-		// for brand new orders we want to create unique hash
-		if (empty($this->data['Order']['id']) AND empty($this->id)) {
-			$plain = 'Shop_' . $this->data['Order']['shop_id'] .
-				 'Customer_' . $this->data['Order']['customer_id'] .
-				 'OrderNo_' . $this->data['Order']['order_no'] . time();
-			
-			$this->data['Order']['hash'] = Security::hash($plain, 'sha1', true);
-			
-			
+		/**
+		* Need to generate order_no unique to the shop itself
+		**/
+		if (empty($this->data['Order']['id']) && empty($this->id)) {
 			if (empty($this->data['Order']['order_no'])) {
-				$this->data['Order']['order_no'] = $this->getNextOrderNo();	
-			}
-						       
+				$this->data['Order']['order_no'] = $this->getNextOrderNo();        
+	        }
 		}
 		
-		/**
-		 * to prevent editing of orders past the checkout point
-		 
-		$id = 0;
-		if (isset($this->data[$this->alias]['id'])) {
-			$id = $this->data[$this->alias]['id'];	
-		}
-		if ($id > 0) {
-			
-			return !($this->field('past_checkout_point', array('id'=>$id)));
-			
-		}
-		**/
 		return true;
 	}
 	
@@ -255,20 +238,7 @@ class Order extends AppModel {
 		return $shippingRequired;
 		
 	}
-	
-	public function saveForCheckoutStep1($data) {
 		
-		$result = $this->saveAll($data);
-		if ($result) {
-			
-			$hash = $this->field('hash', array('id'=>$this->id));
-			return array('result'=>$result, 'hash'=>$hash);
-		}
-		
-		return $result;
-		
-	}
-	
 	public function savePaymentAndShipment($data) {
 		// assume $data contains order_id for the Payment and Shipment arrays
 		// assume $data contains ShippingRate id
@@ -426,13 +396,21 @@ class Order extends AppModel {
 	**/
 	public function createFrom($orderFormData = array()) {
 		
-		// first we need to resolve the customer and address ids
-		// we don't really know for sure 
-		// if its a guest Customer or a Registered Customer at this point in time
-		// we also would like to reuse addresses where applicable so we run this resolve function
-		// customer id, billing address, delivery address, contact_email are all resolved 
+		//3 steps of NEW Order creation
+		// Step 1) Resolve the Customer Id, the Billing and Delivery Address id and contact_email
+		// Step 2) Fetch all Cart and CartItem data and use them as Order and OrderLineItem data
+		// Step 3) Clean up Order, OrderLineItem data before save. Eg, getting rid of ids for OrderLineItem data
+		
+		
+		// We need to resolve the customer and address ids. Why??
+		// Reason 1) We don't really know for sure 
+		// if its a guest Customer or a Registered Customer at this point in time.
+		// Reason 2) We also would like to reuse addresses where applicable so we run this resolve function
+		// Customer id, billing address, delivery address, contact_email are all resolved after this step
 		$orderFormData = $this->resolveCustomerAddressIDIn($orderFormData);
 		
+		// fetch Cart and CartItem data where quantity per CartItem is at least 1
+		// based on the cart_id inside the $orderFormData
 		$cartData = $this->Cart->find('first', array(
 			'conditions'	=> array(
 				'Cart.id' 	=> $orderFormData['Order']['cart_id']
@@ -444,13 +422,11 @@ class Order extends AppModel {
 			)
 		));
 		
-		
+		// Cleaning up CartItem data before using it for creating new Order and OrderLineItem
 		// we need to remove the id from the cart items otherwise they will override the legit
 		// order line items
-		$shipping_required = false;
 		foreach($cartData['CartItem'] as $key => $cartItem) {
 			unset($cartData['CartItem'][$key]['id']);
-			$shipping_required = $shipping_required || $cartData['CartItem'][$key]['shipping_required'];
 		}
 		
 		// assigning Order data and OrderLineItem data
@@ -459,7 +435,7 @@ class Order extends AppModel {
 			'OrderLineItem' => $cartData['CartItem']
 		);
 		
-		// finally we are going to save the order data!!!
+		// finally we are going to create a brand NEW Order!!!
 		$this->create();
 		$result = $this->saveAll($data);
 		

@@ -47,11 +47,41 @@ class CartItemFixture extends CakeTestFixture {
 			'product_title' => 'test product with no pic and no collection',
 			'product_weight' => '2000',
 			'currency' => 'SGD',
-			'shipping_required' => 1,
+			'shipping_required' => true,
 			'previous_price' => '23.0000',
 			'previous_currency' => 'SGD',
 			'variant_id' => '3',
 			'variant_title' => 'Default Title'
 		),
 	);
+	
+	/**
+	*
+	* where we use the data in $records and generate an array where the index is OrderLineItem
+	* and it contains all the corresponding OrderLineItem data
+	**/
+	public function getAllAsOrderLineItemBelongingTo($orderId) {
+		
+		$orderLineItems = array();
+		// looping through the records
+		foreach($this->records as $cartItem) {
+			// add in fields and values unique to OrderLineItem
+			$orderLineItem['id']				= $cartItem['id'];
+			$orderLineItem['order_id'] 			= $orderId;
+			$orderLineItem['product_id']		= $cartItem['product_id'];
+			$orderLineItem['product_price']		= $cartItem['product_price'];
+			$orderLineItem['product_quantity']	= $cartItem['product_quantity'];
+			$orderLineItem['status'] 			= 1;
+			$orderLineItem['product_title'] 	= $cartItem['product_title'];
+			$orderLineItem['product_weight'] 	= $cartItem['product_weight'];
+			$orderLineItem['currency'] 			= $cartItem['currency'];
+			$orderLineItem['shipping_required'] = $cartItem['shipping_required'];
+			$orderLineItem['variant_id'] 		= $cartItem['variant_id'];
+			$orderLineItem['variant_title'] 	= $cartItem['variant_title'];
+			
+			$orderLineItems[]['OrderLineItem'] = $orderLineItem;
+		}
+		
+		return $orderLineItems;
+	}
 }

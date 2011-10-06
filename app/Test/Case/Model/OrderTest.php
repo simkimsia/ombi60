@@ -95,12 +95,11 @@ class OrderTestCase extends CakeTestCase {
 				
 		// GIVEN valid order form data
 		$orderFormData = array(
-			// attached inside CartsController/create_order
 			'Order' => array(
 				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
 				'shop_id' => '2'
 			),
-			// comes from the actual view
+		// AND the billing address is brand new
 			'BillingAddress' => array(
 				'0' => array(
 					'full_name' => 'Fake Full Name',
@@ -112,9 +111,11 @@ class OrderTestCase extends CakeTestCase {
 					'type'		=> BILLING,
 				)
 			),
+		// AND we want the delivery address to be the same as billing address
 			'DeliveryAddress' => array(
 				'same' => true,
 			),
+		// AND this User is brand new as well
 			'User' => array(
 				'email' =>  'fake_customer@gmail.com',
 			)
@@ -129,6 +130,20 @@ class OrderTestCase extends CakeTestCase {
 		// AND the Order ID is a 36 char string
 		$this->assertEquals(strlen($orderId), 36);
 		// AND the Order has the correct OrderLineItem
+		$cartItemFixture 	= new CartItemFixture();
+		$expected 			= $cartItemFixture->getAllAsOrderLineItemBelongingTo($orderId);
+		$this->Order->OrderLineItem->recursive = -1;
+		$orderLineItems = $this->Order->OrderLineItem->find('all', array(
+			'order_id' => $orderId,
+		));
+		//debug($orderLineItems);
+		//debug($cartItemFixture->records);
+		$this->assertEquals($expected, $orderLineItems);
+		// AND a brand new Customer, User is generated
+		// AND brand new addresses for Delivery and BILLING are generated
+		// AND the addresses are assigned to the right User
+		// AND the addresses are assigned to the right Order
+		// AND the Order is assigned to the right Shop and Customer
 		
 	}
 	
