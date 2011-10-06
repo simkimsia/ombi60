@@ -1,19 +1,36 @@
 <?php
-/* Address Fixture generated on: 2010-05-26 08:05:44 : 1274863964 */
+/* Address Fixture generated on: 2011-10-06 04:22:21 : 1317874941 */
+
+/**
+ * AddressFixture
+ *
+ */
 class AddressFixture extends CakeTestFixture {
-	var $name = 'Address';
-	var $import = array('model' => 'Address');
 
+/**
+ * Fields
+ *
+ * @var array
+ */
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary', 'collate' => NULL, 'comment' => ''),
+		'address' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'city' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'region' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'zip_code' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 10, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'country' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 5, 'collate' => NULL, 'comment' => ''),
+		'customer_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'type' => array('type' => 'integer', 'null' => false, 'default' => '1', 'length' => 2, 'collate' => NULL, 'comment' => ''),
+		'full_name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+	);
 
-	var $records = array(
-		array(
-			'id' => 1,
-			'address' => 'Lorem ipsum dolor sit amet',
-			'city' => 'Lorem ipsum dolor sit amet',
-			'region' => 'Lorem ipsum dolor sit amet',
-			'zip_code' => 'Lorem ip',
-			'country' => 'L'
-		),
+/**
+ * Records
+ *
+ * @var array
+ */
+	public $records = array(
 	);
 }
-?>

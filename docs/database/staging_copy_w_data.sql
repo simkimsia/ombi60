@@ -2,7 +2,8 @@
 SQLyog Community v9.20 
 MySQL - 5.5.9 : Database - s2s_new
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -531,7 +532,7 @@ CREATE TABLE `orders` (
   `shipped_weight` int(10) unsigned DEFAULT '0',
   `shipped_amount` decimal(10,4) unsigned DEFAULT NULL,
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
-  `total_weight` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
+  `total_weight` int(10) unsigned NOT NULL DEFAULT '0',
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `contact_email` varchar(255) DEFAULT '',
   `order_line_item_count` int(5) unsigned DEFAULT '0',

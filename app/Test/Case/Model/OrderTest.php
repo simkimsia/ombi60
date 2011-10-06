@@ -25,7 +25,7 @@ class OrderTestCase extends CakeTestCase {
 		'app.casual_surfer', 'app.link_list', 'app.link', 
 		'app.blog', 'app.post', 'app.comment', 
 		'app.shops_payment_module', 'app.log', 'app.saved_theme',
-		'app.vendor', 
+		'app.vendor', 'app.address',
 	);
 
 
@@ -75,15 +75,171 @@ class OrderTestCase extends CakeTestCase {
 		parent::tearDown();
 	}
 	
-	private function setUpForEmptyOrder() {
-		$this->Order->query('TRUNCATE table `orders`');
-		$this->Order->query('TRUNCATE table `order_items`');
-		$this->User->id = 2;
+	
+	private function idShouldBeValid($orderId) {
+		// Should be a string
+		$this->assertTrue(is_string($orderId));
+		// AND the Order ID is a 36 char string
+		$this->assertEquals(strlen($orderId), 36);
+	}
+	
+	private function orderLineItemsShouldBeValid($orderId) {
+		$cartItemFixture 	= new CartItemFixture();
+		$expected 			= $cartItemFixture->getAllAsOrderLineItemBelongingTo($orderId);
 		
-		$noOfOrders = $this->Order->find('count', array(
-			'conditions' => array('Order.user_id' => 2)
+		$this->Order->OrderLineItem->recursive 	= -1;
+		
+		$orderLineItems = $this->Order->OrderLineItem->find('all', array(
+			'conditions' => array(
+				'order_id' => $orderId,
+			)
 		));
-		$this->assertEquals($noOfOrders, 0);
+
+		$this->assertEquals($expected, $orderLineItems);		
+	}
+	
+	private function userCustomerShouldBeValid($expectedCustomerId, $expectedUserId) {
+
+		$this->Order->Customer->recursive = -1;
+		
+		$customerId = $this->Order->field('customer_id');
+		$customer 	= $this->Order->Customer->find('all', array(
+			'conditions'=> array(
+				'Customer.id' => $customerId,
+			)
+		));
+		
+		$expected 	= array();
+		$expected[] = array(
+			'Customer' => array(
+				'id' 			=> $expectedCustomerId,
+				'identity_code' => '',
+				'shop_id' 		=> 2,
+				'user_id' 		=> $expectedUserId,
+			)
+		);
+		
+		$this->assertEquals($expected, $customer);
+
+	}
+	
+	private function addressShouldBeValid($expectedAddressData) {
+		if ($expectedAddressData['type'] == BILLING) {
+			$modelName = 'BillingAddress';
+			$primaryKey = 'billing_address_id';
+		} elseif ($expectedAddressData['type'] == DELIVERY) {
+				$modelName = 'DeliveryAddress';
+				$primaryKey = 'delivery_address_id';
+		}
+		
+		$expected 	= array();
+		$expected[] = array(
+			$modelName => $expectedAddressData
+		);
+		
+		$this->Order->{$modelName}->recursive = -1;
+		
+		$addressId 	= $this->Order->field($primaryKey);
+		$actual 	= $this->Order->{$modelName}->find('all', array(
+			'conditions' => array(
+				'id' => $addressId,
+			)
+		));
+		
+		$this->assertEquals($expected, $actual); 
+	}
+	
+	
+	private function orderShouldBeValid($resultArray, $expectedOptions = array()) {
+		
+		$defaultOptions = array(
+			'customer_id' => 1,
+			'billing_address_id' => 1,
+			'delivery_address_id' => 2,
+			'order_no' 	=> '10001',
+			'contact_email' => 'fake_customer@gmail.com'
+
+		);
+		
+		$expectedOptions = array_merge($defaultOptions, $expectedOptions);
+		
+		$expectedArray = array(
+			'Order' => array(
+				'id' => '4e8d35a1-a9e4-4732-858f-0b711507707a',
+				'shop_id' => 2,
+	            'customer_id' => $expectedOptions['customer_id'],
+	            'billing_address_id' => $expectedOptions['billing_address_id'],
+	            'delivery_address_id' => $expectedOptions['delivery_address_id'],
+				'order_no'			=> $expectedOptions['order_no'],
+				'created'	=> '2011-10-06 04:59:13',
+				'amount'	=> '23.0000',
+				'status'	=> 1,
+				'cart_id'	=> '4e895a91-b374-4a1a-947c-0b701507707a',
+				'payment_status'	=> 0,
+				'fulfillment_status'	=> 1,
+				'shipped_weight'	=> 2000,
+				'shipped_amount'	=> '23.0000',
+				'currency'			=> 'SGD',
+				'total_weight'	=> 2000,
+				'past_checkout_point'	=> NULL,
+				'contact_email'	=> $expectedOptions['contact_email'],
+				'order_line_item_count'	=> 1,
+			),
+			
+	
+		);		
+		
+		$fieldsExpectedToBeDifferent = array('created', 'id');
+
+		$resultCart 	= $resultArray['Order'];
+		$expectedCart	= $expectedArray['Order'];
+
+		// check that these 2 fields exist
+		$this->assertArrayHasKey('id', $resultCart);
+		$this->assertArrayHasKey('created', $resultCart);
+
+		// check that the created and modified are not empty
+		$this->assertNotEmpty($resultCart['created']);
+		$this->assertNotEmpty($resultCart['id']);
+
+		$this->idShouldBeValid($resultCart['id']);
+		
+		// check that the other fields with EXACT field and values are expected
+		foreach($fieldsExpectedToBeDifferent as $field) {
+
+			unset($resultCart[$field]);
+			unset($expectedCart[$field]);
+		}
+
+		$this->assertEquals($expectedCart, $resultCart);
+		
+/**
+		Array
+		(
+		    [Order] => Array
+		        (
+		            [id] => 4e8d35a1-a9e4-4732-858f-0b711507707a
+		            [shop_id] => 2
+		            [customer_id] => 1
+		            [billing_address_id] => 1
+		            [delivery_address_id] => 2
+		            [order_no] => 10001
+		            [created] => 2011-10-06 04:59:13
+		            [amount] => 0.0000 // fix this!!
+		            [status] => 1 
+		            [cart_id] => 4e895a91-b374-4a1a-947c-0b701507707a
+		            [payment_status] => 0
+		            [fulfillment_status] => 1
+		            [shipped_weight] => 0 // fix this!!
+		            [shipped_amount] => // fix this!!
+		            [currency] => SGD
+		            [total_weight] => 0.0000 // fix this!!
+		            [past_checkout_point] => // remove this!!
+		            [contact_email] => fake_customer@gmail.com
+		            [order_line_item_count] => 1
+		        )
+		        **/
+		
 	}
 
 /**
@@ -121,30 +277,73 @@ class OrderTestCase extends CakeTestCase {
 			)
 			
 		);
+
+
+		
+		
 		
 		// WHEN  createForm is executed on the valid order form data
 		$orderId = $this->Order->createFrom($orderFormData);
 
-		// THEN we get a valid Order ID
-		$this->assertTrue(is_string($orderId));
-		// AND the Order ID is a 36 char string
-		$this->assertEquals(strlen($orderId), 36);
+		// Then we expect the following
+		$expectedCustomerId 		= 1;
+		$expectedUserId 			= 3;
+		$expectedBillingAddressId	= 1;
+		$expectedDeliveryAddressId	= 2;
+		$expectedContactEmail 		= 'fake_customer@gmail.com';
+		$expectedOrderNo			= '10001';
+
+		// AND we get valid Order data
+		$this->Order->recursive = -1;
+		$order = $this->Order->read(null, $orderId);
+		
+		$expected = array(
+			'customer_id' => $expectedCustomerId,
+			'billing_address_id' => $expectedBillingAddressId,
+			'delivery_address_id' => $expectedDeliveryAddressId,
+			'order_no' 	=> $expectedOrderNo,
+			'contact_email' => $expectedContactEmail,
+		);
+		
+		$this->orderShouldBeValid($order, $expected);
+		
 		// AND the Order has the correct OrderLineItem
-		$cartItemFixture 	= new CartItemFixture();
-		$expected 			= $cartItemFixture->getAllAsOrderLineItemBelongingTo($orderId);
-		$this->Order->OrderLineItem->recursive = -1;
-		$orderLineItems = $this->Order->OrderLineItem->find('all', array(
-			'order_id' => $orderId,
-		));
-		//debug($orderLineItems);
-		//debug($cartItemFixture->records);
-		$this->assertEquals($expected, $orderLineItems);
+		$this->orderLineItemsShouldBeValid($orderId);
+		
 		// AND a brand new Customer, User is generated
-		// AND brand new addresses for Delivery and BILLING are generated
-		// AND the addresses are assigned to the right User
-		// AND the addresses are assigned to the right Order
-		// AND the Order is assigned to the right Shop and Customer
+		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
+		
+		// AND brand new addresses for Delivery and BILLING are generated to the right Customer
+		// for the right Order
+		$billingAddressExpected = array(
+			'id'			=> '1',
+			'address'		=> '1234 St. Regis View #01-911',
+			'city'			=> 'Singapore',
+			'region'		=> '',
+			'zip_code'		=> '123456',
+			'country'		=> '192',
+			'customer_id'	=> '1',
+			'type'			=> BILLING,
+			'full_name'		=> 'Fake Full Name',	
+		);
+		
+		$this->addressShouldBeValid($billingAddressExpected);
+
+		$deliveryAddressExpected = array(
+			'id'			=> '2',
+			'address'		=> '1234 St. Regis View #01-911',
+			'city'			=> 'Singapore',
+			'region'		=> '',
+			'zip_code'		=> '123456',
+			'country'		=> '192',
+			'customer_id'	=> '1',
+			'type'			=> DELIVERY,
+			'full_name'		=> 'Fake Full Name',	
+		);
+		
+		$this->addressShouldBeValid($deliveryAddressExpected);
 		
 	}
+
 	
 }

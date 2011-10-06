@@ -398,7 +398,7 @@ class Order extends AppModel {
 		
 		//3 steps of NEW Order creation
 		// Step 1) Resolve the Customer Id, the Billing and Delivery Address id and contact_email
-		// Step 2) Fetch all Cart and CartItem data and use them as Order and OrderLineItem data
+		// Step 2) Fetch all Cart data and CartItem data and use them as Order and OrderLineItem data
 		// Step 3) Clean up Order, OrderLineItem data before save. Eg, getting rid of ids for OrderLineItem data
 		
 		
@@ -428,6 +428,14 @@ class Order extends AppModel {
 		foreach($cartData['CartItem'] as $key => $cartItem) {
 			unset($cartData['CartItem'][$key]['id']);
 		}
+		
+		// put in cart data such as shipping weight, etc
+		$orderFormData['Order']['amount'] 			= $cartData['Cart']['amount'];
+		$orderFormData['Order']['total_weight'] 	= $cartData['Cart']['total_weight'];
+		$orderFormData['Order']['shipped_weight'] 	= $cartData['Cart']['shipped_weight'];
+		$orderFormData['Order']['shipped_amount'] 	= $cartData['Cart']['shipped_amount'];
+		$orderFormData['Order']['currency'] 		= $cartData['Cart']['currency'];
+		
 		
 		// assigning Order data and OrderLineItem data
 		$data = array(
