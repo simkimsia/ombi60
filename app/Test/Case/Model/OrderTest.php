@@ -25,7 +25,7 @@ class OrderTestCase extends CakeTestCase {
 		'app.casual_surfer', 'app.link_list', 'app.link', 
 		'app.blog', 'app.post', 'app.comment', 
 		'app.shops_payment_module', 'app.log', 'app.saved_theme',
-		'app.vendor',
+		'app.vendor', 'app.country'
 	);
 
 
@@ -362,7 +362,7 @@ class OrderTestCase extends CakeTestCase {
 	 * @return void
 	 **/
 	public function testCreateFormShouldAttachToExistingCustomerNewAddresses() {
-/*
+
 		// GIVEN valid order form data
 		$orderFormData = array(
 			'Order' => array(
@@ -388,9 +388,9 @@ class OrderTestCase extends CakeTestCase {
 				'same' => true,
 			),
 			
-		// AND this User is brand new as well
+		// AND this User exists as a Customer via supplying the email
 			'User' => array(
-				'email' =>  'fake_customer@gmail.com',
+				'email' =>  'guest_customer@ombi60.com',
 			)
 
 		);
@@ -399,11 +399,11 @@ class OrderTestCase extends CakeTestCase {
 		$orderId = $this->Order->createFrom($orderFormData);
 
 		// Then we expect the following
-		$expectedCustomerId 		= 2;
-		$expectedUserId 			= 4;
+		$expectedCustomerId 		= 1;
+		$expectedUserId 			= 3;
 		$expectedBillingAddressId	= 3;
 		$expectedDeliveryAddressId	= 4;
-		$expectedContactEmail 		= 'fake_customer@gmail.com';
+		$expectedContactEmail 		= 'guest_customer@ombi60.com';
 		$expectedOrderNo			= '10001';
 
 		// AND we get valid Order data
@@ -429,13 +429,13 @@ class OrderTestCase extends CakeTestCase {
 		// AND brand new addresses for Delivery and BILLING are generated to the right Customer
 		// for the right Order
 		$billingAddressExpected = array(
-			'id'			=> '1',
+			'id'			=> $expectedBillingAddressId,
 			'address'		=> '1234 St. Regis View #01-911',
 			'city'			=> 'Singapore',
 			'region'		=> '',
 			'zip_code'		=> '123456',
 			'country'		=> '192',
-			'customer_id'	=> '1',
+			'customer_id'	=> $expectedCustomerId,
 			'type'			=> BILLING,
 			'full_name'		=> 'Fake Full Name',	
 		);
@@ -443,20 +443,114 @@ class OrderTestCase extends CakeTestCase {
 		$this->addressShouldBeValid($billingAddressExpected);
 
 		$deliveryAddressExpected = array(
-			'id'			=> '2',
+			'id'			=> $expectedDeliveryAddressId,
 			'address'		=> '1234 St. Regis View #01-911',
 			'city'			=> 'Singapore',
 			'region'		=> '',
 			'zip_code'		=> '123456',
 			'country'		=> '192',
-			'customer_id'	=> '1',
+			'customer_id'	=> $expectedCustomerId,
 			'type'			=> DELIVERY,
 			'full_name'		=> 'Fake Full Name',	
 		);
 
 		$this->addressShouldBeValid($deliveryAddressExpected);
-*/
+
 	}	
+
+	/**
+	 * 
+	 * Test createForm function for the scenario where we should have
+	 * created the form for existing Customer and Addresses 
+	 *
+	 * @return void
+	 **/
+	public function testCreateFormShouldAttachToExistingCustomerAddresses() {
+
+		// GIVEN valid order form data
+		$orderFormData = array(
+			'Order' => array(
+				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+				'shop_id' => '2'
+			),
+			
+		// AND the billing address exists in database
+			'BillingAddress' => array(
+				'0' => array(
+					'address' => 'Billing Address St. Block 123 #01-911',
+					'city' => 'Singapore',
+					'zip_code' => '111111',
+					'country' => '192',
+					'region' => NULL,
+					'type' => BILLING,
+					'full_name' => 'G. Cherry'				
+				)
+			),
+			
+		// AND the delivery address exists in database
+			'DeliveryAddress' => array(
+				'same' => 0,
+				'0' => array(
+					'address' => 'Delivery Address Block 123 #01-911',
+					'city' => 'Singapore',
+					'zip_code' => '111111',
+					'country' => '192',
+					'region' => NULL,
+					'type' => DELIVERY,
+					'full_name' => 'G. Cherry'
+				)
+			),
+			
+		// AND this User exists as a Customer via supplying the email
+			'User' => array(
+				'email' =>  'guest_customer@ombi60.com',
+			)
+
+		);
+
+		// WHEN  createForm is executed on the valid order form data
+		$orderId = $this->Order->createFrom($orderFormData);
+
+		// Then we expect the following
+		$expectedCustomerId 		= 1;
+		$expectedUserId 			= 3;
+		$expectedBillingAddressId	= 1;
+		$expectedDeliveryAddressId	= 2;
+		$expectedContactEmail 		= 'guest_customer@ombi60.com';
+		$expectedOrderNo			= '10001';
+
+		// AND we get valid Order data
+		$this->Order->recursive = -1;
+		$order = $this->Order->read(null, $orderId);
+
+		$expected = array(
+			'customer_id' => $expectedCustomerId,
+			'billing_address_id' => $expectedBillingAddressId,
+			'delivery_address_id' => $expectedDeliveryAddressId,
+			'order_no' 	=> $expectedOrderNo,
+			'contact_email' => $expectedContactEmail,
+		);
+
+		$this->orderShouldBeValid($order, $expected);
+
+		// AND the Order has the correct OrderLineItem
+		$this->orderLineItemsShouldBeValid($orderId);
+
+		// AND a brand new Customer, User is generated
+		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
+
+		// AND existing addresses for Delivery and BILLING are generated to the right Customer
+		// for the right Order
+		$addressFixture = new AddressFixture();
+		
+		$billingAddressExpected = $addressFixture->records[0];
+		$this->addressShouldBeValid($billingAddressExpected);
+		
+		$deliveryAddressExpected = $addressFixture->records[1];
+		$this->addressShouldBeValid($deliveryAddressExpected);
+
+	}	
+
 
 	
 }

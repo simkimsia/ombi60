@@ -34,8 +34,7 @@ class AddressFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => '1',
-			'address' => 'Billing Address St. Block 123
-#01-911',
+			'address' => 'Billing Address St. Block 123 #01-911',
 			'city' => 'Singapore',
 			'region' => NULL,
 			'zip_code' => '111111',
@@ -47,8 +46,7 @@ class AddressFixture extends CakeTestFixture {
 		
 		array(
 			'id' => '2',
-			'address' => 'Delivery Address Block 123
-#01-911',
+			'address' => 'Delivery Address Block 123 #01-911',
 			'city' => 'Singapore',
 			'region' => NULL,
 			'zip_code' => '111111',

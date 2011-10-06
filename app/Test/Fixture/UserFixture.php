@@ -67,7 +67,7 @@ class UserFixture extends CakeTestFixture {
 			'id' => '3',
 			'email' => 'guest_customer@ombi60.com',
 			'password' => '6d29cb929f8cccd4db7d7d0963108a3d3c9650aa',
-			'group_id' => '5',
+			'group_id' => '4',
 			'full_name' => 'G. Cherry',
 			'name_to_call' => 'Cherry',
 			'last_login_on' => NULL,

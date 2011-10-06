@@ -443,9 +443,9 @@ class Order extends AppModel {
 			'OrderLineItem' => $cartData['CartItem']
 		);
 		
-		// finally we are going to create a brand NEW Order!!!
+		// finally we create the new Order!!
 		$this->create();
-		$result = $this->saveAll($data);
+		$result = $this->saveAssociated($data);
 		
 		if (!$result) {
 			return false;
@@ -531,11 +531,12 @@ class Order extends AppModel {
 			
 			if ($createNewDeliveryAddress) {
 				$deliveryAddressId = $this->Customer->setNewDeliveryAddress($orderFormData);
-			}
+			}			
 			
 		} elseif ($buyingDoneByNewCustomer) {
 			// create brand new customer based on supplied address data
 			$this->Customer->signupNewAccountDuringCheckout($orderFormData);
+			//$orderFormData = $this->prepareNewCustomerDataIn($orderFormData);
 			
 			$customerId = $this->Customer->id;
 			$billingAddressId = $this->Customer->BillingAddress->id;
@@ -543,11 +544,13 @@ class Order extends AppModel {
 			
 			
 		}
+		
 		// CONFIRM and RESOLVE the customer id
 		$orderFormData['Order']['customer_id'] = $customerId;
 		// CONFIRM and RESOLVE the address ids
 		$orderFormData['Order']['billing_address_id']  = $billingAddressId;
 		$orderFormData['Order']['delivery_address_id'] = $deliveryAddressId;
+		
 		
 		// CONFIRM and RESOLVE the contact_email
 		$orderFormData['Order']['contact_email'] = (isset($orderFormData['User']['email'])) ? $orderFormData['User']['email'] : '';
@@ -555,35 +558,6 @@ class Order extends AppModel {
 		return $orderFormData;
 		
 	}
-	
-	/**
-	*
-	* temporary function to replace the $this->Customer->signupNewAccountDuringCheckout() 
-	* 
-	**/
-	private function prepareNewCustomerDataIn($orderFormData) {
-		// extracting all the various pieces of data from address and forming a 
-		// User data array before we create
-		// we need to have a fullname for the user, so we take it from the billing address
-		$orderFormData['User']['full_name'] 	= $orderFormData['BillingAddress'][0]['full_name'];
-		$orderFormData['User']['name_to_call'] 	= $orderFormData['BillingAddress'][0]['full_name'];
-		
-		// because we need to create brand new User so we need to create random password
-		App::uses('StringLib', 'UtilityLib.Lib');
-		App::uses('AuthComponent', 'Controller/Component');
-		$orderFormData['User']['password'] = AuthComponent::password(StringLib::generateRandom());
-		
-		// hackish code to pass the shop id into the uniqueEmailInShop validator
-		// read first few lines of uniqueEmailInShop method in User model
-		$orderFormData['User']['shop_id'] 		= $orderFormData['Order']['shop_id'];
-		$orderFormData['Customer']['shop_id'] 	= $orderFormData['Order']['shop_id'];
-		
-		$orderFormData['User']['group_id'] = CUSTOMERS;
-		
-		return $orderFormData;
-	}
-	
-	
 
 }
 ?>
