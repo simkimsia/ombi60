@@ -52,3 +52,6 @@
 [submodule "app/Plugin/ClearCache"]
 	path = app/Plugin/ClearCache
 	url = git@github.com:simkimsia/ClearCache.git
+[submodule "app/Plugin/UtilityLib"]
+	path = app/Plugin/UtilityLib
+	url = git@github.com:simkimsia/UtilityLib.git
