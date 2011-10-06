@@ -193,6 +193,18 @@
 							)
                         );
 
+		// checkout process 2nd page the action to handle the POSTBACK to collect payment mode
+        Router::connect('/orders/:shop_id/:order_uuid/complete_payment',
+                        array(
+							'controller' 	=> 'orders',
+							'action' 		=> 'complete_payment'),
+						array(
+							'pass'			=> array('shop_id', 'order_uuid'),
+							'shop_id'		=> '[0-9]+',
+							'order_uuid'	=> '[a-zA-Z0-9\-_]+'
+							)
+                        );
+
 		// checkout process indicate that payment is completed
         Router::connect('/orders/:shop_id/:order_uuid/complete',
                         array(

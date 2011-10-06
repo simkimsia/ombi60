@@ -1,5 +1,14 @@
 <?php
+	if ($step == 2) {
+		$currentCart = array(
+			'Cart' 		=> $currentOrder['Order'],
+			'CartItem' 	=> $currentOrder['OrderLineItem']
+		);
+		$is_shipping_included 	= $currentOrder['Order']['shipping_required'];
+		$shipping_cost 			= $this->Number->currency($shippingFee, '$');
+	}
 	$totalAmountWithShipping = $currentCart['Cart']['amount'];
+	
 ?>
 <div id="checkout_warning">
     <?php echo $this->Html->image('lock.gif', array('class' => 'margin_right_5'));?>

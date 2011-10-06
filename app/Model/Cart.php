@@ -78,6 +78,12 @@ class Cart extends AppModel {
 		
 	);
 	
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['shipping_required'] = sprintf('(%s.shipped_weight > 0)', $this->alias, $this->alias);
+	}
+	
+	
 	public function forCustomerOrCasual($check){
 		
 		

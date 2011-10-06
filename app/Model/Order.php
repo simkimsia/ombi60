@@ -5,6 +5,10 @@ class Order extends AppModel {
 	
 	public $actsAs = array('Filter.Filter');
 
+	public $virtualFields = array(
+		'shipping_required' => '(Order.shipped_weight > 0)'
+	);
+
 	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
@@ -558,6 +562,58 @@ class Order extends AppModel {
 		return $orderFormData;
 		
 	}
+	
+	/**
+	* 
+	* Retrieve Order data with OrderLineItem data and CoverImage data.
+	* Format of array is
+	* array(
+	* 	'Order' => array('id'=>'4864-1234-1234-1111'...),
+	*	'OrderLineItem' => array(
+	*		'0' => array(
+	*			'id' => '1'
+	*			'cart_id' => '4864-1234-1234-1111',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*		'1' => array(
+	*			'id' => '2'
+	*			'cart_id' => '4864-1234-1234-1111',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*	)
+	* )
+	*
+	* @param string $order_uuid Order id
+	* @return array Returns Order data with OrderLineItem data and CoverImage data
+	**/
+	public function getItemsWithImages($order_uuid) {
+		
+		$this->OrderLineItem->unbindModel(array(
+			'belongsTo' => array(
+				'OrderedVariant'
+			)
+		));
+		
+		$items = $this->OrderLineItem->find('all', array(
+			'conditions' => array('OrderLineItem.order_id' => $order_uuid),
+			'link' => array('Order', 'CoverImage')
+		));
+
+		$orderData 	= Set::extract('0.Order', $items);
+		$itemsData 	= array();
+		foreach($items as $key=>$item) {
+			$item['OrderLineItem']['CoverImage'] 	= $item['CoverImage'];
+			$itemsData[]							= $item['OrderLineItem'];					
+		}
+		$orderData['OrderLineItem'] = $itemsData;
+		$currentOrder = array(
+			'Order' 		=> $orderData,
+			'OrderLineItem' => $itemsData
+		);
+		
+		return $currentOrder;
+	}
+
 
 }
 ?>
