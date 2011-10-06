@@ -1,5 +1,5 @@
 <?php
-/* Address Fixture generated on: 2011-10-06 04:22:21 : 1317874941 */
+/* Address Fixture generated on: 2011-10-06 08:09:30 : 1317888570 */
 
 /**
  * AddressFixture
@@ -32,5 +32,30 @@ class AddressFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+		array(
+			'id' => '1',
+			'address' => 'Billing Address St. Block 123
+#01-911',
+			'city' => 'Singapore',
+			'region' => NULL,
+			'zip_code' => '111111',
+			'country' => '192',
+			'customer_id' => '1',
+			'type' => '1',
+			'full_name' => 'G. Cherry'
+		),
+		
+		array(
+			'id' => '2',
+			'address' => 'Delivery Address Block 123
+#01-911',
+			'city' => 'Singapore',
+			'region' => NULL,
+			'zip_code' => '111111',
+			'country' => '192',
+			'customer_id' => '1',
+			'type' => '2',
+			'full_name' => 'G. Cherry'
+		),
 	);
 }

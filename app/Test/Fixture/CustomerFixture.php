@@ -1,5 +1,5 @@
 <?php
-/* Customer Fixture generated on: 2011-09-30 18:42:14 : 1317408134 */
+/* Customer Fixture generated on: 2011-10-06 08:09:13 : 1317888553 */
 
 /**
  * CustomerFixture
@@ -27,6 +27,11 @@ class CustomerFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
-		
+		array(
+			'id' => '1',
+			'identity_code' => NULL,
+			'shop_id' => '2',
+			'user_id' => '3'
+		),
 	);
 }

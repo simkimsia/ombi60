@@ -556,6 +556,33 @@ class Order extends AppModel {
 		
 	}
 	
+	/**
+	*
+	* temporary function to replace the $this->Customer->signupNewAccountDuringCheckout() 
+	* 
+	**/
+	private function prepareNewCustomerDataIn($orderFormData) {
+		// extracting all the various pieces of data from address and forming a 
+		// User data array before we create
+		// we need to have a fullname for the user, so we take it from the billing address
+		$orderFormData['User']['full_name'] 	= $orderFormData['BillingAddress'][0]['full_name'];
+		$orderFormData['User']['name_to_call'] 	= $orderFormData['BillingAddress'][0]['full_name'];
+		
+		// because we need to create brand new User so we need to create random password
+		App::uses('StringLib', 'UtilityLib.Lib');
+		App::uses('AuthComponent', 'Controller/Component');
+		$orderFormData['User']['password'] = AuthComponent::password(StringLib::generateRandom());
+		
+		// hackish code to pass the shop id into the uniqueEmailInShop validator
+		// read first few lines of uniqueEmailInShop method in User model
+		$orderFormData['User']['shop_id'] 		= $orderFormData['Order']['shop_id'];
+		$orderFormData['Customer']['shop_id'] 	= $orderFormData['Order']['shop_id'];
+		
+		$orderFormData['User']['group_id'] = CUSTOMERS;
+		
+		return $orderFormData;
+	}
+	
 	
 
 }

@@ -25,7 +25,7 @@ class OrderTestCase extends CakeTestCase {
 		'app.casual_surfer', 'app.link_list', 'app.link', 
 		'app.blog', 'app.post', 'app.comment', 
 		'app.shops_payment_module', 'app.log', 'app.saved_theme',
-		'app.vendor', 'app.address',
+		'app.vendor',
 	);
 
 
@@ -75,7 +75,12 @@ class OrderTestCase extends CakeTestCase {
 		parent::tearDown();
 	}
 	
-	
+	/**
+	*
+	* check for id to be valid
+	* @param string $orderId
+	* @return void
+	**/
 	private function idShouldBeValid($orderId) {
 		// Should be a string
 		$this->assertTrue(is_string($orderId));
@@ -83,6 +88,12 @@ class OrderTestCase extends CakeTestCase {
 		$this->assertEquals(strlen($orderId), 36);
 	}
 	
+	/**
+	*
+	* check for OrderLineItem data to be valid
+	* @param string $orderId
+	* @return void
+	**/
 	private function orderLineItemsShouldBeValid($orderId) {
 		$cartItemFixture 	= new CartItemFixture();
 		$expected 			= $cartItemFixture->getAllAsOrderLineItemBelongingTo($orderId);
@@ -98,6 +109,15 @@ class OrderTestCase extends CakeTestCase {
 		$this->assertEquals($expected, $orderLineItems);		
 	}
 	
+	/**
+	*
+	* check for Customer data and User id to be valid
+	*
+	* @param integer $expectedCustomerId
+	* @param integer $expectedUserId
+	* @return void
+	*
+	**/
 	private function userCustomerShouldBeValid($expectedCustomerId, $expectedUserId) {
 
 		$this->Order->Customer->recursive = -1;
@@ -123,6 +143,13 @@ class OrderTestCase extends CakeTestCase {
 
 	}
 	
+	/**
+	*
+	* check for Address model data to be valid
+	*
+	* @param array $expectedAddressData
+	* @return void
+	**/
 	private function addressShouldBeValid($expectedAddressData) {
 		if ($expectedAddressData['type'] == BILLING) {
 			$modelName = 'BillingAddress';
@@ -150,6 +177,14 @@ class OrderTestCase extends CakeTestCase {
 	}
 	
 	
+	/**
+	*
+	* check the Order model data if it is valid
+	*
+	* @param array $resultArray
+	* @param array $expectedOptions
+	* @return void
+	**/
 	private function orderShouldBeValid($resultArray, $expectedOptions = array()) {
 		
 		$defaultOptions = array(
@@ -160,6 +195,7 @@ class OrderTestCase extends CakeTestCase {
 			'contact_email' => 'fake_customer@gmail.com'
 
 		);
+		
 		
 		$expectedOptions = array_merge($defaultOptions, $expectedOptions);
 		
@@ -212,43 +248,18 @@ class OrderTestCase extends CakeTestCase {
 		}
 
 		$this->assertEquals($expectedCart, $resultCart);
-		
-/**
-		Array
-		(
-		    [Order] => Array
-		        (
-		            [id] => 4e8d35a1-a9e4-4732-858f-0b711507707a
-		            [shop_id] => 2
-		            [customer_id] => 1
-		            [billing_address_id] => 1
-		            [delivery_address_id] => 2
-		            [order_no] => 10001
-		            [created] => 2011-10-06 04:59:13
-		            [amount] => 0.0000 // fix this!!
-		            [status] => 1 
-		            [cart_id] => 4e895a91-b374-4a1a-947c-0b701507707a
-		            [payment_status] => 0
-		            [fulfillment_status] => 1
-		            [shipped_weight] => 0 // fix this!!
-		            [shipped_amount] => // fix this!!
-		            [currency] => SGD
-		            [total_weight] => 0.0000 // fix this!!
-		            [past_checkout_point] => // remove this!!
-		            [contact_email] => fake_customer@gmail.com
-		            [order_line_item_count] => 1
-		        )
-		        **/
-		
+				
 	}
 
 /**
- * testMakeThisPrimary method
+ * 
+ * Test createForm function for the scenario where we should have
+ * new Customer, new Addresses 
  *
  * @return void
  */
-	public function testShouldGenerateValidOrderUsingFunctionCreateForm() {
-				
+	public function testCreateFormShouldGiveNewCustomerNewAddresses() {
+			
 		// GIVEN valid order form data
 		$orderFormData = array(
 			'Order' => array(
@@ -279,17 +290,14 @@ class OrderTestCase extends CakeTestCase {
 		);
 
 
-		
-		
-		
 		// WHEN  createForm is executed on the valid order form data
 		$orderId = $this->Order->createFrom($orderFormData);
-
+		
 		// Then we expect the following
-		$expectedCustomerId 		= 1;
-		$expectedUserId 			= 3;
-		$expectedBillingAddressId	= 1;
-		$expectedDeliveryAddressId	= 2;
+		$expectedCustomerId 		= 2;
+		$expectedUserId 			= 4;
+		$expectedBillingAddressId	= 3;
+		$expectedDeliveryAddressId	= 4;
 		$expectedContactEmail 		= 'fake_customer@gmail.com';
 		$expectedOrderNo			= '10001';
 
@@ -316,6 +324,111 @@ class OrderTestCase extends CakeTestCase {
 		// AND brand new addresses for Delivery and BILLING are generated to the right Customer
 		// for the right Order
 		$billingAddressExpected = array(
+			'id'			=> $expectedBillingAddressId,
+			'address'		=> '1234 St. Regis View #01-911',
+			'city'			=> 'Singapore',
+			'region'		=> '',
+			'zip_code'		=> '123456',
+			'country'		=> '192',
+			'customer_id'	=> $expectedCustomerId,
+			'type'			=> BILLING,
+			'full_name'		=> 'Fake Full Name',	
+		);
+		
+		$this->addressShouldBeValid($billingAddressExpected);
+
+		$deliveryAddressExpected = array(
+			'id'			=> $expectedDeliveryAddressId,
+			'address'		=> '1234 St. Regis View #01-911',
+			'city'			=> 'Singapore',
+			'region'		=> '',
+			'zip_code'		=> '123456',
+			'country'		=> '192',
+			'customer_id'	=> $expectedCustomerId,
+			'type'			=> DELIVERY,
+			'full_name'		=> 'Fake Full Name',	
+		);
+		
+		$this->addressShouldBeValid($deliveryAddressExpected);
+	
+	}
+	
+
+	/**
+	 * 
+	 * Test createForm function for the scenario where we should have
+	 * created the form for existing Customer, new Addresses 
+	 *
+	 * @return void
+	 **/
+	public function testCreateFormShouldAttachToExistingCustomerNewAddresses() {
+/*
+		// GIVEN valid order form data
+		$orderFormData = array(
+			'Order' => array(
+				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+				'shop_id' => '2'
+			),
+			
+		// AND the billing address is brand new
+			'BillingAddress' => array(
+				'0' => array(
+					'full_name' => 'Fake Full Name',
+					'address'	=> '1234 St. Regis View #01-911',
+					'city'		=> 'Singapore',
+					'region'	=> '',
+					'zip_code'	=> '123456',
+					'country'	=> '192',
+					'type'		=> BILLING,
+				)
+			),
+			
+		// AND we want the delivery address to be the same as billing address
+			'DeliveryAddress' => array(
+				'same' => true,
+			),
+			
+		// AND this User is brand new as well
+			'User' => array(
+				'email' =>  'fake_customer@gmail.com',
+			)
+
+		);
+
+		// WHEN  createForm is executed on the valid order form data
+		$orderId = $this->Order->createFrom($orderFormData);
+
+		// Then we expect the following
+		$expectedCustomerId 		= 2;
+		$expectedUserId 			= 4;
+		$expectedBillingAddressId	= 3;
+		$expectedDeliveryAddressId	= 4;
+		$expectedContactEmail 		= 'fake_customer@gmail.com';
+		$expectedOrderNo			= '10001';
+
+		// AND we get valid Order data
+		$this->Order->recursive = -1;
+		$order = $this->Order->read(null, $orderId);
+
+		$expected = array(
+			'customer_id' => $expectedCustomerId,
+			'billing_address_id' => $expectedBillingAddressId,
+			'delivery_address_id' => $expectedDeliveryAddressId,
+			'order_no' 	=> $expectedOrderNo,
+			'contact_email' => $expectedContactEmail,
+		);
+
+		$this->orderShouldBeValid($order, $expected);
+
+		// AND the Order has the correct OrderLineItem
+		$this->orderLineItemsShouldBeValid($orderId);
+
+		// AND a brand new Customer, User is generated
+		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
+
+		// AND brand new addresses for Delivery and BILLING are generated to the right Customer
+		// for the right Order
+		$billingAddressExpected = array(
 			'id'			=> '1',
 			'address'		=> '1234 St. Regis View #01-911',
 			'city'			=> 'Singapore',
@@ -326,7 +439,7 @@ class OrderTestCase extends CakeTestCase {
 			'type'			=> BILLING,
 			'full_name'		=> 'Fake Full Name',	
 		);
-		
+
 		$this->addressShouldBeValid($billingAddressExpected);
 
 		$deliveryAddressExpected = array(
@@ -340,10 +453,10 @@ class OrderTestCase extends CakeTestCase {
 			'type'			=> DELIVERY,
 			'full_name'		=> 'Fake Full Name',	
 		);
-		
+
 		$this->addressShouldBeValid($deliveryAddressExpected);
-		
-	}
+*/
+	}	
 
 	
 }
