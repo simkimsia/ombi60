@@ -48,6 +48,8 @@ ALTER TABLE `webpages` AUTO_INCREMENT = 2;
 TRUNCATE TABLE merchants;
 TRUNCATE TABLE users;
 TRUNCATE TABLE casual_surfers;
+TRUNCATE TABLE customers;
+TRUNCATE TABLE addresses;
 TRUNCATE TABLE recurring_payment_profiles;
 TRUNCATE TABLE invoices;
 /*

@@ -1,8 +1,9 @@
 /*
-SQLyog Community v8.81 
+SQLyog Community v8.81
 MySQL - 5.1.41-3ubuntu12.10 : Database - s2s_new
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -889,7 +890,7 @@ CREATE TABLE `saved_themes` (
 
 /*Data for the table `saved_themes` */
 
-insert  into `saved_themes`(`id`,`name`,`description`,`author`,`created`,`modified`,`folder_name`,`shop_id`,`theme_id`,`featured`) values (1,'default','default','asd','2011-06-20 10:58:10','2011-06-20 10:58:10','2_cover',2,3,1);
+insert  into `saved_themes`(`id`,`name`,`description`,`author`,`created`,`modified`,`folder_name`,`shop_id`,`theme_id`,`featured`) values (1,'default','default','asd','2011-06-20 10:58:10','2011-06-20 10:58:10','2Cover',2,3,1);
 
 /*Table structure for table `shipments` */
 
@@ -1219,3 +1220,4 @@ CREATE TABLE `wishlists` (
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
