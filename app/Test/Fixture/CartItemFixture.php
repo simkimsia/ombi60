@@ -45,7 +45,7 @@ class CartItemFixture extends CakeTestFixture {
 			'product_quantity' => '1',
 			'visible' => 1,
 			'product_title' => 'test product with no pic and no collection',
-			'product_weight' => '2000',
+			'product_weight' => '15000',
 			'currency' => 'SGD',
 			'shipping_required' => true,
 			'previous_price' => '23.0000',

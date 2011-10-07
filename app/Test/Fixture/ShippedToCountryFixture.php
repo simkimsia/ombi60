@@ -1,22 +1,50 @@
 <?php
-/* ShippedToCountry Fixture generated on: 2010-09-09 09:09:32 : 1284017672 */
-class ShippedToCountryFixture extends CakeTestFixture {
-	var $name = 'ShippedToCountry';
+/* ShippedToCountry Fixture generated on: 2011-10-07 02:15:32 : 1317953732 */
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'country_id' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 5),
-		'shop_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
+/**
+ * ShippedToCountryFixture
+ *
+ */
+class ShippedToCountryFixture extends CakeTestFixture {
+
+/**
+ * Fields
+ *
+ * @var array
+ */
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary', 'collate' => NULL, 'comment' => ''),
+		'country_id' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 5, 'collate' => NULL, 'comment' => ''),
+		'shop_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
-	var $records = array(
+/**
+ * Records
+ *
+ * @var array
+ */
+	public $records = array(
 		array(
-			'id' => 1,
-			'country_id' => 1,
-			'shop_id' => 1
+			'id' => '1',
+			'country_id' => '0',
+			'shop_id' => '1'
+		),
+		array(
+			'id' => '2',
+			'country_id' => '192',
+			'shop_id' => '1'
+		),
+		array(
+			'id' => '3',
+			'country_id' => '192',
+			'shop_id' => '2'
+		),
+		array(
+			'id' => '4',
+			'country_id' => '0',
+			'shop_id' => '2'
 		),
 	);
 }
-?>

@@ -44,7 +44,7 @@ class CartFixture extends CakeTestFixture {
 			'created' => '2011-10-01 05:16:44',
 			'amount' => '23.0000',
 			'status' => 1,
-			'total_weight' => '2000',
+			'total_weight' => '15000',
 			'currency' => 'SGD',
 			'shipped_amount' => '23.0000',
 			'shipped_weight' => '2000',

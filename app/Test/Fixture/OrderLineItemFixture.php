@@ -1,5 +1,5 @@
 <?php
-/* OrderLineItem Fixture generated on: 2011-10-01 04:24:04 : 1317443044 */
+/* OrderLineItem Fixture generated on: 2011-10-07 02:08:47 : 1317953327 */
 
 /**
  * OrderLineItemFixture
@@ -35,5 +35,19 @@ class OrderLineItemFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+		array(
+			'id' => '1',
+			'order_id' => '4e8d8ef9-71a4-4a69-8dbf-04b01507707a',
+			'product_id' => '3',
+			'product_price' => '23.0000',
+			'product_quantity' => '1',
+			'status' => '1',
+			'product_title' => 'test product with no pic and no collection',
+			'product_weight' => '15000',
+			'currency' => 'SGD',
+			'shipping_required' => 1,
+			'variant_id' => '3',
+			'variant_title' => 'Default Title'
+		),
 	);
 }

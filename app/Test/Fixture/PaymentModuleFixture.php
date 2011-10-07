@@ -1,22 +1,50 @@
 <?php
-/* PaymentModule Fixture generated on: 2010-06-08 08:06:07 : 1275979567 */
-class PaymentModuleFixture extends CakeTestFixture {
-	var $name = 'PaymentModule';
+/* PaymentModule Fixture generated on: 2011-10-07 02:16:30 : 1317953790 */
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'name' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'group' => array('type' => 'string', 'null' => false, 'default' => NULL),
+/**
+ * PaymentModuleFixture
+ *
+ */
+class PaymentModuleFixture extends CakeTestFixture {
+
+/**
+ * Fields
+ *
+ * @var array
+ */
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary', 'collate' => NULL, 'comment' => ''),
+		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'group' => array('type' => 'string', 'null' => false, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
-	var $records = array(
+/**
+ * Records
+ *
+ * @var array
+ */
+	public $records = array(
 		array(
-			'id' => 1,
-			'name' => 'Lorem ipsum dolor sit amet',
-			'group' => 'Lorem ipsum dolor sit amet'
+			'id' => '1',
+			'name' => 'Custom',
+			'group' => 'Custom'
+		),
+		array(
+			'id' => '2',
+			'name' => 'Paypal',
+			'group' => 'Payment Gateway'
+		),
+		array(
+			'id' => '3',
+			'name' => 'Cheque',
+			'group' => 'Custom'
+		),
+		array(
+			'id' => '4',
+			'name' => 'Internet Banking',
+			'group' => 'Custom'
 		),
 	);
 }
-?>
