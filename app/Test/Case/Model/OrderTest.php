@@ -592,6 +592,23 @@ class OrderTestCase extends CakeTestCase {
 		$this->addressShouldBeValid($deliveryAddressExpected);
 
 	}	
+	
+	
+	public function testGetItemsWithImagesShouldContainRightItemsAndImages() {
+		
+	}
+	
+	public function testExtractShipmentDataFromShippingRateShouldWork() {
+		
+	}
+	
+	public function testCompletePurchaseShouldCloseTheCart() {
+		
+	}
+	
+	public function testCloseTheCartShouldWork() {
+		
+	}
 
 
 	
