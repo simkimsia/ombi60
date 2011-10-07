@@ -96,8 +96,7 @@ class OrdersControllerTestCase extends ControllerTestCase {
 	* 
 	* test View Cart 
 	**/
-	
-	public function testPay() {
+	public function testPayShouldDisplayContentsProperly() {
 		$ordersFixture 	= new OrderFixture();
 		$order_uuid 	= $ordersFixture->records[0]['id'];
 		
@@ -110,7 +109,60 @@ class OrdersControllerTestCase extends ControllerTestCase {
 		
 		$this->assertRegexp('#You are using our secure server#', $this->contents);
 		
-	}	
+	}
+	
+	/**
+	* 
+	* test complete purchase redirect properly
+	**/
+	public function testCompletePurchaseShouldRedirectProperly() {
+		$ordersFixture 	= new OrderFixture();
+		$order_uuid 	= $ordersFixture->records[0]['id'];
+		
+		$pageUrl = '/orders/2/' . $order_uuid . '/complete_purchase';
+		
+		$data = array(
+			'Payment' => array(
+				'shops_payment_module_id' => 1,
+			),
+			'Shipment' => array(
+				'shipping_rate_id' => 7,
+			)
+		);
+		
+		$this->controller->request->data = $data;
+		
+		$this->controller->expects($this->once())->method('redirect')->with(array('action' => 'completed', 'shop_id' => '2', 'order_uuid' => $order_uuid))->will($this->returnValue(true));
+		
+		$this->testAction($pageUrl, array(
+			'return' => 'contents',
+			'method' => 'POST',
+			'data' => $this->controller->request->data,
+		));		
+		
+	}
+	
+	/**
+	* 
+	* test Purchase completed page
+	**/
+	public function testCompletdShouldDisplayContentsProperly() {
+		$ordersFixture 	= new OrderFixture();
+		$order_uuid 	= $ordersFixture->records[0]['id'];
+		
+		$shopFixture 	= new ShopFixture();
+		$shopDomain		= $shopFixture->records[1]['primary_domain'];
+		
+		$pageUrl = '/orders/2/' . $order_uuid . '/completed';
+		
+		$this->testAction($pageUrl, array(
+			'return' => 'contents',
+			'method' => 'GET'
+		));		
+		
+		$this->assertRegexp('#Successful transaction! You may return back to your <a href="'.$shopDomain.'">shopping</a>#', $this->contents);
+		
+	}
 
 	
 }
