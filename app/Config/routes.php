@@ -219,10 +219,10 @@
                         );
 
 		// checkout process indicate that payment is completed
-        Router::connect('/orders/:shop_id/:order_uuid/complete',
+        Router::connect('/orders/:shop_id/:order_uuid/completed',
                         array(
 							'controller' 	=> 'orders',
-							'action' 		=> 'complete'),
+							'action' 		=> 'completed'),
 						array(
 							'pass'			=> array('shop_id', 'order_uuid'),
 							'shop_id'		=> '[0-9]+',

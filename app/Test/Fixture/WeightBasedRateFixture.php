@@ -1,5 +1,5 @@
 <?php
-/* WeightBasedRate Fixture generated on: 2011-10-07 02:15:52 : 1317953752 */
+/* WeightBasedRate Fixture generated on: 2011-10-07 18:19:07 : 1318011547 */
 
 /**
  * WeightBasedRateFixture

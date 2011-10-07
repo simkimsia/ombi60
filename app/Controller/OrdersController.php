@@ -380,9 +380,10 @@ class OrdersController extends AppController {
 		
 		return $PayPalResult;
 	}
+
 	
 	
-	public function success($shop_id = null) {
+	public function success_orig($shop_id = null) {
 		
 		$paypal = isset($this->request->params['url']['paypal']);
 		$tokenValueOn = isset($this->request->params['url']['token']);
@@ -554,6 +555,14 @@ class OrdersController extends AppController {
 		}
 	}
 	
+	/**
+	*
+	* this action handles the POSTBACK for the checkout process step 2
+	*
+	* @param integer $shop_id Shop id
+	* @param string $order_uuid Order id
+	* @param boolean Returns the result for all the $this->redirect
+	**/
 	public function complete_purchase($shop_id = false, $order_uuid = false) {
 		$this->layout 		= 'default';
 		$this->autoRender 	= false;
@@ -594,15 +603,33 @@ class OrdersController extends AppController {
 				
 				
 				return $this->redirect(array(
-					'action' => 'success',
-					'shop_id'=> $shop_id
+					'action' => 'completed',
+					'shop_id'=> $shop_id,
+					'order_uuid' => $order_uuid,
 				));
 			} else {
 				// redirect user back to pay page and ask them to contact owner for assistance
 			}
 		}
 		
-		//die();
+	
+	}
+	
+	/**
+	*
+	* Displays success for order purchase completion
+	*
+	* @param integer $shop_id Shop id
+	* @param string $order_uuid Order id
+	* @return void
+	**/
+	public function completed($shop_id = false, $order_uuid = false) {
+		$this->layout 	= 'default';
+		$shop 			= $this->Order->Shop->getById($shop_id);
+		$link 			= $shop['Shop']['primary_domain'];
+		
+		$this->set(compact('link'));
+		$this->render('success');
 	}
 	
 	

@@ -1,5 +1,5 @@
 <?php
-/* Shipment Fixture generated on: 2011-10-07 16:37:10 : 1318005430 */
+/* Shipment Fixture generated on: 2011-10-07 18:18:24 : 1318011504 */
 
 /**
  * ShipmentFixture
