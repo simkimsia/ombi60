@@ -5,19 +5,25 @@
 
 	$totalAmountWithShipping 	= $currentCart['Cart']['amount'];
 	$cart_uuid 					= $currentCart['Cart']['id'];
+	$shopId						= $currentCart['Cart']['shop_id'];
 
 	echo $this->element('checkout_information', array(
 		'is_shipping_included' => FALSE, 
 		'step' => 1,
-		'cart' => $currentCart,
 	));
 	
 
 	
 ?>
-<?php echo $this->Form->create('Order', array('url' => array('controller' => 'carts',
-							     'action' => 'view',
-							     'cart_uuid' => $cart_uuid)));?>
+<?php 
+	echo $this->Form->create('Order', array(
+		'url' => array(
+			'controller' 	=> 'carts',
+			'action' 		=> 'create_order',
+			'shop_id'		=> $shopId,
+			'cart_uuid' 	=> $cart_uuid
+	)));
+?>
 <div class="gray_background">
     <div><?php
     echo $this->Form->label('Contact Email');

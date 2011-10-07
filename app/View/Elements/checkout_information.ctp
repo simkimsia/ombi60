@@ -1,5 +1,14 @@
 <?php
+	if ($step == 2) {
+		$currentCart = array(
+			'Cart' 		=> $currentOrder['Order'],
+			'CartItem' 	=> $currentOrder['OrderLineItem']
+		);
+		$is_shipping_included 	= $currentOrder['Order']['shipping_required'];
+		$shipping_cost 			= $this->Number->currency($shippingFee, '$');
+	}
 	$totalAmountWithShipping = $currentCart['Cart']['amount'];
+	
 ?>
 <div id="checkout_warning">
     <?php echo $this->Html->image('lock.gif', array('class' => 'margin_right_5'));?>
@@ -26,7 +35,10 @@
                 <div class="left product_thumb">
                     <span class="font_bold"><?php echo $item['product_title']; ?></span>
                     <br />
-                    <span><?php echo $item['product_quantity'] . ' x ' . $item['product_price']; ?></span>
+                    <span><?php 
+							$price = $this->Number->currency($item['product_price'], '$');
+							echo $item['product_quantity'] . ' x ' . $price; 
+					?></span>
                 </div>
                 <div class="clear"></div>
             </li>
@@ -37,7 +49,7 @@
         </ul>
     </div>
     <div class="product_list_right">
-        <span class="bold_green">
+        <span id="totalAmountWithShipping" class="bold_green">
         <?php echo $total = $this->Number->format($totalAmountWithShipping, array('places' => 2, 'escape' => false, 'decimals' => '.', 'before' => '$'));
         ?>
         
@@ -46,7 +58,7 @@
         <?php
         if (isset($is_shipping_included) && $is_shipping_included) {
             ?>
-                <span class="red_text">including shipping for <span class="cost"><?php echo $shipping_cost?></span></span>
+                <span  class="red_text">including shipping for <span id="shippingFee" class="cost"><?php echo $shipping_cost?></span></span>
             <?php
         }
         ?>

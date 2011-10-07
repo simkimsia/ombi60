@@ -89,5 +89,6 @@ class ShopsPaymentModule extends AppModel {
 		return false;
 	}
 	
+	
 }
 ?>

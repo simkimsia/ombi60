@@ -82,7 +82,7 @@ class ProductFixture extends CakeTestFixture {
 			'created' => '2011-09-29 02:26:59',
 			'modified' => '2011-09-29 02:26:59',
 			'visible' => 1,
-			'weight' => '2000',
+			'weight' => '15000',
 			'currency' => 'SGD',
 			'shipping_required' => 1,
 			'vendor_id' => '0',

@@ -1,5 +1,5 @@
 <?php
-/* User Fixture generated on: 2011-10-05 05:45:45 : 1317793545 */
+/* User Fixture generated on: 2011-10-06 08:26:12 : 1317889572 */
 
 /**
  * UserFixture
@@ -62,6 +62,20 @@ class UserFixture extends CakeTestFixture {
 			'modified' => '2011-07-08 11:54:59',
 			'language_id' => '1',
 			'live_cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a'
+		),
+		array(
+			'id' => '3',
+			'email' => 'guest_customer@ombi60.com',
+			'password' => '6d29cb929f8cccd4db7d7d0963108a3d3c9650aa',
+			'group_id' => '4',
+			'full_name' => 'G. Cherry',
+			'name_to_call' => 'Cherry',
+			'last_login_on' => NULL,
+			'status' => 1,
+			'created' => '2011-10-06 16:04:05',
+			'modified' => '2011-10-06 16:04:14',
+			'language_id' => '1',
+			'live_cart_id' => NULL
 		),
 	);
 }
