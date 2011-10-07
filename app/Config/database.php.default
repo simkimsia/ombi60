@@ -2,23 +2,23 @@
 class DATABASE_CONFIG {
 
 	var $default = array(
-		'driver' => 'mysqli',
+		'datasource' => 'Database/Mysql',
 		'persistent' => true,
 		'host' => '127.0.0.1',
 		'login' => 'root',
 		'password' => '',
 		'database' => 's2s_new',
 	);
-	
+
 	var $test = array(
-		'driver' => 'mysqli',
+		'datasource' => 'Database/Mysql',
 		'persistent' => true,
 		'host' => '127.0.0.1',
 		'login' => 'root',
 		'password' => '',
 		'database' => 's2s_test'
 	);
-	
+
 	var $zendSearchLucene = array(
 		'datasource' => 'ZendSearchLucene',
 		'indexFile' => 'lucene', // stored in the cache dir.
@@ -27,3 +27,4 @@ class DATABASE_CONFIG {
 	);
 }
 ?>
+
