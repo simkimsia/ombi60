@@ -201,6 +201,12 @@ input{
 	margin-right:15px;
 }
 
+#contentInOverallContainer  .show_shipment_option div.radio_text {
+	margin-top: 13px;
+	margin-right:15px;
+	margin-bottom: 25px;
+}
+
 #contentInOverallContainer  .show_shipment_option div.radio {
 	margin-top:20px;
 }

@@ -11,25 +11,32 @@
 
 <!-- Gray table for shipping method -->
 <?php 
+
+	$urlArray = array(
+		'controller' => 'orders',
+		'action' => 'complete_payment',
+		'shop_id' => $shop_id,
+		'order_uuid' => $order_uuid
+	);
+	
+	$completePaymentUrl = $urlArray;
+	
 	echo $this->Form->create('Order', array(
-		'url' => array(
-			'controller' => 'orders',
-			'action' => 'complete_payment',
-			'shop_id' => $shop_id,
-			'order_uuid' => $order_uuid
-	)));
+		'url' => $completePaymentUrl
+	));
 ?>
 <div class="gray_background">
     <h2 class="border_bottom">Shipping method</h2>
     <div style="margin: 5px;">Please select how we deliver your products</div>
     <div class="show_shipment_option"><?php
     if ($displayShipment) {
-	
-		echo $this->Form->input('Shipment.shipping_rate_id', array(
-		    'options' => $shipmentOptions,
-			'label' => FALSE,
-			'type'	=> 'radio'
-		));
+		
+		$checked = 'checked="checked"';
+		foreach($shipmentOptions as $id=>$text) {
+			echo '<input id="ShipmentShippingRateId'.$id.'" type="radio" ' . $checked . ' value="'.$id.'" name="data[Shipment][shipping_rate_id]">';
+			echo '<div class="radio_text">' . $text . '</div>';
+			$checked = '';
+		}
 		
 		echo $this->Form->input('Shipment.order_id', array('type'=>'hidden', 'value' => $currentOrder['Order']['id']));
 	}
@@ -45,11 +52,13 @@
     <div class="show_shipment_option">
 <?php
 
-	echo $this->Form->input('Payment.shops_payment_module_id', array(
-	    'options' => $paymentOptions,
-		'label' => FALSE,
-		'type'	=> 'radio'
-	));
+
+	$checked = 'checked="checked"';
+	foreach($paymentOptions as $id=>$text) {
+		echo '<input id="PaymentShopsPaymentModuleId'.$id.'" type="radio" ' . $checked . ' value="'.$id.'" name="data[Payment][shops_payment_module_id]">';
+		echo '<div class="radio_text">' . $text . '</div>';
+		$checked = '';
+	}
 		
 	echo $this->Form->input('Payment.order_id', array('type'=>'hidden', 'value' => $currentOrder['Order']['id']));
 	            
@@ -63,7 +72,6 @@
 
 <script type="text/javascript">
 
- var orderId 	= '<?php echo $currentOrder['Order']['id']; ?>';
  var cartId		= '<?php echo $currentOrder['Order']['cart_id']; ?>';
  var shipRateId = '';
 
@@ -72,16 +80,22 @@
         $('input:radio[name=data\\[Shipment\\]\\[shipping_rate_id\\]]').click(function() {
 		shipRateId = this.value;
 
+		<?php 
+		$updatePricesUrl = $urlArray;
+		$updatePricesUrl['action'] = 'updatePrices';
+		?>
+		
 		$.ajax({
 			type: 'POST',
-			url: '<?php echo Router::url('updatePrices', true); ?>',
-			data: { order_id: orderId, cart_id: cartId, shipping_rate_id: shipRateId},
+			url: '<?php echo Router::url($updatePricesUrl, true); ?>',
+			data: { cart_id: cartId, shipping_rate_id: shipRateId},
 			success: function(data) {
 				var json_object = $.parseJSON(data);
 		
 				if (json_object.success) {
 					var contents = $.parseJSON(json_object.contents);
 					$('#totalAmountWithShipping').html(contents.totalAmountWithShipping);
+					$('#shippingFee').html(contents.shippingFee);
 				} else {
 					var contents = $.parseJSON(json_object.contents);
 					alert(contents.reason);

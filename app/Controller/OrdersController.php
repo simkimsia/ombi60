@@ -48,6 +48,12 @@ class OrdersController extends AppController {
 
 		$this->Auth->allow('checkout', 'checkout_step_1', 'success',  'pay', 'updatePrices');
 		
+		if ($this->request->action == 'updatePrices' ||
+			$this->request->action == 'complete_payment') {
+		
+			$this->Components->disable('Security');
+		}
+		
 		if ($this->request->action == 'admin_index') {
 			$this->Security->validatePost = false;
 		}
@@ -476,26 +482,25 @@ class OrdersController extends AppController {
 		$this->layout = 'json';
 		
 		// validate for cart_id, order_id, shipping_rate_id
-		if (!array_key_exists('cart_id', $this->request->params['form']) ||
-		    !array_key_exists('order_id', $this->request->params['form']) ||
-		    !array_key_exists('shipping_rate_id', $this->request->params['form'])
+		if (!array_key_exists('cart_id', $this->request->data) ||
+		    !$order_uuid ||
+		    !array_key_exists('shipping_rate_id', $this->request->data)
 		    ) {
 			$successJSON = false;
 			$contents['reason'] = __('Invalid parameters');
 		} else if ($this->request->params['isAjax']) {
-			$data = $this->Order->Cart->updatePricesInCartAndOrder($this->request->params['form']['cart_id'], $this->request->params['form']['order_id']);
+			$data = $this->Order->Cart->updatePricesInCartAndOrder($this->request->data['cart_id'], $order_uuid);
 			
 			if ($data) {
-				$price = $this->Order->Shop->ShippedToCountry->ShippingRate->field('price', array('id'=>$this->request->params['form']['shipping_rate_id']));
+				$price = $this->Order->Shop->ShippedToCountry->ShippingRate->field('price', array('id'=>$this->request->data['shipping_rate_id']));
 				$successJSON = true;
 				App::uses('NumberLib', 'UtilityLib.Lib');
-				$contents['totalAmountWithShipping'] = NumberLib::currency($data['Order']['amount'] + $price, 'SGD');
+				$contents['totalAmountWithShipping'] 	= NumberLib::currency($data['Order']['amount'] + $price, '$');
+				$contents['shippingFee']				= NumberLib::currency($price, '$');
 				
 			} else {
 				$contents['reason'] = __('Cannot update prices');
 			}
-			
-			
 		}
 		
 		$this->set(compact('contents', 'successJSON'));
