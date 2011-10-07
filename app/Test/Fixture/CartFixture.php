@@ -47,7 +47,7 @@ class CartFixture extends CakeTestFixture {
 			'total_weight' => '15000',
 			'currency' => 'SGD',
 			'shipped_amount' => '23.0000',
-			'shipped_weight' => '2000',
+			'shipped_weight' => '15000',
 			'past_checkout_point' => 0,
 			'cart_item_count' => '1',
 			'note' => NULL,

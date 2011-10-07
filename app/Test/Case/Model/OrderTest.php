@@ -90,13 +90,53 @@ class OrderTestCase extends CakeTestCase {
 	
 	/**
 	*
+	* where we use the data in $records and generate an array where the index is OrderLineItem
+	* and it contains all the corresponding OrderLineItem data
+	**/
+	private function getAllCartItemsAsOrderLineItemBelongingTo($orderId) {
+		$cartItemFixture 	= new CartItemFixture();
+		$records			= $cartItemFixture->records;
+		
+		$orderLineItemFixture 			= new OrderLineItemFixture();
+		$sizeOfRecordsInOrderLineItem 	= count($orderLineItemFixture->records);
+		
+		$orderLineItems = array();
+
+		// looping through the records
+		foreach($records as $cartItem) {
+			
+			$sizeOfRecordsInOrderLineItem++;			
+			
+			// add in fields and values unique to OrderLineItem
+			$orderLineItem['id']				= $sizeOfRecordsInOrderLineItem;
+			$orderLineItem['order_id'] 			= $orderId;
+			$orderLineItem['product_id']		= $cartItem['product_id'];
+			$orderLineItem['product_price']		= $cartItem['product_price'];
+			$orderLineItem['product_quantity']	= $cartItem['product_quantity'];
+			$orderLineItem['status'] 			= 1;
+			$orderLineItem['product_title'] 	= $cartItem['product_title'];
+			$orderLineItem['product_weight'] 	= $cartItem['product_weight'];
+			$orderLineItem['currency'] 			= $cartItem['currency'];
+			$orderLineItem['shipping_required'] = $cartItem['shipping_required'];
+			$orderLineItem['variant_id'] 		= $cartItem['variant_id'];
+			$orderLineItem['variant_title'] 	= $cartItem['variant_title'];
+			
+			$orderLineItems[]['OrderLineItem'] = $orderLineItem;
+		}
+		
+		return $orderLineItems;
+	}
+	
+	
+	/**
+	*
 	* check for OrderLineItem data to be valid
 	* @param string $orderId
 	* @return void
 	**/
 	private function orderLineItemsShouldBeValid($orderId) {
-		$cartItemFixture 	= new CartItemFixture();
-		$expected 			= $cartItemFixture->getAllAsOrderLineItemBelongingTo($orderId);
+
+		$expected = $this->getAllCartItemsAsOrderLineItemBelongingTo($orderId);
 		
 		$this->Order->OrderLineItem->recursive 	= -1;
 		
@@ -191,7 +231,7 @@ class OrderTestCase extends CakeTestCase {
 			'customer_id' => 1,
 			'billing_address_id' => 1,
 			'delivery_address_id' => 2,
-			'order_no' 	=> '10001',
+			'order_no' 	=> '10002',
 			'contact_email' => 'fake_customer@gmail.com'
 
 		);
@@ -213,10 +253,10 @@ class OrderTestCase extends CakeTestCase {
 				'cart_id'				=> '4e895a91-b374-4a1a-947c-0b701507707a',
 				'payment_status'		=> 0,
 				'fulfillment_status'	=> 1,
-				'shipped_weight'		=> 2000,
+				'shipped_weight'		=> 15000,
 				'shipped_amount'		=> '23.0000',
 				'currency'				=> 'SGD',
-				'total_weight'			=> 2000,
+				'total_weight'			=> 15000,
 				'past_checkout_point'	=> NULL,
 				'contact_email'			=> $expectedOptions['contact_email'],
 				'order_line_item_count'	=> 1,
@@ -301,7 +341,7 @@ class OrderTestCase extends CakeTestCase {
 		$expectedBillingAddressId	= 3;
 		$expectedDeliveryAddressId	= 4;
 		$expectedContactEmail 		= 'fake_customer@gmail.com';
-		$expectedOrderNo			= '10001';
+		$expectedOrderNo			= '10002';
 
 		// AND we get valid Order data
 		$this->Order->recursive = -1;
@@ -406,7 +446,7 @@ class OrderTestCase extends CakeTestCase {
 		$expectedBillingAddressId	= 3;
 		$expectedDeliveryAddressId	= 4;
 		$expectedContactEmail 		= 'guest_customer@ombi60.com';
-		$expectedOrderNo			= '10001';
+		$expectedOrderNo			= '10002';
 
 		// AND we get valid Order data
 		$this->Order->recursive = -1;
@@ -519,7 +559,7 @@ class OrderTestCase extends CakeTestCase {
 		$expectedBillingAddressId	= 1;
 		$expectedDeliveryAddressId	= 2;
 		$expectedContactEmail 		= 'guest_customer@ombi60.com';
-		$expectedOrderNo			= '10001';
+		$expectedOrderNo			= '10002';
 
 		// AND we get valid Order data
 		$this->Order->recursive = -1;

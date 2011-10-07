@@ -63,8 +63,8 @@
 
 <script type="text/javascript">
 
- var orderId 	= '<?php echo $orderData['Order']['id']; ?>';
- var cartId		= '<?php echo $orderData['Order']['cart_id']; ?>';
+ var orderId 	= '<?php echo $currentOrder['Order']['id']; ?>';
+ var cartId		= '<?php echo $currentOrder['Order']['cart_id']; ?>';
  var shipRateId = '';
 
     $(document).ready(function(){
