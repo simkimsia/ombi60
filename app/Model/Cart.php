@@ -78,6 +78,12 @@ class Cart extends AppModel {
 		
 	);
 	
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['shipping_required'] = sprintf('(%s.shipped_weight > 0)', $this->alias, $this->alias);
+	}
+	
+	
 	public function forCustomerOrCasual($check){
 		
 		
@@ -729,7 +735,7 @@ class Cart extends AppModel {
 		$products_key = Set::combine($items, '{n}.CartItem.id', '{n}.CartItem.product_id');
 		
 		// get live product data based on item list 
-		$products = $this->CartItem->Variant->Product->find('all',
+		$products = $this->CartItem->CheckedOutVariant->Product->find('all',
 			    array('conditions' => array(
 							'Product.id' => array_values($products_key)
 						    ),

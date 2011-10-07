@@ -25,7 +25,7 @@ class OrderTestCase extends CakeTestCase {
 		'app.casual_surfer', 'app.link_list', 'app.link', 
 		'app.blog', 'app.post', 'app.comment', 
 		'app.shops_payment_module', 'app.log', 'app.saved_theme',
-		'app.vendor', 'app.address',
+		'app.vendor', 'app.country'
 	);
 
 
@@ -75,7 +75,12 @@ class OrderTestCase extends CakeTestCase {
 		parent::tearDown();
 	}
 	
-	
+	/**
+	*
+	* check for id to be valid
+	* @param string $orderId
+	* @return void
+	**/
 	private function idShouldBeValid($orderId) {
 		// Should be a string
 		$this->assertTrue(is_string($orderId));
@@ -83,9 +88,55 @@ class OrderTestCase extends CakeTestCase {
 		$this->assertEquals(strlen($orderId), 36);
 	}
 	
-	private function orderLineItemsShouldBeValid($orderId) {
+	/**
+	*
+	* where we use the data in $records and generate an array where the index is OrderLineItem
+	* and it contains all the corresponding OrderLineItem data
+	**/
+	private function getAllCartItemsAsOrderLineItemBelongingTo($orderId) {
 		$cartItemFixture 	= new CartItemFixture();
-		$expected 			= $cartItemFixture->getAllAsOrderLineItemBelongingTo($orderId);
+		$records			= $cartItemFixture->records;
+		
+		$orderLineItemFixture 			= new OrderLineItemFixture();
+		$sizeOfRecordsInOrderLineItem 	= count($orderLineItemFixture->records);
+		
+		$orderLineItems = array();
+
+		// looping through the records
+		foreach($records as $cartItem) {
+			
+			$sizeOfRecordsInOrderLineItem++;			
+			
+			// add in fields and values unique to OrderLineItem
+			$orderLineItem['id']				= $sizeOfRecordsInOrderLineItem;
+			$orderLineItem['order_id'] 			= $orderId;
+			$orderLineItem['product_id']		= $cartItem['product_id'];
+			$orderLineItem['product_price']		= $cartItem['product_price'];
+			$orderLineItem['product_quantity']	= $cartItem['product_quantity'];
+			$orderLineItem['status'] 			= 1;
+			$orderLineItem['product_title'] 	= $cartItem['product_title'];
+			$orderLineItem['product_weight'] 	= $cartItem['product_weight'];
+			$orderLineItem['currency'] 			= $cartItem['currency'];
+			$orderLineItem['shipping_required'] = $cartItem['shipping_required'];
+			$orderLineItem['variant_id'] 		= $cartItem['variant_id'];
+			$orderLineItem['variant_title'] 	= $cartItem['variant_title'];
+			
+			$orderLineItems[]['OrderLineItem'] = $orderLineItem;
+		}
+		
+		return $orderLineItems;
+	}
+	
+	
+	/**
+	*
+	* check for OrderLineItem data to be valid
+	* @param string $orderId
+	* @return void
+	**/
+	private function orderLineItemsShouldBeValid($orderId) {
+
+		$expected = $this->getAllCartItemsAsOrderLineItemBelongingTo($orderId);
 		
 		$this->Order->OrderLineItem->recursive 	= -1;
 		
@@ -98,6 +149,15 @@ class OrderTestCase extends CakeTestCase {
 		$this->assertEquals($expected, $orderLineItems);		
 	}
 	
+	/**
+	*
+	* check for Customer data and User id to be valid
+	*
+	* @param integer $expectedCustomerId
+	* @param integer $expectedUserId
+	* @return void
+	*
+	**/
 	private function userCustomerShouldBeValid($expectedCustomerId, $expectedUserId) {
 
 		$this->Order->Customer->recursive = -1;
@@ -123,6 +183,13 @@ class OrderTestCase extends CakeTestCase {
 
 	}
 	
+	/**
+	*
+	* check for Address model data to be valid
+	*
+	* @param array $expectedAddressData
+	* @return void
+	**/
 	private function addressShouldBeValid($expectedAddressData) {
 		if ($expectedAddressData['type'] == BILLING) {
 			$modelName = 'BillingAddress';
@@ -150,40 +217,51 @@ class OrderTestCase extends CakeTestCase {
 	}
 	
 	
+	/**
+	*
+	* check the Order model data if it is valid
+	*
+	* @param array $resultArray
+	* @param array $expectedOptions
+	* @return void
+	**/
 	private function orderShouldBeValid($resultArray, $expectedOptions = array()) {
 		
 		$defaultOptions = array(
 			'customer_id' => 1,
 			'billing_address_id' => 1,
 			'delivery_address_id' => 2,
-			'order_no' 	=> '10001',
+			'order_no' 	=> '10002',
 			'contact_email' => 'fake_customer@gmail.com'
 
 		);
+		
 		
 		$expectedOptions = array_merge($defaultOptions, $expectedOptions);
 		
 		$expectedArray = array(
 			'Order' => array(
-				'id' => '4e8d35a1-a9e4-4732-858f-0b711507707a',
-				'shop_id' => 2,
-	            'customer_id' => $expectedOptions['customer_id'],
-	            'billing_address_id' => $expectedOptions['billing_address_id'],
-	            'delivery_address_id' => $expectedOptions['delivery_address_id'],
-				'order_no'			=> $expectedOptions['order_no'],
-				'created'	=> '2011-10-06 04:59:13',
-				'amount'	=> '23.0000',
-				'status'	=> 1,
-				'cart_id'	=> '4e895a91-b374-4a1a-947c-0b701507707a',
-				'payment_status'	=> 0,
+				'id' 					=> '4e8d35a1-a9e4-4732-858f-0b711507707a',
+				'shop_id' 				=> 2,
+	            'customer_id' 			=> $expectedOptions['customer_id'],
+	            'billing_address_id' 	=> $expectedOptions['billing_address_id'],
+	            'delivery_address_id' 	=> $expectedOptions['delivery_address_id'],
+				'order_no'				=> $expectedOptions['order_no'],
+				'created'				=> '2011-10-06 04:59:13',
+				'amount'				=> '23.0000',
+				'status'				=> 1,
+				'cart_id'				=> '4e895a91-b374-4a1a-947c-0b701507707a',
+				'payment_status'		=> 0,
 				'fulfillment_status'	=> 1,
-				'shipped_weight'	=> 2000,
-				'shipped_amount'	=> '23.0000',
-				'currency'			=> 'SGD',
-				'total_weight'	=> 2000,
+				'shipped_weight'		=> 15000,
+				'shipped_amount'		=> '23.0000',
+				'currency'				=> 'SGD',
+				'total_weight'			=> 15000,
 				'past_checkout_point'	=> NULL,
-				'contact_email'	=> $expectedOptions['contact_email'],
+				'contact_email'			=> $expectedOptions['contact_email'],
 				'order_line_item_count'	=> 1,
+				'delivered_to_country'	=> '192',
+				'shipping_required'		=> 1,
 			),
 			
 	
@@ -212,43 +290,18 @@ class OrderTestCase extends CakeTestCase {
 		}
 
 		$this->assertEquals($expectedCart, $resultCart);
-		
-/**
-		Array
-		(
-		    [Order] => Array
-		        (
-		            [id] => 4e8d35a1-a9e4-4732-858f-0b711507707a
-		            [shop_id] => 2
-		            [customer_id] => 1
-		            [billing_address_id] => 1
-		            [delivery_address_id] => 2
-		            [order_no] => 10001
-		            [created] => 2011-10-06 04:59:13
-		            [amount] => 0.0000 // fix this!!
-		            [status] => 1 
-		            [cart_id] => 4e895a91-b374-4a1a-947c-0b701507707a
-		            [payment_status] => 0
-		            [fulfillment_status] => 1
-		            [shipped_weight] => 0 // fix this!!
-		            [shipped_amount] => // fix this!!
-		            [currency] => SGD
-		            [total_weight] => 0.0000 // fix this!!
-		            [past_checkout_point] => // remove this!!
-		            [contact_email] => fake_customer@gmail.com
-		            [order_line_item_count] => 1
-		        )
-		        **/
-		
+				
 	}
 
 /**
- * testMakeThisPrimary method
+ * 
+ * Test createForm function for the scenario where we should have
+ * new Customer, new Addresses 
  *
  * @return void
  */
-	public function testShouldGenerateValidOrderUsingFunctionCreateForm() {
-				
+	public function testCreateFormShouldGiveNewCustomerNewAddresses() {
+			
 		// GIVEN valid order form data
 		$orderFormData = array(
 			'Order' => array(
@@ -279,19 +332,16 @@ class OrderTestCase extends CakeTestCase {
 		);
 
 
-		
-		
-		
 		// WHEN  createForm is executed on the valid order form data
 		$orderId = $this->Order->createFrom($orderFormData);
-
+		
 		// Then we expect the following
-		$expectedCustomerId 		= 1;
-		$expectedUserId 			= 3;
-		$expectedBillingAddressId	= 1;
-		$expectedDeliveryAddressId	= 2;
+		$expectedCustomerId 		= 2;
+		$expectedUserId 			= 4;
+		$expectedBillingAddressId	= 3;
+		$expectedDeliveryAddressId	= 4;
 		$expectedContactEmail 		= 'fake_customer@gmail.com';
-		$expectedOrderNo			= '10001';
+		$expectedOrderNo			= '10002';
 
 		// AND we get valid Order data
 		$this->Order->recursive = -1;
@@ -316,13 +366,13 @@ class OrderTestCase extends CakeTestCase {
 		// AND brand new addresses for Delivery and BILLING are generated to the right Customer
 		// for the right Order
 		$billingAddressExpected = array(
-			'id'			=> '1',
+			'id'			=> $expectedBillingAddressId,
 			'address'		=> '1234 St. Regis View #01-911',
 			'city'			=> 'Singapore',
 			'region'		=> '',
 			'zip_code'		=> '123456',
 			'country'		=> '192',
-			'customer_id'	=> '1',
+			'customer_id'	=> $expectedCustomerId,
 			'type'			=> BILLING,
 			'full_name'		=> 'Fake Full Name',	
 		);
@@ -330,20 +380,219 @@ class OrderTestCase extends CakeTestCase {
 		$this->addressShouldBeValid($billingAddressExpected);
 
 		$deliveryAddressExpected = array(
-			'id'			=> '2',
+			'id'			=> $expectedDeliveryAddressId,
 			'address'		=> '1234 St. Regis View #01-911',
 			'city'			=> 'Singapore',
 			'region'		=> '',
 			'zip_code'		=> '123456',
 			'country'		=> '192',
-			'customer_id'	=> '1',
+			'customer_id'	=> $expectedCustomerId,
 			'type'			=> DELIVERY,
 			'full_name'		=> 'Fake Full Name',	
 		);
 		
 		$this->addressShouldBeValid($deliveryAddressExpected);
-		
+	
 	}
+	
+
+	/**
+	 * 
+	 * Test createForm function for the scenario where we should have
+	 * created the form for existing Customer, new Addresses 
+	 *
+	 * @return void
+	 **/
+	public function testCreateFormShouldAttachToExistingCustomerNewAddresses() {
+
+		// GIVEN valid order form data
+		$orderFormData = array(
+			'Order' => array(
+				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+				'shop_id' => '2'
+			),
+			
+		// AND the billing address is brand new
+			'BillingAddress' => array(
+				'0' => array(
+					'full_name' => 'Fake Full Name',
+					'address'	=> '1234 St. Regis View #01-911',
+					'city'		=> 'Singapore',
+					'region'	=> '',
+					'zip_code'	=> '123456',
+					'country'	=> '192',
+					'type'		=> BILLING,
+				)
+			),
+			
+		// AND we want the delivery address to be the same as billing address
+			'DeliveryAddress' => array(
+				'same' => true,
+			),
+			
+		// AND this User exists as a Customer via supplying the email
+			'User' => array(
+				'email' =>  'guest_customer@ombi60.com',
+			)
+
+		);
+
+		// WHEN  createForm is executed on the valid order form data
+		$orderId = $this->Order->createFrom($orderFormData);
+
+		// Then we expect the following
+		$expectedCustomerId 		= 1;
+		$expectedUserId 			= 3;
+		$expectedBillingAddressId	= 3;
+		$expectedDeliveryAddressId	= 4;
+		$expectedContactEmail 		= 'guest_customer@ombi60.com';
+		$expectedOrderNo			= '10002';
+
+		// AND we get valid Order data
+		$this->Order->recursive = -1;
+		$order = $this->Order->read(null, $orderId);
+
+		$expected = array(
+			'customer_id' => $expectedCustomerId,
+			'billing_address_id' => $expectedBillingAddressId,
+			'delivery_address_id' => $expectedDeliveryAddressId,
+			'order_no' 	=> $expectedOrderNo,
+			'contact_email' => $expectedContactEmail,
+		);
+
+		$this->orderShouldBeValid($order, $expected);
+
+		// AND the Order has the correct OrderLineItem
+		$this->orderLineItemsShouldBeValid($orderId);
+
+		// AND a brand new Customer, User is generated
+		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
+
+		// AND brand new addresses for Delivery and BILLING are generated to the right Customer
+		// for the right Order
+		$billingAddressExpected = array(
+			'id'			=> $expectedBillingAddressId,
+			'address'		=> '1234 St. Regis View #01-911',
+			'city'			=> 'Singapore',
+			'region'		=> '',
+			'zip_code'		=> '123456',
+			'country'		=> '192',
+			'customer_id'	=> $expectedCustomerId,
+			'type'			=> BILLING,
+			'full_name'		=> 'Fake Full Name',	
+		);
+
+		$this->addressShouldBeValid($billingAddressExpected);
+
+		$deliveryAddressExpected = array(
+			'id'			=> $expectedDeliveryAddressId,
+			'address'		=> '1234 St. Regis View #01-911',
+			'city'			=> 'Singapore',
+			'region'		=> '',
+			'zip_code'		=> '123456',
+			'country'		=> '192',
+			'customer_id'	=> $expectedCustomerId,
+			'type'			=> DELIVERY,
+			'full_name'		=> 'Fake Full Name',	
+		);
+
+		$this->addressShouldBeValid($deliveryAddressExpected);
+
+	}	
+
+	/**
+	 * 
+	 * Test createForm function for the scenario where we should have
+	 * created the form for existing Customer and Addresses 
+	 *
+	 * @return void
+	 **/
+	public function testCreateFormShouldAttachToExistingCustomerAddresses() {
+
+		// GIVEN valid order form data
+		$orderFormData = array(
+			'Order' => array(
+				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+				'shop_id' => '2'
+			),
+			
+		// AND the billing address exists in database
+			'BillingAddress' => array(
+				'0' => array(
+					'address' => 'Billing Address St. Block 123 #01-911',
+					'city' => 'Singapore',
+					'zip_code' => '111111',
+					'country' => '192',
+					'region' => NULL,
+					'type' => BILLING,
+					'full_name' => 'G. Cherry'				
+				)
+			),
+			
+		// AND the delivery address exists in database
+			'DeliveryAddress' => array(
+				'same' => 0,
+				'0' => array(
+					'address' => 'Delivery Address Block 123 #01-911',
+					'city' => 'Singapore',
+					'zip_code' => '111111',
+					'country' => '192',
+					'region' => NULL,
+					'type' => DELIVERY,
+					'full_name' => 'G. Cherry'
+				)
+			),
+			
+		// AND this User exists as a Customer via supplying the email
+			'User' => array(
+				'email' =>  'guest_customer@ombi60.com',
+			)
+
+		);
+
+		// WHEN  createForm is executed on the valid order form data
+		$orderId = $this->Order->createFrom($orderFormData);
+
+		// Then we expect the following
+		$expectedCustomerId 		= 1;
+		$expectedUserId 			= 3;
+		$expectedBillingAddressId	= 1;
+		$expectedDeliveryAddressId	= 2;
+		$expectedContactEmail 		= 'guest_customer@ombi60.com';
+		$expectedOrderNo			= '10002';
+
+		// AND we get valid Order data
+		$this->Order->recursive = -1;
+		$order = $this->Order->read(null, $orderId);
+
+		$expected = array(
+			'customer_id' => $expectedCustomerId,
+			'billing_address_id' => $expectedBillingAddressId,
+			'delivery_address_id' => $expectedDeliveryAddressId,
+			'order_no' 	=> $expectedOrderNo,
+			'contact_email' => $expectedContactEmail,
+		);
+
+		$this->orderShouldBeValid($order, $expected);
+
+		// AND the Order has the correct OrderLineItem
+		$this->orderLineItemsShouldBeValid($orderId);
+
+		// AND a brand new Customer, User is generated
+		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
+
+		// AND existing addresses for Delivery and BILLING are generated to the right Customer
+		// for the right Order
+		$addressFixture = new AddressFixture();
+		
+		$billingAddressExpected = $addressFixture->records[0];
+		$this->addressShouldBeValid($billingAddressExpected);
+		
+		$deliveryAddressExpected = $addressFixture->records[1];
+		$this->addressShouldBeValid($deliveryAddressExpected);
+
+	}	
+
 
 	
 }

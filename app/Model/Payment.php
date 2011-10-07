@@ -98,5 +98,40 @@ class Payment extends AppModel {
 		return $this->query($escapedSql);
 		**/
 	}
+	
+	/**
+	*
+	* Get Payment Options for display in Checkout process
+	*
+	* @param integer $shop_id
+	* @return array Returns the array of Payment Options 
+	**/
+	public function getOptionsForCheckout($shop_id) {
+		$this->ShopsPaymentModule->recursive = -1;
+		
+		// retrieve all payment modes because payment mode is undecided
+		$shopsPaymentModules = $this->ShopsPaymentModule->find('list', array(
+			'conditions'=>array(
+				'ShopsPaymentModule.shop_id'=>$shop_id, 
+				'ShopsPaymentModule.active' => true
+			), 
+		));
+		
+		$options = array();
+		
+	    foreach ($shopsPaymentModules as $module_id => $payments) {
+			$pos = strpos($payments,'Paypal');
+            
+            if($pos === false) {
+            	$options[$module_id] = $payments;
+            }
+            else {
+             	$options[$module_id] = "<img src='/img/paypal.jpeg' style='float:left; margin-right: 5px;' />".$payments;
+            }
+	    }
+	
+		return $options;
+	}
+	
 }
 ?>

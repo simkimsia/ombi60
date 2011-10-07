@@ -153,19 +153,16 @@ class Customer extends AppModel {
 		return $this->saveAll($data, array('validate'=>'first'));
 	}
 	
-	public function getExistingByShopIdAndEmail($data = NULL) {
+	public function getExistingByShopIdAndEmail($orderFormData = NULL) {
 		
-		$this->recursive = -1;
-		$this->User->recursive = -1;
 		$this->Behaviors->attach('Linkable.Linkable');
-		$this->User->Behaviors->attach('Linkable.Linkable');
-		
-		if (isset($data['Order']['shop_id'])) {
-			$shopId = $data['Order']['shop_id'];
+
+		if (isset($orderFormData['Order']['shop_id'])) {
+			$shopId = $orderFormData['Order']['shop_id'];
 		}
 		
-		if (isset($data['User']['email'])) {
-			$userEmail = $data['User']['email'];
+		if (isset($orderFormData['User']['email'])) {
+			$userEmail = $orderFormData['User']['email'];
 		}
 		
 		$customer = $this->find('first', array(
@@ -181,6 +178,7 @@ class Customer extends AppModel {
 		if (empty($customer['Customer']['id'])) {
 			return false;
 		}
+		
 		$this->id = $customer['Customer']['id'];
 		return $customer['Customer']['id'];
 	}

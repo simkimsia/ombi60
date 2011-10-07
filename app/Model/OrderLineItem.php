@@ -15,13 +15,26 @@ class OrderLineItem extends AppModel {
 			'order' => ''
 		),
 
-		'Variant' => array(
+		'OrderedVariant' => array(
 			'className' => 'VariantModel',
 			'foreignKey' => 'variant_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		)
+	);
+	
+
+	public $hasOne = array(
+		'CoverImage' => array(
+			'className' => 'ProductImage',
+			'foreignKey' => false,
+			'conditions' => array(
+				'OrderLineItem.product_id = CoverImage.product_id',
+				'CoverImage.cover = 1'
+			)
+
+		),
 	);
 
 }

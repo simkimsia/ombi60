@@ -1,5 +1,5 @@
 <?php
-/* Order Fixture generated on: 2011-10-06 07:39:13 : 1317886753 */
+/* Order Fixture generated on: 2011-10-07 02:09:03 : 1317953343 */
 
 /**
  * OrderFixture
@@ -32,6 +32,7 @@ class OrderFixture extends CakeTestFixture {
 		'past_checkout_point' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'collate' => NULL, 'comment' => ''),
 		'contact_email' => array('type' => 'string', 'null' => true, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'order_line_item_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 5, 'collate' => NULL, 'comment' => ''),
+		'delivered_to_country' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 10, 'collate' => NULL, 'comment' => ''),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -42,5 +43,27 @@ class OrderFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+		array(
+			'id' => '4e8d8ef9-71a4-4a69-8dbf-04b01507707a',
+			'shop_id' => '2',
+			'customer_id' => '1',
+			'billing_address_id' => '3',
+			'delivery_address_id' => '4',
+			'order_no' => '10001',
+			'created' => '2011-10-06 11:20:25',
+			'amount' => '23.0000',
+			'status' => '1',
+			'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+			'payment_status' => '0',
+			'fulfillment_status' => '1',
+			'shipped_weight' => '15000',
+			'shipped_amount' => '23.0000',
+			'currency' => 'SGD',
+			'total_weight' => '15000',
+			'past_checkout_point' => 0,
+			'contact_email' => 'guest_customer@ombi60.com',
+			'order_line_item_count' => '1',
+			'delivered_to_country' => '192'
+		),
 	);
 }

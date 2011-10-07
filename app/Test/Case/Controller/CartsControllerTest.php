@@ -4,6 +4,7 @@ App::uses('CartsController', 'Controller');
 App::uses('User', 'Model');
 App::uses('Shop', 'Model');
 App::uses('Cart', 'Model');
+App::uses('Order', 'Model');
 
 /**
  * CoursesController Test Case
@@ -49,6 +50,7 @@ class CartsControllerTestCase extends ControllerTestCase {
 		$this->Shop 	= ClassRegistry::init('Shop');
 		$this->User 	= ClassRegistry::init('User');
 		$this->Cart		= ClassRegistry::init('Cart');
+		$this->Order	= ClassRegistry::init('Order');
 		
 		$cachedShopId = Shop::get('Shop.id');
 		
@@ -76,6 +78,8 @@ class CartsControllerTestCase extends ControllerTestCase {
 		unset($this->Shop);
 		unset($this->User);
 		unset($this->Cart);
+		unset($this->Order);
+		
 		ClassRegistry::flush();
 		
 		// this is to allow User singleton to work properly
@@ -200,7 +204,11 @@ class CartsControllerTestCase extends ControllerTestCase {
 		
 		$string = '/carts/2/' . User::get('User.live_cart_id') . '/create_order';
 		
-		$orderId = '11111111-1111-1111-1111-111111111111';
+		// this test will not work because we cannot get the order_uuid BEFORE we run the testAction
+		// hence we will use selenium as integrated test.
+		
+		/*
+		$orderId = '111111111-1111-1111-1111-111111111111';
 		
 		$this->controller->expects($this->once())->method('redirect')->with(array('controller' =>'orders', 'action' => 'pay', 'shop_id' => '2', 'order_uuid' => $orderId))->will($this->returnValue(true));
 
@@ -208,10 +216,13 @@ class CartsControllerTestCase extends ControllerTestCase {
 			'return' => 'contents',
 			'method' => 'POST'
 		));
+		*/
 
 		//$this->assertRegexp('#You are using our secure server#', $this->contents);
 		
 	}
+	
+
 	
 }
 ?>

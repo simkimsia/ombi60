@@ -5,6 +5,10 @@ class Order extends AppModel {
 	
 	public $actsAs = array('Filter.Filter');
 
+	public $virtualFields = array(
+		'shipping_required' => '(Order.shipped_weight > 0)'
+	);
+
 	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
@@ -72,6 +76,11 @@ class Order extends AppModel {
 			'order' => ''
 		),
 	);
+	
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['shipping_required'] = sprintf('(%s.shipped_weight > 0)', $this->alias, $this->alias);
+	}
 	
 	/**
 	 * this is a very specific operation where it converts the Cart data
@@ -443,9 +452,10 @@ class Order extends AppModel {
 			'OrderLineItem' => $cartData['CartItem']
 		);
 		
-		// finally we are going to create a brand NEW Order!!!
+		// finally we create the new Order!!
 		$this->create();
-		$result = $this->saveAll($data);
+		$result = $this->saveAssociated($data);
+		
 		
 		if (!$result) {
 			return false;
@@ -493,6 +503,20 @@ class Order extends AppModel {
 		return $orderFormData;
 	}
 	
+	/**
+	*
+	* Extract the delivery address country and insert into the Order Form Data
+	**/
+	private function markDeliveredToCountryInOrder($orderFormData) {
+
+		if (!is_blank($orderFormData['DeliveryAddress'][0]['country'])) {
+
+			$orderFormData['Order']['delivered_to_country'] = $orderFormData['DeliveryAddress'][0]['country'];
+		}
+		
+		return $orderFormData;
+	}
+	
 	
 	/**
 	*
@@ -514,6 +538,8 @@ class Order extends AppModel {
 		// then no change in $orderFormData
 		$orderFormData = $this->makeDeliveryBillingAddressesSameIn($orderFormData);
 		
+		$orderFormData = $this->markDeliveredToCountryInOrder($orderFormData);
+		
 		if ($buyingDoneByExistingCustomer) {
 			// need to set the id in Customer so that the Address related functions work
 			$this->Customer->id = $customerId;
@@ -531,11 +557,12 @@ class Order extends AppModel {
 			
 			if ($createNewDeliveryAddress) {
 				$deliveryAddressId = $this->Customer->setNewDeliveryAddress($orderFormData);
-			}
+			}			
 			
 		} elseif ($buyingDoneByNewCustomer) {
 			// create brand new customer based on supplied address data
 			$this->Customer->signupNewAccountDuringCheckout($orderFormData);
+			//$orderFormData = $this->prepareNewCustomerDataIn($orderFormData);
 			
 			$customerId = $this->Customer->id;
 			$billingAddressId = $this->Customer->BillingAddress->id;
@@ -543,11 +570,13 @@ class Order extends AppModel {
 			
 			
 		}
+		
 		// CONFIRM and RESOLVE the customer id
 		$orderFormData['Order']['customer_id'] = $customerId;
 		// CONFIRM and RESOLVE the address ids
 		$orderFormData['Order']['billing_address_id']  = $billingAddressId;
 		$orderFormData['Order']['delivery_address_id'] = $deliveryAddressId;
+		
 		
 		// CONFIRM and RESOLVE the contact_email
 		$orderFormData['Order']['contact_email'] = (isset($orderFormData['User']['email'])) ? $orderFormData['User']['email'] : '';
@@ -556,7 +585,57 @@ class Order extends AppModel {
 		
 	}
 	
-	
+	/**
+	* 
+	* Retrieve Order data with OrderLineItem data and CoverImage data.
+	* Format of array is
+	* array(
+	* 	'Order' => array('id'=>'4864-1234-1234-1111'...),
+	*	'OrderLineItem' => array(
+	*		'0' => array(
+	*			'id' => '1'
+	*			'cart_id' => '4864-1234-1234-1111',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*		'1' => array(
+	*			'id' => '2'
+	*			'cart_id' => '4864-1234-1234-1111',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*	)
+	* )
+	*
+	* @param string $order_uuid Order id
+	* @return array Returns Order data with OrderLineItem data and CoverImage data
+	**/
+	public function getItemsWithImages($order_uuid) {
+		
+		$this->OrderLineItem->unbindModel(array(
+			'belongsTo' => array(
+				'OrderedVariant'
+			)
+		));
+		
+		$items = $this->OrderLineItem->find('all', array(
+			'conditions' => array('OrderLineItem.order_id' => $order_uuid),
+			'link' => array('Order', 'CoverImage')
+		));
+
+		$orderData 	= Set::extract('0.Order', $items);
+		$itemsData 	= array();
+		foreach($items as $key=>$item) {
+			$item['OrderLineItem']['CoverImage'] 	= $item['CoverImage'];
+			$itemsData[]							= $item['OrderLineItem'];					
+		}
+		$orderData['OrderLineItem'] = $itemsData;
+		$currentOrder = array(
+			'Order' 		=> $orderData,
+			'OrderLineItem' => $itemsData
+		);
+		
+		return $currentOrder;
+	}
+
 
 }
 ?>

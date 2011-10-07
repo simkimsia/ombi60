@@ -48,6 +48,12 @@ class OrdersController extends AppController {
 
 		$this->Auth->allow('checkout', 'checkout_step_1', 'success',  'pay', 'updatePrices');
 		
+		if ($this->request->action == 'updatePrices' ||
+			$this->request->action == 'complete_payment') {
+		
+			$this->Components->disable('Security');
+		}
+		
 		if ($this->request->action == 'admin_index') {
 			$this->Security->validatePost = false;
 		}
@@ -341,161 +347,6 @@ class OrdersController extends AppController {
 		return $countryId;
 	}
 	
-	private function syncAddressCustomerOrder($options = array(), $PayPalRequest = false) {
-		// $customerId, $shopId, $hash,
-		$customerId = $options['customer_id'];
-		$shopId = $options['shop_id'];
-		$hash = $options['hash'];
-		// fix the paypal_payer_id for PPEC from Checkout Point
-		$paypalPayerId = '';
-		if (isset($options['paypal_payer_id'])) {
-			$paypalPayerId = $options['paypal_payer_id'];	
-		}
-		
-		$delivery_address_id = isset($options['delivery_address_id']) ? $options['delivery_address_id'] : 0;
-		
-		$result = true;
-		
-		// instantiate the Cart model
-		$cart = $this->Order->Customer->User->Cart;
-		// this chunk of if-else statement is to determine customer id
-		if ($this->request->data['Order']['customer_id'] > 0) {
-			$customerId = $this->request->data['Order']['customer_id'];
-			$this->Order->Customer->id = $customerId;
-		} else {
-			// check database for existing customer
-			$customerId = $this->Order->Customer->getExistingByShopIdAndEmail($this->request->data);
-			
-		}
-		
-		// use existing delivery address
-		if ($delivery_address_id > 0) {
-			$deliveryAddressId = $delivery_address_id;
-			$this->Order->Customer->id = $customerId;
-			// we go retrieve the delivery address and use its details for billing address
-			$billingAddressId = $this->Order->Customer->duplicateBillingAddressFromDeliveryAddress($delivery_address_id);
-			
-			if (!($deliveryAddressId > 0) OR !($billingAddressId > 0) OR !($customerId >0)) {
-				$result = false;
-			}
-			
-		} else {
-			
-			// duplicate the delivery address if same as billing address
-			if ($this->request->data['DeliveryAddress']['same']) {
-				$this->request->data['DeliveryAddress'] = $this->request->data['BillingAddress'];
-				$this->request->data['DeliveryAddress'][0]['type'] = DELIVERY;
-			}
-			
-			
-			
-			// if customer is existing in database
-			if ($customerId){
-				// retrieve addresses from database	
-				$billingAddressId = $this->Order->Customer->getExistingBillingAddress($this->request->data);
-				
-				$deliveryAddressId = $this->Order->Customer->getExistingDeliveryAddress($this->request->data);
-				
-				// if billing address does not exist in database, we will create new billing address
-				if (!$billingAddressId) {
-					
-					if ($this->Order->Customer->setNewBillingAddress($this->request->data)) {
-						$billingAddressId = $this->Order->Customer->BillingAddress->id;
-					} else {
-						$result = false;
-					}
-				}
-				
-				// if delivery address does not exist in database, we will create new delivery address
-				if (!$deliveryAddressId AND $billingAddressId) {
-					if ($this->Order->Customer->setNewDeliveryAddress($this->request->data)) {
-						$deliveryAddressId = $this->Order->Customer->DeliveryAddress->id;
-					} else {
-						$result = false;
-					}
-				}
-				
-				
-				
-			} else {
-				// we need to have a fullname for the user, so we take it from the billing address
-				$this->request->data['User']['full_name'] = $this->request->data['BillingAddress'][0]['full_name'];
-				$this->request->data['User']['name_to_call'] = $this->request->data['BillingAddress'][0]['full_name'];
-				// because we need to create brand new User so we need to create random password
-				$this->request->data['User']['password'] = AuthComponent::password($this->RandomString->generate());
-				// hackish code to pass the shop id into the uniqueEmailInShop validator
-				// read first few lines of uniqueEmailInShop method in User model
-				$this->request->data['User']['shop_id'] = $this->request->data['Customer']['shop_id'];
-				
-				$result = $this->Order->Customer->signupNewAccountDuringCheckout($this->request->data);
-				$customerId = $this->Order->Customer->id;
-				$billingAddressId = $this->Order->Customer->BillingAddress->field('id');
-				$deliveryAddressId = $this->Order->Customer->DeliveryAddress->field('id');
-				
-			}	
-		}
-		
-		// if at this point in time, we get a $result == false, it means something went wrong prior.
-		if (!$result) {
-			$this->Session->setFlash(__('The Order could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
-			
-		} else {
-		
-			// since all prepartory work is done, we can now start to save Order data.
-			$orderDetails = array();
-			
-			// store shop and customer ids
-			$orderDetails['shop_id']     = $shopId;
-			$orderDetails['customer_id'] = $customerId;
-	
-			// store the addresses id
-			$orderDetails['billing_address_id']  = $billingAddressId;
-			$orderDetails['delivery_address_id'] = $deliveryAddressId;
-			
-			// we fix the contact email on the order based on the email supplied in the form.
-			$orderDetails['contact_email'] = (isset($this->request->data['User']['email'])) ? $this->request->data['User']['email'] : '';
-				
-			// now we get the cart data again
-			$cartData = $cart->findByHash($hash);
-			
-			$orderDetails['amount'] = $cartData['Cart']['amount'];
-			
-			// convert the cart data to savable order data
-			$data = $this->Order->convertCart($cartData, $orderDetails);
-			
-			// now we save the order for the very first time!
-			$resultSet = 	$this->Order->saveForCheckoutStep1($data);
-			
-			if (is_array($resultSet) AND $resultSet['result']) {
-				// reconsider removing the cart data.
-				// incase user press back button to change address etc.
-				// or halfway user gets DC.
-				//$this->Order->removeCart($cartData['Cart']['id']);
-				
-				$orderHash = $resultSet['hash'];
-				
-				// need PayPalRequest to call DoExpressCheckout API
-				$this->Session->write('Shop.' . $shopId . '.confirmPage', array('PayPalRequest'=>$PayPalRequest,
-												'hash'=>$orderHash,
-												'amount'=>$orderDetails['amount'],
-												'shipped_amount'=>$data['Order']['shipped_amount'],
-												'shipped_weight'=>$data['Order']['shipped_weight'],
-												'shipping_required'=>$data['Order']['shipping_required'],
-												'paypal_payer_id' => $paypalPayerId));
-				
-				$this->redirect(array('action' => 'pay',
-						      'controller' => 'orders',
-						      'hash' => $orderHash,
-						      'shop_id' => $shopId));
-				
-				$this->Session->setFlash(__('The Order has been saved'), 'default', array('class'=>'flash_success'));
-				
-			} else {
-				$this->Session->setFlash(__('The Order could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
-			}
-			
-		}
-	}
 	
 	private function executeDECP($PayPalRequest, $shopId) {
 		
@@ -623,7 +474,7 @@ class OrdersController extends AppController {
 	}
 	
 	// expect $this->request->params to have cart_id, order_id, shipping_rate_id
-	public function updatePrices() {
+	public function updatePrices($shop_id = false, $order_uuid = false) {
 		
 		$successJSON = false;
 		$contents = array();
@@ -631,26 +482,25 @@ class OrdersController extends AppController {
 		$this->layout = 'json';
 		
 		// validate for cart_id, order_id, shipping_rate_id
-		if (!array_key_exists('cart_id', $this->request->params['form']) ||
-		    !array_key_exists('order_id', $this->request->params['form']) ||
-		    !array_key_exists('shipping_rate_id', $this->request->params['form'])
+		if (!array_key_exists('cart_id', $this->request->data) ||
+		    !$order_uuid ||
+		    !array_key_exists('shipping_rate_id', $this->request->data)
 		    ) {
 			$successJSON = false;
 			$contents['reason'] = __('Invalid parameters');
 		} else if ($this->request->params['isAjax']) {
-			$data = $this->Order->Cart->updatePricesInCartAndOrder($this->request->params['form']['cart_id'], $this->request->params['form']['order_id']);
+			$data = $this->Order->Cart->updatePricesInCartAndOrder($this->request->data['cart_id'], $order_uuid);
 			
 			if ($data) {
-				$price = $this->Order->Shop->ShippedToCountry->ShippingRate->field('price', array('id'=>$this->request->params['form']['shipping_rate_id']));
+				$price = $this->Order->Shop->ShippedToCountry->ShippingRate->field('price', array('id'=>$this->request->data['shipping_rate_id']));
 				$successJSON = true;
 				App::uses('NumberLib', 'UtilityLib.Lib');
-				$contents['totalAmountWithShipping'] = NumberLib::currency($data['Order']['amount'] + $price, 'SGD');
+				$contents['totalAmountWithShipping'] 	= NumberLib::currency($data['Order']['amount'] + $price, '$');
+				$contents['shippingFee']				= NumberLib::currency($price, '$');
 				
 			} else {
 				$contents['reason'] = __('Cannot update prices');
 			}
-			
-			
 		}
 		
 		$this->set(compact('contents', 'successJSON'));
@@ -659,8 +509,50 @@ class OrdersController extends AppController {
 	}
 	
 	public function pay($shop_id = false, $order_uuid = false) {
+		$this->layout = 'default';
 		
+		if ($this->request->is('get')) {
+			// use the given shop id to re-establish Shop data into session
+			Shop::store($this->Order->Shop->getById($shop_id));
+			
+			
+			// get Order data
+			$this->Order->id 	= $order_uuid;
+			$currentOrder 		= $this->Order->getItemsWithImages($order_uuid);
+			
+			// set up the shipping options
+			if ($currentOrder['Order']['shipping_required']) {
+				$shippedAmt 	= $currentOrder['Order']['shipped_amount'];
+				$shippedWeight 	= $currentOrder['Order']['shipped_weight'];				
+				$country		= $currentOrder['Order']['delivered_to_country'];
+				
+				$shipmentOptions = $this->Order->Shipment->getOptionsForCheckout($shippedAmt, $shippedWeight, $shop_id, $country);
+				
+				$shippingFee = $this->Order->Shipment->getPriceFromDisplayName(current($shipmentOptions));
+
+				$currentOrder['Order']['amount'] = $currentOrder['Order']['shipped_amount'] + $shippingFee;
+			}
+			
+			// set up the payment options
+			$paymentOptions = $this->Order->Payment->getOptionsForCheckout($shop_id);
+			
+			// populate view vars
+			$this->set(compact(
+				'currentOrder', 
+				'shipmentOptions', 
+				'shippingFee',
+				'paymentOptions'
+			));
+			
+		}
 	}
+	
+	public function complete_payment($shop_id = false, $order_uuid = false) {
+		$this->layout 		= 'default';
+		$this->autoRender 	= false;
+	}
+	
+	
 	public function pay_orig($shop_id, $hash) {
 		
 		$payPalShopsPaymentModuleId = $this->Order->Shop->getPayPalShopsPaymentModuleId($shop_id);
@@ -740,7 +632,12 @@ class OrdersController extends AppController {
 			} else {
 				// retrieve all payment modes because payment mode is undecided
 				$shopsPaymentModules = $paymentModuleInShop->find('list', array(
-				                                                           'conditions'=>array('ShopsPaymentModule.shop_id'=>$shop_id, 'ShopsPaymentModule.active' => true), ));
+					'conditions'=>array(
+						'ShopsPaymentModule.shop_id'=>$shop_id, 
+						'ShopsPaymentModule.active' => true
+					), 
+				));
+				
 			    foreach ($shopsPaymentModules as $module_id => $payments) {
 			        $pos = strpos($payments,'Paypal');
                     
