@@ -117,7 +117,7 @@
 		<!-- END OVERVIEW -->
 		<!-- START FOOTER -->
 		<div id="footer" class="clear">
-			<p>&copy; {{ "now" | date( "%Y" ) }} {{ shop.name | escape }}. Powered by <a href="http://www.shopify.com">Shopify</a>.</p>{% if linklists.footer_menu.links | length > 0 %}
+			<p>&copy; {{ "now" | date( "Y" ) }} {{ shop.name | escape }}. Powered by <a href="http://www.openmybusinessin60seconds.com">OMBI60</a>.</p>{% if linklists.footer_menu.links | length > 0 %}
 			<p class="links">{% for link in linklists.footer.links %}<a href="{{ link.url }}">{{ link.title | escape }}</a>{% if not forloop.last %} <span>&#124;</span> {% endif %}{% endfor %}</p>{% endif %}
 		</div>
 		<!-- END FOOTER -->

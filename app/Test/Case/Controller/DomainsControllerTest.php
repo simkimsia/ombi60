@@ -52,7 +52,6 @@ class DomainsControllerTestCase extends ControllerTestCase {
 		$this->testAction('/admin/domains/index', array('return' => 'contents'));
 		$this->assertRegexp('#<h2 class="text_center">Domains</h2>#', $this->contents);
 		$this->assertRegexp('#<td>http://localhost&nbsp;</td>#', $this->contents);
-		//$this->assertRegexp('#<td>test&nbsp;</td>#', $this->contents);
 	}
 
 	/**
