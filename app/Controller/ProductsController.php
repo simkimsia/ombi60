@@ -103,75 +103,7 @@ class ProductsController extends AppController {
 			$this->Session->setFlash(__($resultArray['message']), 'default', array('class'=>'flash_failure'));	
 		}
 		$this->redirect(array('action' => 'index'));
-	}
-	
-	public function checkout() {
-		// flag for paypal express checkout
-		$paypal = false;
-		$uuid = '';
-		
-		$userId = User::get('User.id');
-		
-		$cart = $this->cartModel->getLiveCartByUserId($userId, true);
-		$postFields = array();
-		
-		if ($this->request->is('post')) {
-			$shopId = Shop::get('Shop.id');
-			$count = $this->request->data['Product']['products_count'];
-			
-			if ($count > 0) {
-				
-				
-				$postFields['cart'] = $cart;
-				
-				$postFields['shopId'] = $shopId;
-				$postFields['userId'] = $userId;
-				$postFields['cancelURL'] = Router::url(array('controller'=>'products', 'action'=>'view_cart'), true);
-				
-				if(isset($this->request->params['form']['checkoutBtn'])) {
-					// user clicked the submit button named proceedToCheckout... so we'll do that
-					$postFields['paypal'] = 0;
-				} else if (isset($this->request->params['form']['checkout'])) {
-					$postFields['paypal'] = 1;
-					$paypal = true;
-				}
-				
-				$postFields['payments'] = $this->Session->read('Shop.' . $shopId . '.Payments');
-				$postFields['paymentAmount'] = $this->Session->read('Shop.' . $shopId . '.paymentAmount');
-				
-				// transfer the session over	
-				$postFields['uuid'] = $this->transferSession();
-				$PPRedirectURL = '';
-				
-				// 1 final check in database on whether paypal option is turned on
-				$paypalExpressOn = $this->Product->Shop->getPaypalExpressOn($shopId);
-				
-				
-				if ($paypal AND $paypalExpressOn AND isset($cart['Cart']['hash'])) {
-					$PayPalResult = $this->prepareSEC($postFields, $cart['Cart']['hash']);
-					//$this->log('productspreparesec');
-					//$this->log($PayPalResult);
-					$PPRedirectURL = $PayPalResult['REDIRECTURL'];
-				}
-				
-				// write the Payments to Session for the Paypal to work at the Payment Option stage
-				$this->Session->write('Shop.'.$shopId.'.Payments', $postFields['payments']);
-				
-				if(!$paypal) {
-					$step1Link = $this->makeCheckoutStep1Link($shopId, $cart['Cart']['hash'], $postFields['uuid']);
-					$this->redirect($step1Link);	
-				} else {
-					$this->redirect($PPRedirectURL);
-				}
-				
-			}
-			$this->Session->setFlash(__('You need to have products in your cart'), 'default', array('class'=>'flash_failure'));
-		}
-		
-		$this->redirect(array('action'=>'view_cart'));
-		
-	}
-	
+	}	
 	
 	private function prepareSEC($postFields, $hash) {
 		

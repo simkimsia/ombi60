@@ -46,10 +46,17 @@ class OrdersController extends AppController {
 		parent::beforeFilter();
 
 
-		$this->Auth->allow('checkout', 'checkout_step_1', 'success',  'pay', 'updatePrices');
+		$this->Auth->allow(
+			'checkout', 
+			'checkout_step_1', 
+			'success',  
+			'pay', 
+			'update_prices',
+			'complete_purchase');
 		
-		if ($this->request->action == 'updatePrices' ||
-			$this->request->action == 'complete_payment') {
+		if ($this->request->action == 'update_prices' ||
+			$this->request->action == 'complete_purchase' ||
+			$this->request->action == 'success') {
 		
 			$this->Components->disable('Security');
 		}
@@ -474,7 +481,7 @@ class OrdersController extends AppController {
 	}
 	
 	// expect $this->request->params to have cart_id, order_id, shipping_rate_id
-	public function updatePrices($shop_id = false, $order_uuid = false) {
+	public function update_prices($shop_id = false, $order_uuid = false) {
 		
 		$successJSON = false;
 		$contents = array();
@@ -547,9 +554,55 @@ class OrdersController extends AppController {
 		}
 	}
 	
-	public function complete_payment($shop_id = false, $order_uuid = false) {
+	public function complete_purchase($shop_id = false, $order_uuid = false) {
 		$this->layout 		= 'default';
 		$this->autoRender 	= false;
+		
+		if ($this->request->is('post')) {
+			$orderFormData = $this->request->data;
+			
+			$this->Order->id = $order_uuid;
+			
+			// 3 Step
+			// first we retrieve all relevant shipping rate data and attach the shipping rate data as shipment data
+			// second we format payment & shipment data as hasMany association
+			// finally we save
+			
+			// first retrieve the shipping rate based on shipping_rate_id
+			$rate = $this->Order->Shop->ShippedToCountry->ShippingRate->read(null, $orderFormData['Shipment']['shipping_rate_id']);
+			
+			// format the shipping rate data into shipment data
+			$result = $this->Order->extractShipmentDataFromShippingRate($rate);
+			if ($result) {
+				$orderFormData['Shipment'] = $result['Shipment'];
+			} else {
+				// something went wrong with shipment data
+				// redirect user back to pay page and ask them to contact owner for assistance
+			}
+			
+			// second, format payment data
+			$payment 					= array($orderFormData['Payment']);
+			$orderFormData['Payment'] 	= $payment;
+			
+			$shipment 					= array($orderFormData['Shipment']);
+			$orderFormData['Shipment'] 	= $shipment;
+				
+			// now we are going to save the Payment and Shipment rates
+			$result = $this->Order->completePurchase($orderFormData);
+			
+			if ($result) {
+				
+				
+				return $this->redirect(array(
+					'action' => 'success',
+					'shop_id'=> $shop_id
+				));
+			} else {
+				// redirect user back to pay page and ask them to contact owner for assistance
+			}
+		}
+		
+		//die();
 	}
 	
 	

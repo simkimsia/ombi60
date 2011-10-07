@@ -14,7 +14,7 @@
 
 	$urlArray = array(
 		'controller' => 'orders',
-		'action' => 'complete_payment',
+		'action' => 'complete_purchase',
 		'shop_id' => $shop_id,
 		'order_uuid' => $order_uuid
 	);
@@ -82,12 +82,12 @@
 
 		<?php 
 		$updatePricesUrl = $urlArray;
-		$updatePricesUrl['action'] = 'updatePrices';
+		$updatePricesUrl['action'] = 'update_prices';
 		?>
 		
 		$.ajax({
 			type: 'POST',
-			url: '<?php echo Router::url($updatePricesUrl, true); ?>',
+			url: '<?php echo Router::url($updatePricesUrl); ?>',
 			data: { cart_id: cartId, shipping_rate_id: shipRateId},
 			success: function(data) {
 				var json_object = $.parseJSON(data);

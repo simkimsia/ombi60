@@ -175,7 +175,7 @@ CREATE TABLE `cart_items` (
 
 /*Data for the table `cart_items` */
 
-insert  into `cart_items`(`id`,`cart_id`,`product_id`,`product_price`,`product_quantity`,`visible`,`product_title`,`product_weight`,`currency`,`shipping_required`,`previous_price`,`previous_currency`,`variant_id`,`variant_title`) values (1,'4e895a91-b374-4a1a-947c-0b701507707a',3,'23.0000',1,1,'test product with no pic and no collection',2000,'SGD',1,'23.0000','SGD',3,'Default Title');
+insert  into `cart_items`(`id`,`cart_id`,`product_id`,`product_price`,`product_quantity`,`visible`,`product_title`,`product_weight`,`currency`,`shipping_required`,`previous_price`,`previous_currency`,`variant_id`,`variant_title`) values (1,'4e895a91-b374-4a1a-947c-0b701507707a',3,'23.0000',1,1,'test product with no pic and no collection',15000,'SGD',1,'23.0000','SGD',3,'Default Title');
 
 /*Table structure for table `carts` */
 
@@ -201,7 +201,7 @@ CREATE TABLE `carts` (
 
 /*Data for the table `carts` */
 
-insert  into `carts`(`id`,`shop_id`,`user_id`,`created`,`amount`,`status`,`total_weight`,`currency`,`shipped_amount`,`shipped_weight`,`past_checkout_point`,`cart_item_count`,`note`,`attributes`) values ('4e895a91-b374-4a1a-947c-0b701507707a',2,2,'2011-10-01 05:16:44','23.0000',1,'2000','SGD','23.0000',2000,0,1,NULL,NULL);
+insert  into `carts`(`id`,`shop_id`,`user_id`,`created`,`amount`,`status`,`total_weight`,`currency`,`shipped_amount`,`shipped_weight`,`past_checkout_point`,`cart_item_count`,`note`,`attributes`) values ('4e895a91-b374-4a1a-947c-0b701507707a',2,2,'2011-10-01 05:16:44','23.0000',1,'15000','SGD','23.0000',15000,0,1,NULL,NULL);
 
 /*Table structure for table `casual_surfers` */
 
@@ -511,9 +511,11 @@ CREATE TABLE `order_line_items` (
   `variant_id` int(14) unsigned DEFAULT NULL,
   `variant_title` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `order_line_items` */
+
+insert  into `order_line_items`(`id`,`order_id`,`product_id`,`product_price`,`product_quantity`,`status`,`product_title`,`product_weight`,`currency`,`shipping_required`,`variant_id`,`variant_title`) values (1,'4e8d8ef9-71a4-4a69-8dbf-04b01507707a',3,'23.0000',1,1,'test product with no pic and no collection',15000,'SGD',1,3,'Default Title');
 
 /*Table structure for table `orders` */
 
@@ -543,6 +545,8 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `orders` */
+
+insert  into `orders`(`id`,`shop_id`,`customer_id`,`billing_address_id`,`delivery_address_id`,`order_no`,`created`,`amount`,`status`,`cart_id`,`payment_status`,`fulfillment_status`,`shipped_weight`,`shipped_amount`,`currency`,`total_weight`,`past_checkout_point`,`contact_email`,`order_line_item_count`) values ('4e8d8ef9-71a4-4a69-8dbf-04b01507707a',2,1,3,4,'10001','2011-10-06 11:20:25','23.0000',1,'4e895a91-b374-4a1a-947c-0b701507707a',0,1,15000,'23.0000','SGD',15000,0,'guest_customer@ombi60.com',1);
 
 /*Table structure for table `page_types` */
 
@@ -836,7 +840,7 @@ CREATE TABLE `products` (
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`visible`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`,`product_type_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,'dummy',0),(2,2,'Dummy Product',NULL,NULL,'11.0000','2011-07-08 11:54:47','2011-07-08 11:54:47',1,7000,'SGD',1,1,'dummy-product',1),(3,2,'test product with no pic and no collection',NULL,'<p>test</p>','23.0000','2011-09-29 02:26:59','2011-09-29 02:26:59',1,2000,'SGD',1,0,'test-product-with-no-pic-and-no-collection',0);
+insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`visible`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`,`product_type_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,'dummy',0),(2,2,'Dummy Product',NULL,NULL,'11.0000','2011-07-08 11:54:47','2011-07-08 11:54:47',1,7000,'SGD',1,1,'dummy-product',1),(3,2,'test product with no pic and no collection',NULL,'<p>test</p>','23.0000','2011-09-29 02:26:59','2011-09-29 02:26:59',1,15000,'SGD',1,0,'test-product-with-no-pic-and-no-collection',0);
 
 /*Table structure for table `products_in_groups` */
 
@@ -901,7 +905,7 @@ DROP TABLE IF EXISTS `shipments`;
 
 CREATE TABLE `shipments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) DEFAULT NULL,
+  `order_id` char(36) DEFAULT NULL,
   `completed` tinyint(1) unsigned DEFAULT '0',
   `name` varchar(255) NOT NULL DEFAULT '',
   `price` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
@@ -939,11 +943,11 @@ CREATE TABLE `shipping_rates` (
   `shipped_to_country_id` int(11) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shipping_rates` */
 
-insert  into `shipping_rates`(`id`,`name`,`price`,`shipped_to_country_id`,`description`) values (1,'Standard Shipping','10.000',2,'From 10kg to 20kg'),(2,'Heavy Duty Shipping','25.000',2,'From 20kg to 50kg'),(3,'Standard Shipping','10.000',3,'From 10kg to 20kg'),(4,'Heavy Duty','25.000',3,'From 20kg to 50kg'),(5,'Standard Shipping','10.000',4,'From 10kg to 20kg'),(6,'Heavy Duty','25.000',4,'From 20kg to 50kg');
+insert  into `shipping_rates`(`id`,`name`,`price`,`shipped_to_country_id`,`description`) values (1,'Standard Shipping','10.000',2,'From 10kg to 20kg'),(2,'Heavy Duty Shipping','25.000',2,'From 20kg to 50kg'),(3,'Standard Shipping','10.000',3,'From 10kg to 20kg'),(4,'Heavy Duty','25.000',3,'From 20kg to 50kg'),(5,'Standard Shipping','10.000',4,'From 10kg to 20kg'),(6,'Heavy Duty','25.000',4,'From 20kg to 50kg'),(7,'Standard Shipping Price-based','10.000',3,'From $20.00 and above');
 
 /*Table structure for table `shop_settings` */
 
