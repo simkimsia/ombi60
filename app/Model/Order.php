@@ -77,6 +77,11 @@ class Order extends AppModel {
 		),
 	);
 	
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['shipping_required'] = sprintf('(%s.shipped_weight > 0)', $this->alias, $this->alias);
+	}
+	
 	/**
 	 * this is a very specific operation where it converts the Cart data
 	 * into savable data array
@@ -451,6 +456,7 @@ class Order extends AppModel {
 		$this->create();
 		$result = $this->saveAssociated($data);
 		
+		
 		if (!$result) {
 			return false;
 		}
@@ -497,6 +503,20 @@ class Order extends AppModel {
 		return $orderFormData;
 	}
 	
+	/**
+	*
+	* Extract the delivery address country and insert into the Order Form Data
+	**/
+	private function markDeliveredToCountryInOrder($orderFormData) {
+
+		if (!is_blank($orderFormData['DeliveryAddress'][0]['country'])) {
+
+			$orderFormData['Order']['delivered_to_country'] = $orderFormData['DeliveryAddress'][0]['country'];
+		}
+		
+		return $orderFormData;
+	}
+	
 	
 	/**
 	*
@@ -517,6 +537,8 @@ class Order extends AppModel {
 		// if explicitly given different addresses for billing, delivery
 		// then no change in $orderFormData
 		$orderFormData = $this->makeDeliveryBillingAddressesSameIn($orderFormData);
+		
+		$orderFormData = $this->markDeliveredToCountryInOrder($orderFormData);
 		
 		if ($buyingDoneByExistingCustomer) {
 			// need to set the id in Customer so that the Address related functions work

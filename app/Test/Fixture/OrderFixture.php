@@ -1,5 +1,5 @@
 <?php
-/* Order Fixture generated on: 2011-10-06 07:39:13 : 1317886753 */
+/* Order Fixture generated on: 2011-10-07 01:59:42 : 1317952782 */
 
 /**
  * OrderFixture
@@ -32,6 +32,7 @@ class OrderFixture extends CakeTestFixture {
 		'past_checkout_point' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'collate' => NULL, 'comment' => ''),
 		'contact_email' => array('type' => 'string', 'null' => true, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'order_line_item_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 5, 'collate' => NULL, 'comment' => ''),
+		'delivered_to_country' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 10, 'collate' => NULL, 'comment' => ''),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -42,5 +43,6 @@ class OrderFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+
 	);
 }
