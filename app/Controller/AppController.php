@@ -108,7 +108,7 @@ class AppController extends Controller {
 		if (Configure::read('Auth.allowAll')) {
 			$this->Auth->allow('*');
 		}
-
+		
 		/**
 		 *for Acl
 		 **/
@@ -344,14 +344,13 @@ class AppController extends Controller {
 
 			}
 		}
-
-		$localhostDomain = (strpos(FULL_BASE_URL, '.localhost') > 0);
-
+		
+		//DISABLED TO TEST WITHOUT SSL 10/07/2011
 		// if its admin or an ssl action, we want to force SSL on production or staging server
-		if ((isset($this->request->params['admin']) && !$localhostDomain) || (!$localhostDomain && array_key_exists($this->request->params['controller'], $this->sslActions) && in_array($this->request->params['action'], $this->sslActions[$this->request->params['controller']]))) {
+		/*if ((isset($this->request->params['admin']) && !$localhostDomain) || (!$localhostDomain && array_key_exists($this->request->params['controller'], $this->sslActions) && in_array($this->request->params['action'], $this->sslActions[$this->request->params['controller']]))) {
 			$this->Security->blackHoleCallback = 'forceSSL';
 			$this->Security->requireSecure();
-		}
+		} */
 		// set the weight unit for shop
 		App::uses('ConstantHelper', 'View/Helper');
 		//@todo fix this helper call
