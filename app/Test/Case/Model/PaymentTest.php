@@ -81,9 +81,12 @@ class PaymentTestCase extends CakeTestCase {
 	*
 	**/
 	public function testGetOptionsForCheckoutShouldGrabRelevantOptions() {
+		// GIVEN that we want to get all the relevant payment options for shop 2
 		
+		// WHEN we run the getOptionsForCheckout
 		$actualOptions = $this->Payment->getOptionsForCheckout(2);
 		
+		// THEN we get back Cash On Delivery as the only option
 		$expectedOptions = array(
 			'1' => 'Cash On Delivery',
 		);

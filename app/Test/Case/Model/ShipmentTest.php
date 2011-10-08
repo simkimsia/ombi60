@@ -78,29 +78,43 @@ class ShipmentTestCase extends CakeTestCase {
 	}
 	
 	
-	
+	/**
+	*
+	* test the getOptionsForCheckout method
+	*
+	**/
 	public function testGetOptionsForCheckoutShouldGrabRelevantOptions() {
+		//GIVEN that the following we want to buy goods weighing 15kg, $23 and shipped to Singapore
 		$shippedAmount 	= 23.00;
 		$shippedWeight 	= 15000;
 		$shop_id		= 2;
 		$country		= 192;
 		
+		// WHEN we run the method
+		$actualOptions = $this->Shipment->getOptionsForCheckout($shippedAmount, $shippedWeight, $shop_id, $country);
+
+		// THEN we get back 1 price based and 1 weight based rate as follows
 		$expectedOptions = array(
 			'3'	=> 'Standard Shipping - $10.00',
 			'7'	=> 'Standard Shipping Price-based - $5.00',
-		);
-		
-		$actualOptions = $this->Shipment->getOptionsForCheckout($shippedAmount, $shippedWeight, $shop_id, $country);
-		
+		);		
 		$this->assertEquals($expectedOptions, $actualOptions);
 	}
-	
+
+	/**
+	*
+	* test the getPriceFromDisplayName method
+	*
+	**/	
 	public function testGetPriceFromDisplayNameShouldExtractPrice() {
-		
+		// GIVEN we have just this shipment option display name
 		$displayName 	= 'Standard Shipping - $10.00';
-		$actualPrice 	= $this->Shipment->getPriceFromDisplayName($displayName);
-		$expectedPrice	= '10.00';
 		
+		// WHEN we run the getPriceFromDisplayName
+		$actualPrice 	= $this->Shipment->getPriceFromDisplayName($displayName);
+
+		// THEN we get back 10.00
+		$expectedPrice	= '10.00';
 		$this->assertEquals($expectedPrice, $actualPrice);
 	}
 

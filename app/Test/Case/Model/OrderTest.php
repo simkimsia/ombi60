@@ -25,7 +25,9 @@ class OrderTestCase extends CakeTestCase {
 		'app.casual_surfer', 'app.link_list', 'app.link', 
 		'app.blog', 'app.post', 'app.comment', 
 		'app.shops_payment_module', 'app.log', 'app.saved_theme',
-		'app.vendor', 'app.country'
+		'app.vendor', 'app.country', 'app.shipment', 
+		'app.shipping_rate',
+		'app.shipped_to_country', 
 	);
 
 
@@ -599,6 +601,28 @@ class OrderTestCase extends CakeTestCase {
 	}
 	
 	public function testExtractShipmentDataFromShippingRateShouldWork() {
+		// Given that we use Shipping Rate 7 as the shipping rate data for input
+		$shippingRateFixture 	= new ShippingRateFixture();
+		$shippingRate 			= $shippingRateFixture->records[6];
+		
+		// WHEN we run the function
+		$shipmentData = $this->Order->extractShipmentDataFromShippingRate(array(
+			'ShippingRate' => $shippingRate,
+		));
+		
+		// THEN we get the following
+		
+		$expectedShipmentData = array(
+			'Shipment' => array(
+				'shipping_rate_id' => $shippingRate['id'],
+				'name'				=> $shippingRate['name'],
+				'description'		=> $shippingRate['description'],
+				'price'				=> $shippingRate['price'],
+				
+			)
+		);
+		
+		$this->assertEquals($expectedShipmentData,$shipmentData);
 		
 	}
 	
@@ -606,8 +630,70 @@ class OrderTestCase extends CakeTestCase {
 		
 	}
 	
+	/**
+	* 
+	* test the CloseTheCart method on a originally opened cart
+	*
+	**/
 	public function testCloseTheCartShouldWork() {
+		$cartFixture = new CartFixture();
+		$currentCart = $cartFixture->records[0];
+		// Given that the cart currently is NOT closed
+		$this->assertEquals(0, $currentCart['past_checkout_point']);
 		
+		// When we run the closeThisCart method
+		$resultArray = $this->Order->closeTheCart('4e8d8ef9-71a4-4a69-8dbf-04b01507707a');
+
+		// THEN the result returns an array
+		$expectedArray = array(
+			'Cart' => array(
+				'past_checkout_point' => true
+		    )
+		);
+
+
+		$this->assertEquals($expectedArray, $resultArray);
+		
+		// AND the cart is closed
+		$this->Order->Cart->id = '4e895a91-b374-4a1a-947c-0b701507707a';
+
+		$this->assertEquals(true, $this->Order->Cart->field('past_checkout_point'));
+		
+		
+	}
+	
+	/**
+	*
+	* test CloseTheCart should still return successful result even when the said cart is closed
+	*
+	**/
+	public function testCloseTheCartShouldReturnTrueEvenWhenAlreadyClosed() {
+
+		// GIVEN that the cart is already closed the function is idempotent
+		$this->Order->Cart->id = '4e895a91-b374-4a1a-947c-0b701507707a';
+		$this->Order->Cart->saveField('past_checkout_point', true);
+		$this->assertTrue($this->Order->Cart->field('past_checkout_point'));
+
+		// WHEN we run closeTheCart despite the Cart being already closed
+		$resultArray = $this->Order->closeTheCart('4e8d8ef9-71a4-4a69-8dbf-04b01507707a');
+
+		// THEN the result returns an array
+		$expectedArray = array(
+			'Cart' => array(
+				'past_checkout_point' => true
+		    )
+		);
+
+
+		$this->assertEquals($expectedArray, $resultArray);
+		
+		// AND the cart remains closed
+		$this->Order->Cart->id = '4e895a91-b374-4a1a-947c-0b701507707a';
+
+		$this->assertEquals(true, $this->Order->Cart->field('past_checkout_point'));
+		
+		
+
 	}
 
 

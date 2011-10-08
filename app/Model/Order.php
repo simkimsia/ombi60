@@ -323,8 +323,10 @@ class Order extends AppModel {
 		$this->Cart->id = $cartId;
 
 		// we use save and not saveField because saveField is not idempotent
-		$result = $this->Cart->save(array('past_checkout_point', true));
-
+		$result = $this->Cart->save(array(
+			'past_checkout_point'=>true
+		));
+	
 		return $result;
 	}
 		
