@@ -74,7 +74,7 @@ class ShippingRateFixture extends CakeTestFixture {
 			'id' => '7',
 			'name' => 'Standard Shipping Price-based',
 			'price' => '5.000',
-			'shipped_to_country_id' => '4',
+			'shipped_to_country_id' => '3',
 			'description' => 'From $10.00 and above'
 		),
 	);
