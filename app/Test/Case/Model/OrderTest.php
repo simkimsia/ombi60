@@ -597,7 +597,10 @@ class OrderTestCase extends CakeTestCase {
 	
 	
 	public function testGetItemsWithImagesShouldContainRightItemsAndImages() {
-		
+		// Given that we have the order_uuid
+		$order_uuid = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a';
+		$resultArray = $this->Order->getItemsWithImages($order_uuid);
+		debug($resultArray);
 	}
 	
 	public function testExtractShipmentDataFromShippingRateShouldWork() {
