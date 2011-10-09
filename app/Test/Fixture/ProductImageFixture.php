@@ -39,7 +39,7 @@ class ProductImageFixture extends CakeTestFixture {
 			'created' => '2010-05-20 07:59:19',
 			'modified' => '2010-05-20 07:59:19',
 			'filename' => 'default.jpg',
-			'dir' => 'uploads\\products',
+			'dir' => 'uploads/products',
 			'mimetype' => 'image/jpeg',
 			'filesize' => '6103'
 		),

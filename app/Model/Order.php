@@ -699,6 +699,11 @@ class Order extends AppModel {
 				'OrderedVariant'
 			)
 		));
+
+		// We need to do this convoluted way because we had difficulty retrieving
+		// the correct CoverImage when we do a $this->find('first', array(
+		//	 'contain' => array('OrderLineItem' => 'CoverImage')
+		//	))
 		
 		$items = $this->OrderLineItem->find('all', array(
 			'conditions' => array('OrderLineItem.order_id' => $order_uuid),
@@ -711,7 +716,7 @@ class Order extends AppModel {
 			$item['OrderLineItem']['CoverImage'] 	= $item['CoverImage'];
 			$itemsData[]							= $item['OrderLineItem'];					
 		}
-		$orderData['OrderLineItem'] = $itemsData;
+
 		$currentOrder = array(
 			'Order' 		=> $orderData,
 			'OrderLineItem' => $itemsData

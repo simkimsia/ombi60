@@ -784,7 +784,7 @@ CREATE TABLE `product_images` (
 
 /*Data for the table `product_images` */
 
-insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads\\products','image/jpeg',6103),(2,2,1,'2011-07-08 11:54:47','2011-07-08 11:54:47','default-0.jpg','uploads/products','image/jpeg',6103);
+insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads/products','image/jpeg',6103),(2,2,1,'2011-07-08 11:54:47','2011-07-08 11:54:47','default-0.jpg','uploads/products','image/jpeg',6103);
 
 /*Table structure for table `product_options` */
 

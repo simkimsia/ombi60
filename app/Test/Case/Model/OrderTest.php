@@ -95,7 +95,7 @@ class OrderTestCase extends CakeTestCase {
 	* where we use the data in $records and generate an array where the index is OrderLineItem
 	* and it contains all the corresponding OrderLineItem data
 	**/
-	private function getAllCartItemsAsOrderLineItemBelongingTo($orderId) {
+	private function getAllCartItemsAsOrderLineItemBelongingTo($orderId, $cartId) {
 		$cartItemFixture 	= new CartItemFixture();
 		$records			= $cartItemFixture->records;
 		
@@ -107,23 +107,26 @@ class OrderTestCase extends CakeTestCase {
 		// looping through the records
 		foreach($records as $cartItem) {
 			
-			$sizeOfRecordsInOrderLineItem++;			
-			
-			// add in fields and values unique to OrderLineItem
-			$orderLineItem['id']				= $sizeOfRecordsInOrderLineItem;
-			$orderLineItem['order_id'] 			= $orderId;
-			$orderLineItem['product_id']		= $cartItem['product_id'];
-			$orderLineItem['product_price']		= $cartItem['product_price'];
-			$orderLineItem['product_quantity']	= $cartItem['product_quantity'];
-			$orderLineItem['status'] 			= 1;
-			$orderLineItem['product_title'] 	= $cartItem['product_title'];
-			$orderLineItem['product_weight'] 	= $cartItem['product_weight'];
-			$orderLineItem['currency'] 			= $cartItem['currency'];
-			$orderLineItem['shipping_required'] = $cartItem['shipping_required'];
-			$orderLineItem['variant_id'] 		= $cartItem['variant_id'];
-			$orderLineItem['variant_title'] 	= $cartItem['variant_title'];
-			
-			$orderLineItems[]['OrderLineItem'] = $orderLineItem;
+			if ($cartItem['cart_id'] == $cartId)  {
+				$sizeOfRecordsInOrderLineItem++;			
+
+				// add in fields and values unique to OrderLineItem
+				$orderLineItem['id']				= $sizeOfRecordsInOrderLineItem;
+				$orderLineItem['order_id'] 			= $orderId;
+				$orderLineItem['product_id']		= $cartItem['product_id'];
+				$orderLineItem['product_price']		= $cartItem['product_price'];
+				$orderLineItem['product_quantity']	= $cartItem['product_quantity'];
+				$orderLineItem['status'] 			= 1;
+				$orderLineItem['product_title'] 	= $cartItem['product_title'];
+				$orderLineItem['product_weight'] 	= $cartItem['product_weight'];
+				$orderLineItem['currency'] 			= $cartItem['currency'];
+				$orderLineItem['shipping_required'] = (boolean)$cartItem['shipping_required'];
+				$orderLineItem['variant_id'] 		= $cartItem['variant_id'];
+				$orderLineItem['variant_title'] 	= $cartItem['variant_title'];
+
+				$orderLineItems[]['OrderLineItem'] = $orderLineItem;
+				
+			}
 		}
 		
 		return $orderLineItems;
@@ -133,12 +136,13 @@ class OrderTestCase extends CakeTestCase {
 	/**
 	*
 	* check for OrderLineItem data to be valid
+	*
 	* @param string $orderId
 	* @return void
 	**/
-	private function orderLineItemsShouldBeValid($orderId) {
+	private function orderLineItemsShouldBeValid($orderId, $cartId, $coverImage = false) {
 
-		$expected = $this->getAllCartItemsAsOrderLineItemBelongingTo($orderId);
+		$expected = $this->getAllCartItemsAsOrderLineItemBelongingTo($orderId, $cartId);
 		
 		$this->Order->OrderLineItem->recursive 	= -1;
 		
@@ -147,9 +151,10 @@ class OrderTestCase extends CakeTestCase {
 				'order_id' => $orderId,
 			)
 		));
-
+		
 		$this->assertEquals($expected, $orderLineItems);		
 	}
+	
 	
 	/**
 	*
@@ -233,7 +238,7 @@ class OrderTestCase extends CakeTestCase {
 			'customer_id' => 1,
 			'billing_address_id' => 1,
 			'delivery_address_id' => 2,
-			'order_no' 	=> '10002',
+			'order_no' 	=> '10003',
 			'contact_email' => 'fake_customer@gmail.com'
 
 		);
@@ -269,6 +274,12 @@ class OrderTestCase extends CakeTestCase {
 	
 		);		
 		
+		$this->expectedOrderShouldMatchActualOrder($expectedArray, $resultArray);
+				
+	}
+	
+	
+	private function expectedOrderShouldMatchActualOrder($expectedArray, $resultArray) {
 		$fieldsExpectedToBeDifferent = array('created', 'id');
 
 		$resultCart 	= $resultArray['Order'];
@@ -289,12 +300,11 @@ class OrderTestCase extends CakeTestCase {
 
 			unset($resultCart[$field]);
 			unset($expectedCart[$field]);
+						
 		}
 
 		$this->assertEquals($expectedCart, $resultCart);
-				
 	}
-
 /**
  * 
  * Test createForm function for the scenario where we should have
@@ -305,9 +315,11 @@ class OrderTestCase extends CakeTestCase {
 	public function testCreateFormShouldGiveNewCustomerNewAddresses() {
 			
 		// GIVEN valid order form data
+		$cart_uuid = '4e895a91-b374-4a1a-947c-0b701507707a';
+		
 		$orderFormData = array(
 			'Order' => array(
-				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+				'cart_id' => $cart_uuid,
 				'shop_id' => '2'
 			),
 		// AND the billing address is brand new
@@ -343,7 +355,7 @@ class OrderTestCase extends CakeTestCase {
 		$expectedBillingAddressId	= 3;
 		$expectedDeliveryAddressId	= 4;
 		$expectedContactEmail 		= 'fake_customer@gmail.com';
-		$expectedOrderNo			= '10002';
+		$expectedOrderNo			= '10003';
 
 		// AND we get valid Order data
 		$this->Order->recursive = -1;
@@ -360,7 +372,7 @@ class OrderTestCase extends CakeTestCase {
 		$this->orderShouldBeValid($order, $expected);
 		
 		// AND the Order has the correct OrderLineItem
-		$this->orderLineItemsShouldBeValid($orderId);
+		$this->orderLineItemsShouldBeValid($orderId, $cart_uuid);
 		
 		// AND a brand new Customer, User is generated
 		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
@@ -408,9 +420,10 @@ class OrderTestCase extends CakeTestCase {
 	public function testCreateFormShouldAttachToExistingCustomerNewAddresses() {
 
 		// GIVEN valid order form data
+		$cart_uuid = '4e895a91-b374-4a1a-947c-0b701507707a';
 		$orderFormData = array(
 			'Order' => array(
-				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+				'cart_id' => $cart_uuid,
 				'shop_id' => '2'
 			),
 			
@@ -448,7 +461,7 @@ class OrderTestCase extends CakeTestCase {
 		$expectedBillingAddressId	= 3;
 		$expectedDeliveryAddressId	= 4;
 		$expectedContactEmail 		= 'guest_customer@ombi60.com';
-		$expectedOrderNo			= '10002';
+		$expectedOrderNo			= '10003';
 
 		// AND we get valid Order data
 		$this->Order->recursive = -1;
@@ -465,7 +478,7 @@ class OrderTestCase extends CakeTestCase {
 		$this->orderShouldBeValid($order, $expected);
 
 		// AND the Order has the correct OrderLineItem
-		$this->orderLineItemsShouldBeValid($orderId);
+		$this->orderLineItemsShouldBeValid($orderId, $cart_uuid);
 
 		// AND a brand new Customer, User is generated
 		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
@@ -512,9 +525,10 @@ class OrderTestCase extends CakeTestCase {
 	public function testCreateFormShouldAttachToExistingCustomerAddresses() {
 
 		// GIVEN valid order form data
+		$cart_uuid = '4e895a91-b374-4a1a-947c-0b701507707a';
 		$orderFormData = array(
 			'Order' => array(
-				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+				'cart_id' => $cart_uuid,
 				'shop_id' => '2'
 			),
 			
@@ -525,7 +539,7 @@ class OrderTestCase extends CakeTestCase {
 					'city' => 'Singapore',
 					'zip_code' => '111111',
 					'country' => '192',
-					'region' => NULL,
+					'region' => '',
 					'type' => BILLING,
 					'full_name' => 'G. Cherry'				
 				)
@@ -539,7 +553,7 @@ class OrderTestCase extends CakeTestCase {
 					'city' => 'Singapore',
 					'zip_code' => '111111',
 					'country' => '192',
-					'region' => NULL,
+					'region' => '',
 					'type' => DELIVERY,
 					'full_name' => 'G. Cherry'
 				)
@@ -561,7 +575,7 @@ class OrderTestCase extends CakeTestCase {
 		$expectedBillingAddressId	= 1;
 		$expectedDeliveryAddressId	= 2;
 		$expectedContactEmail 		= 'guest_customer@ombi60.com';
-		$expectedOrderNo			= '10002';
+		$expectedOrderNo			= '10003';
 
 		// AND we get valid Order data
 		$this->Order->recursive = -1;
@@ -578,7 +592,7 @@ class OrderTestCase extends CakeTestCase {
 		$this->orderShouldBeValid($order, $expected);
 
 		// AND the Order has the correct OrderLineItem
-		$this->orderLineItemsShouldBeValid($orderId);
+		$this->orderLineItemsShouldBeValid($orderId, $cart_uuid);
 
 		// AND a brand new Customer, User is generated
 		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
@@ -599,8 +613,13 @@ class OrderTestCase extends CakeTestCase {
 	public function testGetItemsWithImagesShouldContainRightItemsAndImages() {
 		// Given that we have the order_uuid
 		$order_uuid = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a';
+
+		// WHEN we run getItemsWithImages
 		$resultArray = $this->Order->getItemsWithImages($order_uuid);
-		debug($resultArray);
+		
+		// THEN we expect the following result
+		//$this->check2ItemsWithImagesCartResult($resultArray);
+		
 	}
 	
 	public function testExtractShipmentDataFromShippingRateShouldWork() {

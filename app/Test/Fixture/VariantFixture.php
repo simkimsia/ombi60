@@ -59,7 +59,7 @@ class VariantFixture extends CakeTestFixture {
 			'modified' => '2011-07-08 11:54:47',
 			'currency' => 'SGD',
 			'shipping_required' => 1,
-			'price' => '0.0000',
+			'price' => '11.0000',
 			'order' => '0',
 			'compare_with_price' => NULL
 		),
@@ -68,7 +68,7 @@ class VariantFixture extends CakeTestFixture {
 			'title' => 'Default Title',
 			'product_id' => '3',
 			'sku_code' => '',
-			'weight' => '2000',
+			'weight' => '15000',
 			'created' => '2011-09-29 02:26:59',
 			'modified' => '2011-09-29 02:26:59',
 			'currency' => 'SGD',
