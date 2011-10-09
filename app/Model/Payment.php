@@ -20,6 +20,7 @@ class Payment extends AppModel {
 		)
 	);
 	
+	/*
 	public $hasOne = array(
 		'PaypalPayersPayment' => array(
 			'className' => 'PaypalPayersPayment',
@@ -35,7 +36,7 @@ class Payment extends AppModel {
 			'counterQuery' => ''
 		)
 	);
-	
+	*/
 	
 	public $validate = array(
 		/*
