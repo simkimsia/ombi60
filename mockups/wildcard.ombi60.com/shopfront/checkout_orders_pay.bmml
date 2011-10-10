@@ -1,0 +1,185 @@
+<mockup version="1.0" skin="sketch" measuredW="1188" measuredH="1025" mockupW="1030" mockupH="1017">
+  <controls>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="158" y="8" w="1030" h="1017" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Shop001%20-%20Welcome%20-%20Google%20Chrome%0Ahttp%3A//checkout.ombi60.com/orders/2/87654321-4321-4321-4321-123456789012/pay</text>
+        <verticalScrollbar>true</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Canvas" x="164" y="77" w="1024" h="115" measuredW="100" measuredH="70" zOrder="1" locked="false" isInGroup="-1"/>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Label" x="252" y="77" w="181" h="54" measuredW="159" measuredH="50" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>40</size>
+        <text>Shop001</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::ButtonBar" x="252" y="152" w="366" h="40" measuredW="343" measuredH="29" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>4</selectedIndex>
+        <text>Home%2C%20About%20Us%2C%20Catalogue%2C%20Blog%2C%20Cart</text>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::HRule" x="164" y="152" w="1018" h="-1" measuredW="100" measuredH="5" zOrder="4" locked="false" isInGroup="-1"/>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::VRule" x="252" y="184" w="-1" h="812" measuredW="5" measuredH="100" zOrder="5" locked="false" isInGroup="-1"/>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::VRule" x="1071" y="192" w="-1" h="804" measuredW="5" measuredH="100" zOrder="6" locked="false" isInGroup="-1"/>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Canvas" x="254" y="192" w="819" h="34" measuredW="100" measuredH="70" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderColor>16370588</borderColor>
+        <color>16370588</color>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::Label" x="559" y="200" w="-1" h="-1" measuredW="178" measuredH="20" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>12</size>
+        <text>You%20are%20using%20our%20secure%20server.</text>
+      </controlProperties>
+    </control>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Icon" x="528" y="197" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>LockIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::Canvas" x="256" y="274" w="819" h="183" measuredW="100" measuredH="70" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderColor>16370588</borderColor>
+        <color>16370588</color>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::Label" x="278" y="289" w="-1" h="-1" measuredW="95" measuredH="21" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>You%27re%20buying%20...</text>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::VRule" x="772" y="283" w="-1" h="159" measuredW="5" measuredH="100" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>16776960</color>
+      </controlProperties>
+    </control>
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::Label" x="842" y="283" w="-1" h="-1" measuredW="138" measuredH="50" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>40463</color>
+        <size>40</size>
+        <text>%2480.00</text>
+      </controlProperties>
+    </control>
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::Label" x="855" y="384" w="-1" h="-1" measuredW="109" measuredH="28" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <italic>true</italic>
+        <size>20</size>
+        <text>Step%202%20of%202</text>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::Image" x="285" y="314" w="50" h="51" measuredW="77" measuredH="79" zOrder="15" locked="false" isInGroup="-1"/>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::Paragraph" x="337" y="314" w="70" h="51" measuredW="200" measuredH="140" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <size>10</size>
+        <text>*Product1*%0A2%20x%20%2410.00</text>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::Image" x="285" y="379" w="50" h="51" measuredW="77" measuredH="79" zOrder="17" locked="false" isInGroup="-1"/>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::Paragraph" x="337" y="379" w="70" h="51" measuredW="200" measuredH="140" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <size>10</size>
+        <text>*Product2*%0A1%20x%20%2450.00</text>
+      </controlProperties>
+    </control>
+    <control controlID="103" controlTypeID="com.balsamiq.mockups::Canvas" x="254" y="662" w="819" h="190" measuredW="100" measuredH="70" zOrder="27" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderColor>15658734</borderColor>
+        <color>15658734</color>
+      </controlProperties>
+    </control>
+    <control controlID="104" controlTypeID="com.balsamiq.mockups::Label" x="281" y="662" w="-1" h="-1" measuredW="126" measuredH="24" zOrder="28" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>Payment%20method</text>
+      </controlProperties>
+    </control>
+    <control controlID="105" controlTypeID="com.balsamiq.mockups::HRule" x="266" y="687" w="796" h="-1" measuredW="100" measuredH="5" zOrder="29" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>10066329</color>
+      </controlProperties>
+    </control>
+    <control controlID="106" controlTypeID="com.balsamiq.mockups::Label" x="274" y="694" w="-1" h="-1" measuredW="692" measuredH="21" zOrder="30" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <text>All%20transcations%20are%20secure%20and%20encrypted.%20We%20never%20store%20credit%20card%20information.%20View%20our%20%5Bprivacy%20policy%5D%20to%20learn%20more.</text>
+      </controlProperties>
+    </control>
+    <control controlID="107" controlTypeID="com.balsamiq.mockups::RadioButtonGroup" x="291" y="725" w="289" h="100" measuredW="233" measuredH="84" zOrder="31" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%28o%29%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20PayPal%20Express%20Checkout%0A%20%0A%28%20%29%20Cash%20on%20Delivery%0A%28%20%29%20Internet%20Banking</text>
+      </controlProperties>
+    </control>
+    <control controlID="108" controlTypeID="com.balsamiq.mockups::Canvas" x="256" y="471" w="819" h="163" measuredW="100" measuredH="70" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderColor>15658734</borderColor>
+        <color>15658734</color>
+      </controlProperties>
+    </control>
+    <control controlID="109" controlTypeID="com.balsamiq.mockups::Label" x="285" y="471" w="-1" h="-1" measuredW="121" measuredH="24" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>Shipping%20method</text>
+      </controlProperties>
+    </control>
+    <control controlID="110" controlTypeID="com.balsamiq.mockups::HRule" x="270" y="496" w="796" h="-1" measuredW="100" measuredH="5" zOrder="24" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>10066329</color>
+      </controlProperties>
+    </control>
+    <control controlID="111" controlTypeID="com.balsamiq.mockups::Label" x="278" y="503" w="-1" h="-1" measuredW="255" measuredH="21" zOrder="25" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <text>Please%20select%20how%20we%20deliver%20your%20products</text>
+      </controlProperties>
+    </control>
+    <control controlID="112" controlTypeID="com.balsamiq.mockups::RadioButtonGroup" x="295" y="534" w="-1" h="-1" measuredW="199" measuredH="63" zOrder="26" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%28o%29%20Standard%20Shipping%20-%20%2410.00%20%0A%28%20%29%20Heavy%20Duty%20Shipping%20-%20%2430.00%20%0A%28%20%29%20Express%20Shipping%20-%20%2450.00%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="113" controlTypeID="com.balsamiq.mockups::Image" x="313" y="725" w="42" h="34" measuredW="87" measuredH="50" zOrder="32" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/AcceptanceMark_60x38.gif</src>
+      </controlProperties>
+    </control>
+    <control controlID="114" controlTypeID="com.balsamiq.mockups::Button" x="278" y="889" w="-1" h="-1" measuredW="157" measuredH="27" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <italic>true</italic>
+        <text>Complete%20my%20purchase</text>
+      </controlProperties>
+    </control>
+    <control controlID="115" controlTypeID="com.balsamiq.mockups::Label" x="448" y="890" w="-1" h="-1" measuredW="18" measuredH="21" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>or</text>
+      </controlProperties>
+    </control>
+    <control controlID="116" controlTypeID="com.balsamiq.mockups::Link" x="474" y="890" w="-1" h="-1" measuredW="91" measuredH="21" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>return%20to%20Store</text>
+      </controlProperties>
+    </control>
+    <control controlID="117" controlTypeID="com.balsamiq.mockups::Label" x="810" y="345" w="-1" h="-1" measuredW="146" measuredH="24" zOrder="33" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <color>10027008</color>
+        <italic>true</italic>
+        <size>16</size>
+        <text>including%20shipping%20for</text>
+      </controlProperties>
+    </control>
+    <control controlID="118" controlTypeID="com.balsamiq.mockups::Label" x="976" y="344" w="-1" h="-1" measuredW="60" measuredH="24" zOrder="34" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>false</bold>
+        <color>6684672</color>
+        <italic>true</italic>
+        <size>16</size>
+        <text>%2470.00</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
