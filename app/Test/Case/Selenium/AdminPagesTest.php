@@ -11,7 +11,7 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 {
 	
 	public $localhost 				= true;
-	public $url 					= 
+	public $domains 				= 
 		array(
 			'localhost' => 'http://shop001.ombi60.localhost/',
 			'production'=> 'http://');
@@ -26,7 +26,8 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 	public $whiteList = array('testHandleizeInDummyProduct');
 	
 	public $blackList = array();
-	
+
+	public $baseUrl  = '';
 	
 	/**
 	 *
@@ -36,9 +37,11 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
         $this->setBrowser('*firefox');
 
 		if ($this->localhost) {
-			$this->setBrowserUrl($this->url['localhost']);
+			$this->setBrowserUrl($this->domains['localhost']);
+			$this->baseUrl = $this->domains['localhost'];
 		} else {
-			$this->setBrowserUrl($this->url['production']);
+			$this->setBrowserUrl($this->domains['production']);
+			$this->baseUrl = $this->domains['localhost'];
 		}
         
 		$this->setSleep($this->secondsBetweenCommands);
@@ -216,6 +219,38 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		$this->open('admin/products/toggle/2');
 		$this->assertElementPresent('xpath=//div[@id="flashMessage"][@class="flash_success"][contains(text(), "Product status has been changed")]');
 		$this->assertElementPresent('xpath=//a[@href="/admin/products/toggle/2"][@class="product-status"][contains(text(), "Published")]');
+	}
+
+	/**
+	 *
+	 * This replaces the OrdersController test for Redirect for create_order action
+	 *
+	 *
+	**/
+	public function testOrdersControllerCreateActionShouldRedirectToPayIfSuccessful() {
+		if ($this->doNotRunThisTest(__FUNCTION__)) {
+			return;
+		}
+		
+		// GIVEN at checkout page 1 aka carts view action
+		$this->open('carts/2/4e895a91-b374-4a1a-947c-0b701507707a');
+		
+		$this->assertElementPresent('xpath=//span[@class="font_bold"][contains(text(), "You are using our secure server")]');
+		
+		// WHEN we fill in the form correctly
+		$this->type('id=UserEmail', 'guest_customer@ombi60.com');
+		$this->type('id=BillingAddress0FullName', 'G. Cherry');
+		$this->type('id=BillingAddress0Address', 'Billing Address St. Block 123 #01-911');
+		$this->type('id=BillingAddress0City', 'Singapore');
+		$this->type('id=BillingAddress0ZipCode', '11111');
+		$this->select('id=BillingAddress0Country', 'label=Singapore');
+		
+		// AND submit to create_order action
+		$this->assertElementPresent('xpath=//form[@action="/carts/2/4e895a91-b374-4a1a-947c-0b701507707a/create_order"]');
+		$this->clickAndWait('css=input[type="submit"]');
+		
+		// THEN we should be redirected to pay action
+		$this->assertLocation('regexp:' . $this->baseUrl . 'orders/2/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/pay');
 	}
 
 
