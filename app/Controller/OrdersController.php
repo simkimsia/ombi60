@@ -52,11 +52,12 @@ class OrdersController extends AppController {
 			'success',  
 			'pay', 
 			'update_prices',
-			'complete_purchase');
+			'complete_purchase', 
+			'completed');
 		
 		if ($this->request->action == 'update_prices' ||
 			$this->request->action == 'complete_purchase' ||
-			$this->request->action == 'success') {
+			$this->request->action == 'completed') {
 		
 			$this->Components->disable('Security');
 		}
