@@ -14,13 +14,25 @@ class ProductTestCase extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.product', 'app.saved_theme', 'app.user', 
-		'app.shop_setting', 'app.shop', 'app.domain',
-		'app.link', 'app.link_list', 'app.vendor', 
-		'app.product_type', 'app.product_image', 'app.variant',
-		'app.variant_option', 'app.log', 'app.products_in_group', 
-		'app.product_group', 'smart_collection_condition',
-		'app.blog', 'app.post', 'app.comment', 'app.webpage');
+		'app.shop',  'app.domain',
+		'app.shop_setting', 'app.language',
+		'app.user', 'app.group',
+		'app.merchant', 'app.customer', 'app.casual_surfer',
+		'app.cart', 'app.cart_item',
+		'app.order', 'app.order_line_item', 'app.address', 
+		'app.product', 'app.product_image', 'app.wishlist', 
+		'app.variant', 'app.variant_option', 'app.products_in_group', 'app.product_group',  
+		'app.product_type', 'app.vendor',
+		'app.smart_collection_condition',
+		'app.webpage', 'app.page_type', 
+		'app.link_list', 'app.link', 
+		'app.blog', 'app.post', 'app.comment', 
+		'app.payment', 'app.shops_payment_module', 'app.payment_module',
+		'app.log', 'app.saved_theme',
+ 		'app.country',
+		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
+		'app.price_based_rate', 'app.weight_based_rate'
+	);
 	
 /**
  * setUp method
@@ -115,7 +127,7 @@ class ProductTestCase extends CakeTestCase {
 				'title' => 'Dummy Product',
 	            'code' => '',
 	            'description' => '',
-	            'price' => '0.0000',
+	            'price' => '11.0000',
 	            'created' => '2011-09-28 17:06:24',
 	            'modified' => '2011-09-28 17:06:24',
 	            'visible' => true,
@@ -126,7 +138,7 @@ class ProductTestCase extends CakeTestCase {
 	            'handle' => 'dummy-product-1',
 	            'product_type_id' => 1,
 	            'url' => '/products/dummy-product-1',
-	            'displayed_weight' => 7.0,
+	            'displayed_weight' => 7,
 			)
 
 		);
@@ -136,8 +148,8 @@ class ProductTestCase extends CakeTestCase {
 			$expectedProduct['Product']['title'] 			= 'test product with no pic and no collection';
 			$expectedProduct['Product']['description'] 		= '<p>test</p>';
 			$expectedProduct['Product']['price'] 			= '23.0000';
-			$expectedProduct['Product']['weight'] 			= 2000;
-			$expectedProduct['Product']['displayed_weight'] = 2;
+			$expectedProduct['Product']['weight'] 			= 15000;
+			$expectedProduct['Product']['displayed_weight'] = 15.0;
 			$expectedProduct['Product']['handle'] 			= 'test-product-with-no-pic-and-no-collection-1';
 			$expectedProduct['Product']['url'] 				= '/products/test-product-with-no-pic-and-no-collection-1';
 			$expectedProduct['Product']['product_type_id'] 	= 0;			
@@ -164,7 +176,7 @@ class ProductTestCase extends CakeTestCase {
 			unset($expectedProduct[$field]);
 		}
 	
-		$this->assertEquals($resultProduct, $expectedProduct);
+		$this->assertEquals($expectedProduct, $resultProduct);
 		
 	}
 	
