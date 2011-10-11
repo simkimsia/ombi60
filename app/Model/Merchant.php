@@ -49,26 +49,32 @@ class Merchant extends AppModel {
 	}
 
 
-	
-	
-	
-
 	public function updateProfile($data = NULL) {
 		$data['User']['group_id'] = MERCHANTS;
 		return $this->saveAll($data, array('validate'=>'first'));
 	}
 	
-	
 	public function retrieveShopUserLanguageByUserId($id = false) {
 		if (!$id) {
 			return false;
 		}
+				
+		$this->Behaviors->attach('Linkable.Linkable');
+		$result = $this->find('first', array(
+			'conditions'=>array(
+				'Merchant.user_id'=>$id
+			),
+			'link' => array(
+				'User' => array(
+					'Language'
+				),
+				'Shop'
+			)
 		
-		$this->Behaviors->load('Linkable.Linkable');
-		$this->User->Behaviors->attach('Linkable.Linkable');
+		));
 		
-		return $this->find('first', array('conditions'=>array('Merchant.user_id'=>$id),
-					   'link'=>array('Shop', 'User'=>array('Language'))));
+		return $result;
+
 	}
 
 /** sign up account code more meant for mainsite **/

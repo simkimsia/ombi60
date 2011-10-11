@@ -193,35 +193,7 @@ class CartsControllerTestCase extends ControllerTestCase {
 
 		$this->assertRegexp('#You are using our secure server#', $this->contents);
 		
-	}
-	
-	/**
-	*
-	* /carts/:shop_id/:cart_uuid/create_order should redirect to /orders/:shop_id/:order_uuid/pay
-	*
-	**/
-	public function testCreateOrderShouldRedirectToOrdersPay() {
-		
-		$string = '/carts/2/' . User::get('User.live_cart_id') . '/create_order';
-		
-		// this test will not work because we cannot get the order_uuid BEFORE we run the testAction
-		// hence we will use selenium as integrated test.
-		
-		/*
-		$orderId = '111111111-1111-1111-1111-111111111111';
-		
-		$this->controller->expects($this->once())->method('redirect')->with(array('controller' =>'orders', 'action' => 'pay', 'shop_id' => '2', 'order_uuid' => $orderId))->will($this->returnValue(true));
-
-		$this->testAction($string, array(
-			'return' => 'contents',
-			'method' => 'POST'
-		));
-		*/
-
-		//$this->assertRegexp('#You are using our secure server#', $this->contents);
-		
-	}
-	
+	}	
 
 	
 }

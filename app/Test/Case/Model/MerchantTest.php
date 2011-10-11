@@ -12,7 +12,12 @@ class MerchantTestCase extends CakeTestCase {
  *
  * @var array
  */
-	public $fixtures = array('app.merchant', 'app.shop', 'app.user', 'app.group', 'app.language');
+	public $fixtures = array('app.shop_setting',
+							'app.language',
+							'app.merchant', 
+							'app.shop',
+							'app.user', 'app.group', 
+							'app.saved_theme');
 
 /**
  * setUp method
@@ -51,8 +56,8 @@ class MerchantTestCase extends CakeTestCase {
 				'url' => 'http://shop001.ombi60.localhost'
 			),
 			'User' => array(
-				'email' => 'merchant1@example.com',
-				'full_name' => 'crash dummy'
+				'email' => 'owner@shop001.com',
+				'full_name' => 'Barry Allen'
 			)
 		);
 		$this->assertEqual($merchant['Shop']['name'], $expected['Shop']['name']);
