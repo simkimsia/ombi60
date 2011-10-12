@@ -42,9 +42,9 @@
     <div class="billing_left">
         <h2 class="border_bottom">Billing Address</h2>
         <?php
-	    if (!empty($shippingAddresses)) {
+	    if (!empty($shippingAddresses)) :
 	    ?>
-	        <?php foreach ($shippingAddresses as $address) { ?>
+	        <?php foreach ($shippingAddresses as $address) : ?>
 	        <span class="info"><?php echo $address['DeliveryAddress']['full_name']; ?></span>
 	        <span class="info"><?php echo $address['DeliveryAddress']['address']; ?></span>
 	        <span class="info"><?php echo $address['DeliveryAddress']['city']; ?></span>
@@ -57,9 +57,9 @@
 									    'id'=>$address['DeliveryAddress']['id'],
 									    'class'=>'shipToThisAddressBtn')); ?>
 	        </span>
-	        <?php } ?>
+	        <?php endforeach; ?>
 		    <?php		    
-	    }
+	    endif;
 	    echo $this->Form->input('Order.fixed_delivery', array('type'=>'hidden', 'value'=>0));
 	    
         echo $this->Form->input('Cart.id', array('type'=>'hidden', 'value'=>$cart_uuid));

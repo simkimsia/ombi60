@@ -13,11 +13,24 @@ class AddressTestCase extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.address', 'app.saved_theme', 'app.user', 
-		'app.shop_setting', 'app.shop', 'app.domain', 
-		'app.post', 'app.comment', 'app.link', 
-		'app.link_list', 'app.product', 'app.webpage', 
-		'app.customer'
+		'app.shop',  'app.domain',
+		'app.shop_setting', 'app.language',
+		'app.user', 'app.group',
+		'app.merchant', 'app.customer', 'app.casual_surfer',
+		'app.cart', 'app.cart_item',
+		'app.order', 'app.order_line_item', 'app.address', 
+		'app.product', 'app.product_image', 'app.wishlist', 
+		'app.variant', 'app.variant_option', 'app.products_in_group', 'app.product_group',  
+		'app.product_type', 'app.vendor',
+		'app.smart_collection_condition',
+		'app.webpage', 'app.page_type', 
+		'app.link_list', 'app.link', 
+		'app.blog', 'app.post', 'app.comment', 
+		'app.payment', 'app.shops_payment_module', 'app.payment_module',
+		'app.log', 'app.saved_theme',
+ 		'app.country',
+		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
+		'app.price_based_rate', 'app.weight_based_rate'	
 	);
 	
 /**
@@ -48,18 +61,24 @@ class AddressTestCase extends CakeTestCase {
  *
  * @return void
  */
-	public function testGetAllByCustomer() {
-		// negative test
-		/*
-		$result = $this->Address->getAllByCustomer(0, DELIVERY);
-		$this->assertFalse(!empty($result));
+	public function testGetAllByCustomerShouldRetrieveDeliveryAddress() {
 		
-		// positive test
+		// GIVEN we have  Address 2 for Customer 1 as DELIVERY in fixtures
 		
-		$this->assertTrue(!empty($result));
-		$this->assertTrue(!empty($result['Language']));
-		$this->assertEqual($result['Language']['name'], 'English');
-		*/
+		// WHEN we run getALLByCustomer(2, DELIVERY)
+		$result = $this->Address->getAllByCustomer(1, DELIVERY);
+		
+		// THEN we should get back the Address 2
+		$addressFixture = new AddressFixture();
+		$deliveryAddress = $addressFixture->records[1];
+		
+		$expected = array(
+			'0' => array(
+				'Address' => $deliveryAddress
+			)
+		);
+		
+		$this->assertEquals($expected, $result);
 	}
 
 }

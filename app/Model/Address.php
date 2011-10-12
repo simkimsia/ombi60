@@ -44,9 +44,23 @@ class Address extends AppModel {
 		
 	);
 	
+	/**
+	*
+	* Retrieve ALL the addresses that match the customer id and type.
+	* We ignore associated model data.
+	*
+	* @param integer $customer_id Customer Id
+	* @param integer $type Address Type. Either BILLING or DELIVERY
+	* @return array Array of all addresses record that match the data. Returns false if otherwise
+	**/
 	public function getAllByCustomer($customer_id, $type) {
-		return $this->find('all', array('conditions'=>array('customer_id'=>$customer_id,
-								    'type' => $type)));
+		$this->recursive = -1;
+		return $this->find('all', array(
+			'conditions'=>array(
+				'customer_id'=>$customer_id,
+				'type' => $type
+			)
+		));
 	}
 
 }

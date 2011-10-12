@@ -32,7 +32,8 @@ class CartTestCase extends CakeTestCase {
 		'app.log', 'app.saved_theme',
  		'app.country',
 		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
-		'app.price_based_rate', 'app.weight_based_rate'	);
+		'app.price_based_rate', 'app.weight_based_rate'	
+	);
 
 
 /**
