@@ -34,9 +34,6 @@
 [submodule "app/Plugin/Visible"]
 	path = app/Plugin/Visible
 	url = git@github.com:simkimsia/Visible.git
-[submodule "app/Plugin/RandomString"]
-	path = app/Plugin/RandomString
-	url = git@github.com:simkimsia/RandomString.git
 [submodule "app/Vendor/phpThumb"]
 	path = app/Vendor/phpThumb
 	url = git@github.com:simkimsia/phpThumb-for-cakephp-2.0.git
