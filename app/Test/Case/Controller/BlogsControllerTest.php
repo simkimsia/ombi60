@@ -12,7 +12,26 @@ class BlogsControllerTestCase extends ControllerTestCase {
 	 *
 	 * @var array
 	 */
-	public $fixtures = array('app.blog', 'app.saved_theme', 'app.user', 'app.shop_setting', 'app.shop', 'app.domain', 'app.post', 'app.comment', 'app.link', 'app.link_list', 'app.product', 'app.webpage');
+	public $fixtures = array(
+		'app.shop',  'app.domain',
+		'app.shop_setting', 'app.language',
+		'app.user', 'app.group',
+		'app.merchant', 'app.customer', 'app.casual_surfer',
+		'app.cart', 'app.cart_item',
+		'app.order', 'app.order_line_item', 'app.address', 
+		'app.product', 'app.product_image', 'app.wishlist', 
+		'app.variant', 'app.variant_option', 'app.products_in_group', 'app.product_group',  
+		'app.product_type', 'app.vendor',
+		'app.smart_collection_condition',
+		'app.webpage', 'app.page_type', 
+		'app.link_list', 'app.link', 
+		'app.blog', 'app.post', 'app.comment', 
+		'app.payment', 'app.shops_payment_module', 'app.payment_module',
+		'app.log', 'app.saved_theme',
+ 		'app.country',
+		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
+		'app.price_based_rate', 'app.weight_based_rate'
+	);
 
 	/**
 	 * setUp method
@@ -46,8 +65,6 @@ class BlogsControllerTestCase extends ControllerTestCase {
 		));
 		$this->testAction('/admin/blogs/index', array('return' => 'contents'));
 		$this->assertRegexp('#<h2>Blogs</h2>#', $this->contents);
-		$this->assertRegexp('#<td>Test&nbsp;</td>#', $this->contents);
-		$this->assertRegexp('#<td>test&nbsp;</td>#', $this->contents);
 	}
 
 	/**
@@ -60,8 +77,8 @@ class BlogsControllerTestCase extends ControllerTestCase {
 			'methods' => array('forceSSL'), 
 			'components' => array('Auth' => array('user'), 'Security')
 		));
-		$this->testAction('/admin/blogs/view/3', array('return' => 'contents'));
-		$expected = array('tag' => 'h2', 'content' => 'Test');
+		$this->testAction('/admin/blogs/view/1', array('return' => 'contents'));
+		$expected = array('tag' => 'h2', 'content' => 'news');
 		$this->assertTag($expected, $this->contents);
 	}
 
@@ -71,7 +88,7 @@ class BlogsControllerTestCase extends ControllerTestCase {
 			'components' => array('Auth' => array('user'), 'Security')
 		));
 		$fixture = new BlogFixture();	
-		$this->controller->request->data['Blog'] = $fixture->records[1];
+		$this->controller->request->data['Blog'] = $fixture->records[0];
 		unset($this->controller->request->data['Blog']['id']);
 		$this->assertFlash($this->controller, 'The blog has been saved');
 		$_SERVER['REQUEST_METHOD'] = 'POST';
@@ -84,7 +101,7 @@ class BlogsControllerTestCase extends ControllerTestCase {
 					'components' => array('Auth' => array('user'), 'Security')
 		));
 		$fixture = new BlogFixture();
-		$this->controller->request->data['Blog'] = $fixture->records[1];
+		$this->controller->request->data['Blog'] = $fixture->records[0];
 		$this->controller->request->data['Blog']['name'] = "Test2";
 		$this->assertFlash($this->controller, 'The blog has been saved');
 		$_SERVER['REQUEST_METHOD'] = 'POST';

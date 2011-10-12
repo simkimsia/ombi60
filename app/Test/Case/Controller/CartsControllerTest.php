@@ -17,17 +17,24 @@ class CartsControllerTestCase extends ControllerTestCase {
 	 * @var array
 	 */
 	public $fixtures = array(
-		'app.cart', 'app.customer', 'app.shop', 
-		'app.merchant', 'app.order', 'app.address', 
-		'app.product', 'app.product_image', 'app.order_line_item', 
-		'app.webpage', 'app.wishlist', 'app.cart_item', 
-		'app.page_type', 'app.user', 'app.group',
-		'app.variant', 'app.variant_option', 'app.products_in_group',
-		'app.product_group', 'app.shop_setting', 'app.domain', 
-		'app.casual_surfer', 'app.link_list', 'app.link', 
+		'app.shop',  'app.domain',
+		'app.shop_setting', 'app.language',
+		'app.user', 'app.group',
+		'app.merchant', 'app.customer', 'app.casual_surfer',
+		'app.cart', 'app.cart_item',
+		'app.order', 'app.order_line_item', 'app.address', 
+		'app.product', 'app.product_image', 'app.wishlist', 
+		'app.variant', 'app.variant_option', 'app.products_in_group', 'app.product_group',  
+		'app.product_type', 'app.vendor',
+		'app.smart_collection_condition',
+		'app.webpage', 'app.page_type', 
+		'app.link_list', 'app.link', 
 		'app.blog', 'app.post', 'app.comment', 
-		'app.shops_payment_module', 'app.log', 'app.saved_theme',
-		'app.vendor', 'app.country',
+		'app.payment', 'app.shops_payment_module', 'app.payment_module',
+		'app.log', 'app.saved_theme',
+ 		'app.country',
+		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
+		'app.price_based_rate', 'app.weight_based_rate'
 	);
 
 	/**
