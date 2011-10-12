@@ -54,7 +54,6 @@ class AppController extends Controller {
         'RequestHandler',
 	    'DebugKit.Toolbar',
         'Cookie',
-        'RandomString.RandomString',
         'Theme',
         'Paginator',
 	);
@@ -200,8 +199,10 @@ class AppController extends Controller {
 				App::uses('CasualSurfer', 'Model');
 				$this->loadModel('CasualSurfer');
 					
-				$randomPassword = $this->Auth->password($this->RandomString->generate());
-				$randomEmail = $this->RandomString->generate() . '@ombi60.com';
+				App::uses('StringLib', 'UtilityLib.Lib');
+					
+				$randomPassword = $this->Auth->password(StringLib::generateRandom());
+				$randomEmail = StringLib::generateRandom() . '@ombi60.com';
 				$userIdInCookie = $this->CasualSurfer->createNew($randomEmail, $randomPassword);
 					
 				$this->Cookie->write('User.id', $userIdInCookie, true, '1 year');
@@ -387,8 +388,10 @@ class AppController extends Controller {
 		$this->loadModel('CasualSurfer');
 
 		// create new casual surfer
-		$randomPassword = $this->Auth->password($this->RandomString->generate());
-		$randomEmail = $this->RandomString->generate() . '@ombi60.com';
+		App::uses('StringLib', 'UtilityLib.Lib');
+		
+		$randomPassword = $this->Auth->password(StringLib::generateRandom());
+		$randomEmail 	= StringLib::generateRandom() . '@ombi60.com';
 		$userIdInCookie = $this->CasualSurfer->createNew($randomEmail, $randomPassword);
 
 		$this->Cookie->write('User.id', $userIdInCookie, true, '1 year');

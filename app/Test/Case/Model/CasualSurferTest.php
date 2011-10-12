@@ -1,18 +1,136 @@
 <?php
-/* CasualSurfer Test cases generated on: 2010-09-28 03:09:40 : 1285635640*/
-App::import('Model', 'CasualSurfer');
+/* Cart Test cases generated on: 2011-09-22 09:25:06 : 1316683506*/
+App::uses('User', 'Model');
+App::uses('Shop', 'Model');
+App::uses('CasualSurfer', 'Model');
 
+/**
+ * CasualSurfer Test Case
+ *
+ */
 class CasualSurferTestCase extends CakeTestCase {
-	var $fixtures = array('app.casual_surfer', 'app.shop', 'app.theme', 'app.saved_theme', 'app.customer', 'app.user', 'app.group', 'app.language', 'app.merchant', 'app.post', 'app.blog', 'app.comment', 'app.webpage', 'app.cart', 'app.cart_item', 'app.product', 'app.product_image', 'app.order_line_item', 'app.order', 'app.address', 'app.payment', 'app.shops_payment_module', 'app.payment_module', 'app.custom_payment_module', 'app.shipment', 'app.wishlist', 'app.domain', 'app.shipped_to_country', 'app.country', 'app.shipping_rate', 'app.price_based_rate', 'app.weight_based_rate');
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 *
+	 **/
+	public $fixtures = array(
+		'app.shop',  'app.domain',
+		'app.shop_setting', 'app.language',
+		'app.user', 'app.group',
+		'app.merchant', 'app.customer', 'app.casual_surfer',
+		'app.cart', 'app.cart_item',
+		'app.order', 'app.order_line_item', 'app.address', 
+		'app.product', 'app.product_image', 'app.wishlist', 
+		'app.variant', 'app.variant_option', 'app.products_in_group', 'app.product_group',  
+		'app.product_type', 'app.vendor',
+		'app.smart_collection_condition',
+		'app.webpage', 'app.page_type', 
+		'app.link_list', 'app.link', 
+		'app.blog', 'app.post', 'app.comment', 
+		'app.payment', 'app.shops_payment_module', 'app.payment_module',
+		'app.log', 'app.saved_theme',
+ 		'app.country',
+		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
+		'app.price_based_rate', 'app.weight_based_rate'	
+	);
 
-	function startTest() {
-		$this->CasualSurfer =& ClassRegistry::init('CasualSurfer');
+
+	/**
+	 * setUp method
+	 *
+	 * @return void
+	 */
+	public function setUp() {
+		parent::setUp();
+
+		$this->CasualSurfer = ClassRegistry::init('CasualSurfer');
+		
+		// setting up Shop and User singleton
+		$this->Shop 	= ClassRegistry::init('Shop');
+		$this->User 	= ClassRegistry::init('User');
+		
+		$cachedShopId = Shop::get('Shop.id');
+		
+		if ($cachedShopId != 2) {
+			$testShop = $this->Shop->getById(2);
+			Shop::store($testShop);
+		}
+		
+		$cachedUserId = User::get('User.id');
+		
+		if($cachedUserId != 2) {
+			User::store($this->User->read(null, 2));
+		}
+		// this is to allow User singleton to work properly
+		// look at AppController beforeFilter
+		Configure::write('run_test', true);
+		
 	}
 
-	function endTest() {
+	/**
+	 * tearDown method
+	 *
+	 * @return void
+	 */
+	public function tearDown() {
 		unset($this->CasualSurfer);
+		unset($this->Shop);
+		unset($this->User);
 		ClassRegistry::flush();
+
+		parent::tearDown();
 	}
+		
+	
+	/**
+	 * createNew should return new User id
+	 * New User created
+	 * New Casual Surfer created
+	 *
+	 * @return void
+	 *
+	 **/
+	public function testCreateNewShouldCreateNewUserCasualSurfer() {
+
+		// GIVEN that we have 1 Casual Surfer and 3 User currently
+		$count = $this->CasualSurfer->find('count');
+		$this->assertEquals(1, $count);
+
+		$count = $this->User->find('count');
+		$this->assertEquals(3, $count);
+				
+		// WHEN we create a brand new CasualSurfer
+		$result = $this->CasualSurfer->createNew('randomemail@ombi60.com', 'randompasswordhash');
+		
+		// THEN we expect the result to be new User id expected to be 4
+		$this->assertEquals(4, $result);
+		
+		// AND we expect new User and Casual Surfer		
+		$actual = $this->CasualSurfer->find('all', array(
+			'conditions' => array(
+				'User.email' => 'randomemail@ombi60.com',
+				'User.password' => 'randompasswordhash',
+			),
+			'fields' => array(
+				'CasualSurfer.id',
+				'CasualSurfer.shop_id',
+				'CasualSurfer.user_id'
+			)
+		));
+		
+				
+		$expected = array(
+			array('CasualSurfer' => array(
+				'id'		=> 2,
+				'shop_id'	=> 2,
+				'user_id'	=> 4
+			))
+		);
+		
+		$this->assertEquals($expected, $actual);
+	}
+	
 
 }
-?>

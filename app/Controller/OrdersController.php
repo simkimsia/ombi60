@@ -10,7 +10,7 @@ class OrdersController extends AppController {
 	public $helpers = array('Html', 'Form', 'Session', 'Time', 'Number');
 
 	public $components = array('Permission',
-				'Session', 'Paypal.Paypal', 'RandomString.RandomString', 'Filter.Filter' => array(
+				'Session', 'Paypal.Paypal', 'Filter.Filter' => array(
 					'actions' => array('index', 'admin_index'),
 					'defaults' => array(),
 					'fieldFormatting' => array(

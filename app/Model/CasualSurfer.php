@@ -27,6 +27,11 @@ class CasualSurfer extends AppModel {
 
 	}
 	
+	/**
+	*
+	* this method may be deprecated or refactored
+	*
+	**/
 	public function convertCartForCustomerLogin($currentIdInCookie, $loggedInUserId) {
 		
 		$exists = $this->find('count', array('conditions'=>array('CasualSurfer.user_id'=>$currentIdInCookie)));
@@ -50,6 +55,14 @@ class CasualSurfer extends AppModel {
 		return false;
 	}
 	
+	/**
+	*
+	* we will create a brand new User and CasualSurfer given a randomized email and password hash
+	*
+	* @param string $randomEmail Email of would be User
+	* @param string $randomPassword Password hash of would be User
+	* @return integer Returns User id if successful, false otherwise.
+	**/
 	public function createNew($randomEmail, $randomPassword) {
 		$this->create();
 		$this->User->create();

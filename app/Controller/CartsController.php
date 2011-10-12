@@ -13,7 +13,6 @@ class CartsController extends AppController {
 	public $components = array(
 		'Session', 
 		'Paypal.Paypal',
-		'RandomString.RandomString',
 		'Theme' => array(
 			'view_cart',
 		)
