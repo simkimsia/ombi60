@@ -711,6 +711,66 @@ class Cart extends AppModel {
 		return false;
 		
 	}
+	
+	/**
+	*
+	* Read all the CartItem and recalculate Total weight, price, etc
+	*
+	* @param string $cartId Cart id
+	* @return boolean Returns true if successful. False otherwise.
+	**/
+	public function recalculateTotalWeightPrice($cartId) {
+		// get all items of this cart 
+		$this->CartItem->recursive = -1;
+		$items = $this->CartItem->find('all',
+			array(
+				'conditions' => array(
+					'CartItem.cart_id' => $cartId,
+					'CartItem.product_quantity >=' => 1,
+				)
+			)
+		);
+		
+		$shippedWeight 		= 0;
+		$totalWeight		= 0;
+		$totalAmount		= 0.0;
+		$shippedAmount 		= 0.0;
+		$currency			= '';
+		
+		// go through each item and calculate total weight and price
+		foreach($items as $key => $item) {
+			$quantity 	= $item['CartItem']['product_quantity'];
+			$weight		= $item['CartItem']['product_weight'];
+			$price		= $item['CartItem']['product_price'];
+			$currency	= $item['CartItem']['currency'];
+			
+			$lineWeight = $quantity * $weight;
+			$linePrice	= $quantity * $price;
+			
+			if ($item['CartItem']['shipping_required']) {
+				$shippedWeight += $lineWeight;
+				$shippedAmount += $linePrice;
+			}
+			
+			$totalWeight += $lineWeight;
+			$totalAmount += $linePrice;
+		}
+		
+		// prepare the data to be saved
+		$this->id = $cartId;
+		$cartData = array(
+			'Cart' => array(
+				'amount' 			=> $totalAmount,
+				'shipped_amount'	=> $shippedAmount,
+				'total_weight'		=> $totalWeight,
+				'shipped_weight'	=> $shippedWeight,
+				'currency'			=> $currency
+			)
+		);
+		
+		// execute the save function and return its results
+		return $this->save($cartData);
+	}
 
 	public function updatePricesInCartAndOrder($id = false, $order_id = false) {
 		
@@ -834,6 +894,26 @@ class Cart extends AppModel {
 		
 		return true;
 		
+	}
+	
+	/**
+	*
+	* Close the cart
+	*
+	* @param string $cartId Cart id
+	* @return array Returns array of saved data if successful. False otherwise.
+	**/
+	public function close($cartId) {
+		$this->id = $cartId;
+		
+//		debug($this->id);
+
+		// we use save and not saveField because saveField is not idempotent
+		$result = $this->save(array(
+			'past_checkout_point'=>true
+		));
+	
+		return $result;
 	}
 
 	/**
@@ -991,6 +1071,7 @@ class Cart extends AppModel {
 			)
 		));
 		
+		$this->CartItem->recursive = 0;
 		// We need to do this convoluted way because we had difficulty retrieving
 		// the correct CoverImage when we do a $this->find('first', array(
 		//	 'contain' => array('CartItem' => 'CoverImage')
@@ -999,7 +1080,7 @@ class Cart extends AppModel {
 			'conditions' => array('CartItem.cart_id' => $cart_uuid),
 			'link' => array('Cart', 'CoverImage')
 		));
-		
+
 		$cartData 	= Set::extract('0.Cart', $items);
 		$itemsData 	= array();
 		foreach($items as $key=>$item) {

@@ -140,8 +140,9 @@ class CartsController extends AppController {
 			
 			// get Cart data
 			$this->Cart->id = $cart_uuid;
+			$this->Cart->recalculateTotalWeightPrice($cart_uuid);
 			$currentCart 	= $this->Cart->getItemsWithImages($cart_uuid);
-						
+
 			// populate view vars
 			$this->set(compact('countries', 'customerId', 'shopId', 'shippingAddresses', 'currentCart')
 			);

@@ -5,10 +5,6 @@ class Order extends AppModel {
 	
 	public $actsAs = array('Filter.Filter');
 
-	public $virtualFields = array(
-		'shipping_required' => '(Order.shipped_weight > 0)'
-	);
-
 	public $belongsTo = array(
 		'Shop' => array(
 			'className' => 'Shop',
@@ -80,6 +76,7 @@ class Order extends AppModel {
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
 		$this->virtualFields['shipping_required'] = sprintf('(%s.shipped_weight > 0)', $this->alias, $this->alias);
+		$this->virtualFields['net_amount'] = sprintf('(%s.shipping_fee + %s.amount)', $this->alias, $this->alias);
 	}
 	
 	/**
@@ -269,6 +266,16 @@ class Order extends AppModel {
 		return false;
 	}
 	
+	/**
+	*
+	* close the cart
+	* save Payment and Shipment data 
+	* transfer the final shipping amount, prices, cart item prices, weights into order_line_items
+	*
+	* @param array $data the prepared data to complete the purchase
+	* @return boolean Returns true if successful. False otherwise
+	*
+	**/
 	public function completePurchase($data) {
 		
 		// set the Order pk
@@ -293,8 +300,23 @@ class Order extends AppModel {
 			return false;
 		}
 
+
+		// get cart id
+		$cartId = $this->field('cart_id');
+		$this->Cart->id = $cartId;
+
 		// need to set Cart past_checkout_point to true to ensure cart is emptied
-		$result = $this->closeTheCart();
+		$result = $this->Cart->close($cartId);
+		
+		if (!$result) {
+
+			$dataSource->rollback($this);
+			return false;
+		}
+		
+		
+		// check that the key data for both Cart and Order match
+		$result = $this->confirmMatchWithCart($this->id, $cartId);
 		
 		if (!$result) {
 			$dataSource->rollback($this);
@@ -304,6 +326,74 @@ class Order extends AppModel {
 			return true;
 		}
 		
+	}
+	
+	/**
+	* check that the key data for both Cart and Order match
+	* we will recalculate the prices for both 
+	**/
+	public function confirmMatchWithCart($orderId, $cartId) {
+		return true;
+	}
+	
+	/**
+	*
+	* Read all the OrderLineItem and recalculate Total weight, price, etc
+	*
+	* @param string $orderId Order id
+	* @return boolean Returns true if successful. False otherwise.
+	**/
+	public function recalculateTotalWeightPrice($orderId) {
+		// get all items of this cart 
+		$this->OrderLineItem->recursive = -1;
+		$items = $this->OrderLineItem->find('all',
+			array(
+				'conditions' => array(
+					'OrderLineItem.order_id' => $orderId,
+					'OrderLineItem.product_quantity >=' => 1,
+				)
+			)
+		);
+		
+		$shippedWeight 		= 0;
+		$totalWeight		= 0;
+		$totalAmount		= 0.0;
+		$shippedAmount 		= 0.0;
+		$currency			= '';
+		
+		// go through each item and calculate total weight and price
+		foreach($items as $key => $item) {
+			$quantity 	= $item['OrderLineItem']['product_quantity'];
+			$weight		= $item['OrderLineItem']['product_weight'];
+			$price		= $item['OrderLineItem']['product_price'];
+			$currency	= $item['OrderLineItem']['currency'];
+			
+			$lineWeight = $quantity * $weight;
+			$linePrice	= $quantity * $price;
+			
+			if ($item['OrderLineItem']['shipping_required']) {
+				$shippedWeight += $lineWeight;
+				$shippedAmount += $linePrice;
+			}
+			
+			$totalWeight += $lineWeight;
+			$totalAmount += $linePrice;
+		}
+		
+		// prepare the data to be saved
+		$this->id = $orderId;
+		$orderData = array(
+			'Order' => array(
+				'amount' 			=> $totalAmount,
+				'shipped_amount'	=> $shippedAmount,
+				'total_weight'		=> $totalWeight,
+				'shipped_weight'	=> $shippedWeight,
+				'currency'			=> $currency
+			)
+		);
+		
+		// execute the save function and return its results
+		return $this->save($orderData);
 	}
 	
 	/**
@@ -405,7 +495,7 @@ class Order extends AppModel {
 		
 	}
 	
-	public function update_prices($id = false, $cartData = array()) {
+	public function updatePrices($id = false, $cartData = array()) {
 		$this->id = $id;
 		
 		if (!$this->id) {
@@ -704,6 +794,7 @@ class Order extends AppModel {
 		// the correct CoverImage when we do a $this->find('first', array(
 		//	 'contain' => array('OrderLineItem' => 'CoverImage')
 		//	))
+		$this->OrderLineItem->recursive = 0;
 		
 		$items = $this->OrderLineItem->find('all', array(
 			'conditions' => array('OrderLineItem.order_id' => $order_uuid),

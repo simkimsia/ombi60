@@ -121,12 +121,27 @@ class Blog extends AppModel {
 		return $results;
 	}
 	
+	/**
+	*
+	* the custom afterSave will execute updateBlogLinks and updateHandlesInArticles
+	*
+	* @return void
+	**/
 	public function afterSave($created) {
 		$this->updateBlogLinks();
-		$this->updateHandlesInArticles();
+		$this->updateBlogHandlesInArticles();
 	}
 	
-	private function updateHandlesInArticles() {
+	/**
+	*
+	* this private function will auto update the blog handles for articles
+	* after a Blog has been saved
+	*
+	* Assumed $this->id and $this->data['Blog']['short_name'] contains values
+	*
+	* @return boolean Returns true if successful. False otherwise
+	**/
+	private function updateBlogHandlesInArticles() {
 		$this->Post->recursive = -1;
 		// get the new handle 
 		$handle = $this->data['Blog']['short_name'];
@@ -138,13 +153,22 @@ class Blog extends AppModel {
 		App::uses('StringLib', 'UtilityLib.Lib');
 		$fields = StringLib::iterateArrayWrapStringValuesInQuotes($fields);
 		
-		// meant only for all the BlogLinks belonging to this Blog
+		// meant only for all the Posts belonging to this Blog
 		$conditions = array('Post.blog_id'=>$this->id);
 		
 		return $this->Post->updateAll($fields, $conditions);
 		
 	}
 	
+	/**
+	*
+	* this private function will auto update the various links
+	* after a Blog has been saved
+	*
+	* Assumed $this->id and $this->data['Blog']['short_name'] contains values
+	*
+	* @return boolean Returns true if successful. False otherwise
+	**/
 	private function updateBlogLinks() {
 		$this->Link->recursive = -1;
 		

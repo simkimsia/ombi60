@@ -425,6 +425,72 @@ class CartTestCase extends CakeTestCase {
 		$this->check2ItemsWithImagesCartResult($resultArray);
 		
 	}
+	
+	/**
+	*
+	* closing the cart should work for open or live carts
+	**/
+	public function testCloseTheCartShouldCloseLiveCart() {
+		$cartFixture = new CartFixture();
+		$currentCart = $cartFixture->records[0];
+		// Given that the cart currently is OPEN
+		$this->assertEquals(0, $currentCart['past_checkout_point']);
+		
+		$cart_uuid = $currentCart['id'];
+		
+		// When we run the closeThisCart method
+		$resultArray = $this->Cart->close($cart_uuid);
+
+		// THEN the result returns an array
+		$expectedArray = array(
+			'Cart' => array(
+				'past_checkout_point' => true
+		    )
+		);
+
+
+		$this->assertEquals($expectedArray, $resultArray);
+		
+		// AND the cart is closed
+		$this->Cart->id = $cart_uuid;
+
+		$this->assertEquals(true, $this->Cart->field('past_checkout_point'));
+		
+	}
+	
+	/**
+	*
+	* test CloseTheCart should still return successful result even when the said cart is closed
+	*
+	**/
+	public function testCloseTheCartShouldReturnTrueEvenWhenAlreadyClosed() {
+
+		// GIVEN that the cart is already closed the function is idempotent
+		$cart_uuid = '4e895a91-b374-4a1a-947c-0b701507707a';
+		$this->Cart->id = $cart_uuid;
+		$this->Cart->saveField('past_checkout_point', true);
+		$this->assertTrue($this->Cart->field('past_checkout_point'));
+
+		// WHEN we run closeTheCart despite the Cart being already closed
+		$resultArray = $this->Cart->close($cart_uuid);
+
+		// THEN the result returns an array
+		$expectedArray = array(
+			'Cart' => array(
+				'past_checkout_point' => true
+		    )
+		);
+
+
+		$this->assertEquals($expectedArray, $resultArray);
+		
+		// AND the cart remains closed
+		$this->Cart->id = $cart_uuid;
+
+		$this->assertEquals(true, $this->Cart->field('past_checkout_point'));
+		
+	}
+	
 
 
 }

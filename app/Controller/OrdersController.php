@@ -527,6 +527,8 @@ class OrdersController extends AppController {
 			
 			// get Order data
 			$this->Order->id 	= $order_uuid;
+			// refresh prices, weights, etc
+			$this->Order->recalculateTotalWeightPrice($order_uuid);
 			$currentOrder 		= $this->Order->getItemsWithImages($order_uuid);
 			
 			// set up the shipping options

@@ -152,7 +152,7 @@ class CartItem extends AppModel {
 					$results[$key]['CartItem']['previous_price'] = number_format($results[$key]['CartItem']['previous_price'], 2);
 				} else if (isset($val['CartItem'])) {
 					foreach ($val['CartItem'] as $key1=>$val1) {
-						if (isset($val1['previous_price'])) {
+						if (isset($val1['previous_price']) && is_numeric($val1['previous_price'])) {
 							$results[$key]['CartItem'][$key1]['previous_price'] = number_format($results[$key]['CartItem'][$key1]['previous_price'], 2);
 						}
 					}
@@ -166,56 +166,59 @@ class CartItem extends AppModel {
 		return $results;
 	}
 	
-	public function refreshCart($data) {
-		
-		// anticipating
-		//Array
-		//(
-		//        [CartItem] => Array
-		//    (
-		//        [2] => Array
-		//            (
-		//                [product_quantity] => 1
-		//                [id] => 2
-		//            )
-		//	  [3] => Array
-		//            (
-		//                [product_quantity] => 2
-		//                [id] => 3
-		//            )
-		//
-		//    )
-		//
-		//
-		//)
-		
-		if(!isset($data['CartItem'])) {
-			return false;
-		}
-		
-		return $this->saveAll($data['CartItem']);
-
-	}
-	
 	/**
-	 * update all the existing cart items prices and weights
+	 * 
+	 *	Update all the existing cart items prices and weights
+	 *
+	 * @param integer $variant_id Variant id
+	 * @param float  $newPrice New Price for the said Variant
+	 * @param string $newCurrency New Currency for the said Variant
+	 * @param float $newWeight New weight for the said Variant
+	 * @return boolean Returns true if successful. False otherwise
 	 * */
 	public function updatePricesAndWeights($variant_id, $newPrice, $newCurrency, $newWeight) {
 		
 		// first we get all the affected cart_items
-		$items = $this->find('all', array('conditions'=>array('Cart.past_checkout_point'=>false,
-								      'CartItem.variant_id'=>$variant_id),
-						  'fields'=>array('CartItem.id')
-					 ));
+		$items = $this->find('all', array(
+			'conditions'=>array(
+				'Cart.past_checkout_point'	=>false,
+				'CartItem.variant_id'		=>$variant_id
+			),
+			'fields'=>array(
+				'CartItem.id',
+				'CartItem.product_price',
+				'CartItem.currency'
+			)
+		));
 		
-		$cartItemIdArray = Set::extract('{n}.CartItem.id', $items);
+		$cartItemIdArray 		= Set::extract('{n}.CartItem.id', $items);
+		$previousPriceArray 	= Set::extract('/CartItem/product_price[:first]', $items);
+		$previousCurrencyArray 	= Set::extract('/CartItem/currency[:first]', $items);
+
+
+		$previousPrice = $newPrice;
+		if (is_numeric($previousPriceArray[0])) {
+			$previousPrice = $previousPriceArray[0];
+		}
 		
-		return $this->updateAll(array('CartItem.product_price' => $newPrice,
-				       'CartItem.currency' => "'" . $newCurrency . "'",
-				       'CartItem.product_weight' => $newWeight,
-				       ),
-				 array('CartItem.variant_id'=>$variant_id,
-				       'CartItem.id'=>$cartItemIdArray));
+		$previousCurrency = $newCurrency;
+		if (is_string($previousCurrencyArray[0])) {
+			$previousCurrency = $previousCurrencyArray[0];
+		}
+		
+		return $this->updateAll(
+			array(
+				'CartItem.product_price' 		=> $newPrice,
+				'CartItem.currency' 			=> "'" . $newCurrency . "'",
+				'CartItem.product_weight' 		=> $newWeight,
+				'CartItem.previous_price' 		=> $previousPrice,
+				'CartItem.previous_currency' 	=> "'" . $previousCurrency . "'",
+			),
+			array(
+				'CartItem.variant_id'	=> $variant_id,
+				'CartItem.id'			=> $cartItemIdArray
+			)
+		);
 	}
 	
 	

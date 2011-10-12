@@ -155,10 +155,24 @@ class VariantModel extends AppModel {
 		if (!$created) {
 			if (isset($this->data['Variant']['price']) &&
 			    isset($this->data['Variant']['weight'])) {
-				$this->CartItem->updatePricesAndWeights($this->id, $this->data['Variant']['price'],
-								'SGD',
-								$this->data['Variant']['weight'],
-								'kg');
+				
+				// we update the CartItem that are still inside Live carts
+				$this->CartItem->updatePricesAndWeights(
+					$this->id, 
+					$this->data['Variant']['price'],
+					'SGD',
+					$this->data['Variant']['weight'],
+					'kg'
+				);
+								
+				// we update the OrderLineItem that are still inside incomplete orders
+				$this->OrderLineItem->updatePricesAndWeights(
+					$this->id, 
+					$this->data['Variant']['price'],
+					'SGD',
+					$this->data['Variant']['weight'],
+					'kg'
+				);
 			}
 			
 			if(isset($this->data['Variant']['shipping_required']) &&
