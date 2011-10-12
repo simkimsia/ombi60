@@ -1,5 +1,5 @@
 <?php
-/* Order Fixture generated on: 2011-10-07 02:09:03 : 1317953343 */
+/* Order Fixture generated on: 2011-10-09 07:15:35 : 1318144535 */
 
 /**
  * OrderFixture
@@ -63,6 +63,28 @@ class OrderFixture extends CakeTestFixture {
 			'past_checkout_point' => 0,
 			'contact_email' => 'guest_customer@ombi60.com',
 			'order_line_item_count' => '1',
+			'delivered_to_country' => '192'
+		),
+		array(
+			'id' => '4e91458a-b0f8-452c-ab84-1d351507707a',
+			'shop_id' => '2',
+			'customer_id' => '1',
+			'billing_address_id' => '1',
+			'delivery_address_id' => '2',
+			'order_no' => '10002',
+			'created' => '2011-10-09 06:56:10',
+			'amount' => '34.0000',
+			'status' => '1',
+			'cart_id' => '4e9144d7-55e4-44a6-a2f1-1f721507707a',
+			'payment_status' => '0',
+			'fulfillment_status' => '1',
+			'shipped_weight' => '22000',
+			'shipped_amount' => '34.0000',
+			'currency' => 'SGD',
+			'total_weight' => '22000',
+			'past_checkout_point' => 0,
+			'contact_email' => 'guest_customer@ombi60.com',
+			'order_line_item_count' => '2',
 			'delivered_to_country' => '192'
 		),
 	);

@@ -1,5 +1,5 @@
 <?php
-/* ShippingRate Fixture generated on: 2011-10-07 02:15:40 : 1317953740 */
+/* ShippingRate Fixture generated on: 2011-10-07 18:18:39 : 1318011519 */
 
 /**
  * ShippingRateFixture
@@ -69,6 +69,13 @@ class ShippingRateFixture extends CakeTestFixture {
 			'price' => '25.000',
 			'shipped_to_country_id' => '4',
 			'description' => 'From 20kg to 50kg'
+		),
+		array(
+			'id' => '7',
+			'name' => 'Standard Shipping Price-based',
+			'price' => '5.000',
+			'shipped_to_country_id' => '3',
+			'description' => 'From $10.00 and above'
 		),
 	);
 }

@@ -1,5 +1,5 @@
 <?php
-/* PriceBasedRate Fixture generated on: 2011-10-07 02:16:05 : 1317953765 */
+/* PriceBasedRate Fixture generated on: 2011-10-07 18:19:14 : 1318011554 */
 
 /**
  * PriceBasedRateFixture
@@ -27,5 +27,11 @@ class PriceBasedRateFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+		array(
+			'id' => '1',
+			'min_price' => '10.000',
+			'max_price' => NULL,
+			'shipping_rate_id' => '7'
+		),
 	);
 }

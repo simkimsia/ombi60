@@ -1,5 +1,5 @@
 <?php
-/* OrderLineItem Fixture generated on: 2011-10-07 02:08:47 : 1317953327 */
+/* OrderLineItem Fixture generated on: 2011-10-09 07:13:34 : 1318144414 */
 
 /**
  * OrderLineItemFixture
@@ -38,6 +38,34 @@ class OrderLineItemFixture extends CakeTestFixture {
 		array(
 			'id' => '1',
 			'order_id' => '4e8d8ef9-71a4-4a69-8dbf-04b01507707a',
+			'product_id' => '3',
+			'product_price' => '23.0000',
+			'product_quantity' => '1',
+			'status' => '1',
+			'product_title' => 'test product with no pic and no collection',
+			'product_weight' => '15000',
+			'currency' => 'SGD',
+			'shipping_required' => 1,
+			'variant_id' => '3',
+			'variant_title' => 'Default Title'
+		),
+		array(
+			'id' => '2',
+			'order_id' => '4e91458a-b0f8-452c-ab84-1d351507707a',
+			'product_id' => '2',
+			'product_price' => '11.0000',
+			'product_quantity' => '1',
+			'status' => '1',
+			'product_title' => 'Dummy Product',
+			'product_weight' => '7000',
+			'currency' => 'SGD',
+			'shipping_required' => 1,
+			'variant_id' => '2',
+			'variant_title' => 'Default Title'
+		),
+		array(
+			'id' => '3',
+			'order_id' => '4e91458a-b0f8-452c-ab84-1d351507707a',
 			'product_id' => '3',
 			'product_price' => '23.0000',
 			'product_quantity' => '1',

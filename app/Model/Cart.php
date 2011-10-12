@@ -881,32 +881,6 @@ class Cart extends AppModel {
 		
 	}
 	
-	public function afterFind($results, $primary) {
-		if (is_array($results)) {
-			
-			
-			$flag = 0;
-			
-			foreach ($results as $key => $val) {
-				if (isset($val['CartItem'])) {
-					foreach($val['CartItem'] as $key => $item) {
-						if(isset($item['shipping_required'])) {
-							if ($item['shipping_required']) {
-								$flag = 1;
-								break;	
-							}
-						}
-					}
-				}
-				
-				$results[$key]['Cart']['shipping_required'] = $flag;
-				
-			}
-			
-			
-		}
-		return $results;
-	}
 	
 	/**
 	 * we are assuming that this $postData is from $_POST
@@ -1013,27 +987,31 @@ class Cart extends AppModel {
 		$this->CartItem->unbindModel(array(
 			'belongsTo' => array(
 				'Product',
-				'CheckedOutVariant'
+				'CheckedOutVariant',
 			)
 		));
 		
+		// We need to do this convoluted way because we had difficulty retrieving
+		// the correct CoverImage when we do a $this->find('first', array(
+		//	 'contain' => array('CartItem' => 'CoverImage')
+		//	))
 		$items = $this->CartItem->find('all', array(
 			'conditions' => array('CartItem.cart_id' => $cart_uuid),
 			'link' => array('Cart', 'CoverImage')
 		));
-
+		
 		$cartData 	= Set::extract('0.Cart', $items);
 		$itemsData 	= array();
 		foreach($items as $key=>$item) {
 			$item['CartItem']['CoverImage'] = $item['CoverImage'];
 			$itemsData[]					= $item['CartItem'];					
 		}
-		$cartData['CartItem'] = $itemsData;
+		
 		$currentCart = array(
 			'Cart' => $cartData,
 			'CartItem' => $itemsData
 		);
-		
+
 		return $currentCart;
 	}
 	

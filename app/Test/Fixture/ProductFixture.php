@@ -61,7 +61,7 @@ class ProductFixture extends CakeTestFixture {
 			'title' => 'Dummy Product',
 			'code' => NULL,
 			'description' => NULL,
-			'price' => '0.0000',
+			'price' => '11.0000',
 			'created' => '2011-07-08 11:54:47',
 			'modified' => '2011-07-08 11:54:47',
 			'visible' => 1,

@@ -197,7 +197,7 @@
         Router::connect('/orders/:shop_id/:order_uuid/update',
                         array(
 							'controller' 	=> 'orders',
-							'action' 		=> 'updatePrices'),
+							'action' 		=> 'update_prices'),
 						array(
 							'pass'			=> array('shop_id', 'order_uuid'),
 							'shop_id'		=> '[0-9]+',
@@ -207,10 +207,10 @@
 
 
 		// checkout process 2nd page the action to handle the POSTBACK to collect payment mode
-        Router::connect('/orders/:shop_id/:order_uuid/complete_payment',
+        Router::connect('/orders/:shop_id/:order_uuid/complete_purchase',
                         array(
 							'controller' 	=> 'orders',
-							'action' 		=> 'complete_payment'),
+							'action' 		=> 'complete_purchase'),
 						array(
 							'pass'			=> array('shop_id', 'order_uuid'),
 							'shop_id'		=> '[0-9]+',
@@ -219,10 +219,10 @@
                         );
 
 		// checkout process indicate that payment is completed
-        Router::connect('/orders/:shop_id/:order_uuid/complete',
+        Router::connect('/orders/:shop_id/:order_uuid/completed',
                         array(
 							'controller' 	=> 'orders',
-							'action' 		=> 'complete'),
+							'action' 		=> 'completed'),
 						array(
 							'pass'			=> array('shop_id', 'order_uuid'),
 							'shop_id'		=> '[0-9]+',

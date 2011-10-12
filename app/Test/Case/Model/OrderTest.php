@@ -15,17 +15,24 @@ class OrderTestCase extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.cart', 'app.customer', 'app.shop', 
-		'app.merchant', 'app.order', 'app.address', 
-		'app.product', 'app.product_image', 'app.order_line_item', 
-		'app.webpage', 'app.wishlist', 'app.cart_item', 
-		'app.page_type', 'app.user', 'app.group',
-		'app.variant', 'app.variant_option', 'app.products_in_group',
-		'app.product_group', 'app.shop_setting', 'app.domain', 
-		'app.casual_surfer', 'app.link_list', 'app.link', 
+		'app.shop',  'app.domain',
+		'app.shop_setting', 'app.language',
+		'app.user', 'app.group',
+		'app.merchant', 'app.customer', 'app.casual_surfer',
+		'app.cart', 'app.cart_item',
+		'app.order', 'app.order_line_item', 'app.address', 
+		'app.product', 'app.product_image', 'app.wishlist', 
+		'app.variant', 'app.variant_option', 'app.products_in_group', 'app.product_group',  
+		'app.product_type', 'app.vendor',
+		'app.smart_collection_condition',
+		'app.webpage', 'app.page_type', 
+		'app.link_list', 'app.link', 
 		'app.blog', 'app.post', 'app.comment', 
-		'app.shops_payment_module', 'app.log', 'app.saved_theme',
-		'app.vendor', 'app.country'
+		'app.payment', 'app.shops_payment_module', 'app.payment_module',
+		'app.log', 'app.saved_theme',
+ 		'app.country',
+		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
+		'app.price_based_rate', 'app.weight_based_rate'
 	);
 
 
@@ -93,7 +100,7 @@ class OrderTestCase extends CakeTestCase {
 	* where we use the data in $records and generate an array where the index is OrderLineItem
 	* and it contains all the corresponding OrderLineItem data
 	**/
-	private function getAllCartItemsAsOrderLineItemBelongingTo($orderId) {
+	private function getAllCartItemsAsOrderLineItemBelongingTo($orderId, $cartId) {
 		$cartItemFixture 	= new CartItemFixture();
 		$records			= $cartItemFixture->records;
 		
@@ -105,23 +112,26 @@ class OrderTestCase extends CakeTestCase {
 		// looping through the records
 		foreach($records as $cartItem) {
 			
-			$sizeOfRecordsInOrderLineItem++;			
-			
-			// add in fields and values unique to OrderLineItem
-			$orderLineItem['id']				= $sizeOfRecordsInOrderLineItem;
-			$orderLineItem['order_id'] 			= $orderId;
-			$orderLineItem['product_id']		= $cartItem['product_id'];
-			$orderLineItem['product_price']		= $cartItem['product_price'];
-			$orderLineItem['product_quantity']	= $cartItem['product_quantity'];
-			$orderLineItem['status'] 			= 1;
-			$orderLineItem['product_title'] 	= $cartItem['product_title'];
-			$orderLineItem['product_weight'] 	= $cartItem['product_weight'];
-			$orderLineItem['currency'] 			= $cartItem['currency'];
-			$orderLineItem['shipping_required'] = $cartItem['shipping_required'];
-			$orderLineItem['variant_id'] 		= $cartItem['variant_id'];
-			$orderLineItem['variant_title'] 	= $cartItem['variant_title'];
-			
-			$orderLineItems[]['OrderLineItem'] = $orderLineItem;
+			if ($cartItem['cart_id'] == $cartId)  {
+				$sizeOfRecordsInOrderLineItem++;			
+
+				// add in fields and values unique to OrderLineItem
+				$orderLineItem['id']				= $sizeOfRecordsInOrderLineItem;
+				$orderLineItem['order_id'] 			= $orderId;
+				$orderLineItem['product_id']		= $cartItem['product_id'];
+				$orderLineItem['product_price']		= $cartItem['product_price'];
+				$orderLineItem['product_quantity']	= $cartItem['product_quantity'];
+				$orderLineItem['status'] 			= 1;
+				$orderLineItem['product_title'] 	= $cartItem['product_title'];
+				$orderLineItem['product_weight'] 	= $cartItem['product_weight'];
+				$orderLineItem['currency'] 			= $cartItem['currency'];
+				$orderLineItem['shipping_required'] = (boolean)$cartItem['shipping_required'];
+				$orderLineItem['variant_id'] 		= $cartItem['variant_id'];
+				$orderLineItem['variant_title'] 	= $cartItem['variant_title'];
+
+				$orderLineItems[]['OrderLineItem'] = $orderLineItem;
+				
+			}
 		}
 		
 		return $orderLineItems;
@@ -131,22 +141,55 @@ class OrderTestCase extends CakeTestCase {
 	/**
 	*
 	* check for OrderLineItem data to be valid
+	*
 	* @param string $orderId
 	* @return void
 	**/
-	private function orderLineItemsShouldBeValid($orderId) {
+	private function orderLineItemsShouldBeValid($orderId, $cartId, $coverImage = false) {
 
-		$expected = $this->getAllCartItemsAsOrderLineItemBelongingTo($orderId);
+		$expected = $this->getAllCartItemsAsOrderLineItemBelongingTo($orderId, $cartId);
 		
 		$this->Order->OrderLineItem->recursive 	= -1;
 		
+		if($coverImage) {
+			$coverImage = array('CoverImage');
+		}
+		
+
 		$orderLineItems = $this->Order->OrderLineItem->find('all', array(
 			'conditions' => array(
 				'order_id' => $orderId,
-			)
+			),
+			'contain' => $coverImage,
 		));
-
+		
 		$this->assertEquals($expected, $orderLineItems);		
+	}
+	
+	private function orderLineItemsDataShouldBeValid($actualData, $orderId, $cartId, $coverImage = false) {
+		$this->Order->OrderLineItem->recursive = 1;
+		
+		if($coverImage) {
+			$coverImage = array('CoverImage');
+		}
+		
+
+		$orderLineItems = $this->Order->OrderLineItem->find('all', array(
+			'conditions' => array(
+				'order_id' => $orderId,
+			),
+			'link' => $coverImage,
+		));
+		
+		$expected = array('OrderLineItem' => array());
+		foreach($orderLineItems as $key=>$item) {
+			$expectedItem = $item['OrderLineItem'];
+			$expectedImage= $item['CoverImage'];
+			$expectedItem['CoverImage'] = $expectedImage;
+			$expected['OrderLineItem'][] = $expectedItem;
+		}
+		
+		$this->assertEquals($expected, $actualData);
 	}
 	
 	/**
@@ -231,42 +274,82 @@ class OrderTestCase extends CakeTestCase {
 			'customer_id' => 1,
 			'billing_address_id' => 1,
 			'delivery_address_id' => 2,
-			'order_no' 	=> '10002',
-			'contact_email' => 'fake_customer@gmail.com'
+			'order_no' 	=> '10003',
+			'contact_email' => 'fake_customer@gmail.com',
+			'id'	=> '4e8d35a1-a9e4-4732-858f-0b711507707a'
 
 		);
 		
 		
 		$expectedOptions = array_merge($defaultOptions, $expectedOptions);
-		
-		$expectedArray = array(
-			'Order' => array(
-				'id' 					=> '4e8d35a1-a9e4-4732-858f-0b711507707a',
-				'shop_id' 				=> 2,
-	            'customer_id' 			=> $expectedOptions['customer_id'],
-	            'billing_address_id' 	=> $expectedOptions['billing_address_id'],
-	            'delivery_address_id' 	=> $expectedOptions['delivery_address_id'],
-				'order_no'				=> $expectedOptions['order_no'],
-				'created'				=> '2011-10-06 04:59:13',
-				'amount'				=> '23.0000',
-				'status'				=> 1,
-				'cart_id'				=> '4e895a91-b374-4a1a-947c-0b701507707a',
-				'payment_status'		=> 0,
-				'fulfillment_status'	=> 1,
-				'shipped_weight'		=> 15000,
-				'shipped_amount'		=> '23.0000',
-				'currency'				=> 'SGD',
-				'total_weight'			=> 15000,
-				'past_checkout_point'	=> NULL,
-				'contact_email'			=> $expectedOptions['contact_email'],
-				'order_line_item_count'	=> 1,
-				'delivered_to_country'	=> '192',
-				'shipping_required'		=> 1,
-			),
+		if ($expectedOptions['id'] == '4e91458a-b0f8-452c-ab84-1d351507707a') {
+
+			$expectedArray = array(
+				'Order' => array(
+					'id' 					=> $expectedOptions['id'],
+					'shop_id' 				=> 2,
+		            'customer_id' 			=> $expectedOptions['customer_id'],
+		            'billing_address_id' 	=> $expectedOptions['billing_address_id'],
+		            'delivery_address_id' 	=> $expectedOptions['delivery_address_id'],
+					'order_no'				=> $expectedOptions['order_no'],
+					'created'				=> '2011-10-06 04:59:13',
+					'amount'				=> '34.0000',
+					'status'				=> 1,
+					'cart_id'				=> '4e9144d7-55e4-44a6-a2f1-1f721507707a',
+					'payment_status'		=> 0,
+					'fulfillment_status'	=> 1,
+					'shipped_weight'		=> 22000,
+					'shipped_amount'		=> '34.0000',
+					'currency'				=> 'SGD',
+					'total_weight'			=> 22000,
+					'past_checkout_point'	=> NULL,
+					'contact_email'			=> $expectedOptions['contact_email'],
+					'order_line_item_count'	=> 2,
+					'delivered_to_country'	=> '192',
+					'shipping_required'		=> 1,
+				),
+
+
+			);
 			
-	
-		);		
+		} else {
+
+			$expectedArray = array(
+				'Order' => array(
+					'id' 					=> $expectedOptions['id'],
+					'shop_id' 				=> 2,
+		            'customer_id' 			=> $expectedOptions['customer_id'],
+		            'billing_address_id' 	=> $expectedOptions['billing_address_id'],
+		            'delivery_address_id' 	=> $expectedOptions['delivery_address_id'],
+					'order_no'				=> $expectedOptions['order_no'],
+					'created'				=> '2011-10-06 04:59:13',
+					'amount'				=> '23.0000',
+					'status'				=> 1,
+					'cart_id'				=> '4e895a91-b374-4a1a-947c-0b701507707a',
+					'payment_status'		=> 0,
+					'fulfillment_status'	=> 1,
+					'shipped_weight'		=> 15000,
+					'shipped_amount'		=> '23.0000',
+					'currency'				=> 'SGD',
+					'total_weight'			=> 15000,
+					'past_checkout_point'	=> NULL,
+					'contact_email'			=> $expectedOptions['contact_email'],
+					'order_line_item_count'	=> 1,
+					'delivered_to_country'	=> '192',
+					'shipping_required'		=> 1,
+				),
+
+
+			);
+			
+		}
 		
+		$this->expectedOrderShouldMatchActualOrder($expectedArray, $resultArray);
+				
+	}
+	
+	
+	private function expectedOrderShouldMatchActualOrder($expectedArray, $resultArray) {
 		$fieldsExpectedToBeDifferent = array('created', 'id');
 
 		$resultCart 	= $resultArray['Order'];
@@ -287,12 +370,11 @@ class OrderTestCase extends CakeTestCase {
 
 			unset($resultCart[$field]);
 			unset($expectedCart[$field]);
+						
 		}
 
 		$this->assertEquals($expectedCart, $resultCart);
-				
 	}
-
 /**
  * 
  * Test createForm function for the scenario where we should have
@@ -303,9 +385,11 @@ class OrderTestCase extends CakeTestCase {
 	public function testCreateFormShouldGiveNewCustomerNewAddresses() {
 			
 		// GIVEN valid order form data
+		$cart_uuid = '4e895a91-b374-4a1a-947c-0b701507707a';
+		
 		$orderFormData = array(
 			'Order' => array(
-				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+				'cart_id' => $cart_uuid,
 				'shop_id' => '2'
 			),
 		// AND the billing address is brand new
@@ -341,7 +425,7 @@ class OrderTestCase extends CakeTestCase {
 		$expectedBillingAddressId	= 3;
 		$expectedDeliveryAddressId	= 4;
 		$expectedContactEmail 		= 'fake_customer@gmail.com';
-		$expectedOrderNo			= '10002';
+		$expectedOrderNo			= '10003';
 
 		// AND we get valid Order data
 		$this->Order->recursive = -1;
@@ -358,7 +442,7 @@ class OrderTestCase extends CakeTestCase {
 		$this->orderShouldBeValid($order, $expected);
 		
 		// AND the Order has the correct OrderLineItem
-		$this->orderLineItemsShouldBeValid($orderId);
+		$this->orderLineItemsShouldBeValid($orderId, $cart_uuid);
 		
 		// AND a brand new Customer, User is generated
 		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
@@ -406,9 +490,10 @@ class OrderTestCase extends CakeTestCase {
 	public function testCreateFormShouldAttachToExistingCustomerNewAddresses() {
 
 		// GIVEN valid order form data
+		$cart_uuid = '4e895a91-b374-4a1a-947c-0b701507707a';
 		$orderFormData = array(
 			'Order' => array(
-				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+				'cart_id' => $cart_uuid,
 				'shop_id' => '2'
 			),
 			
@@ -446,7 +531,7 @@ class OrderTestCase extends CakeTestCase {
 		$expectedBillingAddressId	= 3;
 		$expectedDeliveryAddressId	= 4;
 		$expectedContactEmail 		= 'guest_customer@ombi60.com';
-		$expectedOrderNo			= '10002';
+		$expectedOrderNo			= '10003';
 
 		// AND we get valid Order data
 		$this->Order->recursive = -1;
@@ -463,7 +548,7 @@ class OrderTestCase extends CakeTestCase {
 		$this->orderShouldBeValid($order, $expected);
 
 		// AND the Order has the correct OrderLineItem
-		$this->orderLineItemsShouldBeValid($orderId);
+		$this->orderLineItemsShouldBeValid($orderId, $cart_uuid);
 
 		// AND a brand new Customer, User is generated
 		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
@@ -510,9 +595,10 @@ class OrderTestCase extends CakeTestCase {
 	public function testCreateFormShouldAttachToExistingCustomerAddresses() {
 
 		// GIVEN valid order form data
+		$cart_uuid = '4e895a91-b374-4a1a-947c-0b701507707a';
 		$orderFormData = array(
 			'Order' => array(
-				'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707a',
+				'cart_id' => $cart_uuid,
 				'shop_id' => '2'
 			),
 			
@@ -523,7 +609,7 @@ class OrderTestCase extends CakeTestCase {
 					'city' => 'Singapore',
 					'zip_code' => '111111',
 					'country' => '192',
-					'region' => NULL,
+					'region' => '',
 					'type' => BILLING,
 					'full_name' => 'G. Cherry'				
 				)
@@ -537,7 +623,7 @@ class OrderTestCase extends CakeTestCase {
 					'city' => 'Singapore',
 					'zip_code' => '111111',
 					'country' => '192',
-					'region' => NULL,
+					'region' => '',
 					'type' => DELIVERY,
 					'full_name' => 'G. Cherry'
 				)
@@ -559,7 +645,7 @@ class OrderTestCase extends CakeTestCase {
 		$expectedBillingAddressId	= 1;
 		$expectedDeliveryAddressId	= 2;
 		$expectedContactEmail 		= 'guest_customer@ombi60.com';
-		$expectedOrderNo			= '10002';
+		$expectedOrderNo			= '10003';
 
 		// AND we get valid Order data
 		$this->Order->recursive = -1;
@@ -576,7 +662,7 @@ class OrderTestCase extends CakeTestCase {
 		$this->orderShouldBeValid($order, $expected);
 
 		// AND the Order has the correct OrderLineItem
-		$this->orderLineItemsShouldBeValid($orderId);
+		$this->orderLineItemsShouldBeValid($orderId, $cart_uuid);
 
 		// AND a brand new Customer, User is generated
 		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
@@ -592,6 +678,202 @@ class OrderTestCase extends CakeTestCase {
 		$this->addressShouldBeValid($deliveryAddressExpected);
 
 	}	
+	
+	
+	public function testGetItemsWithImagesShouldContainRightItemsAndImages() {
+		// Given that we have the order_uuid
+		$orderId = '4e91458a-b0f8-452c-ab84-1d351507707a';
+		$cart_uuid  = '4e9144d7-55e4-44a6-a2f1-1f721507707a';
+		
+		// WHEN we run getItemsWithImages
+		$resultArray = $this->Order->getItemsWithImages($orderId);
+
+		// Then we expect the following
+		$expectedCustomerId 		= 1;
+		$expectedUserId 			= 3;
+		$expectedBillingAddressId	= 1;
+		$expectedDeliveryAddressId	= 2;
+		$expectedContactEmail 		= 'guest_customer@ombi60.com';
+		$expectedOrderNo			= '10002';
+
+
+		$expected = array(
+			'customer_id' => $expectedCustomerId,
+			'billing_address_id' => $expectedBillingAddressId,
+			'delivery_address_id' => $expectedDeliveryAddressId,
+			'order_no' 	=> $expectedOrderNo,
+			'contact_email' => $expectedContactEmail,
+			'id'		=> $orderId,
+		);
+
+		// AND the Order is valid
+		$this->orderShouldBeValid($resultArray, $expected);
+
+		// AND the Order has the correct OrderLineItem
+		$checkCoverImage = true;
+		$orderLineItems = array('OrderLineItem' => $resultArray['OrderLineItem']);
+		$this->orderLineItemsDataShouldBeValid($orderLineItems, $orderId, $cart_uuid, $checkCoverImage);
+
+		// AND a brand new Customer, User is generated
+		$this->userCustomerShouldBeValid($expectedCustomerId, $expectedUserId);
+		
+		
+	}
+	
+	public function testExtractShipmentDataFromShippingRateShouldWork() {
+		// Given that we use Shipping Rate 7 as the shipping rate data for input
+		$shippingRateFixture 	= new ShippingRateFixture();
+		$shippingRate 			= $shippingRateFixture->records[6];
+		
+		// WHEN we run the function
+		$shipmentData = $this->Order->extractShipmentDataFromShippingRate(array(
+			'ShippingRate' => $shippingRate,
+		));
+		
+		// THEN we get the following
+		
+		$expectedShipmentData = array(
+			'Shipment' => array(
+				'shipping_rate_id' => $shippingRate['id'],
+				'name'				=> $shippingRate['name'],
+				'description'		=> $shippingRate['description'],
+				'price'				=> $shippingRate['price'],
+				
+			)
+		);
+		
+		$this->assertEquals($expectedShipmentData,$shipmentData);
+		
+	}
+	
+	/**
+	*	
+	* Associated Cart closed. And we have a Payment and Shipment data
+	*
+	**/
+	public function testCompletePurchaseShouldCloseTheCartAndHaveShipmentPaymentData() {
+		// Given that we have the following data to complete the purchase
+		$order_uuid = '4e91458a-b0f8-452c-ab84-1d351507707a';
+		
+		$orderFormData = array(
+			'Order' => array(
+				'id' => $order_uuid,
+				'shop_id' => 2,
+			),
+			'Payment' => array(
+				'0' => array(
+					'shops_payment_module_id' => '1',
+				)
+			),
+			'Shipment' => array(
+				'0' =>array(
+					'shipping_rate_id' 	=> 3,
+					'name'				=> 'Standard Shipping',
+					'description'		=> 'From 10kg to 20kg',
+					'price'				=> '10.000',
+				)
+			
+			)
+		);
+		$this->Order->id = $order_uuid;
+		// WHEN we complete the purchase
+		$result = $this->Order->completePurchase($orderFormData);
+		
+		// THEN the result is true
+		$this->assertTrue($result);
+		// AND the associated Cart is closed
+		$this->Order->Cart->id = '4e9144d7-55e4-44a6-a2f1-1f721507707a';
+		$closed = $this->Order->Cart->field('past_checkout_point');
+		$this->assertTrue($closed);
+		
+		// AND Payment data valid
+		$noOfPayments = $this->Order->Payment->find('count', array(
+			'conditions' => array(
+				'Payment.order_id' 					=> $order_uuid,
+				'Payment.id'						=> 1,
+				'Payment.shops_payment_module_id' 	=> 1,
+			)
+		));
+		$this->assertEquals(1, $noOfPayments);
+				
+		// AND Shipment data valid
+		$noOfShipments = $this->Order->Shipment->find('count', array(
+			'conditions' => array(
+				'Shipment.id'			=> 1,
+				'Shipment.order_id' 	=> $order_uuid,
+				'Shipment.name' 		=> 'Standard Shipping',
+				'Shipment.description'	=> 'From 10kg to 20kg',
+				'Shipment.price' 		=> 10.000,
+			)
+		));
+		$this->assertEquals(1, $noOfShipments);
+	}
+	
+	/**
+	* 
+	* test the CloseTheCart method on a originally opened cart
+	*
+	**/
+	public function testCloseTheCartShouldWork() {
+		$cartFixture = new CartFixture();
+		$currentCart = $cartFixture->records[0];
+		// Given that the cart currently is NOT closed
+		$this->assertEquals(0, $currentCart['past_checkout_point']);
+		
+		// When we run the closeThisCart method
+		$resultArray = $this->Order->closeTheCart('4e8d8ef9-71a4-4a69-8dbf-04b01507707a');
+
+		// THEN the result returns an array
+		$expectedArray = array(
+			'Cart' => array(
+				'past_checkout_point' => true
+		    )
+		);
+
+
+		$this->assertEquals($expectedArray, $resultArray);
+		
+		// AND the cart is closed
+		$this->Order->Cart->id = '4e895a91-b374-4a1a-947c-0b701507707a';
+
+		$this->assertEquals(true, $this->Order->Cart->field('past_checkout_point'));
+		
+		
+	}
+	
+	/**
+	*
+	* test CloseTheCart should still return successful result even when the said cart is closed
+	*
+	**/
+	public function testCloseTheCartShouldReturnTrueEvenWhenAlreadyClosed() {
+
+		// GIVEN that the cart is already closed the function is idempotent
+		$this->Order->Cart->id = '4e895a91-b374-4a1a-947c-0b701507707a';
+		$this->Order->Cart->saveField('past_checkout_point', true);
+		$this->assertTrue($this->Order->Cart->field('past_checkout_point'));
+
+		// WHEN we run closeTheCart despite the Cart being already closed
+		$resultArray = $this->Order->closeTheCart('4e8d8ef9-71a4-4a69-8dbf-04b01507707a');
+
+		// THEN the result returns an array
+		$expectedArray = array(
+			'Cart' => array(
+				'past_checkout_point' => true
+		    )
+		);
+
+
+		$this->assertEquals($expectedArray, $resultArray);
+		
+		// AND the cart remains closed
+		$this->Order->Cart->id = '4e895a91-b374-4a1a-947c-0b701507707a';
+
+		$this->assertEquals(true, $this->Order->Cart->field('past_checkout_point'));
+		
+		
+
+	}
 
 
 	

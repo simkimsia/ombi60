@@ -1,5 +1,5 @@
 <?php
-/* Cart Fixture generated on: 2011-10-05 05:56:30 : 1317794190 */
+/* Cart Fixture generated on: 2011-10-09 07:10:48 : 1318144248 */
 
 /**
  * CartFixture
@@ -19,7 +19,7 @@ class CartFixture extends CakeTestFixture {
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
 		'amount' => array('type' => 'float', 'null' => false, 'default' => '0.0000', 'length' => '10,4', 'collate' => NULL, 'comment' => ''),
 		'status' => array('type' => 'boolean', 'null' => true, 'default' => '1', 'collate' => NULL, 'comment' => ''),
-		'total_weight' => array('type' => 'float', 'null' => false, 'default' => '0', 'length' => 10, 'collate' => NULL, 'comment' => ''),
+		'total_weight' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 10, 'collate' => NULL, 'comment' => ''),
 		'currency' => array('type' => 'string', 'null' => false, 'default' => 'SGD', 'length' => 5, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'shipped_amount' => array('type' => 'float', 'null' => false, 'default' => '0.0000', 'length' => '10,4', 'collate' => NULL, 'comment' => ''),
 		'shipped_weight' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 10, 'collate' => NULL, 'comment' => ''),
@@ -50,6 +50,22 @@ class CartFixture extends CakeTestFixture {
 			'shipped_weight' => '15000',
 			'past_checkout_point' => 0,
 			'cart_item_count' => '1',
+			'note' => NULL,
+			'attributes' => NULL
+		),
+		array(
+			'id' => '4e9144d7-55e4-44a6-a2f1-1f721507707a',
+			'shop_id' => '2',
+			'user_id' => '3',
+			'created' => '2011-10-09 06:53:11',
+			'amount' => '34.0000',
+			'status' => 1,
+			'total_weight' => '22000',
+			'currency' => 'SGD',
+			'shipped_amount' => '34.0000',
+			'shipped_weight' => '22000',
+			'past_checkout_point' => 0,
+			'cart_item_count' => '2',
 			'note' => NULL,
 			'attributes' => NULL
 		),

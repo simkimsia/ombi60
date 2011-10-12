@@ -1,13 +1,22 @@
 <?php
+	if ($step == 1) {
+		$mainModel = 'Cart';
+		$itemModel = 'CartItem';
+		$currentData = $currentCart;
+	}
+	
 	if ($step == 2) {
-		$currentCart = array(
-			'Cart' 		=> $currentOrder['Order'],
-			'CartItem' 	=> $currentOrder['OrderLineItem']
-		);
+		
+		$mainModel = 'Order';
+		$itemModel = 'OrderLineItem';
+		
+		$currentData = $currentOrder;
+		
 		$is_shipping_included 	= $currentOrder['Order']['shipping_required'];
 		$shipping_cost 			= $this->Number->currency($shippingFee, '$');
 	}
-	$totalAmountWithShipping = $currentCart['Cart']['amount'];
+	
+	$totalAmountWithShipping = $currentData[$mainModel]['amount'];
 	
 ?>
 <div id="checkout_warning">
@@ -20,7 +29,7 @@
         <span class="youarebuying">You're buying...</span>
         <ul>
 		<?php
-		$items = $currentCart['CartItem'];
+		$items = $currentData[$itemModel];
 		foreach($items as $key=>$item) :
 			$image = $item['CoverImage'];
 			$imagePath = 'no-image.jpeg';

@@ -1,5 +1,5 @@
 <?php
-/* ShopsPaymentModule Fixture generated on: 2011-10-07 02:16:42 : 1317953802 */
+/* ShopsPaymentModule Fixture generated on: 2011-10-07 18:18:58 : 1318011538 */
 
 /**
  * ShopsPaymentModuleFixture

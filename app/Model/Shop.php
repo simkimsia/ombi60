@@ -353,19 +353,33 @@ class Shop extends AppModel {
 	 * */
 	private function getDataForStoringIntoSingleton($conditions) {
 		
-		$this->recursive         = -1;
+		$this->recursive         = 0;
 		$this->Domain->recursive = -1;
 		$this->ShopSetting->recursive = -1;
 		
-		$this->Behaviors->load('Linkable.Linkable');
+		$this->bindModel(array(
+			'hasOne' => array(
+				'ShopSetting' => array(
+					'className' => 'ShopSetting',
+					'foreignKey' => 'shop_id',
+				),
+				'Domain' => array(
+					'className' => 'Domain',
+					'conditions' => array(
+						'Domain.primary' => true
+					)
+				)
+			)
+		));
 		
-		$result = $this->find(
-				      'first',
-				      array(
-					   'link' => array('ShopSetting', 'Domain', ),
-					   'conditions' => $conditions,
-					   'fields' => array('Shop.*', 'Domain.domain', 'Domain.id', 'ShopSetting.*'),
-					   ));
+		$result = $this->find('first', array(
+			'conditions' => $conditions,
+			'fields' => array(
+				'Shop.*', 
+				'Domain.domain', 
+				'Domain.id', 
+				'ShopSetting.*')
+		));
 
 		if (!empty($result)) {
 			return $result;

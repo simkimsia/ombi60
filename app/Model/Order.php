@@ -247,6 +247,88 @@ class Order extends AppModel {
 		return $shippingRequired;
 		
 	}
+	
+	/**
+	*
+	* Returns a result array containing Shipment data formatted from ShippingRate data
+	* The result array  is used to complete checkout process
+	*
+	* @param array $data
+	* @return array Returns the formatted array if successful. Otherwise, false
+	*
+	**/
+	public function extractShipmentDataFromShippingRate($data) {
+		if (array_key_exists('ShippingRate', $data)) {
+			$result = array('Shipment'=>array());
+			$result['Shipment']['shipping_rate_id']	= $data['ShippingRate']['id'];
+			$result['Shipment']['name'] 			= $data['ShippingRate']['name'];
+			$result['Shipment']['description'] 		= $data['ShippingRate']['description'];
+			$result['Shipment']['price'] 			= $data['ShippingRate']['price'];
+			return $result;
+		}
+		return false;
+	}
+	
+	public function completePurchase($data) {
+		
+		// set the Order pk
+		$data['Order'] = array(
+			'id'     => $this->id,
+			'status' => ORDER_OPENED,
+		);
+		
+		
+		// need to set Order past_checkout_point to be true to conclude the order
+		$data['Order']['past_checkout_point'] = true;
+		
+		$dataSource = $this->getDataSource();
+		
+		$dataSource->begin($this);
+		
+		$result = $this->saveAssociated($data, array('atomic'=>false));
+		
+		if (!$result) {
+
+			$dataSource->rollback($this);
+			return false;
+		}
+
+		// need to set Cart past_checkout_point to true to ensure cart is emptied
+		$result = $this->closeTheCart();
+		
+		if (!$result) {
+			$dataSource->rollback($this);
+			return false;
+		} else {
+			$dataSource->commit($this);
+			return true;
+		}
+		
+	}
+	
+	/**
+	*
+	* Close the associated Cart 
+	*
+	* @param string $orderId If not stated, $this->id is used instead.
+	* @return boolean
+	**/
+	public function closeTheCart($orderId = null) {
+		if ($orderId == null) {
+			$orderId = $this->id;
+		}
+		
+		$this->id = $orderId;
+		$cartId = $this->field('cart_id');
+		$this->Cart->id = $cartId;
+
+		// we use save and not saveField because saveField is not idempotent
+		$result = $this->Cart->save(array(
+			'past_checkout_point'=>true
+		));
+	
+		return $result;
+	}
 		
 	public function savePaymentAndShipment($data) {
 		// assume $data contains order_id for the Payment and Shipment arrays
@@ -255,9 +337,11 @@ class Order extends AppModel {
 		// we need to convert the $data to this format array('Payment'=>array(array('payment_module_id'=>3),)) etc
 		
 		// set the Order pk
-		$data['Order'] = array('id'     => $this->id,
-				       'status' => $data['Order']['status'],
-				       'payment_status' => $data['Payment']['status'],);
+		$data['Order'] = array(
+			'id'     => $this->id,
+			'status' => $data['Order']['status'],
+			'payment_status' => $data['Payment']['status'],
+		);
 		
 		// check for Shipment
 		if (array_key_exists('Shipment', $data)) {
@@ -321,7 +405,7 @@ class Order extends AppModel {
 		
 	}
 	
-	public function updatePrices($id = false, $cartData = array()) {
+	public function update_prices($id = false, $cartData = array()) {
 		$this->id = $id;
 		
 		if (!$this->id) {
@@ -615,6 +699,11 @@ class Order extends AppModel {
 				'OrderedVariant'
 			)
 		));
+
+		// We need to do this convoluted way because we had difficulty retrieving
+		// the correct CoverImage when we do a $this->find('first', array(
+		//	 'contain' => array('OrderLineItem' => 'CoverImage')
+		//	))
 		
 		$items = $this->OrderLineItem->find('all', array(
 			'conditions' => array('OrderLineItem.order_id' => $order_uuid),
@@ -627,7 +716,7 @@ class Order extends AppModel {
 			$item['OrderLineItem']['CoverImage'] 	= $item['CoverImage'];
 			$itemsData[]							= $item['OrderLineItem'];					
 		}
-		$orderData['OrderLineItem'] = $itemsData;
+
 		$currentOrder = array(
 			'Order' 		=> $orderData,
 			'OrderLineItem' => $itemsData

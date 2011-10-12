@@ -1,5 +1,5 @@
 <?php
-/* CartItem Fixture generated on: 2011-10-05 05:56:43 : 1317794203 */
+/* CartItem Fixture generated on: 2011-10-09 07:05:17 : 1318143917 */
 
 /**
  * CartItemFixture
@@ -47,12 +47,43 @@ class CartItemFixture extends CakeTestFixture {
 			'product_title' => 'test product with no pic and no collection',
 			'product_weight' => '15000',
 			'currency' => 'SGD',
-			'shipping_required' => true,
+			'shipping_required' => 1,
+			'previous_price' => '23.0000',
+			'previous_currency' => 'SGD',
+			'variant_id' => '3',
+			'variant_title' => 'Default Title'
+		),
+		array(
+			'id' => '2',
+			'cart_id' => '4e9144d7-55e4-44a6-a2f1-1f721507707a',
+			'product_id' => '2',
+			'product_price' => '11.0000',
+			'product_quantity' => '1',
+			'visible' => 1,
+			'product_title' => 'Dummy Product',
+			'product_weight' => '7000',
+			'currency' => 'SGD',
+			'shipping_required' => 1,
+			'previous_price' => '11.0000',
+			'previous_currency' => 'SGD',
+			'variant_id' => '2',
+			'variant_title' => 'Default Title'
+		),
+		array(
+			'id' => '3',
+			'cart_id' => '4e9144d7-55e4-44a6-a2f1-1f721507707a',
+			'product_id' => '3',
+			'product_price' => '23.0000',
+			'product_quantity' => '1',
+			'visible' => 1,
+			'product_title' => 'test product with no pic and no collection',
+			'product_weight' => '15000',
+			'currency' => 'SGD',
+			'shipping_required' => 1,
 			'previous_price' => '23.0000',
 			'previous_currency' => 'SGD',
 			'variant_id' => '3',
 			'variant_title' => 'Default Title'
 		),
 	);
-	
 }

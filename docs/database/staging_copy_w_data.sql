@@ -50,7 +50,7 @@ CREATE TABLE `addresses` (
 
 /*Data for the table `addresses` */
 
-insert  into `addresses`(`id`,`address`,`city`,`region`,`zip_code`,`country`,`customer_id`,`type`,`full_name`) values (1,'Billing Address St. Block 123 #01-911','Singapore',NULL,'111111',192,1,1,'G. Cherry'),(2,'Delivery Address Block 123 #01-911','Singapore',NULL,'111111',192,1,2,'G. Cherry');
+insert  into `addresses`(`id`,`address`,`city`,`region`,`zip_code`,`country`,`customer_id`,`type`,`full_name`) values (1,'Billing Address St. Block 123 #01-911','Singapore','','111111',192,1,1,'G. Cherry'),(2,'Delivery Address Block 123 #01-911','Singapore','','111111',192,1,2,'G. Cherry');
 
 /*Table structure for table `aros` */
 
@@ -65,11 +65,11 @@ CREATE TABLE `aros` (
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=196 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `aros` */
 
-insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,8),(4,NULL,'Group',4,'customers',9,144),(5,NULL,'Group',5,'casual',145,358),(6,3,'User',1,NULL,6,7),(7,NULL,'User',2,NULL,363,364),(8,5,'User',4,NULL,146,147),(9,NULL,'User',4,NULL,359,360),(10,NULL,'User',3,NULL,361,362),(11,5,'User',4,NULL,148,149),(12,5,'User',4,NULL,150,151),(13,5,'User',4,NULL,152,153),(14,5,'User',4,NULL,154,155),(15,5,'User',4,NULL,156,157),(16,5,'User',4,NULL,158,159),(17,5,'User',4,NULL,160,161),(18,5,'User',4,NULL,162,163),(19,5,'User',4,NULL,164,165),(20,5,'User',4,NULL,166,167),(21,5,'User',4,NULL,168,169),(22,5,'User',4,NULL,170,171),(23,5,'User',4,NULL,172,173),(24,5,'User',4,NULL,174,175),(25,5,'User',4,NULL,176,177),(26,5,'User',4,NULL,178,179),(27,5,'User',4,NULL,180,181),(28,5,'User',4,NULL,182,183),(29,5,'User',3,NULL,184,185),(30,5,'User',3,NULL,186,187),(31,5,'User',3,NULL,188,189),(32,5,'User',3,NULL,190,191),(33,5,'User',3,NULL,192,193),(34,5,'User',3,NULL,194,195),(35,5,'User',3,NULL,196,197),(36,5,'User',3,NULL,198,199),(37,5,'User',3,NULL,200,201),(38,5,'User',3,NULL,202,203),(39,5,'User',3,NULL,204,205),(40,5,'User',3,NULL,206,207),(41,5,'User',3,NULL,208,209),(42,5,'User',3,NULL,210,211),(43,5,'User',3,NULL,212,213),(44,5,'User',3,NULL,214,215),(45,5,'User',3,NULL,216,217),(46,5,'User',3,NULL,218,219),(47,5,'User',3,NULL,220,221),(48,5,'User',3,NULL,222,223),(49,5,'User',3,NULL,224,225),(50,5,'User',3,NULL,226,227),(51,5,'User',3,NULL,228,229),(52,5,'User',3,NULL,230,231),(53,5,'User',3,NULL,232,233),(54,5,'User',3,NULL,234,235),(55,5,'User',3,NULL,236,237),(56,5,'User',3,NULL,238,239),(57,5,'User',3,NULL,240,241),(58,5,'User',3,NULL,242,243),(59,5,'User',3,NULL,244,245),(60,5,'User',3,NULL,246,247),(61,5,'User',3,NULL,248,249),(62,5,'User',3,NULL,250,251),(63,5,'User',3,NULL,252,253),(64,5,'User',3,NULL,254,255),(65,5,'User',3,NULL,256,257),(66,5,'User',3,NULL,258,259),(67,5,'User',3,NULL,260,261),(68,5,'User',3,NULL,262,263),(69,5,'User',3,NULL,264,265),(70,5,'User',3,NULL,266,267),(71,5,'User',3,NULL,268,269),(72,5,'User',3,NULL,270,271),(73,5,'User',3,NULL,272,273),(74,5,'User',3,NULL,274,275),(75,5,'User',3,NULL,276,277),(76,5,'User',3,NULL,278,279),(77,5,'User',3,NULL,280,281),(78,5,'User',3,NULL,282,283),(79,5,'User',3,NULL,284,285),(80,5,'User',3,NULL,286,287),(81,5,'User',3,NULL,288,289),(82,5,'User',3,NULL,290,291),(83,5,'User',3,NULL,292,293),(84,5,'User',3,NULL,294,295),(85,5,'User',3,NULL,296,297),(86,5,'User',3,NULL,298,299),(87,5,'User',3,NULL,300,301),(88,5,'User',3,NULL,302,303),(89,5,'User',3,NULL,304,305),(90,5,'User',3,NULL,306,307),(91,5,'User',3,NULL,308,309),(92,5,'User',3,NULL,310,311),(93,5,'User',3,NULL,312,313),(94,5,'User',3,NULL,314,315),(95,5,'User',3,NULL,316,317),(96,5,'User',3,NULL,318,319),(97,5,'User',3,NULL,320,321),(98,5,'User',3,NULL,322,323),(99,5,'User',3,NULL,324,325),(100,5,'User',3,NULL,326,327),(101,5,'User',3,NULL,328,329),(102,5,'User',3,NULL,330,331),(103,5,'User',3,NULL,332,333),(104,5,'User',3,NULL,334,335),(105,5,'User',3,NULL,336,337),(106,5,'User',3,NULL,338,339),(107,5,'User',3,NULL,340,341),(108,5,'User',3,NULL,342,343),(109,5,'User',3,NULL,344,345),(110,5,'User',3,NULL,346,347),(111,NULL,'User',5,NULL,365,366),(112,5,'User',6,NULL,348,349),(113,5,'User',3,NULL,350,351),(114,5,'User',4,NULL,352,353),(115,5,'User',5,NULL,354,355),(116,5,'User',6,NULL,356,357),(117,4,'User',3,NULL,10,11),(118,4,'User',3,NULL,12,13),(119,4,'User',3,NULL,14,15),(120,4,'User',3,NULL,16,17),(121,4,'User',3,NULL,18,19),(122,4,'User',3,NULL,20,21),(123,4,'User',3,NULL,22,23),(124,4,'User',3,NULL,24,25),(125,4,'User',3,NULL,26,27),(126,4,'User',3,NULL,28,29),(127,4,'User',3,NULL,30,31),(128,4,'User',3,NULL,32,33),(129,4,'User',3,NULL,34,35),(130,4,'User',3,NULL,36,37),(131,4,'User',3,NULL,38,39),(132,4,'User',3,NULL,40,41),(133,4,'User',3,NULL,42,43),(134,4,'User',3,NULL,44,45),(135,4,'User',3,NULL,46,47),(136,4,'User',3,NULL,48,49),(137,4,'User',3,NULL,50,51),(138,4,'User',3,NULL,52,53),(139,4,'User',3,NULL,54,55),(140,4,'User',3,NULL,56,57),(141,4,'User',3,NULL,58,59),(142,4,'User',3,NULL,60,61),(143,4,'User',3,NULL,62,63),(144,4,'User',3,NULL,64,65),(145,4,'User',3,NULL,66,67),(146,4,'User',3,NULL,68,69),(147,4,'User',3,NULL,70,71),(148,4,'User',3,NULL,72,73),(149,4,'User',3,NULL,74,75),(150,4,'User',3,NULL,76,77),(151,4,'User',3,NULL,78,79),(152,4,'User',3,NULL,80,81),(153,4,'User',3,NULL,82,83),(154,4,'User',3,NULL,84,85),(155,4,'User',3,NULL,86,87),(156,4,'User',3,NULL,88,89),(157,4,'User',3,NULL,90,91),(158,4,'User',3,NULL,92,93),(159,4,'User',3,NULL,94,95),(160,4,'User',3,NULL,96,97),(161,4,'User',3,NULL,98,99),(162,4,'User',3,NULL,100,101),(163,4,'User',4,NULL,102,103),(164,4,'User',4,NULL,104,105),(165,4,'User',4,NULL,106,107),(166,4,'User',4,NULL,108,109),(167,4,'User',4,NULL,110,111),(168,4,'User',4,NULL,112,113),(169,4,'User',4,NULL,114,115),(170,4,'User',4,NULL,116,117),(171,4,'User',4,NULL,118,119),(172,4,'User',4,NULL,120,121),(173,4,'User',4,NULL,122,123),(174,4,'User',4,NULL,124,125),(175,4,'User',4,NULL,126,127),(176,4,'User',4,NULL,128,129),(177,4,'User',4,NULL,130,131),(178,4,'User',4,NULL,132,133),(179,4,'User',4,NULL,134,135),(180,4,'User',4,NULL,136,137),(181,4,'User',4,NULL,138,139),(182,4,'User',4,NULL,140,141),(183,4,'User',4,NULL,142,143);
+insert  into `aros`(`id`,`parent_id`,`model`,`foreign_key`,`alias`,`lft`,`rght`) values (1,NULL,'Group',1,'administrators',1,2),(2,NULL,'Group',2,'editors',3,4),(3,NULL,'Group',3,'merchants',5,8),(4,NULL,'Group',4,'customers',9,162),(5,NULL,'Group',5,'casual',163,382),(6,3,'User',1,NULL,6,7),(7,NULL,'User',2,NULL,387,388),(8,5,'User',4,NULL,164,165),(9,NULL,'User',4,NULL,383,384),(10,NULL,'User',3,NULL,385,386),(11,5,'User',4,NULL,166,167),(12,5,'User',4,NULL,168,169),(13,5,'User',4,NULL,170,171),(14,5,'User',4,NULL,172,173),(15,5,'User',4,NULL,174,175),(16,5,'User',4,NULL,176,177),(17,5,'User',4,NULL,178,179),(18,5,'User',4,NULL,180,181),(19,5,'User',4,NULL,182,183),(20,5,'User',4,NULL,184,185),(21,5,'User',4,NULL,186,187),(22,5,'User',4,NULL,188,189),(23,5,'User',4,NULL,190,191),(24,5,'User',4,NULL,192,193),(25,5,'User',4,NULL,194,195),(26,5,'User',4,NULL,196,197),(27,5,'User',4,NULL,198,199),(28,5,'User',4,NULL,200,201),(29,5,'User',3,NULL,202,203),(30,5,'User',3,NULL,204,205),(31,5,'User',3,NULL,206,207),(32,5,'User',3,NULL,208,209),(33,5,'User',3,NULL,210,211),(34,5,'User',3,NULL,212,213),(35,5,'User',3,NULL,214,215),(36,5,'User',3,NULL,216,217),(37,5,'User',3,NULL,218,219),(38,5,'User',3,NULL,220,221),(39,5,'User',3,NULL,222,223),(40,5,'User',3,NULL,224,225),(41,5,'User',3,NULL,226,227),(42,5,'User',3,NULL,228,229),(43,5,'User',3,NULL,230,231),(44,5,'User',3,NULL,232,233),(45,5,'User',3,NULL,234,235),(46,5,'User',3,NULL,236,237),(47,5,'User',3,NULL,238,239),(48,5,'User',3,NULL,240,241),(49,5,'User',3,NULL,242,243),(50,5,'User',3,NULL,244,245),(51,5,'User',3,NULL,246,247),(52,5,'User',3,NULL,248,249),(53,5,'User',3,NULL,250,251),(54,5,'User',3,NULL,252,253),(55,5,'User',3,NULL,254,255),(56,5,'User',3,NULL,256,257),(57,5,'User',3,NULL,258,259),(58,5,'User',3,NULL,260,261),(59,5,'User',3,NULL,262,263),(60,5,'User',3,NULL,264,265),(61,5,'User',3,NULL,266,267),(62,5,'User',3,NULL,268,269),(63,5,'User',3,NULL,270,271),(64,5,'User',3,NULL,272,273),(65,5,'User',3,NULL,274,275),(66,5,'User',3,NULL,276,277),(67,5,'User',3,NULL,278,279),(68,5,'User',3,NULL,280,281),(69,5,'User',3,NULL,282,283),(70,5,'User',3,NULL,284,285),(71,5,'User',3,NULL,286,287),(72,5,'User',3,NULL,288,289),(73,5,'User',3,NULL,290,291),(74,5,'User',3,NULL,292,293),(75,5,'User',3,NULL,294,295),(76,5,'User',3,NULL,296,297),(77,5,'User',3,NULL,298,299),(78,5,'User',3,NULL,300,301),(79,5,'User',3,NULL,302,303),(80,5,'User',3,NULL,304,305),(81,5,'User',3,NULL,306,307),(82,5,'User',3,NULL,308,309),(83,5,'User',3,NULL,310,311),(84,5,'User',3,NULL,312,313),(85,5,'User',3,NULL,314,315),(86,5,'User',3,NULL,316,317),(87,5,'User',3,NULL,318,319),(88,5,'User',3,NULL,320,321),(89,5,'User',3,NULL,322,323),(90,5,'User',3,NULL,324,325),(91,5,'User',3,NULL,326,327),(92,5,'User',3,NULL,328,329),(93,5,'User',3,NULL,330,331),(94,5,'User',3,NULL,332,333),(95,5,'User',3,NULL,334,335),(96,5,'User',3,NULL,336,337),(97,5,'User',3,NULL,338,339),(98,5,'User',3,NULL,340,341),(99,5,'User',3,NULL,342,343),(100,5,'User',3,NULL,344,345),(101,5,'User',3,NULL,346,347),(102,5,'User',3,NULL,348,349),(103,5,'User',3,NULL,350,351),(104,5,'User',3,NULL,352,353),(105,5,'User',3,NULL,354,355),(106,5,'User',3,NULL,356,357),(107,5,'User',3,NULL,358,359),(108,5,'User',3,NULL,360,361),(109,5,'User',3,NULL,362,363),(110,5,'User',3,NULL,364,365),(111,NULL,'User',5,NULL,389,390),(112,5,'User',6,NULL,366,367),(113,5,'User',3,NULL,368,369),(114,5,'User',4,NULL,370,371),(115,5,'User',5,NULL,372,373),(116,5,'User',6,NULL,374,375),(117,4,'User',3,NULL,10,11),(118,4,'User',3,NULL,12,13),(119,4,'User',3,NULL,14,15),(120,4,'User',3,NULL,16,17),(121,4,'User',3,NULL,18,19),(122,4,'User',3,NULL,20,21),(123,4,'User',3,NULL,22,23),(124,4,'User',3,NULL,24,25),(125,4,'User',3,NULL,26,27),(126,4,'User',3,NULL,28,29),(127,4,'User',3,NULL,30,31),(128,4,'User',3,NULL,32,33),(129,4,'User',3,NULL,34,35),(130,4,'User',3,NULL,36,37),(131,4,'User',3,NULL,38,39),(132,4,'User',3,NULL,40,41),(133,4,'User',3,NULL,42,43),(134,4,'User',3,NULL,44,45),(135,4,'User',3,NULL,46,47),(136,4,'User',3,NULL,48,49),(137,4,'User',3,NULL,50,51),(138,4,'User',3,NULL,52,53),(139,4,'User',3,NULL,54,55),(140,4,'User',3,NULL,56,57),(141,4,'User',3,NULL,58,59),(142,4,'User',3,NULL,60,61),(143,4,'User',3,NULL,62,63),(144,4,'User',3,NULL,64,65),(145,4,'User',3,NULL,66,67),(146,4,'User',3,NULL,68,69),(147,4,'User',3,NULL,70,71),(148,4,'User',3,NULL,72,73),(149,4,'User',3,NULL,74,75),(150,4,'User',3,NULL,76,77),(151,4,'User',3,NULL,78,79),(152,4,'User',3,NULL,80,81),(153,4,'User',3,NULL,82,83),(154,4,'User',3,NULL,84,85),(155,4,'User',3,NULL,86,87),(156,4,'User',3,NULL,88,89),(157,4,'User',3,NULL,90,91),(158,4,'User',3,NULL,92,93),(159,4,'User',3,NULL,94,95),(160,4,'User',3,NULL,96,97),(161,4,'User',3,NULL,98,99),(162,4,'User',3,NULL,100,101),(163,4,'User',4,NULL,102,103),(164,4,'User',4,NULL,104,105),(165,4,'User',4,NULL,106,107),(166,4,'User',4,NULL,108,109),(167,4,'User',4,NULL,110,111),(168,4,'User',4,NULL,112,113),(169,4,'User',4,NULL,114,115),(170,4,'User',4,NULL,116,117),(171,4,'User',4,NULL,118,119),(172,4,'User',4,NULL,120,121),(173,4,'User',4,NULL,122,123),(174,4,'User',4,NULL,124,125),(175,4,'User',4,NULL,126,127),(176,4,'User',4,NULL,128,129),(177,4,'User',4,NULL,130,131),(178,4,'User',4,NULL,132,133),(179,4,'User',4,NULL,134,135),(180,4,'User',4,NULL,136,137),(181,4,'User',4,NULL,138,139),(182,4,'User',4,NULL,140,141),(183,4,'User',4,NULL,142,143),(184,5,'User',4,NULL,376,377),(185,5,'User',4,NULL,378,379),(186,5,'User',4,NULL,380,381),(187,4,'User',4,NULL,144,145),(188,4,'User',4,NULL,146,147),(189,4,'User',4,NULL,148,149),(190,4,'User',4,NULL,150,151),(191,4,'User',4,NULL,152,153),(192,4,'User',4,NULL,154,155),(193,4,'User',4,NULL,156,157),(194,4,'User',4,NULL,158,159),(195,4,'User',4,NULL,160,161);
 
 /*Table structure for table `aros_acos` */
 
@@ -171,11 +171,11 @@ CREATE TABLE `cart_items` (
   `variant_title` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_variant_card_index` (`cart_id`,`variant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `cart_items` */
 
-insert  into `cart_items`(`id`,`cart_id`,`product_id`,`product_price`,`product_quantity`,`visible`,`product_title`,`product_weight`,`currency`,`shipping_required`,`previous_price`,`previous_currency`,`variant_id`,`variant_title`) values (1,'4e895a91-b374-4a1a-947c-0b701507707a',3,'23.0000',1,1,'test product with no pic and no collection',2000,'SGD',1,'23.0000','SGD',3,'Default Title');
+insert  into `cart_items`(`id`,`cart_id`,`product_id`,`product_price`,`product_quantity`,`visible`,`product_title`,`product_weight`,`currency`,`shipping_required`,`previous_price`,`previous_currency`,`variant_id`,`variant_title`) values (1,'4e895a91-b374-4a1a-947c-0b701507707a',3,'23.0000',1,1,'test product with no pic and no collection',15000,'SGD',1,'23.0000','SGD',3,'Default Title'),(2,'4e9144d7-55e4-44a6-a2f1-1f721507707a',2,'11.0000',1,1,'Dummy Product',7000,'SGD',1,'11.0000','SGD',2,'Default Title'),(3,'4e9144d7-55e4-44a6-a2f1-1f721507707a',3,'23.0000',1,1,'test product with no pic and no collection',15000,'SGD',1,'23.0000','SGD',3,'Default Title');
 
 /*Table structure for table `carts` */
 
@@ -188,7 +188,7 @@ CREATE TABLE `carts` (
   `created` datetime DEFAULT NULL,
   `amount` decimal(10,4) NOT NULL DEFAULT '0.0000',
   `status` tinyint(1) DEFAULT '1',
-  `total_weight` decimal(10,0) unsigned NOT NULL DEFAULT '0',
+  `total_weight` int(10) unsigned NOT NULL DEFAULT '0',
   `currency` varchar(5) NOT NULL DEFAULT 'SGD',
   `shipped_amount` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
   `shipped_weight` int(10) unsigned NOT NULL DEFAULT '0',
@@ -201,7 +201,7 @@ CREATE TABLE `carts` (
 
 /*Data for the table `carts` */
 
-insert  into `carts`(`id`,`shop_id`,`user_id`,`created`,`amount`,`status`,`total_weight`,`currency`,`shipped_amount`,`shipped_weight`,`past_checkout_point`,`cart_item_count`,`note`,`attributes`) values ('4e895a91-b374-4a1a-947c-0b701507707a',2,2,'2011-10-01 05:16:44','23.0000',1,'2000','SGD','23.0000',2000,0,1,NULL,NULL);
+insert  into `carts`(`id`,`shop_id`,`user_id`,`created`,`amount`,`status`,`total_weight`,`currency`,`shipped_amount`,`shipped_weight`,`past_checkout_point`,`cart_item_count`,`note`,`attributes`) values ('4e895a91-b374-4a1a-947c-0b701507707a',2,2,'2011-10-01 05:16:44','23.0000',1,15000,'SGD','23.0000',15000,0,1,NULL,NULL),('4e9144d7-55e4-44a6-a2f1-1f721507707a',2,3,'2011-10-09 06:53:11','34.0000',1,22000,'SGD','34.0000',22000,0,2,NULL,NULL);
 
 /*Table structure for table `casual_surfers` */
 
@@ -214,11 +214,11 @@ CREATE TABLE `casual_surfers` (
   PRIMARY KEY (`id`),
   KEY `shop` (`shop_id`),
   KEY `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `casual_surfers` */
 
-insert  into `casual_surfers`(`id`,`shop_id`,`user_id`) values (1,2,2);
+insert  into `casual_surfers`(`id`,`shop_id`,`user_id`) values (1,2,2),(2,2,4);
 
 /*Table structure for table `comments` */
 
@@ -274,9 +274,11 @@ CREATE TABLE `custom_payment_modules` (
   `instructions` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_spm` (`shop_payment_module_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `custom_payment_modules` */
+
+insert  into `custom_payment_modules`(`id`,`shop_payment_module_id`,`name`,`instructions`) values (1,1,'Cash On Delivery','Description of COD');
 
 /*Table structure for table `customers` */
 
@@ -511,9 +513,11 @@ CREATE TABLE `order_line_items` (
   `variant_id` int(14) unsigned DEFAULT NULL,
   `variant_title` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `order_line_items` */
+
+insert  into `order_line_items`(`id`,`order_id`,`product_id`,`product_price`,`product_quantity`,`status`,`product_title`,`product_weight`,`currency`,`shipping_required`,`variant_id`,`variant_title`) values (1,'4e8d8ef9-71a4-4a69-8dbf-04b01507707a',3,'23.0000',1,1,'test product with no pic and no collection',15000,'SGD',1,3,'Default Title'),(2,'4e91458a-b0f8-452c-ab84-1d351507707a',2,'11.0000',1,1,'Dummy Product',0,'SGD',1,2,'Default Title'),(3,'4e91458a-b0f8-452c-ab84-1d351507707a',3,'23.0000',1,1,'test product with no pic and no collection',15000,'SGD',1,3,'Default Title');
 
 /*Table structure for table `orders` */
 
@@ -539,10 +543,13 @@ CREATE TABLE `orders` (
   `past_checkout_point` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `contact_email` varchar(255) DEFAULT '',
   `order_line_item_count` int(5) unsigned DEFAULT '0',
+  `delivered_to_country` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `orders` */
+
+insert  into `orders`(`id`,`shop_id`,`customer_id`,`billing_address_id`,`delivery_address_id`,`order_no`,`created`,`amount`,`status`,`cart_id`,`payment_status`,`fulfillment_status`,`shipped_weight`,`shipped_amount`,`currency`,`total_weight`,`past_checkout_point`,`contact_email`,`order_line_item_count`,`delivered_to_country`) values ('4e8d8ef9-71a4-4a69-8dbf-04b01507707a',2,1,3,4,'10001','2011-10-06 11:20:25','23.0000',1,'4e895a91-b374-4a1a-947c-0b701507707a',0,1,15000,'23.0000','SGD',15000,0,'guest_customer@ombi60.com',1,192),('4e91458a-b0f8-452c-ab84-1d351507707a',2,1,3,4,'10002','2011-10-09 06:56:10','34.0000',1,'4e9144d7-55e4-44a6-a2f1-1f721507707a',0,1,22000,'34.0000','SGD',22000,0,'guest_customer@ombi60.com',2,192);
 
 /*Table structure for table `page_types` */
 
@@ -728,9 +735,11 @@ CREATE TABLE `price_based_rates` (
   `max_price` decimal(10,3) DEFAULT NULL,
   `shipping_rate_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `price_based_rates` */
+
+insert  into `price_based_rates`(`id`,`min_price`,`max_price`,`shipping_rate_id`) values (1,'10.000',NULL,7);
 
 /*Table structure for table `product_groups` */
 
@@ -775,7 +784,7 @@ CREATE TABLE `product_images` (
 
 /*Data for the table `product_images` */
 
-insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads\\products','image/jpeg',6103),(2,2,1,'2011-07-08 11:54:47','2011-07-08 11:54:47','default-0.jpg','uploads/products','image/jpeg',6103);
+insert  into `product_images`(`id`,`product_id`,`cover`,`created`,`modified`,`filename`,`dir`,`mimetype`,`filesize`) values (1,1,1,'2010-05-20 07:59:19','2010-05-20 07:59:19','default.jpg','uploads/products','image/jpeg',6103),(2,2,1,'2011-07-08 11:54:47','2011-07-08 11:54:47','default-0.jpg','uploads/products','image/jpeg',6103);
 
 /*Table structure for table `product_options` */
 
@@ -836,7 +845,7 @@ CREATE TABLE `products` (
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`visible`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`,`product_type_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,'dummy',0),(2,2,'Dummy Product',NULL,NULL,'11.0000','2011-07-08 11:54:47','2011-07-08 11:54:47',1,7000,'SGD',1,1,'dummy-product',1),(3,2,'test product with no pic and no collection',NULL,'<p>test</p>','23.0000','2011-09-29 02:26:59','2011-09-29 02:26:59',1,2000,'SGD',1,0,'test-product-with-no-pic-and-no-collection',0);
+insert  into `products`(`id`,`shop_id`,`title`,`code`,`description`,`price`,`created`,`modified`,`visible`,`weight`,`currency`,`shipping_required`,`vendor_id`,`handle`,`product_type_id`) values (1,1,'Dummy Product',NULL,NULL,'0.0000','2010-05-20 08:00:24','2010-05-20 08:00:24',1,7000,'SGD',1,0,'dummy',0),(2,2,'Dummy Product',NULL,NULL,'11.0000','2011-07-08 11:54:47','2011-07-08 11:54:47',1,7000,'SGD',1,1,'dummy-product',1),(3,2,'test product with no pic and no collection',NULL,'<p>test</p>','23.0000','2011-09-29 02:26:59','2011-09-29 02:26:59',1,15000,'SGD',1,0,'test-product-with-no-pic-and-no-collection',0);
 
 /*Table structure for table `products_in_groups` */
 
@@ -901,7 +910,7 @@ DROP TABLE IF EXISTS `shipments`;
 
 CREATE TABLE `shipments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) DEFAULT NULL,
+  `order_id` char(36) DEFAULT NULL,
   `completed` tinyint(1) unsigned DEFAULT '0',
   `name` varchar(255) NOT NULL DEFAULT '',
   `price` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000',
@@ -939,11 +948,11 @@ CREATE TABLE `shipping_rates` (
   `shipped_to_country_id` int(11) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shipping_rates` */
 
-insert  into `shipping_rates`(`id`,`name`,`price`,`shipped_to_country_id`,`description`) values (1,'Standard Shipping','10.000',2,'From 10kg to 20kg'),(2,'Heavy Duty Shipping','25.000',2,'From 20kg to 50kg'),(3,'Standard Shipping','10.000',3,'From 10kg to 20kg'),(4,'Heavy Duty','25.000',3,'From 20kg to 50kg'),(5,'Standard Shipping','10.000',4,'From 10kg to 20kg'),(6,'Heavy Duty','25.000',4,'From 20kg to 50kg');
+insert  into `shipping_rates`(`id`,`name`,`price`,`shipped_to_country_id`,`description`) values (1,'Standard Shipping','10.000',2,'From 10kg to 20kg'),(2,'Heavy Duty Shipping','25.000',2,'From 20kg to 50kg'),(3,'Standard Shipping','10.000',3,'From 10kg to 20kg'),(4,'Heavy Duty','25.000',3,'From 20kg to 50kg'),(5,'Standard Shipping','10.000',4,'From 10kg to 20kg'),(6,'Heavy Duty','25.000',4,'From 20kg to 50kg'),(7,'Standard Shipping Price-based','5.000',3,'From $10.00 and above');
 
 /*Table structure for table `shop_settings` */
 
@@ -1006,9 +1015,11 @@ CREATE TABLE `shops_payment_modules` (
   `active` tinyint(1) unsigned DEFAULT '1',
   `display_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shops_payment_modules` */
+
+insert  into `shops_payment_modules`(`id`,`shop_id`,`payment_module_id`,`default`,`active`,`display_name`) values (1,2,1,0,1,'Cash On Delivery');
 
 /*Table structure for table `site_transfers` */
 
@@ -1142,7 +1153,7 @@ CREATE TABLE `variants` (
 
 /*Data for the table `variants` */
 
-insert  into `variants`(`id`,`title`,`product_id`,`sku_code`,`weight`,`created`,`modified`,`currency`,`shipping_required`,`price`,`order`,`compare_with_price`) values (1,'Default Title',1,NULL,7000,NULL,NULL,'SGD',1,'0.0000',0,NULL),(2,'Default Title',2,'',0,'2011-07-08 11:54:47','2011-10-03 02:15:04','SGD',1,'11.0000',0,NULL),(3,'Default Title',3,NULL,2000,'2011-09-29 02:26:59','2011-09-29 02:26:59','SGD',1,'23.0000',0,NULL);
+insert  into `variants`(`id`,`title`,`product_id`,`sku_code`,`weight`,`created`,`modified`,`currency`,`shipping_required`,`price`,`order`,`compare_with_price`) values (1,'Default Title',1,NULL,7000,NULL,NULL,'SGD',1,'0.0000',0,NULL),(2,'Default Title',2,'',7000,'2011-07-08 11:54:47','2011-10-03 02:15:04','SGD',1,'11.0000',0,NULL),(3,'Default Title',3,NULL,15000,'2011-09-29 02:26:59','2011-09-29 02:26:59','SGD',1,'23.0000',0,NULL);
 
 /*Table structure for table `vendors` */
 

@@ -308,6 +308,9 @@ class Customer extends AppModel {
 			return false;
 		}
 		
+		// doubly ensure that the type is correctly saved!!!
+		$addressData[$modelName]['type'] = $type;
+		
 		$result = $model->save($addressData);
 		if ($result  == false) { return false; }
 		return $model->id;

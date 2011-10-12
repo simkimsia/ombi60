@@ -11,7 +11,7 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 {
 	
 	public $localhost 				= true;
-	public $url 					= 
+	public $domains 				= 
 		array(
 			'localhost' => 'http://shop001.ombi60.localhost/',
 			'production'=> 'http://');
@@ -26,7 +26,8 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 	public $whiteList = array('testHandleizeInDummyProduct');
 	
 	public $blackList = array();
-	
+
+	public $baseUrl  = '';
 	
 	/**
 	 *
@@ -36,9 +37,11 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
         $this->setBrowser('*firefox');
 
 		if ($this->localhost) {
-			$this->setBrowserUrl($this->url['localhost']);
+			$this->setBrowserUrl($this->domains['localhost']);
+			$this->baseUrl = $this->domains['localhost'];
 		} else {
-			$this->setBrowserUrl($this->url['production']);
+			$this->setBrowserUrl($this->domains['production']);
+			$this->baseUrl = $this->domains['localhost'];
 		}
         
 		$this->setSleep($this->secondsBetweenCommands);
@@ -217,7 +220,6 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		$this->assertElementPresent('xpath=//div[@id="flashMessage"][@class="flash_success"][contains(text(), "Product status has been changed")]');
 		$this->assertElementPresent('xpath=//a[@href="/admin/products/toggle/2"][@class="product-status"][contains(text(), "Published")]');
 	}
-
 
     
 }
