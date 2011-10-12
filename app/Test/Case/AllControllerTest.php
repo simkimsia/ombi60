@@ -22,8 +22,13 @@ class AllControllersTest extends PHPUnit_Framework_TestSuite {
 
 		$path = APP_TEST_CASES . DS . 'Controller' . DS;
 
+<<<<<<< HEAD
 		$suite->addTestFile($path . 'BlogsControllerTest.php');
+=======
+		//$suite->addTestFile($path . 'AddressesControllerTest.php');
+>>>>>>> origin/develop
 		$suite->addTestFile($path . 'CartsControllerTest.php');
+		$suite->addTestFile($path . 'BlogsControllerTest.php');
 		//$suite->addTestFile($path . 'CustomersControllerTest.php');
 		$suite->addTestFile($path . 'DomainsControllerTest.php');
 		/*
