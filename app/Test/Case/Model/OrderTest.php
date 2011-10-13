@@ -813,6 +813,36 @@ class OrderTestCase extends CakeTestCase {
 		$this->assertEquals(1, $noOfShipments);
 	}
 	
-
+	/**
+	*
+	* test getDetailed works for orders admin view
+	*
+	**/
+	public function testGetDetailed() {
+		// GIVEN the ORDER 1 associated with Customer 1
+		// WHEN we run getDetailed
+		// THEN we get all the following information
+	}
 	
+	/**
+	*
+	* confirm match  with cart must work when they match
+	*
+	**/
+	public function testConfirmMatchWithCartWorksForMatch() {
+		// GIVEN we have identical cart and order data
+		// WHEN we run confirmMatchWithCart
+		// THEN we get a boolean true
+	}
+
+	/**
+	*
+	* confirm  match with cart must work when they DONT match
+	*
+	**/
+	public function testConfirmMatchWithCartWorksForNoMatch() {
+		// GIVEN we have not Identical cart and order data
+		// WHEN we run confirmMatchWithCart
+		// THEN we get a boolean false
+	}
 }

@@ -86,7 +86,6 @@ class Cart extends AppModel {
 	
 	public function forCustomerOrCasual($check){
 		
-		
 		$count = $this->User->find('count', array('conditions' => array('OR' => array(array('User.group_id' => CUSTOMERS),
 										     array('User.group_id' => CASUAL)),
 										'AND' => array('id' => $check)
@@ -357,31 +356,7 @@ class Cart extends AppModel {
 		return $this->query($escapedSql);
 	}
 
-	
-	public function getShippingRequired($id = false) {
-		if (!$id) {
-			return false;
-		}
-		$shippingRequired = false;
-		$this->CartItem->recursive = -1;
-		$items = $this->CartItem->find('all', array('conditions'=>array('CartItem.cart_id'=>$id),
-				 			    'fields'=>array('CartItem.shipping_required', 'CartItem.id')));
 		
-		if (!empty($items)) {
-			
-			foreach($items['CartItem'] as $item) {
-				$shippingRequired = $item['shipping_required'];
-				if ($shippingRequired) {
-					break;
-				}
-			}
-			
-		}
-		
-		return $shippingRequired;
-		
-	}
-	
 	
 	public function getCartItemsCountByCustomerId($user_id = false) {
 		if (!$user_id) {
@@ -561,8 +536,15 @@ class Cart extends AppModel {
 		
 		return $cart;
 	}
+	
 	/**
-	 * $productsAndQuantities expect an array with variant_id as key and quantity as value
+	 * 
+	 * Add Product to Cart of said Customer via user_id
+	 *
+	 * @param integer $user_id User id
+	 * @param array $productsAndQuantities Data array with variant_id as key and quantity as value
+	 * @param boolean $increment True if we want to add onto existing quantity. False if we want to set the quantity.
+	 * @return boolean Return true if successful. False otherwise.
 	 * */
 	public function addProductForCustomer($user_id = false, $productsAndQuantities = array(), $increment = true) {
 		if (!$user_id) {
@@ -771,112 +753,6 @@ class Cart extends AppModel {
 		// execute the save function and return its results
 		return $this->save($cartData);
 	}
-
-	public function updatePricesInCartAndOrder($id = false, $order_id = false) {
-		
-		$this->id = $id;	
-		
-		if (!$this->id OR !$order_id) {
-			return false;
-		}
-		
-		// get all items of this cart especially their id, product_id, quantity
-		$items = $this->CartItem->find('all',
-			    array('conditions' => array(
-							'CartItem.cart_id' => $this->id
-						    ),
-				  'fields' => array('CartItem.id',
-						    'CartItem.product_id',
-						    'CartItem.product_quantity')
-			));
-		
-		// cause the items is using numerical index,
-		$items = Set::combine($items, '{n}.CartItem.id', '{n}');
-		$products_key = Set::combine($items, '{n}.CartItem.id', '{n}.CartItem.product_id');
-		
-		// get live product data based on item list 
-		$products = $this->CartItem->CheckedOutVariant->Product->find('all',
-			    array('conditions' => array(
-							'Product.id' => array_values($products_key)
-						    ),
-			      
-			      'fields'=>array('Product.id',
-					      'Product.title',
-					      'Product.price',
-					      'Product.shipping_required',
-					      'Product.weight',
-					      'Product.currency',
-					      
-					      ),
-			));
-		
-		// cause the products is using numerical index,
-		// we want to do it such that it uses the Product id as key
-		$products = Set::combine($products, '{n}.Product.id', '{n}');
-		
-		$subtotal = 0;
-		$totalWeight = 0;
-		$shippingWeight = 0;
-		$shippingAmount = 0;
-		$shippingRequired = false;
-		$cartWeightUnit = '';
-		$cartCurrency = '';
-		
-		$data = array('Cart'=>array('id'=>$this->id),
-			      'CartItem'=>array());
-		
-		// loop thru the cart inside Session
-		foreach($items as $cart_item_id => $item) {
-			$product_id = $item['CartItem']['product_id'];
-			$qty = $item['CartItem']['product_quantity'];
-			
-			// insert the quantity in
-			$subtotal = $subtotal + $products[$product_id]['Product']['price'] * $qty;
-			
-			// insert into CartItem
-			$data['CartItem'][] = array('id' => $cart_item_id,
-						'product_id' => $product_id,
-						'product_price' => $products[$product_id]['Product']['price'],
-						'product_quantity' => $qty,
-						'product_title' => $products[$product_id]['Product']['title'],
-						'product_weight'=> $products[$product_id]['Product']['weight'],
-						'currency' => $products[$product_id]['Product']['currency'],
-						
-						'shipping_required' => $products[$product_id]['Product']['shipping_required'],);
-			
-			// if shipping_required we totaled the amount
-			if ($products[$product_id]['Product']['shipping_required']) {
-				$shippingAmount += $products[$product_id]['Product']['price'] * $qty;
-				$shippingWeight += $products[$product_id]['Product']['weight'] * $qty;
-			}
-			
-			// insert the weight in
-			$totalWeight = $totalWeight + $products[$product_id]['Product']['weight'] * $qty;
-			
-			// insert the shippingRequired
-			$shippingRequired = ($shippingRequired || $products[$product_id]['Product']['shipping_required']);
-			
-			$cartCurrency = $products[$product_id]['Product']['currency'];
-			
-		}
-		$data['Cart']['total_weight'] = $totalWeight;
-		$data['Cart']['shipped_amount'] = $shippingAmount;
-		$data['Cart']['amount'] = $subtotal;
-		$data['Cart']['shipped_weight'] = $shippingWeight;
-		$data['Cart']['shipping_required'] = $shippingRequired;
-		
-		$data['Cart']['currency'] = $cartCurrency;
-		
-		if (!empty($data['CartItem'])) {
-			
-			if ($this->saveAll($data)) {
-				
-				return $this->Order->updatePrices($order_id, $data);
-				
-			}
-		}
-		
-	}
 	
 	public function transferCartFromUserToAnother($old_user_id, $new_user_id) {
 		$cart = $this->getLiveCartByUserId($old_user_id, true);
@@ -905,8 +781,6 @@ class Cart extends AppModel {
 	**/
 	public function close($cartId) {
 		$this->id = $cartId;
-		
-//		debug($this->id);
 
 		// we use save and not saveField because saveField is not idempotent
 		$result = $this->save(array(

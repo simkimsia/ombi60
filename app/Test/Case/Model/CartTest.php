@@ -325,20 +325,26 @@ class CartTestCase extends CakeTestCase {
  */
 	public function testAddProductForCustomer() {
 
-		// Given that we have non existent carts for User 2
+		// GIVEN that we have non existent carts for User 2
 		$this->setUpForEmptyCart();
 				
-		// now we add a product to non-existent cart for User 2
+		// WHEN we add a product to non-existent cart for User 2
 		$addToNonExistentCart = $this->Cart->addProductForCustomer(2, array(3=>1));
+		
+		// THEN we get back successful result
 		$this->assertTrue($addToNonExistentCart);
 		
+		// AND cart is generated and item is inside
 		$cart = $this->Cart->getLiveCartByUserId(2);
 		$this->check1ItemCartResult($cart, 1);
 		
-		// now we add same product to existent cart for User 2
+		// WHEN we add another product for same customer
 		$addToExistentCart = $this->Cart->addProductForCustomer(2, array(3=>1));
+		
+		// THEN we get back successful result
 		$this->assertTrue($addToExistentCart);
 		
+		// AND cart now contains the 2nd item
 		$cart = $this->Cart->getLiveCartByUserId(2);
 		$this->check1ItemCartResult($cart, 2);
 	}
@@ -491,6 +497,20 @@ class CartTestCase extends CakeTestCase {
 		
 	}
 	
-
+	/**
+	*
+	*  test getLiveCartByUserId 
+	**/
+	public function testGetLiveCartByUserId() {
+		// GIVEN the various scenarios that call this function... we test them all.
+	}
+	
+	/*
+	*
+	* Get getCartItemsCountByCustomerId
+	**/
+	public function testGetCartItemsCountByCustomerId() {
+		
+	}
 
 }

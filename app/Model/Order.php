@@ -177,6 +177,15 @@ class Order extends AppModel {
 		return strVal(intVal($order_no) + 1);
 	}
 	
+	/**
+	*
+	* Get detailed Order model data alongside with Customer, Delivery Address, Billing Address,
+	* Payment, Shipment
+	*
+	* @param string $id Order id
+	* @param boolean $lineItems Default true.
+	* @return array Data array
+	**/
 	public function getDetailed($id, $lineItems = true) {
 		if (!$id) {
 			return false;
@@ -221,29 +230,6 @@ class Order extends AppModel {
 		return $order;
 	}
 	
-	public function getShippingRequired($id = false) {
-		if (!$id) {
-			return false;
-		}
-		$shippingRequired = false;
-		$this->OrderLineItem->recursive = -1;
-		$items = $this->OrderLineItem->find('all', array('conditions'=>array('OrderLineItem.order_id'=>$id),
-								 'fields'=>array('OrderLineItem.shipping_required', 'OrderLineItem.id')));
-		
-		if (!empty($items)) {
-			
-			foreach($items['OrderLineItem'] as $item) {
-				$shippingRequired = $item['shipping_required'];
-				if ($shippingRequired) {
-					break;
-				}
-			}
-			
-		}
-		
-		return $shippingRequired;
-		
-	}
 	
 	/**
 	*
@@ -331,6 +317,8 @@ class Order extends AppModel {
 	/**
 	* check that the key data for both Cart and Order match
 	* we will recalculate the prices for both 
+	*
+	* 
 	**/
 	public function confirmMatchWithCart($orderId, $cartId) {
 		return true;
@@ -395,180 +383,7 @@ class Order extends AppModel {
 		// execute the save function and return its results
 		return $this->save($orderData);
 	}
-	
-	/**
-	*
-	* Close the associated Cart 
-	*
-	* @param string $orderId If not stated, $this->id is used instead.
-	* @return boolean
-	**/
-	public function closeTheCart($orderId = null) {
-		if ($orderId == null) {
-			$orderId = $this->id;
-		}
-		
-		$this->id = $orderId;
-		$cartId = $this->field('cart_id');
-		$this->Cart->id = $cartId;
-
-		// we use save and not saveField because saveField is not idempotent
-		$result = $this->Cart->save(array(
-			'past_checkout_point'=>true
-		));
-	
-		return $result;
-	}
-		
-	public function savePaymentAndShipment($data) {
-		// assume $data contains order_id for the Payment and Shipment arrays
-		// assume $data contains ShippingRate id
-		// assume $data is in the form array('Payment'=>array('payment_module_id'=>3),) etc
-		// we need to convert the $data to this format array('Payment'=>array(array('payment_module_id'=>3),)) etc
-		
-		// set the Order pk
-		$data['Order'] = array(
-			'id'     => $this->id,
-			'status' => $data['Order']['status'],
-			'payment_status' => $data['Payment']['status'],
-		);
-		
-		// check for Shipment
-		if (array_key_exists('Shipment', $data)) {
-			if (array_key_exists('ShippingRate', $data)) {
-				$rate = array('ShippingRate' => $data['ShippingRate']);
-			} else {
-				$rate = $this->Shop->ShippedToCountry->ShippingRate->read(null, $data['Shipment']['shipping_rate_id']);	
-			}
-			
-			$data['Shipment']['name'] = $rate['ShippingRate']['name'];
-			$data['Shipment']['description'] = $rate['ShippingRate']['description'];
-			$data['Shipment']['price'] = $rate['ShippingRate']['price'];
-			
-			$actualShipmentData = array(0=>$data['Shipment']);
-			$data['Shipment']  = $actualShipmentData;
-		}
-		
-		$actualPaymentData = array(0=>$data['Payment']);
-		$data['Payment']  = $actualPaymentData;
-		
-		// need to set Order past_checkout_point to be true to conclude the order
-		$data['Order']['past_checkout_point'] = true;
-		
-		$dataSource = $this->getDataSource();
-		
-		$dataSource->begin($this);
-		
-		$result = $this->saveAll($data, array('atomic'=>false));
-		
-		if (!$result) {
-			$dataSource->rollback($this);
-			return false;
-		}
-		
-		// because Paypal_Payers_Payment not a direct associated with Order so we need to save it separately
-		if (isset($data['PaypalPayersPayment'])) {
-			$pppData = array('PaypalPayersPayment' => $data['PaypalPayersPayment']);
-			$pppData['PaypalPayersPayment']['payment_id'] = $this->Payment->id;
-			
-			$result = $this->Payment->PaypalPayersPayment->save($pppData);
-			
-			if (!$result) {
-				$dataSource->rollback($this);
-				return false;
-			}
-			
-		}
-		
-		// need to set Cart past_checkout_point to true to ensure cart is emptied
-		$cartData = array('Cart' => $data['Cart']);
-		$cartData['Cart']['past_checkout_point'] = true;
-		$result = $this->Cart->save($cartData, array('validate'=>false));
-		
-		if (!$result) {
-			$dataSource->rollback($this);
-			return false;
-		} else {
-			$dataSource->commit($this);
-			return true;
-		}
-		
-	}
-	
-	public function updatePrices($id = false, $cartData = array()) {
-		$this->id = $id;
-		
-		if (!$this->id) {
-			return false;
-		}
-		
-		
-		if (!is_array($cartData) OR empty($cartData)) {
-			return false;
-		}
-		
-		// get all items of this cart especially their id, product_id, quantity
-		$items = $this->OrderLineItem->find('all',
-			    array('conditions' => array(
-							'OrderLineItem.order_id' => $this->id
-						    ),
-				  'fields' => array('OrderLineItem.id',
-						    'OrderLineItem.product_id')
-			));
-		
-		
-		// order line items
-		
-		foreach($items as $key1 => $item) {
-			foreach($cartData['CartItem'] as $key => $cartItem) {
-				if ($item['OrderLineItem']['product_id'] === $cartItem['product_id']) {
-					$cartItem['id'] = $item['OrderLineItem']['id'];
-					unset($cartItem['cart_id']);
-					
-					$items['OrderLineItem'][$key1] = $cartItem;
-					
-					unset($cartData['CartItem'][$key]);
-					unset($items[$key1]);
-					break;
 				
-				}
-			}
-			
-		}
-		
-		
-		// initial data
-		$data = array('Order' => array( 'id' => $this->id,
-						'cart_id' => $cartData['Cart']['id']
-						),
-			      'OrderLineItem' => $items['OrderLineItem']);
-		
-		// put in cart data such as shipping weight, etc
-		$data['Order']['amount'] = $cartData['Cart']['amount'];
-		$data['Order']['total_weight'] = $cartData['Cart']['total_weight'];
-		$data['Order']['shipped_weight'] = $cartData['Cart']['shipped_weight'];
-		$data['Order']['shipped_amount'] = $cartData['Cart']['shipped_amount'];
-		$data['Order']['shipping_required'] = $cartData['Cart']['shipping_required'];
-		
-		$data['Order']['currency'] = $cartData['Cart']['currency'];
-		
-		
-		if (!empty($data['OrderLineItem'])) {
-			$result = $this->saveAll($data);
-			if (!$result) {
-				
-				return $result;
-			} else {
-				
-				return $data;	
-			}
-			
-		}
-		
-		return false;
-	
-	}
-	
 	/**
 	*
 	* We will expect form data from checkout process first page aka CartsController/view

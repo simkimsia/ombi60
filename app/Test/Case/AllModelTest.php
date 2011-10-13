@@ -34,7 +34,7 @@ class AllModelTest extends PHPUnit_Framework_TestSuite {
 		$suite->addTestFile($path . 'LinkListTest.php');
 		$suite->addTestFile($path . 'LinkTest.php');
 		$suite->addTestFile($path . 'MerchantTest.php');
-		//$suite->addTestFile($path . 'OrderLineItemTest.php');
+		$suite->addTestFile($path . 'OrderLineItemTest.php');
 		$suite->addTestFile($path . 'OrderTest.php');
 		/*
 		$suite->addTestFile($path . 'PageTypeTest.php');

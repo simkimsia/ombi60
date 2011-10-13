@@ -498,18 +498,22 @@ class OrdersController extends AppController {
 			$successJSON = false;
 			$contents['reason'] = __('Invalid parameters');
 		} else if ($this->request->params['isAjax']) {
-			$data = $this->Order->Cart->updatePricesInCartAndOrder($this->request->data['cart_id'], $order_uuid);
+			// 1st we get Shipping price
+			$price = $this->Order->Shop->ShippedToCountry->ShippingRate->field('price', array('id'=>$this->request->data['shipping_rate_id']));
+			// 2nd we update Order with new shipping fee
+			$this->Order->id = $order_uuid;
+			$this->Order->save(array(
+				'shipping_fee' => $price
+			));
+			// 3rd we update Cart and Order prices just in case
+			$data = $this->Order->recalculateTotalWeightPrice($order_uuid);
+			$this->Order->Cart->recalculateTotalWeightPrice($this->request->data['cart_id']);
 			
-			if ($data) {
-				$price = $this->Order->Shop->ShippedToCountry->ShippingRate->field('price', array('id'=>$this->request->data['shipping_rate_id']));
-				$successJSON = true;
-				App::uses('NumberLib', 'UtilityLib.Lib');
-				$contents['totalAmountWithShipping'] 	= NumberLib::currency($data['Order']['amount'] + $price, '$');
-				$contents['shippingFee']				= NumberLib::currency($price, '$');
+			$successJSON = true;
+			App::uses('NumberLib', 'UtilityLib.Lib');
+			$contents['totalAmountWithShipping'] 	= NumberLib::currency($data['Order']['amount'] + $price, '$');
+			$contents['shippingFee']				= NumberLib::currency($price, '$');
 				
-			} else {
-				$contents['reason'] = __('Cannot update prices');
-			}
 		}
 		
 		$this->set(compact('contents', 'successJSON'));
@@ -538,7 +542,7 @@ class OrdersController extends AppController {
 				$country		= $currentOrder['Order']['delivered_to_country'];
 				
 				$shipmentOptions = $this->Order->Shipment->getOptionsForCheckout($shippedAmt, $shippedWeight, $shop_id, $country);
-				
+
 				$shippingFee = $this->Order->Shipment->getPriceFromDisplayName(current($shipmentOptions));
 
 				$currentOrder['Order']['amount'] = $currentOrder['Order']['shipped_amount'] + $shippingFee;

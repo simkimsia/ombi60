@@ -517,7 +517,7 @@ CREATE TABLE `order_line_items` (
 
 /*Data for the table `order_line_items` */
 
-insert  into `order_line_items`(`id`,`order_id`,`product_id`,`product_price`,`product_quantity`,`status`,`product_title`,`product_weight`,`currency`,`shipping_required`,`variant_id`,`variant_title`) values (1,'4e8d8ef9-71a4-4a69-8dbf-04b01507707a',3,'23.0000',1,1,'test product with no pic and no collection',15000,'SGD',1,3,'Default Title'),(2,'4e91458a-b0f8-452c-ab84-1d351507707a',2,'11.0000',1,1,'Dummy Product',0,'SGD',1,2,'Default Title'),(3,'4e91458a-b0f8-452c-ab84-1d351507707a',3,'23.0000',1,1,'test product with no pic and no collection',15000,'SGD',1,3,'Default Title');
+insert  into `order_line_items`(`id`,`order_id`,`product_id`,`product_price`,`product_quantity`,`status`,`product_title`,`product_weight`,`currency`,`shipping_required`,`variant_id`,`variant_title`) values (1,'4e8d8ef9-71a4-4a69-8dbf-04b01507707a',3,'23.0000',1,1,'test product with no pic and no collection',15000,'SGD',1,3,'Default Title'),(2,'4e91458a-b0f8-452c-ab84-1d351507707a',2,'11.0000',1,1,'Dummy Product',7000,'SGD',1,2,'Default Title'),(3,'4e91458a-b0f8-452c-ab84-1d351507707a',3,'23.0000',1,1,'test product with no pic and no collection',15000,'SGD',1,3,'Default Title');
 
 /*Table structure for table `orders` */
 
