@@ -43,7 +43,7 @@ class Link extends AppModel {
 		    isset($this->data['Link']['action1'])) {
 			
 			if ($this->data['Link']['model'] === 'web') {
-				$this->data['Link']['action1'] = $this->convertLink($this->data['Link']['action1']);
+				$this->data['Link']['action1'] = $this->prependHttp($this->data['Link']['action1']);
 				$this->data['Link']['action']  = $this->data['Link']['action1'];
 				$this->data['Link']['route'] = $this->data['Link']['action1'];	
 				
@@ -82,16 +82,14 @@ class Link extends AppModel {
 	}
 	
 	/**
-	 * reorder the links in the list
-	 *
-	 *2011-01-10 11:07:36 Error: Array
-		
-		[0] => 3
-		[1] => 1
-		[2] => 2
-		
-		
-	)
+	 * Reorder the links in the list
+	 *	Array (
+	 *	[0] => 3, [1] => 1, [2] => 2
+	 * )
+	 * 
+	 * @param array $data Data array where the keys are the order and the values are the link ids
+	 * @param integer $listId LinkList id
+	 * @return boolean Return true if successful, false otherwise.
 	 * 
 	 * */
 	public function saveOrder($data=array(), $listId) {
@@ -126,39 +124,63 @@ class Link extends AppModel {
 			$newlyInsertedData['Link'][] = array('id'=>$id,
 							     'order'=>$order);
 		}
-		
-		
-	
+
 		// because we update existing entries
 		// so we need to directly use 1 level below Link
 		return $this->saveAll($newlyInsertedData['Link'], array('validate'=>false));
 		
 	}
 	
-	// before any saveAll for LinkList or Link
-	// we want to 
+	/**
+	* before any saveAll for LinkList or Link, we want to prependHttp to all the web links
+	* 
+	* @param array $data Data array for the links and linklist
+	* @return array Data array after being processed for prependHttp
+	**/
 	public function beforeSaveAll($data) {
 		
+		$links = array();
+		
+		// if we are doing a saveAssociated from LinkList
 		if (isset($data['Link'])) {
-			foreach($data['Link'] as $key=>$link) {
-				if (isset($link['model']) &&
-				    isset($link['action']) &&
-				    isset($link['action1']) ) {
-					
-					if ($data['Link'][$key]['model'] === 'web') {
-						$link['action1']             = $this->prependHttp($link['action1']);
-						$link['action']              = $link['action1'];
-						$data['Link'][$key]['route'] = $link['action1'];
-					} else {
-						$data['Link'][$key]['route'] = $link['model'] . $link['action'];
-					}
-					
+			$links = $data['Link'];
+		
+		// if we are doing a saveMany from Link	
+		} elseif (isset($data[0]['model'])) {
+			$links = $data;
+		}
+		
+		
+		
+		// iterate through the links and prepend the http
+		foreach ($links as $key => $link) {
+
+			if (isset($link['model']) &&
+			    isset($link['action']) &&
+			    isset($link['action1']) ) {
+				
+				if ($links[$key]['model'] === 'web') {
+					$link['action1']             = $this->prependHttp($link['action1']);
+					$link['action']              = $link['action1'];
+					$links[$key]['route'] = $link['action1'];
+				} else {
+					$links[$key]['route'] = $link['model'] . $link['action'];
 				}
+				
 			}
+
+		}
+		
+		// if saveAssociated via LinkList
+		if (isset($data['Link'])) {
+			$data['Link'] = $links;
+			
+		// if saveMany via Link
+		} elseif (isset($data[0]['model'])) {
+			$data = $links;
 		}
 		
 		return $data;
-		
 	}
 	
 	/**

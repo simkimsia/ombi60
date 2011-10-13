@@ -83,7 +83,42 @@ class LinkTestCase extends CakeTestCase {
 		parent::tearDown();
 	}
 		
-	
+	/**
+ 	 * beforeSaveAll should successfully loop through all links and convert them
+	 *
+	 * @return void
+	 *
+	 **/
+	public function testBeforeSaveAllShouldWork() {
+		// GIVEN we are preparing for  saveAssociated from LinkList
+		$linkFixture = new LinkFixture();
+		$relatedLinks = $linkFixture->records;
+		unset($relatedLinks[5]);
+		unset($relatedLinks[6]);
+		
+		// AND we have at least 1 web link
+		$relatedLinks[] = array(
+			'name' => 'Google',
+			'route' => '/',
+			'link_list_id' => '1',
+			'model' => 'web',
+			'action' => '',
+			'action1' => 'www.google.com',
+			'parent_model' => NULL,
+			'parent_id'	=> '0',
+			'order' => '5'
+		);
+		
+		// WHEN we run beforeSaveALL
+		$actual = $this->Link->beforeSaveAll(array('Link' => $relatedLinks));
+		
+		// THEN the links are changed accordingly
+		$expected 						= array('Link' => $relatedLinks);
+		$expected['Link'][7]['route'] 	= 'http://www.google.com';
+		
+		$this->assertEquals($expected, $actual);
+	}
+
 	/**
 	 * saveAll should successfully convert all links before saving
 	 * successful result returned
@@ -168,18 +203,7 @@ class LinkTestCase extends CakeTestCase {
 
 	}
 	
-	/**
- 	 * beforeSaveAll should successfully loop through all links and convert them
-	 *
-	 * @return void
-	 *
-	 **/
-	public function testBeforeSaveAllShouldWork() {
-		// GIVEN all current links in fixture
-		// AND we make change to 1 of the links
-		// WHEN we run beforeSaveALL
-		// THEN the links are changed accordingly
-	}
+
 	
 
 }
