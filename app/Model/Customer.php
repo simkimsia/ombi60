@@ -108,6 +108,14 @@ class Customer extends AppModel {
 		return array_merge($registerFormErrors, $shopErrors, $userErrors);
 	}
 
+	/**
+	*
+	* For registering a new Customer
+	*
+	* @param array $data Form data from register form
+	* @return boolean Return true if successful. False otherwise.
+	*
+	**/
 	public function signupNewAccount($data = NULL) {
 		$data['User']['group_id'] = CUSTOMERS;
 		
@@ -117,9 +125,10 @@ class Customer extends AppModel {
 	/**
 	*
 	* Take in order form data at checkout process and create a brand new Customer User
+	* Works exclusively with checkout process
 	*
 	* @param array $data 
-	* @return boolean Returns true if successful
+	* @return boolean Returns true if successful. False otherwise.
 	**/
 	public function signupNewAccountDuringCheckout($data = NULL) {
 		
@@ -153,6 +162,14 @@ class Customer extends AppModel {
 		return $this->saveAll($data, array('validate'=>'first'));
 	}
 	
+	/**
+	*
+	* Retrieve any existing Customer based on shop id and email inside order form
+	* Works exclusively with checkout process
+	* 
+	* @param array $orderFormData Order form data has shop id in $data['Order']['shop_id'] and $data['User']['email']
+	* @return integer Returns the id of the Customer if exists, otherwise returns false
+	**/
 	public function getExistingByShopIdAndEmail($orderFormData = NULL) {
 		
 		$this->Behaviors->attach('Linkable.Linkable');
@@ -182,42 +199,43 @@ class Customer extends AppModel {
 		$this->id = $customer['Customer']['id'];
 		return $customer['Customer']['id'];
 	}
-		
+	
+	/**
+	* 
+	* Gets 	all the existing Billing Address that this Customer has and matches the data array.
+	* ALias for getExistingAddress($data, BILLING)
+	*
+	* @param array $data Data array which contains information like region, city, address, etc
+	* @return integer Returns the address id if successful. False otherwise.
+	**/
 	public function getExistingBillingAddress($data = NULL) {
 		
 		return $this->getExistingAddress($data, BILLING);
 		
 	}
 	
+	/**
+	* 
+	* Gets all the existing Delivery Address that this Customer has and matches the data array
+	* ALias for getExistingAddress($data, DELIVERY)
+	*
+	* @param array $data Data array which contains information like region, city, address, etc
+	* @return integer Returns the address id if successful. False otherwise.
+	**/	
 	public function getExistingDeliveryAddress($data = NULL) {
 		
 		return $this->getExistingAddress($data, DELIVERY);
 		
 	}
-	
-	public function duplicateBillingAddressFromDeliveryAddress($deliveryAddressId) {
-		$deliveryAddress = $this->DeliveryAddress->read(null, $deliveryAddressId);
 		
-		// unset the id
-		unset($deliveryAddress['DeliveryAddress']['id']);
-		
-		$inputArray = array('BillingAddress'=>array());
-		
-		$inputArray['BillingAddress'][] = $deliveryAddress['DeliveryAddress'];
-		$inputArray['BillingAddress'][0]['type'] = BILLING;
-		
-		$billingAddressId = $this->getExistingAddress($deliveryAddress, BILLING);
-		
-		if (!($billingAddressId > 0)) {
-			
-			$this->setNewAddress($inputArray, BILLING);
-			$billingAddressId = $this->BillingAddress->id;
-			
-		}
-		
-		return $billingAddressId;
-	}
-	
+	/**
+	* 
+	* Gets all the existing Address that this Customer has and matches the data array and type.
+	*
+	* @param array $data Data array which contains information like region, city, address, etc
+	* @param integer $type Either BILLING or DELIVERY
+	* @return integer Returns the address id if successful. False otherwise.
+	**/	
 	private function getExistingAddress($data = NULL, $type = BILLING) {
 		
 		if ($type == BILLING) {
@@ -235,9 +253,7 @@ class Customer extends AppModel {
 		}
 		
 		$conditions = array();
-		
-		
-		
+
 		foreach($data[$modelName][0] as $field => $value) {
 			$newKey = $modelName . '.' . $field;
 			$conditions[$newKey] = $value;
