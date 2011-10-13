@@ -550,7 +550,7 @@ CREATE TABLE `orders` (
 
 /*Data for the table `orders` */
 
-insert  into `orders`(`id`,`shop_id`,`customer_id`,`billing_address_id`,`delivery_address_id`,`order_no`,`created`,`amount`,`shipping_fee`,`status`,`cart_id`,`payment_status`,`fulfillment_status`,`shipped_weight`,`shipped_amount`,`currency`,`total_weight`,`past_checkout_point`,`contact_email`,`order_line_item_count`,`delivered_to_country`) values ('4e8d8ef9-71a4-4a69-8dbf-04b01507707a',2,1,3,4,'10001','2011-10-06 11:20:25','23.0000','0.0000',1,'4e895a91-b374-4a1a-947c-0b701507707a',0,1,15000,'23.0000','SGD',15000,0,'guest_customer@ombi60.com',1,192),('4e91458a-b0f8-452c-ab84-1d351507707a',2,1,3,4,'10002','2011-10-09 06:56:10','34.0000','0.0000',1,'4e9144d7-55e4-44a6-a2f1-1f721507707a',0,1,22000,'34.0000','SGD',22000,0,'guest_customer@ombi60.com',2,192);
+insert  into `orders`(`id`,`shop_id`,`customer_id`,`billing_address_id`,`delivery_address_id`,`order_no`,`created`,`amount`,`shipping_fee`,`status`,`cart_id`,`payment_status`,`fulfillment_status`,`shipped_weight`,`shipped_amount`,`currency`,`total_weight`,`past_checkout_point`,`contact_email`,`order_line_item_count`,`delivered_to_country`) values ('4e8d8ef9-71a4-4a69-8dbf-04b01507707a',2,1,1,2,'10001','2011-10-06 11:20:25','23.0000','0.0000',1,'4e895a91-b374-4a1a-947c-0b701507707a',0,1,15000,'23.0000','SGD',15000,0,'guest_customer@ombi60.com',1,192),('4e91458a-b0f8-452c-ab84-1d351507707a',2,1,1,2,'10002','2011-10-09 06:56:10','34.0000','0.0000',1,'4e9144d7-55e4-44a6-a2f1-1f721507707a',0,1,22000,'34.0000','SGD',22000,0,'guest_customer@ombi60.com',2,192);
 
 /*Table structure for table `page_types` */
 

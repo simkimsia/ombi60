@@ -30,7 +30,6 @@ class Order extends AppModel {
 		'DeliveryAddress' => array(
 			'className' => 'Address',
 			'foreignKey' => 'delivery_address_id',
-		
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -42,6 +41,7 @@ class Order extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
+
 	);
 
 	
@@ -190,43 +190,44 @@ class Order extends AppModel {
 		if (!$id) {
 			return false;
 		}
+
+		$this->unbindModel(array(
+			'belongsTo' => array(
+				'Shop',
+				'Cart',
+			)
+		));
 		
-		$this->recursive = -1;
-		$this->DeliveryAddress->recursive = -1;
-		$this->BillingAddress->recursive = -1;
-		$this->Payment->recursive = -1;
-		$this->Shipment->recursive = -1;
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'User' => array(
+					'className' => 'User',
+					'foreignKey' => false,
+					'conditions' => array(
+						'Customer.user_id = User.id'
+					)
+				
+				)
+			)
+		));
 		
-		
-		// attach Linkable behavior
-		$this->Behaviors->load('Linkable.Linkable');
-		$this->Customer->Behaviors->attach('Linkable.Linkable');
-		$this->Customer->User->Behaviors->attach('Linkable.Linkable');
-		$this->DeliveryAddress->Behaviors->attach('Linkable.Linkable');
-		$this->BillingAddress->Behaviors->attach('Linkable.Linkable');
-		$this->Payment->Behaviors->attach('Containable');
-		$this->Shipment->Behaviors->attach('Containable');
-		
-		$findConditionsArray = 	array(
-						'conditions'=>array('Order.id'=>$id),
-						'link'=>array('Customer'=>array('User'),
-							      'DeliveryAddress',
-							      'BillingAddress',),
-						'contain'=>array('Payment', 'Shipment')
-						  );
-		
-		if ($lineItems) {
-			
-			$this->OrderLineItem->recursive = -1;
-			$this->OrderLineItem->Behaviors->attach('Containable');
-			$this->Behaviors->load('Containable');
-			
-			$findConditionsArray['contain'][] = 'OrderLineItem';
+		if (!$lineItems) {
+			$this->unbindModel(array(
+				'hasMany' => array(
+					'OrderLineItem',
+				)
+			));	
 			
 		}
+
+		$this->recursive = 1;
+		
+		$findConditionsArray = array(
+			'conditions'=>array('Order.id'=>$id),
+		);
 		
 		$order = $this->find('first', $findConditionsArray);
-		
+
 		return $order;
 	}
 	
