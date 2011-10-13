@@ -93,9 +93,40 @@ class LinkTestCase extends CakeTestCase {
 	 **/
 	public function testSaveAllShouldSuccessfullyConvertAllLinks() {
 		// GIVEN all current links in fixture
+		$linkFixture = new LinkFixture();
+		$relatedLinks = $linkFixture->records;
+		unset($relatedLinks[5]);
+		unset($relatedLinks[6]);
+		
+		
 		// AND we make change to 1 of the links
+		$relatedLinks[0]['name'] = 'Home1';
+		
 		// WHEN we run saveALL
+		$result = $this->Link->saveAll($relatedLinks);
+		
 		// THEN the links are changed accordingly
+		$this->assertTrue($result);
+		
+		// AND the links change
+		$expected = array(
+			'Link' => 
+				array(
+					'id' => '1',
+					'name' => 'Home1',
+					'route' => '/',
+					'link_list_id' => '1',
+					'model' => '/',
+					'action' => '',
+					'order' => '0',
+					'parent_model' => NULL,
+					'parent_id' => '0'
+				),
+		);
+		$this->Link->recursive = -1;
+		$actual = $this->Link->read(null, 1);
+		
+		$this->assertEquals($expected, $actual);
 	}
 	
 	
