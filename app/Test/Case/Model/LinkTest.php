@@ -137,11 +137,21 @@ class LinkTestCase extends CakeTestCase {
 	 * @return void
 	 *
 	 **/
-	public function testConvertLinkShouldWork() {
-		// GIVEN 1 link
-		// AND we make changes to that link
-		// WHEN we run convertLink
-		// THEN we get back 
+	public function testPrependHttpShouldWork() {
+		// GIVEN 1 link that does NOT have http and 1 link that does have http
+		$noHttpLink = 'www.cakephp.org';
+		$httpLink   = 'http://google.com';
+		
+		// WHEN we run prependHttp on both
+		$resultNoHttp = $this->Link->prependHttp($noHttpLink);
+		$resultHttp = $this->Link->prependHttp($httpLink);
+		
+		// THEN we get back both starting with http
+		$expectedHttp = 'http://google.com';
+		$expectedNoHttp = 'http://www.cakephp.org';
+		
+		$this->assertEquals($expectedNoHttp, $resultNoHttp);
+		$this->assertEquals($expectedHttp, $resultHttp);
 	}
 	
 	/**

@@ -93,7 +93,6 @@ class LinkListTestCase extends CakeTestCase {
 	 **/
 	public function testSaveAllShouldSuccessfullyConvertAllLinkLists() {
 		
-		
 		// GIVEN all current links in fixture
 		$linkFixture = new LinkFixture();
 		$relatedLinks = $linkFixture->records;

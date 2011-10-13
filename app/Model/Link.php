@@ -63,7 +63,16 @@ class Link extends AppModel {
 		
 	}
 	
-	public function convertLink($url) {
+	
+	/**
+	*
+	* Given a url, we will prepend a http:// if it does NOT exist
+	*
+	* @param string $url Url to be prepended with http://
+	* @return string
+	*
+	**/
+	public function prependHttp($url) {
 		$url = strtolower($url);
 		if (strpos($url, 'http') === false) {
 			return 'http://' . $url;
@@ -137,7 +146,7 @@ class Link extends AppModel {
 				    isset($link['action1']) ) {
 					
 					if ($data['Link'][$key]['model'] === 'web') {
-						$link['action1']             = $this->convertLink($link['action1']);
+						$link['action1']             = $this->prependHttp($link['action1']);
 						$link['action']              = $link['action1'];
 						$data['Link'][$key]['route'] = $link['action1'];
 					} else {
