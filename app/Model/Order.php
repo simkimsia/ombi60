@@ -318,6 +318,104 @@ class Order extends AppModel {
 	* 
 	**/
 	public function confirmMatchWithCart($orderId, $cartId) {
+		// get the Cart and Items
+		$cart = $this->Cart->find('first', array(
+			'conditions' => array('Cart.id' => $cartId),
+			'contain'	=> array('CartItem')
+		));
+		
+		// get the Order and Items
+		$order = $this->find('first', array(
+			'conditions' => array('Order.id' => $orderId),
+			'contain'	=> array('OrderLineItem')
+		));
+		
+		// check the Order and Cart model data first
+		$result = $this->checkImportantFieldsMatchForOrderCart($order, $cart);
+		
+		if (!$result) {
+			return false;
+		}
+		
+		// THEN we check the individual items
+		return $this->checkItemsMatchForOrderCart($order, $cart);
+		
+	}
+	
+	
+	/**
+	*
+	* check through main model for values matching
+	*
+	* @param array $order Should contain Order indexed array
+	* @param array $cart SHould contain Cart indexed array
+	* @return boolean Return true if successful, false otherwise
+	**/
+	protected function checkItemsMatchForOrderCart($order, $cart) {
+		$order = $order['OrderLineItem'];
+		$cart = $cart['CartItem'];
+		if (count($order) != count($cart)) {
+			return false;
+		}
+		
+		$orderItems = Set::combine($order, '{n}.variant_id', '{n}');
+		$cartItems = Set::combine($cart, '{n}.variant_id', '{n}');
+		
+		$fieldsNotImportant = array(
+			'created', 'cart_id', 'order_id',
+			'modified', 'status',
+			'id', );
+			
+		foreach($orderItems as $variant_id=>$item) {
+			foreach ($item as $field => $value) {
+				if (!in_array($field, $fieldsNotImportant)) {
+					if ($cartItems[$variant_id][$field] != $value) {
+						return false;
+					}
+				}				
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	*
+	* check through main model for values matching
+	*
+	* @param array $order Should contain Order indexed array
+	* @param array $cart SHould contain Cart indexed array
+	* @return boolean Return true if successful, false otherwise
+	**/
+	protected function checkImportantFieldsMatchForOrderCart($order, $cart) {
+		$order = $order['Order'];
+		$cart = $cart['Cart'];
+		if ($order['cart_id'] != $cart['id']) {
+			return false;
+		}
+		
+		if ($order['order_line_item_count'] != $cart['cart_item_count']) {
+			return false;
+		}
+		
+		$fieldsNotImportant = array(
+			'created', 'cart_id',
+			'modified', 'billing_address_id', 'delivery_address_id',
+			'id', 'customer_id', 'delivered_to_country',
+			'previous_price', 'order_no', 'contact_email',
+			'previous_currency', 'payment_status', 'fulfillment_status',
+			'net_amount', 'shipping_fee', 'status',
+			'cart_item_count', 'order_line_item_count');
+
+
+		foreach($order as $field=>$value) {
+			if (!in_array($field, $fieldsNotImportant)) {
+				if ($cart[$field] != $value) {
+					return false;
+				}
+			}
+		}
+		
 		return true;
 	}
 	

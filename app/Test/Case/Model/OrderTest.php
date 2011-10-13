@@ -880,9 +880,8 @@ class OrderTestCase extends CakeTestCase {
 		
 		$this->Order->Cart->id = $cart_uuid;
 		$result = $this->Order->Cart->save(array(
-			'weight' => 25000
+			'past_checkout_point' => true,
 		));
-		
 		$this->assertTrue(!empty($result));
 		
 		// WHEN we run confirmMatchWithCart
