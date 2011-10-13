@@ -144,11 +144,7 @@ class Order extends AppModel {
 		return false;
 	}
 	
-	public function removeCart($cart_id) {
-		$cart = ClassRegistry::init('Cart'); 
-		return $cart->delete($cart_id);
-	}
-	
+
 	/**
 	*
 	* beforeSave Filter

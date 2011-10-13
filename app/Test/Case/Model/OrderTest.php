@@ -859,8 +859,12 @@ class OrderTestCase extends CakeTestCase {
 	**/
 	public function testConfirmMatchWithCartWorksForMatch() {
 		// GIVEN we have identical cart and order data
+		$order_uuid = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a';
+		$cart_uuid 	= '4e895a91-b374-4a1a-947c-0b701507707a';
 		// WHEN we run confirmMatchWithCart
+		$result = $this->Order->confirmMatchWithCart($order_uuid, $cart_uuid);
 		// THEN we get a boolean true
+		$this->assertTrue($result);
 	}
 
 	/**
@@ -870,7 +874,20 @@ class OrderTestCase extends CakeTestCase {
 	**/
 	public function testConfirmMatchWithCartWorksForNoMatch() {
 		// GIVEN we have not Identical cart and order data
+		// AND the weight does not match
+		$order_uuid = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a';
+		$cart_uuid 	= '4e895a91-b374-4a1a-947c-0b701507707a';
+		
+		$this->Order->Cart->id = $cart_uuid;
+		$result = $this->Order->Cart->save(array(
+			'weight' => 25000
+		));
+		
+		$this->assertTrue(!empty($result));
+		
 		// WHEN we run confirmMatchWithCart
-		// THEN we get a boolean false
+		$result = $this->Order->confirmMatchWithCart($order_uuid, $cart_uuid);
+		// THEN we get a boolean true
+		$this->assertFalse($result);
 	}
 }
