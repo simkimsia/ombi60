@@ -48,12 +48,26 @@ class Merchant extends AppModel {
 
 	}
 
-
+	
+	/**
+	*
+	* Update merchant's profile
+	*
+	* @param array $data Data array containing User and Shop model data
+	* @return boolean Returns true if successful. False otherwise
+	**/
 	public function updateProfile($data = NULL) {
 		$data['User']['group_id'] = MERCHANTS;
 		return $this->saveAll($data, array('validate'=>'first'));
 	}
 	
+	/**
+	*
+	* Retrieve Shop, User, Language model data based on User id
+	*
+	* @param integer $id User id
+	* @return array Returns data array if successful. False otherwise
+	**/	
 	public function retrieveShopUserLanguageByUserId($id = false) {
 		if (!$id) {
 			return false;
@@ -78,8 +92,5 @@ class Merchant extends AppModel {
 	}
 
 /** sign up account code more meant for mainsite **/
-
-
-
 }
 ?>

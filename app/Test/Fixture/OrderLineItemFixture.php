@@ -45,7 +45,7 @@ class OrderLineItemFixture extends CakeTestFixture {
 			'product_title' => 'test product with no pic and no collection',
 			'product_weight' => '15000',
 			'currency' => 'SGD',
-			'shipping_required' => 1,
+			'shipping_required' => true,
 			'variant_id' => '3',
 			'variant_title' => 'Default Title'
 		),
@@ -59,7 +59,7 @@ class OrderLineItemFixture extends CakeTestFixture {
 			'product_title' => 'Dummy Product',
 			'product_weight' => '7000',
 			'currency' => 'SGD',
-			'shipping_required' => 1,
+			'shipping_required' => true,
 			'variant_id' => '2',
 			'variant_title' => 'Default Title'
 		),
@@ -73,7 +73,7 @@ class OrderLineItemFixture extends CakeTestFixture {
 			'product_title' => 'test product with no pic and no collection',
 			'product_weight' => '15000',
 			'currency' => 'SGD',
-			'shipping_required' => 1,
+			'shipping_required' => true,
 			'variant_id' => '3',
 			'variant_title' => 'Default Title'
 		),
