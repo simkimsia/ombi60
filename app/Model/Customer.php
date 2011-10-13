@@ -237,7 +237,7 @@ class Customer extends AppModel {
 	* @return integer Returns the address id if successful. False otherwise.
 	**/	
 	private function getExistingAddress($data = NULL, $type = BILLING) {
-		
+
 		if ($type == BILLING) {
 			$modelName = 'BillingAddress';
 			$model = $this->BillingAddress;

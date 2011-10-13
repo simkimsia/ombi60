@@ -263,8 +263,23 @@ class CustomerTestCase extends CakeTestCase {
 	 **/
 	public function testGetExistingByShopIdAndEmailShouldWork() {
 		// GIVEN that we have 1 customer
+		$count = $this->Customer->find('count');
+		$this->assertEquals(1, $count);
+		
 		// WHEN we look up based on ShopId and Email
+		$orderFormData = array(
+			'Order' => array(
+				'shop_id' => 2,
+			),
+			'User'  => array(
+				'email' => 'guest_customer@ombi60.com'
+			)
+		);
+		
+		$result = $this->Customer->getExistingByShopIdAndEmail($orderFormData);
+		
 		// THEN we retrieve that customer id correctly which is 1
+		$this->assertEquals(1, $result);
 	}
 	
 	/**
@@ -275,8 +290,29 @@ class CustomerTestCase extends CakeTestCase {
 	 **/
 	public function testGetExistingBillingAddressShouldWork() {
 		// GIVEN that we have 1 customer and 2 addresses assigned to her
+		$count = $this->Customer->find('count');
+		$this->assertEquals(1, $count);
+		
+		$count = $this->Customer->BillingAddress->find('count', array(
+			'customer_id' => 1,
+		));
+		$this->assertEquals(2, $count);
+		
 		// WHEN we look up the billing address
+		$addressFixture = new AddressFixture();
+		$billingAddress = $addressFixture->records[0];
+		unset($billingAddress['id']);
+		
+		$this->Customer->id = 1;
+		
+		$result = $this->Customer->getExistingBillingAddress(array(
+			'BillingAddress' => array(
+				'0' => $billingAddress
+			)
+		));
+		
 		// THEN we retrieve that address id correctly
+		$this->assertEquals(1, $result);
 	}
 	
 	/**
@@ -287,8 +323,29 @@ class CustomerTestCase extends CakeTestCase {
 	 **/
 	public function testGetExistingDeliveryAddressShouldWork() {
 		// GIVEN that we have 1 customer and 2 addresses assigned to her
+		$count = $this->Customer->find('count');
+		$this->assertEquals(1, $count);
+		
+		$count = $this->Customer->DeliveryAddress->find('count', array(
+			'customer_id' => 1,
+		));
+		$this->assertEquals(2, $count);
+		
 		// WHEN we look up the delivery address
+		$addressFixture = new AddressFixture();
+		$deliveryAddress = $addressFixture->records[1];
+		unset($deliveryAddress['id']);
+		
+		$this->Customer->id = 1;
+		
+		$result = $this->Customer->getExistingDeliveryAddress(array(
+			'DeliveryAddress' => array(
+				'0' => $deliveryAddress
+			)
+		));
+		
 		// THEN we retrieve that address id correctly
+		$this->assertEquals(2, $result);
 	}	
 	
 
@@ -300,9 +357,58 @@ class CustomerTestCase extends CakeTestCase {
 	 **/
 	public function testSetNewBillingAddressShouldWork() {
 		// GIVEN that we have 1 customer and 2 addresses assigned to her
+		$count = $this->Customer->find('count');
+		$this->assertEquals(1, $count);
+		
+		$count = $this->Customer->DeliveryAddress->find('count', array(
+			'customer_id' => 1,
+		));
+		$this->assertEquals(2, $count);
+		
 		// WHEN we add new billing address
-		// THEN we find 3 addresses
+		$data = array(
+			'BillingAddress' => array(
+				'0' => array(
+					'address' => 'Billing Address',					
+					'city' => 'Singapore',					
+					'region' => '',					
+					'zip_code' => '111111',					
+					'country' => '192',					
+					'type'	=> BILLING,					
+					'full_name' => 'some name', 
+				)
+			),
+		);
+		
+		$this->Customer->id = 1;
+		
+		$result = $this->Customer->setNewBillingAddress($data);
+		
+		// THEN result is true
+		$this->assertEquals(3, $result);
+		
 		// AND the new address data is saved
+		$expected['BillingAddress'] = array(
+			'0' => array(
+				'id' => '3'
+			)
+		);
+		foreach($data['BillingAddress'][0] as $field => $value) {
+			$expected['BillingAddress'][0][$field] = $value;
+			if ($field == 'country') {
+				$expected['BillingAddress'][0]['customer_id'] = 1;
+			}
+		}
+		
+		$customer = $this->Customer->find('first', array(
+			'conditions' => array(
+				'User.email' => 'guest_customer@ombi60.com'
+			)
+		));
+		
+		
+		$this->assertEquals($expected['BillingAddress'][0], $customer['BillingAddress'][1]);
+
 	}
 	
 	/**
@@ -313,10 +419,56 @@ class CustomerTestCase extends CakeTestCase {
 	 **/
 	public function testSetNewDeliveryAddressShouldWork() {
 		// GIVEN that we have 1 customer and 2 addresses assigned to her
+		$count = $this->Customer->find('count');
+		$this->assertEquals(1, $count);
+		
+		$count = $this->Customer->DeliveryAddress->find('count', array(
+			'customer_id' => 1,
+		));
+		$this->assertEquals(2, $count);
+		
 		// WHEN we add new delivery address
-		// THEN we find 3 addresses
-		// AND the new address data is saved	
-	}	
+		$data = array(
+			'DeliveryAddress' => array(
+				'0' => array(
+					'address' => 'Delivery Address',					
+					'city' => 'Singapore',					
+					'region' => '',					
+					'zip_code' => '111111',					
+					'country' => '192',					
+					'type'	=> DELIVERY,					
+					'full_name' => 'some name', 
+				)
+			),
+		);
+		
+		$this->Customer->id = 1;
+		
+		$result = $this->Customer->setNewDeliveryAddress($data);
+		
+		// THEN result is true
+		$this->assertEquals(3, $result);
+		
+		// AND the new address data is saved
+		$expected['DeliveryAddress'] = array(
+			'0' => array(
+				'id' => '3'
+			)
+		);
+		foreach($data['DeliveryAddress'][0] as $field => $value) {
+			$expected['DeliveryAddress'][0][$field] = $value;
+			if ($field == 'country') {
+				$expected['DeliveryAddress'][0]['customer_id'] = 1;
+			}
+		}
+		
+		$customer = $this->Customer->find('first', array(
+			'conditions' => array(
+				'User.email' => 'guest_customer@ombi60.com'
+			)
+		));		
+		
+		$this->assertEquals($expected['DeliveryAddress'][0], $customer['DeliveryAddress'][1]);	}	
 	
 
 }
