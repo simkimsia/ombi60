@@ -32,7 +32,7 @@ class Domain extends AppModel {
 							    )
 			        );
 	
-	public function make_this_primary($id = null, $shopId = null) {
+	public function makeThisPrimary($id = null, $shopId = null) {
 		
 		if (!$id) {
 			if (!$this->id) {

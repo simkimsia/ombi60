@@ -12,7 +12,26 @@ class DomainTestCase extends CakeTestCase {
  *
  * @var array
  */
-	public $fixtures = array('app.domain', 'app.shop');
+	public $fixtures = array(
+		'app.shop',  'app.domain',
+		'app.shop_setting', 'app.language',
+		'app.user', 'app.group',
+		'app.merchant', 'app.customer', 'app.casual_surfer',
+		'app.cart', 'app.cart_item',
+		'app.order', 'app.order_line_item', 'app.address', 
+		'app.product', 'app.product_image', 'app.wishlist', 
+		'app.variant', 'app.variant_option', 'app.products_in_group', 'app.product_group',  
+		'app.product_type', 'app.vendor',
+		'app.smart_collection_condition',
+		'app.webpage', 'app.page_type', 
+		'app.link_list', 'app.link', 
+		'app.blog', 'app.post', 'app.comment', 
+		'app.payment', 'app.shops_payment_module', 'app.payment_module',
+		'app.log', 'app.saved_theme',
+ 		'app.country',
+		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
+		'app.price_based_rate', 'app.weight_based_rate'		
+	);
 
 /**
  * setUp method
@@ -47,7 +66,7 @@ class DomainTestCase extends CakeTestCase {
 		$noPrimary = $this->Domain->read(null, '3'); //no primary
 		$this->assertTrue($primary['Domain']['primary']);
 		$this->assertFalse($noPrimary['Domain']['primary']);
-		$this->Domain->make_this_primary('3', '2');
+		$this->Domain->makeThisPrimary('3', '2');
 		$primary = $this->Domain->read(null, '3'); //new primary
 		$noPrimary = $this->Domain->read(null, '2'); //no primary
 		$this->assertTrue($primary['Domain']['primary']);

@@ -1,18 +1,102 @@
 <?php
-/* LinkList Test cases generated on: 2011-01-04 12:01:16 : 1294144456*/
-App::import('Model', 'LinkList');
+/* Cart Test cases generated on: 2011-09-22 09:25:06 : 1316683506*/
+App::uses('User', 'Model');
+App::uses('Shop', 'Model');
+App::uses('LinkList', 'Model');
 
+/**
+ * LinkList Test Case
+ *
+ */
 class LinkListTestCase extends CakeTestCase {
-	var $fixtures = array('app.link_list', 'app.shop', 'app.saved_theme', 'app.theme', 'app.recurring_payment_profile', 'app.customer', 'app.user', 'app.group', 'app.language', 'app.casual_surfer', 'app.merchant', 'app.post', 'app.blog', 'app.comment', 'app.cart', 'app.cart_item', 'app.product', 'app.product_image', 'app.order_line_item', 'app.order', 'app.address', 'app.country', 'app.shipped_to_country', 'app.shipping_rate', 'app.price_based_rate', 'app.weight_based_rate', 'app.payment', 'app.shops_payment_module', 'app.payment_module', 'app.custom_payment_module', 'app.paypal_payment_module', 'app.paypal_payers_payment', 'app.paypal_payer', 'app.shipment', 'app.webpage', 'app.wishlist', 'app.domain', 'app.link');
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 *
+	 **/
+	public $fixtures = array(
+		'app.shop',  'app.domain',
+		'app.shop_setting', 'app.language',
+		'app.user', 'app.group',
+		'app.merchant', 'app.customer', 'app.casual_surfer',
+		'app.cart', 'app.cart_item',
+		'app.order', 'app.order_line_item', 'app.address', 
+		'app.product', 'app.product_image', 'app.wishlist', 
+		'app.variant', 'app.variant_option', 'app.products_in_group', 'app.product_group',  
+		'app.product_type', 'app.vendor',
+		'app.smart_collection_condition',
+		'app.webpage', 'app.page_type', 
+		'app.link_list', 'app.link', 
+		'app.blog', 'app.post', 'app.comment', 
+		'app.payment', 'app.shops_payment_module', 'app.payment_module',
+		'app.log', 'app.saved_theme',
+ 		'app.country',
+		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
+		'app.price_based_rate', 'app.weight_based_rate'	
+	);
 
-	function startTest() {
-		$this->LinkList =& ClassRegistry::init('LinkList');
+
+	/**
+	 * setUp method
+	 *
+	 * @return void
+	 */
+	public function setUp() {
+		parent::setUp();
+
+		$this->LinkList = ClassRegistry::init('LinkList');
+		
+		// setting up Shop and User singleton
+		$this->Shop 	= ClassRegistry::init('Shop');
+		$this->User 	= ClassRegistry::init('User');
+		
+		$cachedShopId = Shop::get('Shop.id');
+		
+		if ($cachedShopId != 2) {
+			$testShop = $this->Shop->getById(2);
+			Shop::store($testShop);
+		}
+		
+		$cachedUserId = User::get('User.id');
+		
+		if($cachedUserId != 2) {
+			User::store($this->User->read(null, 2));
+		}
+		// this is to allow User singleton to work properly
+		// look at AppController beforeFilter
+		Configure::write('run_test', true);
+		
 	}
 
-	function endTest() {
+	/**
+	 * tearDown method
+	 *
+	 * @return void
+	 */
+	public function tearDown() {
 		unset($this->LinkList);
+		unset($this->Shop);
+		unset($this->User);
 		ClassRegistry::flush();
-	}
 
+		parent::tearDown();
+	}
+		
+	
+	/**
+	 * saveAll should successfully convert all links before saving
+	 * successful result returned
+	 *
+	 * @return void
+	 *
+	 **/
+	public function testSaveAllShouldSuccessfullyConvertAllLinkLists() {
+		// GIVEN all current links in fixture
+		// AND we make change to 1 of the links
+		// WHEN we run saveALL
+		// THEN the links are changed accordingly
+	}
+	
+	
 }
-?>

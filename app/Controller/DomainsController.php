@@ -81,7 +81,7 @@ class DomainsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		if ($this->Domain->make_this_primary($id, $shopId)) {
+		if ($this->Domain->makeThisPrimary($id, $shopId)) {
 			$this->Session->setFlash(__('Domain now primary'), 'default', array('class'=>'flash_failure'));
 
 			$this->redirect(array('action' => 'index'));

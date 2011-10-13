@@ -152,6 +152,14 @@ class Link extends AppModel {
 		
 	}
 	
+	/**
+	*
+	* override the saveAll just in case it is used
+	*
+	* @param array $data 
+	* @param array $options
+	* @return boolean returns true if successful, false otherwise
+	**/
 	public function saveAll($data = null, $options = array()) {
 		$data = $this->beforeSaveAll($data);
 		return parent::saveAll($data, $options);
@@ -191,25 +199,5 @@ class Link extends AppModel {
 		return $results;
 	}
 	
-	/**
-	 * override the original updateAll
-	 * if it comes from Webpage, Product, Blog,
-	 * then the $parentModel is set as 'Webpage', etc
-	 * 
-	
-	public function deleteAll($fields, $conditions = true, $parentModel = false) {
-		$parentModels = array('Blog', 'Webpage', 'Product');
-		
-		$updateCounterCacheInLinkLists = in_array($parentModel, $parentModels);
-				
-		if ($updateCounterCacheInLinkLists) {
-			// get all the parent linklists id
-		}
-		parent::updateAll($fields, $conditions);
-		if ($updateCounterCacheInLinkLists) {
-			// now update all the parent linklists id
-		}
-	}
-	 **/
 }
 ?>
