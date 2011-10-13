@@ -1,5 +1,5 @@
 <?php
-/* Link Fixture generated on: 2011-09-21 17:20:32 : 1316625632 */
+/* Link Fixture generated on: 2011-10-13 05:55:47 : 1318485347 */
 
 /**
  * LinkFixture
@@ -39,8 +39,8 @@ class LinkFixture extends CakeTestFixture {
 			'link_list_id' => '1',
 			'model' => '/',
 			'action' => '',
-			'order' => '1',
-			'parent_model' => '',
+			'order' => '0',
+			'parent_model' => NULL,
 			'parent_id' => '0'
 		),
 		array(
@@ -50,7 +50,7 @@ class LinkFixture extends CakeTestFixture {
 			'link_list_id' => '1',
 			'model' => '/pages/',
 			'action' => 'about-us',
-			'order' => '3',
+			'order' => '1',
 			'parent_model' => 'Webpage',
 			'parent_id' => '3'
 		),
@@ -61,9 +61,20 @@ class LinkFixture extends CakeTestFixture {
 			'link_list_id' => '1',
 			'model' => '/collections/all',
 			'action' => '',
-			'order' => '0',
-			'parent_model' => '',
+			'order' => '2',
+			'parent_model' => NULL,
 			'parent_id' => '0'
+		),
+		array(
+			'id' => '4',
+			'name' => 'Blog',
+			'route' => '/blogs/news',
+			'link_list_id' => '1',
+			'model' => '/blogs/',
+			'action' => 'news',
+			'order' => '3',
+			'parent_model' => 'Blog',
+			'parent_id' => '1'
 		),
 		array(
 			'id' => '5',
@@ -72,7 +83,7 @@ class LinkFixture extends CakeTestFixture {
 			'link_list_id' => '1',
 			'model' => '/cart',
 			'action' => '',
-			'order' => '2',
+			'order' => '4',
 			'parent_model' => NULL,
 			'parent_id' => '0'
 		),
@@ -96,39 +107,6 @@ class LinkFixture extends CakeTestFixture {
 			'action' => 'about-us',
 			'order' => '1',
 			'parent_model' => 'Webpage',
-			'parent_id' => '3'
-		),
-		array(
-			'id' => '8',
-			'name' => 'prueba',
-			'route' => '/collections/all',
-			'link_list_id' => '1',
-			'model' => '/collections/all',
-			'action' => '',
-			'order' => '4',
-			'parent_model' => '',
-			'parent_id' => NULL
-		),
-		array(
-			'id' => '9',
-			'name' => 'asdadadas',
-			'route' => '/cart',
-			'link_list_id' => '2',
-			'model' => '/cart',
-			'action' => '',
-			'order' => '2',
-			'parent_model' => '',
-			'parent_id' => NULL
-		),
-		array(
-			'id' => '10',
-			'name' => 'dfsf',
-			'route' => '/blogs/sdvsdvsdvs',
-			'link_list_id' => '2',
-			'model' => '/blogs/',
-			'action' => 'sdvsdvsdvs',
-			'order' => '3',
-			'parent_model' => 'Blog',
 			'parent_id' => '3'
 		),
 	);

@@ -32,7 +32,6 @@ class LinkListsController extends AppController {
 					      'action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
-			
 			if ($this->LinkList->saveAll($this->request->data)) {
 				$this->Session->setFlash(__('The linklist has been saved'));
 				
