@@ -196,10 +196,32 @@ class LinkTestCase extends CakeTestCase {
 	 *
 	 **/
 	public function testSaveOrderShouldWork() {
-		// GIVEN all current links in fixture
-		// AND we swap the the first with the second
+		// GIVEN we reverse the order of all the  links for LinkList 1
+		$linksNewOrder = array(
+			5,4,3,2,1
+		);
+		
 		// WHEN we run saveOrder
+		$result = $this->Link->saveOrder($linksNewOrder, 1);
+		
 		// THEN the links are changed accordingly
+		$this->assertTrue($result);
+		
+		$this->Link->recursive = -1;
+		$links = $this->Link->find('all', array(
+			'conditions' => array(
+				'Link.link_list_id' => 1,
+			),
+			'order' => array(
+				'order asc'
+			),
+			'fields' => array(
+				'Link.id'
+			)
+		));
+		
+		$actual = Set::extract('/Link/id', $links);
+		$this->assertEquals($linksNewOrder, $actual);
 
 	}
 	
