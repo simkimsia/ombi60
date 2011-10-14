@@ -299,7 +299,7 @@ class Cart extends AppModel {
 	}
 	
 	public function afterSave($created) {		
-		$this->sqlUpdatePriceWeightCurrencyShippingStats($this->id);
+		$this->recalculateTotalWeightPrice($this->id);
 		$this->updateLiveCartOnUser();
 		
 	}
@@ -335,17 +335,24 @@ class Cart extends AppModel {
 		return 0;
 	}
 	
-	public function sqlUpdatePriceWeightCurrencyShippingStats($id = false) {
+	/**
+	*
+	* Read all the CartItem and recalculate Total weight, price, etc
+	*
+	* @param string $id Cart id
+	* @return boolean Returns true if successful. False otherwise.
+	**/
+	public function recalculateTotalWeightPrice($id) {
 		if (!$id) {
 			return false;
 		}
 		
-		$sql = 'UPDATE carts SET amount = (SELECT SUM(product_price*product_quantity) FROM cart_items WHERE cart_id = \'%1$s\'),
-				total_weight = (SELECT SUM(product_weight*product_quantity) FROM cart_items WHERE cart_id = \'%1$s\'),
+		$sql = 'UPDATE carts SET amount = (SELECT SUM(product_price*product_quantity) FROM cart_items WHERE cart_id = \'%1$s\' AND product_quantity >= 1),
+				total_weight = (SELECT SUM(product_weight*product_quantity) FROM cart_items WHERE cart_id = \'%1$s\' AND product_quantity >= 1),
 				currency = (SELECT currency FROM cart_items WHERE cart_id = \'%1$s\' LIMIT 1),
 				
-				shipped_amount = IFNULL((SELECT SUM(product_price*product_quantity)  FROM cart_items WHERE cart_id = \'%1$s\' AND shipping_required = 1),0),
-				shipped_weight = IFNULL((SELECT SUM(product_weight*product_quantity)  FROM cart_items WHERE cart_id = \'%1$s\' AND shipping_required = 1),0)
+				shipped_amount = IFNULL((SELECT SUM(product_price*product_quantity)  FROM cart_items WHERE cart_id = \'%1$s\' AND shipping_required = 1 AND product_quantity >= 1),0),
+				shipped_weight = IFNULL((SELECT SUM(product_weight*product_quantity)  FROM cart_items WHERE cart_id = \'%1$s\' AND shipping_required = 1 AND product_quantity >= 1),0)
 
 			WHERE carts.id = \'%1$s\'';
 		
@@ -402,7 +409,7 @@ class Cart extends AppModel {
 						 'past_checkout_point'=>false));
 			
 			if ($cart_id > 0) {
-				$this->sqlUpdatePriceWeightCurrencyShippingStats($cart_id);
+				$this->recalculateTotalWeightPrice($cart_id);
 			} else {
 				return false;
 			}
@@ -614,7 +621,7 @@ class Cart extends AppModel {
 			$result = $this->saveAll($data);
 			
 			if($result){
-				$this->sqlUpdatePriceWeightCurrencyShippingStats($this->id);
+				$this->recalculateTotalWeightPrice($this->id);
 			}
 
 			return $result;
@@ -681,12 +688,9 @@ class Cart extends AppModel {
 			
 			}
 			
-			
-			$this->sqlUpdatePriceWeightCurrencyShippingStats($cart['Cart']['id']);
-			
+			$this->recalculateTotalWeightPrice($cart['Cart']['id']);
 			
 			return $result;
-			
 			
 		}
 		
@@ -694,65 +698,6 @@ class Cart extends AppModel {
 		
 	}
 	
-	/**
-	*
-	* Read all the CartItem and recalculate Total weight, price, etc
-	*
-	* @param string $cartId Cart id
-	* @return boolean Returns true if successful. False otherwise.
-	**/
-	public function recalculateTotalWeightPrice($cartId) {
-		// get all items of this cart 
-		$this->CartItem->recursive = -1;
-		$items = $this->CartItem->find('all',
-			array(
-				'conditions' => array(
-					'CartItem.cart_id' => $cartId,
-					'CartItem.product_quantity >=' => 1,
-				)
-			)
-		);
-		
-		$shippedWeight 		= 0;
-		$totalWeight		= 0;
-		$totalAmount		= 0.0;
-		$shippedAmount 		= 0.0;
-		$currency			= '';
-		
-		// go through each item and calculate total weight and price
-		foreach($items as $key => $item) {
-			$quantity 	= $item['CartItem']['product_quantity'];
-			$weight		= $item['CartItem']['product_weight'];
-			$price		= $item['CartItem']['product_price'];
-			$currency	= $item['CartItem']['currency'];
-			
-			$lineWeight = $quantity * $weight;
-			$linePrice	= $quantity * $price;
-			
-			if ($item['CartItem']['shipping_required']) {
-				$shippedWeight += $lineWeight;
-				$shippedAmount += $linePrice;
-			}
-			
-			$totalWeight += $lineWeight;
-			$totalAmount += $linePrice;
-		}
-		
-		// prepare the data to be saved
-		$this->id = $cartId;
-		$cartData = array(
-			'Cart' => array(
-				'amount' 			=> $totalAmount,
-				'shipped_amount'	=> $shippedAmount,
-				'total_weight'		=> $totalWeight,
-				'shipped_weight'	=> $shippedWeight,
-				'currency'			=> $currency
-			)
-		);
-		
-		// execute the save function and return its results
-		return $this->save($cartData);
-	}
 	
 	public function transferCartFromUserToAnother($old_user_id, $new_user_id) {
 		$cart = $this->getLiveCartByUserId($old_user_id, true);
