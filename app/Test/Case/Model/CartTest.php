@@ -512,5 +512,16 @@ class CartTestCase extends CakeTestCase {
 	public function testGetCartItemsCountByCustomerId() {
 		
 	}
+	
+	/**
+	*
+	public function testGetLiveCart() {
+		
+	}
+	
+	public function testGetLiveCartForCartTemplate() {
+		
+	}
+	*/
 
 }

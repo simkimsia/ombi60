@@ -140,5 +140,26 @@ class CartItemTestCase extends CakeTestCase {
 		$this->assertEquals($expectedItems, $actualItems);
 	}
 	
+	/**
+	*
+	* test setVariantIdAsKey should work
+	*
+	**/
+	public function testSetVariantIdAsKeyShouldWork() {
+		// GIVEN an array of CartItem data
+		// WHEN we run function
+		// THEN keys have been changed to variant id instead
+	}
+	
+	/**
+	*
+	* test attachProductData should work
+	*
+	**/
+	public function testAttachProductDataShouldWork() {
+		// GIVEN an array of CartItem data
+		// WHEN we run function
+		// THEN keys have been changed to variant id instead
+	}
 
 }

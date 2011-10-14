@@ -383,6 +383,93 @@ class Cart extends AppModel {
 	}
 	
 	/**
+	*
+	* Get Live Cart data to be displayed in cart template.
+	*
+	* @param integer $user_id User id
+	* @return array Return array
+	**/
+	public function getLiveCartForCartTemplate($user_id = false) {
+		// 1st retrieve main Cart, CartItem and CheckedOutVariant model data
+		$minimumProductQuantityOf1 = 1;
+		$includeCheckedOutVariant = true;
+		$cart = $this->getLiveCart($user_id, $minimumProductQuantityOf1, $includeCheckedOutVariant);
+		
+		// 2nd if empty we return empty cart now!
+		if (empty($cart['CartItem'])) return $cart;
+		
+		// 3rd if not empty, we attach Product data to CartItem
+		$cart = $this->CartItem->attachProductData($cart);
+		
+		// 4th set variant_id as key for CartItem array
+		$cart = $this->CartItem->setVariantIdAsKey($cart);
+		
+		return $cart;
+	}
+	
+	
+	/**
+	* 
+	* Get Live Cart data associated with User. Cart data includes CartItem. 
+	*
+	* @param integer $user_id User id
+	* @param integer $productQuantityAtLeast. Cart Items to be retrieved need to have at least this quantity . Default 0. 
+	* @param boolean $includeCheckedOutVariant. Include CheckedOutVariant data Default is true.
+	* @return array Array of Cart, CartItem data. May include more models data.
+	**/
+	public function getLiveCart($user_id = false, $productQuantityAtLeast = 0, $includeCheckedOutVariant = true) {
+		if (!$user_id) {
+			return false;
+		}
+		
+		// 1st we get the cart_id
+		$cart_id = $this->field('id', array('user_id'=>$user_id,
+					 'past_checkout_point'=>false));
+		
+		// 2nd recalculate weight, price stats for Cart assuming CartItems updated
+		if (!empty($cart_id)) {
+			$this->recalculateTotalWeightPrice($cart_id);
+		} else {
+			return false;
+		}
+		
+		// 3rd set up the minimum product quantity amount for Cart Item
+		$conditionsForCartItem = array('CartItem.product_quantity >='=> $productQuantityAtLeast);
+		
+		$containableArray = array(
+			'CartItem'=>array(
+				'conditions'=>$conditionsForCartItem,
+			)
+		);
+		
+		// 4th if we need to include CheckedOutVariant
+		if ($includeCheckedOutVariant) {
+			$containVariantData = array(
+						
+					       'CheckedOutVariant' => array(
+						       'order'=>'CheckedOutVariant.order ASC',
+						       'VariantOption' => array(
+							       'fields' => array('id', 'value', 'field'),
+							       'order'  => 'VariantOption.order ASC',
+						       )
+					       ));
+			
+			$containableArray['CartItem'] = array_merge($containableArray['CartItem'], $containVariantData);
+		}
+		
+		// 5th run the find operation
+		$cart = $this->find('first', array(
+			'conditions' => array(
+				'Cart.user_id'				=> $user_id,
+				'Cart.past_checkout_point'	=> false
+			),
+			'contain' => $containableArray,
+		));
+		
+		return $cart;
+	}
+	
+	/**
 	* 
 	* Get Cart data associated with User. Cart data includes CartItem. 
 	* If the data is meant for view cart page (aka cart.tpl in Twig), data includes Product, 
@@ -408,7 +495,7 @@ class Cart extends AppModel {
 			$cart_id = $this->field('id', array('user_id'=>$user_id,
 						 'past_checkout_point'=>false));
 			
-			if ($cart_id > 0) {
+			if (!empty($cart_id)) {
 				$this->recalculateTotalWeightPrice($cart_id);
 			} else {
 				return false;

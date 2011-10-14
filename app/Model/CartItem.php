@@ -221,6 +221,107 @@ class CartItem extends AppModel {
 		);
 	}
 	
+	/**
+	*
+	* Extract variant_id as key for CartItem array
+	* 
+	*
+	* @param array $data Data array containing CartItem => array('0' => array(...), '1' => array(...))
+	* @return array Return data array
+	**/
+	public function setVariantIdAsKey($data) {
+		
+		if (isset($data['CartItem'])) {
+			$cartItems = Set::combine($data, 'CartItem.{n}.variant_id', 'CartItem.{n}');
+			if (!empty($cartItems)) {
+				$data['CartItem'] = $cartItems;
+			}
+		}
+		
+		return $data;
+	}
+	
+	/**
+	*
+	* Get All Products related data and attach to CartItem
+	*
+	* @param array $data Data array containing CartItem => array('0' => array(..), '1' => array(..)) 
+	* @return array Return data array
+	**/
+	public function attachProductData($data) {
+		
+		if (isset($data['CartItem'])) {
+			
+			$productIDs = Set::extract('CartItem.{n}.product_id', $data);
+			$conditionsForProduct = array(
+					// Product Data	
+					'conditions' => array(
+						'Product.visible' =>true,
+						'Product.id'  	  =>$productIDs,
+					),
+					'contain' => array(
+						'ProductImage'=>array(
+						       'fields' => array('filename'),
+						       'order'=>array(
+								'ProductImage.cover DESC')
+						),
+						
+						'Variant' => array(
+							'order'=>'Variant.order ASC',
+							'VariantOption' => array(
+								'fields' => array('id', 'value', 'field', 'variant_id'),
+								'order'  => 'VariantOption.order ASC',
+							)
+						),
+						
+						'ProductsInGroup'=>array(
+						       'fields' => array(
+								'id',
+								'product_id'),
+						       
+						       'ProductGroup'=>array(
+							       'fields' => array(
+									'id', 
+									'title', 'handle',
+									'description', 'visible_product_count',
+									'url', 'vendor_count'),
+						       )
+					       )
+				       ),
+					'link' => array('Vendor'=>array('fields'=>array('id', 'title'))),
+				);
+			
+			/**
+			 * $products is in the form of {n}=>array(Product, ProductImage, ProductsInGroup=>array(ProductGroup))
+			 **/
+			$products = $this->Product->find('all', $conditionsForProduct);
+			
+			$originalIndex = array_keys($data['CartItem']);
+			
+			// then we use product_id as the index in $products to facilitate the insertion
+			$products = Set::combine($products, '{n}.Product.id', '{n}');
+			
+			// now we insert the Product data
+			foreach($data['CartItem'] as $id=>$item) {
+				$product_id = $item['product_id'];
+				if (!empty($products[$product_id])) {
+					$data['CartItem'][$id]['Product'] = $products[$product_id]['Product'];
+					$data['CartItem'][$id]['ProductImage'] = $products[$product_id]['ProductImage'];
+					$data['CartItem'][$id]['ProductsInGroup'] = $products[$product_id]['ProductsInGroup'];
+					$data['CartItem'][$id]['Variant']	= $products[$product_id]['Variant'];
+					$data['CartItem'][$id]['Vendor']	= $products[$product_id]['Vendor'];
+				}
+			}
+			
+			// now we put the original index back
+			$cartItems = array_values($data['CartItem']);
+			$data['CartItem'] = array_combine($originalIndex, $cartItems);
+
+		}
+		
+		return $data;
+	}
+	
 	
 	/**
 	 * for use in templates for shopfront pages
