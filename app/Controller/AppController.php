@@ -338,14 +338,6 @@ class AppController extends Controller {
 		if ($denied) {
 			throw new NotFoundException();
 			//$this->cakeError('noSuchDomain');
-		} else {
-
-			if(!isset($this->request->params['admin'])) {
-				$cart = ClassRegistry::init('Cart');
-				$cartItemsCount = $cart->getCartItemsCountByCustomerId(User::get('User.id'));
-				$this->set('cartItemsCount', $cartItemsCount);
-
-			}
 		}
 		
 		//DISABLED TO TEST WITHOUT SSL 10/07/2011

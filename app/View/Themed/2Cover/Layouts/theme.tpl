@@ -49,7 +49,7 @@
 			<!-- END LINKS -->
 			<!-- START GOCART -->
 			<div id="gocart">
-				<p><a href="/cart"{% if template == "cart" %} class="active"{% endif %}>{{ cart.item_count }} {{ cart.item_count | pluralize( "Item", "Items") }}</a></p>
+				<p><a href="/cart"{% if template == "cart" %} class="active"{% endif %}>{{ cart.item_count | pluralize( "Item", "Items") }}</a></p>
 			</div>
 			<!-- END GOCART -->
 			<!-- END NAV -->

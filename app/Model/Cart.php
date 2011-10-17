@@ -363,25 +363,7 @@ class Cart extends AppModel {
 		return $this->query($escapedSql);
 	}
 
-		
-	
-	public function getCartItemsCountByCustomerId($user_id = false) {
-		if (!$user_id) {
-			return false;
-		}
-		
-		$this->Behaviors->load('Linkable.Linkable');
-		
-		return $this->CartItem->find('count', array('conditions'=>
-						   array('Cart.user_id'=>$user_id,
-							 'Cart.past_checkout_point'=>false,
-							 'CartItem.product_quantity >' => 0),
-							 
-						   'link' => array('Cart'),
-						   
-						   ));
-	}
-	
+			
 	/**
 	*
 	* Get Live Cart data to be displayed in cart template.

@@ -581,23 +581,13 @@ class CartTestCase extends CakeTestCase {
 		$this->assertEquals($expectedVariantIds, $resultVariantIds);
 	}
 	
-	/*
-	*
-	* Get getCartItemsCountByCustomerId
-	**/
-	public function testGetCartItemsCountByCustomerId() {
-		
-	}
-	
 	/**
 	*
-	public function testGetLiveCart() {
+	* When we change Product Price Weight, overall Cart Price Weight should change
+	*
+	**/
+	public function testRecalculateShouldWorkForProductPriceWeightChange() {
 		
 	}
-	
-	public function testGetLiveCartForCartTemplate() {
-		
-	}
-	*/
 
 }
