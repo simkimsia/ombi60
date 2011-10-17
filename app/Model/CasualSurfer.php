@@ -39,6 +39,8 @@ class CasualSurfer extends AppModel {
 		if ($exists AND $loggedInUserId > 0) {
 			
 			$cartOfUnloggedIn = $this->User->Cart->getLiveCartByUserId($currentIdInCookie, true);
+			// we set the variant ids as keys for CartItem array
+			$cartOfUnloggedIn = $this->User->Cart->CartItem->setVariantIdAsKey($cartOfUnloggedIn);
 			
 			$cartOfUnloggedInExists = isset($cartOfUnloggedIn['Cart']) AND is_array($cartOfUnloggedIn['Cart']) AND
 						  isset($cartOfUnloggedIn['CartItem']) AND is_array($cartOfUnloggedIn['CartItem']);

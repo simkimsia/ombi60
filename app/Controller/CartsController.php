@@ -233,7 +233,7 @@ class CartsController extends AppController {
 			$paypalExpressOn = false;
 
 			// retrieve live cart of customer
-			$productsInCart = $this->Cart->getLiveCartByUserId(User::get('User.id'), true, true);
+			$productsInCart = $this->Cart->getLiveCartForCartTemplate(User::get('User.id'));
 
 			$paymentAmount = 0.00;
 

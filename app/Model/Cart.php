@@ -392,8 +392,7 @@ class Cart extends AppModel {
 	public function getLiveCartForCartTemplate($user_id = false) {
 		// 1st retrieve main Cart, CartItem and CheckedOutVariant model data
 		$minimumProductQuantityOf1 = 1;
-		$includeCheckedOutVariant = true;
-		$cart = $this->getLiveCart($user_id, $minimumProductQuantityOf1, $includeCheckedOutVariant);
+		$cart = $this->getLiveCartWithVariantByUserId($user_id, $minimumProductQuantityOf1);
 		
 		// 2nd if empty we return empty cart now!
 		if (empty($cart['CartItem'])) return $cart;
@@ -410,14 +409,26 @@ class Cart extends AppModel {
 	
 	/**
 	* 
+	* Get Live Cart data associated with User. Cart data includes CartItem. Alias for getLiveCartByUserId($user_id, $quantity, TRUE)
+	*
+	* @param integer $user_id User id
+	* @param integer $productQuantityAtLeast. Cart Items to be retrieved need to have at least this quantity . Default 0. 
+	* @return array Array of Cart, CartItem, CheckedOutVariant, VariantOption data.
+	**/
+	public function getLiveCartWithVariantByUserId($user_id = false, $productQuantityAtLeast = 0) {
+		return $this->getLiveCartByUserId($user_id, $productQuantityAtLeast, true);
+	}
+	
+	/**
+	* 
 	* Get Live Cart data associated with User. Cart data includes CartItem. 
 	*
 	* @param integer $user_id User id
 	* @param integer $productQuantityAtLeast. Cart Items to be retrieved need to have at least this quantity . Default 0. 
 	* @param boolean $includeCheckedOutVariant. Include CheckedOutVariant data Default is true.
-	* @return array Array of Cart, CartItem data. May include more models data.
+	* @return array Array of Cart, CartItem data. May include CheckedOutVariant models data.
 	**/
-	public function getLiveCart($user_id = false, $productQuantityAtLeast = 0, $includeCheckedOutVariant = true) {
+	public function getLiveCartByUserId($user_id = false, $productQuantityAtLeast = 0, $includeCheckedOutVariant = false) {
 		if (!$user_id) {
 			return false;
 		}
@@ -469,167 +480,6 @@ class Cart extends AppModel {
 		return $cart;
 	}
 	
-	/**
-	* 
-	* Get Cart data associated with User. Cart data includes CartItem. 
-	* If the data is meant for view cart page (aka cart.tpl in Twig), data includes Product, 
-	* Variant in the alias CheckedOutVariant, ProductImage, 
-	* ProductsInGroup, ProductGroup.
-	*
-	* @param integer $user_id User id
-	* @param boolean $variantIdAsKey. Default is false. Set true if you want to return the CartItem data array using variant_id as key
-	* @param boolean $viewCart. Default is false. Set true if you want to use the data for cart.tpl in Twig
-	* @return array Array of Cart, CartItem data. May include more models data.
-	**/
-	public function getLiveCartByUserId($user_id = false, $variantIdAsKey = false, $viewCart = false) {
-		if (!$user_id) {
-			return false;
-		}
-		
-		// get the most updated cart stats since we need to do this for viewCart action 
-		if ($viewCart) {
-			// need to set this true always if viewCart is true
-			$variantIdAsKey = true;
-			
-			// first we get the cart_id
-			$cart_id = $this->field('id', array('user_id'=>$user_id,
-						 'past_checkout_point'=>false));
-			
-			if (!empty($cart_id)) {
-				$this->recalculateTotalWeightPrice($cart_id);
-			} else {
-				return false;
-			}
-		}
-		
-		$this->Behaviors->load('Containable');
-		$this->recursive = -1;
-		
-		if ($viewCart) {
-			// we get minimum quantity of 1 for the cart item
-			$conditionsForCartItem = array('CartItem.product_quantity >='=>1);
-		} else {
-			// we get ALL cart items even if the quantity is ZERO
-			$conditionsForCartItem = array('CartItem.product_quantity >='=>0);
-		}
-
-		// to be used for the find statement
-		$containableArray = array(
-			'CartItem'=>array(
-				'conditions'=>$conditionsForCartItem,
-			)
-		);
-		
-		// if we want to view the cart, we need to gather a lot of data
-		// from Product, ProductImage, Variant, etc
-		// due to some weird reason with containable, i need to append the Variant first
-		// and do the Product one cart item at a time separately.
-		if ($viewCart) {
-			$containVariantData = array(
-						
-					       'CheckedOutVariant' => array(
-						       'order'=>'CheckedOutVariant.order ASC',
-						       'VariantOption' => array(
-							       'fields' => array('id', 'value', 'field'),
-							       'order'  => 'VariantOption.order ASC',
-						       )
-					       ));
-			
-			$containableArray['CartItem'] = array_merge($containableArray['CartItem'], $containVariantData);
-		}
-		
-		$cart = $this->find('first', array('conditions'=>
-						   array('Cart.user_id'=>$user_id,
-							 'Cart.past_checkout_point'=>false),
-						   
-						   'contain' => $containableArray,
-						   
-						   ));
-		
-		
-		$emptyCart = empty($cart['CartItem']);
-		
-		if ($emptyCart) {
-			return $cart;
-		}
-		
-	
-		if ($viewCart) {
-			$productIDs = Set::extract('CartItem.{n}.product_id', $cart);
-			$conditionsForProduct = array(
-					// Product Data	
-					'conditions' => array(
-						'Product.visible' =>true,
-						'Product.id'  	  =>$productIDs,
-					),
-					'contain' => array(
-						'ProductImage'=>array(
-						       'fields' => array('filename'),
-						       'order'=>array(
-								'ProductImage.cover DESC')
-						),
-						
-						'Variant' => array(
-							'order'=>'Variant.order ASC',
-							'VariantOption' => array(
-								'fields' => array('id', 'value', 'field', 'variant_id'),
-								'order'  => 'VariantOption.order ASC',
-							)
-						),
-						
-						'ProductsInGroup'=>array(
-						       'fields' => array(
-								'id',
-								'product_id'),
-						       
-						       'ProductGroup'=>array(
-							       'fields' => array(
-									'id', 
-									'title', 'handle',
-									'description', 'visible_product_count',
-									'url', 'vendor_count'),
-						       )
-					       )
-				       ),
-					'link' => array('Vendor'=>array('fields'=>array('id', 'title'))),
-				);
-			
-			/**
-			 * $products is in the form of {n}=>array(Product, ProductImage, ProductsInGroup=>array(ProductGroup))
-			 **/
-			$products = $this->Shop->Product->find('all', $conditionsForProduct);
-			
-			$originalIndex = array_keys($cart['CartItem']);
-			
-			// then we use product_id as the index in $products to facilitate the insertion
-			$products = Set::combine($products, '{n}.Product.id', '{n}');
-			
-			// now we insert the Product data
-			foreach($cart['CartItem'] as $id=>$item) {
-				$product_id = $item['product_id'];
-				if (!empty($products[$product_id])) {
-					$cart['CartItem'][$id]['Product'] = $products[$product_id]['Product'];
-					$cart['CartItem'][$id]['ProductImage'] = $products[$product_id]['ProductImage'];
-					$cart['CartItem'][$id]['ProductsInGroup'] = $products[$product_id]['ProductsInGroup'];
-					$cart['CartItem'][$id]['Variant']	= $products[$product_id]['Variant'];
-					$cart['CartItem'][$id]['Vendor']	= $products[$product_id]['Vendor'];
-				}
-			}
-			
-			// now we put the original index back
-			$cartItems = array_values($cart['CartItem']);
-			$cart['CartItem'] = array_combine($originalIndex, $cartItems);
-		}
-		
-		$placeItemIdAsKeyInArray = (!empty($cart['CartItem']) AND $variantIdAsKey);
-		
-		if ($placeItemIdAsKeyInArray) {
-			$cartItems = Set::combine($cart, 'CartItem.{n}.variant_id', 'CartItem.{n}');		
-			$cart['CartItem'] = $cartItems;
-		}
-		
-		return $cart;
-	}
 	
 	/**
 	 * 
@@ -652,7 +502,9 @@ class Cart extends AppModel {
 		$shop_id = Shop::get('Shop.id');
 		
 		// we go get the unprocessed cart of this customer
-		$cart = $this->getLiveCartByUserId($user_id, true);
+		$cart = $this->getLiveCartByUserId($user_id);
+		// we set the variant ids as keys for CartItem array
+		$cart = $this->CartItem->setVariantIdAsKey($cart);
 		
 		$arrayOfProducts = array();
 		
@@ -787,7 +639,9 @@ class Cart extends AppModel {
 	
 	
 	public function transferCartFromUserToAnother($old_user_id, $new_user_id) {
-		$cart = $this->getLiveCartByUserId($old_user_id, true);
+		$cart = $this->getLiveCartByUserId($old_user_id);
+		// we set the variant ids as keys for CartItem array
+		$cart = $this->CartItem->setVariantIdAsKey($cart);
 		
 		$productAndQuantities = array();
 		
@@ -893,7 +747,9 @@ class Cart extends AppModel {
 		$userId = User::get('User.id');
 		
 		// retrieving the cart data again. necessary to avoid overloading the form on cart page
-		$cart 	= $this->getLiveCartByUserId($userId, true, false);
+		$cart 	= $this->getLiveCartByUserId($userId);
+		// we set the variant ids as keys for CartItem array
+		$cart = $this->CartItem->setVariantIdAsKey($cart);
 		
 		// retrieving the new quantities in the cart page
 		$newQuantities = (!empty($postData['updates'])) ? $postData['updates'] : array();
