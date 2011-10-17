@@ -501,8 +501,29 @@ class CartTestCase extends CakeTestCase {
 	*
 	*  test getLiveCartByUserId 
 	**/
-	public function testGetLiveCartByUserId() {
-		// GIVEN the various scenarios that call this function... we test them all.
+	public function testGetLiveCartByUserIdForCartTemplate() {
+		// GIVEN we want to run getLiveCartByUserId for Cart Template
+		
+		
+		// WHEN we run the function
+		//$result = $this->Cart->getLiveCartByUserId(3, true, true);
+		$result = $this->Cart->getLiveCartForCartTemplate(3);
+		
+		// THEN we get the following result		
+		$this->assertTrue(!empty($result['Cart']));
+		$this->assertTrue(!empty($result['CartItem']));
+		$this->assertEqual(2, count($result['CartItem']));
+		
+		foreach($result['CartItem'] as $item) {
+			$this->assertTrue(is_array($item['CheckedOutVariant']));
+			$this->assertTrue(is_array($item['Product']));		
+			$this->assertTrue(is_array($item['ProductImage']));			
+			$this->assertTrue(is_array($item['ProductsInGroup']));
+			$this->assertTrue(is_array($item['Variant']));			
+			$this->assertTrue(is_array($item['Vendor']));			
+		}
+		
+		
 	}
 	
 	/*

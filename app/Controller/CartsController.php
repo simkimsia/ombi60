@@ -235,7 +235,8 @@ class CartsController extends AppController {
 			// retrieve live cart of customer
 			$productsInCart = $this->Cart->getLiveCartByUserId(User::get('User.id'), true, true);
 
-
+			debug($productsInCart);
+			die();
 
 			$paymentAmount = 0.00;
 
