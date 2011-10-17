@@ -499,9 +499,12 @@ class CartTestCase extends CakeTestCase {
 	
 	/**
 	*
-	*  test getLiveCartByUserId 
+	* test the original getLiveCartByUserId only returns Cart, CartItem and a host of other models when we do a 
+	* getLiveCartByUserId(2, true, true)
+	*
+	* the variant_id also becomes the key for cartitem
 	**/
-	public function testGetLiveCartByUserIdForCartTemplate() {
+	public function testGetLiveCartByUserIdForCartTemplateShouldIncludeAssociatedModels() {
 		// GIVEN we want to run getLiveCartByUserId for Cart Template
 		
 		
@@ -523,7 +526,57 @@ class CartTestCase extends CakeTestCase {
 			$this->assertTrue(is_array($item['Vendor']));			
 		}
 		
+		// AND the variant ids are a match
+		$expectedVariantIds = Set::extract('CartItem.{n}.variant_id', $result);
+		$resultVariantIds = array_keys($result['CartItem']);
 		
+		$this->assertEquals($expectedVariantIds, $resultVariantIds);
+		
+	}
+	
+	/**
+	*
+	* test the original getLiveCartByUserId only returns Cart and CartItem when we do a 
+	* getLiveCartByUserId(2, false, false)
+	**/
+	public function testGetLiveCartByUserIdShouldHaveOnlyCartAndCartItem() {
+		// Given that we have non existent carts for User 2
+		$this->setUpForEmptyCart();
+		$userId = 2;
+		$quantityAtLeastZero = 0;
+		$excludeCheckedOutVariant = false;
+
+		// WHEN we add a product to non-existent cart for User 2
+		$addToNonExistentCart = $this->Cart->addProductForCustomer($userId, array(3=>1));
+		$this->assertTrue($addToNonExistentCart);
+
+		// THEN the getLiveCartByUserId works
+		//$cart = $this->Cart->getLiveCartByUserId($userId, false, false);
+		$cart = $this->Cart->getLiveCart($userId, $quantityAtLeastZero, $excludeCheckedOutVariant);
+		$this->check1ItemCartResult($cart, 1);
+	}
+	
+	public function testGetLiveCartByUserIdShouldHaveDifferentVariantIdasKey() {
+		// Given that we have non existent carts for User 2
+		$this->setUpForEmptyCart();
+		$userId = 2;
+		$quantityAtLeastZero = 0;
+		$excludeCheckedOutVariant = false;
+
+		// WHEN we add a product to non-existent cart for User 2
+		$addToNonExistentCart = $this->Cart->addProductForCustomer($userId, array(3=>1));
+		$this->assertTrue($addToNonExistentCart);
+
+		// AND the getLiveCartByUserId works with the variant id fixed as keys for CartItem array
+		//$result = $this->Cart->getLiveCartByUserId($userId, true, false);
+		$result = $this->Cart->getLiveCart($userId, $quantityAtLeastZero, $excludeCheckedOutVariant);
+		$result = $this->Cart->CartItem->setVariantIdAsKey($result);
+		
+		// THEN we expect the keys of the CartItem array to match the variant ids
+		$expectedVariantIds = Set::extract('CartItem.{n}.variant_id', $result);
+		$resultVariantIds = array_keys($result['CartItem']);
+		
+		$this->assertEquals($expectedVariantIds, $resultVariantIds);
 	}
 	
 	/*
