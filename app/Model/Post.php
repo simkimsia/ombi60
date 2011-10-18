@@ -105,11 +105,11 @@ class Post extends AppModel {
 	 * use this method ONLY after toggle!!
 	 **/
 	public function updatePublishedAt($id) {
-		
+
 		return $this->updateAll(
 			// fields to change
                         // this should give array('Product.visible' => '!Product.visible')
-			 array('published' => date('Y-m-d')),
+			 array('Post.published' => "'" . date('Y-m-d H:i:s') . "'"),
 			 // conditions
                          // this should like array('Product.id' => $id)
 			 array('Post.id' => $id, 'Post.visible'=>true)
