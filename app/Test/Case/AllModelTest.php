@@ -36,18 +36,10 @@ class AllModelTest extends PHPUnit_Framework_TestSuite {
 		$suite->addTestFile($path . 'MerchantTest.php');
 		$suite->addTestFile($path . 'OrderLineItemTest.php');
 		$suite->addTestFile($path . 'OrderTest.php');
-		/*
-		$suite->addTestFile($path . 'PageTypeTest.php');
-		$suite->addTestFile($path . 'PaydollarTransactionTest.php');
-		$suite->addTestFile($path . 'PaymentModuleTest.php');
-		**/
+
 		$suite->addTestFile($path . 'PaymentTest.php');
-		/*
-		$suite->addTestFile($path . 'PaypalPayerTest.php');
-		$suite->addTestFile($path . 'PaypalPayersPaymentTest.php');
-		
 		$suite->addTestFile($path . 'PostTest.php');
-		$suite->addTestFile($path . 'PriceBasedRateTest.php');
+/*
 		
 		$suite->addTestFile($path . 'ProductGroupTest.php');
 		$suite->addTestFile($path . 'ProductImageTest.php');
