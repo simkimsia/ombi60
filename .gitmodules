@@ -52,3 +52,6 @@
 [submodule "app/Plugin/UtilityLib"]
 	path = app/Plugin/UtilityLib
 	url = git@github.com:simkimsia/UtilityLib.git
+[submodule "app/Plugin/Migrations"]
+	path = app/Plugin/Migrations
+	url = https://github.com/CakeDC/migrations.git
