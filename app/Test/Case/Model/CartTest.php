@@ -587,7 +587,37 @@ class CartTestCase extends CakeTestCase {
 	*
 	**/
 	public function testRecalculateShouldWorkForProductPriceWeightChange() {
+		// GIVEN Cart For User 3
+		$cart_uuid = '4e9144d7-55e4-44a6-a2f1-1f721507707a';
 		
+		// WHEN we change the Product Price and Weight for Product 3
+		$this->Cart->CartItem->Product->Variant->id = 3;
+		$this->Cart->CartItem->Product->Variant->save(array(
+			'Variant' => array(
+				'price' => '25.0000',
+				'weight' => '25000'
+			)
+		));
+		
+		// AND we run recalculate
+		$result = $this->Cart->recalculateTotalWeightPrice($cart_uuid);
+		
+		// THEN result is successful
+		$this->assertTrue($result);
+		
+		$cart = $this->Cart->read(array(
+			'amount', 
+			'total_weight', 
+			'shipped_amount', 
+			'shipped_weight'), $cart_uuid);
+			
+		// AND the price is 36.0000
+		$this->assertEquals('36.0000', $cart['Cart']['amount']);
+		$this->assertEquals('36.0000', $cart['Cart']['shipped_amount']);
+		
+		// AND the weight is 
+		$this->assertEquals('32000', $cart['Cart']['total_weight']);
+		$this->assertEquals('32000', $cart['Cart']['shipped_weight']);
 	}
 
 }
