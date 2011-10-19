@@ -226,7 +226,10 @@ class ProductsController extends AppController {
 		$shopId = Shop::get('Shop.id');
 		
 		// get the product details
-        $product = $this->Product->getDetails($id, true); //This action gets complete product information
+        $product = $this->Product->getDetailsEvenHidden($id); 
+		
+		$this->log($product);
+
 		$this->set(compact('collections', 'product', 'variantOptions'));
 		// for uploadify
 		// the images list related code
@@ -535,7 +538,7 @@ class ProductsController extends AppController {
 
 		if (empty($this->request->data)) {
 			// get the product details
-			$this->request->data = $this->Product->getDetails($id, true); //This action gets complete product information
+			$this->request->data = $this->Product->getDetailsEvenHidden($id); 
 		}
 
 		$product_id = $id;

@@ -1271,58 +1271,86 @@ class Product extends AppModel {
 		$this->updateCounterCacheForM2M('AllProductInGroup', 	 $smartCollectionIDs);
 		return $result;
 	}
+	
+	/**
+     * This function does a DEEP $this->find('first') 
+     * supplying a Product that is visible with all the Product fields
+     * with a full list of Variant, ProductImage, ProductsInGroup, Vendor, ProductType.
+     * 
+     * Alias for getDetails($id, true) 
+     *
+     * @param integer $id Product Id
+     * 
+     * @return array of product info as explained above
+     * */
+	public function getDetailsEvenHidden($id) {
+		return $this->getDetails($id, true);
+	}
         
-        /**
-         * This function does a DEEP $this->find('first') 
-         * supplying a Product that is visible with all the Product fields
-         * with a full list of Variant, ProductImage, ProductsInGroup, Vendor, ProductType.
-         * 
-         * Each Variant contains a list of VariantOption.
-         * Each ProductsInGroup contains the ProductGroup this Product belongs to.
-         * ProductImage only contains the filename and the cover image is the first in the list.
-         *
-         * Product will also have an options which will give a list of options that is extracted using
-         * $this->extractProductOptions
-         * 
-         * @params integer $id Product Id
-         * 
-         * @return array of product info as explained above
-         * */
-        public function getDetails($id, $showHidden = false) {
+    /**
+     * This function does a DEEP $this->find('first') 
+     * supplying a Product that is visible with all the Product fields
+     * with a full list of Variant, ProductImage, ProductsInGroup, Vendor, ProductType.
+     * 
+     * Each Variant contains a list of VariantOption.
+     * Each ProductsInGroup contains the ProductGroup this Product belongs to.
+     * ProductImage only contains the filename and the cover image is the first in the list.
+     *
+     * Product will also have an options which will give a list of options that is extracted using
+     * $this->extractProductOptions
+     * 
+     * @param integer $id Product Id
+     * @param boolean $doWeWantHiddenProduct True if we want to include hidden product
+     * 
+     * @return array of product info as explained above
+     * */
+	public function getDetails($id, $includeHiddenProduct = false) {
 		
 		$shopId = Shop::get('Shop.id');
-		if ($showHidden) {
-			$conditions = array('Product.id'=>$id, 'Product.shop_id'=>$shopId);
-		} else {
-			$conditions = array('Product.visible' => true, 'Product.id'=>$id, 'Product.shop_id'=>$shopId);
+		$excludeHiddenProduct = !$includeHiddenProduct;
+		
+		$conditions = array(
+			'Product.id'=>$id, 
+			'Product.shop_id'=>$shopId
+		);
+		
+		if ($excludeHiddenProduct) {
+			$conditions['Product.visible'] = true;
 		}
-		$productFound = $this->find('first', array('conditions' => $conditions,
-                                                            'contain' => array('Variant' => array(
-                                                                                        'conditions' => array('Variant.product_id' => $id),
-                                                                                        'order'=>'Variant.order ASC',
-                                                                                        'VariantOption' => array(
-                                                                                                'fields' => array('id', 'value', 'field', 'variant_id'),
-                                                                                                'order'  => 'VariantOption.order ASC',
-                                                                                        )
-                                                                                ),
-                                                                               'ProductImage'=>array(
-                                                                                        'fields' => array('filename'),
-                                                                                        'order'=>array('ProductImage.cover DESC'),
-                                                                                ),
-                                                                                'ProductsInGroup'=>array(
-                                                                                        'fields' => array('id', 'product_id'),
-                                                                                        'ProductGroup'=>array(
-                                                                                                'fields' => array('id', 
-                                                                                                                  'title', 'handle',
-                                                                                                                  'description', 'visible_product_count',
-                                                                                                                  'url', 'vendor_count', 'type'),
-                                                                                                )
-                                                                                        )
-                                                                                ),
-                                                             'link' => array('Vendor' => array('fields' => 'title'),
-                                                                             'ProductType' => array('fields' => 'title'),
-                                                                        ),
-                                                                ));
+		
+		$productFound = $this->find('first', array(
+			'conditions' => $conditions,
+			'contain' => array(
+				'Variant' => array(
+					'conditions' => array(
+						'Variant.product_id' => $id
+					),
+					'order'=>'Variant.order ASC',
+					'VariantOption' => array(
+						'fields' => array('id', 'value', 'field', 'variant_id'),
+						'order'  => 'VariantOption.order ASC',
+					)
+				),
+				'ProductImage'=>array(
+					'fields' => array('filename'),
+					'order'=>array('ProductImage.cover DESC'),
+				),
+				'ProductsInGroup'=>array(
+					'fields' => array('id', 'product_id'),
+					'ProductGroup'=>array(
+						'fields' => array(
+							'id', 'title', 'handle',
+							'description', 'visible_product_count',
+							'url', 'vendor_count', 'type'
+						),
+					)
+				)
+			),
+			'link' => array(
+				'Vendor' => array('fields' => 'title'),
+				'ProductType' => array('fields' => 'title'),
+			),
+		));
 		
 		// extract the unique VariantOptions for the Product
 		$productOptions = $this->extractProductOptions($productFound);
@@ -1339,10 +1367,9 @@ class Product extends AppModel {
 		if ($insertOptionsIntoProduct) {
 			$productFound['Product']['options'] = $productOptions;
 		}
-
-                return $productFound;
-	
-        }//end getDetails()
+		
+		return $productFound;
+	}//end getDetails()
 	
 	
 	/**

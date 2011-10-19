@@ -70,12 +70,119 @@ class ProductTestCase extends CakeTestCase {
 	}
 	
 	/**
+	*
+	* test Product
+	*
+	* @param array Data array of result
+	* @param integer $id Product id
+	* @param boolean $visible We expect Product to be visible
+	* @return void
+	*
+	**/
+	private function checkProductResult($resultProduct, $id, $visible = true) {
+		if ($id == 2) {
+			$expectedProduct = array(
+				'Product' => array(
+					'id' => 2,
+					'shop_id' => 2,
+					'title' => 'Dummy Product',
+		            'code' => '',
+		            'description' => '',
+		            'price' => '11.0000',
+		            'created' => '2011-09-28 17:06:24',
+		            'modified' => '2011-09-28 17:06:24',
+		            'visible' => $visible,
+		            'weight' => 7000,
+		            'currency' => 'SGD',
+		            'shipping_required' => true,
+		            'vendor_id' => 1,
+		            'handle' => 'dummy-product',
+		            'product_type_id' => 1,
+		            'url' => '/products/dummy-product',
+		            'displayed_weight' => '7.0',
+					'options' => array(
+						'title' => array(
+							'values' => array(
+								0 => 'Default Title',
+							),
+							'option_ids' => array(
+								0 => 2
+							),
+							'values_in_string' => 'Default Title'
+						)
+					),
+					'selected_collections' => array(
+						0 => 1
+					),
+				)
+			);
+		} elseif ($id == 3) {
+			$expectedProduct = array(
+				'Product' => array(
+					'id' => 3,
+					'shop_id' => 2,					
+					'title' => 'test product with no pic and no collection',
+		            'code' => '',
+		            'description' => '<p>test</p>',
+		            'price' => '23.0000',
+		            'created' => '2011-09-28 17:06:24',
+		            'modified' => '2011-09-28 17:06:24',
+		            'visible' => $visible,
+		            'weight' => 15000,
+		            'currency' => 'SGD',
+		            'shipping_required' => true,
+		            'vendor_id' => 0,
+		            'handle' => 'test-product-with-no-pic-and-no-collection',
+		            'product_type_id' => 0,
+		            'url' => '/products/test-product-with-no-pic-and-no-collection',
+		            'displayed_weight' => '15.0',
+					'options' => array(
+						'Title' => array(
+							'values' => array(
+								0 => 'Default Title',
+							),
+							'option_ids' => array(
+								0 => 3
+							),
+							'values_in_string' => 'Default Title'
+						)
+					),
+					'selected_collections' => array(),
+				)
+			);			
+		}
+		
+		$fieldsExpectedToBeDifferent = array('modified', 'created');
+	
+		$resultProduct 		= $resultProduct['Product'];
+		$expectedProduct	= $expectedProduct['Product'];
+	
+		// check that these 2 fields exist
+		$this->assertArrayHasKey('modified', $resultProduct);
+		$this->assertArrayHasKey('created', $resultProduct);
+		
+		// check that the created and modified are not empty
+		$this->assertNotEmpty($resultProduct['created']);
+		$this->assertNotEmpty($resultProduct['modified']);
+	
+		// check that the other fields with EXACT field and values are expected
+		foreach($fieldsExpectedToBeDifferent as $field) {
+
+			unset($resultProduct[$field]);
+			unset($expectedProduct[$field]);
+		}
+	
+		$this->assertEquals($expectedProduct, $resultProduct);
+		
+		
+	}
+	
+	/**
 	* contains the list of assert statements that check the aftermath of $this->Product->duplicate
 	* this checks primarily the Product data 
 	**/
 	private function checkProductDuplicateResult($duplicateProduct, $expectedId) {
 		
-
 		$expectedProduct = array(
 			'Product' => array(
 				'id' => 4,
@@ -315,6 +422,47 @@ class ProductTestCase extends CakeTestCase {
 		$this->assertEquals(4, $result['Product']['id']);
 		$this->assertEquals(4, $result['Variant'][0]['id']);
 	}
+	
+	/**
+	*
+	* test getDetails and getDetailsEvenHidden
+	*
+	**/
+	public function testGetDetailsShouldWorkForVisibleProductOnly() {
+		// GIVEN a visible Product
+		$visible = $this->Product->find('count', array(
+			'conditions' => array(
+				'id' => 3,
+				'Product.visible' => true
+			),
+		));
+		$this->assertEquals(1, $visible);
+		
+		// AND a hidden Product
+		$this->Product->toggle(2, 'visible');
+		$hidden = $this->Product->find('count', array(
+			'conditions' => array(
+				'id' => 2,
+				'Product.visible' => false
+			),
+		));
+		$this->assertEquals(1, $hidden);
+		
+		// WHEN we run on both products
+		$visibleResult = $this->Product->getDetails(3);
+		$hiddenResult = $this->Product->getDetailsEvenHidden(2);
+		$hiddenResultFalse = $this->Product->getDetails(2);
+		
+		$visibleExpected = true;
+		$hiddenExpected = false;
+		// THEN getDetails works for visible Products
+		$this->checkProductResult($visibleResult, 3, $visibleExpected);	
+		// AND getDetails fails for hidden Product
+		$this->assertFalse($hiddenResultFalse);
+		// AND getDetailsEvenHidden works for hidden prodcut
+		$this->checkProductResult($hiddenResult, 2, $hiddenExpected);		
+	}
+	
 	
 		
 }
