@@ -560,7 +560,7 @@ class Shop extends AppModel {
 	public function getAccountEmailPaypal($shopId = 0) {
 		if ($shopId > 0) {
 			$this->ShopsPaymentModule->recursive = -1;
-			$this->ShopsPaymentModule->Behaviors->attach('Linkable.Linkable');
+			$this->ShopsPaymentModule->Behaviors->load('Linkable.Linkable');
 			$paymentModule = $this->ShopsPaymentModule->find('first',
 							array('conditions'=>array(
 										'ShopsPaymentModule.shop_id'=>$shopId,
@@ -584,7 +584,7 @@ class Shop extends AppModel {
 			return false;
 		}
 		
-		$this->Merchant->User->Behaviors->attach('Linkable.Linkable');
+		$this->Merchant->User->Behaviors->load('Linkable.Linkable');
 		
 		
 		

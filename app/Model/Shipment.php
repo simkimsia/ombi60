@@ -17,10 +17,10 @@ class Shipment extends AppModel {
 	public function getOptionsForCheckout($shippedAmt, $shippedWeight, $shop_id, $country) {
 		$shippingRate 	         = $this->Order->Shop->ShippedToCountry->ShippingRate;
 		$shippingRate->recursive = -1;
-		$shippingRate->Behaviors->attach('Linkable.Linkable');
+		$shippingRate->Behaviors->load('Linkable.Linkable');
 		
-		$shippingRate->PriceBasedRate->Behaviors->attach('Linkable.Linkable');
-		$shippingRate->WeightBasedRate->Behaviors->attach('Linkable.Linkable');
+		$shippingRate->PriceBasedRate->Behaviors->load('Linkable.Linkable');
+		$shippingRate->WeightBasedRate->Behaviors->load('Linkable.Linkable');
 		
 		// get the suitable ShippedToCountry based on shop_id and country_id
 		$this->Order->Shop->ShippedToCountry->recursive = -1;

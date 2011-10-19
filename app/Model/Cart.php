@@ -495,7 +495,7 @@ class Cart extends AppModel {
 			
 			$variantModel = $this->CartItem->CheckedOutVariant;
 			$variantModel->recursive = -1;
-			$variantModel->Behaviors->attach('Linkable.Linkable');
+			$variantModel->Behaviors->load('Linkable.Linkable');
 			
 			$checkedOutVariant = $this->CartItem->CheckedOutVariant->find('first',
 						array('conditions'	=>array('Variant.id' => $variant_id),

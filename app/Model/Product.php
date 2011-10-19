@@ -406,7 +406,7 @@ class Product extends AppModel {
 			// duplicate the variants as well.
 			// first we need to retrieve all the Variants belonging to the original Product
 			$this->Variant->recursive = -1;
-			$this->Variant->Behaviors->attach('Containable');
+			$this->Variant->Behaviors->load('Containable');
 			$variants = $this->Variant->find('all', array(
 							'conditions'	=> array('product_id' => $id),
 							'contain'	=> array('VariantOption')
@@ -687,7 +687,7 @@ class Product extends AppModel {
 		$optionModel = $this->Variant->VariantOption;
 		$optionModel->recursive = -1;
 		
-		$optionModel->Behaviors->attach('Linkable.Linkable');
+		$optionModel->Behaviors->load('Linkable.Linkable');
 		
 		$nextOrder = $optionModel->find('first', array(	'conditions'=>array('Product.id'=>$productID),
 									'link'=>array('Variant'=>array(
@@ -1237,7 +1237,7 @@ class Product extends AppModel {
 		
 		$collectionModel = $this->ProductsInGroup->ProductGroup;
 		$collectionModel->recursive = -1;
-		$collectionModel->Behaviors->attach('Containable');
+		$collectionModel->Behaviors->load('Containable');
 			
 		$smartCollections = $collectionModel->find('all', array('conditions'=>array('ProductGroup.shop_id'=>Shop::get('Shop.id'),
 											    'ProductGroup.type'=>SMART_COLLECTION),

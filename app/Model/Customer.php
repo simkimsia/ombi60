@@ -172,7 +172,7 @@ class Customer extends AppModel {
 	**/
 	public function getExistingByShopIdAndEmail($orderFormData = NULL) {
 		
-		$this->Behaviors->attach('Linkable.Linkable');
+		$this->Behaviors->load('Linkable.Linkable');
 
 		if (isset($orderFormData['Order']['shop_id'])) {
 			$shopId = $orderFormData['Order']['shop_id'];

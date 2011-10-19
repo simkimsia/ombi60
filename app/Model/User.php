@@ -282,7 +282,7 @@ class User extends AppModel {
 			switch ($group_id) {
 				case CUSTOMERS:
 					
-					$this->Customer->Behaviors->attach('Linkable.Linkable');
+					$this->Customer->Behaviors->load('Linkable.Linkable');
 					
 					$count = $this->Customer->find('count', array(
 						'contain' => array('User'),
@@ -298,7 +298,7 @@ class User extends AppModel {
 					
 				case MERCHANTS:
 				
-					$this->Merchant->Behaviors->attach('Linkable.Linkable');
+					$this->Merchant->Behaviors->load('Linkable.Linkable');
 					
 					$count = $this->Merchant->find('count', array(
 						'conditions'=>array(
@@ -312,7 +312,7 @@ class User extends AppModel {
 				case CASUAL:
 					
 					
-					$this->CasualSurfer->Behaviors->attach('Linkable.Linkable');
+					$this->CasualSurfer->Behaviors->load('Linkable.Linkable');
 					
 					$count = $this->CasualSurfer->find('count', array(
 						'conditions'=>array(

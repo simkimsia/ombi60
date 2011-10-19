@@ -277,7 +277,7 @@ class ProductGroup extends AppModel {
 		
 		$productModel = $this->ProductsInGroup->Product;
 		$productModel->recursive = -1;
-		$productModel->Behaviors->attach('Containable');
+		$productModel->Behaviors->load('Containable');
 		
 		if (!empty($tmp)) {
 			
