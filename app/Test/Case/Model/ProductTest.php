@@ -68,50 +68,6 @@ class ProductTestCase extends CakeTestCase {
 
 		parent::tearDown();
 	}
-
-/**
- * testDuplicate method
- *
- * @return void
- */
-	public function testDuplicate() {
-		// first we duplicate Dummy Product which has 1 pic and belongs to 1 regular collection called Frontpage
-		$result = $this->Product->duplicate('2'); // duplicate Dummy Product
-		$this->checkImageDuplicateResult($result); // check image duplicate data and file
-		
-		// now we go find the duplicate and compare
-		$dupeProductId 		= $this->Product->getLastInsertId();
-		$duplicateProduct 	= $this->Product->read(null, $dupeProductId);
-		
-		$this->checkProductDuplicateResult($duplicateProduct, 4); // check Product data
-		$count = $this->Product->ProductsInGroup->find('count', array(
-			'conditions' => array(
-				'ProductsInGroup.product_id' => 4,
-				'ProductsInGroup.product_group_id' => 1)
-		));
-		
-		// check product is in collection
-		$this->assertEquals($count, 1);
-		
-		// now we test for another Product with no pics and no collections
-		$result = $this->Product->duplicate('3'); // duplicate Dummy Product
-		$this->checkImageDuplicateResult($result, false); // check image duplicate data and file
-		
-		// now we go find the duplicate and compare
-		$dupeProductId 		= $this->Product->getLastInsertId();
-		$duplicateProduct 	= $this->Product->read(null, $dupeProductId);
-
-		$this->checkProductDuplicateResult($duplicateProduct, 5); // check Product data
-		$count = $this->Product->ProductsInGroup->find('count', array(
-			'conditions' => array(
-				'ProductsInGroup.product_id' => 5,
-				'ProductsInGroup.product_group_id' => 1)
-		));
-		
-		// check product is NOT in collection. 
-		$this->assertEquals($count, 0);
-		
-	}
 	
 	/**
 	* contains the list of assert statements that check the aftermath of $this->Product->duplicate
@@ -260,4 +216,49 @@ class ProductTestCase extends CakeTestCase {
 
 	}
 
+
+/**
+ * testDuplicate method
+ *
+ * @return void
+ */
+	public function testDuplicate() {
+		// first we duplicate Dummy Product which has 1 pic and belongs to 1 regular collection called Frontpage
+		$result = $this->Product->duplicate('2'); // duplicate Dummy Product
+		$this->checkImageDuplicateResult($result); // check image duplicate data and file
+		
+		// now we go find the duplicate and compare
+		$dupeProductId 		= $this->Product->getLastInsertId();
+		$duplicateProduct 	= $this->Product->read(null, $dupeProductId);
+		
+		$this->checkProductDuplicateResult($duplicateProduct, 4); // check Product data
+		$count = $this->Product->ProductsInGroup->find('count', array(
+			'conditions' => array(
+				'ProductsInGroup.product_id' => 4,
+				'ProductsInGroup.product_group_id' => 1)
+		));
+		
+		// check product is in collection
+		$this->assertEquals($count, 1);
+		
+		// now we test for another Product with no pics and no collections
+		$result = $this->Product->duplicate('3'); // duplicate Dummy Product
+		$this->checkImageDuplicateResult($result, false); // check image duplicate data and file
+		
+		// now we go find the duplicate and compare
+		$dupeProductId 		= $this->Product->getLastInsertId();
+		$duplicateProduct 	= $this->Product->read(null, $dupeProductId);
+
+		$this->checkProductDuplicateResult($duplicateProduct, 5); // check Product data
+		$count = $this->Product->ProductsInGroup->find('count', array(
+			'conditions' => array(
+				'ProductsInGroup.product_id' => 5,
+				'ProductsInGroup.product_group_id' => 1)
+		));
+		
+		// check product is NOT in collection. 
+		$this->assertEquals($count, 0);
+		
+	}
+		
 }

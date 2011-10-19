@@ -294,27 +294,7 @@ class Product extends AppModel {
 		
 		return true;
 	}
-	
-	/**
-	 * will return the product url based on id
-	 * otherwise return the shop url
-	 * **/
-	public function getProductUrl($id = false) {
 		
-		if (!$id) {
-			$id = $this->id;
-		}
-		
-		if (is_numeric($id) && ($id > 0)) {
-			return Router::url(array('controller'=>'products',
-					  'action'=>'view',
-					  $id), true);
-		}
-		
-		return FULL_BASE_URL;
-		
-	}
-	
 	/**
 	 * Prepares data for a newly created Product and the associated models.
 	 * The newly created Product will have 1 Variant and its list of VariantOption created as well.
