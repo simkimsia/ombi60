@@ -118,7 +118,7 @@ class DomainsController extends AppController {
 		
 		$userId = User::get('User.id');
 		$shopId = Shop::get('Shop.id');
-		$this->Domain->Shop->Merchant->Behaviors->attach('Linkable.Linkable');
+		$this->Domain->Shop->Merchant->Behaviors->load('Linkable.Linkable');
 		
 		$merchantAllowed = $this->Domain->Shop->Merchant->find('count',
 								       array('conditions' =>

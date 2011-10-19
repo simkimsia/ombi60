@@ -51,7 +51,7 @@ class ThemeComponent extends Component {
 				$controller->loadModel('Shop');
 				
 				$controller->Shop->recursive = -1;
-				$controller->Shop->Behaviors->attach('Containable');
+				$controller->Shop->Behaviors->load('Containable');
 				
 				$shop = $controller->Shop->find('first', array('conditions'=>array('Shop.id'=>$shopId),
 									 'contain'=>array( 'FeaturedSavedTheme')));

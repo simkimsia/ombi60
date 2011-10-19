@@ -60,7 +60,7 @@ class WebpagesController extends AppController {
 		$webpages = $this->paginate();
 		
 		$blogModel = $this->Webpage->Shop->Blog;
-		$blogModel->Behaviors->attach('Containable');
+		$blogModel->Behaviors->load('Containable');
 		
 		$blogs = $blogModel->find('all', array('conditions'=>array('Blog.shop_id'=>$shopid),
 						       'contain'=>array('Post'=>array('fields'=>array('Post.id', 'Post.blog_id'),

@@ -79,7 +79,7 @@ class PagesController extends AppController {
 			$this->loadModel('Shop');
 			
 			$this->Shop->recursive = -1;
-			$this->Shop->Behaviors->attach('Containable');
+			$this->Shop->Behaviors->load('Containable');
 			
 			$shop = $this->Shop->find('first', array('conditions'=>array('Shop.id'=>$shopId),
 								 'contain'=>array('FeaturedSavedTheme')));

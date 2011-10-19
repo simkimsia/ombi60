@@ -23,7 +23,7 @@ class PaymentsController extends AppController {
 		$currentShopId = Shop::get('Shop.id');
 		
 		if ($this->request->is('get')){
-			$this->Payment->Behaviors->attach('Linkable.Linkable');
+			$this->Payment->Behaviors->load('Linkable.Linkable');
 			$this->Payment->recursive = -1;
 			
 			$paymentModuleInShop->recursive = -1;

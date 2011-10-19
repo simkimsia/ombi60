@@ -20,7 +20,7 @@ class LinksController extends AppController {
 		$shopId = Shop::get('Shop.id');
 		
 		$this->Link->LinkList->recursive = -1;
-		$this->Link->LinkList->Behaviors->attach('Containable');
+		$this->Link->LinkList->Behaviors->load('Containable');
 		$lists = $this->Link->LinkList->find('all',
 						     array('conditions' => array('LinkList.shop_id'=>$shopId),
 							   'contain'    => array('Link'=>array('order' => array('Link.order ASC'))),

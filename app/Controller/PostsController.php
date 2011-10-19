@@ -35,7 +35,7 @@ class PostsController extends AppController {
 			//$this->cakeError('error404',array(array('url'=>'/', 'viewVars' =>$this->viewVars)));
 		}
 		
-		$this->Post->Behaviors->attach('Linkable.Linkable');
+		$this->Post->Behaviors->load('Linkable.Linkable');
 		
 		$post = $this->Post->find('first', array('conditions'=>array(
 									'Blog.short_name'=>$short_name,

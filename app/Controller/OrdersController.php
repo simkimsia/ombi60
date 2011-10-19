@@ -105,9 +105,9 @@ class OrdersController extends AppController {
 		$this->Order->recursive = -1;
 		
 		// attach Linkable behavior
-		$this->Order->Behaviors->attach('Linkable.Linkable');
-		$this->Order->Customer->Behaviors->attach('Linkable.Linkable');
-		$this->Order->Customer->User->Behaviors->attach('Linkable.Linkable');
+		$this->Order->Behaviors->load('Linkable.Linkable');
+		$this->Order->Customer->Behaviors->load('Linkable.Linkable');
+		$this->Order->Customer->User->Behaviors->load('Linkable.Linkable');
 		
 		$this->paginate = array(
 			      'conditions' => array('Order.shop_id' => $shop_id),
@@ -969,7 +969,7 @@ class OrdersController extends AppController {
 				// set shipping addresses
 				// get delivery address by order id
 				$this->Order->DeliveryAddress->recursive = -1;
-				$this->Order->DeliveryAddress->Behaviors->attach('Linkable.Linkable');
+				$this->Order->DeliveryAddress->Behaviors->load('Linkable.Linkable');
 				$deliveryAddress = $this->Order->DeliveryAddress->find('first', array('conditions'=>array('Order.id'=>$this->Order->id,
 												       'DeliveryAddress.type'=>DELIVERY),
 												      'fields'=>array('DeliveryAddress.*', 'Country.iso'),
@@ -1068,10 +1068,10 @@ class OrdersController extends AppController {
 	private function getShipmentOptions ($shippedAmt, $shippedWeight, $shop_id, $country) {
 			$shippingRate 	         = $this->Order->Shop->ShippedToCountry->ShippingRate;
 			$shippingRate->recursive = -1;
-			$shippingRate->Behaviors->attach('Linkable.Linkable');
+			$shippingRate->Behaviors->load('Linkable.Linkable');
 			
-			$shippingRate->PriceBasedRate->Behaviors->attach('Linkable.Linkable');
-			$shippingRate->WeightBasedRate->Behaviors->attach('Linkable.Linkable');
+			$shippingRate->PriceBasedRate->Behaviors->load('Linkable.Linkable');
+			$shippingRate->WeightBasedRate->Behaviors->load('Linkable.Linkable');
 			
 			// get the suitable ShippedToCountry based on shop_id and country_id
 			$this->Order->Shop->ShippedToCountry->recursive = -1;

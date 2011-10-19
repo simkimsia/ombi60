@@ -11,7 +11,7 @@ class ShippingRatesController extends AppController {
 		
 		$shopId = Shop::get('Shop.id');
 		
-		$this->ShippingRate->ShippedToCountry->Behaviors->attach('Linkable.Linkable');
+		$this->ShippingRate->ShippedToCountry->Behaviors->load('Linkable.Linkable');
 		
 		$shippingRates = $this->ShippingRate->ShippedToCountry->find('all', array('conditions'=>array('ShippedToCountry.shop_id'=>$shopId),
 									'order'=>array('ShippedToCountry.country_id ASC'),
@@ -49,7 +49,7 @@ class ShippingRatesController extends AppController {
 				$linkedArray = array('WeightBasedRate');	
 			}
 			
-			$this->ShippingRate->ShippedToCountry->Behaviors->attach('Linkable.Linkable');
+			$this->ShippingRate->ShippedToCountry->Behaviors->load('Linkable.Linkable');
 			
 			$this->request->data = $this->ShippingRate->ShippedToCountry->find('first', array('conditions'=>array('ShippingRate.id'=>$id),
 										'order'=>array('ShippedToCountry.country_id ASC'),
@@ -70,7 +70,7 @@ class ShippingRatesController extends AppController {
 		
 		$this->ShippingRate->recursive = 0;
 		
-		$this->ShippingRate->Behaviors->attach('Linkable.Linkable');
+		$this->ShippingRate->Behaviors->load('Linkable.Linkable');
 		
 		return $this->ShippingRate->find('first', array('conditions'=>array('ShippingRate.id'=>$this->ShippingRate->id),
 									'order'=>array('ShippedToCountry.country_id ASC'),

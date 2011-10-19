@@ -211,7 +211,7 @@ class AppController extends Controller {
 			$this->loadModel('LinkList');
 			$this->LinkList->recursive = -1;
 
-			$this->LinkList->Behaviors->attach('Containable');
+			$this->LinkList->Behaviors->load('Containable');
 
 			$linklists = $this->LinkList->find('all', array(
 				'conditions'=>array('LinkList.shop_id'=>$shopId),
@@ -239,7 +239,7 @@ class AppController extends Controller {
 
 			$this->loadModel('Blog');
 			$this->Blog->recursive = -1;
-			$this->Blog->Behaviors->attach('Containable');
+			$this->Blog->Behaviors->load('Containable');
 
 			$blogs = $this->Blog->find('all', array(
 				'conditions'=>array('Blog.shop_id'=>$shopId),

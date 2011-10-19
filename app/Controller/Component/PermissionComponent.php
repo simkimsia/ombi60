@@ -226,7 +226,7 @@ $shopIdUserHas =2;
 				// not need to check for User group type
 				
 				$gcModelInstance->recursive = -1;
-				$gcModelInstance->Behaviors->attach('Linkable.Linkable');
+				$gcModelInstance->Behaviors->load('Linkable.Linkable');
 				$count = $gcModelInstance->find('count',
 						array('conditions'=>
 							array("$gcModelName.id"=>$id,
