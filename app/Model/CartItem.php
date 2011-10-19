@@ -197,12 +197,12 @@ class CartItem extends AppModel {
 
 
 		$previousPrice = $newPrice;
-		if (is_numeric($previousPriceArray[0])) {
+		if (isset($previousPriceArray[0]) && is_numeric($previousPriceArray[0])) {
 			$previousPrice = $previousPriceArray[0];
 		}
 		
 		$previousCurrency = $newCurrency;
-		if (is_string($previousCurrencyArray[0])) {
+		if (isset($previousCurrencyArray[0]) && is_string($previousCurrencyArray[0])) {
 			$previousCurrency = $previousCurrencyArray[0];
 		}
 		

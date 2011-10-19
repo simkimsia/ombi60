@@ -409,17 +409,19 @@ class ProductsController extends AppController {
 	}
 
 
+	/**
+	*
+	* Action for creating new Product from Shop Admin
+	*
+	* @return boolean
+	**/
 	public function admin_add() {
 		
 		$this->set('title_for_layout', 'Add Product');
 		
 		if ($this->request->is('post')) {
-
-			$this->Product->create();
+			
 			if ($this->Product->createDetails($this->request->data)) {
-				$id = $this->Product->getLastInsertId();
-		
-				//$this->Product->ProductImage->saveFILESAsProductImages($product_id); //This will save product images
 			
 				$this->Session->setFlash(__('Product has been saved'), 'default', array('class'=>'flash_success'));
 				$this->redirect(array('action' => 'index'));
@@ -430,7 +432,6 @@ class ProductsController extends AppController {
 			
 			
 		}
-		
 		
 		$errors = $this->Product->getAllValidationErrors();
 		

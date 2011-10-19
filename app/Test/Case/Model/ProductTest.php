@@ -260,5 +260,61 @@ class ProductTestCase extends CakeTestCase {
 		$this->assertEquals($count, 0);
 		
 	}
+	
+	/**
+	*
+	* test createDetails Should work with Product and Variant -> VariantOption
+	**/
+	public function testCreateDetailsShouldWorkForImagelessProduct() {
+		// GIVEN that we want to create an imageless Product
+		$dataGiven = array(
+			'Product' => array(
+				'shop_id' => 2,
+	            'title' => 'title1',
+	            'description' => '<p>description</p>',
+	            'code' => '',
+	            'visible' => true,
+	            'shipping_required' => true,
+	            'currency' => 'SGD',
+	            'price' => 12,
+	            'displayed_weight' => 2,
+	            'selected_collections' => array()
+			),
+			'Variant' => array(
+				0 => array(
+					'VariantOption' => array(
+						0 => array(
+							'field' => 'Title',
+							'value' => 'Default Title',
+							'order' => 0
+						)
+					)
+				)
+			)
+		);
+		 
+		// WHEN we run the createDetails
+		$result = $this->Product->createDetails($dataGiven);
+		
+		// THEN we expect success
+		$this->assertTrue($result);
+		
+		// AND we find a new Product and Variant stored
+		$result = $this->Product->find('first', array(
+			'conditions' => array(
+				'Product.id' => 4
+			),
+			'contain' => array(
+				'Variant' => array(
+					'fields' => array('Variant.id')
+				)
+			),
+			'fields' => array('Product.id')
+		));
+		
+		$this->assertEquals(4, $result['Product']['id']);
+		$this->assertEquals(4, $result['Variant'][0]['id']);
+	}
+	
 		
 }

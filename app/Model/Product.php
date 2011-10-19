@@ -300,7 +300,7 @@ class Product extends AppModel {
 	 * The newly created Product will have 1 Variant and its list of VariantOption created as well.
 	 *
 	 * @param array $data The associative array with the following expected indices:
-	 * Product, ProductImage, Variant.
+	 * Product, ProductImage, Variant, Variant.{n}.VariantOption
 	 * The Product index points to an array of Product data fields.
 	 * The ProductImage and Variant indices point to lists of ProductImage and Variant.
 	 * A list of VariantOption is expected in each element of the Variant list.
@@ -308,8 +308,8 @@ class Product extends AppModel {
 	 * @return boolean Returns true if the newly created Product and associated models are saved. False otherwise.
 	 * 
 	 **/
-
 	public function createDetails($data = NULL) {
+		$this->create();
 		
 		$variantTitle = VARIANT_DEFAULT_TITLE;
 		$variantOptions = array();
