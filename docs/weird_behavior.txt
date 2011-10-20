@@ -189,3 +189,11 @@ bindModel across unrelated models
 =================================
 
 does not work well with containable
+
+how to use Migrations
+=====================
+.run cake schema generate and choose overwrite schema file...
+change database to add/remove table/fields..
+and then run cake Migrations.migration generate and 
+choose compare to schema file..
+the result should be a migration file with database changes
