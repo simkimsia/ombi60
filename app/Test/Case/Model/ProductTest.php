@@ -575,7 +575,7 @@ class ProductTestCase extends CakeTestCase {
 			)
 		);
 		
-		$this->assertEquals($variant3, $expected);
+		$this->assertEquals($expected, $variant3);
 	}
 	
 	/**
@@ -642,7 +642,53 @@ class ProductTestCase extends CakeTestCase {
 			)
 		);
 		
-		$this->assertEquals($variant3, $expected);
+		$this->assertEquals($expected, $variant3);
 	}
+	
+	/**
+	*
+	* test for the scenario where we look up for next option order for Product 3
+	**/
+	public function testGetNextOptionOrderNoSHouldWork() {
+		// GIVEN we use Product 3 with only 1 Option for Title
+		$productId = 3;
 		
+		// WHEN we run the function
+		$nextNo = $this->Product->getNextOptionOrder($productId);
+		
+		// THEN we expect 1
+		$this->assertEquals(1, $nextNo);
+	}
+	
+	/**
+	*
+	* test for the scenario where are given the full details of Product 3 and then we extract the Product Options
+	**/
+	public function testExtractProductOptionsFromDetailsShouldWork() {
+		// GIVEN we use Product 3 with only 1 Option for Title
+		$productId = 3;
+		
+		// AND we get full details of it
+		$productDetails = $this->Product->getDetails(3);
+		
+		// WHEN we run the function
+		$productOptions = $this->Product->extractProductOptionsFrom($productDetails);
+		
+		// THEN we expect the following
+		$expected = array(
+		    'Title' => array(
+			 	'values' => array (
+				 	0 => 'Default Title'
+				),
+				'option_ids' => array(
+					0 => 3,
+				),
+				'values_in_string' => 'Default Title'
+			)
+		);
+		
+		$this->assertEquals($expected, $productOptions);
+	}
+
+
 }

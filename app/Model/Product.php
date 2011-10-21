@@ -901,7 +901,7 @@ class Product extends AppModel {
 			/* preparing Product options first */
 			if (empty($product['options'])) {
 				if (!empty($originalVariants)) {
-					$product['options'] = Product::extractProductOptions(array('Variant'=>$originalVariants));	
+					$product['options'] = Product::extractProductOptionsFrom(array('Variant'=>$originalVariants));	
 				} else {
 					$product['options'] = array();
 				}
@@ -1294,7 +1294,7 @@ class Product extends AppModel {
      * ProductImage only contains the filename and the cover image is the first in the list.
      *
      * Product will also have an options which will give a list of options that is extracted using
-     * $this->extractProductOptions
+     * $this->extractProductOptionsFrom
      * 
      * @param integer $id Product Id
      * @param boolean $doWeWantHiddenProduct True if we want to include hidden product
@@ -1350,7 +1350,7 @@ class Product extends AppModel {
 		));
 		
 		// extract the unique VariantOptions for the Product
-		$productOptions = $this->extractProductOptions($productFound);
+		$productOptions = $this->extractProductOptionsFrom($productFound);
 		
 		// format the numerically indexed VariantOptions
 		// into an associative array using the "field" as index
@@ -1400,7 +1400,7 @@ class Product extends AppModel {
 	 *	]
 	 * 
 	 **/
-	public function extractProductOptions($productDetails = array()) {
+	public function extractProductOptionsFrom($productDetails = array()) {
 		
 		$variants = Set::extract('Variant.{n}.VariantOption', $productDetails);
 		
@@ -1446,7 +1446,7 @@ class Product extends AppModel {
 			}
                 }
                 return $voption;
-	}//end extractProductOptions
+	}//end extractProductOptionsFrom
 	
 	/**
 	 * Each Variant in Product has a list of VariantOptions. Basically it is a
@@ -1457,7 +1457,7 @@ class Product extends AppModel {
 	 * @return array $productDetails which will have the index for VariantOptions changed for all its Variants
 	 * 
 	 * */
-	public function formatVariantOptionKey($productDetails = array()) {
+	protected function formatVariantOptionKey($productDetails = array()) {
 		
 		if (!empty($productDetails['Variant']) && is_array($productDetails['Variant'])) {
 			foreach ($productDetails['Variant'] as $key =>$variant) {
@@ -1468,7 +1468,8 @@ class Product extends AppModel {
 		}
 		
 		return $productDetails;
-	}
+		
+	}//end formatVariantOptionKey
 	
 	public function handleMenuAction($data) {
 		$resultArray = array('message'=>'No valid actions selected',
