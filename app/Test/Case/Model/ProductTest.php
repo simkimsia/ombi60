@@ -500,5 +500,82 @@ class ProductTestCase extends CakeTestCase {
 		$this->assertEquals($expectedOption, $changedOption);
 	}
 	
+	/**
+	*
+	* Delete all options
+	**/
+	public function testDeleteAllOptionsShouldWork() {
+		// GIVEN we want to delete all Options for Title field and apply to VariantOption 3
+		$options = array(
+			'Title' => array()
+		);
+		
+		$variants = array(3);
+		
+		// WHEN we run deleteAllOptions
+		$result = $this->Product->deleteAllOptions($options, $variants);
+		
+		// THEN we get back success
+		$this->assertTrue($result);
+		
+		// AND we no longer have that VariantOption
+		$deletedOption = $this->Product->Variant->VariantOption->read(null, 3);
+		$this->assertFalse($deletedOption);
+	}
+	
+
+	/**
+	*
+	* Add new Product option
+	**/
+	public function testAddNewProductOptionShouldWork() {
+		// GIVEN we want to add an Option for Size in Product 3
+		$options = array(
+			array(
+				'field' => 'Size',
+				'value' => 'Default Size',
+			)
+		);
+		
+		$productId = 3;
+		
+		$variants = array(3);
+		
+		// WHEN we run addNewProductOptions
+		$result = $this->Product->addNewProductOptions($productId, $options, $variants);
+		
+		// THEN we get back success
+		$this->assertTrue($result);
+		
+		// AND we have 2 VariantOptions for Variant 3
+		$variant3 = $this->Product->Variant->VariantOption->find('all', array(
+			'conditions' => array(
+				'VariantOption.variant_id' => 3
+			)
+		));
+		$expected = array(
+			0 => array(
+				'VariantOption' => array(
+					'id' => 3,
+					'variant_id' => 3,
+					'field' => 'Title',
+					'value' => 'Default Title',
+					'order' => 0,
+				)
+			),
+			
+			1 => array(
+				'VariantOption' => array(
+					'id' => 4,
+					'variant_id' => 3,
+					'field' => 'Size',
+					'value' => 'Default Size',
+					'order' => 1,
+				)
+			)
+		);
+		
+		$this->assertEquals($variant3, $expected);
+	}
 		
 }

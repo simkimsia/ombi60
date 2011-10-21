@@ -641,8 +641,6 @@ class Product extends AppModel {
 	 **/
 	public function addNewProductOptions($productID, $newOptions=array(), $variantIDs = array()) {
 		
-		
-		
 		if ($productID > 0 && !empty($newOptions)) {
 			
 			if (empty($variantIDs)) {
