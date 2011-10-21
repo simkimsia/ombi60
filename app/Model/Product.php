@@ -170,19 +170,6 @@ class Product extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'ProductOption' => array(
-			'className' => 'ProductOption',
-			'foreignKey' => 'product_id',
-			'dependent' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
 
 	);
 	
@@ -1471,9 +1458,19 @@ class Product extends AppModel {
 		
 	}//end formatVariantOptionKey
 	
+	
+	/**
+	*
+	* Handle Menu action for multiple select
+	*
+	* @param array $data Data array containing Product
+	* @return array Result array containing the indices success and message
+	**/
 	public function handleMenuAction($data) {
-		$resultArray = array('message'=>'No valid actions selected',
-				     'success'=>false);
+		$resultArray = array(
+			'message'=>'No valid actions selected',
+			'success'=>false
+		);
 		
 		switch($data['Product']['menu_action']) {
 			case 'Delete' :
@@ -1496,26 +1493,57 @@ class Product extends AppModel {
 		return $resultArray;
 	}
 	
-	public function deleteSelected($selected = array()) {
+	/**
+	*
+	* Deletes selected model records. Used by HandleMenuAction
+	*
+	* @param array $selected Data array containing Product
+	* @return boolean Returns true if successful
+	**/
+	protected function deleteSelected($selected = array()) {
 		$selected = array_unique($selected);
-		return $this->deleteAll(array('Product.id'=>$selected,
-					      'Product.shop_id'=>Shop::get('Shop.id')));
+		return $this->deleteAll(array(
+			'Product.id'=>$selected,
+			'Product.shop_id'=>Shop::get('Shop.id')
+		));
 	}
 	
-	public function publishSelected($selected = array()) {
+	/**
+	*
+	* Publishes selected model records. Used by HandleMenuAction
+	*
+	* @param array $selected Data array containing Product
+	* @return boolean Returns true if successful
+	**/
+	protected function publishSelected($selected = array()) {
 		$this->recursive = -1;
 		$selected = array_unique($selected);
-		return $this->updateAll(array('Product.visible'=>true),
-					array('Product.id' => $selected,
-					      'Product.shop_id'=>Shop::get('Shop.id')));
+		return $this->updateAll(array(
+			'Product.visible'=>true),
+			array(
+				'Product.id' => $selected,
+				'Product.shop_id'=>Shop::get('Shop.id')
+			)
+		);
 	}
 	
-	public function hideSelected($selected = array()) {
+	/**
+	*
+	* Hides selected model records. Used by HandleMenuAction
+	*
+	* @param array $selected Data array containing Product
+	* @return boolean Returns true if successful
+	**/
+	protected function hideSelected($selected = array()) {
 		$this->recursive = -1;
 		$selected = array_unique($selected);
-		return $this->updateAll(array('Product.visible'=>0),
-					array('Product.id' => $selected,
-					      'Product.shop_id'=>Shop::get('Shop.id')));
+		return $this->updateAll(array(
+			'Product.visible'=>0),
+			array(
+				'Product.id' => $selected,
+				'Product.shop_id'=>Shop::get('Shop.id')
+			)
+		);
 	}
 	
 	

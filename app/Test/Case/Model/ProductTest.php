@@ -689,6 +689,149 @@ class ProductTestCase extends CakeTestCase {
 		
 		$this->assertEquals($expected, $productOptions);
 	}
+	
+	
+	/**
+	* 
+	* test HandleMenuAction for delete
+	**/
+	public function testHandleMenuActionForDelete() {
+		// GIVEN we want to delete 2 products of Shop 2
+		$result = $this->Product->find('all', array(
+			'conditions' => array(
+				'shop_id' => 2
+			)
+		));
+		
+		$this->assertEquals(2, count($result));
+		
+		$data = array(
+			'Product' => array(
+				'selected' => array(2, 3),
+				'menu_action' => 'Delete'
+			)
+		);
+		
+		// WHEN we run
+		$result = $this->Product->handleMenuAction($data);
+		
+		// THEN we expect
+		$expected = array(
+			'message' => 'Selected products are successfully deleted',
+		    'success' => true
+		);
+		
+		$this->assertEquals($expected, $result);
+		
+		// AND no products for Shop
+		$result = $this->Product->find('all', array(
+			'conditions' => array(
+				'shop_id' => 2
+			)
+		));
+		
+		$this->assertEquals(0, count($result));
+	}
+
+	/**
+	* 
+	* test HandleMenuAction for hide
+	**/
+	public function testHandleMenuActionForHide() {
+		// GIVEN we want to hide 2 visble products of Shop 2
+		$result = $this->Product->find('all', array(
+			'conditions' => array(
+				'shop_id' => 2,
+				'visible' => true
+			)
+		));
+		
+		$this->assertEquals(2, count($result));
+		
+		$data = array(
+			'Product' => array(
+				'selected' => array(2, 3),
+				'menu_action' => 'Hide'
+			)
+		);
+		
+		// WHEN we run
+		$result = $this->Product->handleMenuAction($data);
+		
+		// THEN we expect
+		$expected = array(
+			'message' => 'Selected products are successfully hidden',
+		    'success' => true
+		);
+		
+		$this->assertEquals($expected, $result);
+		
+		// AND all hidden products for Shop
+		$result = $this->Product->find('all', array(
+			'conditions' => array(
+				'shop_id' => 2,
+				'visible' => false,
+			)
+		));
+		
+		$this->assertEquals(2, count($result));
+		
+	}
+
+	/**
+	* 
+	* test HandleMenuAction for publish
+	**/
+	public function testHandleMenuActionForPublish() {
+		// GIVEN we have 2 visible products of Shop 2
+		$data = array(
+			'Product' => array(
+				'selected' => array(2, 3),
+				'menu_action' => 'Hide'
+			)
+		);
+		
+		// AND we hide them
+		$this->Product->handleMenuAction($data);
+		
+		$result = $this->Product->find('all', array(
+			'conditions' => array(
+				'shop_id' => 2,
+				'visible' => false,
+			)
+		));
+		
+		$this->assertEquals(2, count($result));
+		
+		// WHEN we publish them
+		$data = array(
+			'Product' => array(
+				'selected' => array(2, 3),
+				'menu_action' => 'Publish'
+			)
+		);
+		
+		$result = $this->Product->handleMenuAction($data);
+		
+		// THEN we expect
+		$expected = array(
+			'message' => 'Selected products are successfully published',
+		    'success' => true
+		);
+		
+		$this->assertEquals($expected, $result);
+		
+		// AND all visible products for Shop
+		$result = $this->Product->find('all', array(
+			'conditions' => array(
+				'shop_id' => 2,
+				'visible' => true,
+			)
+		));
+		
+		$this->assertEquals(2, count($result));
+		
+	}
 
 
 }
