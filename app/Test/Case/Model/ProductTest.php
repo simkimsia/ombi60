@@ -464,5 +464,41 @@ class ProductTestCase extends CakeTestCase {
 	}
 	
 	
+	/**
+	*
+	* Rename the field names of the Options associated with Product
+	* These will correctly impact on the VariantOptions model data
+	**/
+	public function testRenameOptionFieldsShouldWork() {
+		// GIVEN we want to alter the Title field in VariantOption 3 into Size
+		$options = array(
+			'Title' => array(
+				'new_field' => 'Size'
+			)
+		);
+		
+		$variants = array(3);
+		
+		// WHEN we run renameOptions
+		$result = $this->Product->renameOptionFields($options, $variants);
+		
+		// THEN we get back success
+		$this->assertTrue($result);
+		
+		// AND we have a renamed field
+		$changedOption = $this->Product->Variant->VariantOption->read(null, 3);
+		$expectedOption = array(
+			'VariantOption' => array(
+				'id' => 3,
+				'variant_id' => 3,
+				'field' => 'Size',
+				'value' => 'Default Title',
+				'order' => 0
+			)
+		);
+		
+		$this->assertEquals($expectedOption, $changedOption);
+	}
+	
 		
 }
