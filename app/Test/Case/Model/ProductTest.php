@@ -577,5 +577,72 @@ class ProductTestCase extends CakeTestCase {
 		
 		$this->assertEquals($variant3, $expected);
 	}
+	
+	/**
+	*
+	* test for the scenario where we add 2 new options and 1 is a custom option called stripes
+	* and delete the old option Title
+	**/
+	public function testUpdateOptionsShouldWork() {
+		// GIVEN we want to add 2 new options AND 1 is a custom option called stripes
+		$newOptions = array(
+			array(
+				'field' => 'custom',
+				'custom_field' => 'stripes',
+				'value' => 'zebra'
+			),
+			array(
+				'field' => 'Size',
+				'value' => 'Default Size'
+			)
+		);
+		// AND we want to delete the old option
+		$currentOptions = array(
+			'Title' => array(
+				'delete' => true,
+			)
+		);
+		
+		$data = array(
+			'Product' => array(
+				'options' => $currentOptions,
+				'new_options' => $newOptions,
+				'id' => 3
+			)
+		);
+		
+		// WHEN we run the function
+		$this->Product->updateOptions($data);
+		
+		// THEN we have 2 VariantOptions for Variant 3
+		$variant3 = $this->Product->Variant->VariantOption->find('all', array(
+			'conditions' => array(
+				'VariantOption.variant_id' => 3
+			)
+		));
+		$expected = array(
+			0 => array(
+				'VariantOption' => array(
+					'id' => 4,
+					'variant_id' => 3,
+					'field' => 'stripes',
+					'value' => 'zebra',
+					'order' => 0,
+				)
+			),
+			
+			1 => array(
+				'VariantOption' => array(
+					'id' => 5,
+					'variant_id' => 3,
+					'field' => 'Size',
+					'value' => 'Default Size',
+					'order' => 1,
+				)
+			)
+		);
+		
+		$this->assertEquals($variant3, $expected);
+	}
 		
 }

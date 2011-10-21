@@ -697,7 +697,6 @@ class Product extends AppModel {
 							)
 						);
 		
-		
 		/**
 		 *
 		 * $nextOrder gives back an
@@ -727,7 +726,7 @@ class Product extends AppModel {
 			
 		}
 		
-		return false;
+		return 0;
 	}//end getNextOptionOrder()
 	
 	public function afterSave($created) {
