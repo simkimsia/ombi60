@@ -4,79 +4,59 @@ class Product extends AppModel {
 	public $name = 'Product';
 
 	// to make it easy for pagination of products, use Linkable and grab 1 product and its 1 cover image
-	public $actsAs    = array('Linkable.Linkable',
-			       'Copyable.Copyable' => array(
-					'habtm' => false,
-					'recursive' => false,),
-			       'Log.Logable',
-			       'UnitSystemConvertible',
-			       'Handleize.Sluggable'=> array(
-					'fields' => 'title',
-					'scope' => array('shop_id'),
-					'conditions' => false,
-					'slugfield' => 'handle',
-					'separator' => '-',
-					'overwrite' => false,
-					'length' => 150,
-					'lower' => true
-					),
-			       'Containable',
-			       'Visible.Visible',
-			       'Handleize.Handleable',
-			       'ManyToManyCountable.ManyToManyCountable' => array(
-						'LinkList'=>array(
-							'className' 	=> 'LinkList',
-							'joinModel' 	=> 'Link',
-							'foreignKey'	=> 'parent_id',
-							'associationForeignKey'	=> 'link_list_id',
-							'unique'	=> true,
-							'counterCache'  => 'link_count',
-							'foreignScope' => array('Link.parent_model' => 'Product'),
-						),
-						
-						'VisibleProductInGroup'=>array(
-							'className' 	=> 'ProductGroup',
-							'joinModel' 	=> 'ProductsInGroup',
-							'foreignKey'	=> 'product_id',
-							'associationForeignKey'	=> 'product_group_id',
-							'unique'	=> true,
-							'counterCache'  => 'visible_product_count',
-							'counterScope'  => array('Product.visible' => 1),
+	public $actsAs = array(
+		'Linkable.Linkable',
+		'Copyable.Copyable' => array(
+			'habtm' => false,
+			'recursive' => false,
+		),
+       'Log.Logable',
+       'UnitSystemConvertible',
+       'Handleize.Sluggable'=> array(
+			'fields' => 'title',
+			'scope' => array('shop_id'),
+			'conditions' => false,
+			'slugfield' => 'handle',
+			'separator' => '-',
+			'overwrite' => false,
+			'length' => 150,
+			'lower' => true
+		),
+       'Containable',
+       'Visible.Visible',
+       'Handleize.Handleable',
+       'ManyToManyCountable.ManyToManyCountable' => array(
+			'LinkList'=>array(
+				'className' 	=> 'LinkList',
+				'joinModel' 	=> 'Link',
+				'foreignKey'	=> 'parent_id',
+				'associationForeignKey'	=> 'link_list_id',
+				'unique'	=> true,
+				'counterCache'  => 'link_count',
+				'foreignScope' => array('Link.parent_model' => 'Product'),
+			),
+		
+			'VisibleProductInGroup'=>array(
+				'className' 	=> 'ProductGroup',
+				'joinModel' 	=> 'ProductsInGroup',
+				'foreignKey'	=> 'product_id',
+				'associationForeignKey'	=> 'product_group_id',
+				'unique'	=> true,
+				'counterCache'  => 'visible_product_count',
+				'counterScope'  => array('Product.visible' => 1),
 
-						),
-						'AllProductInGroup'=>array(
-							'className' 	=> 'ProductGroup',
-							'joinModel' 	=> 'ProductsInGroup',
-							'foreignKey'	=> 'product_id',
-							'associationForeignKey'	=> 'product_group_id',
-							'unique'	=> true,
-							'counterCache'  => 'all_product_count',
-						)
-						
-					),
-					/*
-			       'Many2manyCounterCache'=> array('VisibleProductInGroup'=>array(
-								'className' 	=> 'ProductGroup',
-								'joinModel' 	=> 'ProductsInGroup',
-								'foreignKey'	=> 'product_id',
-								'associationForeignKey'	=> 'product_group_id',
-								'unique'	=> true,
-								'counterCache'  => 'visible_product_count',
-								'counterScope'  => array('Product.visible' => 1),
-								
-								),
-							       'AllProductInGroup'=>array(
-								'className' 	=> 'ProductGroup',
-								'joinModel' 	=> 'ProductsInGroup',
-								'foreignKey'	=> 'product_id',
-								'associationForeignKey'	=> 'product_group_id',
-								'unique'	=> true,
-								'counterCache'  => 'all_product_count',
-								
-								)
-							  ),
-							  */
-			       );
+			),
+			'AllProductInGroup'=>array(
+				'className' 	=> 'ProductGroup',
+				'joinModel' 	=> 'ProductsInGroup',
+				'foreignKey'	=> 'product_id',
+				'associationForeignKey'	=> 'product_group_id',
+				'unique'	=> true,
+				'counterCache'  => 'all_product_count',
+			)
+		),
+	);
+	
 	public $recursive = -1;
 	
 	public $imagesToDelete = array();
@@ -246,7 +226,8 @@ class Product extends AppModel {
 							    [product_group_id] => 3
 							)
 					
-						) */
+						) 
+						**/
 					$groups = Set::extract('ProductsInGroup.{n}.product_group_id', $val);
 					$results[$key]['Product']['selected_collections'] = $groups;
 				}
@@ -276,7 +257,8 @@ class Product extends AppModel {
 						    [product_group_id] => 3
 						)
 				
-					) */
+					) 
+					**/
 				$groups = Set::extract('ProductsInGroup.{n}.product_group_id', $results);
 				$results['selected_collections'] = $groups;
 			}
