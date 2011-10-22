@@ -867,6 +867,40 @@ class ProductTestCase extends CakeTestCase {
 		$this->assertEquals('1', $visibleProduct);
 		$this->assertEquals('1', $allProduct);
 	}
+	
+	/**
+	*
+	* test formatCakeConditions works
+	*
+	**/
+	public function testFormatCakeConditionShouldWork() {
+		// GIVEN conditions for "equals":, starts_with, ends_with, contains, greater_than, less_than
+		$field = 'price';
+		$value = '10';
+		
+		$relations = array(
+			'equals' => array($field => $value), 
+			'starts_with' => array($field . " LIKE '".$value."%'"),
+			'ends_with' => array($field . " LIKE '%".$value."'"),
+			'contains' => array($field . " LIKE '%".$value."%'"),
+			'greater_than' => array($field . " > "=> $value),
+			'less_than' => array($field . " < "=> $value)
+		);
+		
+		foreach($relations as $relation => $expectedValue) {
+			$conditionalArray = array(
+				'relation' => $relation,
+				'field'	=> $field,
+				'condition' => $value,
+			);
+			
+			// WHEN we run the function
+			$result = $this->Product->formatCakeConditions($conditionalArray);
+			
+			// THEN we get back the expected
+			$this->assertEquals($expectedValue, $result);
+		}
+	}
 
 
 }

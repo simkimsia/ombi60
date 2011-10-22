@@ -960,7 +960,7 @@ class Product extends AppModel {
 	 * @param int $id id of Product 
 	 * @param array $newCollections List of ProductGroup ids which the said Product wants to join ONLY.
 	 *
-	 * Returns true if successful. False otherwise.
+	 * @return Returns true if successful. False otherwise.
 	 **/
 	public function saveIntoCollections ($id, $newCollections = array()) {
 		
@@ -1114,8 +1114,17 @@ class Product extends AppModel {
 		
 	}
 
-	public function conditionalProducts($conditionalArray, $fields = array('Product.id')) {
-		$conditions = "";
+	/**
+	*
+	* Breaks down a conditionalarray into the array format version to be used in for cake find
+	*
+	* @param array $conditionalArray Array containing conditions. Associative array containing field, relation, condition.
+	* Relation must be one of the following: equals, starts_with, ends_with, contains, greater_than, less_than.
+	* field, and condition represent the field and the value to be formatted.
+	* @return string Returns array format of the conditions required for cake find
+	**/
+	public function formatCakeConditions($conditionalArray) {
+		$conditions = array();
 		$field      = $conditionalArray['field'];
 		$relation   = $conditionalArray['relation'];
 		$value      = $conditionalArray['condition'];
@@ -1146,9 +1155,8 @@ class Product extends AppModel {
 			  break;
 		endswitch;
 		return $conditions;
-		//First check whick type of 
-		//return ($this->find('all', array('conditions' => $conditions/*, 'fields' => $fields*/)));
-	}//end conditionalProducts()
+		
+	}//end formatCakeConditions()
 	
 	
 	/**

@@ -304,7 +304,7 @@ class ProductGroup extends AppModel {
 		if (!empty($smart_collection['SmartCollectionCondition'])) {
 			
 			foreach ($smart_collection['SmartCollectionCondition'] as $smart_collection_condition) {
-				$condition = $this->ProductsInGroup->Product->conditionalProducts($smart_collection_condition);
+				$condition = $this->ProductsInGroup->Product->formatCakeConditions($smart_collection_condition);
 				if (array_key_exists(key($condition), $tmp)) {
 					$test[key($condition)][] = $tmp[key($condition)];
 					$test[key($condition)][] = $condition[key($condition)];
