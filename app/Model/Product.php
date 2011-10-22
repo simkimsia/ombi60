@@ -1219,9 +1219,11 @@ class Product extends AppModel {
 	}
 	
 	/**
-	 * This function is used to update the ProductsInGroup for Smart Collections
+	 * 
+	 * This function is used to update the ProductsInGroup for SmartCollections given a particular Product $product
 	 *
 	 * @param array $product this is the associative array of the product without Product index present
+	 * @return boolean Return true if successful
 	 * */
 	public function smartUpdateProductsInGroup($product) {
 		
@@ -1231,9 +1233,13 @@ class Product extends AppModel {
 		$collectionModel->recursive = -1;
 		$collectionModel->Behaviors->load('Containable');
 			
-		$smartCollections = $collectionModel->find('all', array('conditions'=>array('ProductGroup.shop_id'=>Shop::get('Shop.id'),
-											    'ProductGroup.type'=>SMART_COLLECTION),
-									'contain'   =>array('SmartCollectionCondition')));
+		$smartCollections = $collectionModel->find('all', array(
+			'conditions'=>array(
+				'ProductGroup.shop_id'=>Shop::get('Shop.id'),
+				'ProductGroup.type'=>SMART_COLLECTION
+			),
+			'contain'   =>array('SmartCollectionCondition')
+		));
 		
 		$smartCollectionIDs = Set::extract('{n}.ProductGroup.id', $smartCollections);
 		
