@@ -135,7 +135,7 @@ class Many2manyCounterCacheBehavior extends ModelBehavior {
    * @param AppModel $model
    */
      	public function updateCounterCacheForM2M(&$model, $relationName, $arrayOfIds) {
-                        
+
                 if (!isset($this->settings[$model->alias][$relationName])) return true;
                 
                 $thisRelationSetting = $this->settings[$model->alias][$relationName];

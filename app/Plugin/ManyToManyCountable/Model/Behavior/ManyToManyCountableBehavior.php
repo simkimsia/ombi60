@@ -128,7 +128,7 @@ class ManyToManyCountableBehavior extends ModelBehavior {
   }
   
   
-	function beforeDelete(&$model, $cascade = true) {
+	public function beforeDelete(&$model, $cascade = true) {
 		
 		foreach($this->settings[$model->alias] as $relationName=>$config) {
 			$joinModel = $config['joinModel'];
@@ -150,7 +150,7 @@ class ManyToManyCountableBehavior extends ModelBehavior {
 		return true;
 	}
 	
-	function afterDelete(&$model) {
+	public function afterDelete(&$model) {
 		
 		foreach($this->_otherParentModelIDs as $relationName=>$ids) {
 			$joinModel = $this->settings[$model->alias][$relationName]['joinModel'];
@@ -170,68 +170,67 @@ class ManyToManyCountableBehavior extends ModelBehavior {
    *
    * @param AppModel $model
    */
-        function updateCounterCacheForM2M(&$model, $relationName, $arrayOfIds) {
-                        
-                if (!isset($this->settings[$model->alias][$relationName])) return true;
-                
-                $thisRelationSetting = $this->settings[$model->alias][$relationName];
-                
-                
-                // Instantiate the join model, e.g. PostsTag
-                $joinModelObj = ClassRegistry::init($thisRelationSetting['joinModel']);
-                
-                // Initialise conditions array
-                  $conditions = array();
-              
-                  // By default, recursive = -1 as no need to get any other associated data
-                  $recursive = -1;
-                
-                if (isset($thisRelationSetting['counterScope'])) {
-                        // Bind the current model as a belongsTo to the joinModel, permanently,
-                        // e.g. PostsTag->belongsTo = array('Post')
-                        $joinModelObj->bindModel(array(
-                          'belongsTo' => array(
-                            $model->alias => array(
-                              'foreignKey' => $thisRelationSetting['foreignKey']
-                            )
-                          )
-                        ), false);
-                  
-                        // Add counter scope to conditions, e.g. array(Post.active => 1)
-                        $conditions[] = $thisRelationSetting['counterScope'];
-                  
-                        // Set recursive to 0 to ensure the bound model data is available for
-                        // applying scope conditions to
-                        $recursive = 0;
-                        
-                        
-                }
-                
-                foreach ($arrayOfIds as $habtmId) {
-                        $conditions[$thisRelationSetting['joinModel'].'.'.$thisRelationSetting['associationForeignKey']] = $habtmId;
-                        
-                        
-                        // Get the count E.g. number of PostsTag with tag_id = 1
-                        $count = $joinModelObj->find('count', array(
-                          'conditions' => $conditions,
-                          'recursive' => $recursive
-                        ));
-                        
-                        
-                        
-                        // Update the associated habtm model record's conter cache, e.g.
-                        // Tag.post_count = 1
-                        $model->{$joinModelObj->alias}->{$thisRelationSetting['className']}->save(array(
-                          $thisRelationSetting['className'] => array(
-                            'id' => $habtmId,
-                            $thisRelationSetting['counterCache'] => $count,
-                          ),
-                        ));
-                        
-                }
-                
+	public function updateCounterCacheForM2M(&$model, $relationName, $arrayOfIds) {
+
+		if (!isset($this->settings[$model->alias][$relationName])) return true;
+		if (empty($arrayOfIds)) return true;
+
+		$thisRelationSetting = $this->settings[$model->alias][$relationName];
+
+
+		// Instantiate the join model, e.g. PostsTag
+		$joinModelObj = ClassRegistry::init($thisRelationSetting['joinModel']);
+
+		// Initialise conditions array
+		  $conditions = array();
+
+		  // By default, recursive = -1 as no need to get any other associated data
+		  $recursive = -1;
+
+		if (isset($thisRelationSetting['counterScope'])) {
+		        // Bind the current model as a belongsTo to the joinModel, permanently,
+		        // e.g. PostsTag->belongsTo = array('Post')
+		        $joinModelObj->bindModel(array(
+		          'belongsTo' => array(
+		            $model->alias => array(
+		              'foreignKey' => $thisRelationSetting['foreignKey']
+		            )
+		          )
+		        ), false);
+  
+		        // Add counter scope to conditions, e.g. array(Post.active => 1)
+		        $conditions[] = $thisRelationSetting['counterScope'];
+  
+		        // Set recursive to 0 to ensure the bound model data is available for
+		        // applying scope conditions to
+		        $recursive = 0;
         
-        }
+        
+		}
+
+		foreach ($arrayOfIds as $habtmId) {
+		        $conditions[$thisRelationSetting['joinModel'].'.'.$thisRelationSetting['associationForeignKey']] = $habtmId;
+        
+        
+		        // Get the count E.g. number of PostsTag with tag_id = 1
+		        $count = $joinModelObj->find('count', array(
+		          'conditions' => $conditions,
+		          'recursive' => $recursive
+		        ));
+        
+        
+        
+		        // Update the associated habtm model record's conter cache, e.g.
+		        // Tag.post_count = 1
+		        $model->{$joinModelObj->alias}->{$thisRelationSetting['className']}->save(array(
+		          $thisRelationSetting['className'] => array(
+		            'id' => $habtmId,
+		            $thisRelationSetting['counterCache'] => $count,
+		          ),
+		        ));
+        
+		}
+	}
 
 }
 

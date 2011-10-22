@@ -832,6 +832,41 @@ class ProductTestCase extends CakeTestCase {
 		$this->assertEquals(2, count($result));
 		
 	}
+	
+	/**
+	*
+	* test saveIntoCollections Should work for Product 3 into 2 separate groups Group1 and 2
+	*
+	**/
+	public function testSaveIntoCollectionShouldWork() {
+		// GIVEN we have 2 Product Groups
+		$addIntoCollection = array(1, 2);
+		
+		// AND we have a Product that belongs to Zero Groups
+		$productId = 3;
+		
+		// WHEN we do a saveIntoCollections
+		$result = $this->Product->saveIntoCollections($productId, $addIntoCollection);
+		
+		// THEN we expect success
+		$this->assertTrue($result);
+		
+		// AND we expect that Group 1 now has 2 product count
+		$this->Product->ProductsInGroup->ProductGroup->id = 1;
+		$visibleProduct = $this->Product->ProductsInGroup->ProductGroup->field('visible_product_count');
+		$allProduct = $this->Product->ProductsInGroup->ProductGroup->field('all_product_count');		
+		
+		$this->assertEquals('2', $visibleProduct);
+		$this->assertEquals('2', $allProduct);
+		
+		// AND Group 2 has 1 product count
+		$this->Product->ProductsInGroup->ProductGroup->id = 2;
+		$visibleProduct = $this->Product->ProductsInGroup->ProductGroup->field('visible_product_count');
+		$allProduct = $this->Product->ProductsInGroup->ProductGroup->field('all_product_count');		
+		
+		$this->assertEquals('1', $visibleProduct);
+		$this->assertEquals('1', $allProduct);
+	}
 
 
 }

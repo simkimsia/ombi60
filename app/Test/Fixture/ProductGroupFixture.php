@@ -49,5 +49,19 @@ class ProductGroupFixture extends CakeTestFixture {
 			'type' => 0,
 			'visible_product_count' => '1'
 		),
+		array(
+			'id' => '2',
+			'title' => 'Shirts',
+			'shop_id' => '2',
+			'created' => '2011-07-08 11:54:48',
+			'modified' => '2011-07-08 11:54:48',
+			'description' => NULL,
+			'all_product_count' => '0',
+			'handle' => 'shirts',
+			'vendor_count' => '0',
+			'visible' => 1,
+			'type' => 0,
+			'visible_product_count' => '0'
+		),
 	);
 }

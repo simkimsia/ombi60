@@ -24,15 +24,37 @@ class Product extends AppModel {
 			       'Visible.Visible',
 			       'Handleize.Handleable',
 			       'ManyToManyCountable.ManyToManyCountable' => array(
-				'LinkList'=>array(
-					'className' 	=> 'LinkList',
-					'joinModel' 	=> 'Link',
-					'foreignKey'	=> 'parent_id',
-					'associationForeignKey'	=> 'link_list_id',
-					'unique'	=> true,
-					'counterCache'  => 'link_count',
-					'foreignScope' => array('Link.parent_model' => 'Product'),
-					)),
+						'LinkList'=>array(
+							'className' 	=> 'LinkList',
+							'joinModel' 	=> 'Link',
+							'foreignKey'	=> 'parent_id',
+							'associationForeignKey'	=> 'link_list_id',
+							'unique'	=> true,
+							'counterCache'  => 'link_count',
+							'foreignScope' => array('Link.parent_model' => 'Product'),
+						),
+						
+						'VisibleProductInGroup'=>array(
+							'className' 	=> 'ProductGroup',
+							'joinModel' 	=> 'ProductsInGroup',
+							'foreignKey'	=> 'product_id',
+							'associationForeignKey'	=> 'product_group_id',
+							'unique'	=> true,
+							'counterCache'  => 'visible_product_count',
+							'counterScope'  => array('Product.visible' => 1),
+
+						),
+						'AllProductInGroup'=>array(
+							'className' 	=> 'ProductGroup',
+							'joinModel' 	=> 'ProductsInGroup',
+							'foreignKey'	=> 'product_id',
+							'associationForeignKey'	=> 'product_group_id',
+							'unique'	=> true,
+							'counterCache'  => 'all_product_count',
+						)
+						
+					),
+					/*
 			       'Many2manyCounterCache'=> array('VisibleProductInGroup'=>array(
 								'className' 	=> 'ProductGroup',
 								'joinModel' 	=> 'ProductsInGroup',
@@ -53,6 +75,7 @@ class Product extends AppModel {
 								
 								)
 							  ),
+							  */
 			       );
 	public $recursive = -1;
 	
@@ -958,11 +981,6 @@ class Product extends AppModel {
 	 * Returns true if successful. False otherwise.
 	 **/
 	public function saveIntoCollections ($id, $newCollections = array()) {
-		/**
-		if (empty($newCollections)) {
-			return true;
-		}
-		**/
 		
 		$this->ProductsInGroup->recursive = -1;
 		
@@ -1038,7 +1056,7 @@ class Product extends AppModel {
 			}
 		}
 		
-		
+		$result = true;
 		// save the new records
 		// and delete the deleted records
 		// using transaction
@@ -1083,16 +1101,16 @@ class Product extends AppModel {
 				
 			}
 			
-			// now we call the Many2manyCounterCache->_updateCounterCache
-			$this->updateCounterCacheForM2MMain($id, $unionRecords);
-			
-			return $result;
+			if ($result != false) {
+				$result = true;
+			}
+
 		}
 		
 		// now we call the Many2manyCounterCache->_updateCounterCache
 		$this->updateCounterCacheForM2MMain($id, $unionRecords);
 		
-		return true;
+		return $result;
 	}
 	
 	public function updateCounterCacheForM2MMain($id, $groupIds=array(), $updateAllCount=true) {
