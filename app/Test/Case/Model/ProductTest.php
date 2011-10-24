@@ -901,6 +901,14 @@ class ProductTestCase extends CakeTestCase {
 			$this->assertEquals($expectedValue, $result);
 		}
 	}
+	
+	/**
+	*
+	* awaiting for Graham to reply on error
+	**/
+	public function testSmartUpdateProductsInGroup() {
+		// skeleton for test case
+	}
 
 
 }
