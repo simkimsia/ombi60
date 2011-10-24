@@ -67,7 +67,9 @@
     <div class="clear">&nbsp;</div>
 </div>
 <?php echo $this->Form->submit('Complete my purchase', array('div' => FALSE));?>&nbsp;or&nbsp;
-<?php echo $this->Html->link('return to store', array('controller' => 'products'));?>
+<?php
+echo $this->element('return_to_store', array('toAction' => 'products'));
+?>
 <?php echo $this->Form->end();?>
 
 <script type="text/javascript">
