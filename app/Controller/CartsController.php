@@ -31,7 +31,9 @@ class CartsController extends AppController {
 			'change_qty_for_1_item_in_cart',
 			'view_cart',
 			'view',
-			'create_order'
+			'create_order',
+			'redirectem',
+			'catchem'
 		);
 		
 		if ($this->request->action == 'add_to_cart' || 
@@ -219,7 +221,7 @@ class CartsController extends AppController {
 			$cart_uuid = $this->Cart->getLiveCartIDByUserID($userId);
 			
 			if (!empty($cart_uuid)) {
-				return $this->redirect(array('action' => 'view', 'shop_id' => $shop_id, 'cart_uuid' => $cart_uuid));
+				return $this->redirect(array('action' => 'redirectem', $shop_id, $cart_uuid));
 			}
 		}
 		
@@ -313,6 +315,28 @@ class CartsController extends AppController {
 			$this->render('cart');
 		}
 		
+		
+	}
+	
+	public function catchem() {
+		if (!empty($this->params->query['shop_id']) && !empty($this->params->query['cart_uuid'])) {
+			$shop_id = $this->params->query['shop_id'];
+			$cart_uuid = $this->params->query['cart_uuid'];
+		}
+		return $this->redirect(array('action' => 'view', 'shop_id' => $shop_id, 'cart_uuid' => $cart_uuid));
+	}
+	
+	public function redirectem($shop_id, $cart_uuid) {
+		$this->autoRender = false;
+		App::import('Core', 'String');
+		$data['SiteTransfer']['sess_id'] = $this->Session->id();
+		$data['SiteTransfer']['id'] = String::uuid();
+		$SiteTransfer = ClassRegistry::init('SiteTransfer');
+		if($SiteTransfer->save($data)) {
+			$this->redirect(
+				        'https://checkout.ombi60.localhost/carts/catchem?uuid='. $SiteTransfer->id . '&shop_id=' . $shop_id . '&cart_uuid=' . $cart_uuid
+			);
+		}
 	}
 
 

@@ -115,7 +115,7 @@
 <?php echo $this->Form->submit('Continue to next step', array('div' => FALSE));?>
 &nbsp;or&nbsp;
 <?php
-echo $this->Html->link('return to store', FULL_BASE_URL);
+echo $this->element('return_to_store');
 ?>
 <?php echo $this->Form->end();?>
 

@@ -173,11 +173,13 @@ Configure::write('Routing.prefixes', array('admin', 'platform'));
  *
  */
 	Configure::write('Session', array(
-		'defaults' => 'php'
+	    'defaults' => 'database',
+		'ini' => array(
+	        'session.cookie_secure' => 0,
+	        'session.use_trans_sid' => 0,
+		)
 	));
-	//Configure::write('Session.save', 'database');
-	//Configure::write('Session.model', 'Session');
-
+	
 /**
  * The level of CakePHP security.
  */

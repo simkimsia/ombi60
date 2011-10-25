@@ -47,18 +47,18 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
 	public $components = array(
+		//'StoreSession',
         'Auth',
         'Acl',
         'Session',
         'Security',
         'RequestHandler',
-	    'DebugKit.Toolbar',
         'Cookie',
         'Theme',
         'Paginator',
 	);
 
-	public $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax');
+	public $helpers = array('Html', 'Form', 'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax', 'Number');
 
 	//Allowed controllers with actions
 	public $sslActions = array(
@@ -71,6 +71,16 @@ class AppController extends Controller {
 	public $params4GETAndNamed = array();
 
 	public function beforeFilter() {
+		if(!empty($this->params->query['uuid'])) {
+			$uuid = $this->params->query['uuid'];
+			$SiteTransfer = ClassRegistry::init('SiteTransfer');
+			$data = $SiteTransfer->findById($uuid);
+			$this->Session->id($data['SiteTransfer']['sess_id']);
+			$SiteTransfer->delete($uuid);
+		}
+		if (Configure::read('debug')) {
+			$this->Toolbar = $this->Components->load('DebugKit.Toolbar');
+		}
 		/**
 		 * merge the named params and the get params into a single array
 		 * with the GET params taking precedence
@@ -117,27 +127,35 @@ class AppController extends Controller {
 		/**
 		 * end of Acl
 		 * */
-
+		
 		// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
 		App::uses('Shop', 'Model');
 		$currentShop = $this->Session->read('CurrentShop');
-		if(empty($currentShop) OR !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain'])) {
+		
+		$isCheckoutProcess = (strpos(FULL_BASE_URL, 'checkout'));
+		if(empty($currentShop) OR (!$isCheckoutProcess AND !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain']))) {
 			$this->loadModel('Shop');
 			$currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
 			$this->Session->write('CurrentShop', $currentShop);
 		}
-
 		if (!$currentShop) {
 			throw new NotFoundException();
 			//$this->cakeError('noSuchDomain', array('url'=>FULL_BASE_URL));
 		}
+		
+		if ($isCheckoutProcess && !in_array($this->name, array('Orders', 'Carts'))) {
+			$this->redirect($this->Session->read('CurrentShop.Domain.domain'));
+		} else if ($isCheckoutProcess) {
+			$this->Security->blackHoleCallback = 'forceSSL';
+			$this->Security->requireSecure();
+		}
+		
 		Shop::store($currentShop);
 		$shopId = Shop::get('Shop.id');
 		$shopName = Shop::get('Shop.name');
 		$this->Cookie->name = $shopName;
 		$this->Cookie->time = '365 days';
 		$this->Cookie->key  = 'qwRVVJ@#$%2#7435' . $shopId;
-
 		/**
 		 * setup the shopName_for_layout
 		 **/
@@ -342,10 +360,10 @@ class AppController extends Controller {
 		
 		//DISABLED TO TEST WITHOUT SSL 10/07/2011
 		// if its admin or an ssl action, we want to force SSL on production or staging server
-		/*if ((isset($this->request->params['admin']) && !$localhostDomain) || (!$localhostDomain && array_key_exists($this->request->params['controller'], $this->sslActions) && in_array($this->request->params['action'], $this->sslActions[$this->request->params['controller']]))) {
-			$this->Security->blackHoleCallback = 'forceSSL';
-			$this->Security->requireSecure();
-		} */
+		//if ((isset($this->request->params['admin']) && !$localhostDomain) || (!$localhostDomain && array_key_exists($this->request->params['controller'], $this->sslActions) && in_array($this->request->params['action'], $this->sslActions[$this->request->params['controller']]))) {
+		//	$this->Security->blackHoleCallback = 'forceSSL';
+		//	$this->Security->requireSecure();
+		//} 
 		// set the weight unit for shop
 		App::uses('ConstantHelper', 'View/Helper');
 		//@todo fix this helper call
@@ -362,7 +380,6 @@ class AppController extends Controller {
 		$fullBaseUrl    = strtolower($fullBaseUrl);
 		$httpDomainInDB = strtolower($httpDomainInDB);
 		$httpsDomain    = str_replace('http://', 'https://', $httpDomainInDB);
-
 		if ($fullBaseUrl === $httpDomainInDB) {
 			return true;
 		}
@@ -546,6 +563,8 @@ class AppController extends Controller {
 			}
 		}
 	}
+	
+	
 
 /*
  @todo implement AppController::cakeError stub

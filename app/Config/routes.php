@@ -154,6 +154,19 @@
 							'cart_uuid'		=> '[a-zA-Z0-9\-_]+'
 							)
                         );
+        
+        
+        Router::connect('/carts/redirectem/:shop_id/:cart_uuid',
+        	array(
+				'controller' 	=> 'carts',
+		 		'action' 		=> 'redirectem'
+		 	),
+	        array(
+				'pass'			=> array('shop_id', 'cart_uuid'),
+				'shop_id'		=> '[0-9]+',
+				'cart_uuid'		=> '[a-zA-Z0-9\-_]+'
+	        )
+        );
 
 		// action to create an order for a cart
 		// at the same time creating billing, delivery addresses
