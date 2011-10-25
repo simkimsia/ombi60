@@ -171,18 +171,21 @@ class ManyToManyCountableBehavior extends ModelBehavior {
    * @param AppModel $model
    */
 	public function updateCounterCacheForM2M(&$model, $relationName, $arrayOfIds) {
-
+		
 		if (!isset($this->settings[$model->alias][$relationName])) return true;
 		if (empty($arrayOfIds)) return true;
-
+		
 		$thisRelationSetting = $this->settings[$model->alias][$relationName];
 
+		debug($arrayOfIds);
+		debug($relationName);
 
 		// Instantiate the join model, e.g. PostsTag
 		$joinModelObj = ClassRegistry::init($thisRelationSetting['joinModel']);
 
 		// Initialise conditions array
 		  $conditions = array();
+//		$conditions[] = $joinModelObj->alias . '.' . 
 
 		  // By default, recursive = -1 as no need to get any other associated data
 		  $recursive = -1;
@@ -207,7 +210,10 @@ class ManyToManyCountableBehavior extends ModelBehavior {
         
         
 		}
-
+		debug($arrayOfIds);
+		debug($relationName);
+		debug($joinModelObj->alias);
+		
 		foreach ($arrayOfIds as $habtmId) {
 		        $conditions[$thisRelationSetting['joinModel'].'.'.$thisRelationSetting['associationForeignKey']] = $habtmId;
         
@@ -219,7 +225,8 @@ class ManyToManyCountableBehavior extends ModelBehavior {
 		        ));
         
         
-        
+        		debug($count);
+
 		        // Update the associated habtm model record's conter cache, e.g.
 		        // Tag.post_count = 1
 		        $model->{$joinModelObj->alias}->{$thisRelationSetting['className']}->save(array(

@@ -1,5 +1,5 @@
 <?php
-/* ProductsInGroup Fixture generated on: 2011-09-28 10:25:43 : 1317205543 */
+/* ProductsInGroup Fixture generated on: 2011-10-25 08:42:18 : 1319532138 */
 
 /**
  * ProductsInGroupFixture
@@ -30,6 +30,26 @@ class ProductsInGroupFixture extends CakeTestFixture {
 			'id' => '1',
 			'product_id' => '2',
 			'product_group_id' => '1'
+		),
+		array(
+			'id' => '2',
+			'product_id' => '2',
+			'product_group_id' => '2'
+		),
+		array(
+			'id' => '3',
+			'product_id' => '3',
+			'product_group_id' => '2'
+		),
+		array(
+			'id' => '4',
+			'product_id' => '4',
+			'product_group_id' => '2'
+		),
+		array(
+			'id' => '5',
+			'product_id' => '5',
+			'product_group_id' => '2'
 		),
 	);
 }

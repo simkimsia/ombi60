@@ -112,7 +112,8 @@ class ProductTestCase extends CakeTestCase {
 						)
 					),
 					'selected_collections' => array(
-						0 => 1
+						0 => 1,
+						1 => 2
 					),
 				)
 			);
@@ -147,7 +148,9 @@ class ProductTestCase extends CakeTestCase {
 							'values_in_string' => 'Default Title'
 						)
 					),
-					'selected_collections' => array(),
+					'selected_collections' => array(
+						0 => 2
+					),
 				)
 			);			
 		}
@@ -322,6 +325,49 @@ class ProductTestCase extends CakeTestCase {
 		
 
 	}
+
+	/**
+	* test smartUpdateProductsInGroup
+	**/
+	public function testSmartUpdateProductsInGroup() {
+		// GIVEN we change Product 2 price into less than 1 dollar
+		$this->Product->id = 2;
+		$this->Product->save(array(
+			'Product' => array(
+				'price' => '0.10'
+			)));
+			
+		$this->Product->recursive = -1;
+		
+		$product = $this->Product->read(null, 2);	
+		
+		// WHEN we run the smartupdate
+		$result = $this->Product->smartUpdateProductsInGroup($product['Product']);
+		
+		// THEN we get success
+		$this->assertTrue($result);
+		
+		// AND the ProductGroup 2 now has 3 products in all_product_count and visible_group_count
+		$this->Product->ProductsInGroup->ProductGroup->id = 2;
+		$visibleProduct = $this->Product->ProductsInGroup->ProductGroup->field('visible_product_count');
+		$allProduct = $this->Product->ProductsInGroup->ProductGroup->field('all_product_count');		
+		
+		$this->assertEquals('1', $visibleProduct);
+		$this->assertEquals('3', $allProduct);
+		die();		
+		$result = $this->Product->ProductsInGroup->find('all', array(
+			'conditions' => array(
+				'product_id' => 2,
+				'product_group_id' => 2
+			)
+		));
+		
+		// AND the association between ProductGroup 2 and Product 2 is no more
+		$this->assertEquals(array(), $result);
+
+
+	}
+
 
 
 /**
@@ -840,7 +886,7 @@ class ProductTestCase extends CakeTestCase {
 	**/
 	public function testSaveIntoCollectionShouldWork() {
 		// GIVEN we have 2 Product Groups
-		$addIntoCollection = array(1, 2);
+		$addIntoCollection = array(1, 3);
 		
 		// AND we have a Product that belongs to Zero Groups
 		$productId = 3;
@@ -860,7 +906,7 @@ class ProductTestCase extends CakeTestCase {
 		$this->assertEquals('2', $allProduct);
 		
 		// AND Group 2 has 1 product count
-		$this->Product->ProductsInGroup->ProductGroup->id = 2;
+		$this->Product->ProductsInGroup->ProductGroup->id = 3;
 		$visibleProduct = $this->Product->ProductsInGroup->ProductGroup->field('visible_product_count');
 		$allProduct = $this->Product->ProductsInGroup->ProductGroup->field('all_product_count');		
 		
@@ -902,13 +948,6 @@ class ProductTestCase extends CakeTestCase {
 		}
 	}
 	
-	/**
-	*
-	* awaiting for Graham to reply on error
-	**/
-	public function testSmartUpdateProductsInGroup() {
-		// skeleton for test case
-	}
 
 
 }
