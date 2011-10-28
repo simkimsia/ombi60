@@ -177,64 +177,58 @@ class ManyToManyCountableBehavior extends ModelBehavior {
 		
 		$thisRelationSetting = $this->settings[$model->alias][$relationName];
 
-		debug($arrayOfIds);
-		debug($relationName);
 
 		// Instantiate the join model, e.g. PostsTag
 		$joinModelObj = ClassRegistry::init($thisRelationSetting['joinModel']);
 
 		// Initialise conditions array
-		  $conditions = array();
-//		$conditions[] = $joinModelObj->alias . '.' . 
+		$conditions = array();
 
-		  // By default, recursive = -1 as no need to get any other associated data
-		  $recursive = -1;
+		// By default, recursive = -1 as no need to get any other associated data
+		$recursive = -1;
+		
+	    // Bind the current model as a belongsTo to the joinModel, permanently,
+        // e.g. PostsTag->belongsTo = array('Post')
+        $joinModelObj->bindModel(array(
+          'belongsTo' => array(
+            $model->alias => array(
+              'foreignKey' => $thisRelationSetting['foreignKey']
+            )
+          )
+        ), false);
+	    
 
 		if (isset($thisRelationSetting['counterScope'])) {
-		        // Bind the current model as a belongsTo to the joinModel, permanently,
-		        // e.g. PostsTag->belongsTo = array('Post')
-		        $joinModelObj->bindModel(array(
-		          'belongsTo' => array(
-		            $model->alias => array(
-		              'foreignKey' => $thisRelationSetting['foreignKey']
-		            )
-		          )
-		        ), false);
-  
-		        // Add counter scope to conditions, e.g. array(Post.active => 1)
-		        $conditions[] = $thisRelationSetting['counterScope'];
-  
-		        // Set recursive to 0 to ensure the bound model data is available for
-		        // applying scope conditions to
-		        $recursive = 0;
-        
-        
-		}
-		debug($arrayOfIds);
-		debug($relationName);
-		debug($joinModelObj->alias);
-		
-		foreach ($arrayOfIds as $habtmId) {
-		        $conditions[$thisRelationSetting['joinModel'].'.'.$thisRelationSetting['associationForeignKey']] = $habtmId;
-        
-        
-		        // Get the count E.g. number of PostsTag with tag_id = 1
-		        $count = $joinModelObj->find('count', array(
-		          'conditions' => $conditions,
-		          'recursive' => $recursive
-		        ));
-        
-        
-        		debug($count);
 
-		        // Update the associated habtm model record's conter cache, e.g.
-		        // Tag.post_count = 1
-		        $model->{$joinModelObj->alias}->{$thisRelationSetting['className']}->save(array(
-		          $thisRelationSetting['className'] => array(
-		            'id' => $habtmId,
-		            $thisRelationSetting['counterCache'] => $count,
-		          ),
-		        ));
+	        // Add counter scope to conditions, e.g. array(Post.active => 1)
+	        $conditions[] = $thisRelationSetting['counterScope'];
+ 
+	        // Set recursive to 0 to ensure the bound model data is available for
+	        // applying scope conditions to
+	        $recursive = 0;
+                
+		}
+
+		foreach ($arrayOfIds as $habtmId) { 
+			$conditions[$thisRelationSetting['joinModel'].'.'.$thisRelationSetting['associationForeignKey']] = $habtmId;
+        	
+
+        	
+	        // Get the count E.g. number of PostsTag with tag_id = 1
+	        $count = $joinModelObj->find('count', array(
+	          'conditions' => $conditions,
+	          'recursive' => $recursive
+	        ));
+        
+
+	        // Update the associated habtm model record's conter cache, e.g.
+	        // Tag.post_count = 1
+	        $model->{$joinModelObj->alias}->{$thisRelationSetting['className']}->save(array(
+	          $thisRelationSetting['className'] => array(
+	            'id' => $habtmId,
+	            $thisRelationSetting['counterCache'] => $count,
+	          ),
+	        ));
         
 		}
 	}

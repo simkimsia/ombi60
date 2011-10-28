@@ -41,15 +41,6 @@ class ProductsInGroupFixture extends CakeTestFixture {
 			'product_id' => '3',
 			'product_group_id' => '2'
 		),
-		array(
-			'id' => '4',
-			'product_id' => '4',
-			'product_group_id' => '2'
-		),
-		array(
-			'id' => '5',
-			'product_id' => '5',
-			'product_group_id' => '2'
-		),
+
 	);
 }

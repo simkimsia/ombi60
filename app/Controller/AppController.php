@@ -71,12 +71,18 @@ class AppController extends Controller {
 	public $params4GETAndNamed = array();
 
 	public function beforeFilter() {
+		debug($this->Session->read());
 		if(!empty($this->params->query['uuid'])) {
 			$uuid = $this->params->query['uuid'];
 			$SiteTransfer = ClassRegistry::init('SiteTransfer');
 			$data = $SiteTransfer->findById($uuid);
+			debug($data);
 			$this->Session->id($data['SiteTransfer']['sess_id']);
-			$SiteTransfer->delete($uuid);
+			
+			debug($this->Session->read());
+			debug($this->Session->id()); 
+			die();
+			//$SiteTransfer->delete($uuid);
 		}
 		if (Configure::read('debug')) {
 			$this->Toolbar = $this->Components->load('DebugKit.Toolbar');
@@ -131,7 +137,7 @@ class AppController extends Controller {
 		// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
 		App::uses('Shop', 'Model');
 		$currentShop = $this->Session->read('CurrentShop');
-		
+
 		$isCheckoutProcess = (strpos(FULL_BASE_URL, 'checkout'));
 		if(empty($currentShop) OR (!$isCheckoutProcess AND !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain']))) {
 			$this->loadModel('Shop');

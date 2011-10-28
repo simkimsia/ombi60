@@ -353,8 +353,8 @@ class ProductTestCase extends CakeTestCase {
 		$allProduct = $this->Product->ProductsInGroup->ProductGroup->field('all_product_count');		
 		
 		$this->assertEquals('1', $visibleProduct);
-		$this->assertEquals('3', $allProduct);
-		die();		
+		$this->assertEquals('1', $allProduct);
+			
 		$result = $this->Product->ProductsInGroup->find('all', array(
 			'conditions' => array(
 				'product_id' => 2,
@@ -364,7 +364,6 @@ class ProductTestCase extends CakeTestCase {
 		
 		// AND the association between ProductGroup 2 and Product 2 is no more
 		$this->assertEquals(array(), $result);
-
 
 	}
 

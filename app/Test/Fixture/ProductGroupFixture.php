@@ -56,12 +56,12 @@ class ProductGroupFixture extends CakeTestFixture {
 			'created' => '2011-10-25 08:40:37',
 			'modified' => '2011-10-25 08:40:37',
 			'description' => '<p>more than 1 dollar</p>',
-			'all_product_count' => '4',
+			'all_product_count' => '2',
 			'handle' => 'smart-collection-1',
 			'vendor_count' => '0',
 			'visible' => 1,
 			'type' => 1,
-			'visible_product_count' => '4'
+			'visible_product_count' => '2'
 		),
 		array(
 			'id' => '3',
