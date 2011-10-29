@@ -71,17 +71,14 @@ class AppController extends Controller {
 	public $params4GETAndNamed = array();
 
 	public function beforeFilter() {
-		debug($this->Session->read());
+
 		if(!empty($this->params->query['uuid'])) {
 			$uuid = $this->params->query['uuid'];
 			$SiteTransfer = ClassRegistry::init('SiteTransfer');
 			$data = $SiteTransfer->findById($uuid);
-			debug($data);
+
 			$this->Session->id($data['SiteTransfer']['sess_id']);
 			
-			debug($this->Session->read());
-			debug($this->Session->id()); 
-			die();
 			//$SiteTransfer->delete($uuid);
 		}
 		if (Configure::read('debug')) {
