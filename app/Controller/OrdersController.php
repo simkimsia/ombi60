@@ -1,5 +1,6 @@
 <?php
 App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
+App::uses('PaymentsComponent', 'Payments.Controller/Component');
 /**
  * @property mixed Order
  */
@@ -10,7 +11,9 @@ class OrdersController extends AppController {
 	public $helpers = array('Html', 'Form', 'Session', 'Time', 'Number');
 
 	public $components = array('Permission',
-				'Session', 'Paypal.Paypal', 'Filter.Filter' => array(
+				'Session', 'Paypal.Paypal', 
+				'Payments.Payments',
+				'Filter.Filter' => array(
 					'actions' => array('index', 'admin_index'),
 					'defaults' => array(),
 					'fieldFormatting' => array(
@@ -44,8 +47,7 @@ class OrdersController extends AppController {
 
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-
-
+		
 		$this->Auth->allow(
 			'checkout', 
 			'checkout_step_1', 
@@ -53,10 +55,12 @@ class OrdersController extends AppController {
 			'pay', 
 			'update_prices',
 			'complete_purchase', 
+			'return_from_payment',
 			'completed');
 		
 		if ($this->request->action == 'update_prices' ||
 			$this->request->action == 'complete_purchase' ||
+			$this->request->action == 'return_from_payment' ||
 			$this->request->action == 'completed') {
 		
 			$this->Components->disable('Security');
@@ -597,29 +601,81 @@ class OrdersController extends AppController {
 			}
 			
 			// second, format payment data
-			$payment 					= array($orderFormData['Payment']);
-			$orderFormData['Payment'] 	= $payment;
+			$order = $this->Order->find('first', array('conditions' => array('Order.id' => $order_uuid))); 
 			
-			$shipment 					= array($orderFormData['Shipment']);
+			//TODO Possibly we need to prepare purchase info for each payment gateway
+			$options = array(
+				'currency' => $order['Order']['currency'],
+				'amount' => $orderFormData['Shipment']['price'] + $order['Order']['amount'],
+				'payment_breakdown' => array(
+					'item_total' => $order['Order']['amount'],
+					'shipping' => $orderFormData['Shipment']['price'],
+					'handling' => 0 //$order['Order']['amount']
+				),
+			);
+			foreach ($order['OrderLineItem'] as $orderItem) {
+				$options['items'][] = array(
+					'description' => $orderItem['product_title'],
+					'unit_price' => $orderItem['product_price'],
+					'quantity' => $orderItem['product_quantity'],
+					'id' => $orderItem['product_id']
+				);
+			}
+			$ShopsPaymentModule = ClassRegistry::init('ShopsPaymentModule');
+			$shopsPaymentModule = $ShopsPaymentModule->find('first', array('conditions' => array('ShopsPaymentModule.id' => $orderFormData['Payment']['shops_payment_module_id'])));
+			$this->Payments->setupPurchase($shopsPaymentModule['ShopsPaymentModule']['display_name'], $options);
+			$orderFormData['Payment']['token_from_gateway'] = $this->Payments->getFromResponse($shopsPaymentModule['ShopsPaymentModule']['display_name'], 'TOKEN');
+			$payment = array($orderFormData['Payment']);
+			$shipment = array($orderFormData['Shipment']);
+			$orderFormData['Payment'] 	= $payment;
 			$orderFormData['Shipment'] 	= $shipment;
-				
 			// now we are going to save the Payment and Shipment rates
 			$result = $this->Order->completePurchase($orderFormData);
-			
 			if ($result) {
-				
-				
-				return $this->redirect(array(
-					'action' => 'completed',
-					'shop_id'=> $shop_id,
-					'order_uuid' => $order_uuid,
-				));
-			} else {
+				$this->Payments->redirect($shopsPaymentModule['ShopsPaymentModule']['display_name']);
+				 
+				//Add conditions to another payment gateways
+			}else {
 				// redirect user back to pay page and ask them to contact owner for assistance
 			}
 		}
 		
 	
+	}
+	
+	public function return_from_payment() {
+		$payment = $this->Order->Payment->find('first', array('conditions' => array('token_from_gateway' => $this->params->query['token'])));
+		if ($this->Payments->isPaypalExpress($payment['ShopsPaymentModule']['display_name'])) {
+			$purchase_opts = array(
+				'token' => $this->params->query['token'],
+				'PayerID' => $this->params->query['PayerID']
+			);
+			$response = $this->Payments->purchase($payment['ShopsPaymentModule']['display_name'], $purchase_opts);
+			$result = $response->success();
+			if ($result) {
+				//TODO Check if we need to change order status to Completed
+				$payment['Payment']['transaction_id_from_gateway'] = $response->__get('PAYMENTINFO_0_TRANSACTIONID');
+				$payment['Payment']['ordertime_from_gateway'] = $response->__get('PAYMENTINFO_0_ORDERTIME');
+				$payment['Payment']['paymentstatus_from_gateway'] = $response->__get('PAYMENTINFO_0_PAYMENTSTATUS');
+				$payment['Payment']['feeamt_from_gateway'] = $response->__get('PAYMENTINFO_0_FEEAMT');
+				$payment['Payment']['pendingreason_from_gateway'] = $response->__get('PAYMENTINFO_0_PENDINGREASON');
+
+			} else {
+				// ....
+			}
+		}
+		$result = $this->Order->Payment->save($payment);		
+		if ($result) {
+			return $this->redirect(array(
+				'action' => 'completed',
+				'shop_id'=> $payment['Order']['shop_id'],
+				'order_uuid' => $payment['Order']['id'],
+			));
+		} else {
+			// redirect user back to pay page and ask them to contact owner for assistance
+		}
+		
+		
 	}
 	
 	/**
