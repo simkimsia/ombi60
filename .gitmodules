@@ -55,3 +55,7 @@
 [submodule "app/Plugin/Migrations"]
 	path = app/Plugin/Migrations
 	url = https://github.com/CakeDC/migrations.git
+[submodule "app/Plugin/Payments/Vendor/AktiveMerchant"]
+	path = app/Plugin/Payments/Vendor/AktiveMerchant
+	url = git@github.com:ajibarra/Aktive-Merchant.git
+
