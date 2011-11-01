@@ -643,6 +643,12 @@ class OrdersController extends AppController {
 	
 	}
 	
+/**
+ *
+ * this action handles the POSTBACK from the payment gateway
+ *
+ * @param boolean Returns the result for all the $this->redirect
+ **/
 	public function return_from_payment() {
 		$payment = $this->Order->Payment->find('first', array('conditions' => array('token_from_gateway' => $this->params->query['token'])));
 		if ($this->Payments->isPaypalExpress($payment['ShopsPaymentModule']['display_name'])) {
