@@ -1,8 +1,12 @@
 <?php
-App::uses('HttpSocket', 'Network/Http');
 App::uses('DataSource', 'Model/Datasource');
 require_once(App::pluginPath('Payments') . 'Vendor' . DS . 'AktiveMerchant' . DS . 'lib' . DS . 'merchant.php');
 
+/** 
+ * This class implements Paypal Express datasource to store the payment gateway and settings
+ * @author ajibarra
+ *
+ */
 class PaypalExpressSource extends DataSource {
 
 /**
@@ -10,9 +14,13 @@ class PaypalExpressSource extends DataSource {
  *
  * ### Possible configuration keys
  *
- *	- environment: defines whether to use a live or testing environment, possible values sandbox, live (default: live)
- *	- business: email which was used to setup the Paypal seller or sandbox account
- *
+ *	- environment: defines whether to use a live or testing environment, possible values test, live (default: live)
+ *  - login: defines the login to use with paypal express api
+ *  - password: defines the password to use with paypal express api
+ *  - signature: defines the signature to use with paypal express api,
+ *  - return_url: defines the return url to use with paypal express api
+ *  - cancel_url: defines the cancel url to use with paypal express api
+ *  - currency: defines the default currency to use with paypal express api
  * @var array
  */
 	public $config = array(
@@ -20,6 +28,9 @@ class PaypalExpressSource extends DataSource {
 		'currency' => 'USD'
 	);
 
+/**
+ * Holds the payment gateway initialized
+ */
 	public $gateway;
 	
 	public $returnUrl;
@@ -56,28 +67,5 @@ class PaypalExpressSource extends DataSource {
 	
 	public function getGateway() {
 		return $this->gateway;
-	}
-
-/**
- * Returns a new HttpSocket object
- *
- * @return HttpSocket object
- */
-	protected function _getConnection() {
-		return new HttpSocket();
-	}
-
-
-}
-
-class PaypalExpressException extends Exception {
-	protected $serverResponse;
-
-	public function setServerResponse($response) {
-		$this->response = $response;
-	}
-
-	public function getServerResponse() {
-		return $response;
 	}
 }

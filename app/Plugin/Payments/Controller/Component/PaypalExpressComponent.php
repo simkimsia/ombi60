@@ -1,12 +1,13 @@
 <?php
 
-
+/**
+ * 
+ * This class implements Paypal Express Component and executes gateway methods
+ * @author ajibarra
+ *
+ */
 class PaypalExpressComponent extends Component {
 
-	public $returnUrl;
-
-	public $cancelUrl;
-	
 	public $response;
 	
 	public $datasource;
@@ -18,8 +19,8 @@ class PaypalExpressComponent extends Component {
 
 /**
  * Setup purchase on gateway
- * @param unknown_type $gateway_type
- * @param unknown_type $amount
+ * @param String $gateway_type
+ * @param Double $amount
  */
 	function setupPurchase($purchaseInfo) {
 		$gateway = $this->datasource->getGateway();
@@ -30,6 +31,11 @@ class PaypalExpressComponent extends Component {
 		$this->response = $gateway->setup_purchase($purchaseInfo['amount'], $options);
 	}
 	
+	/**
+	 * Get URL for given token
+	 * @param String $token
+	 * @return String
+	 */
 	function getUrlForToken($token) {
 		$gateway = $this->datasource->getGateway();
 		return $gateway->url_for_token($token);
@@ -38,7 +44,7 @@ class PaypalExpressComponent extends Component {
 
 /**
  * Execute purchase
- * @param unknown_type $purchase_info
+ * @param String $purchase_info
  * @return boolean
  */
 	function purchase($purchaseInfo) {
