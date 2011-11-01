@@ -1,5 +1,5 @@
 <?php
-/* SmartCollectionCondition Fixture generated on: 2011-09-28 10:37:23 : 1317206243 */
+/* SmartCollectionCondition Fixture generated on: 2011-10-25 08:41:42 : 1319532102 */
 
 /**
  * SmartCollectionConditionFixture
@@ -30,5 +30,14 @@ class SmartCollectionConditionFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+		array(
+			'id' => '1',
+			'smart_collection_id' => '2',
+			'field' => 'Product.price',
+			'relation' => 'greater_than',
+			'condition' => '1',
+			'created' => '2011-10-25 08:40:37',
+			'modified' => '2011-10-25 08:40:37'
+		),
 	);
 }

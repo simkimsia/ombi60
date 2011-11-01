@@ -1,5 +1,5 @@
 <?php
-/* ProductGroup Fixture generated on: 2011-09-28 10:26:15 : 1317205575 */
+/* ProductGroup Fixture generated on: 2011-10-25 08:42:05 : 1319532125 */
 
 /**
  * ProductGroupFixture
@@ -51,17 +51,31 @@ class ProductGroupFixture extends CakeTestFixture {
 		),
 		array(
 			'id' => '2',
+			'title' => 'smart collection 1',
+			'shop_id' => '2',
+			'created' => '2011-10-25 08:40:37',
+			'modified' => '2011-10-25 08:40:37',
+			'description' => '<p>more than 1 dollar</p>',
+			'all_product_count' => '2',
+			'handle' => 'smart-collection-1',
+			'vendor_count' => '0',
+			'visible' => 1,
+			'type' => 1,
+			'visible_product_count' => '2'
+		),
+		array(
+			'id' => '3',
 			'title' => 'Shirts',
 			'shop_id' => '2',
-			'created' => '2011-07-08 11:54:48',
-			'modified' => '2011-07-08 11:54:48',
-			'description' => NULL,
+			'created' => '2011-10-25 08:40:37',
+			'modified' => '2011-10-25 08:40:37',
+			'description' => '',
 			'all_product_count' => '0',
 			'handle' => 'shirts',
 			'vendor_count' => '0',
 			'visible' => 1,
 			'type' => 0,
 			'visible_product_count' => '0'
-		),
+		)
 	);
 }
