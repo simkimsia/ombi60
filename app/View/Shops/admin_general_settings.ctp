@@ -67,6 +67,7 @@
             'label' => false,
 	          'after' => ' Money in Email With Currency',
             ));
+		
 	?>
 		    </fieldset>  
         </div>
@@ -77,6 +78,11 @@
                                                              'default' => $shopSetting['ShopSetting']['checkout_language'],
                                                              'options' => array('0' => 'English',
                                                                                 '1'=> 'Bahasa Malaysia')));
+                echo $this->Form->input('ShopSetting.users_accepted', array(
+                	'type' => 'radio',
+					'default' => $shopSetting['ShopSetting']['users_accepted'],
+					'options' => array('guest'=> 'Only guest users',
+					'registered'=> 'Only registered users', 'both' => 'Both',)));
 	?>
 
 	</fieldset>

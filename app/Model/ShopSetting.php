@@ -1,5 +1,10 @@
 <?php
 class ShopSetting extends AppModel {
+	
+	const GUEST_ONLY = 'guest';
+	const REGISTERED_ONLY = 'registered';
+	const BOTH = 'both';
+	
 	public $name = 'ShopSetting';
 	public $validate = array(
 		'checkout_language' => array(
