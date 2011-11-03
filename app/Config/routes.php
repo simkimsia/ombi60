@@ -156,6 +156,8 @@
                         );
         
         
+        
+        
         Router::connect('/carts/redirectem/:shop_id/:cart_uuid',
         	array(
 				'controller' 	=> 'carts',
@@ -256,6 +258,8 @@
                               'variant_id' 	=> '[0-9]+',
                               
                               ));
+        
+        Router::connect('/admin/payments', array('controller' => 'payments', 'plugin' => false, 'admin' => true));
         
         Router::connect('/cart/add',
                         array('controller' 	=> 'carts',
