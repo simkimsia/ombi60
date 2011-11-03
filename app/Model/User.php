@@ -146,6 +146,7 @@ class User extends AppModel {
 			),
 			'unique' => array(
 				'rule' => array('uniqueEmailInShop'),
+				'on' => 'create',
 				'message' => 'This email has already been used. Please choose another one.'
 				
 			),
@@ -228,7 +229,6 @@ class User extends AppModel {
 	 **/
 	public static function get($fieldName) {
 		$_user =& User::getInstance();
-		
 		if (!$_user) {
 			return false;
 		}
