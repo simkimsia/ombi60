@@ -59,7 +59,7 @@
 	<div id="header">
 		<div id="headerContent">
 			<h1><a href="#"><span><?php echo $companyName;?></span></a></h1>
-			<h2>Username <input name="txtUsername" type="text" /> Password <input name="txtUsername" type="password" /></h2>
+			
 		</div>
 	</div>
 
