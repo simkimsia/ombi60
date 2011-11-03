@@ -146,7 +146,7 @@ class AppController extends Controller {
 			//$this->cakeError('noSuchDomain', array('url'=>FULL_BASE_URL));
 		}
 		
-		if ($isCheckoutProcess && !in_array($this->name, array('Orders', 'Carts'))) {
+		if ($isCheckoutProcess && !in_array($this->name, array('Orders', 'Carts', 'Customers'))) {
 			$this->redirect($this->Session->read('CurrentShop.Domain.domain'));
 		} else if ($isCheckoutProcess) {
 			$this->Security->blackHoleCallback = 'forceSSL';
