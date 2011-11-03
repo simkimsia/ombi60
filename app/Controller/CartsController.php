@@ -1,6 +1,7 @@
 <?php
 // we use angelleye code
 App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
+App::uses('ShopSetting', 'Model');
 
 class CartsController extends AppController {
 
@@ -33,6 +34,7 @@ class CartsController extends AppController {
 			'view',
 			'create_order',
 			'redirectem',
+			'user_type',
 			'catchem'
 		);
 		
@@ -123,29 +125,32 @@ class CartsController extends AppController {
 	public function view($shop_id = false, $cart_uuid = false) {
 
 		if ($this->request->is('get')) {
-			
+			$usersAccepted = $this->Session->read('CurrentShop.ShopSetting.users_accepted');
+			if ($usersAccepted == ShopSetting::REGISTERED_ONLY && !$this->Auth->user()) {
+				return $this->redirect(array('action' => 'user_type', 'shop_id' => $shop_id, 'cart_uuid' => $cart_uuid));
+			}
 			// use the given shop id to re-establish Shop data into session
 			Shop::store($this->Cart->Shop->getById($shop_id));
 			$shopId 	= $shop_id;
 
 			// set up the countries, customerId, shopId in the form.
 			$countries 	= $this->Cart->Order->BillingAddress->Country->find('list');
-			$customerId = User::get('Customer.id');
+			$user = $this->Cart->User->find('first', array('contain' => array('Customer'), 'conditions' => array('User.id' => $this->Auth->user('id'))));
+			$customerId = $user['Customer']['id'];
 			
 			// get all shipping addresses of this customer
 			$shippingAddresses = array();
 			if ($customerId > 0) {
 				$this->Cart->Order->DeliveryAddress->recursive = -1;
-				$shippingAddresses = $this->Order->DeliveryAddress->getAllByCustomer($customerId, DELIVERY);
+				$shippingAddresses = $this->Cart->Order->DeliveryAddress->getAllByCustomer($customerId, DELIVERY);
 			}
-			
 			// get Cart data
 			$this->Cart->id = $cart_uuid;
 			$this->Cart->recalculateTotalWeightPrice($cart_uuid);
 			$currentCart 	= $this->Cart->getItemsWithImages($cart_uuid);
 
 			// populate view vars
-			$this->set(compact('countries', 'customerId', 'shopId', 'shippingAddresses', 'currentCart')
+			$this->set(compact('user', 'countries', 'customerId', 'shopId', 'shippingAddresses', 'currentCart')
 			);
 		}
 		
@@ -317,15 +322,44 @@ class CartsController extends AppController {
 		
 		
 	}
-	
+
+/**
+ * Defines checkout method (Registered or guest users)
+ * @param unknown_type $shop_id
+ * @param unknown_type $cart_uuid
+ */	
+	public function user_type($shop_id = null, $cart_uuid = null){
+		$usersAccepted = $this->Session->read('CurrentShop.ShopSetting.users_accepted');
+		if ($usersAccepted == ShopSetting::REGISTERED_ONLY || $usersAccepted == ShopSetting::BOTH) {
+			if (!$this->Auth->user()) {
+				$this->set('shop_id', (empty($shop_id) ? $this->params->named['shop_id'] : $shop_id));
+				$this->set('cart_uuid', (empty($cart_uuid) ? $this->params->named['cart_uuid'] : $cart_uuid));
+				$this->set('registered_only', $this->Session->read('CurrentShop.ShopSetting.users_accepted') == ShopSetting::REGISTERED_ONLY);
+				$this->layout = 'default';
+			} else {
+				return $this->redirect(array('action' => 'view', 'shop_id' => $shop_id, 'cart_uuid' => $cart_uuid));
+			}
+		} else {
+			return $this->redirect(array('action' => 'view', 'shop_id' => $shop_id, 'cart_uuid' => $cart_uuid));
+		}
+		
+	}
+/**
+ * Retrieves session information from shop
+ */	
 	public function catchem() {
 		if (!empty($this->params->query['shop_id']) && !empty($this->params->query['cart_uuid'])) {
 			$shop_id = $this->params->query['shop_id'];
 			$cart_uuid = $this->params->query['cart_uuid'];
 		}
-		return $this->redirect(array('action' => 'view', 'shop_id' => $shop_id, 'cart_uuid' => $cart_uuid));
+		return $this->redirect(array('action' => 'user_type', $shop_id, $cart_uuid));
 	}
 	
+/**
+ * Redirects to checkout page and saves session information
+ * @param unknown_type $shop_id
+ * @param unknown_type $cart_uuid
+ */
 	public function redirectem($shop_id, $cart_uuid) {
 		$this->autoRender = false;
 		App::import('Core', 'String');
