@@ -56,6 +56,7 @@ class Address extends AppModel {
 	public function getAllByCustomer($customer_id, $type) {
 		$this->recursive = -1;
 		return $this->find('all', array(
+			'contain' => array('Country'),
 			'conditions'=>array(
 				'customer_id'=>$customer_id,
 				'type' => $type
