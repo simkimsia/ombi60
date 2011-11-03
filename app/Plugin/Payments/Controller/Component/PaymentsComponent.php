@@ -23,7 +23,7 @@ class PaymentsComponent extends Component {
  */
 	public function setupPurchase($paymentGateway, $purchaseInfo = array()) {
 		if ($paymentGateway == self::PAYPAL_EXPRESS) {
-			return $this->PaypalExpress->setupPurchase($purchaseInfo);
+			$this->PaypalExpress->setupPurchase($purchaseInfo);
 		}
 	}
 	
@@ -46,6 +46,9 @@ class PaymentsComponent extends Component {
 	public function redirect($paymentGateway, $redirectInfo = array()) {
 		if ($paymentGateway == self::PAYPAL_EXPRESS) {
 			$this->controller->redirect($this->PaypalExpress->getUrlForToken($this->PaypalExpress->response->token()));
+		} else {
+			//Unknown payment method for this component
+			return false;
 		}
 	}
 	
