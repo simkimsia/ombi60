@@ -24,17 +24,20 @@
 			'cart_uuid' 	=> $cart_uuid
 	)));
 ?>
-<div class="gray_background">
-    <div><?php
-    echo $this->Form->label('Contact Email');
-    ?></div>
-    <div class="clear"></div>
-    <?php 
-    if (!$customerId) {
-        echo $this->Form->input('User.email', array('div' => FALSE));
-    } 
-    ?>
-</div>
+<?php if (!$customerId) : ?>
+	<div class="gray_background">
+	    <div><?php
+	    	echo $this->Form->label('Contact Email');
+		 ?></div>
+	    <div class="clear"></div>
+	    <?php 
+	        echo $this->Form->input('User.email', array('div' => FALSE)); 
+	    ?>
+	</div>
+	<?php else: 
+		    echo $this->Form->input('User.email', array('type' => 'hidden', 'value' => $user['User']['email'])); 
+	    
+	endif;?>
 <div class="clear">&nbsp;</div>
 
 <div class="gray_background">
@@ -49,7 +52,7 @@
 	        <span class="info"><?php echo $address['DeliveryAddress']['address']; ?></span>
 	        <span class="info"><?php echo $address['DeliveryAddress']['city']; ?></span>
 	        <span class="info"><?php echo $address['DeliveryAddress']['region']; ?></span>
-	        <span class="info"><?php echo $address['DeliveryAddress']['country']; ?></span>
+	        <span class="info"><?php echo $address['Country']['printable_name']; ?></span>
 	        <span class="info">
 	        <?php
 	        echo $this->Form->submit('Ship to this address', array('name'=>'submitAddress',
@@ -71,7 +74,7 @@
         echo $this->Form->input('Order.customer_id', array('type' => 'hidden', 'value'=>$customerId));
         echo $this->Form->input('Customer.shop_id', array('type' => 'hidden', 'value'=>$shopId));
         
-        echo $this->Form->input('BillingAddress.0.full_name', array('div' => FALSE));
+        echo $this->Form->input('BillingAddress.0.full_name', array('div' => FALSE, 'value' => $user['User']['full_name']));
         echo "<div class='clear'></div>";
         echo $this->Form->input('BillingAddress.0.address', array('div' => FALSE));
         echo "<div class='clear'></div>";
@@ -152,8 +155,7 @@ echo $this->element('return_to_store');
       });
        
        $(":input.shipToThisAddressBtn").each(function() {
-		$(this).click(function() {
-			alert($(this).attr('id'));			
+		$(this).click(function() {		
 			$("#OrderFixedDelivery").val($(this).attr('id'));
 		});
        });
