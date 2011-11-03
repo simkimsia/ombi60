@@ -623,24 +623,29 @@ class Order extends AppModel {
 		$orderFormData = $this->makeDeliveryBillingAddressesSameIn($orderFormData);
 		
 		$orderFormData = $this->markDeliveredToCountryInOrder($orderFormData);
-		
 		if ($buyingDoneByExistingCustomer) {
 			// need to set the id in Customer so that the Address related functions work
 			$this->Customer->id = $customerId;
 			
-			$billingAddressId 	= $this->Customer->getExistingBillingAddress($orderFormData);
-			
-			$deliveryAddressId 	= $this->Customer->getExistingDeliveryAddress($orderFormData);
-			
-			$createNewBillingAddress 	= empty($billingAddressId);
-			$createNewDeliveryAddress 	= empty($deliveryAddressId);
+			$createNewBillingAddress 	= empty($orderFormData['Order']['fixed_delivery']);
+			$createNewDeliveryAddress 	= empty($orderFormData['Order']['fixed_delivery']);
 			
 			if ($createNewBillingAddress) {
+				$customer = $this->Customer->find('first', array('conditions' => array('Customer.id' => $customerId)));
+				if (empty($customer['User']['full_name'])) { //Registered on checkout
+					$customer['User']['full_name'] = $orderFormData['BillingAddress'][0]['full_name'];
+					$customer['User']['name_to_call'] = $orderFormData['BillingAddress'][0]['full_name'];
+					$this->Customer->User->save($customer);
+				}
 				$billingAddressId = $this->Customer->setNewBillingAddress($orderFormData);
+			} else {
+				$billingAddressId = $orderFormData['Order']['fixed_delivery'];
 			}
 			
 			if ($createNewDeliveryAddress) {
 				$deliveryAddressId = $this->Customer->setNewDeliveryAddress($orderFormData);
+			} else {
+				$deliveryAddressId = $orderFormData['Order']['fixed_delivery'];
 			}			
 			
 		} elseif ($buyingDoneByNewCustomer) {
