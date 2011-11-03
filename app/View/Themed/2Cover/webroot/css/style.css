@@ -1031,4 +1031,26 @@ input{
 }
 /* End of Footer Styling Tags */
 
+.login-checkout {
+	border-right: 1px solid gray;
+	float: left;
+	width: 40%;
+	margin-top: 50px;
+	margin-bottom: 20px;
+	margin-left: 100px;
+}
 
+.guest-checkout {
+	float: left;
+	margin-top: 50px;
+	margin-bottom: 20px;
+	margin-left: 100px;
+}
+
+.guest-checkout .submit {
+	margin-top: 60px;
+}
+
+.login-checkout .submit {
+	text-align: center;
+}
