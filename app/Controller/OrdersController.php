@@ -632,7 +632,13 @@ class OrdersController extends AppController {
 			// now we are going to save the Payment and Shipment rates
 			$result = $this->Order->completePurchase($orderFormData);
 			if ($result) {
-				$this->Payments->redirect($shopsPaymentModule['ShopsPaymentModule']['display_name']);
+				if (!$this->Payments->redirect($shopsPaymentModule['ShopsPaymentModule']['display_name'])) {
+					return $this->redirect(array(
+									'action' => 'completed',
+									'shop_id'=> $order['Order']['shop_id'],
+									'order_uuid' => $order['Order']['id'],
+					));
+				}
 				 
 				//Add conditions to another payment gateways
 			}else {
