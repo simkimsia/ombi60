@@ -659,6 +659,7 @@ class OrdersController extends AppController {
 		$payment = $this->Order->Payment->find('first', array('conditions' => array('token_from_gateway' => $this->params->query['token'])));
 		if ($this->Payments->isPaypalExpress($payment['ShopsPaymentModule']['display_name'])) {
 			$purchase_opts = array(
+			    'currency' => $payment['Order']['currency'],
 				'token' => $this->params->query['token'],
 				'PayerID' => $this->params->query['PayerID']
 			);
