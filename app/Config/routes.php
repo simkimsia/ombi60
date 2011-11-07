@@ -260,7 +260,8 @@
                               ));
         
         Router::connect('/admin/payments', array('controller' => 'payments', 'plugin' => false, 'admin' => true));
-        
+        Router::connect('/admin/payments/add_paypal_payment', array('action' => 'add_paypal_payment', 'controller' => 'payments', 'plugin' => false, 'admin' => true));
+       
         Router::connect('/cart/add',
                         array('controller' 	=> 'carts',
                               'action' 		=> 'add_to_cart',
