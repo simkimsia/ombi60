@@ -49,7 +49,7 @@ class PaypalExpressComponent extends Component {
  */
 	function purchase($purchaseInfo) {
 		$gateway = $this->datasource->getGateway();
-		$response = $gateway->get_details_for( $purchaseInfo['token'], $purchaseInfo['PayerID']);
+		$response = $gateway->get_details_for( $purchaseInfo['token'], $purchaseInfo['PayerID'], $purchaseInfo);
 		$response = $gateway->purchase($response->amount(), $purchaseInfo);
 		return $response;
 	}

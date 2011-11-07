@@ -604,7 +604,9 @@ class OrdersController extends AppController {
 			$order = $this->Order->find('first', array('conditions' => array('Order.id' => $order_uuid))); 
 			
 			//TODO Possibly we need to prepare purchase info for each payment gateway
+			$accountEmail = $this->Order->Shop->getAccountEmailPaypal($shop_id);
 			$options = array(
+				'subject' => $accountEmail,
 				'currency' => $order['Order']['currency'],
 				'amount' => $orderFormData['Shipment']['price'] + $order['Order']['amount'],
 				'payment_breakdown' => array(
@@ -658,7 +660,9 @@ class OrdersController extends AppController {
 	public function return_from_payment() {
 		$payment = $this->Order->Payment->find('first', array('conditions' => array('token_from_gateway' => $this->params->query['token'])));
 		if ($this->Payments->isPaypalExpress($payment['ShopsPaymentModule']['display_name'])) {
+			$accountEmail = $this->Order->Shop->getAccountEmailPaypal($payment['Order']['shop_id']);
 			$purchase_opts = array(
+				'subject' => $accountEmail,
 			    'currency' => $payment['Order']['currency'],
 				'token' => $this->params->query['token'],
 				'PayerID' => $this->params->query['PayerID']
@@ -672,21 +676,16 @@ class OrdersController extends AppController {
 				$payment['Payment']['paymentstatus_from_gateway'] = $response->__get('PAYMENTINFO_0_PAYMENTSTATUS');
 				$payment['Payment']['feeamt_from_gateway'] = $response->__get('PAYMENTINFO_0_FEEAMT');
 				$payment['Payment']['pendingreason_from_gateway'] = $response->__get('PAYMENTINFO_0_PENDINGREASON');
-
-			} else {
-				// ....
+				$result = $this->Order->Payment->save($payment);
 			}
 		}
-		$result = $this->Order->Payment->save($payment);		
-		if ($result) {
-			return $this->redirect(array(
-				'action' => 'completed',
-				'shop_id'=> $payment['Order']['shop_id'],
-				'order_uuid' => $payment['Order']['id'],
-			));
-		} else {
-			// redirect user back to pay page and ask them to contact owner for assistance
-		}
+				
+		$this->Session->write('payment_success', $result);
+		return $this->redirect(array(
+			'action' => 'completed',
+			'shop_id'=> $payment['Order']['shop_id'],
+			'order_uuid' => $payment['Order']['id'],
+		));
 		
 		
 	}
@@ -705,7 +704,11 @@ class OrdersController extends AppController {
 		$link 			= $shop['Shop']['primary_domain'];
 		
 		$this->set(compact('link'));
-		$this->render('success');
+		if ($this->Session->read('payment_success')) {
+			$this->render('success');
+		} else {
+			$this->render('failure');
+		}
 	}
 	
 	
