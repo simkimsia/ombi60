@@ -1,5 +1,5 @@
 <?php
-
+App::uses('Component', 'Controller');
 /**
  * 
  * This class implements Payments component to abstract payments module and calls specific 
