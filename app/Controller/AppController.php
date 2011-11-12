@@ -141,17 +141,15 @@ class AppController extends Controller {
 		// if we do not have the currentshop from the session and we are now at the checkout domain
 		if (empty($currentShop) AND $isCheckoutProcess) {
 			// we need to extract the shop id from the url where possible
-			debug($this->params->params);
+		
 			if(is_numeric($this->params->params['shop_id'])) {
-				debug('numeric!!');
+		
 				$currentShop = $this->Shop->getById($this->params->params['shop_id']);
 				$this->Session->write('CurrentShop', $currentShop);
 			}
 		}
-				debug('test0');
-		if(empty($currentShop) OR (!$isCheckoutProcess AND !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain']))) {
-				debug('test0.1');				
 		
+		if(empty($currentShop) OR (!$isCheckoutProcess AND !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain']))) {
 			$currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
 			$this->Session->write('CurrentShop', $currentShop);
 		}
@@ -161,14 +159,13 @@ class AppController extends Controller {
 			//$this->cakeError('noSuchDomain', array('url'=>FULL_BASE_URL));
 		}
 		
-		debug('test');
 		if ($isCheckoutProcess && !in_array($this->name, array('Orders', 'Carts', 'Customers'))) {
 			$this->redirect($this->Session->read('CurrentShop.Domain.domain'));
 		} else if ($isCheckoutProcess) {
 			$this->Security->blackHoleCallback = 'forceSSL';
 			$this->Security->requireSecure();
 		}
-		debug('test1');		
+		
 		Shop::store($currentShop);
 		$shopId = Shop::get('Shop.id');
 		$shopName = Shop::get('Shop.name');
