@@ -83,7 +83,7 @@ class ShopFrontPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		}
 		
 		// GIVEN at checkout page 1 aka carts view action
-		$this->open('carts/2/4e895a91-b374-4a1a-947c-0b701507707a');
+		$this->open('https://checkout.ombi60.localhost/carts/2/4e895a91-b374-4a1a-947c-0b701507707a');
 		
 		$this->assertElementPresent('xpath=//span[@class="font_bold"][contains(text(), "You are using our secure server")]');
 		

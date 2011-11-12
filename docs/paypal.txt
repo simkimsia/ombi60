@@ -11,6 +11,11 @@ API Username	merch_1277746388_biz_api1.gmail.com
 API Password	1277746393
 Signature	AHExNCgTOAf6I0jS8V77WYVPl78nAUalMl21CFNLpKr4giwMI6dr5DKE
 
+Test Account:    owner@shop123.com    Nov 7, 2011 06:52:35 PST
+API Username:    owner_api1.shop123.com
+API Password:    VPMACCG7WFK325NA
+Signature:     Akdx5z4k3yqsxKB-nW5s63x9R2usA7IWd4.I.LFqjMV-c14g4S.OnRzV
+
 
 sandbox tp.simone@gmail.com
 

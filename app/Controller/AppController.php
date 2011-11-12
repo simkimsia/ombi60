@@ -134,25 +134,41 @@ class AppController extends Controller {
 		// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
 		App::uses('Shop', 'Model');
 		$currentShop = $this->Session->read('CurrentShop');
-
+		
 		$isCheckoutProcess = (strpos(FULL_BASE_URL, 'checkout'));
+		$this->loadModel('Shop');		
+		
+		// if we do not have the currentshop from the session and we are now at the checkout domain
+		if (empty($currentShop) AND $isCheckoutProcess) {
+			// we need to extract the shop id from the url where possible
+			debug($this->params->params);
+			if(is_numeric($this->params->params['shop_id'])) {
+				debug('numeric!!');
+				$currentShop = $this->Shop->getById($this->params->params['shop_id']);
+				$this->Session->write('CurrentShop', $currentShop);
+			}
+		}
+				debug('test0');
 		if(empty($currentShop) OR (!$isCheckoutProcess AND !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain']))) {
-			$this->loadModel('Shop');
+				debug('test0.1');				
+		
 			$currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
 			$this->Session->write('CurrentShop', $currentShop);
 		}
+		
 		if (!$currentShop) {
 			throw new NotFoundException();
 			//$this->cakeError('noSuchDomain', array('url'=>FULL_BASE_URL));
 		}
 		
+		debug('test');
 		if ($isCheckoutProcess && !in_array($this->name, array('Orders', 'Carts', 'Customers'))) {
 			$this->redirect($this->Session->read('CurrentShop.Domain.domain'));
 		} else if ($isCheckoutProcess) {
 			$this->Security->blackHoleCallback = 'forceSSL';
 			$this->Security->requireSecure();
 		}
-		
+		debug('test1');		
 		Shop::store($currentShop);
 		$shopId = Shop::get('Shop.id');
 		$shopName = Shop::get('Shop.name');
@@ -376,7 +392,9 @@ class AppController extends Controller {
 	}
 
 	public function forceSSL() {
-		$this->redirect('https://' . env('SERVER_NAME') . $this->request->here);
+		$domain1 = $_SERVER['SERVER_NAME'];
+		$domain2 = env('SERVER_NAME');
+		$this->redirect('https://' . $domain1 . $this->request->here);
 	}
 
 	protected function checkUrlAgainstDomain($fullBaseUrl, $httpDomainInDB) {

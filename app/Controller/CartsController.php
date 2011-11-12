@@ -25,7 +25,6 @@ class CartsController extends AppController {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 
-
 		//$this->Auth->allow('checkout', 'paypalExpressCheckout', 'add');
 		$this->Auth->allow(
 			'add_to_cart',
@@ -44,7 +43,7 @@ class CartsController extends AppController {
 		) {
 			$this->Components->disable('Security');
 		}
-		
+
 	}
 	
 	/**
