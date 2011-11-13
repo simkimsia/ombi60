@@ -63,6 +63,34 @@ class Address extends AppModel {
 			)
 		));
 	}
+	
+	/**
+	*
+	* Get id for given data
+	*
+	* @param array $data Array containing address, city, region, zip_code, country, customer_id, type, full_name
+	* @return integer Id of address
+	**/
+	public function getIdByData($data) {
+		$defaults = array(
+			'address' => '',
+			'city'	=> '',
+			'region' => '',
+			'zip_code' => '',
+			'country' => '0',
+			'customer_id' => '0',
+			'type' => '0',
+			'full_name' => '',
+		);
+		
+		$conditions = array_merge($defaults, $data);
+		
+		$this->recursive = -1;
+		
+		return $this->field('id', $data);
+		
+	}
+	
 
 }
 ?>

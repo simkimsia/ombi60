@@ -13,7 +13,7 @@
 		echo $this->Form->input('User.email');
 		echo $this->Form->input('User.password');
 		echo $this->Form->input('User.password_confirm', array('type' => 'password', 'id' => 'password_confirm'));
-		echo $this->Form->input('User.new_user', array('type' => 'checkbox', 'id' => 'new_user', 'label' => 'New user?' ));
+		//echo $this->Form->input('User.new_user', array('type' => 'checkbox', 'id' => 'new_user', 'label' => 'New user?' ));
 		echo $this->Form->input('Customer.shop_id', array('type'=>'hidden', 'value'=> $shop_id));
 		echo $this->Form->input('Customer.fromCheckout', array('type'=>'hidden', 'value' => true ));
 		echo $this->Form->input('Customer.cart_uuid', array('type'=>'hidden', 'value' => $cart_uuid));

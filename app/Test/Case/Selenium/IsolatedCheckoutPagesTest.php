@@ -1,13 +1,16 @@
 <?php
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
+$currentDirectory = dirname(__FILE__);
+require_once $currentDirectory . '/../../../Vendor/PaymentSelenium/PaypalSelenium.php';
+
 define('SELENIUM_TEST_ALL', 'all');
 
 define('SELENIUM_TEST_WHITELIST', 'white');
 
 define('SELENIUM_TEST_NOT_ON_BLACKLIST', 'black');
  
-class IsolatedAdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
+class IsolatedCheckoutPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 {
 	
 	public $localhost 				= true;
@@ -34,48 +37,7 @@ class IsolatedAdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 	
 	public $baseCheckoutUrl = 'https://checkout.ombi60.localhost/';
 	
-	
-	public function loginToSandboxPaypal(&$seleniumTestCase) {
-		
-		/*
-		$currentLocation = $seleniumTestCase->getLocation();
-		
-		// if at sandbox page prompting for login
-		$seleniumTestCase->assertLocation('regexp:^https://www.sandbox.paypal.com/cgi-bin/webscr');
-//		if (strpos($currentLocation, 'https://www.sandbox.paypal.com/cgi-bin/webscr') == 0) {
-		$seleniumTestCase->click('css=a[href="https://developer.paypal.com/"]');
-		*/
-		$seleniumTestCase->open('https://developer.paypal.com');
-		$seleniumTestCase->waitForPageToLoad(30000);
-		
-		
-//		}
-		$seleniumTestCase->assertLocation('regexp:https://developer.paypal.com');
-		
-		$seleniumTestCase->type('id=login_email', 'developer@ombi60.com');
-		$seleniumTestCase->type('id=login_password', 'd3v31234');
-		$seleniumTestCase->click('css=input[type="submit"]');
-		$seleniumTestCase->waitForPageToLoad(30000);
-		
-		//$seleniumTestCase->assertLocation('regexp:https://developer.paypal.com/cgi-bin/devscr?cmd=_login-done&login_access=0');
-
-	}
-	
-	public function loginToPayAtSandboxPaypal(&$seleniumTestCase) {
-		// to ensure that the login page is used instead of the credit card page
-		$seleniumTestCase->click('css=input[type="submit"][id="loadLogin"]');
-		$seleniumTestCase->waitForPageToLoad(30000);
-		
-		// fill in login credentials
-		$seleniumTestCase->type('id=login_email', 'shopper_sg@gmail.com');
-		$seleniumTestCase->type('id=login_password', 'customer');
-		$seleniumTestCase->click('css=input[type="submit"][id="submitLogin"]');
-		$seleniumTestCase->waitForPageToLoad(30000);
-		
-		// confirmation
-		$seleniumTestCase->click('css=input[type="submit"][id="continue"]');
-		$seleniumTestCase->waitForPageToLoad(30000);
-	}
+	public $paypalSelenium = '';
 	
 	/**
 	 *
@@ -97,6 +59,17 @@ class IsolatedAdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		}
         
 		$this->setSleep($this->secondsBetweenCommands);
+		
+		
+		// setup sandbox paypal credentials
+		$this->paypalSelenium = new PaypalSelenium(array(
+			'sandbox' => array(
+				'login_email' => 'developer@ombi60.com',
+				'login_password' => 'd3v31234',
+				'customer_email' => 'shopper_sg@gmail.com',
+				'customer_password' => 'customer'
+			)
+		));
 		
     }
 
@@ -132,11 +105,10 @@ class IsolatedAdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 			return;
 		}
 		
-		$this->loginToSandboxPaypal($this);
+		// GIVEN we have logged in to Sandbox Paypal
+		$this->paypalSelenium->loginToSandbox($this);
 		
-		// GIVEN at checkout page 1 aka carts view action
-		//$this->open('cart');
-		// https://checkout.ombi60.localhost/carts/2/4e895a91-b374-4a1a-947c-0b701507707a
+		// AND we are at checkout page 1 aka carts view action ie https://checkout.ombi60.localhost/carts/2/4e895a91-b374-4a1a-947c-0b701507707a
 		$this->open($this->baseCheckoutUrl . 'carts/2/4e895a91-b374-4a1a-947c-0b701507707a');
 		
 		$this->assertElementPresent('xpath=//span[@class="font_bold"][contains(text(), "You are using our secure server")]');
@@ -165,20 +137,11 @@ class IsolatedAdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		// AND we wait for up to 30 seconds for the sandbox page to show up
 		$this->waitForPageToLoad(30000);
 		
-		// AND we login to pay for the item at sandbox paypal
-		$this->loginToPayAtSandboxPaypal($this);
+		// WHEN we login to pay for the item at sandbox paypal
+		$this->paypalSelenium->loginToPayAtSandbox($this);
 		
 		// THEN we reach the success page
 		$this->assertLocation('regexp:' . $this->baseCheckoutUrl . 'orders/2/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/completed');
-		// AND we run sandbox paypal
-		//$this->getPastSandboxPaypal($this);
-		/*
-		$currentLocation = $this->getLocation();
-		$this->assertFalse(strpos($currentLocation, 'google.com'));
-		$this->assertTrue((strpos($currentLocation, 'https://www.sandbox.paypal.com/cgi-bin/webscr') == 0));
-		*/
-		// AND we reach paypal sandbox site
-		//$this->assertLocation('regexp:paypal');
 		
 	}
 

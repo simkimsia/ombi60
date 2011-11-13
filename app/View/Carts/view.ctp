@@ -44,27 +44,9 @@
 
     <div class="billing_left">
         <h2 class="border_bottom">Billing Address</h2>
-        <?php
-	    if (!empty($shippingAddresses)) :
-	    ?>
-	        <?php foreach ($shippingAddresses as $address) : ?>
-	        <span class="info"><?php echo $address['DeliveryAddress']['full_name']; ?></span>
-	        <span class="info"><?php echo $address['DeliveryAddress']['address']; ?></span>
-	        <span class="info"><?php echo $address['DeliveryAddress']['city']; ?></span>
-	        <span class="info"><?php echo $address['DeliveryAddress']['region']; ?></span>
-	        <span class="info"><?php echo $address['Country']['printable_name']; ?></span>
-	        <span class="info">
-	        <?php
-	        echo $this->Form->submit('Ship to this address', array('name'=>'submitAddress',
-									    'value'=>$address['DeliveryAddress']['id'],
-									    'id'=>$address['DeliveryAddress']['id'],
-									    'class'=>'shipToThisAddressBtn')); ?>
-	        </span>
-	        <?php endforeach; ?>
-		    <?php		    
-	    endif;
-	    echo $this->Form->input('Order.fixed_delivery', array('type'=>'hidden', 'value'=>0));
+
 	    
+		<?php
         echo $this->Form->input('Cart.id', array('type'=>'hidden', 'value'=>$cart_uuid));
 
         if (!$customerId) {
@@ -73,10 +55,35 @@
         
         echo $this->Form->input('Order.customer_id', array('type' => 'hidden', 'value'=>$customerId));
         echo $this->Form->input('Customer.shop_id', array('type' => 'hidden', 'value'=>$shopId));
+		?>
+
+        <?php
+	    if (!empty($billingAddresses)) :
+	    ?>
+		<br />
+		<select id="billing_address_selector" name="billing_address_selector">
+	        <?php foreach ($billingAddresses as $address) : 
+				
+				$text = $address['BillingAddress']['full_name'] . ', ' . 
+ 						$address['BillingAddress']['address'] . ', ' .
+						$address['BillingAddress']['city'] . ', ' .
+						$address['BillingAddress']['region'] . ', ' .
+						$address['BillingAddress']['zip_code'] . ', ' .
+						$address['Country']['printable_name'];
+						
+				$text = substr($text, 0, 50) . ' ...';
+			?>
+			<option value="<?php echo $address['BillingAddress']['id']; ?>"><?php echo $text; ?></option>
+	        <?php endforeach; ?>
+			<option>New Address...</option>
+		</select>
+		<br />
+		<?php endif; ?>
         
-        echo $this->Form->input('BillingAddress.0.full_name', array('div' => FALSE, 'value' => $user['User']['full_name']));
+		<?php
+        echo $this->Form->input('BillingAddress.0.full_name', array('div' => FALSE));
         echo "<div class='clear'></div>";
-        echo $this->Form->input('BillingAddress.0.address', array('div' => FALSE));
+        echo $this->Form->input('BillingAddress.0.address', array('div' => FALSE, 'type' => 'textarea'));
         echo "<div class='clear'></div>";
         echo $this->Form->input('BillingAddress.0.city', array('div' => FALSE));
         echo "<div class='clear'></div>";
@@ -96,10 +103,35 @@
         <h2 class="border_bottom">Shipping Address</h2>
         <div class="error_message" id="err_msg">Product(s) shipped to billing address</div>
         <div id="delivery_address">
+	
+        <?php
+	    if (!empty($shippingAddresses)) :
+	    ?>
+		<br />
+		<select id="delivery_address_selector" name="delivery_address_selector">
+	        <?php foreach ($shippingAddresses as $address) : 
+
+				$text = $address['DeliveryAddress']['full_name'] . ', ' . 
+ 						$address['DeliveryAddress']['address'] . ', ' .
+						$address['DeliveryAddress']['city'] . ', ' .
+						$address['DeliveryAddress']['region'] . ', ' .
+						$address['DeliveryAddress']['zip_code'] . ', ' .
+						$address['Country']['printable_name'];
+
+				$text = substr($text, 0, 50) . ' ...';
+			?>
+			<option value="<?php echo $address['DeliveryAddress']['id']; ?>"><?php echo $text; ?></option>
+	        <?php endforeach; ?>
+			<option>New Address...</option>
+		</select>
+		<br />
+		<?php endif; ?>
+	
+	
         <?php
         echo $this->Form->input('DeliveryAddress.0.full_name', array('div' => FALSE));
         echo "<div class='clear'></div>";
-        echo $this->Form->input('DeliveryAddress.0.address', array('div' => FALSE));
+        echo $this->Form->input('DeliveryAddress.0.address', array('div' => FALSE, 'type' => 'textarea'));
         echo "<div class='clear'></div>";
         echo $this->Form->input('DeliveryAddress.0.city', array('div' => FALSE));
         echo "<div class='clear'></div>";
@@ -133,9 +165,19 @@ echo $this->element('return_to_store');
     var isChanged = false;
     var isChangedDelivery = false;
 
+	var billingAddresses = $.parseJSON('<?php echo json_encode($billingAddresses) ?>');
+	var deliveryAddresses = $.parseJSON('<?php echo json_encode($shippingAddresses) ?>');
+
     $(document).ready(function(){       
         //Hide div w/id extra
-       $("#delivery_address").css("display","none");
+		if ($("#DeliveryAddressSame").is(":checked")) {
+			$("#delivery_address").css("display","none");
+			$("#err_msg").css("display", "block");
+		} else {
+			$("#delivery_address").css("display","block");
+			$("#err_msg").css("display", "none");
+		}
+
         // Add onclick handler to checkbox w/id checkme
        $("#DeliveryAddressSame").click(function(){
         
@@ -143,22 +185,35 @@ echo $this->element('return_to_store');
         if ($("#DeliveryAddressSame").is(":checked"))
         {
             //show the hidden div
-            $("#delivery_address").hide("fast");
+            $("#delivery_address").hide();
             $("#err_msg").show();
         }
         else
         {      
             //otherwise, hide it 
-            $("#delivery_address").show("fast");
+            $("#delivery_address").show();
             $("#err_msg").hide();
         }
       });
-       
+
+		
+
+		$("#billing_address_selector").change(function() {
+			assignAddress('billing');
+		});
+		
+		$("#delivery_address_selector").change(function() {
+			assignAddress('delivery');
+		});
+		
+
+
        $(":input.shipToThisAddressBtn").each(function() {
 		$(this).click(function() {		
 			$("#OrderFixedDelivery").val($(this).attr('id'));
 		});
        });
+
        $('#BillingAddress0Country').click(function(){      
          if (isChanged == false) {
              $('#BillingAddress0Country').prepend('<option value="0">Please select</option>');
@@ -171,5 +226,33 @@ echo $this->element('return_to_store');
              isChangedDelivery = true;
          }        
        }); 
+
+		// set the default fields
+		assignAddress('billing');
+		assignAddress('delivery');
+
     });
+
+	function assignAddress(type) {
+		if (type == 'billing') {
+			addresses = billingAddresses;
+			selector = "#billing_address_selector";
+			preFieldId = "#BillingAddress0";
+			model = 'BillingAddress';
+		} else {
+			addresses = deliveryAddresses;
+			selector = "#delivery_address_selector";
+			preFieldId = "#DeliveryAddress0";
+			model = 'DeliveryAddress';
+		}
+		var id = $(selector).val();
+
+		$(preFieldId+"FullName").val(addresses[id][model]['full_name']);
+		$(preFieldId+"ZipCode").val(addresses[id][model]['zip_code']);
+		$(preFieldId+"Address").val(addresses[id][model]['address']);
+		$(preFieldId+"City").val(addresses[id][model]['city']);
+		$(preFieldId+"Region").val(addresses[id][model]['region']);
+		$(preFieldId+"Country").val(addresses[id][model]['country']);
+		
+	}
 </script>
