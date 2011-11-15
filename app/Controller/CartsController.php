@@ -309,13 +309,13 @@ class CartsController extends AppController {
 
 			// now we are going to pass the session into the database for the crossover for checkout
 
-			if (!$this->Cart->Shop->isCurrentBaseThisDomain($mainUrl)) {
-				// test if we need to send User id over
-				$this->Session->write('User.id', User::get('User.id'));
+//			if (!$this->Cart->Shop->isCurrentBaseThisDomain($mainUrl)) {
+//				// test if we need to send User id over
+//				$this->Session->write('User.id', User::get('User.id'));
 				//$this->log('new user id in session write ' . $this->Session->read('User.id'));
-				$sessionString = '?ss='.$this->transferSession();
-			}
-			$this->set('sessionString', $sessionString);
+//				$sessionString = '?ss='.$this->transferSession();
+//			}
+//			$this->set('sessionString', $sessionString);
 
 			$this->render('cart');
 		}
@@ -368,7 +368,7 @@ class CartsController extends AppController {
 		$SiteTransfer = ClassRegistry::init('SiteTransfer');
 		if($SiteTransfer->save($data)) {
 			$this->redirect(
-				        'https://checkout.ombi60.localhost/carts/catchem?uuid='. $SiteTransfer->id . '&shop_id=' . $shop_id . '&cart_uuid=' . $cart_uuid
+				        'https://checkout.ombi60.com/carts/catchem?uuid='. $SiteTransfer->id . '&shop_id=' . $shop_id . '&cart_uuid=' . $cart_uuid
 			);
 		}
 	}
