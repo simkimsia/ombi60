@@ -1,4 +1,5 @@
 <?php
+App::uses('Component', 'Controller');
 
 /**
  * 
@@ -52,6 +53,14 @@ class PaypalExpressComponent extends Component {
 		$response = $gateway->get_details_for( $purchaseInfo['token'], $purchaseInfo['PayerID'], $purchaseInfo);
 		$response = $gateway->purchase($response->amount(), $purchaseInfo);
 		return $response;
+	}
+	
+/**
+ * Response getter
+ * 
+ */
+	public function getResponse() {
+		return $this->response;
 	}
 
 }

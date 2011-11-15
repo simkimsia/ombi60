@@ -25,7 +25,6 @@ class CartsController extends AppController {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 
-
 		//$this->Auth->allow('checkout', 'paypalExpressCheckout', 'add');
 		$this->Auth->allow(
 			'add_to_cart',
@@ -44,7 +43,7 @@ class CartsController extends AppController {
 		) {
 			$this->Components->disable('Security');
 		}
-		
+
 	}
 	
 	/**
@@ -140,17 +139,23 @@ class CartsController extends AppController {
 			
 			// get all shipping addresses of this customer
 			$shippingAddresses = array();
+			$billingAddresses = array();
 			if ($customerId > 0) {
 				$this->Cart->Order->DeliveryAddress->recursive = -1;
 				$shippingAddresses = $this->Cart->Order->DeliveryAddress->getAllByCustomer($customerId, DELIVERY);
+				$shippingAddresses = Set::combine($shippingAddresses, '{n}.DeliveryAddress.id', '{n}');
+				$billingAddresses  = $this->Cart->Order->BillingAddress->getAllByCustomer($customerId, BILLING);
+				$billingAddresses  = Set::combine($billingAddresses, '{n}.BillingAddress.id', '{n}');
 			}
+			
+			
 			// get Cart data
 			$this->Cart->id = $cart_uuid;
 			$this->Cart->recalculateTotalWeightPrice($cart_uuid);
 			$currentCart 	= $this->Cart->getItemsWithImages($cart_uuid);
 
 			// populate view vars
-			$this->set(compact('user', 'countries', 'customerId', 'shopId', 'shippingAddresses', 'currentCart')
+			$this->set(compact('user', 'countries', 'customerId', 'shopId', 'shippingAddresses', 'currentCart', 'billingAddresses')
 			);
 		}
 		

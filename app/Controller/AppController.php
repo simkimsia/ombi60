@@ -134,13 +134,26 @@ class AppController extends Controller {
 		// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
 		App::uses('Shop', 'Model');
 		$currentShop = $this->Session->read('CurrentShop');
-
+		
 		$isCheckoutProcess = (strpos(FULL_BASE_URL, 'checkout'));
+		$this->loadModel('Shop');		
+		
+		// if we do not have the currentshop from the session and we are now at the checkout domain
+		if (empty($currentShop) AND $isCheckoutProcess) {
+			// we need to extract the shop id from the url where possible
+		
+			if(is_numeric($this->params->params['shop_id'])) {
+		
+				$currentShop = $this->Shop->getById($this->params->params['shop_id']);
+				$this->Session->write('CurrentShop', $currentShop);
+			}
+		}
+		
 		if(empty($currentShop) OR (!$isCheckoutProcess AND !$this->checkUrlAgainstDomain(FULL_BASE_URL, $currentShop['Domain']['domain']))) {
-			$this->loadModel('Shop');
 			$currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
 			$this->Session->write('CurrentShop', $currentShop);
 		}
+		
 		if (!$currentShop) {
 			throw new NotFoundException();
 			//$this->cakeError('noSuchDomain', array('url'=>FULL_BASE_URL));
@@ -376,7 +389,9 @@ class AppController extends Controller {
 	}
 
 	public function forceSSL() {
-		$this->redirect('https://' . env('SERVER_NAME') . $this->request->here);
+		$domain1 = $_SERVER['SERVER_NAME'];
+		$domain2 = env('SERVER_NAME');
+		$this->redirect('https://' . $domain1 . $this->request->here);
 	}
 
 	protected function checkUrlAgainstDomain($fullBaseUrl, $httpDomainInDB) {
