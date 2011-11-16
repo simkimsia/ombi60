@@ -23,6 +23,7 @@ class ShopSettingFixture extends CakeTestFixture {
 		'money_in_email_with_currency' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'money_in_email' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'checkout_language' => array('type' => 'integer', 'null' => true, 'default' => '1', 'length' => 3, 'collate' => NULL, 'comment' => ''),
+		'users_accepted' => array('type' => 'string', 'null' => false, 'default' => 'guest', 'length' => 10, 'collate' => NULL, 'comment' => ''),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -43,7 +44,8 @@ class ShopSettingFixture extends CakeTestFixture {
 			'money_in_html' => '{{amount}}',
 			'money_in_email_with_currency' => '${{amount}}',
 			'money_in_email' => '{{amount}}',
-			'checkout_language' => '1'
+			'checkout_language' => '1',
+			'users_accepted' => 'guest'
 		),
 	);
 }

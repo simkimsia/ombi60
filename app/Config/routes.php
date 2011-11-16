@@ -170,6 +170,19 @@
 	        )
         );
 
+		// redirection to prompt for customer login before checkout
+		Router::connect('/carts/user_type/:shop_id/:cart_uuid',
+        	array(
+				'controller' 	=> 'carts',
+		 		'action' 		=> 'user_type'
+		 	),
+	        array(
+				'pass'			=> array('shop_id', 'cart_uuid'),
+				'shop_id'		=> '[0-9]+',
+				'cart_uuid'		=> '[a-zA-Z0-9\-_]+'
+	        )
+        );
+
 		// action to create an order for a cart
 		// at the same time creating billing, delivery addresses
 		// also convert the Casual Surfer into a Customer

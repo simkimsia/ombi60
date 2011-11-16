@@ -98,7 +98,7 @@ class IsolatedCheckoutPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 	 * This replaces the OrdersController test for Redirect for create_order action
 	 *
 	 *
-	**/
+
 	public function testPaypalShouldWorkForGuestCustomerOpeningSingleStoreInBrowser() {
 		
 		if ($this->doNotRunThisTest(__FUNCTION__)) {
@@ -107,6 +107,9 @@ class IsolatedCheckoutPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		
 		// GIVEN we have logged in to Sandbox Paypal
 		$this->paypalSelenium->loginToSandbox($this);
+		
+		// AND Shop is at guests for Customer settings
+		
 		
 		// AND we are at checkout page 1 aka carts view action ie https://checkout.ombi60.localhost/carts/2/4e895a91-b374-4a1a-947c-0b701507707a
 		$this->open($this->baseCheckoutUrl . 'carts/2/4e895a91-b374-4a1a-947c-0b701507707a');
@@ -143,7 +146,63 @@ class IsolatedCheckoutPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		// THEN we reach the success page
 		$this->assertLocation('regexp:' . $this->baseCheckoutUrl . 'orders/2/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/completed');
 		
+	}	**/
+
+	/**
+	 *
+	 * Registered Customer when we have Registered Customers ONLY setting turned on
+	 *
+	 *
+	**/
+	public function testPaypalShouldWorkForRegisteredCustomerOpeningSingleStoreInBrowser() {
+		
+		if ($this->doNotRunThisTest(__FUNCTION__)) {
+			return;
+		}
+		
+		// GIVEN we have logged in to Sandbox Paypal
+		$this->paypalSelenium->loginToSandbox($this);
+		
+		// AND Shop is at registered customer ONLY
+		
+		// AND we are at checkout page 1 aka carts view action ie https://checkout.ombi60.localhost/carts/2/4e895a91-b374-4a1a-947c-0b701507707a
+		$this->open($this->baseCheckoutUrl . 'carts/2/4e895a91-b374-4a1a-947c-0b701507707a');
+		
+		// AND we should be redirected to user_type
+		$this->assertLocation('regexp:' . $this->baseCheckoutUrl . 'carts/user_type/2/4e895a91-b374-4a1a-947c-0b701507707a');
+		
+		// AND we fill in the login form correctly
+		$this->type('id=UserEmail', 'guest_customer@ombi60.com');
+		$this->type('id=UserPassword', 'password');
+		$this->clickAndWait('css=input[type="submit"]');
+		
+		// AND we should reach back to the carts checkout page 1
+		$this->assertElementPresent('xpath=//span[@class="font_bold"][contains(text(), "You are using our secure server")]');		
+				
+		// AND submit to create_order action
+		$this->assertElementPresent('xpath=//form[@action="/carts/2/4e895a91-b374-4a1a-947c-0b701507707a/create_order"]');
+		$this->clickAndWait('css=input[type="submit"]');
+		
+		// AND we reach pay action
+		$this->assertLocation('regexp:' . $this->baseCheckoutUrl . 'orders/2/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/pay');
+		
+		// AND we select Paypal
+		$this->click('id=PaymentShopsPaymentModuleId2', 'type=radio');
+		
+		// AND we click on complete purchase
+		$this->click('css=input[type="submit"][value="Complete my purchase"]');
+		
+		// AND we wait for up to 30 seconds for the sandbox page to show up
+		$this->waitForPageToLoad(30000);
+		
+		// WHEN we login to pay for the item at sandbox paypal
+		$this->paypalSelenium->loginToPayAtSandbox($this);
+		
+		// THEN we reach the success page
+		$this->assertLocation('regexp:' . $this->baseCheckoutUrl . 'orders/2/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/completed');
+		
 	}
+
 
  
     

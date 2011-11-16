@@ -371,9 +371,12 @@ class CartsController extends AppController {
 		$data['SiteTransfer']['sess_id'] = $this->Session->id();
 		$data['SiteTransfer']['id'] = String::uuid();
 		$SiteTransfer = ClassRegistry::init('SiteTransfer');
+		
+        $checkoutLink = Configure::read('currentCheckoutLink');
+		
 		if($SiteTransfer->save($data)) {
 			$this->redirect(
-				        'https://checkout.ombi60.com/carts/catchem?uuid='. $SiteTransfer->id . '&shop_id=' . $shop_id . '&cart_uuid=' . $cart_uuid
+				$checkoutLink . '/carts/catchem?uuid='. $SiteTransfer->id . '&shop_id=' . $shop_id . '&cart_uuid=' . $cart_uuid
 			);
 		}
 	}

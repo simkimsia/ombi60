@@ -179,8 +179,14 @@ define('HIDDEN_AND_VISIBLE_ENTITY', 2);
 /**
  * production checkout link
  **/
-define('CHECKOUT_LINK', 'http://checkout.ombi60.com');
-Configure::write('currentCheckoutLink', CHECKOUT_LINK);
+define('CHECKOUT_LINK', 'https://checkout.ombi60.com');
+define('CHECKOUT_LINK_LOCALHOST', 'https://checkout.ombi60.localhost');
+if (strpos($_SERVER['SERVER_NAME'], 'localhost') !== false) {
+	Configure::write('currentCheckoutLink', CHECKOUT_LINK_LOCALHOST);	
+} else {
+	Configure::write('currentCheckoutLink', CHECKOUT_LINK);
+}
+
 
 
 /**
