@@ -705,6 +705,9 @@ class OrdersController extends AppController {
 		
 		$this->set(compact('link'));
 		if ($this->Session->read('payment_success')) {
+			App::uses('CakeEmail', 'Network/Email');
+			CakeEmail::deliver('kimcity@gmail.com', 'Subject', 'Message', array('from' => 'me@example.com'));
+			
 			$this->render('success');
 		} else {
 			$this->render('failure');
