@@ -22,7 +22,7 @@ class OrderFixture extends CakeTestFixture {
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
 		'amount' => array('type' => 'float', 'null' => false, 'default' => '0.0000', 'length' => '10,4', 'collate' => NULL, 'comment' => ''),
 		'shipping_fee' => array('type' => 'float', 'null' => false, 'default' => '0.0000', 'length' => '10,4', 'collate' => NULL, 'comment' => ''),
-		'status' => array('type' => 'integer', 'null' => true, 'default' => '1', 'length' => 4, 'collate' => NULL, 'comment' => ''),
+		'status' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 4, 'collate' => NULL, 'comment' => ''),
 		'cart_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'payment_status' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 2, 'collate' => NULL, 'comment' => ''),
 		'fulfillment_status' => array('type' => 'integer', 'null' => true, 'default' => '1', 'length' => 2, 'collate' => NULL, 'comment' => ''),

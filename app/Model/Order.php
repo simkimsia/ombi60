@@ -730,6 +730,17 @@ class Order extends AppModel {
 		
 		return $currentOrder;
 	}
+	
+	/**
+	* is the order successfully completed the checkout process?
+	*
+	* @param string $order_uuid Order id
+	* @return boolean Returns true if completed checkout process
+	**/
+	public function completedCheckout($order_uuid) {
+		$status = $this->read('status', $order_uuid);
+		return ($status > 0);
+	}
 
 
 }

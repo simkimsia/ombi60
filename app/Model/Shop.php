@@ -557,9 +557,16 @@ class Shop extends AppModel {
 		return false;
 	}
 	
+	/**
+	*
+	* get the email account for paypal given the shopid
+	*
+	* @param integer $shopId Shop id
+	* @return string
+	**/
 	public function getAccountEmailPaypal($shopId = 0) {
 		if ($shopId > 0) {
-			$this->ShopsPaymentModule->recursive = -1;
+			$this->ShopsPaymentModule->recursive = 1;
 			$this->ShopsPaymentModule->Behaviors->load('Linkable.Linkable');
 			$paymentModule = $this->ShopsPaymentModule->find('first',
 							array('conditions'=>array(

@@ -5,6 +5,7 @@ App::uses('User', 'Model');
 App::uses('Shop', 'Model');
 App::uses('Cart', 'Model');
 App::uses('Order', 'Model');
+App::uses('PaypalPaymentModule', 'Model');
 
 /**
  * CoursesController Test Case
@@ -30,7 +31,9 @@ class OrdersControllerTestCase extends ControllerTestCase {
 		'app.webpage', 'app.page_type', 
 		'app.link_list', 'app.link', 
 		'app.blog', 'app.post', 'app.comment', 
-		'app.payment', 'app.shops_payment_module', 'app.payment_module',
+		'app.payment', 'app.shops_payment_module', 'app.paypal_payment_module',
+		'app.custom_payment_module',
+		'app.payment_module',
 		'app.log', 'app.saved_theme',
  		'app.country',
 		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
