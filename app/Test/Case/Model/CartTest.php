@@ -601,7 +601,8 @@ class CartTestCase extends CakeTestCase {
 		
 		// AND we run recalculate
 		$result = $this->Cart->recalculateTotalWeightPrice($cart_uuid);
-		
+		debug($result);
+//		die();
 		// THEN result is successful
 		$this->assertTrue($result);
 		
