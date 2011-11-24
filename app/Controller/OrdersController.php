@@ -101,7 +101,7 @@ class OrdersController extends AppController {
 		$this->Order->recursive = 0;
 		$this->set('orders', $this->paginate());
 	}
-	
+
 	public function admin_index() {
 		
 		$shop_id = Shop::get('Shop.id');
@@ -704,7 +704,9 @@ class OrdersController extends AppController {
 		$link 			= $shop['Shop']['primary_domain'];
 		
 		$this->set(compact('link'));
+		$order = $this->Order->find('first', array('conditions' => array('Order.id' => $order_uuid)));
 		if ($this->Session->read('payment_success')) {
+			$this->Order->sendNotification('checkout', $order);
 			$this->render('success');
 		} else {
 			$this->render('failure');

@@ -3,7 +3,7 @@ class Order extends AppModel {
 
 	public $name = 'Order';
 	
-	public $actsAs = array('Filter.Filter');
+	public $actsAs = array('Filter.Filter', 'Notification');
 
 	public $belongsTo = array(
 		'Shop' => array(
