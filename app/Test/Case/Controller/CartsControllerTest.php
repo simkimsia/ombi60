@@ -176,7 +176,7 @@ class CartsControllerTestCase extends ControllerTestCase {
 		
 		$cartId = User::get('User.live_cart_id');
 		
-		$this->controller->expects($this->once())->method('redirect')->with(array('action' => 'view', 'shop_id' => '2', 'cart_uuid' => $cartId))->will($this->returnValue(true));
+		$this->controller->expects($this->once())->method('redirect')->with(array('action' => 'redirectem', '0' => '2', '1' => $cartId))->will($this->returnValue(true));
 		$this->testAction('/cart', array(
 			'data' => $this->controller->request->data, 
 			'method' => 'POST'

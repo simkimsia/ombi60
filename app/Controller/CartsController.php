@@ -143,6 +143,7 @@ class CartsController extends AppController {
 			if ($customerId > 0) {
 				$this->Cart->Order->DeliveryAddress->recursive = -1;
 				$shippingAddresses = $this->Cart->Order->DeliveryAddress->getAllByCustomer($customerId, DELIVERY);
+
 				$shippingAddresses = Set::combine($shippingAddresses, '{n}.DeliveryAddress.id', '{n}');
 				$billingAddresses  = $this->Cart->Order->BillingAddress->getAllByCustomer($customerId, BILLING);
 				$billingAddresses  = Set::combine($billingAddresses, '{n}.BillingAddress.id', '{n}');

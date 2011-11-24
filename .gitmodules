@@ -59,3 +59,6 @@
 	path = app/Plugin/Payments/Vendor/AktiveMerchant
 	url = git@github.com:ajibarra/Aktive-Merchant.git
 
+[submodule "app/Vendor/RedBean"]
+	path = app/Vendor/RedBean
+	url = git@github.com:simkimsia/redbean.git

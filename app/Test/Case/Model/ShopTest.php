@@ -1,58 +1,73 @@
 <?php
-/* Shop Test cases generated on: 2010-04-17 12:04:24 : 1271507904*/
-App::import('Model', 'Shop');
+/* Shop Test cases generated on: 2011-09-22 09:42:11 : 1316684531*/
+App::uses('Shop', 'Model');
 
+
+/**
+ * Shop Test Case
+ *
+ */
 class ShopTestCase extends CakeTestCase {
-	var $fixtures = array('app.shop', 'app.merchant', 'app.user', 'app.group', 'app.domain', 'app.customer', 'app.cart', 'app.cart_item', 'app.product', 'app.product_image', 'app.order', 'app.address', 'app.order_line_item', 'app.wishlist', 'app.webpage', 'app.page_type', );
-
-	function startTest() {
-		$this->Shop =& ClassRegistry::init('Shop');
-	}
-
-	function endTest() {
-		unset($this->Shop);
-		ClassRegistry::flush();
-	}
+/**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = array(
+		'app.shop',  'app.domain',
+		'app.shop_setting', 'app.language',
+		'app.user', 'app.group',
+		'app.merchant', 'app.customer', 'app.casual_surfer',
+		'app.cart', 'app.cart_item',
+		'app.order', 'app.order_line_item', 'app.address', 
+		'app.product', 'app.product_image', 'app.wishlist', 
+		'app.variant', 'app.variant_option', 'app.products_in_group', 'app.product_group',  
+		'app.product_type', 'app.vendor',
+		'app.smart_collection_condition',
+		'app.webpage', 'app.page_type', 
+		'app.link_list', 'app.link', 
+		'app.blog', 'app.post', 'app.comment', 
+		'app.payment', 'app.shops_payment_module', 'app.payment_module',
+		'app.paypal_payment_module', 'app.custom_payment_module',
+		'app.log', 'app.saved_theme',
+ 		'app.country',
+		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
+		'app.price_based_rate', 'app.weight_based_rate'
+	);
 	
-	function testRegisterNewAccount() {
-		$data = array();
-		$data['User']['name_to_call'] = 'ally';
-		$data['User']['full_name'] = 'ally';
-		$data['User']['email'] = 'ally@a.com';
-		$data['User']['password'] = 'password';
-		$data['User']['password_confirm'] = 'password';
-		$data['Shop']['web_address'] = 'http://abc.myspree2shop.com';
-		$data['Shop']['subdomain'] = 'abc';
+/**
+ * setUp method
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
+
+		$this->Shop 	= ClassRegistry::init('Shop');
 		
-		$this->Shop->signupNewAccount($data);
-		$result = $this->Shop->find('first', array(
-					'conditions' => array('User.email' => 'ally@a.com',
-							      'Shop.web_address' => 'http://abc.myspree2shop.com',
-							      'Merchant.owner' => true,
-							      'User.group_id' => MERCHANTS),
-					
-					));
+		$cachedShopId = Shop::get('Shop.id');
 		
-		$this->assertTrue(!empty($result));
-		
-		$user_details = array();
-		$shop_details = array();
-		
-		if (!empty($result)) {
-			$user_details = array_intersect($result['User'], $data['User']);
-			$shop_details = array_intersect($result['Shop'], $data['Shop']);
-			
-			// need to unset these 2 fields because they actually do NOT exist in the database
-			// they appear on the forms for UI reasons
-			unset($data['User']['password_confirm']);
-			unset($data['Shop']['subdomain']);
+		if ($cachedShopId != 2) {
+			$testShop = $this->Shop->getById(2);
+			Shop::store($testShop);
 		}
 		
-		$this->assertEqual($user_details, $data['User']);
-		$this->assertEqual($shop_details, $data['Shop']);
-		
-
 	}
 
+/**
+ * tearDown method
+ *
+ * @return void
+ */
+	public function tearDown() {
+		unset($this->Shop);
+
+		ClassRegistry::flush();
+		
+		// consider running cake shell code to destroy image file and thumbs
+
+		parent::tearDown();
+	}
+	
+
 }
-?>

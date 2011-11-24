@@ -4,6 +4,14 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 $currentDirectory = dirname(__FILE__);
 require_once $currentDirectory . '/../../../Vendor/PaymentSelenium/PaypalSelenium.php';
 
+// include Redbean ORM
+require_once $currentDirectory . '/../../../Vendor/RedBean/RedBean/redbean.inc.php';
+
+// include Database in Config
+require_once $currentDirectory . '/../../../Config/database.php';
+
+
+
 define('SELENIUM_TEST_ALL', 'all');
 
 define('SELENIUM_TEST_WHITELIST', 'white');
@@ -71,6 +79,15 @@ class IsolatedCheckoutPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 			)
 		));
 		
+		// get database config 
+		$db_config = new DATABASE_CONFIG();
+		$hostname = $db_config->default['host'];
+		$database = $db_config->default['database'];
+		$login = $db_config->default['login'];
+		$password = $db_config->default['password'];
+		
+		R::setup('mysql:host='.$hostname.';dbname='.$database,$login,$password);
+		
     }
 
 	/**
@@ -97,8 +114,7 @@ class IsolatedCheckoutPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 	 *
 	 * This replaces the OrdersController test for Redirect for create_order action
 	 *
-	 *
-
+	 **/
 	public function testPaypalShouldWorkForGuestCustomerOpeningSingleStoreInBrowser() {
 		
 		if ($this->doNotRunThisTest(__FUNCTION__)) {
@@ -109,7 +125,9 @@ class IsolatedCheckoutPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		$this->paypalSelenium->loginToSandbox($this);
 		
 		// AND Shop is at guests for Customer settings
-		
+		$shopSetting = R::load("shop_settings", 1);
+		$shopSetting->users_accepted = "guest";
+		R::store($shopSetting);
 		
 		// AND we are at checkout page 1 aka carts view action ie https://checkout.ombi60.localhost/carts/2/4e895a91-b374-4a1a-947c-0b701507707a
 		$this->open($this->baseCheckoutUrl . 'carts/2/4e895a91-b374-4a1a-947c-0b701507707a');
@@ -146,7 +164,7 @@ class IsolatedCheckoutPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		// THEN we reach the success page
 		$this->assertLocation('regexp:' . $this->baseCheckoutUrl . 'orders/2/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/completed');
 		
-	}	**/
+	}
 
 	/**
 	 *
@@ -164,6 +182,9 @@ class IsolatedCheckoutPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		$this->paypalSelenium->loginToSandbox($this);
 		
 		// AND Shop is at registered customer ONLY
+		$shopSetting = R::load("shop_settings", 1);
+		$shopSetting->users_accepted = "registered";
+		R::store($shopSetting);
 		
 		// AND we are at checkout page 1 aka carts view action ie https://checkout.ombi60.localhost/carts/2/4e895a91-b374-4a1a-947c-0b701507707a
 		$this->open($this->baseCheckoutUrl . 'carts/2/4e895a91-b374-4a1a-947c-0b701507707a');

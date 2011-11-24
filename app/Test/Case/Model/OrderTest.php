@@ -28,6 +28,7 @@ class OrderTestCase extends CakeTestCase {
 		'app.webpage', 'app.page_type', 
 		'app.link_list', 'app.link', 
 		'app.blog', 'app.post', 'app.comment', 
+		'app.paypal_payment_module',
 		'app.payment', 'app.shops_payment_module', 'app.payment_module',
 		'app.log', 'app.saved_theme',
  		'app.country',
@@ -271,13 +272,13 @@ class OrderTestCase extends CakeTestCase {
 	private function orderShouldBeValid($resultArray, $expectedOptions = array()) {
 		
 		$defaultOptions = array(
-			'customer_id' => 1,
-			'billing_address_id' => 1,
-			'delivery_address_id' => 2,
+			'customer_id' => '1',
+			'billing_address_id' => '1',
+			'delivery_address_id' => '2',
 			'order_no' 	=> '10003',
 			'contact_email' => 'fake_customer@gmail.com',
-			'id'	=> '4e8d35a1-a9e4-4732-858f-0b711507707a'
-
+			'id'	=> '4e8d35a1-a9e4-4732-858f-0b711507707a',
+			'status' => '0'
 		);
 		
 		
@@ -287,16 +288,16 @@ class OrderTestCase extends CakeTestCase {
 			$expectedArray = array(
 				'Order' => array(
 					'id' 					=> $expectedOptions['id'],
-					'shop_id' 				=> 2,
+					'shop_id' 				=> '2',
 		            'customer_id' 			=> $expectedOptions['customer_id'],
 		            'billing_address_id' 	=> $expectedOptions['billing_address_id'],
 		            'delivery_address_id' 	=> $expectedOptions['delivery_address_id'],
 					'order_no'				=> $expectedOptions['order_no'],
 					'created'				=> '2011-10-06 04:59:13',
 					'amount'				=> '34.0000',
-					'status'				=> 1,
+					'status'				=> $expectedOptions['status'],
 					'cart_id'				=> '4e9144d7-55e4-44a6-a2f1-1f721507707a',
-					'payment_status'		=> 0,
+					'payment_status'		=> '0',
 					'fulfillment_status'	=> 1,
 					'net_amount'			=> '34.0000',
 					'shipped_weight'		=> 22000,
@@ -319,16 +320,16 @@ class OrderTestCase extends CakeTestCase {
 			$expectedArray = array(
 				'Order' => array(
 					'id' 					=> $expectedOptions['id'],
-					'shop_id' 				=> 2,
+					'shop_id' 				=> '2',
 		            'customer_id' 			=> $expectedOptions['customer_id'],
 		            'billing_address_id' 	=> $expectedOptions['billing_address_id'],
 		            'delivery_address_id' 	=> $expectedOptions['delivery_address_id'],
 					'order_no'				=> $expectedOptions['order_no'],
 					'created'				=> '2011-10-06 04:59:13',
 					'amount'				=> '23.0000',
-					'status'				=> 1,
+					'status'				=> $expectedOptions['status'],
 					'cart_id'				=> '4e895a91-b374-4a1a-947c-0b701507707a',
-					'payment_status'		=> 0,
+					'payment_status'		=> '0',
 					'fulfillment_status'	=> 1,
 					'net_amount'			=> '23.0000',
 					'shipped_weight'		=> 15000,
@@ -424,10 +425,10 @@ class OrderTestCase extends CakeTestCase {
 		$orderId = $this->Order->createFrom($orderFormData);
 		
 		// Then we expect the following
-		$expectedCustomerId 		= 2;
-		$expectedUserId 			= 4;
-		$expectedBillingAddressId	= 3;
-		$expectedDeliveryAddressId	= 4;
+		$expectedCustomerId 		= '2';
+		$expectedUserId 			= '4';
+		$expectedBillingAddressId	= '3';
+		$expectedDeliveryAddressId	= '4';
 		$expectedContactEmail 		= 'fake_customer@gmail.com';
 		$expectedOrderNo			= '10003';
 
@@ -693,12 +694,13 @@ class OrderTestCase extends CakeTestCase {
 		$resultArray = $this->Order->getItemsWithImages($orderId);
 
 		// Then we expect the following
-		$expectedCustomerId 		= 1;
-		$expectedUserId 			= 3;
-		$expectedBillingAddressId	= 1;
-		$expectedDeliveryAddressId	= 2;
+		$expectedCustomerId 		= '1';
+		$expectedUserId 			= '3';
+		$expectedBillingAddressId	= '1';
+		$expectedDeliveryAddressId	= '2';
 		$expectedContactEmail 		= 'guest_customer@ombi60.com';
 		$expectedOrderNo			= '10002';
+		$expectedStatus				= '1';
 
 
 		$expected = array(
@@ -708,6 +710,7 @@ class OrderTestCase extends CakeTestCase {
 			'order_no' 	=> $expectedOrderNo,
 			'contact_email' => $expectedContactEmail,
 			'id'		=> $orderId,
+			'status'	=> $expectedStatus
 		);
 
 		// AND the Order is valid

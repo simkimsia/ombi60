@@ -677,10 +677,14 @@ class OrdersController extends AppController {
 				$payment['Payment']['feeamt_from_gateway'] = $response->__get('PAYMENTINFO_0_FEEAMT');
 				$payment['Payment']['pendingreason_from_gateway'] = $response->__get('PAYMENTINFO_0_PENDINGREASON');
 				$result = $this->Order->Payment->save($payment);
+				
+				// set the Order as successfully opened
+				$this->Order->read(null, $payment['Payment']['order_id']);
+				$this->Order->set('status', ORDER_OPENED);
+				$this->Order->save();
 			}
 		}
 				
-		$this->Session->write('payment_success', $result);
 		return $this->redirect(array(
 			'action' => 'completed',
 			'shop_id'=> $payment['Order']['shop_id'],
@@ -704,8 +708,8 @@ class OrdersController extends AppController {
 		$link 			= $shop['Shop']['primary_domain'];
 		
 		$this->set(compact('link'));
-		$order = $this->Order->find('first', array('conditions' => array('Order.id' => $order_uuid)));
-		if ($this->Session->read('payment_success')) {
+		$order = $this->Order->find('first', array('conditions' => array('Order.id' => $order_uuid)));		
+		if ($this->Order->completedCheckout($order_uuid)) {
 			$this->Order->sendNotification('checkout', $order);
 			$this->render('success');
 		} else {

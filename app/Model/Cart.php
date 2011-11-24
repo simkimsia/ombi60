@@ -360,7 +360,13 @@ class Cart extends AppModel {
 		$id = Sanitize::escape($id);
 		$escapedSql = sprintf($sql, $id);
 
-		return $this->query($escapedSql);
+		$result = $this->query($escapedSql);
+		
+		// for some weird reason this returns empty array in phpunit tests
+		if ($result === true || $result === array()) {
+			return true;
+		}
+		return false;
 	}
 
 			

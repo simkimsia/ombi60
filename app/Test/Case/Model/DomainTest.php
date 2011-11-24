@@ -26,12 +26,12 @@ class DomainTestCase extends CakeTestCase {
 		'app.webpage', 'app.page_type', 
 		'app.link_list', 'app.link', 
 		'app.blog', 'app.post', 'app.comment', 
+		'app.paypal_payment_module',
 		'app.payment', 'app.shops_payment_module', 'app.payment_module',
 		'app.log', 'app.saved_theme',
  		'app.country',
 		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
-		'app.price_based_rate', 'app.weight_based_rate'		
-	);
+		'app.price_based_rate', 'app.weight_based_rate'	);
 
 /**
  * setUp method

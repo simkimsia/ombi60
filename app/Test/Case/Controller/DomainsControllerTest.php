@@ -40,6 +40,21 @@ class DomainsControllerTestCase extends ControllerTestCase {
 	 */
 	public function setUp() {
 		parent::setUp();
+		
+		$this->Shop 	= ClassRegistry::init('Shop');
+		$this->User 	= ClassRegistry::init('User');
+		
+		$cachedShopId = Shop::get('Shop.id');
+		
+		if ($cachedShopId != 2) {
+			$testShop = $this->Shop->getById(2);
+			Shop::store($testShop);
+		}
+		
+		// this is to allow User singleton to work properly
+		// look at AppController beforeFilter
+		Configure::write('run_test', true);
+		
 	}
 
 	/**
@@ -48,7 +63,13 @@ class DomainsControllerTestCase extends ControllerTestCase {
 	 * @return void
 	 */
 	public function tearDown() {
+		unset($this->Shop);
+		unset($this->User);
+		
 		ClassRegistry::flush();
+		
+		// this is to allow User singleton to work properly
+		Configure::write('run_test', false);
 
 		parent::tearDown();
 	}
