@@ -45,9 +45,9 @@ class EmailConfig {
 	public $default = array(
 		'host' => 'ssl://smtp.gmail.com',
       	'port' => 465,
-      	'from' => 'FROM',
-      	'username' => 'username@gmail.com',
-      	'password' => 'password',
+      	'from' => 'no-reply@ombi60.com',
+      	'username' => 'no-reply@ombi60.com',
+      	'password' => 'password4no-reply',
       	'transport' => 'Smtp'
     );
 	

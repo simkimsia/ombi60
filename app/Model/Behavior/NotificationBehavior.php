@@ -18,7 +18,7 @@ class NotificationBehavior extends ModelBehavior {
 			return $email->template('checkout') //template to use app/View/Emails
 				->emailFormat('html')
 				->subject('New order submitted!')
-				->to('alejandro.ibarra@cakedc.com') //you can use data to get this 
+				->to('admin@ombi60.com') //you can use data to get this 
 				->viewVars(array('order' => $data)) //passing data to view
 				->send(); //sending email
 		} else {
