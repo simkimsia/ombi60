@@ -151,15 +151,13 @@ class CakeTestSuiteDispatcher {
 				$found = include 'PHPUnit' . DS . 'Autoload.php';
 			}
 		}
-		if ($found) {
-			PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'DEFAULT');
-		}
 		return $found;
 	}
 
 /**
  * Checks for the xdebug extension required to do code coverage. Displays an error
- * if xdebug isn't installed. *
+ * if xdebug isn't installed.
+ *
  * @return void
  */
 	function _checkXdebug() {

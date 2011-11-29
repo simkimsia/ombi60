@@ -15,6 +15,7 @@ class CartTestCase extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
+		'app.aro', 'app.aco', 'app.aros_aco',
 		'app.shop',  'app.domain',
 		'app.shop_setting', 'app.language',
 		'app.user', 'app.group',
