@@ -785,7 +785,7 @@ class ProductTestCase extends CakeTestCase {
 	* test HandleMenuAction for hide
 	**/
 	public function testHandleMenuActionForHide() {
-		// GIVEN we want to hide 2 visble products of Shop 2
+		// GIVEN we want to hide 2 visible products of Shop 2
 		$result = $this->Product->find('all', array(
 			'conditions' => array(
 				'shop_id' => 2,
@@ -949,6 +949,40 @@ class ProductTestCase extends CakeTestCase {
 		}
 	}
 	
+	/**
+	*
+	* test updateCounterCacheForM2MMain works for Selected Groups 
+	*
+	**/
+	public function testUpdateCounterCacheForM2MMainForGroups() {
+		// GIVEN we want to remove the association between Product 2 and ProductGroup 2
+		$result = $this->Product->ProductsInGroup->delete(2, false);
+		
+		$this->assertTrue($result);
+		
+		// AND ProductGroup 2 still has the incorrect count of 2
+		$this->Product->ProductsInGroup->ProductGroup->id = 2;
+		$visibleCountOf2 = $this->Product->ProductsInGroup->ProductGroup->field('visible_product_count');
+		$allCountOf2 = $this->Product->ProductsInGroup->ProductGroup->field('all_product_count');
+		
+		$this->assertEquals(2, $visibleCountOf2);
+		$this->assertEquals(2, $allCountOf2);
+		
+		// WHEN we run the updateCounterCacheForM2MMain
+		$result = $this->Product->updateCounterCacheForM2MMain(2, array(1, 2));
+		
+		// THEN we get success results
+		$this->assertTrue($result);
+		
+		// AND ProductGroup 2 now has the correct count of 1
+		$this->Product->ProductsInGroup->ProductGroup->id = 2;
+		$visibleCountOf2 = $this->Product->ProductsInGroup->ProductGroup->field('visible_product_count');
+		$allCountOf2 = $this->Product->ProductsInGroup->ProductGroup->field('all_product_count');
+		
+		$this->assertEquals(1, $visibleCountOf2);
+		$this->assertEquals(1, $allCountOf2);
+		
 
+	}
 
 }

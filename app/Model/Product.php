@@ -450,11 +450,12 @@ class Product extends AppModel {
 		$this->imagesToDelete = Set::extract('/ProductImage/filename', $images);
 		
 		return true;
-        }
+
+	}
         
 	// same motive as beforeDelete
 	// this will do the actual deletion using unlink
-     	public function afterDelete() {
+   	public function afterDelete() {
                 
 		// secure way of finding out the possible thumbnail folder names
 		// basically i pr($this->ProductImage->Behaviors) in order to get this.
@@ -479,7 +480,7 @@ class Product extends AppModel {
 		$this->updateCounterCacheForM2MMain($this->id);
 		
 		
-        }
+	}
 	
 	/**
 	 *
@@ -1095,6 +1096,16 @@ class Product extends AppModel {
 		return $result;
 	}
 	
+	/**
+	*
+	* Update Counter Cache of the selected groups or selected product
+	*
+	* @param int $id Product Id
+	* @param array $groupIds Array containing group ids. If empty, we will dig up all the associated groups
+	* @param boolean $updateAllCount Default value is true
+	* @return boolean Return true if successful.
+	*
+	**/
 	public function updateCounterCacheForM2MMain($id, $groupIds=array(), $updateAllCount=true) {
 		if (empty($groupIds)) {
 			$associations = $this->ProductsInGroup->find('all', array(
@@ -1111,7 +1122,7 @@ class Product extends AppModel {
 			$this->updateCounterCacheForM2M('AllProductInGroup', $groupIds);	
 		}
 		
-		
+		return true;
 	}
 
 	/**
