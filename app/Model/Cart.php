@@ -347,20 +347,16 @@ class Cart extends AppModel {
 			return false;
 		}
 		
-		$sql = 'UPDATE carts SET amount = (SELECT SUM(product_price*product_quantity) FROM cart_items WHERE cart_id = \'%1$s\' AND product_quantity >= 1),
-				total_weight = (SELECT SUM(product_weight*product_quantity) FROM cart_items WHERE cart_id = \'%1$s\' AND product_quantity >= 1),
-				currency = (SELECT currency FROM cart_items WHERE cart_id = \'%1$s\' LIMIT 1),
-				
-				shipped_amount = IFNULL((SELECT SUM(product_price*product_quantity)  FROM cart_items WHERE cart_id = \'%1$s\' AND shipping_required = 1 AND product_quantity >= 1),0),
-				shipped_weight = IFNULL((SELECT SUM(product_weight*product_quantity)  FROM cart_items WHERE cart_id = \'%1$s\' AND shipping_required = 1 AND product_quantity >= 1),0)
-
-			WHERE carts.id = \'%1$s\'';
+		$sql = '
+			UPDATE carts
+			SET amount = (SELECT SUM(product_price*product_quantity) FROM cart_items WHERE cart_id = :id AND product_quantity >= 1),
+				total_weight = (SELECT SUM(product_weight*product_quantity) FROM cart_items WHERE cart_id = :id AND product_quantity >= 1),
+				currency = (SELECT currency FROM cart_items WHERE cart_id = :id LIMIT 1),
+				shipped_amount = IFNULL((SELECT SUM(product_price*product_quantity)  FROM cart_items WHERE cart_id = :id AND shipping_required = 1 AND product_quantity >= 1),0),
+				shipped_weight = IFNULL((SELECT SUM(product_weight*product_quantity)  FROM cart_items WHERE cart_id = :id AND shipping_required = 1 AND product_quantity >= 1),0)
+			WHERE carts.id = :id';
 		
-		App::uses('Sanitize', 'Utility');
-		$id = Sanitize::escape($id);
-		$escapedSql = sprintf($sql, $id);
-
-		$result = $this->query($escapedSql);
+		$result = $this->getDataSource()->fetchAll($sql, array('id' => $id));
 		
 		// for some weird reason this returns empty array in phpunit tests
 		if ($result === true || $result === array()) {
