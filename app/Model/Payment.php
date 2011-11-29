@@ -86,18 +86,6 @@ class Payment extends AppModel {
 		return $this->updateAll(array('completed'=>1),
 					array('transaction_id_from_gateway' => "'" . $transaction_id . "'",
 					      'shops_payment_module_id' => $shops_payment_module_id));
-		/**
-		$sql = 'UPDATE payments SET completed = 1
-
-			WHERE payments.transaction_id_from_gateway = "%1$s" AND shops_payment_module_id = %2$d';
-		
-		App::uses('Sanitize', 'Utility');
-		$shops_payment_module_id = Sanitize::escape($shops_payment_module_id);
-		$transaction_id = Sanitize::escape($transaction_id);
-		$escapedSql = sprintf($sql, $transaction_id, $shops_payment_module_id);
-		
-		return $this->query($escapedSql);
-		**/
 	}
 	
 	/**
