@@ -254,6 +254,7 @@ class CartTestCase extends CakeTestCase {
 	
 	/**
 	*
+	* ridciulous change
 	* comparison between expected Cart data and actual Cart data
 	**/
 	private function expectedCartShouldMatchActualCart($expectedArray, $resultArray, $checkCartId = false) {
