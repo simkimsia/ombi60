@@ -40,7 +40,7 @@ class MerchantsController extends AppController {
 		 **/
 
 		// allow non users to access register and login actions only.
-		$this->Auth->allow('register', 'login', 'logout');
+		$this->Auth->allow('register', 'login', 'logout', 'confirm', 'complete', 'sec');
 		//$this->Auth->allow('*');
 
 		// need to set this as false so that extra logic can be done in the action login
@@ -57,31 +57,103 @@ class MerchantsController extends AppController {
 	/**
 	 * Merchants to register a Merchant account
 	 **/
-	public function register() {
-		$this->set('title_for_layout', __('Signup'));
+	public function register($plan = null) {
+		
+		if ($plan == null) {
+			$this->redirect('/pages/pricing-signup');
+		}
+		
+		$this->set('title_for_layout', __('Signup',true));
+		
+		// first we determine the domains
+		$productionDomain = (strpos(FULL_BASE_URL, '.com') > 0);
+		$stagingDomain = (strpos(FULL_BASE_URL, '.biz') > 0);
+		$localhostDomain = (strpos(FULL_BASE_URL, '.localhost') > 0);
+		
+		// now we set the main domain.
+		$mainDomain = '.ombi60.biz';
+		if ($productionDomain) {
+			$mainDomain = '.ombi60.com';
+		} else if ($localhostDomain) {
+			$mainDomain = '.ombi60.localhost';
+		}
+		
+		$this->set('mainDomain', $mainDomain);
+		
 
 		if ($this->request->is('post')) {
 
 			// hash the confirm password field so that the comparison can be done successfully
 			// password is automatically hashed by the Auth component
-			$this->request->data['User']['password_confirm'] = AuthComponent::password($this->request->data['User']['password_confirm']);
-			$this->request->data['User']['password'] = AuthComponent::password($this->request->data['User']['password']);
+			$this->data['User']['password_confirm'] = $this->Auth->password($this->data['User']['password_confirm']);
 			
-			if ($this->Merchant->signupNewAccount($this->request->data)) {
-				$this->Session->setFlash(__('You\'ve successfully registered.'));
+			$this->data['Invoice']['title'] = $plan;
+			$this->data['Invoice']['description'] = 'Initial signup';
+			
+			// set the Shop email
+			$this->data['Shop']['email'] = $this->data['User']['email'];
+			
+			/* get price of subscription plan */
+			$this->Merchant->Shop->Invoice->SubscriptionPlan->id = $plan;
+			$this->data['Invoice']['price'] = $this->Merchant->Shop->Invoice->SubscriptionPlan->field('price');
+			
+			
+			if (isset($this->data['Shop']['primary_domain'])) {
+				
+				$this->data['Shop']['primary_domain'] 	= 'http://' . $this->data['Shop']['subdomain'] . $mainDomain;
+				$this->data['Shop']['url']	      	= $this->data['Shop']['primary_domain'];
+				$this->data['Shop']['permanent_domain']	= $this->data['Shop']['subdomain'] . $mainDomain;
+				
+			}
+			
+			if ($result = $this->Merchant->signupNewAccount($this->data)) {
+				
+				$this->data['Invoice']['reference'] = $result['Invoice']['reference'];
+				
+				// we need to write this into session.
+				$this->Session->write('NewShopID', $this->Merchant->Shop->id);
+				
+				// so now we go to paypal
+				if ($this->params['form']['submit'] == 'paypalExpressCheckout') {
+					$PaypalResult = $this->prepareSEC($result['Invoice']['id']);
+					
+					$this->Session->write('Subscription.Paypal.TOKEN', $PaypalResult['TOKEN']);
+					
+					
+					if (isset($PaypalResult['REDIRECTURL']))
+						$this->redirect($PaypalResult['REDIRECTURL']);
+
+				// or we go to paydollar						
+				} else if ($this->data['Pay']['method'] == 'paydollar') {
+					$PaydollarResult = $this->runAddSchPay($this->data);
+					//$this->log($PaydollarResult);
+					// means success						
+					if($PaydollarResult['resultCode'] == 0) {
+						$this->Session->write('PaydollarResult', $PaydollarResult);
+						
+						$this->redirect('/merchants/confirm?paydollar&inv='.$result['Invoice']['reference']);
+					} else {
+						$this->Session->setFlash(__('Your credit card was not accepted by Paydollar. Please try again.', true), 'default', array('class'=>'flash_failure'));
+					}
+				}
+				
+				
 
 			} else {
-				$this->Session->setFlash(__('Sorry, the information you\'ve entered is incorrect.'));
+				$this->Session->setFlash(__('Sorry, the information you\'ve entered is incorrect.',true));
 			}
 
 			// regardless of success, we must blank out the password fields because we only have the hashed versions
-			$this->request->data['User']['password_confirm'] = NULL;
-			$this->request->data['User']['password']         = NULL;
+			$this->data['User']['password_confirm'] = NULL;
+			$this->data['User']['password']         = NULL;
 
 		}
-
-
+		
+		$theme = ClassRegistry::init('Theme');
+		$this->set('themes', $theme->find('list', array('conditions'=>array('price'=>'0'))));
 		$this->set('errors', $this->Merchant->getAllValidationErrors());
+		$this->set('plan', 	$plan);
+		
 
 	}
 
