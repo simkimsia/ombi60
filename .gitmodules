@@ -62,3 +62,6 @@
 [submodule "app/Vendor/RedBean"]
 	path = app/Vendor/RedBean
 	url = git@github.com:simkimsia/redbean.git
+[submodule "mainsite/Plugin/DebugKit"]
+	path = mainsite/Plugin/DebugKit
+	url = git://github.com/cakephp/debug_kit.git
