@@ -6,8 +6,8 @@ class MerchantsController extends AppController {
 	public $name = 'Merchants';
 
 	public $helpers = array(
-		'Javascript',
 		'Ajax',
+		'Javascript',
 		'Log.Log');
 
 	public function beforeFilter() {

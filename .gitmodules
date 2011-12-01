@@ -65,3 +65,6 @@
 [submodule "mainsite/Plugin/DebugKit"]
 	path = mainsite/Plugin/DebugKit
 	url = git://github.com/cakephp/debug_kit.git
+[submodule "mainsite/Plugin/ClearCache"]
+	path = mainsite/Plugin/ClearCache
+	url = git@github.com:simkimsia/ClearCache.git
