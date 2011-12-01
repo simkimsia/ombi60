@@ -71,7 +71,6 @@ class AppController extends Controller {
 
 	public function beforeFilter() {
 
-		$this->log('something');
 
 		if (Configure::read('debug')) {
 			$this->Toolbar = $this->Components->load('DebugKit.Toolbar');
