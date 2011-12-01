@@ -45,3 +45,4 @@ class SessionsSchema extends CakeSchema {
 		);
 
 }
+?>

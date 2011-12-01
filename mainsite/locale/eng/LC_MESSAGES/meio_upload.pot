@@ -1,0 +1,101 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2010-09-05 11:18+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /models/saved_theme.php:381
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:1094
+msgid "Problems in the copy of the file."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:158
+msgid "This field has not been defined between the parameters of MeioUploadBehavior."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:161
+msgid "The directory where the file would be placed there or is protected against writing."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:164
+msgid "The file can not be empty."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:167
+msgid "There were problems in uploading the file."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:170
+msgid "The maximum file size is exceeded."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:173
+msgid "Invalid file type."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:176
+msgid "Invalid file extension."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:179
+msgid "Image width is smaller than minimum allowed."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:182
+msgid "Image height is smaller than minimum allowed."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:185
+msgid "Image width is larger than maximum allowed."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:188
+msgid "Image height is larger than maximum allowed."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:224
+msgid "MeioUploadBehavior Error: The field \"%s\" doesn't exists in the model \"%s\"."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:230
+msgid "MeioUploadBehavior Error: The default option must be the filename with extension."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:239
+msgid "MeioUploadBehavior Error: The thumbsizes names must be alphanumeric."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:395
+msgid "MeioUploadBehavior Error: The field \"%s\" wasn't declared as part of the MeioUploadBehavior in model \"%s\"."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:422
+msgid "MeioUploadBehavior Error: The directory %s does not exist and cannot be created."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:426
+msgid "MeioUploadBehavior Error: The directory %s does not exist."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:433
+msgid "MeioUploadBehavior Error: The directory %s isn't writable."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:1008
+msgid "MeioUploadBehavior Error: The max_size option format is invalid."
+msgstr ""
+
+#: /plugins/meio_upload/models/behaviors/meio_upload.php:1021
+msgid "MeioUploadBehavior Error: The max_size unit is invalid."
+msgstr ""
+

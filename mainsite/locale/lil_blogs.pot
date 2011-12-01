@@ -1,0 +1,686 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2010-09-12 04:19+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /plugins/lil_blogs/controllers/authors_controller.php:117
+msgid "You've been logged out."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/authors_controller.php:140
+msgid "A new author has been added."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/authors_controller.php:155
+msgid "Author has been saved."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/authors_controller.php:158
+#: /plugins/lil_blogs/controllers/blogs_controller.php:155
+#: /plugins/lil_blogs/controllers/categories_controller.php:126
+#: /plugins/lil_blogs/controllers/posts_controller.php:377;429
+msgid "Please verify that the information is correct."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/authors_controller.php:174
+msgid "Author has been deleted."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/blogs_controller.php:129
+msgid "A new blog has been created."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/blogs_controller.php:150
+msgid "Blog has been saved."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/blogs_controller.php:173
+msgid "Blog has been deleted."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/categories_controller.php:99
+msgid "A new category has been created."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/categories_controller.php:123
+msgid "Category has been saved."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/categories_controller.php:142
+msgid "Category has been deleted."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/comments_controller.php:199
+msgid "Comments on %1$s for %2$s"
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/comments_controller.php:204
+#: /plugins/lil_blogs/views/comments/index.ctp:3
+msgid "Comments for"
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/comments_controller.php:209
+msgid "LilBlogs comments"
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/comments_controller.php:210
+msgid "Coments from every single blog on"
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/comments_controller.php:237
+msgid "Comment has been saved."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/comments_controller.php:254
+msgid "Comment has been deleted"
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/comments_controller.php:333
+msgid "Action completed."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/comments_controller.php:335
+msgid "No comments or action selected"
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/comments_controller.php:355
+msgid "Comment has been successfuly marked as HAM."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/comments_controller.php:357
+msgid "Comment has been successfuly marked as SPAM."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/posts_controller.php:215
+msgid "LilBlogs posts"
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/posts_controller.php:216
+msgid "Posts from every single blog on"
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/posts_controller.php:303
+msgid "Your comment has been successfully saved."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/posts_controller.php:305
+msgid "Your comment has gone into moderation."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/posts_controller.php:312
+msgid "[%1$s] New comment on \"%2$s\""
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/posts_controller.php:323
+msgid "Uh oh, we weren't able to save your comment."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/posts_controller.php:374
+msgid "A new post has been created."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/posts_controller.php:416
+msgid "Post has been saved."
+msgstr ""
+
+#: /plugins/lil_blogs/controllers/posts_controller.php:466
+msgid "Post has been deleted."
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_add.ctp:2
+msgid "Add an Author"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_add.ctp:7
+#: /plugins/lil_blogs/views/authors/admin_edit.ctp:8
+#: /plugins/lil_blogs/views/authors/admin_index.ctp:10
+#: /plugins/lil_blogs/views/blogs/admin_add.ctp:8
+#: /plugins/lil_blogs/views/blogs/admin_edit.ctp:9
+#: /plugins/lil_blogs/views/blogs/admin_index.ctp:16
+#: /plugins/lil_blogs/views/categories/admin_add.ctp:8
+#: /plugins/lil_blogs/views/categories/admin_edit.ctp:9
+#: /plugins/lil_blogs/views/categories/admin_index.ctp:9
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:9
+msgid "Name"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_add.ctp:7
+#: /plugins/lil_blogs/views/authors/admin_edit.ctp:8
+msgid "Name is required."
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_add.ctp:8
+#: /plugins/lil_blogs/views/authors/admin_edit.ctp:9
+#: /plugins/lil_blogs/views/authors/admin_index.ctp:11
+#: /plugins/lil_blogs/views/comments/admin_edit.ctp:11
+#: /plugins/lil_blogs/views/posts/view.ctp:105
+msgid "Email"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_add.ctp:8
+#: /plugins/lil_blogs/views/authors/admin_edit.ctp:9
+msgid "Email is required, format must be valid."
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_add.ctp:9
+#: /plugins/lil_blogs/views/blogs/admin_add.ctp:21
+#: /plugins/lil_blogs/views/categories/admin_add.ctp:9
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:50
+msgid "Create"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_edit.ctp:2
+msgid "Edit Author"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_edit.ctp:10
+#: /plugins/lil_blogs/views/blogs/admin_edit.ctp:23
+#: /plugins/lil_blogs/views/categories/admin_edit.ctp:10
+#: /plugins/lil_blogs/views/comments/admin_edit.ctp:14
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:55
+msgid "Save"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_index.ctp:2
+#: /plugins/lil_blogs/views/elements/admin_navigation.ctp:4
+msgid "Authors"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_index.ctp:3
+msgid "Create a new Author"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_index.ctp:9
+#: /plugins/lil_blogs/views/blogs/admin_index.ctp:15
+#: /plugins/lil_blogs/views/categories/admin_index.ctp:8
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:40
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:8
+msgid "ID"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_index.ctp:21;21
+#: /plugins/lil_blogs/views/blogs/admin_index.ctp:34;34
+#: /plugins/lil_blogs/views/categories/admin_index.ctp:18;18
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:71;71
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:16
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:46;46
+msgid "Edit"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_index.ctp:22
+#: /plugins/lil_blogs/views/blogs/admin_index.ctp:35;35
+#: /plugins/lil_blogs/views/categories/admin_index.ctp:19;19
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:72;72
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:47;47
+msgid "Delete"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/admin_index.ctp:22
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:68
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:41
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:54
+#: /plugins/lil_blogs/views/posts/view.ctp:71
+msgid "Comments"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/login.ctp:2
+msgid "LilBlogs Login"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/login.ctp:7
+msgid "Username"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/login.ctp:8
+msgid "Password"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/login.ctp:9
+msgid "Remember me on this computer"
+msgstr ""
+
+#: /plugins/lil_blogs/views/authors/login.ctp:10
+msgid "OK"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_add.ctp:2
+msgid "Add a Blog"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_add.ctp:3
+#: /plugins/lil_blogs/views/blogs/admin_edit.ctp:3
+msgid "A blog is a container for posts and is generally maintained by one or a few people."
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_add.ctp:8
+#: /plugins/lil_blogs/views/blogs/admin_edit.ctp:9
+msgid "Blog name is required."
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_add.ctp:10
+#: /plugins/lil_blogs/views/blogs/admin_edit.ctp:11
+msgid "Short name"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_add.ctp:10
+#: /plugins/lil_blogs/views/blogs/admin_edit.ctp:11
+msgid "Short name must only use letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_add.ctp:13
+#: /plugins/lil_blogs/views/blogs/admin_edit.ctp:13
+#: /plugins/lil_blogs/views/blogs/admin_index.ctp:18
+msgid "Description"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_add.ctp:14
+#: /plugins/lil_blogs/views/blogs/admin_edit.ctp:13
+msgid "Blog description is required."
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_add.ctp:18
+#: /plugins/lil_blogs/views/blogs/admin_edit.ctp:19
+#: /plugins/lil_blogs/views/comments/admin_edit.ctp:9
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:41
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:39
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:44
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:10
+#: /plugins/lil_blogs/views/posts/view.ctp:104
+msgid "Author"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_edit.ctp:2
+msgid "Edit a Blog"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_index.ctp:2
+#: /plugins/lil_blogs/views/elements/admin_navigation.ctp:3
+msgid "Blogs"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_index.ctp:6
+msgid "Create a new Blog"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_index.ctp:17
+msgid "Short"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_index.ctp:36;36
+msgid "Show Categories"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/admin_index.ctp:37;37
+msgid "Show Posts"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/index.ctp:1
+msgid "LilBlogs List"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/index.ctp:5
+#: /plugins/lil_blogs/views/posts/index.ctp:94
+msgid "Read more"
+msgstr ""
+
+#: /plugins/lil_blogs/views/blogs/view.ctp:1
+msgid "Blog"
+msgstr ""
+
+#: /plugins/lil_blogs/views/categories/admin_add.ctp:2
+msgid "Add a Category"
+msgstr ""
+
+#: /plugins/lil_blogs/views/categories/admin_add.ctp:8
+#: /plugins/lil_blogs/views/categories/admin_edit.ctp:9
+msgid "Category name is required."
+msgstr ""
+
+#: /plugins/lil_blogs/views/categories/admin_edit.ctp:2
+msgid "Edit Category"
+msgstr ""
+
+#: /plugins/lil_blogs/views/categories/admin_index.ctp:2
+msgid "Categories for"
+msgstr ""
+
+#: /plugins/lil_blogs/views/categories/admin_index.ctp:24
+msgid "Create a new Category"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_edit.ctp:2
+msgid "Edit Comment"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_edit.ctp:10
+#: /plugins/lil_blogs/views/posts/view.ctp:106
+msgid "Url"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_edit.ctp:12
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:20
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:22
+#: /plugins/lil_blogs/views/posts/view.ctp:107
+msgid "Body"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_edit.ctp:13
+msgid "Spam"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_edit.ctp:13
+msgid "Awaiting Moderation"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_edit.ctp:13
+msgid "Approved"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:5
+msgid "Comments for %s"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:7
+msgid "%s comments"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:12
+msgid "With selected comments:"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:13
+msgid "Mark them as spam"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:13
+msgid "Allow and publish them"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:13
+msgid "Delete them"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:14
+msgid "Go"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:43
+msgid "Comment"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:44
+msgid "In response to"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:45
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:44
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:49
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:11
+msgid "Status"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:63
+msgid "Submitted"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:70
+msgid "Junk"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:70
+msgid "Awaiting moderation"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:70
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:47
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:52
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:44
+msgid "Live"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:86
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:63
+msgid "previous"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:87
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:64
+msgid "next"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:89
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:66
+msgid "Page <b>%page%</b> of <b>%pages%</b>, total <b>%count%</b> records."
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/index.ctp:5
+msgid "All LilBlogs comments"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/index.ctp:15
+#: /plugins/lil_blogs/views/comments/rss/index.ctp:7
+msgid "Comment on"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/index.ctp:15
+msgid "on"
+msgstr ""
+
+#: /plugins/lil_blogs/views/comments/index.ctp:15
+#: /plugins/lil_blogs/views/comments/rss/index.ctp:7
+msgid "by"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:7
+msgid "Posts"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:23
+msgid "Add New"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:30
+msgid "Edit Categories"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/email/text/comment_notification.ctp:3
+msgid "A new comment on the post #%1$s \"%2$s\" has been posted."
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/email/text/comment_notification.ctp:6
+msgid "A new comment on the post #%1$s \"%2$s\" is waiting for moderation."
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/email/text/comment_notification.ctp:17
+msgid "Author : %1$s"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/email/text/comment_notification.ctp:18
+msgid "E-mail : %1$s"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/email/text/comment_notification.ctp:19
+msgid "Url    : %1$s"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/email/text/comment_notification.ctp:20
+msgid "Whois  : http://ws.arin.net/cgi-bin/whois.pl?queryinput=%1$s"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/email/text/comment_notification.ctp:22
+msgid "Comment:"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/email/text/comment_notification.ctp:25
+msgid "Approve it"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/email/text/comment_notification.ctp:34
+msgid "Delete it"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/email/text/comment_notification.ctp:42
+msgid "Spam it"
+msgstr ""
+
+#: /plugins/lil_blogs/views/layouts/blogs_admin.ctp:5
+msgid "Blog Administration"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:2
+msgid "Add a Post"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:9
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:11
+msgid "Title"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:10
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:12
+msgid "Post title is required."
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:15
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:17
+msgid "Slug"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:16
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:18
+msgid "Post slug is required and must only use letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:21
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:24
+msgid "Body of the post is required."
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:24
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:28
+msgid "Allow Comments"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:29
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:33
+msgid "Category"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:31
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:35
+msgid "none"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_add.ctp:46
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:51
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:44
+msgid "Draft"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_edit.ctp:2
+msgid "Edit Post"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:2
+msgid "Posts for \"%s\""
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/admin_index.ctp:12
+msgid "Date"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/index.ctp:3
+msgid "Search Results"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/index.ctp:25
+#: /plugins/lil_blogs/views/posts/view.ctp:9
+msgid "Posted %1$s by %2$s"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/index.ctp:30
+#: /plugins/lil_blogs/views/posts/view.ctp:14
+msgid "Posted %s"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/index.ctp:37
+#: /plugins/lil_blogs/views/posts/view.ctp:21
+msgid "in"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/index.ctp:50
+#: /plugins/lil_blogs/views/posts/view.ctp:34
+msgid "and"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/index.ctp:72
+#: /plugins/lil_blogs/views/posts/view.ctp:56
+msgid "Edit this post"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/index.ctp:108
+msgid "Newer"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/index.ctp:109
+msgid "Older"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/index.ctp:59
+#: /plugins/lil_blogs/views/posts/view.ctp:43
+msgid "1 comment"
+msgid_plural "%d comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /plugins/lil_blogs/views/posts/view.ctp:76
+msgid "No comments yet. Please do add yours."
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/view.ctp:86
+msgid "said"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/view.ctp:99
+msgid "Leave a Comment"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/view.ctp:104
+msgid "Author is required."
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/view.ctp:105
+msgid "Email in proper form is required."
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/view.ctp:107
+msgid "Body is required."
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/view.ctp:108
+msgid "Add my comment"
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/view.ctp:110
+msgid "Please be respectful; your comment my be edited or marked as spam, if necessary."
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/view.ctp:115
+msgid "Sorry, comments are closed for this post. If you have any further questions or comments, feel free to contact us."
+msgstr ""
+
+#: /plugins/lil_blogs/views/posts/rss/view.ctp:7
+msgid "Comment from"
+msgstr ""
+
