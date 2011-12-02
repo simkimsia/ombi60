@@ -174,11 +174,15 @@ class SavedTheme extends AppModel {
 		
 		
 		$result = $this->save($data);
-		
+		$this->log('result ok?');
+		$this->log($result);
 		
 		$folderOk =  $this->folderOrFileExists($data['SavedTheme']['folder_name'], ROOT . DS . 'app' . DS . 'views' . DS . 'themed');
-		
-		
+
+		$this->log('folderOk ok?');
+		$this->log($folderOk);
+
+				
 		if ($result && $folderOk) {
 			$this->Shop->id = $options['shop_id'];
 			$this->Shop->saveField('saved_theme_id', $this->id);
