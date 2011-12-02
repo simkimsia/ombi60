@@ -53,12 +53,17 @@ class Link extends AppModel {
 			
 		}
 		
-		
-		// only for create
+		// only for create, we need to figure out the order
 		if (!isset($this->data[$this->alias]['id'])) {
-			$this->recursive = -1;
-			$this->data[$this->alias]['order'] = $this->find('count', array('conditions'=>array($this->alias.'.link_list_id'=>$this->data[$this->alias]['link_list_id'])));
-			$this->recursive = 0;	
+			
+			// assuming we know which link_list this link is supposed to belong to beforehand
+			if (!empty($this->data[$this->alias]['link_list_id'])) {
+				$this->recursive = -1;
+				$this->data[$this->alias]['order'] = $this->find('count', array('conditions'=>array($this->alias.'.link_list_id'=>$this->data[$this->alias]['link_list_id'])));
+				$this->recursive = 0;	
+				
+			} 
+			
 		}
 		
 	}

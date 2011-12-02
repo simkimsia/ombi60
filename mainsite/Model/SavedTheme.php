@@ -147,6 +147,50 @@ class SavedTheme extends AppModel {
 		}
 	}
 	
+	
+	public function saveThemeAtSignUp($options = array()) {
+		$theme = ClassRegistry::init('Theme');
+		
+		$themeData = $theme->read(null, $options['theme_id']);
+		
+		$data['SavedTheme']['name'] = $themeData['Theme']['name'];
+		$data['SavedTheme']['description'] = $themeData['Theme']['description'];
+		$data['SavedTheme']['author'] = $options['author'];
+		//$data['SavedTheme']['folder_name'] = $options['user_id'] . '_' . $themeData['Theme']['name'];
+		
+		// we are now going to save just 1 theme per shop like Shopify so all are called shop_id_cover e.g., 5_cover
+		$data['SavedTheme']['folder_name'] = $options['shop_id'] . '_cover';
+		$data['SavedTheme']['shop_id'] = $options['shop_id'];
+		$data['SavedTheme']['theme_id'] = $options['theme_id'];
+		$data['SavedTheme']['featured'] = true;
+		
+		// to prevent the beforesave function from working
+		$data['SavedTheme']['skipCssCheck'] = true;
+		$data['SavedTheme']['signup'] = true;
+		
+		
+		// set the sourceFolderName, later we need it for copying over.
+		$this->sourceFolderName = $themeData['Theme']['folder_name'];
+		
+		
+		$result = $this->save($data);
+		
+		
+		$folderOk =  $this->folderOrFileExists($data['SavedTheme']['folder_name'], ROOT . DS . 'app' . DS . 'views' . DS . 'themed');
+		
+		
+		if ($result && $folderOk) {
+			$this->Shop->id = $options['shop_id'];
+			$this->Shop->saveField('saved_theme_id', $this->id);
+		} else {
+			return false;
+		}
+		
+		
+		return $result;
+	}
+
+	
 	// this is called AFTER the SUCCESS of beforeSave in the ThemeFolder behavior
 	public function beforeSave() {
 		

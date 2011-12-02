@@ -68,5 +68,22 @@ class Domain extends AppModel {
 		return $result;
 	}
 	
+	public function getMainDomain() {
+		// first we determine the domains
+		$productionDomain = (strpos(FULL_BASE_URL, '.com') > 0);
+		$stagingDomain = (strpos(FULL_BASE_URL, '.biz') > 0);
+		$localhostDomain = (strpos(FULL_BASE_URL, '.localhost') > 0);
+		
+		// now we set the main domain.
+		$mainDomain = '.ombi60.biz';
+		if ($productionDomain) {
+			$mainDomain = '.ombi60.com';
+		} else if ($localhostDomain) {
+			$mainDomain = '.ombi60.localhost';
+		}
+		
+		return $mainDomain;
+	}
+	
 }
 ?>

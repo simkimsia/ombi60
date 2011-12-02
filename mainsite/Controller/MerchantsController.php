@@ -19,11 +19,12 @@ class MerchantsController extends AppController {
 		if ($this->request->action == 'register') {
 			// because Security component is turned on
 			// hence need to disable any hidden fields that is auto changed by jQuery
-			$this->Security->unlockedFields[] = 'Shop.primary_domain';
+			//$this->Security->disabledFields[] = 'Shop.primary_domain';
+			$this->Security->validatePost = false;
 
 			// in case the merchant did not turn on Js,
-			if (empty($this->request->data['Shop']['primary_domain'])) {
-				$this->request->data['Shop']['primary_domain'] = 'http://' . $this->request->data['Shop']['subdomain'] . '.myspree2shop.com';
+			if (empty($this->request->data['Shop']['primary_domain']) && $this->request->is('post')) {
+				$this->request->data['Shop']['primary_domain'] = 'http://' . $this->request->data['Shop']['subdomain'] . $this->Merchant->Shop->Domain->getMainDomain();
 			}
 		}
 
@@ -52,6 +53,7 @@ class MerchantsController extends AppController {
 		$this->Auth->loginAction    = '/admin/login';
 		$this->Auth->loginRedirect  = '/admin';
 		$this->Auth->logoutRedirect = '/admin/login';
+
 	}
 
 	/**
@@ -65,50 +67,36 @@ class MerchantsController extends AppController {
 		
 		$this->set('title_for_layout', __('Signup',true));
 		
-		// first we determine the domains
-		$productionDomain = (strpos(FULL_BASE_URL, '.com') > 0);
-		$stagingDomain = (strpos(FULL_BASE_URL, '.biz') > 0);
-		$localhostDomain = (strpos(FULL_BASE_URL, '.localhost') > 0);
-		
-		// now we set the main domain.
-		$mainDomain = '.ombi60.biz';
-		if ($productionDomain) {
-			$mainDomain = '.ombi60.com';
-		} else if ($localhostDomain) {
-			$mainDomain = '.ombi60.localhost';
-		}
+		$mainDomain = $this->Merchant->Shop->Domain->getMainDomain();
 		
 		$this->set('mainDomain', $mainDomain);
-		
 
 		if ($this->request->is('post')) {
-
-			// hash the confirm password field so that the comparison can be done successfully
-			// password is automatically hashed by the Auth component
-			$this->data['User']['password_confirm'] = $this->Auth->password($this->data['User']['password_confirm']);
 			
-			$this->data['Invoice']['title'] = $plan;
-			$this->data['Invoice']['description'] = 'Initial signup';
+			$this->request->data['Invoice']['title'] = $plan;
+			$this->request->data['Invoice']['description'] = 'Initial signup';
 			
 			// set the Shop email
-			$this->data['Shop']['email'] = $this->data['User']['email'];
+			$this->request->data['Shop']['email'] = $this->request->data['User']['email'];
 			
 			/* get price of subscription plan */
 			$this->Merchant->Shop->Invoice->SubscriptionPlan->id = $plan;
-			$this->data['Invoice']['price'] = $this->Merchant->Shop->Invoice->SubscriptionPlan->field('price');
+			$this->request->data['Invoice']['price'] = $this->Merchant->Shop->Invoice->SubscriptionPlan->field('price');
 			
 			
-			if (isset($this->data['Shop']['primary_domain'])) {
+			if (isset($this->request->data['Shop']['primary_domain'])) {
 				
-				$this->data['Shop']['primary_domain'] 	= 'http://' . $this->data['Shop']['subdomain'] . $mainDomain;
-				$this->data['Shop']['url']	      	= $this->data['Shop']['primary_domain'];
-				$this->data['Shop']['permanent_domain']	= $this->data['Shop']['subdomain'] . $mainDomain;
+				$this->request->data['Shop']['primary_domain'] 	= 'http://' . $this->request->data['Shop']['subdomain'] . $mainDomain;
+				$this->request->data['Shop']['url']	      	= $this->request->data['Shop']['primary_domain'];
+				$this->request->data['Shop']['permanent_domain']	= $this->request->data['Shop']['subdomain'] . $mainDomain;
 				
 			}
 			
-			if ($result = $this->Merchant->signupNewAccount($this->data)) {
+			$this->log($this->request->data);
+			
+			if ($result = $this->Merchant->signupNewAccount($this->request->data)) {
 				
-				$this->data['Invoice']['reference'] = $result['Invoice']['reference'];
+				$this->request->data['Invoice']['reference'] = $result['Invoice']['reference'];
 				
 				// we need to write this into session.
 				$this->Session->write('NewShopID', $this->Merchant->Shop->id);
@@ -124,8 +112,8 @@ class MerchantsController extends AppController {
 						$this->redirect($PaypalResult['REDIRECTURL']);
 
 				// or we go to paydollar						
-				} else if ($this->data['Pay']['method'] == 'paydollar') {
-					$PaydollarResult = $this->runAddSchPay($this->data);
+				} else if ($this->request->data['Pay']['method'] == 'paydollar') {
+					$PaydollarResult = $this->runAddSchPay($this->request->data);
 					//$this->log($PaydollarResult);
 					// means success						
 					if($PaydollarResult['resultCode'] == 0) {
@@ -144,8 +132,8 @@ class MerchantsController extends AppController {
 			}
 
 			// regardless of success, we must blank out the password fields because we only have the hashed versions
-			$this->data['User']['password_confirm'] = NULL;
-			$this->data['User']['password']         = NULL;
+			$this->request->data['User']['password_confirm'] = NULL;
+			$this->request->data['User']['password']         = NULL;
 
 		}
 		

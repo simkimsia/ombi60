@@ -79,7 +79,11 @@ class Merchant extends AppModel {
 			$result = $this->saveAll($data, array('validate'=>'first',
 							      'atomic'=>false));
 
-			if (!$result) {
+			App::uses('SaveAllLib', 'UtilityLib.Lib');
+			
+			$fail = !SaveAllLib::hasASuccessful($result);
+
+			if ($fail) {
 				$datasource->rollback($this);
 				return false;
 			}
@@ -204,7 +208,7 @@ class Merchant extends AppModel {
 
 			$blog->create();
 			$result = $blog->save($blogData);
-
+$this->log('blog');
 			if (!$result) {
 				$datasource->rollback($this);
 				return false;
@@ -225,7 +229,7 @@ class Merchant extends AppModel {
 
 			$post->create();
 			$result = $post->save($postData);
-
+$this->log('post');
 			if (!$result) {
 				$datasource->rollback($this);
 				return false;
@@ -297,6 +301,8 @@ class Merchant extends AppModel {
 			foreach($pageData['Webpage'] as $pageName => $page) {
 				$webpage->create();
 				$result = $webpage->save($page);
+				$this->log('webpage');
+				
 				if (!$result) {
 					$datasource->rollback($this);
 					return false;
@@ -340,9 +346,19 @@ class Merchant extends AppModel {
 					      'order'	=> '4')
 					));
 
-			$result = $this->Shop->LinkList->saveAll($linkListData);
+			$result = $this->Shop->LinkList->saveAll($linkListData, array(
+				'atomic' => false
+			));
+			
+			$fail = !SaveAllLib::hasASuccessful($result);
+			
+			$this->log($result);
+			
+			$this->log('linklist');
 
-			if (!$result) {
+			$this->log($fail);
+
+			if ($fail) {
 				$datasource->rollback($this);
 				return false;
 			}
@@ -371,9 +387,17 @@ class Merchant extends AppModel {
 
 					));
 
-			$result = $this->Shop->LinkList->saveAll($linkListData);
+			$result = $this->Shop->LinkList->saveAll($linkListData, array(
+				'atomic' => false
+			));
+			
+			$this->log($result);
+			$fail = !SaveAllLib::hasASuccessful($result);
+			$this->log('linklist');
 
-			if (!$result) {
+			$this->log($fail);
+						
+			if ($fail) {
 				$datasource->rollback($this);
 				return false;
 			}
@@ -390,7 +414,8 @@ class Merchant extends AppModel {
 			$result = $savedTheme->saveThemeAtSignUp($options);
 
 
-
+$this->log('theme');
+$this->log($result);
 			if (!$result) {
 				$datasource->rollback($this);
 

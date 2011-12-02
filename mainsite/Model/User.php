@@ -335,7 +335,14 @@ class User extends AppModel {
 	}
 	
 	
-	
+	public function beforeSave() {
+		if (!empty($this->data[$this->name]['password']) && !empty($this->data[$this->name]['password_confirm'])) {
+			$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+			$this->data['User']['password_confirm'] = AuthComponent::password($this->data['User']['password_confirm']);
+		}
+		
+		return true;
+	}
 
 
 	
