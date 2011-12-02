@@ -57,12 +57,14 @@
 			<div id="headerleft">
 			<h1><?php echo $this->Html->image('logo.png', array('alt' => 'OMBI60: Open My Business In 60s')); ?></h1>
 			</div>
+			<?php if (User::get('User.id') >0 ) : ?>
 			<div id="headerright">
 				<ul>
 				<li><input name="Search" type="text" /></li>
 				<li class="specialli"><?php echo $this->Html->link('Account', '/admin/account'); ?> | <?php echo $this->Html->link('Logout', '/admin/logout'); ?></li>
 				</ul>
 			</div>
+			<?php endif; ?>
 		</div>
 		<?php if ($this->request->params['action'] != 'admin_login') { ?>
 		<div id="barwrapper">

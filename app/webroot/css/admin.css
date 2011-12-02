@@ -311,6 +311,12 @@ div.products.form div.submit {
   float: left;
 }
 
+div.login {
+	margin: auto;
+	width:50%;
+
+}
+
 /**CSS added for domain listing on 15-02-2011*/
 #domain_intro_text{
     padding:10px 0px 15px;
