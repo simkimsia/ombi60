@@ -49,12 +49,13 @@
  *
  */
 
+CakePlugin::loadAll();
 
 /**
  *
  *  Production Mode
  **/
-Configure::write('debug', 0);
+Configure::write('debug', 2);
 
 /**
  * dependent on database having a groups table and the id for
@@ -104,9 +105,7 @@ define('PRODUCT_IMAGES_THUMB_ICON_URL', PRODUCT_IMAGES_THUMB_URL . 'icon/');
  * UPLOADS directory constants
  **/
 define('UPLOADS_DIR', 'uploads' );
-// we need to point this to the app folder so this will be different from the usual
-//define('UPLOADS_PATH', ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . UPLOADS_DIR . DS);
-define('UPLOADS_PATH', ROOT . DS . 'app' . DS . WEBROOT_DIR . DS . UPLOADS_DIR . DS);
+define('UPLOADS_PATH', ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . UPLOADS_DIR . DS);
 define('PRODUCTS_DIR', 'products' );
 define('THUMB_DIR', 'thumb' );
 define('SMALL_DIR', 'small');
@@ -114,15 +113,8 @@ define('LARGE_DIR', 'large');
 define('MEDIUM_DIR', 'medium');
 define('ICON_DIR', 'icon');
 
-// for pointing back to app folder www_root
-define('APP_WWW_ROOT', ROOT . DS . 'app' . DS . WEBROOT_DIR . DS);
-define('ORI_WWW_ROOT', ROOT . DS . 'mainsite' . DS . WEBROOT_DIR . DS);
-
-// these will be different as well
-define('PRODUCT_IMAGES_PATH', UPLOADS_PATH. PRODUCTS_DIR . DS);
-define('PRODUCT_IMAGES_THUMB_PATH', UPLOADS_PATH . PRODUCTS_DIR . DS . THUMB_DIR . DS);
-
-
+define('PRODUCT_IMAGES_PATH', ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . UPLOADS_DIR . DS . PRODUCTS_DIR . DS);
+define('PRODUCT_IMAGES_THUMB_PATH', ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . UPLOADS_DIR . DS . PRODUCTS_DIR . DS . THUMB_DIR . DS);
 define('PRODUCT_IMAGES_THUMB_SMALL_PATH', PRODUCT_IMAGES_THUMB_PATH . SMALL_DIR . DS);
 define('PRODUCT_IMAGES_THUMB_LARGE_PATH', PRODUCT_IMAGES_THUMB_PATH . LARGE_DIR . DS);
 define('PRODUCT_IMAGES_THUMB_MEDIUM_PATH', PRODUCT_IMAGES_THUMB_PATH . MEDIUM_DIR . DS);
@@ -146,16 +138,17 @@ define('PAYMENT_AUTHORIZED', 1);
 define('PAYMENT_PENDING', 3);
 define('PAYMENT_PAID', 2);
 define('PAYMENT_ABANDONED', 0);
-define('PAYMENT_INITIATED', 4);
+define('PAYMENT_REFUNDED', 4);
+define('PAYMENT_VOIDED', 5);
 
 
 /**
  * ORDERS status
  **/
 define('ORDER_CREATED', 0); // when order is created, it means that the checkout button is pressed
-define('ORDER_OPENED', 1); // when order is opened, it means that the payment has been initiated
-define('ORDER_IN_PROCESS', 2); // when order is between opened and closed
-define('ORDER_CLOSED', 3); // when order is closed
+define('ORDER_OPENED', 1); // when order is opened, it means that payment is at least initialized
+define('ORDER_CANCELLED', 2); // when order is cancelled by customer
+define('ORDER_CLOSED', 3); // when order automatically closed by system or closed by merchant
 
 
 /**
@@ -186,8 +179,14 @@ define('HIDDEN_AND_VISIBLE_ENTITY', 2);
 /**
  * production checkout link
  **/
-define('CHECKOUT_LINK', 'http://checkout.ombi60.com');
-Configure::write('currentCheckoutLink', CHECKOUT_LINK);
+define('CHECKOUT_LINK', 'https://checkout.ombi60.com');
+define('CHECKOUT_LINK_LOCALHOST', 'https://checkout.ombi60.localhost');
+if (isset($_SERVER['SERVER_NAME']) && strpos($_SERVER['SERVER_NAME'], 'localhost') !== false) {
+	Configure::write('currentCheckoutLink', CHECKOUT_LINK_LOCALHOST);	
+} else {
+	Configure::write('currentCheckoutLink', CHECKOUT_LINK);
+}
+
 
 
 /**
@@ -220,7 +219,14 @@ define('PAYDOLLAR', 'paydollar');
 Configure::write('SubscriptionUsed', PAYDOLLAR);
 
 /**
+ * Configure arrays in Twig to have size, first and last properties
+ **/
+define('TWIG_ITERATOR', false);
+
+
+/**
  * for TwigView plugin
+ * // change the cache for twig view from TWIG_VIEW_CACHE to TMP/cache/views
  **/
 define('TWIG_VIEW_CACHE', TMP.'cache'.DS.'views');
 
@@ -240,26 +246,27 @@ define('DEFAULT_LANGUAGE', 'eng');
  * this is to include the Zend Framework files i need for Zend_Lucene
  **/
 
-ini_set('include_path', ini_get('include_path') . ':' . CAKE_CORE_INCLUDE_PATH . DS . '/vendors');
-function __autoload($path) {
-if (substr($path, 0, 5) == 'Zend_') {
-include str_replace('_', '/', $path) . '.php';
-}
-return $path;
-}
+//ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . CAKE_CORE_INCLUDE_PATH . DS . 'vendors');
+// function __autoload($path) {
+// if (substr($path, 0, 5) == 'Zend_') {
+// include str_replace('_', '/', $path) . '.php';
+// }
+// return $path;
+// }
 
+
+	
 /**
  * this is to allow getting ip addresses by domains
  **/
-        function getAddrByHost($host, $timeout = 3) {
-		$host = str_replace('http://', '', $host);
-		
-		$query = `nslookup -timeout=$timeout -retry=1 $host`;
-		if(preg_match('/\nAddress: (.*)\n/', $query, $matches))
-		   return trim($matches[1]);
-		return $host;
-	}
-        
-        
+	function is_blank($variable) {
+		return (empty($variable) && !is_numeric($variable));
+	}        
 
-?>
+// debug(APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php');
+   require_once  APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php';
+    Twig_Autoloader::register();
+
+App::uses('File', 'Utility');
+App::uses('Folder', 'Utility');
+App::uses('Sanitize', 'Utility');

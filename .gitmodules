@@ -61,3 +61,27 @@
 [submodule "app/Vendor/RedBean"]
 	path = app/Vendor/RedBean
 	url = git@github.com:simkimsia/redbean.git
+[submodule "mainsite/Plugin/DebugKit"]
+	path = mainsite/Plugin/DebugKit
+	url = git://github.com/cakephp/debug_kit.git
+[submodule "mainsite/Plugin/ClearCache"]
+	path = mainsite/Plugin/ClearCache
+	url = git@github.com:simkimsia/ClearCache.git
+[submodule "mainsite/Plugin/Handleize"]
+	path = mainsite/Plugin/Handleize
+	url = git@github.com:simkimsia/Handleize.git
+[submodule "mainsite/Plugin/Copyable"]
+	path = mainsite/Plugin/Copyable
+	url = git@github.com:simkimsia/copyable_behavior.git
+[submodule "mainsite/Plugin/UtilityLib"]
+	path = mainsite/Plugin/UtilityLib
+	url = git@github.com:simkimsia/UtilityLib.git
+[submodule "mainsite/Plugin/Visible"]
+	path = mainsite/Plugin/Visible
+	url = git@github.com:simkimsia/Visible.git
+[submodule "mainsite/Vendor/phpThumb"]
+	path = mainsite/Vendor/phpThumb
+	url = git@github.com:simkimsia/phpThumb-for-cakephp-2.0.git
+[submodule "mainsite/Plugin/MeioDuplicate"]
+	path = mainsite/Plugin/MeioDuplicate
+	url = git@github.com:simkimsia/MeioDuplicate.git

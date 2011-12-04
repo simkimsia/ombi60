@@ -1,6 +1,6 @@
 <?php
 /**
- * CSS helping functions
+ * Short description for file.
  *
  * PHP versions 4 and 5
  *
@@ -21,16 +21,14 @@ if (!defined('CAKE_CORE_INCLUDE_PATH')) {
 	header('HTTP/1.1 404 Not Found');
 	exit('File Not Found');
 }
-
 /**
- * Ensure required classes are available.
+ * Enter description here...
  */
 if (!class_exists('File')) {
 	uses('file');
 }
-
 /**
- * Make clean CSS
+ * Enter description here...
  *
  * @param unknown_type $path
  * @param unknown_type $name
@@ -46,7 +44,7 @@ if (!class_exists('File')) {
 		return $output;
 	}
 /**
- * Write CSS cache
+ * Enter description here...
  *
  * @param unknown_type $path
  * @param unknown_type $content
@@ -94,3 +92,4 @@ if (!class_exists('File')) {
 	header("Cache-Control: max-age=86400, must-revalidate"); // HTTP/1.1
 	header("Pragma: cache");        // HTTP/1.0
 	print $output;
+?>

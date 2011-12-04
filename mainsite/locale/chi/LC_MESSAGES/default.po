@@ -1,0 +1,2070 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ombi60 v1\n"
+"POT-Creation-Date: 2010-09-12 04:19+0200\n"
+"PO-Revision-Date: 2010-09-13 15:01+0800\n"
+"Last-Translator: kimsia <kimcity@gmail.com>\n"
+"Language-Team: zh-tw <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Chinese Taiwan\n"
+"X-Poedit-Country: TAIWAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: /app_controller.php:168
+msgid "Invalid id for ProductImage"
+msgstr "无效的ID产品图片"
+
+#: /app_controller.php:173
+msgid "ProductImage status changed"
+msgstr "产品图像状态改变"
+
+#: /app_controller.php:181
+msgid "The status of ProductImage could not be changed. Please, try again."
+msgstr "对产品图片状态不能改变。请再试一次。"
+
+#: /controllers/blogs_controller.php:15;34;55
+msgid "Invalid blog"
+msgstr "无效的博客"
+
+#: /controllers/blogs_controller.php:44;61
+msgid "The blog has been saved"
+msgstr "博客已被储存"
+
+#: /controllers/blogs_controller.php:48;64
+msgid "The blog could not be saved. Please, try again."
+msgstr "该博客无法保存。请再试一次。"
+
+#: /controllers/blogs_controller.php:74
+msgid "Invalid id for blog"
+msgstr "无效的博客ID"
+
+#: /controllers/blogs_controller.php:79
+msgid "Blog deleted"
+msgstr "博客已被删除"
+
+#: /controllers/blogs_controller.php:83
+msgid "Blog was not deleted"
+msgstr "博客没被删除"
+
+#: /controllers/customers_controller.php:46
+#: /controllers/merchants_controller.php:62
+msgid "Signup"
+msgstr "注册"
+
+#: /controllers/customers_controller.php:72
+#: /controllers/merchants_controller.php:72
+msgid "You've successfully registered."
+msgstr "您已成功注册。"
+
+#: /controllers/customers_controller.php:75
+#: /controllers/merchants_controller.php:75
+msgid "Sorry, the information you've entered is incorrect."
+msgstr "对不起，您所输入的信息是不正确的。"
+
+#: /controllers/customers_controller.php:90
+msgid "Customer Login"
+msgstr "客户登录"
+
+#: /controllers/domains_controller.php:14;36
+msgid "Invalid domain"
+msgstr "无效的域名"
+
+#: /controllers/domains_controller.php:24;41
+msgid "The domain has been saved"
+msgstr "域名已被储存"
+
+#: /controllers/domains_controller.php:27;44
+msgid "The domain could not be saved. Please, try again."
+msgstr "该域名无法保存。请再试一次。"
+
+#: /controllers/domains_controller.php:56
+msgid "Invalid id for domain"
+msgstr "无效的ID域名尚"
+
+#: /controllers/domains_controller.php:60
+msgid "Domain deleted"
+msgstr "域名尚已被删除"
+
+#: /controllers/domains_controller.php:63
+msgid "Domain was not deleted"
+msgstr "域名尚未被删除"
+
+#: /controllers/gift_cards_controller.php:13;37;76;100
+msgid "Invalid gift card"
+msgstr "无效的礼品卡"
+
+#: /controllers/gift_cards_controller.php:23;42;86;105
+msgid "The gift card has been saved"
+msgstr "礼品卡已被保存"
+
+#: /controllers/gift_cards_controller.php:26;45;89;108
+msgid "The gift card could not be saved. Please, try again."
+msgstr "该礼品卡不能保存。请再试一次。"
+
+#: /controllers/gift_cards_controller.php:59;122
+msgid "Invalid id for gift card"
+msgstr "无效的礼品卡ID"
+
+#: /controllers/gift_cards_controller.php:63;126
+msgid "Gift card deleted"
+msgstr "礼品卡已被删除"
+
+#: /controllers/gift_cards_controller.php:66;129
+msgid "Gift card was not deleted"
+msgstr "礼品卡没被删除"
+
+#: /controllers/merchants_controller.php:50
+msgid "Login failed. Invalid email or password or web address."
+msgstr "登录失败。无效的电子邮件或密码，或网址。"
+
+#: /controllers/merchants_controller.php:91
+msgid "Merchant Login"
+msgstr "商家登录"
+
+#: /controllers/merchants_controller.php:138
+msgid "Edit %s's profile"
+msgstr ""
+
+#: /controllers/merchants_controller.php:152;203
+msgid "Your profile has been saved"
+msgstr "您的个人资料已保存"
+
+#: /controllers/merchants_controller.php:156;207
+msgid "Your profile could not be saved. Please, try again."
+msgstr "您的个人资料无法保存。请再试一次。"
+
+#: /controllers/merchants_controller.php:184
+msgid "Invalid Merchant"
+msgstr "无效的商家"
+
+#: /controllers/merchants_controller.php:216
+msgid "Invalid id for Merchant"
+msgstr "无效的商家ID"
+
+#: /controllers/merchants_controller.php:220
+msgid "Merchant deleted"
+msgstr "商家已删除"
+
+#: /controllers/merchants_controller.php:223
+msgid "The Merchant could not be deleted. Please, try again."
+msgstr "商家没被删除。请再试一次。"
+
+#: /controllers/orders_controller.php:96;217
+msgid "Invalid Order"
+msgstr "无效的订单"
+
+#: /controllers/orders_controller.php:104
+msgid "You do not have the permission to view this order"
+msgstr "您没有权限查看此订单"
+
+#: /controllers/orders_controller.php:177
+msgid "Address has been saved"
+msgstr "地址已被保存"
+
+#: /controllers/orders_controller.php:182;208;232
+msgid "Order could not be saved. Please, try again."
+msgstr "订单不能保存。请再试一次。"
+
+#: /controllers/orders_controller.php:184;229
+msgid "Order has been saved"
+msgstr "订单已保存"
+
+#: /controllers/orders_controller.php:205
+msgid "The Order has been saved"
+msgstr "订单已被保存"
+
+#: /controllers/payments_controller.php:64;83
+msgid "Custom payment has been saved"
+msgstr "自定义付款已被保存"
+
+#: /controllers/payments_controller.php:66;85
+msgid "Custom payment  could not be saved. Please, try again."
+msgstr "自定义付款无法保存。请再试一次。"
+
+#: /controllers/payments_controller.php:74;93
+msgid "Invalid id"
+msgstr "无效的ID"
+
+#: /controllers/payments_controller.php:102
+msgid "Custom payment has been removed"
+msgstr "自定义付款删除"
+
+#: /controllers/payments_controller.php:104
+msgid "Custom payment  could not be removed. Please, try again."
+msgstr "自定义付款不能被删除。请再试一次。"
+
+#: /controllers/posts_controller.php:15
+#: /controllers/webpages_controller.php:19;47;73
+msgid "Invalid %s"
+msgstr ""
+
+#: /controllers/posts_controller.php:36;49;73
+msgid "Invalid post"
+msgstr "无效的公告"
+
+#: /controllers/posts_controller.php:57;80
+msgid "The post has been saved"
+msgstr "该公告已被保存"
+
+#: /controllers/posts_controller.php:62;85
+msgid "The post could not be saved. Please, try again."
+msgstr "公告无法保存。请再试一次。"
+
+#: /controllers/posts_controller.php:100
+msgid "Invalid id for post"
+msgstr "无效的公告ID"
+
+#: /controllers/posts_controller.php:105
+msgid "Post deleted"
+msgstr "删除公告"
+
+#: /controllers/posts_controller.php:110
+msgid "Post was not deleted"
+msgstr "公告没被删除"
+
+#: /controllers/product_images_controller.php:48;65
+msgid "Image has been saved"
+msgstr "产品图片已被保存"
+
+#: /controllers/product_images_controller.php:51;68
+msgid "Image could not be saved. Please, try again."
+msgstr "图像无法保存。请再试一次。"
+
+#: /controllers/product_images_controller.php:98
+msgid "Invalid url"
+msgstr "无效的网址"
+
+#: /controllers/product_images_controller.php:130;132
+msgid "Invalid id for image"
+msgstr "无效的图片ID"
+
+#: /controllers/product_images_controller.php:143
+msgid "Image deleted"
+msgstr "图片删除"
+
+#: /controllers/product_images_controller.php:148;150
+msgid "Image was not deleted"
+msgstr "图像没被删除"
+
+#: /controllers/product_images_controller.php:161
+msgid "Invalid id for Image"
+msgstr "无效的产品图片ID"
+
+#: /controllers/product_images_controller.php:166
+msgid "Image status changed"
+msgstr "图像状态改变"
+
+#: /controllers/product_images_controller.php:170
+msgid "The status of Image could not be changed. Please, try again."
+msgstr "对图像的地位不能改变。请再试一次。"
+
+#: /controllers/products_controller.php:147
+msgid "You need to have products in your cart"
+msgstr "您的购物车需要产品"
+
+#: /controllers/products_controller.php:265;278;439;454;540;562
+msgid "Invalid Product"
+msgstr "无效的产品"
+
+#: /controllers/products_controller.php:299
+msgid "No such product for this shop"
+msgstr "这家商店没有此类产品"
+
+#: /controllers/products_controller.php:354;375;380
+msgid "Product has been saved"
+msgstr "产品已被保存"
+
+#: /controllers/products_controller.php:359;384
+msgid "Product could not be saved. Please, try again."
+msgstr "产品无法储存。请再试一次。"
+
+#: /controllers/products_controller.php:444
+msgid "Product status changed"
+msgstr "产品状态改变"
+
+#: /controllers/products_controller.php:447
+msgid "The status of Product could not be changed. Please, try again."
+msgstr "该产品的地位不能改变。请再试一次。"
+
+#: /controllers/products_controller.php:460;551;567
+msgid "The Product has been saved"
+msgstr "该产品已被保存"
+
+#: /controllers/products_controller.php:463;554;570
+msgid "The Product could not be saved. Please, try again."
+msgstr "该产品无法储存。请再试一次。"
+
+#: /controllers/products_controller.php:507;520;580;609;642
+msgid "Invalid id for Product"
+msgstr "无效的产品ID"
+
+#: /controllers/products_controller.php:511;584
+msgid "Product deleted"
+msgstr "产品已删除"
+
+#: /controllers/products_controller.php:514;587
+msgid "The Product could not be deleted. Please, try again."
+msgstr "该产品不能被删除。请再试一次。"
+
+#: /controllers/products_controller.php:524
+msgid "Product duplicated"
+msgstr "产品重复"
+
+#: /controllers/products_controller.php:527
+msgid "The Product could not be duplicated. Please, try again."
+msgstr "该产品无法复制。请再试一次。"
+
+#: /controllers/products_controller.php:622
+msgid "Product added to cart"
+msgstr "产品添加到购物车"
+
+#: /controllers/products_controller.php:625
+msgid "The Product could not be added to cart. Please, try again."
+msgstr "该产品不能添加到购物车。请再试一次。"
+
+#: /controllers/products_controller.php:646
+msgid "Product removed from cart"
+msgstr "产品从购物车中删除"
+
+#: /controllers/products_controller.php:649
+msgid "The Product could not be removed from cart. Please, try again."
+msgstr "该产品无法从购物车删除。请再试一次。"
+
+#: /controllers/saved_themes_controller.php:67;212
+msgid "Invalid saved theme"
+msgstr "无效的保存主题"
+
+#: /controllers/saved_themes_controller.php:104;141;155;162;221
+msgid "The saved theme has been saved"
+msgstr "保存的主题已被保存"
+
+#: /controllers/saved_themes_controller.php:112;167;225
+msgid "The saved theme could not be saved. Please, try again."
+msgstr "保存的主题无法保存。请再试一次。"
+
+#: /controllers/saved_themes_controller.php:251;253;313
+msgid "Invalid id for saved theme"
+msgstr "无效的保存主题ID"
+
+#: /controllers/saved_themes_controller.php:265
+msgid "Saved theme deleted"
+msgstr "删除已保存的主题"
+
+#: /controllers/saved_themes_controller.php:270;272
+msgid "Saved theme was not deleted"
+msgstr "保存的主题没被删除"
+
+#: /controllers/saved_themes_controller.php:320
+msgid "Theme For Shopfront changed"
+msgstr "主题店面已被改变"
+
+#: /controllers/saved_themes_controller.php:325
+msgid "Theme For Shopfront NOT changed"
+msgstr "主题店面没被改变"
+
+#: /controllers/shipping_rates_controller.php:29
+msgid "Invalid shipping rate"
+msgstr "无效的航运率"
+
+#: /controllers/shipping_rates_controller.php:37;90;130
+msgid "The shipping rate has been saved"
+msgstr "航运率已被保存"
+
+#: /controllers/shipping_rates_controller.php:40;93;134
+msgid "The shipping rate could not be saved. Please, try again."
+msgstr "航运率不能保存。请再试一次。"
+
+#: /controllers/shipping_rates_controller.php:166
+msgid "Invalid id for shipping rate"
+msgstr "无效的航运率ID"
+
+#: /controllers/shipping_rates_controller.php:170
+msgid "Shipping rate deleted"
+msgstr "船舶率已被删除"
+
+#: /controllers/shipping_rates_controller.php:173
+msgid "Shipping rate was not deleted"
+msgstr "船舶率没被删除"
+
+#: /controllers/shops_controller.php:16
+msgid "The Shop has been saved"
+msgstr "该店铺已被保存"
+
+#: /controllers/shops_controller.php:19
+msgid "The Shop could not be saved. Please, try again."
+msgstr "本商店无法保存。请再试一次。"
+
+#: /controllers/webpages_controller.php:58;78
+msgid "The %s has been saved"
+msgstr ""
+
+#: /controllers/webpages_controller.php:61;81
+msgid "The %s could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/webpages_controller.php:95
+msgid "Invalid id for %s"
+msgstr ""
+
+#: /controllers/webpages_controller.php:99
+msgid "%s deleted"
+msgstr ""
+
+#: /controllers/webpages_controller.php:102
+msgid "%s was not deleted"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:87
+msgid "Available ACO sync commands:"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:93
+msgid "For help, run the 'help' command.  For help on a specific command, run 'help <command>'"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:124
+msgid "Aco Update Complete"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:167
+msgid "Deleted %s and all children"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:208
+msgid "Created Aco node: %s"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:244
+msgid "Deleted Aco node %s"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:259
+msgid "Usage: cake acl_extras <command>"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:261
+msgid "Commands:"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:265
+msgid "Add new ACOs for new controllers and actions"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:266
+msgid "Create new ACO's for controllers and their actions. Does not remove any nodes from ACO table"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:270
+msgid "Creates new ACO's for missing controllers and actions. Removes orphaned entries in the ACO table."
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:273
+msgid "Verify the tree structure of either your Aco or Aro Trees"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:276
+msgid "Recover a corrupted Tree"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:279
+msgid "Displays this help message, or a message on a specific command."
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:290
+msgid "Command '%s' not found"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:302;322
+msgid "Missing Type"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:308
+msgid "Tree is valid and strong"
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:328
+msgid "Tree has been recovered, or tree did not need recovery."
+msgstr ""
+
+#: /plugins/acl_extras/vendors/shells/acl_extras.php:330
+msgid "Tree recovery failed."
+msgstr ""
+
+#: /plugins/datasources/models/datasources/array_source.php:99
+msgid "No records found in model."
+msgstr "没有记录发现模型。"
+
+#: /plugins/datasources/models/datasources/xmlrpc_source.php:138
+msgid "Transport error - could not open socket"
+msgstr "传输错误 - 无法打开插座"
+
+#: /plugins/datasources/models/datasources/xmlrpc_source.php:141
+msgid "Transport error - HTTP status code was not 200"
+msgstr "传输错误 - HTTP状态代码是不是200"
+
+#: /plugins/datasources/models/datasources/xmlrpc_source.php:186
+msgid "Parse error. Not well formed"
+msgstr "解析错误。没有很好形成"
+
+#: /plugins/filter/views/helpers/filter.php:26
+msgid "Filter"
+msgstr "过滤"
+
+#: /plugins/filter/views/helpers/filter.php:27
+msgid "Reset"
+msgstr "复位"
+
+#: /plugins/lil_blogs/views/comments/admin_index.ctp:77
+msgid "No comments that match your criteria."
+msgstr "没有评论符合您的标准。"
+
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:46
+msgid "All (%d)"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:50
+msgid "Ham (%d)"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:54
+msgid "Spam (%d)"
+msgstr ""
+
+#: /plugins/lil_blogs/views/elements/admin_sidebar.ctp:58
+msgid "Unclassified (%d)"
+msgstr ""
+
+#: /views/addresses/index.ctp:2
+msgid "Addresses"
+msgstr "地址"
+
+#: /views/addresses/index.ctp:6
+#: /views/blogs/admin_index.ctp:41
+#: /views/domains/admin_index.ctp:37
+#: /views/elements/product_images_admin_list_by_product_list.ctp:26
+#: /views/gift_cards/admin_index.ctp:57
+#: /views/gift_cards/index.ctp:57
+#: /views/merchants/platform_index.ctp:6
+#: /views/orders/admin_index.ctp:6
+#: /views/orders/index.ctp:6
+#: /views/posts/admin_index.ctp:55
+#: /views/products/admin_index.ctp:12
+#: /views/products/index.ctp:6
+#: /views/products/platform_index.ctp:6
+#: /views/saved_themes/admin_index_original.ctp:47
+#: /views/themed/5_c10/products/index.ctp:4
+#: /views/themed/5_c11/products/index.ctp:4
+#: /views/themed/5_c12/products/index.ctp:4
+#: /views/themed/5_c13/products/index.ctp:4
+#: /views/themed/5_c2/_c2/products/index.ctp:4
+#: /views/themed/5_c3/products/index.ctp:4
+#: /views/themed/5_c4/products/index.ctp:4
+#: /views/themed/5_c5/products/index.ctp:4
+#: /views/themed/5_c6/products/index.ctp:4
+#: /views/themed/5_c7/products/index.ctp:4
+#: /views/themed/5_c8/products/index.ctp:4
+#: /views/themed/default/products/index.ctp:4
+#: /views/themes/admin_index.ctp:41
+#: /views/webpages/admin_index.ctp:43
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr ""
+
+#: /views/addresses/index.ctp:17
+#: /views/blogs/admin_add.ctp:13
+#: /views/blogs/admin_edit.ctp:21
+#: /views/blogs/admin_index.ctp:12;53
+#: /views/blogs/admin_view.ctp:42;67
+#: /views/blogs/view.ctp:42;69
+#: /views/domains/admin_add.ctp:15
+#: /views/domains/admin_edit.ctp:16
+#: /views/domains/admin_index.ctp:10;49
+#: /views/domains/admin_view.ctp:28
+#: /views/elements/product_images_admin_list_by_product_list.ctp:35
+#: /views/gift_cards/add.ctp:29
+#: /views/gift_cards/admin_add.ctp:21
+#: /views/gift_cards/admin_edit.ctp:22
+#: /views/gift_cards/admin_index.ctp:18;69
+#: /views/gift_cards/admin_view.ctp:68
+#: /views/gift_cards/edit.ctp:22
+#: /views/gift_cards/index.ctp:18;69
+#: /views/gift_cards/view.ctp:68
+#: /views/merchants/platform_index.ctp:20
+#: /views/orders/index.ctp:20
+#: /views/posts/admin_add.ctp:20
+#: /views/posts/admin_edit.ctp:28
+#: /views/posts/admin_index.ctp:17;67
+#: /views/posts/admin_view.ctp:67;96
+#: /views/posts/view.ctp:67;96
+#: /views/products/admin_index.ctp:23
+#: /views/products/admin_view.ctp:47
+#: /views/products/index.ctp:20
+#: /views/products/platform_index.ctp:20
+#: /views/products/view_cart.ctp:18
+#: /views/saved_themes/admin_add.ctp:67
+#: /views/saved_themes/admin_edit.ctp:81
+#: /views/saved_themes/admin_index.ctp:25
+#: /views/saved_themes/admin_index_original.ctp:14;59
+#: /views/saved_themes/admin_view.ctp:48
+#: /views/shipping_rates/admin_edit.ctp:94
+#: /views/themes/admin_index.ctp:12;53
+#: /views/themes/admin_settings.ctp:15
+#: /views/webpages/admin_add.ctp:16
+#: /views/webpages/admin_edit.ctp:25
+#: /views/webpages/admin_index.ctp:13;62;95
+#: /views/webpages/admin_view.ctp:49
+#: /views/webpages/view.ctp:53
+msgid "Actions"
+msgstr "行为"
+
+#: /views/addresses/index.ctp:47
+#: /views/blogs/admin_index.ctp:31
+#: /views/blogs/view.ctp:93
+#: /views/domains/admin_index.ctp:27
+#: /views/gift_cards/admin_index.ctp:47
+#: /views/gift_cards/index.ctp:47
+#: /views/merchants/platform_index.ctp:59
+#: /views/orders/index.ctp:59
+#: /views/posts/admin_index.ctp:45
+#: /views/posts/admin_view.ctp:118
+#: /views/posts/view.ctp:118
+#: /views/products/admin_index.ctp:66
+#: /views/products/index.ctp:59
+#: /views/products/platform_index.ctp:59
+#: /views/products/view_cart.ctp:44
+#: /views/saved_themes/admin_index_original.ctp:37
+#: /views/themes/admin_index.ctp:31
+#: /views/webpages/admin_index.ctp:33;81
+msgid "View"
+msgstr "图景"
+
+#: /views/addresses/index.ctp:48
+#: /views/blogs/admin_index.ctp:32
+#: /views/blogs/admin_view.ctp:91
+#: /views/blogs/view.ctp:94
+#: /views/domains/admin_index.ctp:28
+#: /views/gift_cards/admin_index.ctp:48
+#: /views/gift_cards/index.ctp:48
+#: /views/merchants/platform_index.ctp:60
+#: /views/orders/index.ctp:60
+#: /views/posts/admin_index.ctp:46
+#: /views/posts/admin_view.ctp:119
+#: /views/posts/view.ctp:119
+#: /views/products/admin_index.ctp:67
+#: /views/products/index.ctp:60
+#: /views/products/platform_index.ctp:60
+#: /views/saved_themes/admin_index_original.ctp:38
+#: /views/themes/admin_index.ctp:32
+#: /views/webpages/admin_index.ctp:34;82
+msgid "Edit"
+msgstr "编辑"
+
+#: /views/addresses/index.ctp:49
+#: /views/blogs/admin_edit.ctp:24
+#: /views/blogs/admin_index.ctp:33
+#: /views/blogs/admin_view.ctp:92
+#: /views/blogs/view.ctp:95
+#: /views/domains/admin_edit.ctp:19
+#: /views/domains/admin_index.ctp:29
+#: /views/elements/product_images_admin_list_by_product_list.ctp:54
+#: /views/gift_cards/admin_edit.ctp:25
+#: /views/gift_cards/admin_index.ctp:49
+#: /views/gift_cards/edit.ctp:25
+#: /views/gift_cards/index.ctp:49
+#: /views/merchants/platform_index.ctp:61
+#: /views/orders/index.ctp:61
+#: /views/posts/admin_edit.ctp:31
+#: /views/posts/admin_index.ctp:47
+#: /views/posts/admin_view.ctp:120
+#: /views/posts/view.ctp:120
+#: /views/products/admin_edit.ctp:20
+#: /views/products/admin_index.ctp:69
+#: /views/products/index.ctp:61
+#: /views/products/platform_edit.ctp:21
+#: /views/products/platform_index.ctp:61
+#: /views/products/view_cart.ctp:45
+#: /views/saved_themes/admin_edit.ctp:83
+#: /views/saved_themes/admin_edit_image.ctp:15
+#: /views/saved_themes/admin_index_original.ctp:39
+#: /views/shipping_rates/admin_edit.ctp:97
+#: /views/shipping_rates/admin_index.ctp:50
+#: /views/shipping_rates/new_shipping_rate.ctp:28
+#: /views/shops/edit.ctp:17
+#: /views/themes/admin_index.ctp:33
+#: /views/webpages/admin_edit.ctp:28
+#: /views/webpages/admin_index.ctp:35;83
+msgid "Delete"
+msgstr "删除"
+
+#: /views/addresses/index.ctp:49
+#: /views/blogs/admin_edit.ctp:24
+#: /views/blogs/admin_index.ctp:33
+#: /views/blogs/admin_view.ctp:45;92
+#: /views/blogs/view.ctp:45;95
+#: /views/domains/admin_edit.ctp:19
+#: /views/domains/admin_index.ctp:29
+#: /views/domains/admin_view.ctp:31
+#: /views/elements/product_images_admin_list_by_product_list.ctp:54
+#: /views/gift_cards/admin_edit.ctp:25
+#: /views/gift_cards/admin_index.ctp:49
+#: /views/gift_cards/admin_view.ctp:71
+#: /views/gift_cards/edit.ctp:25
+#: /views/gift_cards/index.ctp:49
+#: /views/gift_cards/view.ctp:71
+#: /views/merchants/platform_index.ctp:61
+#: /views/merchants/platform_view.ctp:54
+#: /views/orders/index.ctp:61
+#: /views/orders/view.ctp:54
+#: /views/posts/admin_index.ctp:47
+#: /views/posts/admin_view.ctp:70;120
+#: /views/posts/view.ctp:70;120
+#: /views/products/admin_edit.ctp:20
+#: /views/products/admin_index.ctp:69
+#: /views/products/admin_view.ctp:50
+#: /views/products/index.ctp:61
+#: /views/products/platform_add.ctp:54
+#: /views/products/platform_edit.ctp:21
+#: /views/products/platform_index.ctp:61
+#: /views/products/platform_view.ctp:54
+#: /views/products/view.ctp:158
+#: /views/products/view_cart.ctp:45
+#: /views/saved_themes/admin_edit.ctp:83
+#: /views/saved_themes/admin_index_original.ctp:39
+#: /views/saved_themes/admin_view.ctp:51
+#: /views/shops/edit.ctp:17
+#: /views/themes/admin_index.ctp:33
+#: /views/webpages/admin_edit.ctp:28
+#: /views/webpages/admin_index.ctp:35;83
+#: /views/webpages/admin_view.ctp:52
+#: /views/webpages/view.ctp:56
+msgid "Are you sure you want to delete # %s?"
+msgstr ""
+
+#: /views/addresses/index.ctp:56
+#: /views/blogs/admin_index.ctp:46
+#: /views/domains/admin_index.ctp:42
+#: /views/elements/product_images_admin_list_by_product_list.ctp:61
+#: /views/gift_cards/admin_index.ctp:62
+#: /views/gift_cards/index.ctp:62
+#: /views/merchants/platform_index.ctp:68
+#: /views/orders/admin_index.ctp:74
+#: /views/orders/admin_index_filter.ctp:36
+#: /views/orders/index.ctp:68
+#: /views/posts/admin_index.ctp:60
+#: /views/products/admin_index.ctp:77
+#: /views/products/index.ctp:68
+#: /views/products/platform_index.ctp:68
+#: /views/saved_themes/admin_index_original.ctp:52
+#: /views/themed/5_c10/products/index.ctp:73
+#: /views/themed/5_c11/products/index.ctp:73
+#: /views/themed/5_c12/products/index.ctp:73
+#: /views/themed/5_c13/products/index.ctp:73
+#: /views/themed/5_c2/_c2/products/index.ctp:73
+#: /views/themed/5_c3/products/index.ctp:73
+#: /views/themed/5_c4/products/index.ctp:73
+#: /views/themed/5_c5/products/index.ctp:73
+#: /views/themed/5_c6/products/index.ctp:73
+#: /views/themed/5_c7/products/index.ctp:73
+#: /views/themed/5_c8/products/index.ctp:73
+#: /views/themed/default/products/index.ctp:73
+#: /views/themes/admin_index.ctp:46
+#: /views/webpages/admin_index.ctp:48
+msgid "previous"
+msgstr "上个"
+
+#: /views/addresses/index.ctp:58
+#: /views/blogs/admin_index.ctp:49
+#: /views/domains/admin_index.ctp:45
+#: /views/elements/product_images_admin_list_by_product_list.ctp:63
+#: /views/gift_cards/admin_index.ctp:65
+#: /views/gift_cards/index.ctp:65
+#: /views/merchants/platform_index.ctp:70
+#: /views/orders/admin_index.ctp:76
+#: /views/orders/admin_index_filter.ctp:38
+#: /views/orders/index.ctp:70
+#: /views/posts/admin_index.ctp:63
+#: /views/products/admin_index.ctp:79
+#: /views/products/index.ctp:70
+#: /views/products/platform_index.ctp:70
+#: /views/saved_themes/admin_index_original.ctp:55
+#: /views/themed/5_c10/products/index.ctp:75
+#: /views/themed/5_c11/products/index.ctp:75
+#: /views/themed/5_c12/products/index.ctp:75
+#: /views/themed/5_c13/products/index.ctp:75
+#: /views/themed/5_c2/_c2/products/index.ctp:75
+#: /views/themed/5_c3/products/index.ctp:75
+#: /views/themed/5_c4/products/index.ctp:75
+#: /views/themed/5_c5/products/index.ctp:75
+#: /views/themed/5_c6/products/index.ctp:75
+#: /views/themed/5_c7/products/index.ctp:75
+#: /views/themed/5_c8/products/index.ctp:75
+#: /views/themed/default/products/index.ctp:75
+#: /views/themes/admin_index.ctp:49
+#: /views/webpages/admin_index.ctp:51
+msgid "next"
+msgstr "下个"
+
+#: /views/addresses/index.ctp:62
+msgid "New Address"
+msgstr "新地址"
+
+#: /views/blogs/admin_add.ctp:4
+msgid "Admin Add Blog"
+msgstr "管理新增博客"
+
+#: /views/blogs/admin_add.ctp:10
+#: /views/blogs/admin_edit.ctp:18
+#: /views/domains/admin_add.ctp:12
+#: /views/domains/admin_edit.ctp:13
+#: /views/gift_cards/add.ctp:26
+#: /views/gift_cards/admin_add.ctp:18
+#: /views/gift_cards/admin_edit.ctp:19
+#: /views/gift_cards/edit.ctp:19
+#: /views/posts/admin_add.ctp:17
+#: /views/posts/admin_edit.ctp:25
+#: /views/shipping_rates/admin_edit.ctp:83
+#: /views/themes/admin_settings.ctp:12
+#: /views/webpages/admin_add.ctp:13
+#: /views/webpages/admin_edit.ctp:22
+msgid "Submit"
+msgstr "提交"
+
+#: /views/blogs/admin_add.ctp:16
+#: /views/blogs/admin_edit.ctp:25
+#: /views/blogs/view.ctp:46
+#: /views/posts/admin_index.ctp:70
+#: /views/posts/admin_view.ctp:73
+#: /views/posts/view.ctp:73
+msgid "List Blogs"
+msgstr "博客名单"
+
+#: /views/blogs/admin_add.ctp:17
+#: /views/blogs/admin_index.ctp:56
+#: /views/blogs/view.ctp:48
+#: /views/posts/admin_view.ctp:71
+#: /views/posts/view.ctp:71
+msgid "List Posts"
+msgstr "公告名单"
+
+#: /views/blogs/admin_add.ctp:18
+#: /views/blogs/admin_edit.ctp:26
+#: /views/blogs/admin_index.ctp:57
+#: /views/blogs/admin_view.ctp:47
+#: /views/blogs/view.ctp:49;104
+#: /views/posts/admin_index.ctp:69
+#: /views/posts/admin_view.ctp:72
+#: /views/posts/view.ctp:72
+msgid "New Post"
+msgstr "新公告"
+
+#: /views/blogs/admin_edit.ctp:4
+msgid "Admin Edit Blog"
+msgstr "管理编辑博客"
+
+#: /views/blogs/admin_index.ctp:2
+#: /views/webpages/admin_index.ctp:56
+msgid "Blogs"
+msgstr "博客"
+
+#: /views/blogs/admin_index.ctp:55
+#: /views/blogs/view.ctp:47
+#: /views/posts/admin_index.ctp:71
+#: /views/posts/admin_view.ctp:74
+#: /views/posts/view.ctp:74
+#: /views/webpages/admin_index.ctp:98
+msgid "New Blog"
+msgstr "新博客"
+
+#: /views/blogs/admin_view.ctp:2
+#: /views/blogs/view.ctp:2
+#: /views/posts/admin_view.ctp:9
+#: /views/posts/view.ctp:9
+msgid "Blog"
+msgstr "博客"
+
+#: /views/blogs/admin_view.ctp:4;55
+#: /views/blogs/view.ctp:4;57
+#: /views/domains/admin_view.ctp:4
+#: /views/gift_cards/admin_view.ctp:4
+#: /views/gift_cards/view.ctp:4
+#: /views/merchants/platform_view.ctp:4
+#: /views/orders/view.ctp:4
+#: /views/posts/admin_view.ctp:4;86
+#: /views/posts/view.ctp:4;86
+#: /views/products/admin_view.ctp:4
+#: /views/products/platform_add.ctp:4
+#: /views/products/platform_view.ctp:4
+#: /views/saved_themes/admin_view.ctp:4
+#: /views/webpages/admin_view.ctp:4
+#: /views/webpages/view.ctp:4
+msgid "Id"
+msgstr "编号"
+
+#: /views/blogs/admin_view.ctp:9
+#: /views/blogs/view.ctp:9
+#: /views/orders/admin_view.ctp:4;21;53
+#: /views/saved_themes/admin_view.ctp:9
+#: /views/shipping_rates/admin_edit.ctp:16
+msgid "Name"
+msgstr "名字"
+
+#: /views/blogs/admin_view.ctp:14
+#: /views/blogs/view.ctp:14
+msgid "Short Name"
+msgstr "简称"
+
+#: /views/blogs/admin_view.ctp:19
+#: /views/blogs/view.ctp:19
+#: /views/products/admin_view.ctp:19
+#: /views/products/platform_add.ctp:24
+#: /views/products/platform_view.ctp:24
+#: /views/products/view.ctp:15
+#: /views/saved_themes/admin_view.ctp:14
+msgid "Description"
+msgstr "描述"
+
+#: /views/blogs/admin_view.ctp:24
+#: /views/blogs/view.ctp:24
+#: /views/saved_themes/admin_view.ctp:40
+#: /views/themes/admin_index.ctp:55
+#: /views/themes/admin_settings.ctp:4
+msgid "Theme"
+msgstr "主题"
+
+#: /views/blogs/admin_view.ctp:29;65
+#: /views/blogs/view.ctp:29;67
+#: /views/gift_cards/admin_view.ctp:39
+#: /views/gift_cards/view.ctp:39
+#: /views/posts/admin_view.ctp:54;94
+#: /views/posts/view.ctp:54;94
+#: /views/saved_themes/admin_view.ctp:24
+#: /views/webpages/admin_view.ctp:21
+#: /views/webpages/view.ctp:25
+msgid "Created"
+msgstr "创作"
+
+#: /views/blogs/admin_view.ctp:34;66
+#: /views/blogs/view.ctp:34;68
+#: /views/gift_cards/admin_view.ctp:44
+#: /views/gift_cards/view.ctp:44
+#: /views/posts/admin_view.ctp:59;95
+#: /views/posts/view.ctp:59;95
+#: /views/saved_themes/admin_view.ctp:29
+#: /views/webpages/admin_view.ctp:26
+#: /views/webpages/view.ctp:30
+msgid "Modified"
+msgstr "修改"
+
+#: /views/blogs/admin_view.ctp:44
+#: /views/blogs/view.ctp:44
+msgid "Edit Blog"
+msgstr "编辑博客"
+
+#: /views/blogs/admin_view.ctp:45
+#: /views/blogs/view.ctp:45
+msgid "Delete Blog"
+msgstr "删除博客"
+
+#: /views/blogs/admin_view.ctp:46
+msgid "Blogs & Pages"
+msgstr "博客和网页"
+
+#: /views/blogs/admin_view.ctp:51
+#: /views/blogs/view.ctp:53
+msgid "Related Posts"
+msgstr "相关文章"
+
+#: /views/blogs/admin_view.ctp:56
+#: /views/blogs/view.ctp:58
+msgid "Blog Id"
+msgstr "博客ID"
+
+#: /views/blogs/admin_view.ctp:57
+#: /views/blogs/view.ctp:59
+msgid "Author Id"
+msgstr "作者ID"
+
+#: /views/blogs/admin_view.ctp:58
+#: /views/blogs/view.ctp:60
+#: /views/merchants/platform_view.ctp:39
+#: /views/orders/view.ctp:44
+#: /views/posts/admin_view.ctp:19;93
+#: /views/posts/view.ctp:19;93
+#: /views/products/admin_view.ctp:39
+#: /views/products/platform_add.ctp:44
+#: /views/products/platform_view.ctp:44
+msgid "Status"
+msgstr "状态"
+
+#: /views/blogs/admin_view.ctp:59
+#: /views/blogs/view.ctp:61
+#: /views/posts/admin_view.ctp:24
+#: /views/posts/view.ctp:24
+#: /views/products/admin_view.ctp:9
+#: /views/products/platform_add.ctp:14
+#: /views/products/platform_view.ctp:14
+#: /views/products/view.ctp:10
+#: /views/webpages/admin_index.ctp:60
+#: /views/webpages/admin_view.ctp:11
+#: /views/webpages/view.ctp:15
+msgid "Title"
+msgstr "标题"
+
+#: /views/blogs/admin_view.ctp:60
+#: /views/blogs/view.ctp:62
+#: /views/posts/admin_view.ctp:29
+#: /views/posts/view.ctp:29
+msgid "Slug"
+msgstr "蛞蝓"
+
+#: /views/blogs/admin_view.ctp:61
+#: /views/blogs/view.ctp:63
+#: /views/posts/admin_view.ctp:34;88
+#: /views/posts/view.ctp:34;88
+msgid "Body"
+msgstr "支架"
+
+#: /views/blogs/admin_view.ctp:62
+#: /views/blogs/view.ctp:64
+#: /views/posts/admin_view.ctp:39
+#: /views/posts/view.ctp:39
+msgid "No Comments"
+msgstr "不能评论"
+
+#: /views/blogs/admin_view.ctp:63
+#: /views/blogs/view.ctp:65
+#: /views/posts/admin_view.ctp:44
+#: /views/posts/view.ctp:44
+msgid "Allow Comments"
+msgstr "允许评论"
+
+#: /views/blogs/admin_view.ctp:64
+#: /views/blogs/view.ctp:66
+#: /views/posts/admin_view.ctp:49
+#: /views/posts/view.ctp:49
+msgid "Allow Pingback"
+msgstr "允许通告的"
+
+#: /views/customers/login.ctp:12
+#: /views/merchants/login.ctp:14
+#: /views/users/login.ctp:8
+msgid "Login"
+msgstr "注册"
+
+#: /views/domains/admin_add.ctp:4
+#: /views/themes/admin_settings.ctp:4
+msgid "Add %s"
+msgstr ""
+
+#: /views/domains/admin_add.ctp:4
+#: /views/domains/admin_edit.ctp:4
+#: /views/domains/admin_index.ctp:51
+#: /views/domains/admin_view.ctp:2;9;30;31;33
+msgid "Domain"
+msgstr "域名"
+
+#: /views/domains/admin_add.ctp:18
+#: /views/domains/admin_edit.ctp:20
+#: /views/domains/admin_view.ctp:32
+#: /views/products/admin_add.ctp:55
+#: /views/products/admin_edit.ctp:21
+#: /views/products/admin_view.ctp:51
+#: /views/themes/admin_settings.ctp:18
+msgid "List %s"
+msgstr ""
+
+#: /views/domains/admin_add.ctp:18
+#: /views/domains/admin_edit.ctp:20
+#: /views/domains/admin_index.ctp:2
+#: /views/domains/admin_view.ctp:32
+msgid "Domains"
+msgstr "域名"
+
+#: /views/domains/admin_edit.ctp:4
+#: /views/domains/admin_view.ctp:30
+#: /views/products/admin_view.ctp:49
+msgid "Edit %s"
+msgstr ""
+
+#: /views/domains/admin_index.ctp:51
+#: /views/domains/admin_view.ctp:33
+#: /views/products/admin_view.ctp:52
+#: /views/themes/admin_index.ctp:55
+msgid "New %s"
+msgstr ""
+
+#: /views/domains/admin_view.ctp:15
+msgid "Primary"
+msgstr "主要"
+
+#: /views/domains/admin_view.ctp:20
+msgid "Always Redirect Here"
+msgstr "总是重定向这里"
+
+#: /views/domains/admin_view.ctp:31
+#: /views/products/admin_view.ctp:50
+msgid "Delete %s"
+msgstr ""
+
+#: /views/elements/checkout_link.ctp:3
+msgid "Checkout"
+msgstr "结账"
+
+#: /views/elements/display_shipping_range.ctp:9
+msgid "Minimum"
+msgstr "最低限度"
+
+#: /views/elements/product_images_add_form.ctp:14
+#: /views/products/admin_add.ctp:19
+msgid "Add Product"
+msgstr "新增产品"
+
+#: /views/elements/product_images_add_form_uploadify.ctp:14
+msgid "Images"
+msgstr "图片"
+
+#: /views/elements/product_images_add_form_uploadify.ctp:53
+#: /views/elements/product_images_ajax_list.ctp:21
+#: /views/elements/themes_ajax_list.ctp:21
+#: /views/posts/admin_edit.ctp:31
+#: /views/saved_themes/admin_edit_image.ctp:18
+msgid "Are you sure you want to delete %s?"
+msgstr ""
+
+#: /views/elements/product_images_admin_list_by_product_list.ctp:3
+msgid "ProductImages"
+msgstr "产品图片"
+
+#: /views/elements/product_images_admin_list_by_product_list.ctp:53
+msgid "Cover"
+msgstr "隐藏"
+
+#: /views/elements/products_admin_edit_form.ctp:4
+#: /views/products/platform_add.ctp:53
+#: /views/products/platform_edit.ctp:4
+#: /views/products/platform_view.ctp:53
+#: /views/products/view.ctp:157
+msgid "Edit Product"
+msgstr "编辑产品"
+
+#: /views/gift_cards/add.ctp:10
+msgid "Add Gift Card"
+msgstr "添加礼品卡"
+
+#: /views/gift_cards/add.ctp:32
+#: /views/gift_cards/admin_add.ctp:24
+#: /views/gift_cards/admin_edit.ctp:26
+#: /views/gift_cards/admin_view.ctp:72
+#: /views/gift_cards/edit.ctp:26
+#: /views/gift_cards/view.ctp:72
+msgid "List Gift Cards"
+msgstr "礼品卡名单"
+
+#: /views/gift_cards/add.ctp:35
+#: /views/gift_cards/admin_add.ctp:27
+#: /views/gift_cards/admin_edit.ctp:29
+#: /views/gift_cards/admin_index.ctp:74
+#: /views/gift_cards/admin_view.ctp:76
+#: /views/gift_cards/edit.ctp:29
+#: /views/gift_cards/index.ctp:74
+#: /views/gift_cards/view.ctp:76
+msgid "List Gift Card Types"
+msgstr "礼品卡类型名单"
+
+#: /views/gift_cards/add.ctp:36
+#: /views/gift_cards/admin_add.ctp:28
+#: /views/gift_cards/admin_edit.ctp:30
+#: /views/gift_cards/admin_index.ctp:75
+#: /views/gift_cards/admin_view.ctp:77
+#: /views/gift_cards/edit.ctp:30
+#: /views/gift_cards/index.ctp:75
+#: /views/gift_cards/view.ctp:77
+msgid "New Gift Card Type"
+msgstr "新礼品卡类型"
+
+#: /views/gift_cards/add.ctp:37
+#: /views/gift_cards/admin_add.ctp:29
+#: /views/gift_cards/admin_edit.ctp:31
+#: /views/gift_cards/admin_index.ctp:76
+#: /views/gift_cards/admin_view.ctp:78
+#: /views/gift_cards/edit.ctp:31
+#: /views/gift_cards/index.ctp:76
+#: /views/gift_cards/view.ctp:78
+msgid "List Gc Designs"
+msgstr "气相色谱设计名单"
+
+#: /views/gift_cards/add.ctp:38
+#: /views/gift_cards/admin_add.ctp:30
+#: /views/gift_cards/admin_edit.ctp:32
+#: /views/gift_cards/admin_index.ctp:77
+#: /views/gift_cards/admin_view.ctp:79
+#: /views/gift_cards/edit.ctp:32
+#: /views/gift_cards/index.ctp:77
+#: /views/gift_cards/view.ctp:79
+msgid "New Gc Design"
+msgstr "新型气相色谱设计"
+
+#: /views/gift_cards/admin_add.ctp:4
+msgid "Admin Add Gift Card"
+msgstr "管理新增礼品卡"
+
+#: /views/gift_cards/admin_edit.ctp:4
+msgid "Admin Edit Gift Card"
+msgstr "管理编辑礼品卡"
+
+#: /views/gift_cards/admin_index.ctp:2
+#: /views/gift_cards/index.ctp:2
+msgid "Gift Cards"
+msgstr "礼品卡"
+
+#: /views/gift_cards/admin_index.ctp:71
+#: /views/gift_cards/admin_view.ctp:73
+#: /views/gift_cards/index.ctp:71
+#: /views/gift_cards/view.ctp:73
+msgid "New Gift Card"
+msgstr "新礼品卡"
+
+#: /views/gift_cards/admin_view.ctp:2
+#: /views/gift_cards/view.ctp:2
+msgid "Gift Card"
+msgstr "礼品卡"
+
+#: /views/gift_cards/admin_view.ctp:9
+#: /views/gift_cards/view.ctp:9
+msgid "Recipient"
+msgstr "接受者"
+
+#: /views/gift_cards/admin_view.ctp:14
+#: /views/gift_cards/view.ctp:14
+#: /views/orders/view.ctp:39
+msgid "Amount"
+msgstr "数量"
+
+#: /views/gift_cards/admin_view.ctp:19
+#: /views/gift_cards/view.ctp:19
+#: /views/products/admin_view.ctp:14
+#: /views/products/platform_add.ctp:19
+#: /views/products/platform_view.ctp:19
+msgid "Code"
+msgstr "密码"
+
+#: /views/gift_cards/admin_view.ctp:24
+#: /views/gift_cards/view.ctp:24
+msgid "From"
+msgstr "从"
+
+#: /views/gift_cards/admin_view.ctp:29
+#: /views/gift_cards/view.ctp:29
+msgid "To"
+msgstr "于"
+
+#: /views/gift_cards/admin_view.ctp:34
+#: /views/gift_cards/view.ctp:34
+msgid "Message"
+msgstr "讯息"
+
+#: /views/gift_cards/admin_view.ctp:50
+#: /views/gift_cards/view.ctp:50
+msgid "Delivery"
+msgstr "输送"
+
+#: /views/gift_cards/admin_view.ctp:55
+#: /views/gift_cards/view.ctp:55
+msgid "Gift Card Type"
+msgstr "礼品卡类型"
+
+#: /views/gift_cards/admin_view.ctp:60
+#: /views/gift_cards/view.ctp:60
+msgid "Gc Design"
+msgstr "气相色谱设计"
+
+#: /views/gift_cards/admin_view.ctp:70
+#: /views/gift_cards/edit.ctp:4
+#: /views/gift_cards/view.ctp:70
+msgid "Edit Gift Card"
+msgstr "编辑礼品卡"
+
+#: /views/gift_cards/admin_view.ctp:71
+#: /views/gift_cards/view.ctp:71
+msgid "Delete Gift Card"
+msgstr "删除礼品卡"
+
+#: /views/layouts/admin.ctp:25
+#: /views/layouts/default.ctp:25
+#: /views/layouts/overlay-form.ctp:25
+msgid "OMBI60: Open My Business in 60 Seconds:"
+msgstr "OMBI60"
+
+#: /views/layouts/admin.ctp:51;64
+#: /views/layouts/default.ctp:45;56
+msgid "OMBI60: Open My Business in 60 Seconds"
+msgstr "OMBI60"
+
+#: /views/layouts/shop.ctp:25
+#: /views/themed/5_c10/layouts/admin.ctp:25
+#: /views/themed/5_c11/layouts/admin.ctp:25
+#: /views/themed/5_c12/layouts/admin.ctp:25
+#: /views/themed/5_c13/layouts/admin.ctp:25
+#: /views/themed/5_c2/_c2/layouts/admin.ctp:25
+#: /views/themed/5_c3/layouts/admin.ctp:25
+#: /views/themed/5_c4/layouts/admin.ctp:25
+#: /views/themed/5_c5/layouts/admin.ctp:25
+#: /views/themed/5_c6/layouts/admin.ctp:25
+#: /views/themed/5_c7/layouts/admin.ctp:25
+#: /views/themed/5_c8/layouts/admin.ctp:25
+#: /views/themed/alt/layouts/admin.ctp:25
+#: /views/themed/blue-white/layouts/admin.ctp:25
+#: /views/themed/blue-white/layouts/default.ctp:25
+#: /views/themed/default/layouts/admin.ctp:25
+#: /views/themed/orange/layouts/admin.ctp:25
+#: /views/themed/orange/layouts/default.ctp:25
+msgid "CakePHP: the rapid development php framework:"
+msgstr "CakePHP"
+
+#: /views/layouts/shop.ctp:40;51
+#: /views/themed/5_c10/layouts/admin.ctp:39;50
+#: /views/themed/5_c11/layouts/admin.ctp:39;50
+#: /views/themed/5_c12/layouts/admin.ctp:39;50
+#: /views/themed/5_c13/layouts/admin.ctp:39;50
+#: /views/themed/5_c2/_c2/layouts/admin.ctp:39;50
+#: /views/themed/5_c3/layouts/admin.ctp:39;50
+#: /views/themed/5_c4/layouts/admin.ctp:39;50
+#: /views/themed/5_c5/layouts/admin.ctp:39;50
+#: /views/themed/5_c6/layouts/admin.ctp:39;50
+#: /views/themed/5_c7/layouts/admin.ctp:39;50
+#: /views/themed/5_c8/layouts/admin.ctp:39;50
+#: /views/themed/alt/layouts/admin.ctp:39;50
+#: /views/themed/blue-white/layouts/admin.ctp:39;50
+#: /views/themed/blue-white/layouts/default.ctp:64
+#: /views/themed/default/layouts/admin.ctp:39;50
+#: /views/themed/orange/layouts/admin.ctp:39;50
+msgid "CakePHP: the rapid development php framework"
+msgstr "CakePHP"
+
+#: /views/merchants/admin_index.ctp:7
+#: /views/merchants/platform_index.ctp:2
+msgid "Merchants"
+msgstr "商家"
+
+#: /views/merchants/edit.ctp:7
+msgid "Profile"
+msgstr "侧面"
+
+#: /views/merchants/platform_edit.ctp:4
+#: /views/merchants/platform_view.ctp:53
+msgid "Edit Merchant"
+msgstr "编辑商家"
+
+#: /views/merchants/platform_index.ctp:74
+#: /views/merchants/platform_view.ctp:56
+msgid "New Merchant"
+msgstr "新商家"
+
+#: /views/merchants/platform_view.ctp:2
+msgid "Merchant"
+msgstr "商家"
+
+#: /views/merchants/platform_view.ctp:9
+msgid "Full Name"
+msgstr "姓名"
+
+#: /views/merchants/platform_view.ctp:14
+msgid "Name To Call"
+msgstr "名称通话"
+
+#: /views/merchants/platform_view.ctp:19
+#: /views/orders/admin_view.ctp:9
+#: /views/posts/admin_view.ctp:91
+#: /views/posts/view.ctp:91
+msgid "Email"
+msgstr "电邮"
+
+#: /views/merchants/platform_view.ctp:24
+msgid "Password"
+msgstr "密码"
+
+#: /views/merchants/platform_view.ctp:29
+msgid "Joined On"
+msgstr "加入日期"
+
+#: /views/merchants/platform_view.ctp:34
+#: /views/products/admin_view.ctp:34
+#: /views/products/platform_add.ctp:39
+#: /views/products/platform_view.ctp:39
+msgid "Modified On"
+msgstr "修改日期"
+
+#: /views/merchants/platform_view.ctp:44
+msgid "Last Login On"
+msgstr "上次登入"
+
+#: /views/merchants/platform_view.ctp:54
+msgid "Delete Merchant"
+msgstr "删除商家"
+
+#: /views/merchants/platform_view.ctp:55
+msgid "List Merchants"
+msgstr "招商名单"
+
+#: /views/orders/add.ctp:4
+#: /views/orders/checkout.ctp:4
+msgid "Add Order"
+msgstr "新增订单"
+
+#: /views/orders/add.ctp:20
+#: /views/orders/checkout.ctp:39
+#: /views/orders/view.ctp:55
+msgid "List Orders"
+msgstr "订单列表"
+
+#: /views/orders/admin_index.ctp:2
+#: /views/orders/index.ctp:2
+msgid "Orders"
+msgstr "订单"
+
+#: /views/orders/admin_index.ctp:47
+#: /views/orders/admin_index_filter.ctp:27
+msgid "#"
+msgstr "#"
+
+#: /views/orders/admin_view.ctp:2
+msgid "Customer"
+msgstr "顾客"
+
+#: /views/orders/admin_view.ctp:19
+msgid "Delivery Address"
+msgstr "送货地址"
+
+#: /views/orders/admin_view.ctp:26;58
+msgid "address"
+msgstr "地址"
+
+#: /views/orders/admin_view.ctp:31;63
+msgid "region"
+msgstr "地区"
+
+#: /views/orders/admin_view.ctp:36;68
+msgid "city"
+msgstr "城市"
+
+#: /views/orders/admin_view.ctp:41;73
+msgid "country"
+msgstr "国家"
+
+#: /views/orders/admin_view.ctp:51
+msgid "Billing Address"
+msgstr "帐单地址"
+
+#: /views/orders/index.ctp:74
+#: /views/orders/view.ctp:56
+msgid "New Order"
+msgstr "新订单"
+
+#: /views/orders/view.ctp:2
+msgid "Order"
+msgstr "订单"
+
+#: /views/orders/view.ctp:9
+#: /views/products/platform_add.ctp:9
+#: /views/products/platform_view.ctp:9
+msgid "Shop Id"
+msgstr "商店ID"
+
+#: /views/orders/view.ctp:14
+msgid "Customer Id"
+msgstr "客户"
+
+#: /views/orders/view.ctp:19
+msgid "Billing Address Id"
+msgstr "帐单地址ID"
+
+#: /views/orders/view.ctp:24
+msgid "Delivery Address Id"
+msgstr "送货地址ID"
+
+#: /views/orders/view.ctp:29
+msgid "Order No"
+msgstr "订单号"
+
+#: /views/orders/view.ctp:34
+#: /views/products/admin_view.ctp:29
+#: /views/products/platform_add.ctp:34
+#: /views/products/platform_view.ctp:34
+msgid "Created On"
+msgstr "创建日期"
+
+#: /views/orders/view.ctp:53
+msgid "Edit Order"
+msgstr "编辑订单"
+
+#: /views/orders/view.ctp:54
+msgid "Delete Order"
+msgstr "删除订单"
+
+#: /views/payments/admin_index.ctp:8
+msgid "Payment Settings"
+msgstr "付款设定"
+
+#: /views/payments/admin_index.ctp:40
+msgid "Turn Off"
+msgstr "关闭"
+
+#: /views/payments/admin_index.ctp:47
+msgid "Are you sure?"
+msgstr "你肯定吗？"
+
+#: /views/posts/admin_add.ctp:6
+msgid "Admin Add Post"
+msgstr "管理添加公告"
+
+#: /views/posts/admin_add.ctp:23
+msgid "Cancel"
+msgstr "取消"
+
+#: /views/posts/admin_edit.ctp:7
+msgid "Admin Edit Post"
+msgstr "管理编辑公告"
+
+#: /views/posts/admin_index.ctp:2
+msgid "Posts"
+msgstr "公告"
+
+#: /views/posts/admin_index.ctp:72
+#: /views/posts/admin_view.ctp:75
+#: /views/posts/view.ctp:75
+msgid "List Authors"
+msgstr "作者名单"
+
+#: /views/posts/admin_index.ctp:73
+#: /views/posts/admin_view.ctp:76
+#: /views/posts/view.ctp:76
+msgid "New Author"
+msgstr "新作者"
+
+#: /views/posts/admin_index.ctp:74
+#: /views/posts/admin_view.ctp:77
+#: /views/posts/view.ctp:77
+msgid "List Comments"
+msgstr "评论列表"
+
+#: /views/posts/admin_index.ctp:75
+#: /views/posts/admin_view.ctp:78;129
+#: /views/posts/view.ctp:78;129
+msgid "New Comment"
+msgstr "新评论"
+
+#: /views/posts/admin_view.ctp:2
+#: /views/posts/view.ctp:2
+msgid "Post"
+msgstr "公告"
+
+#: /views/posts/admin_view.ctp:14;89
+#: /views/posts/view.ctp:14;89
+#: /views/saved_themes/admin_view.ctp:19
+msgid "Author"
+msgstr "作者"
+
+#: /views/posts/admin_view.ctp:69
+#: /views/posts/view.ctp:69
+msgid "Edit Post"
+msgstr "编辑公告"
+
+#: /views/posts/admin_view.ctp:70
+#: /views/posts/view.ctp:70
+msgid "Delete Post"
+msgstr "删除公告"
+
+#: /views/posts/admin_view.ctp:82
+#: /views/posts/view.ctp:82
+msgid "Related Comments"
+msgstr "相关评论"
+
+#: /views/posts/admin_view.ctp:87
+#: /views/posts/view.ctp:87
+msgid "Post Id"
+msgstr "公告ID"
+
+#: /views/posts/admin_view.ctp:90
+#: /views/posts/view.ctp:90
+msgid "Url"
+msgstr "网址"
+
+#: /views/posts/admin_view.ctp:92
+#: /views/posts/view.ctp:92
+msgid "Ip"
+msgstr "互联网协议"
+
+#: /views/product_images/admin_add.ctp:4
+msgid "Add ProductImage"
+msgstr "新增产品图片"
+
+#: /views/product_images/admin_add.ctp:14
+msgid "List ProductImages"
+msgstr "产品图片列表"
+
+#: /views/products/admin_add.ctp:55
+#: /views/products/admin_edit.ctp:21
+#: /views/products/admin_index.ctp:8
+#: /views/products/admin_view.ctp:51
+#: /views/products/index.ctp:2
+#: /views/products/platform_index.ctp:2
+msgid "Products"
+msgstr "产品"
+
+#: /views/products/admin_index.ctp:19
+#: /views/products/view_cart.ctp:14
+msgid "Photo"
+msgstr "图片"
+
+#: /views/products/admin_index.ctp:68
+msgid "Duplicate"
+msgstr "复制"
+
+#: /views/products/admin_index.ctp:83
+#: /views/products/index.ctp:74
+#: /views/products/platform_add.ctp:56
+#: /views/products/platform_index.ctp:74
+#: /views/products/platform_view.ctp:56
+#: /views/products/view.ctp:160
+msgid "New Product"
+msgstr "新产品"
+
+#: /views/products/admin_view.ctp:2;49;50;52
+#: /views/products/platform_add.ctp:2
+#: /views/products/platform_view.ctp:2
+#: /views/products/view.ctp:8
+msgid "Product"
+msgstr "产品"
+
+#: /views/products/admin_view.ctp:24
+#: /views/products/platform_add.ctp:29
+#: /views/products/platform_view.ctp:29
+#: /views/products/view.ctp:20
+#: /views/shipping_rates/admin_edit.ctp:21
+#: /views/themed/5_c10/products/view_cart.ctp:23
+#: /views/themed/5_c11/products/view_cart.ctp:23
+#: /views/themed/5_c12/products/view_cart.ctp:23
+#: /views/themed/5_c13/products/view_cart.ctp:23
+#: /views/themed/5_c2/_c2/products/view_cart.ctp:23
+#: /views/themed/5_c3/products/view_cart.ctp:23
+#: /views/themed/5_c4/products/view_cart.ctp:23
+#: /views/themed/5_c5/products/view_cart.ctp:23
+#: /views/themed/5_c6/products/view_cart.ctp:23
+#: /views/themed/5_c7/products/view_cart.ctp:23
+#: /views/themed/5_c8/products/view_cart.ctp:23
+#: /views/themed/default/products/view_cart.ctp:23
+msgid "Price"
+msgstr "价格"
+
+#: /views/products/platform_add.ctp:54
+#: /views/products/platform_view.ctp:54
+#: /views/products/view.ctp:158
+msgid "Delete Product"
+msgstr "删除产品"
+
+#: /views/products/platform_add.ctp:55
+#: /views/products/platform_edit.ctp:22
+#: /views/products/platform_view.ctp:55
+#: /views/products/view.ctp:159
+msgid "List Products"
+msgstr "产品名单"
+
+#: /views/products/view.ctp:47
+#: /views/products/view_cart.ctp:2
+msgid "Cart"
+msgstr "购物车"
+
+#: /views/products/view_cart.ctp:15
+msgid "title"
+msgstr "标题"
+
+#: /views/products/view_cart.ctp:16
+msgid "price"
+msgstr "价格"
+
+#: /views/products/view_cart.ctp:17
+msgid "quantity"
+msgstr "数量"
+
+#: /views/saved_themes/admin_add.ctp:16
+msgid "Admin Add Saved Theme"
+msgstr "管理新增保存的主题"
+
+#: /views/saved_themes/admin_add.ctp:70
+#: /views/saved_themes/admin_edit.ctp:84
+#: /views/saved_themes/admin_view.ctp:52
+msgid "List Saved Themes"
+msgstr "列表保存主题"
+
+#: /views/saved_themes/admin_add.ctp:73
+#: /views/saved_themes/admin_index.ctp:30
+#: /views/saved_themes/admin_index_original.ctp:64
+#: /views/saved_themes/admin_view.ctp:56
+msgid "List Themes"
+msgstr "主题列表"
+
+#: /views/saved_themes/admin_add.ctp:74
+#: /views/saved_themes/admin_index.ctp:31
+#: /views/saved_themes/admin_index_original.ctp:65
+#: /views/saved_themes/admin_view.ctp:57
+msgid "New Theme"
+msgstr "新主题"
+
+#: /views/saved_themes/admin_index.ctp:27
+#: /views/saved_themes/admin_index_original.ctp:61
+#: /views/saved_themes/admin_view.ctp:53
+msgid "New Saved Theme"
+msgstr "新保存的主题"
+
+#: /views/saved_themes/admin_index_original.ctp:2
+msgid "Saved Themes"
+msgstr "保存的主题"
+
+#: /views/saved_themes/admin_view.ctp:2
+msgid "Saved Theme"
+msgstr "保存的主题"
+
+#: /views/saved_themes/admin_view.ctp:34
+msgid "Folder Name"
+msgstr "文件夹名称"
+
+#: /views/saved_themes/admin_view.ctp:50
+msgid "Edit Saved Theme"
+msgstr "编辑已保存的主题"
+
+#: /views/saved_themes/admin_view.ctp:51
+msgid "Delete Saved Theme"
+msgstr "删除已保存的主题"
+
+#: /views/shipping_rates/admin_edit.ctp:11;96
+msgid "Edit Shipping Rate"
+msgstr "编辑运费率"
+
+#: /views/shipping_rates/admin_edit.ctp:26
+msgid "Shipping to "
+msgstr "运送到"
+
+#: /views/shipping_rates/admin_edit.ctp:33
+msgid "Weight Range"
+msgstr "重量范围"
+
+#: /views/shipping_rates/admin_edit.ctp:41
+msgid "Price Range"
+msgstr "价格范围"
+
+#: /views/shipping_rates/admin_edit.ctp:97
+#: /views/shipping_rates/admin_index.ctp:50
+#: /views/shipping_rates/new_shipping_rate.ctp:28
+msgid "Are you sure you want to delete %s for %s?"
+msgstr ""
+
+#: /views/shipping_rates/admin_index.ctp:5
+msgid "Shipping"
+msgstr "航运"
+
+#: /views/shops/edit.ctp:4
+msgid "Edit Shop"
+msgstr "编辑店"
+
+#: /views/shops/edit.ctp:18
+msgid "List Shops"
+msgstr "商店名单"
+
+#: /views/themed/5_c10/products/view_cart.ctp:21
+#: /views/themed/5_c11/products/view_cart.ctp:21
+#: /views/themed/5_c12/products/view_cart.ctp:21
+#: /views/themed/5_c13/products/view_cart.ctp:21
+#: /views/themed/5_c2/_c2/products/view_cart.ctp:21
+#: /views/themed/5_c3/products/view_cart.ctp:21
+#: /views/themed/5_c4/products/view_cart.ctp:21
+#: /views/themed/5_c5/products/view_cart.ctp:21
+#: /views/themed/5_c6/products/view_cart.ctp:21
+#: /views/themed/5_c7/products/view_cart.ctp:21
+#: /views/themed/5_c8/products/view_cart.ctp:21
+#: /views/themed/default/products/view_cart.ctp:21
+msgid "Item"
+msgstr "项目"
+
+#: /views/themed/5_c10/products/view_cart.ctp:22
+#: /views/themed/5_c11/products/view_cart.ctp:22
+#: /views/themed/5_c12/products/view_cart.ctp:22
+#: /views/themed/5_c13/products/view_cart.ctp:22
+#: /views/themed/5_c2/_c2/products/view_cart.ctp:22
+#: /views/themed/5_c3/products/view_cart.ctp:22
+#: /views/themed/5_c4/products/view_cart.ctp:22
+#: /views/themed/5_c5/products/view_cart.ctp:22
+#: /views/themed/5_c6/products/view_cart.ctp:22
+#: /views/themed/5_c7/products/view_cart.ctp:22
+#: /views/themed/5_c8/products/view_cart.ctp:22
+#: /views/themed/default/products/view_cart.ctp:22
+msgid "Quantity"
+msgstr "数量"
+
+#: /views/themes/admin_index.ctp:2
+#: /views/themes/admin_settings.ctp:18
+msgid "Themes"
+msgstr "主题"
+
+#: /views/webpages/admin_add.ctp:4
+msgid "Admin Add Webpage"
+msgstr "管理新增网页"
+
+#: /views/webpages/admin_add.ctp:19
+#: /views/webpages/admin_edit.ctp:29
+#: /views/webpages/admin_view.ctp:53
+#: /views/webpages/view.ctp:57
+msgid "List Webpages"
+msgstr "列表网页"
+
+#: /views/webpages/admin_edit.ctp:4
+msgid "Admin Edit Webpage"
+msgstr "管理编辑网页"
+
+#: /views/webpages/admin_index.ctp:2
+msgid "Webpages"
+msgstr "网页"
+
+#: /views/webpages/admin_index.ctp:97
+#: /views/webpages/admin_view.ctp:54
+#: /views/webpages/view.ctp:58
+msgid "New Webpage"
+msgstr "新网页"
+
+#: /views/webpages/admin_view.ctp:2
+#: /views/webpages/view.ctp:2
+msgid "Webpage"
+msgstr "网页"
+
+#: /views/webpages/admin_view.ctp:16
+#: /views/webpages/view.ctp:20
+msgid "Text"
+msgstr "正文"
+
+#: /views/webpages/admin_view.ctp:31
+#: /views/webpages/view.ctp:35
+msgid "Meta Title"
+msgstr "梅塔标题"
+
+#: /views/webpages/admin_view.ctp:36
+#: /views/webpages/view.ctp:40
+msgid "Meta Keywords"
+msgstr "梅塔关键词"
+
+#: /views/webpages/admin_view.ctp:41
+#: /views/webpages/view.ctp:45
+msgid "Meta Description"
+msgstr "梅塔介绍"
+
+#: /views/webpages/admin_view.ctp:51
+#: /views/webpages/view.ctp:55
+msgid "Edit Webpage"
+msgstr "编辑网页"
+
+#: /views/webpages/admin_view.ctp:52
+#: /views/webpages/view.ctp:56
+msgid "Delete Webpage"
+msgstr "删除网页"
+
+#: /views/webpages/view.ctp:9
+msgid "Shop"
+msgstr "店"
+
+#: /webroot/test.php:88
+msgid "Debug setting does not allow access to this url."
+msgstr "调试设置不允许访问该网址。"
+
+#~ msgid "Customer deleted"
+#~ msgstr "客户已被删除"
+
+#~ msgid "Add Address"
+#~ msgstr "添加地址"
+
+#~ msgid "List Addresses"
+#~ msgstr "地址列表"
+
+#~ msgid "Edit Address"
+#~ msgstr "编辑地址"
+
+#~ msgid "Address"
+#~ msgstr "地址"
+
+#~ msgid "City"
+#~ msgstr "城市"
+
+#~ msgid "Region"
+#~ msgstr "地区"
+
+#~ msgid "Zip Code"
+#~ msgstr "邮政编码"
+
+#~ msgid "Country"
+#~ msgstr "国家"
+
+#~ msgid "Delete Address"
+#~ msgstr "删除地址"
+
+#~ msgid "Add Blog"
+#~ msgstr "添加博客"
+
+#~ msgid "Add CartItem"
+#~ msgstr "添加购物车项目"
+
+#~ msgid "List CartItems"
+#~ msgstr "购物车清单"
+
+#~ msgid "Edit CartItem"
+#~ msgstr "编辑购物车清单"
+
+#~ msgid "CartItems"
+#~ msgstr "购物车项目"
+
+#~ msgid "New CartItem"
+#~ msgstr "新购物车项目"
+
+#~ msgid "CartItem"
+#~ msgstr "购物车项目"
+
+#~ msgid "Cart Id"
+#~ msgstr "购物车ID"
+
+#~ msgid "Product Id"
+#~ msgstr "产品编号"
+
+#~ msgid "Product Price"
+#~ msgstr "产品价格"
+
+#~ msgid "Product Quantity"
+#~ msgstr "产品数量"
+
+#~ msgid "Delete CartItem"
+#~ msgstr "删除购物车项目"
+
+#~ msgid "Carts"
+#~ msgstr "购物车"
+
+#~ msgid "Add Customer"
+#~ msgstr "新增顾客"
+
+#~ msgid "List Customers"
+#~ msgstr "顾客名单"
+
+#~ msgid "Edit Customer"
+#~ msgstr "编辑顾客"
+
+#~ msgid "Customers"
+#~ msgstr "顾客"
+
+#~ msgid "New Customer"
+#~ msgstr "新顾客"
+
+#~ msgid "First Name"
+#~ msgstr "名字"
+
+#~ msgid "Last Name"
+#~ msgstr "姓"
+
+#~ msgid "Delete Customer"
+#~ msgstr "删除顾客"
+
+#~ msgid "Shops"
+#~ msgstr "店"
+
+#~ msgid "Group"
+#~ msgstr "组"
+
+#~ msgid "Groups"
+#~ msgstr "组"
+
+#~ msgid "Users"
+#~ msgstr "用户"
+
+#~ msgid "User"
+#~ msgstr "用户"
+
+#~ msgid "Group Id"
+#~ msgstr "组ID"
+
+#~ msgid "Order Id"
+#~ msgstr "订单ID"
+
+#~ msgid "Delete OrderLineItem"
+#~ msgstr "删除OrderLineItem"
+
+#~ msgid "PageType"
+#~ msgstr "页心"
+
+#~ msgid "Alias"
+#~ msgstr "别名"
+
+#~ msgid "Delete PageType"
+#~ msgstr "删除页心"
+
+#~ msgid "Add Payment"
+#~ msgstr "新增付款"
+
+#~ msgid "List Payments"
+#~ msgstr "付款列表"
+
+#~ msgid "Edit Payment"
+#~ msgstr "编辑付款"
+
+#~ msgid "Payment"
+#~ msgstr "付款"
+
+#~ msgid "Delete Payment"
+#~ msgstr "删除付款"
+
+#~ msgid "New Payment"
+#~ msgstr "新付款方式"
+
+#~ msgid "Payments"
+#~ msgstr "付款"
+
+#~ msgid "Add Post"
+#~ msgstr "添加公告"
+
+#~ msgid "Edit ProductImage"
+#~ msgstr "编辑图片列表"
+
+#~ msgid "New ProductImage"
+#~ msgstr "新产品图片"
+
+#~ msgid "ProductImage"
+#~ msgstr "产品图片"
+
+#~ msgid "Delete ProductImage"
+#~ msgstr "删除产品图片"
+
+#~ msgid "Add Saved Theme"
+#~ msgstr "添加保存主题"
+
+#~ msgid "New Shop"
+#~ msgstr "新铺"
+
+#~ msgid "Add Shop"
+#~ msgstr "新增店"
+
+#~ msgid "Merchant Id"
+#~ msgstr "商家ID"
+
+#~ msgid "Theme Id"
+#~ msgstr "主题ID"
+
+#~ msgid "Web Address"
+#~ msgstr "网址"
+
+#~ msgid "Delete Shop"
+#~ msgstr "删除店"
+
+#~ msgid "Available For All"
+#~ msgstr "适用于所有"
+
+#~ msgid "Add Webpage"
+#~ msgstr "新增网页"
+
+#~ msgid "Page Type"
+#~ msgstr "页心"

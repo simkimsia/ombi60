@@ -1,1 +1,4 @@
-default-*.jpg
+*
+!thumb
+!default.jpg
+!default-0.jpg

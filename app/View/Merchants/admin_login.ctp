@@ -1,4 +1,4 @@
-<div class="login form">
+<div class="login">
 <?php
 	echo $this->Session->flash('auth');
 	
