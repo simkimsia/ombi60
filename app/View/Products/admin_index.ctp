@@ -1,7 +1,7 @@
 
 <div class="products index">
 <h2 align="center" class="product-heading"><?php echo __('Products');?></h2>
-<div class="product-add">
+<div align="center">
     <?php echo $this->Html->link(__('Add New Product'), array('action' => 'add')); ?></li>
 </div>
 <br />

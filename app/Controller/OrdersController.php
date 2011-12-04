@@ -121,8 +121,7 @@ class OrdersController extends AppController {
 			      'fields'=>array('User.full_name', 'Order.*'),
 			      );
 		
-		// combine the original pagination conditions with the Filter pagination
-		$this->paginate['conditions'] = array_merge((array)$this->Filter->paginate['conditions'], $this->Paginator->paginate['conditions']);
+
 		
 		$orders = $this->paginate();
 

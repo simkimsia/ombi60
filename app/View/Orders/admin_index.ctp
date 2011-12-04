@@ -1,34 +1,9 @@
 <div>
 <h2 align="center"><?php echo __('Orders');?></h2>
-<?php echo $this->Form->create('Order', array('url' => array('controller' => 'orders', 'action' => 'index', 'admin' => 'true'), 'id'=>'filters')); ?>
-<table cellpadding="0" cellspacing="0" class="search-filters">
-	<tr>
-		<th>Order</th>
-		<th>Placed by</th>
-		<th>Payment Status</th>
-		<th>Fulfillment Status</th>
-		<th>Amount</th>
-		
-	</tr>
-  <tr>
-    <th><?php echo $this->Form->input('Order.order_no', array('label'=>false, 'size' => 4)); ?></th>
-		<th><?php echo $this->Form->input('User.full_name', array('label'=>false, 'size' => 10)); ?></th>
-		<th><?php echo $this->Form->input('Order.payment_status', array('options' => array('0'=>'Abandoned','1'=>'Authorized', '2'=>'Paid', '3'=>'Pending'),
-										    'empty' => 'Any status',
-										    'label' => false)); ?></th>
-		<th><?php echo $this->Form->input('Order.fulfillment_status', array('options' => array('0'=>'Fulfilled','1'=>'NOT fulfilled', '2'=>'Partially fulfilled'),
-										    'empty' => 'Any status',
-										    'label' => false)); ?></th>
+<div align="center">
+    <?php echo $this->Html->link(__('Export orders'), array('action' => 'export')); ?></li>
+</div>
 
-		<th><?php echo $this->Form->input('Order.amount', array('label'=>false, 'size' => 4)); ?></th>
-                <th>
-                    <button type="submit" name="data[filter]" value="filter">Filter</button>
-                    <button type="submit" name="data[reset]" value="reset">Reset</button>
-                </th>
-        </tr>
-</table>
-<br />
-<?php echo $this->Form->end(); ?>
 <span class='paginator-top'>
 <?php
 echo $this->Paginator->counter(array(
@@ -50,12 +25,12 @@ if ($this->Paginator->params['paging']['Order']['pageCount'] > 1) {
 <br />
 <table cellpadding="0" cellspacing="0" class="items-table orders-table">
 	<tr>
-		<th><?php echo $this->Paginator->sort('Order', 'order_no');?></th>
-		<th width="20%"><?php echo $this->Paginator->sort('Date', 'created');?></th>
-		<th><?php echo $this->Paginator->sort('Placed by', 'User.full_name');?></th>
-		<th><?php echo $this->Paginator->sort('payment_status');?></th>
-		<th><?php echo $this->Paginator->sort('fulfillment_status');?></th>
-		<th><?php echo $this->Paginator->sort('amount');?></th>
+		<th><?php echo $this->Paginator->sort('Order.order_no', 'Order');?></th>
+		<th width="20%"><?php echo $this->Paginator->sort('Order.created', 'Date');?></th>
+		<th><?php echo $this->Paginator->sort('User.full_name', 'Placed by');?></th>
+		<th><?php echo $this->Paginator->sort('Order.payment_status', 'Payment');?></th>
+		<th><?php echo $this->Paginator->sort('Order.fulfillment_status', 'Fulfillment');?></th>
+		<th><?php echo $this->Paginator->sort('Order.amount', 'Amount');?></th>
 		
 	</tr>
 <?php
@@ -72,7 +47,7 @@ foreach ($orders as $order):
 			
 		</td>
 		<td>
-			<?php echo $this->Time->nice($order['Order']['created']); ?>
+			<?php echo $this->Time->niceShort($order['Order']['created']); ?>
 		</td>
 		<td>
 			<?php echo $order['User']['full_name']; ?>
@@ -86,7 +61,7 @@ foreach ($orders as $order):
 		</td>
 		
 		<td>
-			<?php echo '$' . $order['Order']['amount']; ?>
+			<?php echo $this->Number->currency($order['Order']['amount'], '$'); ?>
 		</td>
 		
 	</tr>
