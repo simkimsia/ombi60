@@ -57,8 +57,7 @@
 	url = https://github.com/CakeDC/migrations.git
 [submodule "app/Plugin/Payments/Vendor/AktiveMerchant"]
 	path = app/Plugin/Payments/Vendor/AktiveMerchant
-	url = git@github.com:ajibarra/Aktive-Merchant.git
-
+	url = git@github.com:simkimsia/Aktive-Merchant.git
 [submodule "app/Vendor/RedBean"]
 	path = app/Vendor/RedBean
 	url = git@github.com:simkimsia/redbean.git
