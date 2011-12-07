@@ -43,7 +43,7 @@
  
 
 App::build(array(
-	'Model' => array(dirname(APP) . DS . 'app' . DS . 'Model')
+	'Model' => array(dirname(APP) . DS . 'app' . DS . 'Model' . DS)
 ));
 
 
