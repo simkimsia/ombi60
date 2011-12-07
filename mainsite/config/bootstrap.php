@@ -40,6 +40,15 @@
  * ));
  *
  */
+ 
+
+App::build(
+	array(
+		'Model' => array(basename(APP) . 'app' . DS . 'Model' )
+	)
+);
+
+
 
 /**
  * As of 1.3, additional rules for the inflector are added below
@@ -270,3 +279,5 @@ define('DEFAULT_LANGUAGE', 'eng');
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
 App::uses('Sanitize', 'Utility');
+
+
