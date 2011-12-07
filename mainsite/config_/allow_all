@@ -1,0 +1,3 @@
+#!/bin/sh
+sed -i "s_Configure::write('Auth.allowAll', false);_Configure::write('Auth.allowAll', true);_g" /var/www/ombi60.biz/current/app/config/bootstrap.local.php
+sed -i "s_Configure::write('Auth.allowAll', false);_Configure::write('Auth.allowAll', true);_g" /var/www/ombi60.com/current/app/config/bootstrap.local.php
