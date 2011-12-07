@@ -33,8 +33,8 @@ echo $this->element('action_buttons', array('modelName' => 'Product'));
 <table cellpadding="0" cellspacing="0" class="products-table" id="products-table">
 	<tr>
 		<th>&nbsp;</th>
-		<th class="product-header"><?php echo $this->Paginator->sort(__('Product'), 'title'); ?></th>
-		<th style="text-align: center;"><?php echo $this->Paginator->sort('visible');?></th>
+		<th class="product-header"><?php echo $this->Paginator->sort('Product.title', 'Title'); ?></th>
+		<th style="text-align: center;"><?php echo $this->Paginator->sort('Product.visible', 'Visible');?></th>
 		<th class="actions" style="text-align: center;"><?php echo __('Actions');?></th>
 	</tr>
 
