@@ -57,7 +57,10 @@ foreach ($products as $key=>$product):
 		  <span class="photo">
 		    <?php
             if (isset($product['ProductImage']['filename']))            
-                echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $product['ProductImage']['filename']); ?>
+                echo $this->Html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_SMALL_URL . $product['ProductImage']['filename']); 
+			else 
+				echo $this->Html->image('/img/admin/no-image-small.gif'); 
+			?>
 		  </span>
 		  <span class="product-details">
             <?php echo $this->Html->link($product['Product']['title'], array('action' => 'view', $product['Product']['id'])); ?> <br>
