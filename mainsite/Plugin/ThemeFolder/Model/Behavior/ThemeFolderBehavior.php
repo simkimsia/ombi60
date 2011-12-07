@@ -71,9 +71,13 @@ class ThemeFolderBehavior extends ModelBehavior {
 		}
 	
 		$success = $this->createFolder($model, null);
+		$this->log('1');
+		$this->log($success);
 		
 		if ($success) {
 			$success = $this->copyBaseTheme($model);
+			$this->log('2');
+			$this->log($success);
 		}
 		
 		return $success;
