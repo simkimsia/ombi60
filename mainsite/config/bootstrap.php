@@ -42,11 +42,9 @@
  */
  
 
-App::build(
-	array(
-		'Model' => array(basename(APP) . 'app' . DS . 'Model' )
-	)
-);
+App::build(array(
+	'Model' => array(dirname(APP) . DS . 'app' . DS . 'Model')
+));
 
 
 
