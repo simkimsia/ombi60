@@ -1,9 +1,9 @@
-<div class="merchants index">
+<div class="merchants">
 <h2><?php echo __('Merchants');?></h2>
 
 
 
-Dashboard for Merchant
+Dashboard
 <table id="recent-activity" class="table" cellpadding="0" cellspacing="0">
 	<thead class="hide">
 		<tr>

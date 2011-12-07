@@ -1045,6 +1045,14 @@ table.secondary-variant-options tr td.right{
 background-color: #FFFFE0 !important;
 }
 
+.merchants {
+	text-align: center;
+}
+.merchants table {
+	margin: 0px 0px 10px 200px;
+	width: 70%;
+}
+
 /********************************* Style for variant list ends here ********************************************/
 
 
