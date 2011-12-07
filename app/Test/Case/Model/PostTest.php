@@ -100,14 +100,19 @@ class PostTestCase extends CakeTestCase {
 		// AND we get a datetime in the POST
 		$this->Post->recursive = -1;
 		$result = $this->Post->read(array('Post.published'), 1);
-		$date 	= date('Y-m-d H:i:s');
-		$publishedDate = $result['Post']['published'];
-		$this->assertEquals($date, $publishedDate);
 		
-		/*
-		$array = explode(" ", $publishedDate);
 
-		$this->assertEquals($date, $array[0]);*/
+		$expectedDate 	= date('Y-m-d H:i:s');
+		$publishedDate 	= $result['Post']['published'];
+		
+		$publishedDateTime 	= new DateTime($publishedDate);
+		$expectedDateTime 	= new DateTime($expectedDate);
+		
+		$interval =  $expectedDateTime->diff($publishedDateTime);
+		
+		// AND the published datetime is within a 2 second timespan from the expected datetime		
+		$this->assertTrue(($interval->s <= 2));
+		$this->assertTrue(($interval->s >= 0));
 		
 	}
 	
