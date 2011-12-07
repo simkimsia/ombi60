@@ -9,7 +9,12 @@ function ombi60ProductImgUrl($filename, $size) {
         $html = new HtmlHelper();
         return $html->image(UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_URL . $size . '/' . $filename);
         */
-        return '/img/' . UP_ONE_DIR_LEVEL . PRODUCT_IMAGES_THUMB_URL . $size . '/' . $filename;
+		if (empty($filename)) {
+			$filename = 'no-image-' . $size . '.gif';
+			return '/img/admin/' . $filename;
+		}
+		
+        return '/' . PRODUCT_IMAGES_THUMB_URL . $size . '/' . $filename;
 }
 
 /**

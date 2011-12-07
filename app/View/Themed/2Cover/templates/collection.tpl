@@ -12,7 +12,8 @@
 		<!-- START IMAGE -->
 		<div class="image">
 			<div class="align">
-				<div><a href="{{ product.url | within( collection) }}"><img src="{{ product.images[0] | product_img_url( "medium" )}}" alt="{{ product.title | escape }}" /></a></div>
+				<div><a href="{{ product.url | within( collection) }}"><img src="{{ product.images[0] | product_img_url( "medium" )}}" alt="{{ product.title | escape }}" /></a>
+				</div>
 			</div>
 		</div>
 		<!-- END IMAGE -->
