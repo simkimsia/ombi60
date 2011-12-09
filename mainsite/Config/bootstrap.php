@@ -43,7 +43,9 @@
  
 
 App::build(array(
-	'Model' => array(dirname(APP) . DS . 'app' . DS . 'Model' . DS),
+	'Model' 	=> array(dirname(APP) . DS . 'app' . DS . 'Model' . DS),
+	'Behavior' 	=> array(dirname(APP) . DS . 'app' . DS . 'Model' . DS . 'Behavior' . DS),
+	'Plugin'	=> array(dirname(APP) . DS . 'app' . DS . 'Plugin' . DS),
 ));
 
 

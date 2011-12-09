@@ -37,9 +37,9 @@ class ThemeFolderBehavior extends ModelBehavior {
 		if (!isset($this->settings[$Model->alias])) {
 			$this->settings[$Model->alias] = array(
 				'chmod' => 0775,
-				'themePath' => APP . 'View' . DS . 'Themed' . DS,
+				'themePath' => ROOT . DS . 'app' . DS . 'View' . DS . 'Themed' . DS,
 				'folderNameField' => 'name',
-				'defaultFolderName' => 'default'
+				'defaultFolderName' => 'Default'
 			);
 		}
 		
@@ -79,7 +79,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 		return $success;
 	}
 	
-	function copyTheme(&$model, $theme_folder_name) {
+	public function copyTheme(&$model, $theme_folder_name) {
 		
 		$dir = new Folder();
 		$newFolderName = $model->data[$model->alias][$this->folderNameField];
@@ -96,7 +96,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 		
 	}
 	
-	private function copyBaseTheme(&$model) {
+	protected function copyBaseTheme(&$model) {
 		
 		$dir = new Folder();
 		$newFolderName = $model->data[$model->alias][$this->folderNameField];
@@ -110,7 +110,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 		
 	}
 	
-	function createFolder(&$model, $chmod = null, $themeName = '') {
+	public function createFolder(&$model, $chmod = null, $themeName = '') {
 		if ($chmod == null) {
 			$chmod = $this->settings[$model->alias]['chmod'];
 		}
@@ -128,7 +128,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 		return $success;
 	}
 	
-	function deleteFolder(&$model, $themeName = '') {
+	public function deleteFolder(&$model, $themeName = '') {
 		
 		$path = $this->settings[$model->alias]['themePath'];
 		$success = false;
@@ -143,7 +143,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 		return $success;
 	}
 	
-	function fileExists($filename, $parent_folder, $sort = true, $exceptions = false, $full_path = false) {
+	public function fileExists($filename, $parent_folder, $sort = true, $exceptions = false, $full_path = false) {
 		$dir = new Folder();
 		$dir->cd($parent_folder);
 		
@@ -160,7 +160,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 		return $flag;
 	}
 	
-	function renameFolder(&$model, $oldFolderName, $newFolderName, $chmod = null) {
+	public function renameFolder(&$model, $oldFolderName, $newFolderName, $chmod = null) {
 		
 		if ($chmod == null) {
 			$chmod = $this->settings[$model->alias]['chmod'];

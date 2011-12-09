@@ -96,7 +96,6 @@ class MerchantsController extends AppController {
 
 			if ($this->Auth->login() &&$this->Auth->user()) {
 
-				$this->log($this->request->data);
 				// this code is for the remember me when Merchant first logs in and chooses the remember me
 				if (!empty($this->request->data) && $this->request->data['User']['remember_me']) {
 					$cookie = array('email'    => $this->request->data['User']['email'],

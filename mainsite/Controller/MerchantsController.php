@@ -1,6 +1,7 @@
 <?php
 App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
-App::import('Vendor', 'PayDollar', array('file'=>'paydollar'.DS.'includes'.DS.'paydollar.nvp.class.php'));
+require_once(ROOT. DS . 'app' . DS . 'Vendor' . DS . 'paydollar' . DS . 'includes' . DS . 'paydollar.nvp.class.php');
+//App::import('Vendor', 'PayDollar', array('file'=>'paydollar'.DS.'includes'.DS.'paydollar.nvp.class.php'));
 class MerchantsController extends AppController {
 
 	public $name = 'Merchants';
@@ -9,6 +10,11 @@ class MerchantsController extends AppController {
 		'Ajax',
 		'Javascript',
 		'Log.Log');
+		
+		
+	public $components = array(
+		'Paydollar.Paydollar'
+	);
 
 	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
@@ -216,11 +222,11 @@ class MerchantsController extends AppController {
 		$domain = array();
 		
 		// must come from paypal express checkout
-		if(isset($this->params['url']['paypal'])) {
+		if(isset($this->request->query['paypal'])) {
 			$token = $this->Session->read('Subscription.Paypal.TOKEN');
 			$ppResult = $this->getECD($token);
 			
-			$invoiceID = $this->params['url']['inv'];
+			$invoiceID = $this->request->query['inv'];
 			$shopid = $this->Session->read('NewShopID');
 			
 			$options=array('PROFILEREFERENCE'=>$invoiceID);
@@ -248,9 +254,9 @@ class MerchantsController extends AppController {
 			
 		}
 		
-		if(isset($this->params['url']['paydollar'])) {
+		if(isset($this->request->query['paydollar'])) {
 			
-			$invoiceID = $this->params['url']['inv'];
+			$invoiceID = $this->request->query['inv'];
 			$shopid = $this->Session->read('NewShopID');
 			$mSchPayId = $this->Session->read('PaydollarResult.mSchPayId');
 			

@@ -187,8 +187,6 @@ class ProductsController extends AppController {
 		
 		$shop_id = Shop::get('Shop.id');
 		
-		$this->log($shop_id);
-		
 		$this->paginate = array(
 			'conditions' => array(
 				'AND' => array(
@@ -227,8 +225,6 @@ class ProductsController extends AppController {
 		
 		// get the product details
         $product = $this->Product->getDetailsEvenHidden($id); 
-		
-		$this->log($product);
 
 		$this->set(compact('collections', 'product', 'variantOptions'));
 		// for uploadify

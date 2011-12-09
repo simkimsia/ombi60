@@ -127,26 +127,32 @@ class SavedTheme extends AppModel {
 	}
 	
 	public function beforeValidate() {
+		
+		
 		if (isset($this->data['SavedTheme']['switch'])) {
 				
 			return true;
 
 		}
-
 		
+		if (isset($this->data['SavedTheme']['signup']) && $this->data['SavedTheme']['signup'] === true) {
+			
+			return true;
+		}
+
+
 		// now we need to set the values for fields like author, folder_name, shop_id
 		$this->data['SavedTheme']['author'] = User::get('User.full_name');
-		
+
 		$this->data['SavedTheme']['folder_name'] = (!empty($this->data['SavedTheme']['name'])) ? User::get('User.id') . '_' . $this->data['SavedTheme']['name'] : '';
 
 		$this->data['SavedTheme']['shop_id'] = Shop::get('Shop.id');
-		
+
 		if (isset($this->data['SavedTheme']['original_name'])) {
 			$this->data['SavedTheme']['original_folder_name'] = User::get('User.id') . '_' . $this->data['SavedTheme']['original_name'];
-			
-		}
-		$this->log('at beforeValidate');
 
+		}
+		
 		return true;
 	}
 	
@@ -161,8 +167,8 @@ class SavedTheme extends AppModel {
 		$data['SavedTheme']['author'] = $options['author'];
 		//$data['SavedTheme']['folder_name'] = $options['user_id'] . '_' . $themeData['Theme']['name'];
 		
-		// we are now going to save just 1 theme per shop like Shopify so all are called shop_id_cover e.g., 5_cover
-		$data['SavedTheme']['folder_name'] = $options['shop_id'] . '_cover';
+		// we are now going to save just 1 theme per shop like Shopify so all are called shop_idCover e.g., 5Cover
+		$data['SavedTheme']['folder_name'] = $options['shop_id'] . 'Cover';
 		$data['SavedTheme']['shop_id'] = $options['shop_id'];
 		$data['SavedTheme']['theme_id'] = $options['theme_id'];
 		$data['SavedTheme']['featured'] = true;
@@ -175,16 +181,9 @@ class SavedTheme extends AppModel {
 		// set the sourceFolderName, later we need it for copying over.
 		$this->sourceFolderName = $themeData['Theme']['folder_name'];
 		
-		
 		$result = $this->save($data);
-		$this->log('result ok?');
-		$this->log($result);
 		
-		$folderOk =  $this->folderOrFileExists($data['SavedTheme']['folder_name'], ROOT . DS . 'app' . DS . 'views' . DS . 'themed');
-
-		$this->log('folderOk ok?');
-		$this->log($folderOk);
-
+		$folderOk =  $this->folderOrFileExists($data['SavedTheme']['folder_name'], ROOT . DS . 'app' . DS . 'View' . DS . 'Themed');
 				
 		if ($result && $folderOk) {
 			$this->Shop->id = $options['shop_id'];
@@ -192,7 +191,6 @@ class SavedTheme extends AppModel {
 		} else {
 			return false;
 		}
-		
 		
 		return $result;
 	}
@@ -204,8 +202,6 @@ class SavedTheme extends AppModel {
 		$success = false;
 		
 		if (isset($this->data['SavedTheme']['switch'])) {
-				
-			$this->log('3');
 
 			return true;
 
@@ -229,7 +225,6 @@ class SavedTheme extends AppModel {
 		
 		// this is for just admin_edit because we ONLY want to validate for name and description
 		if (isset($this->data[$this->name]['skipCssCheck']) AND $this->data[$this->name]['skipCssCheck']) {
-			$this->log('5');
 
 			return true;
 		}
@@ -255,7 +250,6 @@ class SavedTheme extends AppModel {
 			if (!empty($this->data['SavedTheme']['css'])) {
 				$success = $file->write($this->data['SavedTheme']['css']);
 				
-				$this->log('6');
 				$this->log($success);
 					
 			}

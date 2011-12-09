@@ -208,7 +208,7 @@ class Merchant extends AppModel {
 
 			$blog->create();
 			$result = $blog->save($blogData);
-$this->log('blog');
+
 			if (!$result) {
 				$datasource->rollback($this);
 				return false;
@@ -229,7 +229,7 @@ $this->log('blog');
 
 			$post->create();
 			$result = $post->save($postData);
-$this->log('post');
+
 			if (!$result) {
 				$datasource->rollback($this);
 				return false;
@@ -301,7 +301,6 @@ $this->log('post');
 			foreach($pageData['Webpage'] as $pageName => $page) {
 				$webpage->create();
 				$result = $webpage->save($page);
-				$this->log('webpage');
 				
 				if (!$result) {
 					$datasource->rollback($this);
@@ -351,12 +350,6 @@ $this->log('post');
 			));
 			
 			$fail = !SaveAllLib::hasASuccessful($result);
-			
-			$this->log($result);
-			
-			$this->log('linklist');
-
-			$this->log($fail);
 
 			if ($fail) {
 				$datasource->rollback($this);
@@ -391,11 +384,7 @@ $this->log('post');
 				'atomic' => false
 			));
 			
-			$this->log($result);
 			$fail = !SaveAllLib::hasASuccessful($result);
-			$this->log('linklist');
-
-			$this->log($fail);
 						
 			if ($fail) {
 				$datasource->rollback($this);
@@ -413,14 +402,11 @@ $this->log('post');
 
 			$result = $savedTheme->saveThemeAtSignUp($options);
 
-
-$this->log('theme');
-$this->log($result);
 			if (!$result) {
 				$datasource->rollback($this);
 
 				$folder = new Folder();
-				$folder->delete(ROOT . DS . 'app' . DS . 'views' . DS . 'themed' . DS . $this->Shop->id . '_cover');
+				$folder->delete(ROOT . DS . 'app' . DS . 'View' . DS . 'Themed' . DS . $this->Shop->id . 'Cover');
 
 
 				return false;
