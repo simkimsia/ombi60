@@ -249,8 +249,6 @@ class SavedTheme extends AppModel {
 			
 			if (!empty($this->data['SavedTheme']['css'])) {
 				$success = $file->write($this->data['SavedTheme']['css']);
-				
-				$this->log($success);
 					
 			}
 			
@@ -258,8 +256,6 @@ class SavedTheme extends AppModel {
 		} else if ($cssName == 'submittedfile') {
 			// just save this submittedfile as style.css in the right folder
 			$success = $this->copyFileFromTemp($this->data['SavedTheme']['submittedfile']['tmp_name'], $cssFilePath);
-			$this->log('7');
-			$this->log($success);
 		}
 		
 		

@@ -273,7 +273,7 @@ define('DEFAULT_LANGUAGE', 'eng');
 	}        
 
 // debug(APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php');
-   require_once  APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php';
+   require_once  ROOT . DS . 'app' . DS . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php';
     Twig_Autoloader::register();
 
 App::uses('File', 'Utility');
