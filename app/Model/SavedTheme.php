@@ -219,8 +219,7 @@ class SavedTheme extends AppModel {
 			$success = $this->renameFolder($this->data['SavedTheme']['original_folder_name'],
 							$this->data['SavedTheme']['folder_name'], $chmod);
 							
-						$this->log('4');
-						$this->log($success);
+		
 		}
 		
 		// this is for just admin_edit because we ONLY want to validate for name and description

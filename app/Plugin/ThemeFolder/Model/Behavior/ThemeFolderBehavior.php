@@ -51,7 +51,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 	
 	}
 	
-	function existFolder(&$Model, $check){
+	public function existFolder(&$Model, $check){
 		return !$this->fileExists($check[$this->folderNameField], $this->themePath);
 	}
 	
@@ -106,6 +106,9 @@ class ThemeFolderBehavior extends ModelBehavior {
 		$options = array('to'=> $this->themePath . $newFolderName,
 				 'from'=>$defaultThemeFolder,
 				 'chmod'=>$chmod);
+				
+		$this->log($options);
+		
 		return $dir->copy($options);
 		
 	}
