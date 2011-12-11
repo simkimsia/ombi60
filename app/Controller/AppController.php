@@ -320,12 +320,23 @@ class AppController extends Controller {
 
 		// if admin User Auth more important
 		if(isset($this->request->params['admin'])) {
+			
+			
 			if ($userAuth) {
 				$userAuth = $this->Session->read('Auth');
 				User::store($userAuth);
+				
+				// we need to set the UserData for LogableBehavior
+				//debug($this->modelClass);
+				//debug($userAuth);
+				if ($this->{$this->modelClass}->Behaviors->attached('Logable')) {
+					//debug('enter');
+					$this->{$this->modelClass}->setUserData($userAuth);
+				}
 			}
-			// else shd prompt for login inside admin
-			// if not in admin pages
+			
+		// else shd prompt for login inside admin
+		// if not in admin pages
 		} else {
 			// we need to allow userIdInCookie to be more important
 			if (!$userAuth && $userIdInCookie != null) {
