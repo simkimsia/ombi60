@@ -143,21 +143,19 @@ class Webpage extends AppModel {
 			return false;
 		}
 		
-		$this->recursive = -1;
-		$this->Behaviors->load('Linkable.Linkable');
+        $webpage = $this->find('first', array(
+			'conditions'=>$conditions,
+			'contain' => array(
+				'Author' => array(
+					'fields' => array(
+						'Author.full_name',
+						'Author.id',
+						'Author.name_to_call')
+					),
+				),
+			)
+		);
 		
-                $webpage = $this->find('first', array(
-						'conditions'=>$conditions,
-						'link' => array(
-							'Author' => array(
-								'fields' => array(
-									'Author.full_name',
-									'Author.id',
-									'Author.name_to_call')
-							),
-						
-						),
-						));
 		return $webpage;
 	}
 
