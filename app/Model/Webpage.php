@@ -64,7 +64,7 @@ class Webpage extends AppModel {
 					'associationForeignKey'	=> 'link_list_id',
 					'unique'	=> true,
 					'counterCache'  => 'link_count',
-					'foreignScope' => array('Link.parent_model' => 'Blog'),
+					'foreignScope' => array('Link.parent_model' => 'Webpage'),
 					)
 				),
 			);
