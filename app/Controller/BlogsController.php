@@ -5,6 +5,7 @@ class BlogsController extends AppController {
 	
 	public $viewClass = 'Theme';
 	
+	
 	public $components = array('Permission' =>
 				array('redirect' =>
 					array('controller'=>'webpages',
@@ -33,7 +34,7 @@ class BlogsController extends AppController {
 	}
 
 	public function admin_view($id = null) {
-		if (!$id) {
+		if ($id == null) {
 			$this->Session->setFlash(__('Invalid blog'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action' => 'index'));
 		}
@@ -50,6 +51,7 @@ class BlogsController extends AppController {
 		$posts                        = $this->paginate('Post');
 
 		$this->set(compact('blog', 'posts'));	
+
 	}
 
 	public function admin_add() {

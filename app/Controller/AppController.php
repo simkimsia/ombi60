@@ -322,8 +322,25 @@ class AppController extends Controller {
 		if(isset($this->request->params['admin'])) {
 			
 			
-			if ($userAuth) {
-				$userAuth = $this->Session->read('Auth');
+			$adminUser = false;
+			// this is to allow phpunit tests to work properly without
+			// overriding the User singleton
+			if (Configure::read('run_test')) {
+				$userIdSetInTest = User::get('User.id');
+				if ($userIdSetInTest > 0) {
+					$adminUser = $userIdSetInTest;
+				}
+			}
+			
+			if ($userAuth || $adminUser) {
+				
+				// allow phpunit tests to work properly
+				if (Configure::read('run_test')) {
+					$userAuth = $this->User->getMerchantUser($adminUser );
+				} else {
+					$userAuth = $this->Session->read('Auth');
+				}
+
 				User::store($userAuth);
 				
 				// we need to set the UserData for LogableBehavior
