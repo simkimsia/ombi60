@@ -44,6 +44,7 @@
  * models that are beyond the AccountGrandChild models.
  * **/
 
+App::uses('User', 'Model');
 
 class PermissionComponent extends Component {
  
