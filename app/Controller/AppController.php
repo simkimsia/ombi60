@@ -332,6 +332,7 @@ class AppController extends Controller {
 				if ($this->{$this->modelClass}->Behaviors->attached('Logable')) {
 					//debug('enter');
 					$this->{$this->modelClass}->setUserData($userAuth);
+					$this->{$this->modelClass}->setObjectGroupKeys('shop_id');
 				}
 			}
 			
