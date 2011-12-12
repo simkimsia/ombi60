@@ -18,9 +18,10 @@ if (!defined('TWIG_VIEW_CACHE')) {
 }
 
 // Load Twig Lib and start auto loader
-App::import('Vendor', 'TwigView.TwigAutoloader', array(
-	'file' => 'Twig'.DS.'lib'.DS.'Twig'.DS.'Autoloader.php'
-));
+//App::import('Vendor', 'TwigView.TwigAutoloader', array(
+//	'file' => 'Twig'.DS.'lib'.DS.'Twig'.DS.'Autoloader.php'
+//));
+require_once('Plugin/TwigView/vendors/Twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 
 // overwrite Twig_Environment classe
