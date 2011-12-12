@@ -21,7 +21,7 @@ if (!defined('TWIG_VIEW_CACHE')) {
 //App::import('Vendor', 'TwigView.TwigAutoloader', array(
 //	'file' => 'Twig'.DS.'lib'.DS.'Twig'.DS.'Autoloader.php'
 //));
-require_once('Plugin/TwigView/vendors/Twig/lib/Twig/Autoloader.php');
+require_once('Plugin' . DS . 'TwigView' . DS . 'vendors' . DS . 'Twig' . DS . 'lib' . DS . 'Twig' . DS . 'Autoloader.php');
 Twig_Autoloader::register();
 
 // overwrite Twig_Environment classe
