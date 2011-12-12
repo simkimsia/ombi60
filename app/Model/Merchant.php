@@ -250,6 +250,7 @@ class Merchant extends AppModel {
 	                                </div>',
 						'shop_id'=>$this->Shop->id,
 						'author'=>$this->User->id,
+						'real_author' => $this->User->id,
 						'handle'=>'shopfront');
 
 			$aboutUsPage = array('title'=>'About Us',
@@ -270,6 +271,7 @@ class Merchant extends AppModel {
 	<p>Go to the <a href="/admin/pages">Blogs &amp; Pages</a> in administration menu.</p>',
 							'shop_id'=>$this->Shop->id,
 							'author'=>$this->User->id,
+							'real_author' => $this->User->id,
 							'handle'=>'about-us');
 
 			$tosPage = array('title'=>'Terms of Service',
@@ -289,7 +291,8 @@ class Merchant extends AppModel {
 	</ul>
 	<p>Go to the <a href="/admin/pages">Blogs &amp; Pages</a> in administration menu.</p>',
 							'shop_id'=>$this->Shop->id,
-							'author'=>$this->User->id,
+							'author'		=> $this->User->id,
+							'real_author' 	=> $this->User->id,
 							'handle'=>'terms-of-service');
 
 

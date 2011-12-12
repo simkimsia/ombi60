@@ -151,7 +151,15 @@ class MerchantsController extends AppController {
 		$this->Merchant->recursive = 0;
 		$this->set('merchants', $this->paginate());
 		$log = ClassRegistry::init('Log.Log');
-		$this->set('logs', $log->find('dashboard'));
+		$logs = $log->find('all', array(
+			'conditions' => array(
+				'Log.shop_id' => Shop::get('Shop.id'),
+			),
+			'contain' => array('User'),
+			'limit' => 20,
+		));
+		
+		$this->set('logs', $logs);
 	}
 
 	private function updateSession() {

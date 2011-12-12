@@ -120,13 +120,14 @@ class MerchantsController extends AppController {
 				// or we go to paydollar						
 				} else if ($this->request->data['Pay']['method'] == 'paydollar') {
 					$PaydollarResult = $this->runAddSchPay($this->request->data);
-					//$this->log($PaydollarResult);
+
 					// means success						
-					if($PaydollarResult['resultCode'] == 0) {
+					if(isset($PaydollarResult['resultCode']) && $PaydollarResult['resultCode'] == 0) {
 						$this->Session->write('PaydollarResult', $PaydollarResult);
 						
 						$this->redirect('/merchants/confirm?paydollar&inv='.$result['Invoice']['reference']);
 					} else {
+						$this->log($PaydollarResult);
 						$this->Session->setFlash(__('Your credit card was not accepted by Paydollar. Please try again.', true), 'default', array('class'=>'flash_failure'));
 					}
 				}

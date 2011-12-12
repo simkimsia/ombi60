@@ -4,6 +4,7 @@
 
 
 Dashboard
+
 <table id="recent-activity" class="table" cellpadding="0" cellspacing="0">
 	<thead class="hide">
 		<tr>
@@ -12,6 +13,7 @@ Dashboard
 		</tr>
 	</thead>
 	<tbody>
+	
 		<?php foreach ($logs as $a_log) : ?>
      	  <td class="frontpage-type">
 					<?php echo $this->Log->logDate($a_log['Log']['created']); ?>
@@ -28,4 +30,4 @@ Dashboard
 			</tr>
 		<?php endforeach; ?>
 	</tbody>
-</table>
+</table> 
