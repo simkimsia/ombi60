@@ -50,8 +50,9 @@ class AllControllersTest extends PHPUnit_Framework_TestSuite {
 		$suite->addTestFile($path . 'ShopsControllerTest.php');
 		$suite->addTestFile($path . 'ThemesControllerTest.php');
 		$suite->addTestFile($path . 'UsersControllerTest.php');
-		$suite->addTestFile($path . 'WebpagesControllerTest.php');
 		*/
+		$suite->addTestFile($path . 'WebpagesControllerTest.php');
+		
 
 		return $suite;
 	}
