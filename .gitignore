@@ -1,11 +1,16 @@
 *.kpf
-/mainsite/tmp
 .idea
 pmip
 *.tmproj
-app/tmp/cache/cake*
 .DS_Store
 *.DS_Store
 tags
+
+## Tempoarary files
+mainsite/tmp
+app/tmp
+
+## Other files
 app/webroot/coverage/*
 app/views/themed/2_cover/*
+
