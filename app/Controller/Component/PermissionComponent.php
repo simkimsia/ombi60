@@ -128,13 +128,14 @@ class PermissionComponent extends Component {
 		$shopIdUserHas = User::get('Merchant.shop_id');
 
 /// @TODO reve this hack
-$shopIdUserHas =2;
+//$shopIdUserHas =2;
 		// check the admin_edit, admin_view,
 		// admin_delete, admin_toggle for correct primary key
 		// assuming that the url is something like
 		// admin/:controller-name/edit/:id
 		// we use $controller->params['pass'][0] to access the $id
-		
+
+
 		$this->checkForValidPrimaryKeyInAction($controller, $shopIdUserHas);
 		
 		$this->checkForValidShopIdInData($controller, $shopIdUserHas);

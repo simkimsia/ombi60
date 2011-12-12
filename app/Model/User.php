@@ -334,7 +334,27 @@ class User extends AppModel {
 		return false;
 	}
 	
-	
+	/**
+	* to get Merchant and User data based on User id
+	*
+	* used mostly for admin related pages and login
+	**/
+	public function getMerchantUser($id = null) {
+		
+		if ($id == null) {
+			return false;
+		}
+		
+
+		return $this->find('first', array(
+			'conditions' => array(
+				'User.id' => $id,
+				'User.group_id' => MERCHANTS
+			),
+			'contain' => array('Merchant')
+		));
+		
+	}
 	
 
 
