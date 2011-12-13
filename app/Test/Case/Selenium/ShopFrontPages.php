@@ -1,6 +1,15 @@
 <?php
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
+$currentDirectory = dirname(__FILE__);
+require_once $currentDirectory . '/../../../Vendor/PaymentSelenium/PaypalSelenium.php';
+
+// include Redbean ORM
+require_once $currentDirectory . '/../../../Vendor/RedBean/RedBean/redbean.inc.php';
+
+// include Database in Config
+require_once $currentDirectory . '/../../../Config/database.php';
+
 define('SELENIUM_TEST_ALL', 'all');
 
 define('SELENIUM_TEST_WHITELIST', 'white');
@@ -39,12 +48,18 @@ class ShopFrontPagesTest extends PHPUnit_Extensions_SeleniumTestCase
         $this->setBrowser('*firefox');
 
 		if ($this->localhost) {
+
 			$this->setBrowserUrl($this->domains['localhost']);
 			$this->baseUrl = $this->domains['localhost'];
+
+
 		} else {
 			$this->setBrowserUrl($this->domains['production']);
-			$this->baseUrl = $this->domains['localhost'];
+			$this->baseUrl = $this->domains['production'];
+
 		}
+        
+		$this->setSleep($this->secondsBetweenCommands);
         
 		$this->setSleep($this->secondsBetweenCommands);
 		
@@ -71,14 +86,30 @@ class ShopFrontPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 	}
 	
  
+	/**
+	* 
+	* Just to test that the TwigView is working 
+	**/
+	public function testTwigRunningWithIndex() {
+		if ($this->doNotRunThisTest(__FUNCTION__)) {
+			return;
+		}
+		
+		// GIVEN at index page for shop001
+		$this->open('/');
+		
+		// THEN we see a Powered by hyperlink
+		$this->assertElementPresent('xpath=//a[@href="http://www.openmybusinessin60seconds.com"][contains(text(), "Open My Business In 60 Seconds")]');
+		
+	}
 
 
 	/**
 	 *
 	 * This replaces the OrdersController test for Redirect for create_order action
+	 * TODO: This needs to be rewritten to cater for checkout pages with authentication purposes.
 	 *
-	 *
-	**/
+
 	public function testOrdersControllerCreateActionShouldRedirectToPayIfSuccessful() {
 		if ($this->doNotRunThisTest(__FUNCTION__)) {
 			return;
@@ -104,7 +135,7 @@ class ShopFrontPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		// THEN we should be redirected to pay action
 		$this->assertLocation('regexp:' . $this->baseCheckoutUrl . 'orders/2/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/pay');
 	}
-
+	**/
 
     
 }
