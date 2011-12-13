@@ -264,8 +264,17 @@ define('DEFAULT_LANGUAGE', 'eng');
 	}        
 
 // debug(APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php');
-   require_once  APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php';
-    Twig_Autoloader::register();
+define('TWIG_PLUGIN', APP . 'Plugin' . DS .'TwigView');
+
+// we want to load the original Twig from fabpot
+require_once  TWIG_PLUGIN . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php';
+Twig_Autoloader::register();
+
+// we also want to load the Twig-extensions from fabpot
+require_once  TWIG_PLUGIN . DS .'vendors' . DS .'Twig-extensions' . DS .'lib' . DS .'Twig' . DS . 'Extensions' . DS . 'Autoloader.php';
+Twig_Extensions_Autoloader::register();
+
+
 
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
