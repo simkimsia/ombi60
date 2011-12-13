@@ -88,6 +88,3 @@
 [submodule "app/Plugin/Log"]
 	path = app/Plugin/Log
 	url = git@github.com:simkimsia/Log.git
-[submodule "app/Plugin/TwigView"]
-	path = app/Plugin/TwigView
-	url = git@github.com:simkimsia/TwigViewTemporary.git
