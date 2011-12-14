@@ -1,5 +1,5 @@
 <?php
-/* Theme Fixture generated on: 2011-10-12 14:25:33 : 1318429533 */
+/* Theme Fixture generated on: 2011-12-14 04:32:28 : 1323837148 */
 
 /**
  * ThemeFixture
@@ -34,16 +34,52 @@ class ThemeFixture extends CakeTestFixture {
  */
 	public $records = array(
 		array(
-			'id' => 1,
-			'name' => 'Lorem ipsum dolor sit amet',
-			'description' => 'Lorem ipsum dolor sit amet',
-			'author' => 'Lorem ipsum dolor sit amet',
-			'created' => '2011-10-12 14:25:33',
-			'modified' => '2011-10-12 14:25:33',
+			'id' => '1',
+			'name' => 'blue-white',
+			'description' => 'blue-white',
+			'author' => 'kimsia',
+			'created' => '2010-05-13 00:00:00',
+			'modified' => '2010-05-13 00:00:00',
 			'available_for_all' => 1,
-			'folder_name' => 'Lorem ipsum dolor sit amet',
-			'shop_id' => 1,
-			'price' => 1
+			'folder_name' => '',
+			'shop_id' => NULL,
+			'price' => '1.00'
+		),
+		array(
+			'id' => '2',
+			'name' => 'orange',
+			'description' => 'orange',
+			'author' => 'kimsia',
+			'created' => '2010-05-13 00:00:00',
+			'modified' => '2010-05-13 00:00:00',
+			'available_for_all' => 1,
+			'folder_name' => '',
+			'shop_id' => NULL,
+			'price' => '1.00'
+		),
+		array(
+			'id' => '3',
+			'name' => 'default',
+			'description' => 'default',
+			'author' => 'kimsia',
+			'created' => '2010-07-06 12:55:23',
+			'modified' => '2010-07-06 12:55:28',
+			'available_for_all' => 1,
+			'folder_name' => '2Cover',
+			'shop_id' => NULL,
+			'price' => '0.00'
+		),
+		array(
+			'id' => '4',
+			'name' => 'alt',
+			'description' => 'alt',
+			'author' => 'kimsia',
+			'created' => '2010-07-08 00:00:00',
+			'modified' => '2010-07-08 00:00:00',
+			'available_for_all' => 1,
+			'folder_name' => 'Alt',
+			'shop_id' => NULL,
+			'price' => '0.00'
 		),
 	);
 }

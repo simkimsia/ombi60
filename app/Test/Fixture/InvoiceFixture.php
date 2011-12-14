@@ -1,30 +1,45 @@
 <?php
-/* Invoice Fixture generated on: 2010-12-05 12:12:53 : 1291551833 */
-class InvoiceFixture extends CakeTestFixture {
-	var $name = 'Invoice';
+/* Invoice Fixture generated on: 2011-12-14 05:09:02 : 1323839342 */
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'title' => array('type' => 'string', 'null' => true, 'default' => NULL),
-		'shop_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
-		'description' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'payment_number' => array('type' => 'string', 'null' => true, 'default' => NULL),
-		'payer_user' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+/**
+ * InvoiceFixture
+ *
+ */
+class InvoiceFixture extends CakeTestFixture {
+
+/**
+ * Fields
+ *
+ * @var array
+ */
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary', 'collate' => NULL, 'comment' => ''),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'title' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'shop_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'description' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'payment_number' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'payer_user' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
+		'reference' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 35, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
-	var $records = array(
+/**
+ * Records
+ *
+ * @var array
+ */
+	public $records = array(
 		array(
-			'id' => 1,
-			'created' => '2010-12-05 12:23:53',
-			'title' => 'Lorem ipsum dolor sit amet',
-			'shop_id' => 1,
-			'description' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-			'payment_number' => 'Lorem ipsum dolor sit amet',
-			'payer_user' => 1
+			'id' => '1',
+			'created' => '2011-07-08 11:54:46',
+			'title' => 'starter',
+			'shop_id' => '2',
+			'description' => 'Initial signup',
+			'payment_number' => NULL,
+			'payer_user' => NULL,
+			'reference' => '2011-07-08-1154-1'
 		),
 	);
 }
-?>
