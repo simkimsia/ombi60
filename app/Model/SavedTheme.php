@@ -296,8 +296,6 @@ class SavedTheme extends AppModel {
 			return false;
 		}
 		
-		// because we use userid_foldername format as foldername
-		$themeFolderName = User::get('User.id') . '_' . $themeFolderName;
 		
 		// first we ensure that this folder does NOT exist in database.
 		// this is to prevent unnecessary deletion due to validation
@@ -310,7 +308,7 @@ class SavedTheme extends AppModel {
 	
 		
 		$this->data = array('SavedTheme'=>array('folder_name'=>$themeFolderName));
-		$success = $this->deleteFolder();
+		$success = $this->deleteFolder($themeFolderName);
 		
 		
 		return $success;
