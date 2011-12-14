@@ -895,4 +895,42 @@ class OrderTestCase extends CakeTestCase {
 		// THEN we get a boolean true
 		$this->assertFalse($result);
 	}
+	
+	
+	/**
+	*
+	* test if the completedCheckout check works
+	*
+	**/
+	public function testCompletedCheckout() {
+		// GIVEN we are using the following order
+		$order_uuid = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a';
+		
+		// WHEN we run the funciton
+		$result = $this->Order->completedCheckout($order_uuid);
+		
+		// THEN we expect true
+		$this->assertTrue($result);
+		
+	}
+	
+	
+	/**
+	*
+	* test if the getDeliveryAddressByOrderId works
+	*
+	**/
+	public function testGetDeliveryAddressByOrderId() {
+		// GIVEN we are using the following order
+		$order_uuid = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a';
+		
+		// WHEN we run the funciton
+		$result = $this->Order->getDeliveryAddressByOrderId($order_uuid);
+		
+		// THEN we get back the 2nd record of the Address Fixture
+		$addressFixture = new AddressFixture();
+		$expected = array('DeliveryAddress' => $addressFixture->records[1]);
+		$this->assertEqual($expected, $result);
+		
+	}
 }
