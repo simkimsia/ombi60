@@ -744,16 +744,23 @@ class Order extends AppModel {
 	
 	/**
 	* 
-	* Get Delivery Address given just the order id
+	* Get Delivery Address and the Country given just the order id
 	*
 	* @param string $order_uuid Order id
-	* @param int $recursive Recursive level we want to retrieve the Address data. Default is -1
 	* @return array Returns delivery Address data in the same form as the one in  DeliveryAddress::read->(null, address_id)
 	**/
-	public function getDeliveryAddressByOrderId($order_uuid, $recursive = -1) {
+	public function getDeliveryAddressByOrderId($order_uuid) {
 		$delivery_address_id = $this->field('Order.delivery_address_id', array('Order.id' => $order_uuid));
+		
 		$this->DeliveryAddress->recursive = -1;
-		return $this->DeliveryAddress->read(null, $delivery_address_id);
+		
+		return $this->DeliveryAddress->find('first', array(
+				'conditions' => array(
+					'DeliveryAddress.id' => $delivery_address_id,
+				),
+				'contain' => array('Country'),
+			)
+		);
 	}
 
 

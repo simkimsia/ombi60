@@ -604,6 +604,11 @@ class OrdersController extends AppController {
 			
 			//TODO Possibly we need to prepare purchase info for each payment gateway
 			$accountEmail = $this->Order->Shop->getAccountEmailPaypal($shop_id);
+			
+			// Retrieve Delivery Address details to pass to payment gateway
+			$deliveryAddress = $this->Order->getDeliveryAddressByOrderId($order_uuid);
+			
+			// this is the options we need to set for AktiveMerchant to process the payment
 			$options = array(
 				'subject' => $accountEmail,
 				'currency' => $order['Order']['currency'],
@@ -613,6 +618,18 @@ class OrdersController extends AppController {
 					'shipping' => $orderFormData['Shipment']['price'],
 					'handling' => 0 //$order['Order']['amount']
 				),
+				// address related 
+				'address' => array(
+					'name' => $deliveryAddress['DeliveryAddress']['full_name'],
+					'address1' => $deliveryAddress['DeliveryAddress']['address'],
+					'address2' => '',
+					'city' => $deliveryAddress['DeliveryAddress']['city'],
+					'state' => $deliveryAddress['DeliveryAddress']['region'],
+					'zip'	=> $deliveryAddress['DeliveryAddress']['zip_code'],
+					'countrycode' => $deliveryAddress['Country']['iso'],
+					'phone' => '',
+				),
+				'addroverride' => 1,
 			);
 			foreach ($order['OrderLineItem'] as $orderItem) {
 				$options['items'][] = array(

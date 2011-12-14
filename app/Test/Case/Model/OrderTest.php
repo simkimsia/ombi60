@@ -929,7 +929,11 @@ class OrderTestCase extends CakeTestCase {
 		
 		// THEN we get back the 2nd record of the Address Fixture
 		$addressFixture = new AddressFixture();
-		$expected = array('DeliveryAddress' => $addressFixture->records[1]);
+		$countryFixture = new CountryFixture();
+		$expected = array(
+			'DeliveryAddress' => $addressFixture->records[1],
+			'Country' => $countryFixture->records[191]
+		);
 		$this->assertEqual($expected, $result);
 		
 	}
