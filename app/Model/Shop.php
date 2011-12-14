@@ -286,7 +286,7 @@ class Shop extends AppModel {
 	public function beforeValidate() {
 		
 		// for localhost we will NOT validate for url
-		if(strpos(FULL_BASE_URL, '.localhost')) {
+		if(strpos(FULL_BASE_URL, '.com') === false) {
 			unset($this->validate['primary_domain']['url']);
 		}
 		
@@ -487,8 +487,8 @@ class Shop extends AppModel {
 	 * afterSave callback saving shop and theme data into cache under the key Shop8 for shop of id 8
 	 * */
 	public function afterSave($created) {
-
-                $this->recursive = -1;
+		
+		$this->recursive = -1;
 		$this->Behaviors->load('Containable');
 			
 		$shop = $this->find('first', array('conditions'=>array('Shop.id'=>$this->id),
