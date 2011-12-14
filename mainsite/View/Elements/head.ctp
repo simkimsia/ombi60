@@ -22,11 +22,24 @@
 						<div class="wrapper">
 							<div class="menu">
 								<ul>
-									<li><a href="index" class="active"><span><span>Home</span></span></a></li>
-									<li><a href="pricing-signup"><span><span>Pricing & Sign Up</span></span></a></li>
-									<li><a href="support.html"><span><span>Support</span></span></a></li>
-									<li><a href="faq.html"><span><span>FAQ</span></span></a></li>
-									<li><a href="login.html"><span><span>Login</span></span></a></li>
+								<?php 
+								function displayClass($href, $class) {
+
+
+									$currentUrl = Router::url();
+
+									if ($currentUrl === $href) {
+										return 'class="' . $class . '"';
+									}
+									return '';
+								}
+									
+								?>
+									<li><a href="/" <?php echo displayClass('/', 'active'); ?><span><span>Home</span></span></a></li>
+									<li><a href="/pricing-signup" <?php echo displayClass('/pricing-signup', 'active'); ?>><span><span>Pricing & Sign Up</span></span></a></li>
+									<li><a href="/support"><span><span>Support</span></span></a></li>
+									<li><a href="/faq"><span><span>FAQ</span></span></a></li>
+									<li><a href="/login"><span><span>Login</span></span></a></li>
 									<li class="last"><a href="contact"><span><span>Contact Us</span></span></a></li>
 								</ul>
 							</div>
