@@ -356,8 +356,25 @@ class User extends AppModel {
 		
 	}
 	
+	/**
+	*
+	* beforeSave function
+	*
+	* @param $options Array
+	* @return boolean Returns true if okay
+	**/
+	public function beforeSave($options = array()) {
+		if (isset($this->data['User']['password'])) {
+			$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+		}
 
+		if (isset($this->data['User']['password_confirm'])) {
+			$this->data['User']['password_confirm'] = AuthComponent::password($this->data['User']['password_confirm']);
+		}
+		
 
+        return true;
+    }
 	
 	
     
