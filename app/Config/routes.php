@@ -56,7 +56,16 @@
                         array('pass' => array('handle'),
                               'handle' => '[a-zA-Z0-9\-_]+'
                               ));
-        
+
+	   // build links so that LogHelper can work
+       Router::connect('/admin/products/view/:id',
+                       array('controller' => 'products',
+								'admin' => true,
+                             'action' => 'view'),
+                       array('pass' => array('id'),
+                             'id' => '[a-zA-Z0-9\-_]+'
+                             ));
+      
 		//display 1 product WITHIN collection
 		Router::connect('/collections/:handle/products/:product_handle',
                         array('controller' 	=> 'products',

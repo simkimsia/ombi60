@@ -329,7 +329,10 @@ class MerchantsController extends AppController {
 		$this->Merchant->recursive = 0;
 		$this->set('merchants', $this->paginate());
 		$log = ClassRegistry::init('Log.Log');
-		$this->set('logs', $log->find('dashboard'));
+		$shopId = Shop::get('Shop.id');
+		$this->set('logs', $log->findObjectGroupActions(array(
+			'shop_id' => $shopId
+		)));
 	}
 
 	private function updateSession() {
