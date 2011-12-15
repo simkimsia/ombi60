@@ -182,9 +182,17 @@ class SavedTheme extends AppModel {
 		$this->sourceFolderName = $themeData['Theme']['folder_name'];
 		
 		$result = $this->save($data);
-		$this->log($result);
+		
+		if (!$result) {
+			$this->log('Fail to save Theme in ' . __FILE__ . ' at line ' . __LINE__);
+		}
+
 		$folderOk =  $this->folderOrFileExists($data['SavedTheme']['folder_name'], ROOT . DS . 'app' . DS . 'View' . DS . 'Themed');
-		$this->log($folderOk);				
+		
+		if (!$folderOk) {
+			$this->log('Folder is NOT created in ' . __FILE__ . ' at line ' . __LINE__);
+		}
+		
 		if ($result && $folderOk) {
 			$this->Shop->id = $options['shop_id'];
 			$this->Shop->saveField('saved_theme_id', $this->id);
