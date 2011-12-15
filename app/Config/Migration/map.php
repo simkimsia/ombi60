@@ -6,5 +6,7 @@ $map = array(
 		'002_set_full_name_and_display_name_as_nullables' => 'M4eb1f7c895044865b5210fc61507707a'),
 	3 => array(
 		'003_add_custom_column_shop_id_to_logs_table' => 'M4ee9ce7af3b4430e99fb53d61507707a'),
+	4 => array(
+		'004_add_custom_column_display_for_to_logs_table' => 'M4ee9e7f070504201a7c156a91507707a'),
 );
 ?>
