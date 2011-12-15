@@ -287,6 +287,7 @@ class Shop extends AppModel {
 		
 		// for localhost we will NOT validate for url
 		if(strpos(FULL_BASE_URL, '.com') === false) {
+			$this->log('do not evaluate for url');
 			unset($this->validate['primary_domain']['url']);
 		}
 		
