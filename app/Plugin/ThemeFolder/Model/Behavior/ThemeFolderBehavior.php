@@ -71,13 +71,9 @@ class ThemeFolderBehavior extends ModelBehavior {
 		}
 	
 		$success = $this->createFolder($model, null);
-		$this->log('did we succeed in creating the new folder?');
-		$this->log($success);
 		
 		if ($success) {
 			$success = $this->copyBaseTheme($model);
-			$this->log('did we succeed in copying from base theme?');
-			$this->log($success);			
 		}
 		
 		return $success;

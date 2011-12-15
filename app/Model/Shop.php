@@ -287,7 +287,6 @@ class Shop extends AppModel {
 		
 		// for localhost we will NOT validate for url
 		if(strpos(FULL_BASE_URL, '.com') === false) {
-			$this->log('do not evaluate for url');
 			unset($this->validate['primary_domain']['url']);
 		}
 		
@@ -461,17 +460,18 @@ class Shop extends AppModel {
 	
 	public static function getTemplateVariable() {
 		$shopInstance = Shop::getInstance();
-		$shop = array('name' => $shopInstance['Shop']['name'],
-			      'url'  => $shopInstance['Shop']['url'] . '/',
-			      'primary_domain'=> $shopInstance['Shop']['primary_domain'] . '/',
-			      'permanent_domain'=>$shopInstance['Shop']['permanent_domain'] . '/',
-			      'email'=>$shopInstance['Shop']['email'],
-			      'products_count'=>$shopInstance['Shop']['visible_product_count'],
-			      
-			      'collections_count'=>$shopInstance['Shop']['product_group_count'],
-			      'currency'=>$shopInstance['ShopSetting']['currency'],
-			      'money_format'=>$shopInstance['ShopSetting']['money_in_html'],
-			      'money_format_in_currency'=>$shopInstance['ShopSetting']['money_in_html_with_currency'],
+		$shop = array(
+			'name' => $shopInstance['Shop']['name'],
+			'url'  => $shopInstance['Shop']['url'] . '/',
+		      'primary_domain'=> $shopInstance['Shop']['primary_domain'] . '/',
+		      'permanent_domain'=>$shopInstance['Shop']['permanent_domain'] . '/',
+		      'email'=>$shopInstance['Shop']['email'],
+		      'products_count'=>$shopInstance['Shop']['visible_product_count'],
+	      
+		      'collections_count'=>$shopInstance['Shop']['product_group_count'],
+		      'currency'=>$shopInstance['ShopSetting']['currency'],
+		      'money_format'=>$shopInstance['ShopSetting']['money_in_html'],
+		      'money_format_in_currency'=>$shopInstance['ShopSetting']['money_in_html_with_currency'],
 			      
 			      );
 		
