@@ -158,7 +158,7 @@ class MerchantTestCase extends CakeTestCase {
 * test the signup function
 *
 * @return void
-
+**/
 	public function testSignupNewAccount() {
 		// GIVEN that we want to sign up an account using paydollar sandbox Mastercard settings
 		$data = array(
@@ -238,6 +238,6 @@ class MerchantTestCase extends CakeTestCase {
 		// AND we need to clean up by removing the test folder 3Cover
 		$this->Merchant->Shop->FeaturedSavedTheme->deleteFolder('3Cover');
 	}
-*/
+
 
 }
