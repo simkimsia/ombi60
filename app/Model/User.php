@@ -1,6 +1,8 @@
 <?php
 class User extends AppModel {
 	public $name = 'User';
+	
+	public $displayField = 'full_name';
 
 	public $belongsTo = array(
 		'Group' => array(
