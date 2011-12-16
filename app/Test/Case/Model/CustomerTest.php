@@ -102,6 +102,7 @@ class CustomerTestCase extends CakeTestCase {
 			'User' => array(
 				'email' 		=> 'new_customer@ombi60.com',
 				'password' 		=> 'passwordhash',
+				'password_confirm' => 'passwordhash',
 				'full_name' 	=> 'some name',
 				'name_to_call' 	=> 'some name to call',
 			),
@@ -131,7 +132,9 @@ class CustomerTestCase extends CakeTestCase {
 		));
 		
 		$expected = $data['User'];
-		$expected['group_id'] = CUSTOMERS;
+		$expected['group_id'] = (string)CUSTOMERS;
+		$expected['password'] = 'd5657f0ebb0ed96d3eb9cad019919577a80de4a0';
+		unset($expected['password_confirm']);
 		
 		$this->assertEquals($expected, $customer['User']);
 		

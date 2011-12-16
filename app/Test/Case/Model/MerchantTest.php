@@ -1,6 +1,7 @@
 <?php
 /* Merchant Test cases generated on: 2011-09-22 09:56:50 : 1316685410*/
 App::uses('Merchant', 'Model');
+App::uses('AuthComponent', 'Component');
 
 /**
  * Merchant Test Case

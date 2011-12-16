@@ -3,6 +3,7 @@
 App::uses('User', 'Model');
 App::uses('Shop', 'Model');
 App::uses('CasualSurfer', 'Model');
+App::uses('AuthComponent', 'Controller/Component');
 
 /**
  * CasualSurfer Test Case
@@ -109,11 +110,13 @@ class CasualSurferTestCase extends CakeTestCase {
 		// THEN we expect the result to be new User id expected to be 4
 		$this->assertEquals(4, $result);
 		
-		// AND we expect new User and Casual Surfer		
+		// AND we expect new User and Casual Surfer	with new hashed password	
+		$passwordHash = AuthComponent::password('randompasswordhash');
+		
 		$actual = $this->CasualSurfer->find('all', array(
 			'conditions' => array(
 				'User.email' => 'randomemail@ombi60.com',
-				'User.password' => 'randompasswordhash',
+				'User.password' => $passwordHash,
 			),
 			'fields' => array(
 				'CasualSurfer.id',
