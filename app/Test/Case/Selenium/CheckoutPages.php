@@ -4,6 +4,14 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 $currentDirectory = dirname(__FILE__);
 require_once $currentDirectory . '/../../../Vendor/PaymentSelenium/PaypalSelenium.php';
 
+// include Redbean ORM
+require_once $currentDirectory . '/../../../Vendor/RedBean/RedBean/redbean.inc.php';
+
+// include Database in Config
+require_once $currentDirectory . '/../../../Config/database.php';
+
+
+
 define('SELENIUM_TEST_ALL', 'all');
 
 define('SELENIUM_TEST_WHITELIST', 'white');
@@ -70,6 +78,15 @@ class CheckoutPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 				'customer_password' => 'customer'
 			)
 		));
+		
+		// get database config 
+		$db_config = new DATABASE_CONFIG();
+		$hostname = $db_config->default['host'];
+		$database = $db_config->default['database'];
+		$login = $db_config->default['login'];
+		$password = $db_config->default['password'];
+		
+		R::setup('mysql:host='.$hostname.';dbname='.$database,$login,$password);
 		
     }
 

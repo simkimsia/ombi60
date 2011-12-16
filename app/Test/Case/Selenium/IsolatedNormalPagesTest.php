@@ -1,6 +1,15 @@
 <?php
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
+$currentDirectory = dirname(__FILE__);
+
+// include Redbean ORM
+require_once $currentDirectory . '/../../../Vendor/RedBean/RedBean/redbean.inc.php';
+
+// include Database in Config
+require_once $currentDirectory . '/../../../Config/database.php';
+
+
 
 define('SELENIUM_TEST_ALL', 'all');
 
@@ -33,6 +42,9 @@ class IsolatedNormalPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 	
 	public $baseUrl  = '';
 	
+	public $baseCheckoutUrl = 'https://checkout.ombi60.localhost/';
+	
+
 	
 	/**
 	 *
@@ -55,6 +67,14 @@ class IsolatedNormalPagesTest extends PHPUnit_Extensions_SeleniumTestCase
         
 		$this->setSleep($this->secondsBetweenCommands);
 		
+		// get database config 
+		$db_config = new DATABASE_CONFIG();
+		$hostname = $db_config->default['host'];
+		$database = $db_config->default['database'];
+		$login = $db_config->default['login'];
+		$password = $db_config->default['password'];
+		
+		R::setup('mysql:host='.$hostname.';dbname='.$database,$login,$password);
 		
     }
 
@@ -77,7 +97,7 @@ class IsolatedNormalPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		
 		return true;
 	}
- 
+
     
 }
 ?>
