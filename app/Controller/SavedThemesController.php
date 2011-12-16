@@ -141,12 +141,12 @@ class SavedThemesController extends AppController {
 				$this->Session->setFlash(__('The saved theme has been saved'), 'default', array('class'=>'flash_success'));
 				
 				$successJSON = true;
-				$contents = array('folder_name' => Shop::get('Shop.id') . '_' . $this->request->data['SavedTheme']['name'],
+				$contents = array('folder_name' => Shop::get('Shop.id') . 'Cover',
 						       'id' => $this->SavedTheme->id);
 				
 				
 			} else {
-				$this->SavedTheme->deleteThemeFolderAfterFailSave($this->request->data['SavedTheme']['name']);
+				$this->SavedTheme->deleteThemeFolderAfterFailSave($this->request->data['SavedTheme']['folder_name']);
 				$this->Session->setFlash(__('The saved theme could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 				
 				$contents['reason'] = $this->SavedTheme->validationErrors;
@@ -201,7 +201,7 @@ class SavedThemesController extends AppController {
 				
 			} else {
 				
-				$this->SavedTheme->deleteThemeFolderAfterFailSave($this->request->data['SavedTheme']['name']);
+				$this->SavedTheme->deleteThemeFolderAfterFailSave($this->request->data['SavedTheme']['folder_name']);
 				$this->Session->setFlash(__('The saved theme could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 				
 			}

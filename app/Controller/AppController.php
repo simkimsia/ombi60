@@ -72,8 +72,8 @@ class AppController extends Controller {
 
 	public function beforeFilter() {
 
-		if(!empty($this->params->query['uuid'])) {
-			$uuid = $this->params->query['uuid'];
+		if(!empty($this->request->query['uuid'])) {
+			$uuid = $this->request->query['uuid'];
 			$SiteTransfer = ClassRegistry::init('SiteTransfer');
 			$data = $SiteTransfer->findById($uuid);
 
@@ -142,9 +142,9 @@ class AppController extends Controller {
 		if (empty($currentShop) AND $isCheckoutProcess) {
 			// we need to extract the shop id from the url where possible
 		
-			if(is_numeric($this->params->params['shop_id'])) {
+			if(is_numeric($this->request->params['shop_id'])) {
 		
-				$currentShop = $this->Shop->getById($this->params->params['shop_id']);
+				$currentShop = $this->Shop->getById($this->request->params['shop_id']);
 				$this->Session->write('CurrentShop', $currentShop);
 			}
 		}

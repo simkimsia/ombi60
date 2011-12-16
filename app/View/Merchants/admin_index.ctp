@@ -19,11 +19,13 @@ Dashboard
 					<?php echo $this->Log->logDate($a_log['Log']['created']); ?>
 				</td>
 				<td class="frontpage-owner">
-				  <?php echo $a_log['Log']['model'] . ' ' . $this->Log->logTitle($a_log['Log']); ?>
+				  <?php echo $a_log['Log']['model'] . ' ' . $this->Log->logTitle($a_log['Log'], array(
+				  	'admin' => true
+				  )); ?>
 
-					<?php echo $this->Log->logAction($a_log['Log']); ?>
+					<?php echo 'was ' . $this->Log->logAction($a_log['Log']); ?>
 					<div style="color:#999999; font-size: 80%">
-					<?php echo $this->Log->logAt($a_log); ?>
+					<?php echo 'at ' . $this->Log->logAtWhatTime($a_log) . ' by ' . $this->Log->logByWhom($a_log); ?>
 					</div>
 					
 				</td>

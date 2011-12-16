@@ -738,8 +738,29 @@ class Order extends AppModel {
 	* @return boolean Returns true if completed checkout process
 	**/
 	public function completedCheckout($order_uuid) {
-		$status = $this->read('status', $order_uuid);
+		$status = $this->field('Order.status', array('Order.id' => $order_uuid));
 		return ($status > 0);
+	}
+	
+	/**
+	* 
+	* Get Delivery Address and the Country given just the order id
+	*
+	* @param string $order_uuid Order id
+	* @return array Returns delivery Address data in the same form as the one in  DeliveryAddress::read->(null, address_id)
+	**/
+	public function getDeliveryAddressByOrderId($order_uuid) {
+		$delivery_address_id = $this->field('Order.delivery_address_id', array('Order.id' => $order_uuid));
+		
+		$this->DeliveryAddress->recursive = -1;
+		
+		return $this->DeliveryAddress->find('first', array(
+				'conditions' => array(
+					'DeliveryAddress.id' => $delivery_address_id,
+				),
+				'contain' => array('Country'),
+			)
+		);
 	}
 
 

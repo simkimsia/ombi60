@@ -137,8 +137,13 @@ class ThemeFolderBehavior extends ModelBehavior {
 		$success = false;
 		$dir = new Folder();
 		
-		if ($themeName != '') {
-			$themeName = $model->data[$model->alias][$this->folderNameField];
+		if ($themeName == '') {
+			if (isset($model->data[$model->alias][$this->folderNameField])) {
+				$themeName = $model->data[$model->alias][$this->folderNameField];
+			} else {
+				$themeName = $model->data[$model->className][$this->folderNameField];
+			}
+			
 		}
 		
 		$success = $dir->delete($path . $themeName);

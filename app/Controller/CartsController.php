@@ -338,8 +338,8 @@ class CartsController extends AppController {
 		$usersAccepted = $this->Session->read('CurrentShop.ShopSetting.users_accepted');
 		if ($usersAccepted == ShopSetting::REGISTERED_ONLY || $usersAccepted == ShopSetting::BOTH) {
 			if (!$this->Auth->user()) {
-				$this->set('shop_id', (empty($shop_id) ? $this->params->named['shop_id'] : $shop_id));
-				$this->set('cart_uuid', (empty($cart_uuid) ? $this->params->named['cart_uuid'] : $cart_uuid));
+				$this->set('shop_id', (empty($shop_id) ? $this->request->named['shop_id'] : $shop_id));
+				$this->set('cart_uuid', (empty($cart_uuid) ? $this->request->named['cart_uuid'] : $cart_uuid));
 				$this->set('registered_only', $this->Session->read('CurrentShop.ShopSetting.users_accepted') == ShopSetting::REGISTERED_ONLY);
 				$this->layout = 'default';
 			} else {
@@ -354,9 +354,9 @@ class CartsController extends AppController {
  * Retrieves session information from shop
  */	
 	public function catchem() {
-		if (!empty($this->params->query['shop_id']) && !empty($this->params->query['cart_uuid'])) {
-			$shop_id = $this->params->query['shop_id'];
-			$cart_uuid = $this->params->query['cart_uuid'];
+		if (!empty($this->request->query['shop_id']) && !empty($this->request->query['cart_uuid'])) {
+			$shop_id = $this->request->query['shop_id'];
+			$cart_uuid = $this->request->query['cart_uuid'];
 		}
 		return $this->redirect(array('action' => 'user_type', $shop_id, $cart_uuid));
 	}

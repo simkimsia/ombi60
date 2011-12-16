@@ -21,31 +21,41 @@ class AllModelTest extends PHPUnit_Framework_TestSuite {
 		$suite = new PHPUnit_Framework_TestSuite('All Model related class tests');
 
 		$path = APP_TEST_CASES . DS . 'Model' . DS;
-
+		
+		// we need to put this MerchantTest on top because the signupNewAccount fails 
+		// if it happens after the other tests
+		$suite->addTestFile($path . 'MerchantTest.php');
 		$suite->addTestFile($path . 'AddressTest.php');
 		//$suite->addTestFile($path . 'AppModelTest.php');
 		$suite->addTestFile($path . 'BlogTest.php');
+		
 		$suite->addTestFile($path . 'CartItemTest.php');
+		
 		$suite->addTestFile($path . 'CartTest.php');
+		
 		$suite->addTestFile($path . 'CasualSurferTest.php');
 		$suite->addTestFile($path . 'CountryTest.php');
+		
 		$suite->addTestFile($path . 'CustomerTest.php');
 		$suite->addTestFile($path . 'DomainTest.php');
 		$suite->addTestFile($path . 'LinkListTest.php');
 		$suite->addTestFile($path . 'LinkTest.php');
-		$suite->addTestFile($path . 'MerchantTest.php');
+		
 		$suite->addTestFile($path . 'OrderLineItemTest.php');
 		$suite->addTestFile($path . 'OrderTest.php');
 
 		$suite->addTestFile($path . 'PaymentTest.php');
 		$suite->addTestFile($path . 'PostTest.php');
+		
 /*
 		
 		$suite->addTestFile($path . 'ProductGroupTest.php');
 		$suite->addTestFile($path . 'ProductImageTest.php');
 		$suite->addTestFile($path . 'ProductOptionTest.php');
 		*/
+		
 		$suite->addTestFile($path . 'ProductTest.php');
+		
 		/*
 		$suite->addTestFile($path . 'ProductTypeTest.php');
 		$suite->addTestFile($path . 'ProductsInGroupTest.php');

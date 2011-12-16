@@ -84,6 +84,9 @@ class Merchant extends AppModel {
 			$fail = !SaveAllLib::hasASuccessful($result);
 
 			if ($fail) {
+				$this->log('fail basic merchant saveAll');
+				$this->log($result);
+				
 				$datasource->rollback($this);
 				return false;
 			}
@@ -102,6 +105,9 @@ class Merchant extends AppModel {
 			$result = $domain->save($domainData);
 
 			if (!$result) {
+				$this->log('fail domain save');
+				$this->log($result);
+				
 				$datasource->rollback($this);
 				return false;
 			}
@@ -131,6 +137,9 @@ class Merchant extends AppModel {
 			$result = $shopSetting->save($settingData);
 
 			if (!$result) {
+				$this->log('fail shopseting save');
+				$this->log($result);
+				
 				$datasource->rollback($this);
 				return false;
 			}
@@ -148,6 +157,9 @@ class Merchant extends AppModel {
 			$invoiceData = $invoice->save($invoiceData);
 
 			if (!$invoiceData) {
+				$this->log('fail invoice save');
+				$this->log($result);
+				
 				$datasource->rollback($this);
 				return false;
 			}
@@ -194,6 +206,9 @@ class Merchant extends AppModel {
 					$shippedToCountry->ShippingRate->saveAll($shippedData, array('atomic'=>false));
 
 				} else {
+					$this->log('fail shipped data save');
+					$this->log($result);
+					
 					$datasource->rollback($this);
 					return false;
 				}
@@ -210,6 +225,9 @@ class Merchant extends AppModel {
 			$result = $blog->save($blogData);
 
 			if (!$result) {
+				$this->log('fail blog save');
+				$this->log($result);
+				
 				$datasource->rollback($this);
 				return false;
 			}
@@ -231,6 +249,9 @@ class Merchant extends AppModel {
 			$result = $post->save($postData);
 
 			if (!$result) {
+				$this->log('fail post  save');
+				$this->log($result);
+				
 				$datasource->rollback($this);
 				return false;
 			}
@@ -306,6 +327,11 @@ class Merchant extends AppModel {
 				$result = $webpage->save($page);
 				
 				if (!$result) {
+					$this->log('fail webpage save');
+					$this->log($result);
+					
+					
+					
 					$datasource->rollback($this);
 					return false;
 				}
@@ -355,6 +381,9 @@ class Merchant extends AppModel {
 			$fail = !SaveAllLib::hasASuccessful($result);
 
 			if ($fail) {
+				$this->log('fail main menu linklist saveAll');
+				$this->log($result);
+				
 				$datasource->rollback($this);
 				return false;
 			}
@@ -390,6 +419,9 @@ class Merchant extends AppModel {
 			$fail = !SaveAllLib::hasASuccessful($result);
 						
 			if ($fail) {
+				$this->log('fail footer menu linklist saveAll');
+				$this->log($result);
+				
 				$datasource->rollback($this);
 				return false;
 			}
@@ -406,6 +438,9 @@ class Merchant extends AppModel {
 			$result = $savedTheme->saveThemeAtSignUp($options);
 
 			if (!$result) {
+				$this->log('fail save themed saveAll');
+				$this->log($result);
+				
 				$datasource->rollback($this);
 
 				$folder = new Folder();
@@ -437,11 +472,44 @@ class Merchant extends AppModel {
 			$parentIDs = array('shop_id'   		=> $this->Shop->id,
 					   'vendor_id' 		=> $vendorModel->id,
 					   'product_type_id'	=> $typeModel->id);
+					
+			// set the Log to false since we want to use a customLog
+			$this->Shop->Product->enableLog(false);
+			
+			// set the UserData for LogBehavior
+			$userData = $data['User'];
+			$userData['id'] = $this->User->id;
+			$this->Shop->Product->setUserData(array(
+				'User' => $userData
+				)
+			);
+			
+			
+			
+			// duplicate the product now
 			$result = $this->Shop->Product->duplicate(DEFAULT_PRODUCT_ID, $parentIDs);
 
 			// this is the product id of the newly minted dummy product
 			$productID = $this->Shop->Product->getLastInsertID();
+			
+			if ($productID > 0) {
 
+				$description = sprintf('Product "Dummy Product" (%1$d) added ', $productID);
+				$options = array(
+					'description' => $description, 
+					'model' => 'Product',
+					'shop_id' => $this->Shop->id,
+					'title' => 'Dummy Product',
+					'triggered_by' => __METHOD__,
+					'display_for' => MERCHANTS,
+				);
+				$this->Shop->Product->customLog('add', $productID, $options);
+			}
+			
+			// set the Log to true since we want auto log for model saves
+			$this->Shop->Product->enableLog(true);
+			$this->Shop->Product->clearUserData();
+			
 			// create the Frontpage collection
 			$data = array('ProductGroup'=>array('title'=>'Frontpage',
 							    'shop_id'=>$this->Shop->id),

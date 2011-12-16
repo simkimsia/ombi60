@@ -1,6 +1,7 @@
 <?php
 /* Merchant Test cases generated on: 2011-09-22 09:56:50 : 1316685410*/
 App::uses('Merchant', 'Model');
+App::uses('AuthComponent', 'Component');
 
 /**
  * Merchant Test Case
@@ -29,10 +30,13 @@ class MerchantTestCase extends CakeTestCase {
 		'app.blog', 'app.post', 'app.comment', 
 		'app.paypal_payment_module',
 		'app.payment', 'app.shops_payment_module', 'app.payment_module',
-		'app.log', 'app.saved_theme',
+		'app.log', 'app.saved_theme', 'app.theme',
  		'app.country',
 		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
-		'app.price_based_rate', 'app.weight_based_rate'	);
+		'app.price_based_rate', 'app.weight_based_rate',
+		'app.invoice', 'app.recurring_payment_profile',
+		
+	);
 
 /**
  * setUp method
@@ -55,6 +59,34 @@ class MerchantTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 
 		parent::tearDown();
+	}
+	
+	
+/**
+ * assert the valid Invoice data
+ *
+ * @return void
+ */
+	protected function assertValidInvoice($invoiceData) {
+		$this->assertTrue(!empty($invoiceData['Invoice']['created']));
+		$this->assertTrue(!empty($invoiceData['Invoice']['reference']));
+		
+		unset($invoiceData['Invoice']['created']);
+		unset($invoiceData['Invoice']['reference']);
+		
+		$expected = array
+		(
+		    'Invoice' => array
+		        (
+		            'title' => 'starter',
+		            'description' => 'Initial signup',
+		            'shop_id' => '3',
+		            'id' => 2
+		        )
+
+		);
+		
+		$this->assertEqual($expected, $invoiceData);
 	}
 
 /**
@@ -121,5 +153,92 @@ class MerchantTestCase extends CakeTestCase {
 		$this->assertTrue(!empty($result['Language']));
 		$this->assertEqual($result['Language']['name'], 'English');
 	}
+	
+	
+/**
+* test the signup function
+*
+* @return void
+**/
+	public function testSignupNewAccount() {
+		// GIVEN that we want to sign up an account using paydollar sandbox Mastercard settings
+		$data = array(
+		'submit' => 'Submit',
+	    'Shop' => array
+	        (
+	            'name' => 'shop017',
+	            'primary_domain' => 'http://shop017.ombi60.localhost',
+	            'subdomain' => 'shop017',
+	            'email' => 'owner@shop017.com',
+	            'url' => 'http://shop017.ombi60.localhost',
+	            'permanent_domain' => 'shop017.ombi60.localhost'
+	        ),
+
+	    'User' => array
+	        (
+	            'full_name' => 'queenie',
+	            'name_to_call' => 'queenie',
+	            'email' => 'owner@shop017.com',
+	            'password' => 'password',
+	            'password_confirm' => 'password',
+	        ),
+
+	    'Merchant' => array
+	        (
+	            'theme_id' => 3
+	        ),
+
+	    'Paydollar' => array
+	        (
+	            'ccName' => 'queenie',
+	            'ccNumber' => '5422882800700007',
+	            'ccType' => 'Master',
+	            'ccExpiry' => array
+	                (
+	                    'month' => '07',
+	                    'year' => '2015',
+	                )
+
+	        ),
+
+	    'Pay' => array
+	        (
+	            'method' => 'paydollar'
+	        ),
+
+	    'Invoice' => array
+	        (
+	            'title' => 'starter',
+	            'description' => 'Initial signup',
+	            'price' => '19.90',
+	        )
+		);
+		
+		// AND we need to ensure that the 3Cover Themed is removed
+		$this->Merchant->Shop->FeaturedSavedTheme->deleteFolder('3Cover');
+		
+		// WHEN we run the signupNewAccount method
+		$result = $this->Merchant->signupNewAccount($data);
+		
+		// THEN we expect the valid Invoice
+		$this->assertValidInvoice($result);
+		
+		// AND shops has new data
+		$shop = $this->Merchant->Shop->findByName('shop017');
+		$this->assertTrue(!empty($shop));
+		
+		// AND merchants has new data
+		$user = $this->Merchant->User->findByFullName('queenie');
+		$this->assertTrue(!empty($user));
+		$this->assertEqual(MERCHANTS, $user['User']['group_id']);
+		
+		$merchant = $this->Merchant->findByUserId($user['User']['id']);
+		$this->assertTrue(!empty($merchant));
+		$this->assertEqual(2, $merchant['Merchant']['id']);
+		
+		// AND we need to clean up by removing the test folder 3Cover
+		$this->Merchant->Shop->FeaturedSavedTheme->deleteFolder('3Cover');
+	}
+
 
 }

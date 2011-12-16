@@ -1,6 +1,6 @@
 <?php
 /**
- * Core Configurations.
+ * AppShell file
  *
  * PHP 5
  *
@@ -12,8 +12,21 @@
  *
  * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       Cake.Config
- * @since         CakePHP(tm) v 1.1.11.4062
+ * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-return $config['Cake.version'] = '2.0.4';
+
+App::uses('Shell', 'Console');
+
+/**
+ * This is a placeholder class.
+ * Create the same file in app/Console/Command/AppShell.php
+ *
+ * Add your application-wide methods in the class below, your shells
+ * will inherit them.
+ *
+ * @package       Cake.Console
+ */
+class AppShell extends Shell {
+
+}

@@ -98,7 +98,11 @@ class MerchantsController extends AppController {
 				
 			}
 			
-			$this->log($this->request->data);
+			// backdoor code to allow signup without payment
+			// this is to circumvent paydollar for time being 
+			// to be used for beta users .
+			// to be removed once paydollar issue resolved
+			$backdoorOn = isset($this->request->query['backdoor']);
 			
 			if ($result = $this->Merchant->signupNewAccount($this->request->data)) {
 				
@@ -106,6 +110,11 @@ class MerchantsController extends AppController {
 				
 				// we need to write this into session.
 				$this->Session->write('NewShopID', $this->Merchant->Shop->id);
+				
+				
+				if ($backdoorOn) {
+					$this->redirect('/merchants/confirm?backdoor&inv='.$result['Invoice']['reference']);
+				}
 				
 				// so now we go to paypal
 				if ($this->params['form']['submit'] == 'paypalExpressCheckout') {
@@ -165,7 +174,6 @@ class MerchantsController extends AppController {
 
 			if ($this->Auth->login() &&$this->Auth->user()) {
 
-				$this->log($this->request->data);
 				// this code is for the remember me when Merchant first logs in and chooses the remember me
 				if (!empty($this->request->data) && $this->request->data['User']['remember_me']) {
 					$cookie = array('email'    => $this->request->data['User']['email'],
@@ -255,6 +263,29 @@ class MerchantsController extends AppController {
 			
 		}
 		
+		// hackish code for backdoor
+		// for beta users who are not paying
+		if(isset($this->request->query['backdoor'])) {
+			
+			$invoiceID = $this->request->query['inv'];
+			$shopid = $this->Session->read('NewShopID');
+			
+			$this->Merchant->Shop->RecurringPaymentProfile->create();
+			$data = array('RecurringPaymentProfile' =>
+					      array(
+						'gateway'=>'backdoor',
+						'method'=>'backdoor',
+						'shop_id' => $shopid,
+						'gateway_reference_id' => 'backdoor'));
+				
+			$this->Merchant->Shop->RecurringPaymentProfile->save($data);
+			
+			// retrieve the url
+			$this->Merchant->Shop->recursive = -1;
+			$domain = $this->Merchant->Shop->read(array('Shop.primary_domain'), $shopid);
+			
+		}
+		
 		if(isset($this->request->query['paydollar'])) {
 			
 			$invoiceID = $this->request->query['inv'];
@@ -298,7 +329,10 @@ class MerchantsController extends AppController {
 		$this->Merchant->recursive = 0;
 		$this->set('merchants', $this->paginate());
 		$log = ClassRegistry::init('Log.Log');
-		$this->set('logs', $log->find('dashboard'));
+		$shopId = Shop::get('Shop.id');
+		$this->set('logs', $log->findObjectGroupActions(array(
+			'shop_id' => $shopId
+		)));
 	}
 
 	private function updateSession() {

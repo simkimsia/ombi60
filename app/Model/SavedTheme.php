@@ -183,8 +183,16 @@ class SavedTheme extends AppModel {
 		
 		$result = $this->save($data);
 		
+		if (!$result) {
+			$this->log('Fail to save Theme in ' . __FILE__ . ' at line ' . __LINE__);
+		}
+
 		$folderOk =  $this->folderOrFileExists($data['SavedTheme']['folder_name'], ROOT . DS . 'app' . DS . 'View' . DS . 'Themed');
-				
+		
+		if (!$folderOk) {
+			$this->log('Folder is NOT created in ' . __FILE__ . ' at line ' . __LINE__);
+		}
+		
 		if ($result && $folderOk) {
 			$this->Shop->id = $options['shop_id'];
 			$this->Shop->saveField('saved_theme_id', $this->id);
@@ -219,7 +227,11 @@ class SavedTheme extends AppModel {
 			$success = $this->renameFolder($this->data['SavedTheme']['original_folder_name'],
 							$this->data['SavedTheme']['folder_name'], $chmod);
 							
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> release/0.1.9
 		}
 		
 		// this is for just admin_edit because we ONLY want to validate for name and description
@@ -295,8 +307,6 @@ class SavedTheme extends AppModel {
 			return false;
 		}
 		
-		// because we use userid_foldername format as foldername
-		$themeFolderName = User::get('User.id') . '_' . $themeFolderName;
 		
 		// first we ensure that this folder does NOT exist in database.
 		// this is to prevent unnecessary deletion due to validation
@@ -309,7 +319,7 @@ class SavedTheme extends AppModel {
 	
 		
 		$this->data = array('SavedTheme'=>array('folder_name'=>$themeFolderName));
-		$success = $this->deleteFolder();
+		$success = $this->deleteFolder($themeFolderName);
 		
 		
 		return $success;

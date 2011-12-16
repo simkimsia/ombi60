@@ -31,10 +31,12 @@ class OrderTestCase extends CakeTestCase {
 		'app.blog', 'app.post', 'app.comment', 
 		'app.paypal_payment_module',
 		'app.payment', 'app.shops_payment_module', 'app.payment_module',
-		'app.log', 'app.saved_theme',
- 		'app.country',
+		'app.log', 'app.saved_theme', 'app.theme',
+		'app.country',
 		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
-		'app.price_based_rate', 'app.weight_based_rate'
+		'app.price_based_rate', 'app.weight_based_rate',
+		'app.invoice', 'app.recurring_payment_profile',
+	
 	);
 
 
@@ -892,5 +894,47 @@ class OrderTestCase extends CakeTestCase {
 		$result = $this->Order->confirmMatchWithCart($order_uuid, $cart_uuid);
 		// THEN we get a boolean true
 		$this->assertFalse($result);
+	}
+	
+	
+	/**
+	*
+	* test if the completedCheckout check works
+	*
+	**/
+	public function testCompletedCheckout() {
+		// GIVEN we are using the following order
+		$order_uuid = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a';
+		
+		// WHEN we run the funciton
+		$result = $this->Order->completedCheckout($order_uuid);
+		
+		// THEN we expect true
+		$this->assertTrue($result);
+		
+	}
+	
+	
+	/**
+	*
+	* test if the getDeliveryAddressByOrderId works
+	*
+	**/
+	public function testGetDeliveryAddressByOrderId() {
+		// GIVEN we are using the following order
+		$order_uuid = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a';
+		
+		// WHEN we run the funciton
+		$result = $this->Order->getDeliveryAddressByOrderId($order_uuid);
+		
+		// THEN we get back the 2nd record of the Address Fixture
+		$addressFixture = new AddressFixture();
+		$countryFixture = new CountryFixture();
+		$expected = array(
+			'DeliveryAddress' => $addressFixture->records[1],
+			'Country' => $countryFixture->records[191]
+		);
+		$this->assertEqual($expected, $result);
+		
 	}
 }

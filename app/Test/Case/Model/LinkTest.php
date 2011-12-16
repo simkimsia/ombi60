@@ -16,6 +16,7 @@ class LinkTestCase extends CakeTestCase {
 	 *
 	 **/
 	public $fixtures = array(
+		'app.aro', 'app.aco', 'app.aros_aco',
 		'app.shop',  'app.domain',
 		'app.shop_setting', 'app.language',
 		'app.user', 'app.group',
@@ -31,11 +32,12 @@ class LinkTestCase extends CakeTestCase {
 		'app.blog', 'app.post', 'app.comment', 
 		'app.paypal_payment_module',
 		'app.payment', 'app.shops_payment_module', 'app.payment_module',
-		'app.log', 'app.saved_theme',
- 		'app.country',
+		'app.log', 'app.saved_theme', 'app.theme',
+		'app.country',
 		'app.shipment', 'app.shipping_rate', 'app.shipped_to_country',	
-		'app.price_based_rate', 'app.weight_based_rate'	);
-
+		'app.price_based_rate', 'app.weight_based_rate',
+		'app.invoice', 'app.recurring_payment_profile',	
+	);
 
 	/**
 	 * setUp method

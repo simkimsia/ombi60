@@ -168,10 +168,10 @@ class WebpagesController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Webpage->delete($id)) {
-			$this->Session->setFlash(__('webpage deleted'), 'default', array('class'=>'flash_failure'));
+			$this->Session->setFlash(__('Webpage deleted'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('webpage was not deleted'), 'default', array('class'=>'flash_failure'));
+		$this->Session->setFlash(__('Webpage was not deleted'), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('action' => 'index'));
 	}
 

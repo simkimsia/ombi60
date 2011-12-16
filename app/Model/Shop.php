@@ -286,7 +286,7 @@ class Shop extends AppModel {
 	public function beforeValidate() {
 		
 		// for localhost we will NOT validate for url
-		if(strpos(FULL_BASE_URL, '.localhost')) {
+		if(strpos(FULL_BASE_URL, '.com') === false) {
 			unset($this->validate['primary_domain']['url']);
 		}
 		
@@ -460,17 +460,18 @@ class Shop extends AppModel {
 	
 	public static function getTemplateVariable() {
 		$shopInstance = Shop::getInstance();
-		$shop = array('name' => $shopInstance['Shop']['name'],
-			      'url'  => $shopInstance['Shop']['url'] . '/',
-			      'primary_domain'=> $shopInstance['Shop']['primary_domain'] . '/',
-			      'permanent_domain'=>$shopInstance['Shop']['permanent_domain'] . '/',
-			      'email'=>$shopInstance['Shop']['email'],
-			      'products_count'=>$shopInstance['Shop']['visible_product_count'],
-			      
-			      'collections_count'=>$shopInstance['Shop']['product_group_count'],
-			      'currency'=>$shopInstance['ShopSetting']['currency'],
-			      'money_format'=>$shopInstance['ShopSetting']['money_in_html'],
-			      'money_format_in_currency'=>$shopInstance['ShopSetting']['money_in_html_with_currency'],
+		$shop = array(
+			'name' => $shopInstance['Shop']['name'],
+			'url'  => $shopInstance['Shop']['url'] . '/',
+		      'primary_domain'=> $shopInstance['Shop']['primary_domain'] . '/',
+		      'permanent_domain'=>$shopInstance['Shop']['permanent_domain'] . '/',
+		      'email'=>$shopInstance['Shop']['email'],
+		      'products_count'=>$shopInstance['Shop']['visible_product_count'],
+	      
+		      'collections_count'=>$shopInstance['Shop']['product_group_count'],
+		      'currency'=>$shopInstance['ShopSetting']['currency'],
+		      'money_format'=>$shopInstance['ShopSetting']['money_in_html'],
+		      'money_format_in_currency'=>$shopInstance['ShopSetting']['money_in_html_with_currency'],
 			      
 			      );
 		
@@ -487,8 +488,8 @@ class Shop extends AppModel {
 	 * afterSave callback saving shop and theme data into cache under the key Shop8 for shop of id 8
 	 * */
 	public function afterSave($created) {
-
-                $this->recursive = -1;
+		
+		$this->recursive = -1;
 		$this->Behaviors->load('Containable');
 			
 		$shop = $this->find('first', array('conditions'=>array('Shop.id'=>$this->id),

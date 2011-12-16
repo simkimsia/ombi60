@@ -1,5 +1,5 @@
 <?php
-/* Webpage Fixture generated on: 2011-09-28 10:39:41 : 1317206381 */
+/* Webpage Fixture generated on: 2011-12-12 05:07:14 : 1323666434 */
 
 /**
  * WebpageFixture
@@ -216,5 +216,6 @@ class WebpageFixture extends CakeTestFixture {
 			'handle' => 'terms-of-service',
 			'visible' => 1
 		),
+	
 	);
 }

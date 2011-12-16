@@ -6,8 +6,7 @@
 
 <?php
 	echo $this->element('errors', array('errors' => $errors));
-	echo $this->Form->create('Merchant', array('url'=>array('controller'=>'merchants',
-								'action' => 'register','plan'=>$plan)));
+	echo $this->Form->create('Merchant');
 	echo $this->Form->input('Shop.name', array('label'=>'Shop name'));
 	echo $this->Form->input('Shop.primary_domain', array('value'=>'', 'type'=>'hidden') );
 	echo 'http://' . $this->Form->input('Shop.subdomain', array('label'=>'Web Address')) . $mainDomain ;
