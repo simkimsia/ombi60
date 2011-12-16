@@ -85,3 +85,6 @@
 [submodule "app/Plugin/Payments/Vendor/AktiveMerchant"]
 	path = app/Plugin/Payments/Vendor/AktiveMerchant
 	url = git@github.com:simkimsia/Aktive-Merchant.git
+[submodule "app/Plugin/Log"]
+	path = app/Plugin/Log
+	url = git@github.com:simkimsia/Log.git

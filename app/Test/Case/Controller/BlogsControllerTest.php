@@ -42,6 +42,25 @@ class BlogsControllerTestCase extends ControllerTestCase {
 	 */
 	public function setUp() {
 		parent::setUp();
+		
+		$this->Shop 	= ClassRegistry::init('Shop');
+		$this->User 	= ClassRegistry::init('User');
+		
+		$cachedShopId = Shop::get('Shop.id');
+		
+		if ($cachedShopId != 2) {
+			$testShop = $this->Shop->getById(2);
+			Shop::store($testShop);
+		}
+		
+		$cachedUserId = User::get('User.id');
+
+		if($cachedUserId !== 1) {
+			$user = $this->User->getMerchantUser(1);
+			User::store($user);
+		}
+		
+		Configure::write('run_test', true);
 	}
 
 	/**
@@ -50,7 +69,14 @@ class BlogsControllerTestCase extends ControllerTestCase {
 	 * @return void
 	 */
 	public function tearDown() {
+		
+		unset($this->Shop);
+		unset($this->User);
+		
 		ClassRegistry::flush();
+		
+		// this is to allow User singleton to work properly
+		Configure::write('run_test', false);
 
 		parent::tearDown();
 	}
@@ -66,6 +92,7 @@ class BlogsControllerTestCase extends ControllerTestCase {
 			'components' => array('Auth' => array('user'), 'Security')
 		));
 		$this->testAction('/admin/blogs/index', array('return' => 'contents'));
+		
 		$this->assertRegexp('#<h2>Blogs</h2>#', $this->contents);
 	}
 
@@ -80,11 +107,12 @@ class BlogsControllerTestCase extends ControllerTestCase {
 			'components' => array('Auth' => array('user'), 'Security')
 		));
 		$this->testAction('/admin/blogs/view/1', array('return' => 'contents'));
-		$expected = array('tag' => 'h2', 'content' => 'news');
-		$this->assertTag($expected, $this->contents);
+		$expected = '#<h2>news</h2>#';
+
+		$this->assertRegexp($expected, $this->contents);
 	}
 
-	function testAdminAdd() {
+	public function testAdminAdd() {
 		$this->controller = $this->generate('Blogs', array(
 			'methods' => array('forceSSL'), 
 			'components' => array('Auth' => array('user'), 'Security')
@@ -97,7 +125,7 @@ class BlogsControllerTestCase extends ControllerTestCase {
 		$this->testAction('/admin/blogs/add', array('data' => $this->controller->request->data, 'method' => 'POST'));
 	}
 
-	function testAdminEdit() {
+	public function testAdminEdit() {
 		$this->controller = $this->generate('Blogs', array(
 					'methods' => array('forceSSL'), 
 					'components' => array('Auth' => array('user'), 'Security')
@@ -110,7 +138,7 @@ class BlogsControllerTestCase extends ControllerTestCase {
 		$this->testAction('/admin/blogs/edit/3', array('data' => $this->controller->request->data, 'method' => 'POST'));
 	}
 
-	function testAdminDelete() {
+	public function testAdminDelete() {
 		$this->controller = $this->generate('Blogs', array(
 					'methods' => array('forceSSL'), 
 					'components' => array('Auth' => array('user'), 'Security')
