@@ -674,14 +674,14 @@ class OrdersController extends AppController {
  * @param boolean Returns the result for all the $this->redirect
  **/
 	public function return_from_payment() {
-		$payment = $this->Order->Payment->find('first', array('conditions' => array('token_from_gateway' => $this->params->query['token'])));
+		$payment = $this->Order->Payment->find('first', array('conditions' => array('token_from_gateway' => $this->request->query['token'])));
 		if ($this->Payments->isPaypalExpress($payment['ShopsPaymentModule']['display_name'])) {
 			$accountEmail = $this->Order->Shop->getAccountEmailPaypal($payment['Order']['shop_id']);
 			$purchase_opts = array(
 				'subject' => $accountEmail,
 			    'currency' => $payment['Order']['currency'],
-				'token' => $this->params->query['token'],
-				'PayerID' => $this->params->query['PayerID']
+				'token' => $this->request->query['token'],
+				'PayerID' => $this->request->query['PayerID']
 			);
 			$response = $this->Payments->purchase($payment['ShopsPaymentModule']['display_name'], $purchase_opts);
 			$result = $response->success();
