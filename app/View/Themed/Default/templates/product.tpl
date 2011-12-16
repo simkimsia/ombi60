@@ -9,7 +9,7 @@
 		</div>
 		<!-- END IMAGE -->
 		<!-- START THUMBS -->
-		<div id="thumbs">{% if product.images.size > 1 %}{% for image in product.images %}
+		<div id="thumbs">{% if product.images| length > 1 %}{% for image in product.images %}
 			<p{% if forloop.first %} class="active"{% endif %}><a href="{{ image | product_img_url( "large") }}" rel="lightbox-images">{% if forloop.first %}More Images{% else %}{{ forloop.index }}{% endif %}</a></p>{% endfor %}{% endif %}
 		</div>
 		<!-- END THUMBS -->
@@ -24,7 +24,7 @@
 		<!-- END DESC -->
 		<!-- START OPTIONS -->
 		<div id="options">
-			<form method="post" action="/cart/add">{% if product.variants.size > 1 %}
+			<form method="post" action="/cart/add">{% if product.variants| length > 1 %}
 				<!-- START VARIANTS -->
 				<div id="variants">
 					<div class="border">

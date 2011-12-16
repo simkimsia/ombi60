@@ -1,10 +1,10 @@
 <!-- START EXCERPT -->
 <div id="excerpt">
-	<h1 class="title">{{ collection.title | escape }}</h1>{% if collection.description.size > 0 %}
+	<h1 class="title">{{ collection.title | escape }}</h1>{% if collection.description| length > 0 %}
 	{{ collection.description }}{% endif %}
 </div>
 <!-- END EXCERPT -->
-<!-- START PRODUCTS -->{% if collection.products.size > 0 %}
+<!-- START PRODUCTS -->{% if collection.products| length > 0 %}
 <ul id="products" class="clear">{% for key, product in collection.products %}
 	<!-- START PRODUCT {{ forloop.index }} -->
 	<li{{ cycle (['', '', ' class="end"'], key) }}>
