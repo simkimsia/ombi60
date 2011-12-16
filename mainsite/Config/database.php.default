@@ -25,6 +25,19 @@ class DATABASE_CONFIG {
 		'driver' => '',
 		'source' => 'search_indices'
 	);
+	
+	var $paypal_express = array(
+		'datasource' => 'Payments.PaypalExpressSource',
+		'environment' => 'test',
+		'login' => 'merch_1277746388_biz_api1.gmail.com',
+		
+		
+		'password' => '1277746393',
+		
+		'signature' => 'AHExNCgTOAf6I0jS8V77WYVPl78nAUalMl21CFNLpKr4giwMI6dr5DKE',
+		'return_url' => 'https://checkout.ombi60.localhost/orders/return_from_payment',
+		'cancel_url' => 'https://checkout.ombi60.localhost',
+	 
+	);
 }
 ?>
-
