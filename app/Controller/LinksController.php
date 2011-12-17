@@ -7,7 +7,7 @@ class LinksController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		if ($this->request->action== 'admin_order') {
+		if ($this->request->action== 'admin_order' || $this->request->action== 'admin_delete') {
 			$this->Components->disable('Security');
 		}
 		if ($this->request->action== 'admin_edit' || $this->request->action == 'admin_add') {
