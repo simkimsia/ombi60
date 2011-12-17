@@ -9,7 +9,7 @@
 	{{ "reset.css" | asset_url | css_tag }}
 	{{ "screen.css" | asset_url | css_tag }}
 	{{ "theme.css" | asset_url | css_tag }}
-	<!--[if lte IE 6]>{{ "ie6.css" | asset_url | css_tag }}<![endif]-->{% if template == "product" %}{% if product.available %}{% if product.variants.size > 1 %}
+	<!--[if lte IE 6]>{{ "ie6.css" | asset_url | css_tag }}<![endif]-->{% if template == "product" %}{% if product.available %}{% if product.variants| length > 1 %}
 	{{ "option_selection.js" | asset_url | script_tag }}{% endif %}{% endif %}{% endif %}
 	{{ "jquery-1-3-1.js" | asset_url | script_tag }}
 	{{ "jquery-ui-1-7-1.js" | asset_url | script_tag }}{% if template == "product" %}
@@ -27,11 +27,11 @@
 				<a href="/"><img src="{{ "logo.png" | asset_url }}" alt="{{ shop.name | escape }}" /></a>
 			</div>{% else %}
 			<h2><a href="/">{{ shop.name | escape }}</a></h2>{% endif %}
-			<!-- END LOGO -->{% if settings.phone.size > 0 or settings.email.size > 0 %}
+			<!-- END LOGO -->{% if settings.phone| length > 0 or settings.email| length > 0 %}
 			<!-- START HELLO -->
 			<div id="hello">
-				<div>{% if settings.phone.size > 0 %}
-					<p><strong>t:</strong> {{ settings.phone | escape }}</p>{% endif %}{% if settings.email.size > 0 %}
+				<div>{% if settings.phone| length > 0 %}
+					<p><strong>t:</strong> {{ settings.phone | escape }}</p>{% endif %}{% if settings.email| length > 0 %}
 					<p><strong>e:</strong> <a href="mailto:{{ settings.email }}">{{ settings.email | escape }}</a></p>{% endif %}
 				</div>
 			</div>
@@ -122,7 +122,7 @@
 		</div>
 		<!-- END FOOTER -->
 	</div>
-	<!-- END CONTAINER -->{% if template == "product" %}{% if product.available %}{% if product.variants.size > 1 %}
+	<!-- END CONTAINER -->{% if template == "product" %}{% if product.available %}{% if product.variants| length > 1 %}
 	<script type="text/javascript">
 		// <![CDATA[
 		var selectCallback = function(variant, selector) {

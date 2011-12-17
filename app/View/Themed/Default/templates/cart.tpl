@@ -30,10 +30,10 @@
 	</table>
 	<!-- END TABLE -->
 	<!-- START COMPLETE -->
-	<div id="complete" class="clear">{% if settings.notes.size > 0 %}
+	<div id="complete" class="clear">{% if settings.notes| length > 0 %}
 		<!-- START NOTES -->
 		<div id="notes">
-			<label for="note">{% if settings.notes.size > 0 %}{{ settings.notes | escape }}{% else %}Tell us about any special instructions{% endif %}</label>
+			<label for="note">{% if settings.notes| length > 0 %}{{ settings.notes | escape }}{% else %}Tell us about any special instructions{% endif %}</label>
 			<textarea name="note" id="note" rows="" cols="">{{ cart.note }}</textarea>
 		</div>
 		<!-- END NOTES -->{% endif %}
