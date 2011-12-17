@@ -161,27 +161,28 @@ public $fixtures = array(
 	*
 	* @param array $resultArray the actual result array
 	* @param integer $expectedQuantity the quantity of the cart item bought
+	* @param boolean $zeroed Zero'd product_quantity for the 2nd item
 	* @return boolean
 	**/
-	private function check2ItemsWithImagesCartResult($resultArray) {
+	private function check2ItemsWithImagesCartResult($resultArray, $zeroed = false) {
 		
 		$expectedArray = array(
 			'Cart' => array(
 				'id' => '4e9144d7-55e4-44a6-a2f1-1f721507707a',
-	            'shop_id' => 2,
-	            'user_id' => 3,
+	            'shop_id' => '2',
+	            'user_id' => '3',
 				'created' => '2011-10-03 06:47:45',
 	            'amount' => '34.0000',
 	            'status' => true,
-	            'total_weight' => 22000,
+	            'total_weight' => '22000',
 	            'currency' => 'SGD',
 	            'shipped_amount' => '34.0000',
-	            'shipped_weight' => 22000,
+	            'shipped_weight' => '22000',
 	            'past_checkout_point' => false,
-	            'cart_item_count' => 2,
+	            'cart_item_count' => '2',
 	            'note' => NULL,
 	            'attributes' => NULL,
-	            'shipping_required' => 1,
+	            'shipping_required' => '1',
 			),
 		    'CartItem' => array(
 				'0' => array(
@@ -249,6 +250,12 @@ public $fixtures = array(
 		);		
 		
 		$checkCartIdAsWell = true;
+		
+		if ($zeroed) {
+			unset($expectedArray['CartItem'][1]);
+			$expectedArray['Cart']['cart_item_count'] = '1';
+		}
+		
 		$this->expectedCartShouldMatchActualCart($expectedArray, $resultArray, $checkCartIdAsWell);
 	
 	}
@@ -431,6 +438,24 @@ public $fixtures = array(
 		
 		// THEN we expect the following result
 		$this->check2ItemsWithImagesCartResult($resultArray);
+		
+	}
+	
+	
+	public function testGetItemsWithImagesShouldGrabResultsButNotZeroedItems() {
+		// Given that we have 2 item in the Cart for User 3
+		$cart_uuid = '4e9144d7-55e4-44a6-a2f1-1f721507707a';
+		
+		// AND that we made item id 3 to have product_quantity = 0
+		$this->Cart->CartItem->id = 3;
+		$this->Cart->CartItem->saveField('product_quantity', 0);
+
+		// WHEN we run getItemsWithImages
+		$resultArray = $this->Cart->getItemsWithImages($cart_uuid);
+		
+		// THEN we expect the following result
+		$zeroedTheVariant3 = true;
+		$this->check2ItemsWithImagesCartResult($resultArray, $zeroedTheVariant3);
 		
 	}
 	

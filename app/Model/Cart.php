@@ -823,7 +823,10 @@ class Cart extends AppModel {
 		//	 'contain' => array('CartItem' => 'CoverImage')
 		//	))
 		$items = $this->CartItem->find('all', array(
-			'conditions' => array('CartItem.cart_id' => $cart_uuid),
+			'conditions' => array(
+				'CartItem.cart_id' => $cart_uuid,
+				'CartItem.product_quantity >' => 0,
+			),
 			'link' => array('Cart', 'CoverImage')
 		));
 
