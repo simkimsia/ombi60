@@ -538,6 +538,9 @@ class OrdersController extends AppController {
 			$this->Order->recalculateTotalWeightPrice($order_uuid);
 			$currentOrder 		= $this->Order->getItemsWithImages($order_uuid);
 			
+			
+			$shipmentOptions = array();
+			
 			// set up the shipping options
 			if ($currentOrder['Order']['shipping_required']) {
 				$shippedAmt 	= $currentOrder['Order']['shipped_amount'];
@@ -546,10 +549,20 @@ class OrdersController extends AppController {
 				
 				$shipmentOptions = $this->Order->Shipment->getOptionsForCheckout($shippedAmt, $shippedWeight, $shop_id, $country);
 
-				$shippingFee = $this->Order->Shipment->getPriceFromDisplayName(current($shipmentOptions));
 
-				$currentOrder['Order']['amount'] = $currentOrder['Order']['shipped_amount'] + $shippingFee;
+				// if we do not have the appropriate shipmentOptions, assume free shipping
+				if(empty($shipmentOptions)) {
+					$shippingFee = 0.00;
+				} else {
+					$shippingFee = $this->Order->Shipment->getPriceFromDisplayName(current($shipmentOptions));
+					
+				}
+
+			} else {
+				$shippingFee = 0.00;
 			}
+			
+			$currentOrder['Order']['amount'] = $currentOrder['Order']['shipped_amount'] + $shippingFee;
 			
 			// set up the payment options
 			$paymentOptions = $this->Order->Payment->getOptionsForCheckout($shop_id);
