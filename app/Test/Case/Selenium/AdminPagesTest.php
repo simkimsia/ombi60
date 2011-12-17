@@ -220,6 +220,24 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 		$this->assertElementPresent('xpath=//div[@id="flashMessage"][@class="flash_success"][contains(text(), "Product status has been changed")]');
 		$this->assertElementPresent('xpath=//a[@href="/admin/products/toggle/2"][@class="product-status"][contains(text(), "Published")]');
 	}
+	
+	/**
+	 *
+	 * Test Visible Plugin works
+	**/
+	public function testWebpageContentPresentInPagesEdit() {
+		if ($this->doNotRunThisTest(__FUNCTION__)) {
+			return;
+		}
+		// go to products index for dummy product
+		$this->open('admin/pages/edit/4');
+		// login
+		$this->type('id=UserEmail', 'owner@shop001.com');
+    	$this->type('id=UserPassword', 'password');
+    	$this->clickAndWait('css=input[type="submit"]');
+		$this->assertElementPresent('xpath=//textarea[@id="WebpageContent"]');
+	}
+	
 
     
 }

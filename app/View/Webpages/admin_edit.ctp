@@ -35,7 +35,7 @@
 		$prefix = Router::url('/pages/', true);
     $suffix = ' ( ' . $this->Html->link(__('What is this?'), '#') . ' )';
 		echo $this->Html->div('input text', $label.$prefix.$textbox. $suffix ,array(), true);
-		echo $this->Form->input('text', array('label' => __('Write your page')));
+		echo $this->Form->input('content', array('label' => __('Write your page')));
 			
 	?>
 	</fieldset>
