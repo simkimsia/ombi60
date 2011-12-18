@@ -5,7 +5,7 @@
 	echo $this->element('checkout_information', array('currentOrder' => $currentOrder, 'step' => 2));
 	$shop_id 			= $currentOrder['Order']['shop_id'];
 	$order_uuid 		= $currentOrder['Order']['id'];
-	$displayShipment 	= $currentOrder['Order']['shipping_required'];
+	$displayShipment 	= $currentOrder['Order']['shipping_required'] && !empty($shipmentOptions);
 	
 ?>
 
