@@ -82,20 +82,22 @@ class ProductGroup extends AppModel {
 		if (!$multiple) $productsInGroups = array($productsInGroups);
 		
 		foreach($productsInGroups as $key=>$group) {
+			if (!isset($group['ProductGroup'])) {
+				$this->log('ProductGroup::getTemplateVariable undefined');
+				$this->log($key);
+				$this->log($group);
+			}
+			
 			$result = array(
-					   'title' => $group['ProductGroup']['title'],
+				'title' => $group['ProductGroup']['title'],
+				'content' => $group['ProductGroup']['description'],
+				'handle' => $group['ProductGroup']['handle'],
+				'underscore_handle' => str_replace('-', '_', $group['ProductGroup']['handle']),
+				'url' => $group['ProductGroup']['url'],
+				'all_products_count' => $group['ProductGroup']['visible_product_count'],
+				'vendor_count' => $group['ProductGroup']['vendor_count'],
 					   
-					   'content' => $group['ProductGroup']['description'],
-					   
-					   'handle' => $group['ProductGroup']['handle'],
-					   'underscore_handle' => str_replace('-', '_', $group['ProductGroup']['handle']),
-					   'url' => $group['ProductGroup']['url'],
-					   'all_products_count' => $group['ProductGroup']['visible_product_count'],
-					   
-					   
-					   'vendor_count' => $group['ProductGroup']['vendor_count'],
-					   
-					);
+			);
 			
 			
 			if (isset($group['Product'])) {
@@ -386,8 +388,10 @@ class ProductGroup extends AppModel {
 	 * Include the collections.all
 	 * Will NOT include the Products of each Collection. Only first-level stats of Collection
 	 *
+	 * Does NOT return Array of ThemeVariable-formatted Collections
+	 *
 	 * @param integer $shopId Id of shop which the collections belong to.
-	 * @return array Array of ThemeVariable-formatted Collections
+	 * @return array 
 	 * */	
 	public function getAllRegularVisible($shopId = null) {
 		// we want to retrieve all regular collections, smart or custom
@@ -400,12 +404,16 @@ class ProductGroup extends AppModel {
 			$shopId = Shop::get('Shop.id');
 		}
 
-		$collections = $this->find('all', array(
+		$rawCollections = $this->find('all', array(
 		    'conditions'=>array('ProductGroup.shop_id'=>$shopId,
 								'ProductGroup.visible'=>true),
+			
 		));
-
-		$customCollectionCalledAll = Set::extract('/ProductGroup[handle=all]', $collections);
+		
+		// we are going to use the id as index for the array
+		$finalCollections = Set::combine($rawCollections, '{n}.ProductGroup.id', '{n}');
+		
+		$customCollectionCalledAll = Set::extract('/ProductGroup[handle=all]', $rawCollections);
 
 		// since no custom collection set aside for collections.all, we will auto create 1
 		if (empty($customCollectionCalledAll)) {
@@ -418,13 +426,11 @@ class ProductGroup extends AppModel {
 				'vendor_count'			=> Shop::get('Shop.vendor_count')
 			));
 
-			$collections[] = $collectionCalledAll;
+			$finalCollections[0] = $collectionCalledAll;
 
 		}
 
-		return ProductGroup::getTemplateVariable($collections);
-
-
+		return $finalCollections;
 	}
 
 	/**
@@ -567,9 +573,11 @@ class ProductGroup extends AppModel {
 	 **/
 	private function prepProductPaginate4Regular($collection) {
 		// Extract the product ids in the found collection
-                $productIds = Set::extract($collection['ProductsInGroup'], '/product_id');
+        $productIds = Set::extract($collection['ProductsInGroup'], '/product_id');
+
 		// get the standard paginate stuff like order, variants, etc
 		$productPaginate = $this->prepCommonProductPaginate();
+		
 		// special condition meant only for regular collection
 		// regular collection regardless custom or smart uses ProductsInGroup as joint table
 		$productPaginate['conditions']['AND']['Product.id'] = $productIds;
@@ -581,7 +589,7 @@ class ProductGroup extends AppModel {
 	 * assumed that the products you want to paginate are visible
 	 * assumed that the conditions BEFORE invoking this will ensure the products are within a single shop
 	 * */
-	private function prepCommonProductPaginate($visibleOrAll = VISIBLE_ENTITY) {
+	public function prepCommonProductPaginate($visibleOrAll = VISIBLE_ENTITY) {
 		if ($visibleOrAll == VISIBLE_ENTITY) {
 			$productPaginate = array('conditions'=>array('AND' => array('Product.visible'=>true) ));	
 		} else if ($visibleOrAll == HIDDEN_ENTITY) {
@@ -624,6 +632,58 @@ class ProductGroup extends AppModel {
 		$productPaginate['order'] = array('Product.created DESC');
 		
 		return $productPaginate;
+	}
+	
+	/**
+	*
+	* form all the collections for global use
+	*
+	* @param $shopId 
+	* @return array Array of ThemeVariable-formatted Collections
+	**/
+	public function prepareGlobalCollectionsWithProducts($shopId) {
+		
+		
+		// is in the form of {id}.ProductGroup with noting else
+		$collections = $this->getAllRegularVisible($shopId);
+		
+		//$products is in the form of {n}.Product, ProductsInGroup, etc 
+		// get default 30
+		$products = $this->ProductsInGroup->Product->getAllVisibleByShopId($shopId);
+		
+		$products 		= Product::getTemplateVariable($products);
+		$collections 	= ProductGroup::getTemplateVariable($collections);
+		
+		// now we loop through each product
+		foreach($products as $handle => $product) {
+			
+			// well-formatted product if belong to collection will have a non-empty collections
+			if(!empty($product['collections'])) {
+				
+				// then we will loop through all the regular collection the product belongs to
+				foreach($product['collections'] as $collectionHandle => $collection) {
+					// and we assign this well-formatted product to the respective collection
+					$collections[$collectionHandle]['products'][$handle] = $product;
+				}
+			}
+			
+		}
+		
+		// check if user has set a regular collection for all??
+		$noUserSetRegularCollectionForAll = !(isset($collections['all']['id']));
+		
+		// looks like user has not, so we need to assign the products to 'all'
+		if ($noUserSetRegularCollectionForAll) {
+			$collections['all']['products'] = $products;
+		}
+		
+		// now we need to ensure that products_count is updated because we add the products AFTER the fact
+		foreach($collections as $collectionHandle => $collection) {
+			$collections[$collectionHandle]['products_count'] = count($collection['products']);
+		}
+		
+		return $collections;
+		
 	}
 	
 
