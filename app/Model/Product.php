@@ -1572,4 +1572,35 @@ class Product extends AppModel {
 	}
 	
 	
+	/**
+	* get all visible Products by Shop
+	*
+	* @param $shop_id int 
+	* @param $limit int Default is 30
+	* @return array 
+	*
+	**/
+	public function getAllVisibleByShopId($shop_id, $limit = 30) {
+		if (!($shop_id > 0)) {
+			return false;
+		}
+		
+
+		$getAllVisibleProducts = array(
+			'conditions' => array(
+				'Product.shop_id' => $shop_id
+			), 
+			'limit' => $limit
+		);
+			
+		
+		$productPaginate 		= $this->ProductsInGroup->ProductGroup->prepCommonProductPaginate();
+		$getAllVisibleProducts 	= array_merge($getAllVisibleProducts, $productPaginate);
+		
+		$rawProducts 	= $this->find('all', $getAllVisibleProducts);
+		
+		return $rawProducts;
+	}
+	
+	
 }//end class
