@@ -1,10 +1,7 @@
 <?php
 class BlogsController extends AppController {
 
-	public $name = 'Blogs';
-	
-	public $viewClass = 'Theme';
-	
+	public $name = 'Blogs';	
 	
 	public $components = array('Permission' =>
 				array('redirect' =>

@@ -66,7 +66,7 @@ class AppController extends Controller {
 		//'products' => array('checkout'),
 	);
 
-	public $viewClass = 'TwigView.Twig';
+	public $viewClass = 'View';
 
 	public $params4GETAndNamed = array();
 
@@ -594,15 +594,19 @@ class AppController extends Controller {
 		);
 		
 		$controller 	= $this->name;
-		$action 	= $this->request->action;
+		$action 		= $this->request->action;
 
 		$validControllers = array_keys($publicActions);
 
 		if (in_array($controller, $validControllers)) {
 			$validActions = array_keys($publicActions[$controller]);
 			if (in_array($action, $validActions)) {
+				// set the view class
+				$this->viewClass = 'TwigView.Twig';
+				
 				// set the view path
 				$this->viewPath = 'templates';
+				
 				// set the template name variable
 				$templateName = $publicActions[$controller][$action];
 				$this->set('template', $templateName);
