@@ -1,7 +1,7 @@
-{% if collections.related.products.size > 0 %}
+{% if collections.related.products | length > 0 %}
 <!-- START RELATED -->
 <div id="related">
-	<h6>{% if settings.related.size > 0 %}{{ settings.related | escape }}{% else %}Take a look at these great accessories:{% endif %}</h6>
+	<h6>{% if settings.related| length > 0 %}{{ settings.related | escape }}{% else %}Take a look at these great accessories:{% endif %}</h6>
 	<!-- START SLIDER -->
 	<div id="slider" class="clear">
 		<!-- START PREV -->

@@ -265,9 +265,8 @@ class AppController extends Controller {
 			
 			// fetch all collections smart, custom and the collection.all
 			$this->loadModel('ProductGroup');
-			$this->ProductGroup->recursive = -1;
-			
-			$collections = $this->ProductGroup->getAllRegularVisible($shopId);
+
+			$collections = $this->ProductGroup->prepareGlobalCollectionsWithProducts($shopId);
 			
 			$this->set('collections', $collections);
 

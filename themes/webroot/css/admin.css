@@ -1,0 +1,1075 @@
+dd.payment {
+	border: 0 none;
+
+	padding: 0;
+	margin: 0;
+}
+a.actions {
+	font-weight:normal;
+	padding: 4px 8px;
+	background:#e6e49f;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f1f1d4), to(#e6e49f));
+	background-image: -moz-linear-gradient(top, #f1f1d4, #e6e49f);
+	color:#333;
+	border:1px solid #aaac62;
+	-webkit-border-radius:8px;
+	-moz-border-radius:8px;
+	border-radius:8px;
+	text-decoration:none;
+	text-shadow: #fff 0px 1px 0px;
+	min-width: 0;
+}
+
+.new-rate-table {
+	background:none repeat scroll 0 0 #EFEFEF;
+	/*border-top:1px solid #CCCCCC;*/
+	padding:10px 0;
+	width:100%;
+}
+
+td.new-rate {
+	padding-bottom:10px;
+	vertical-align:top;
+}
+
+td.new-rate input {
+	margin:0;
+	padding:0;
+	font-size: 100%;
+	width: auto;
+}
+
+.rate-weight {
+	padding-left:15px;
+	width:155px;
+}
+
+.rate-price {
+	width:100px;
+}
+
+/**
+ * this is for the dropdown menu effect in admin
+ * see this http://www.noupe.com/tutorial/drop-down-menu-jquery-css.html
+**/
+.govern{display: none;} 
+ul.topnav {
+	list-style: none;
+	padding: 0 20px;
+	margin: 0;
+	float: right;
+	font-size: 1.2em;
+}
+ul.topnav li {
+	background:url("../img/admin/arrow2.png") no-repeat scroll right 19px;
+	float: left;
+	margin: 0;
+	padding: 0 15px 0 0;
+	position: relative; /*--Declare X and Y axis base for sub navigation--*/
+}
+ul.topnav li a{
+	padding: 0 0 0 9px;
+	color: #fff;
+	display: block;
+	text-decoration: none;
+	float: left;
+}
+
+ul.topnav li a strong {
+	padding: 12px 25px 10px 10px;
+	color: #fff;
+	display: block;
+	text-decoration: none;
+	float: left;
+}
+ul.topnav li a:hover, ul.topnav li.active a{
+	background: url("../img/admin/topnav_left.png") no-repeat left bottom;
+	color:#363636;
+	text-shadow:0 1px 0 #FFF;
+}
+ul.topnav li a:hover strong, ul.topnav li.active a strong{background: url("../img/admin/topnav_right.png") no-repeat right bottom;color:#363636;text-shadow:0 1px 0 #FFF;}
+
+
+ul.topnav li span { /*--Drop down trigger styles--*/
+	width: 17px;
+	height: 40px;
+	float: left;
+	background: url("../img/admin/arrow.png") no-repeat left center ;
+}
+ul.topnav li span.subhover {background: url("../img/admin/topnav_hover.png") no-repeat right bottom ; cursor: pointer;} /*--Hover effect for trigger--*/
+ul.topnav li ul#subnav {
+	list-style: none;
+	position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
+	left: 2px;*left: 0px;
+	top: 41px;
+	background: #ccc;
+	margin: 0; padding: 0;
+	float: left;
+	width: 170px;
+}
+ul.topnav li.first ul#subnav{ right:5px; left:auto;}
+ul.topnav li ul#subnav li{
+	margin: 0; padding: 0;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	clear: both;
+	width: 170px;
+}
+html ul.topnav li ul#subnav li a {
+	background:url("../img/admin/subnav.png") repeat-x scroll;
+	float:left;
+	height:42px;
+	line-height:42px;
+	padding-left:0;
+	width:170px;
+}
+html ul.topnav li ul#subnav li a:hover { /*--Hover effect for subnav links--*/
+	background:#95a8c1;
+	color:#fff;
+	text-shadow:#000 0px 1px 0px;
+}
+ul#subnav li a {
+	color:#363636;
+	text-shadow: #fff 0px 1px 0px;
+	font-weight:normal;
+}
+
+/** end of dropdown menu **/
+
+/* New CSS Code Starts */
+#content .products, #content .orders, #content .main-container-div {
+	border: none;
+	padding: 10px 2%;
+    width:97%;
+    float:center;       
+}
+
+
+.top-paging {
+    background: none repeat scroll 0 0 #FFFFFF;
+    clear: both;
+    color: #CCCCCC;
+    width:50%;
+    margin-bottom: 0px;
+    padding:0 0 0 180px;
+}
+
+.paginator-top {
+	float: left;
+	width:50%;
+    clear: both;
+    margin-bottom: 0;
+    padding: 0;
+    vertical-align: center;	
+}
+
+.product-status {
+    -moz-border-radius: 8px 8px 8px 8px;
+    background:#e6e49f;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f1f1d4), to(#e6e49f));
+    background: -moz-linear-gradient(top, #f1f1d4, #e6e49f);
+    border: 1px solid #AAAC62;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;    
+    color: #333;
+    font-weight: normal;
+    min-width: 0;
+    padding: 4px 8px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+.bottom-paging {
+	text-align:center;   
+  margin-top:10px;
+}
+
+.products table tr td {
+    padding: 6px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.product-search, .search-filters {
+    border: 1px solid #DDDDDD;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-filters th {
+  text-align: center;
+}
+
+.products .product-search td, .search-filters td {
+    background: none;
+}
+
+.product-search th, .search-filters th {
+    bottom-border:0px;
+    border-style:none;
+}
+
+.product-header {
+	color: white;
+	text-align: center;
+}
+
+.products-table, .items-table {
+	/*border: 1px solid;*/
+	width: 85%;
+	align:center;
+	margin: 10px 0px;
+	margin-left: auto;
+    margin-right: auto;
+}
+table.products-table {
+    width: 100%;
+    margin: 0px;
+}
+.products-table td, .items-table td, th {
+    /*border-right: 1px solid black;*/
+}	
+
+.products-table th, .items-table th {
+    background: #8498B5;
+    color: white;
+}
+
+.products-table th a, .items-table th a {
+    color: white;
+}
+
+.photo {
+    float: left;
+    width:50%;   
+    text-align: center;
+}
+
+.product-details {
+	float: right;
+	text-align: center;
+	width:50%;
+	vertical-align: middle;
+}
+
+.orders-table {
+  width: 100%;
+}
+
+.top-paging span.disabled, .bottom-paging span.disabled {
+	color: #ddd;
+	display: inline;
+}
+.top-paging span.current, .bottom-paging span.current {
+	color: #c73e14;
+}
+
+span.hint {
+  color: #999999;
+  font-weight: normal;
+}
+
+fieldset.left {
+  display: inline;
+  float: left;
+  width: 45%;
+}
+
+fieldset.right {
+  display: inline;
+  float: right;
+  width: 45%;
+}
+
+label span.small {
+  font-size: 80%;
+}
+
+div.input.left {
+  width: 40%;
+  float: left;
+  display: inline;
+  clear: none;
+}
+div.input.right {
+  width: 40%;
+  float: right;
+  display: inline;
+  clear: none;
+}
+input.noclear {
+  clear: none;
+  width: 60%;
+}
+div.products.form div.submit {
+  display: inline;
+  float: left;
+}
+
+/**CSS added for domain listing on 15-02-2011*/
+#domain_intro_text{
+    padding:10px 0px 15px;
+    width: 50%;
+}
+
+#domain_intro_text p{
+    padding:10px 0px;
+}
+.text_center{
+    text-align: center;
+    margin: 15px 0px;
+}
+
+.text_center a {
+    padding: 0px 10px;
+    /*border-right: 1px solid;*/
+}
+.internal_forms .paginator-top, .internal_forms .top-paging{
+    /*margin-top: 20px;*/
+}
+
+.internal_forms .products-table {
+}
+
+.center_align{
+    text-align: center;
+}
+
+.link_class{
+    padding: 2px 0px;
+}
+
+.margin_top_15{
+    margin-top: 15px;
+}
+
+.text_field{
+    width: 80%;
+}
+
+.redText{
+   color: red;
+}
+
+.background_gray{
+    background: #F5F5F5; 
+    padding: 20px 10px;
+    border: 1px solid #E4E4E4;
+}
+
+.internal_forms{
+    margin: 0px;
+}
+
+.internal_forms label {
+    font-weight: bold;
+    margin-top: 20px;
+}
+.example_text{
+    font-size: 90%;
+    padding: 0px;
+}
+
+.slug_text{
+    padding: 0px;
+    margin: 10px 0px;
+}
+
+.slug_text input{
+    width: auto;
+}
+
+.hidden_gray{
+    background: #E4E4E4;
+    color: #000000;
+    padding:5px 10px;
+    margin: 5px;
+}
+
+.border_none{
+    border: none;
+}
+
+.background_none{
+    background: none;
+}
+
+.link_li{
+    display: block; 
+    float: left; 
+    width: 470px;
+}
+/*table tr:nth-child(2n) td {
+    background: none;
+}*/
+
+input.small {
+  width:20%;
+}
+
+div.pagination-margin {
+  margin:20px;
+}
+.sortable li span.link_li, .sortable li span a {
+  font-size:15px;
+}
+tr.add-link-tr td  {
+  background:none repeat scroll 0 0 #F5F5F5;
+  padding:15px;
+}
+tr.add-link-tr-submit td  {
+  background:none repeat scroll 0 0 #F5F5F5;
+  padding-left:15px;
+}
+div.example-text {
+  margin-bottom:1px;
+}
+div.pagination-container-div {
+  margin:15px 0;
+}
+
+.view_textarea{
+padding: 5px;
+border: 1px solid #E4E4E4;
+margin: 10px 0px;
+}
+
+.float_right {
+float: right;
+}
+
+.action-buttons{
+float: left;
+margin: 10px 5px 0px 0px;
+}
+
+.checkbox{
+margin: 5px 6px 7px 11px;
+}
+
+.order_customer_info{
+    list-style: none;
+    margin: 0px;
+}
+
+.order_customer_info li{
+    padding: 5px 0px;
+    margin: 0px;
+}
+
+.image_div{
+    float: left; 
+    margin: 5px;
+}
+
+.customer_information{
+    margin: 10px; 
+    padding: 5px; 
+    border: 1px solid #E4E4E4;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+#order_left{
+    float: left; 
+    width: 350px; 
+    margin: 10px; 
+    padding: 5px;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+#order_right{
+    float: right;
+    margin: 17px 10px;
+    padding: 5px;
+    width: 775px;
+}
+
+#payment_shipping{
+    border: 1px solid #E4E4E4; 
+    padding: 15px;
+}
+
+.text_right{
+    text-align: right;
+}
+
+.background_none {
+    background: none;
+}
+
+.payments{
+    border: 1px solid #E4E4E4;
+    /*padding: 10px;*/
+    margin: 10px 0px;
+}
+
+.clear{
+    clear: both;
+}
+
+.payment_right{
+    float: right;
+    margin: 10px;
+    padding: 10px;
+    width: 725px;
+}
+
+.payment_left{
+    float:left; 
+    width: 200px;
+     padding: 10px;
+}
+
+.service_class{
+    padding: 0px 20px;
+}
+
+.payment_dropdown{
+    background: #F5F5F5;
+    border: 1px solid #E4E4E4;
+    margin: 0px;
+    padding: 0 10px 2px;
+}
+
+.method_list{
+    margin: 0px;
+    list-style: none;
+    padding: 0px 5px;
+}
+
+.method_list li {
+    float: left;
+    margin: 0px;
+}
+
+.payment_name{
+    width: 400px;
+}
+
+.payment_edit{
+    width: 600px;
+}
+
+.payment_turn_off{
+    width: 100px;
+}
+
+.custom_select{
+    margin: 5px 0px;
+}
+
+.email_div{
+    float:left; 
+    width: 300px;
+}
+
+.description_div{
+    background: #FFFFFF;
+    border: 1px solid #E4E4E4;
+    float: right;
+    margin-top: -75px;
+    padding: 11px;
+    width: 734px;
+}
+
+.order_info_div{
+    padding-right: 10px; 
+    margin-bottom: 10px;
+}
+
+.express_list{
+    list-style: none;
+    padding-left: 10px;
+    margin-top: 20px;
+}
+
+.express_list li{
+    padding: 5px;
+}
+
+.border_bottom{
+    border-bottom: 1px solid #E4E4E4;
+}
+
+.shipping-view {
+    list-style: none;
+    margin: 0px;
+}
+
+.shipping-view li{
+    padding: 15px;
+    margin: 0px;
+}
+
+.shipping-view li label{
+    font-size: 115%;
+    font-weight: inherit;
+}
+
+.product_image-thumbs{
+    list-style: none;
+    margin: 0px auto;
+    width: 70%;
+}
+
+.product_image-thumbs li{
+    float: left;
+    margin: 0px;
+    /*margin-right: 20px ;*/
+    /*width: 215px;*/
+}
+
+.action_button_main_div{
+    /*width: 85%;*/
+    margin-left: auto; 
+    margin-right: auto;
+}
+.product_image-thumbs li.right {
+    float: right;
+}
+.product_image_make_cover {
+    font-size: 90%;
+    margin-left: 5px;
+}
+.list-pages {
+    width: 85%;
+    margin: 0 auto;
+}
+
+ul.custom_product_list
+{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display:block
+ 
+}
+ul.custom_product_list li.tiny_with_thumb{
+   border-top: 1px solid #EEEEEE;
+    list-style: none outside none;
+    margin: 0 0 10px;
+    padding: 0;
+    padding-top:3px;
+    height:15px;
+}
+
+ul.custom_product_list li.tiny_with_thumb:last-child{
+   border-top: 1px solid #EEEEEE;
+    list-style: none outside none;
+    margin: 0 0 10px;
+    padding: 0;
+    padding-top:3px;
+    height:15px;
+}
+
+ul.custom_product_list li.added
+{
+  background-image: url(../img/admin/right.png);
+  background-repeat: no-repeat;
+  background-position: right center;
+ /* padding-left: .6em;   */
+  color:#BBBBBB;
+  /*height:20px;*/
+   height:15px;
+}
+ul.custom_product_list .imagebox{
+ padding:6px;
+}
+ul.custom_product_list li a
+{
+  text-decoration:none;
+}
+ul.custom_product_list li.added a
+{
+  color:#BBBBBB;
+}
+ul.products_for_collections 
+{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display:block
+}
+
+ul.products_for_collections li
+{
+  /*background-image: url(../img/admin/delete.png);
+  background-repeat: no-repeat;*/
+ /* background-position: top right; */
+  background-position: right center;
+  /*padding-left: .6em;*/
+  height:42px;
+  padding:7px;
+  list-style:none outside none;
+  padding:10px;
+  border-bottom:1px dotted #CCCCCC;
+}
+img.removeProduct {
+ float:right;
+ 
+}
+ul.products_for_collections li:first-child
+{
+  /*background-image: url(../img/admin/delete.png);
+  background-repeat: no-repeat;
+  background-position: right center; */
+  /*padding-left: .6em;*/
+  height:42px;
+  padding:7px;
+  list-style:none outside none;
+  padding:10px;
+  border-bottom:1px dotted #CCCCCC;
+  border-top:1px dotted #CCCCCC;
+}
+ul.products_for_collections li a {
+ text-decoration:none;
+}
+div.small-product-image {
+ /*width:15%; */
+ text-align:left;
+}
+.floatLeft{
+ /*width:65%;*/
+ text-align: left;
+}
+div.flashError{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:20px;
+  background-color:#8A0808;  
+  color:#FFF;
+  font-weight:bold;
+  /*margin-top:-50px; */
+  z-index:9999;
+}  
+div.productnote {
+  color: #777777;
+  font-size: 11px;
+  font-weight: normal;
+} 
+
+.small-product-image {
+    float: left;
+    margin-right: 5px;
+    text-align: center;
+    width: 50px;
+}
+
+ .collections #search #startsearch{
+    float: left; 
+    width: 350px; 
+    border: 1px solid #e4e4e4; 
+    padding: 7px; 
+    margin-right: 21px;
+  }
+  .collections #search #startsearch h2 {
+    font-size: 110%;
+    font-weight: bold;
+    color: #000000;    
+    margin: 5px 10px;
+  }
+  .collections #search #startsearch p {
+    margin: 5px 10px;
+  }
+  
+  .collections #search #startsearch input[type=text] {
+    width: 70%;
+    margin: 10px 10px 10px 0px;
+  }
+
+  .collections #search #startsearch ul {
+    padding: 10px;
+  }
+
+  .collections #search #startsearch ul li{
+    list-style: none;
+  }
+  .collections #search #startsearch ul li .imagebox{
+    float: left;
+    width: 50px;
+    min-height: 20px;
+  }
+
+  .collections #search #startsearch ul li .description{
+    float: left;
+    width: 200px;
+  }
+
+  .collections #search #startsearch ul li .go{ 
+    float: left;
+    width: 30px;
+    background: url('../img/');
+  }
+  .collections #search #searchresult{
+    float: left; 
+    width: 795px; 
+    border: 1px solid #e4e4e4; 
+    padding: 5px;
+  }
+  .plus {
+    padding: 5px; margin: 5px;
+  }
+  .minus {
+    padding: 5px; margin: 5px;
+  }
+  #smart-products {
+    list-style: none;
+  }
+  #smart-products li{
+    list-style: none;
+    margin: 2px 5px 5px 0px;
+    border-bottom: 1px dashed #CCCCCC;
+  }
+  #smart-products .smart-products-desc { 
+    float: left; 
+    margin: 5px 10px 5px 0px;
+  }
+  #properties label{
+    background: #e4e4e4;
+    float: left;
+    text-align: right;
+    width: 50%;
+    border: 1px solid #CCC;
+    padding: 5px;
+    margin-right: 2px;
+    margin-bottom: 1px;
+  }
+
+  .property-info {
+    padding: 5px;
+  }
+
+#variants, #vOpts, .alreadAddedOptions{
+    margin: 0px;
+}
+.alreadAddedOptions {
+        border: 1px solid #CCCCCC;
+        margin: 2px 0;
+        padding: 0;
+        width: 100%; 
+        list-style: none;
+}
+
+.alreadAddedOptions li {
+        float: left;
+        margin: 0 10px 0 0;
+        width: 130px;
+}
+
+.alreadAddedOptions .selectOpts{
+    width: 220px;
+    background: none;
+}
+
+.alreadAddedOptions .selectOpts table tr td{ 
+    background: none;
+}
+.alreadAddedOptions .selectVals{
+    width: 150px;
+}
+.alreadAddedOptions .optsTrash{
+    margin: 10px 0;
+    text-align: right;
+    width: 20px;
+}
+.alreadAddedOptions .optsTrash .minus{
+    margin: 0px;
+    padding: 0px;
+}
+.addMultiple table tr td {
+        padding: 0px;
+}
+.addMultiple table tr:nth-child(2n) td {
+    background: none repeat scroll 0 0 #F5F5F5;
+    padding: 0px;
+}
+
+.opts, .alreadAddedOptions {
+    list-style: none;
+    /*margin: 2px;*/
+    background: none;
+}
+
+
+.alreadAddedOptions table tr:nth-child(2n) td {
+    padding: 0px;
+}
+#vOpts .addMultiple {
+    border: 1px solid #CCCCCC;
+    list-style: none outside none;
+    margin: 2px 23px;
+    padding: 0;
+    width: 460px;
+}
+#vOpts .addMultiple li{
+    float: left;
+    margin: 0 10px 0 0;
+    width: 130px;
+}
+#vOpts .addMultiple .selectOpts{
+    width: 220px;
+    background: none;
+}
+#vOpts .addMultiple .selectOpts table tr td{ 
+    background: none;
+}
+
+#vOpts .addMultiple .selectVals{
+    width: 150px;
+}
+#vOpts .addMultiple .optsTrash{
+    margin: 10px 0;
+    text-align: right;
+    width: 20px;
+}
+#vOpts .addMultiple .optsTrash .minus{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.addMultiple{
+        margin-bottom: 0px; 
+        /*display: none;*/
+}
+
+/***************************************  Style for variant list starts here **************************************/
+.variant_option_1 {
+  color: #237FAD !important;
+}
+
+.variant_option_2 {
+  color: #70991F !important;
+}
+
+.variant_option_3 {
+   color: #A95A05 !important;
+}
+
+table.variant_list {
+ cellpadding:0;
+ cellspacing:0;
+}
+table.variant_list th {
+    background: none repeat scroll 0 0 #F2F2F2;
+    border-bottom: 1px solid #DDDDDD;
+    color: #333333;
+    font-size: 14px;
+    padding: 2px 5px;
+    text-align: left;
+    text-shadow: 0 1px 1px #FFFFFF;
+    vertical-align:middle;
+}
+
+table.variant_list tr {
+    font-size: 12px;
+    padding: 2px 5px;
+    text-align: left;
+    font-weight:bold;
+}
+
+table.variant_list tr.row-even td {
+   background: none repeat scroll 0 0 #FFFFFF;!important;
+}
+
+table.variant_list tr.row-odd td {
+  background: none repeat scroll 0 0 #F5F5F5;!important;
+}
+
+
+table.variant_list .checkbox_cell {
+ vertical-align: middle;
+ width: 5px;
+}   
+
+
+form.variant .variant_fields  {
+    float: left;!important;
+    clear: none;!important;
+    font-size: 14px;
+    margin: 10px 20px 0 0;
+    width: 175px;
+    padding-left:20px;
+}
+.variant_div {
+    background: none repeat scroll 0 0 #F7F7F7;
+    border: 1px solid #DDDDDD;
+    margin: 20px 0;
+}
+
+.variant_div tr.divider td {
+   border-top: 1px dashed #CCCCCC;
+   border-bottom: 1px solid #CCCCCC;
+}
+
+table.secondary-variant-options {
+  width:auto;!important;
+  margin-left:0;!important;
+  padding-left:10px;!important;
+}
+
+table.secondary-variant-options tr td.right{
+  text-align:right;
+}
+.group-actions {
+ background: -moz-linear-gradient(center top , #F0F0F0 0%, #E9E9E9 100%) repeat scroll 0 0 transparent;
+    border-top: 1px solid #FAFAFA;
+    display: block;
+    margin: 10px 0 0;
+    padding: 10px;
+    position: relative;
+    vertical-align: middle;
+}  
+
+.note, .hint {
+    color: #777777;
+    font-size: 11px;
+    font-weight: normal;
+}  
+.highlight-alt {
+background-color: #FFFFE0 !important;
+}
+
+/********************************* Style for variant list ends here ********************************************/
+
+
+/******************************** Style for theme settings page ************************************************/
+
+.section-header {
+    background: none repeat scroll 0 0 #EEEEEE !important;
+    border-bottom: 1px solid #CCCCCC !important;
+    color: #333333 !important;
+    font-size: 12px !important;
+    font-weight: bold;
+    margin-bottom: 1px;
+    padding: 5px 5px 5px 10px !important;
+}
+
+#ThemeAdminSettingsForm {
+  margin-bottom:0px;
+  padding-bottom:0px;
+}
+
+.collapsable-container {
+  margin-bottom:0px;
+  padding-bottom:0px;
+  padding-top:0px;
+}
+
+.collapsable-container fieldset {
+  margin-bottom:0px;
+}
+
+h3.collapsed{
+/*background-image: url("../img/admin/icons/arrow-right.gif") !important;*/
+background-image: url("../img/admin/arrow.png")  !important; 
+background-repeat:no-repeat !important; 
+/*background-position:right top !important; */
+background-position:99.9% 10% !important;
+}
+/****************************** styele for theme settings page ends here **************************************/

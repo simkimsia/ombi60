@@ -1,0 +1,44 @@
+/* CSS Document */
+table.plans tr td.standard-price .tagline{padding-bottom:18px;}
+
+table.plans tr td.standard-price {border-top:1px solid #d6f0c2;}
+table.plans tr td.basic-price {border-top:1px solid #FFF;}
+table.plans tr td.business-price {border-top:1px solid #e2f7ff;}
+
+table.plans tr td.starter-price .month {margin-top:10px;margin-left:105px;}
+table.plans tr td.basic-price .month {margin-top:10px;margin-left:110px;}
+table.plans tr td.standard-price .month {padding-top:28px;margin-left:140px;}
+table.plans tr td.business-price .month {margin-top:10px;margin-left:136px;}
+
+.signup a {font-weight:normal;letter-spacing:0;}
+.standard-signup a {font-weight:normal;letter-spacing:-1.5px;}
+
+table.plans tr td.starter-price {
+        *padding-bottom:35px;
+    }
+    table.plans tr td.standard-price {
+        *padding-bottom:35px;
+    }
+    table.plans tr td.business-price {
+        *padding-bottom:35px;
+    }
+    table.plans tr td.basic-price {
+	*padding-bottom:35px;
+    }
+table.plans tr td.starter-price .month {*padding-top:33px;}
+table.plans tr td.basic-price .month {*padding-top:33px;}
+table.plans tr td.standard-price .month {*padding-top:70px;}
+table.plans tr td.business-price .month {*padding-top:33px;}
+
+table.plans tr td.plan-starter {*padding-left:30px;}
+table.plans tr td.plan-basic {*padding-left:45px;}
+table.plans tr td.plan-standard {*padding-left:30px;}
+table.plans tr td.plan-business {*padding-left:40px;}
+
+table.plans tr td.standard-price {*display:block;*background-color:#99da66;*color:#FFF;*border-top:0px;*overflow:visible;*min-width:205px;*min-height:182px;*position:relative; *margin-top:-80px;}
+
+table.plans tr td.standard-price .tagline{*padding:0px;*margin:0;*margin-top:-20px;*letter-spacing:0;}
+
+h2 {*position:relative;*margin-bottom: 1px;*border-collapse:collapse; }
+
+.col-5 .features a {font-size:19px;}

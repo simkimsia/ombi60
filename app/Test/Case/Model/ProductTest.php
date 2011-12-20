@@ -84,12 +84,12 @@ class ProductTestCase extends CakeTestCase {
 	* @return void
 	*
 	**/
-	private function checkProductResult($resultProduct, $id, $visible = true) {
+	private function checkProductResult($resultProduct, $id, $visible = true, $optionsIncluded = true) {
 		if ($id == 2) {
 			$expectedProduct = array(
 				'Product' => array(
-					'id' => 2,
-					'shop_id' => 2,
+					'id' => '2',
+					'shop_id' => '2',
 					'title' => 'Dummy Product',
 		            'code' => '',
 		            'description' => '',
@@ -97,12 +97,12 @@ class ProductTestCase extends CakeTestCase {
 		            'created' => '2011-09-28 17:06:24',
 		            'modified' => '2011-09-28 17:06:24',
 		            'visible' => $visible,
-		            'weight' => 7000,
+		            'weight' => '7000',
 		            'currency' => 'SGD',
 		            'shipping_required' => true,
-		            'vendor_id' => 1,
+		            'vendor_id' => '1',
 		            'handle' => 'dummy-product',
-		            'product_type_id' => 1,
+		            'product_type_id' => '1',
 		            'url' => '/products/dummy-product',
 		            'displayed_weight' => '7.0',
 					'options' => array(
@@ -178,6 +178,10 @@ class ProductTestCase extends CakeTestCase {
 
 			unset($resultProduct[$field]);
 			unset($expectedProduct[$field]);
+		}
+		
+		if (!$optionsIncluded) {
+			unset($expectedProduct['options']);
 		}
 	
 		$this->assertEquals($expectedProduct, $resultProduct);
@@ -986,6 +990,18 @@ class ProductTestCase extends CakeTestCase {
 		$this->assertEquals(1, $allCountOf2);
 		
 
+	}
+	
+	public function testGetAllVisibleByShopShouldWork() {
+		// GIVEN we want to use shop 2
+		$shop_id = 2;
+		
+		// WHEN we run the function
+		$result = $this->Product->getAllVisibleByShopId($shop_id);
+		
+		// THEN we should match the following data because we get in CREATED DESC order
+		$this->checkProductResult($result[1], 2, true, false);
+		$this->checkProductResult($result[0], 3, true, false);
 	}
 
 }
