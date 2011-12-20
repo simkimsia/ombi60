@@ -91,3 +91,6 @@
 [submodule "app/Plugin/TwigView"]
 	path = app/Plugin/TwigView
 	url = git@github.com:simkimsia/TwigViewTemporary.git
+[submodule "themes/Vendor/phpThumb"]
+	path = themes/Vendor/phpThumb
+	url = git@github.com:simkimsia/phpThumb-for-cakephp-2.0.git
