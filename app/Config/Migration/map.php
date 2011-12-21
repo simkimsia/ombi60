@@ -8,5 +8,7 @@ $map = array(
 		'003_add_custom_column_shop_id_to_logs_table' => 'M4ee9ce7af3b4430e99fb53d61507707a'),
 	4 => array(
 		'004_add_custom_column_display_for_to_logs_table' => 'M4ee9e7f070504201a7c156a91507707a'),
+	5 => array(
+		'005_add_phone_to_addresses_table' => 'M4ef1d82e964043c4a92cf2ea1507707a'),
 );
 ?>
