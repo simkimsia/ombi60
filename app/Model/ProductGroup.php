@@ -414,6 +414,15 @@ class ProductGroup extends AppModel {
 		$finalCollections = Set::combine($rawCollections, '{n}.ProductGroup.id', '{n}');
 		
 		$customCollectionCalledAll = Set::extract('/ProductGroup[handle=all]', $rawCollections);
+		
+		// retrieve the vendor_count and the visible_product_count
+		$this->Shop->recursive = -1;
+		$updatedShopSetting = $this->Shop->findById($shopId, array(
+			'visible_product_count',
+			'vendor_count'
+		));
+		
+		
 
 		// since no custom collection set aside for collections.all, we will auto create 1
 		if (empty($customCollectionCalledAll)) {
@@ -422,8 +431,8 @@ class ProductGroup extends AppModel {
 				'description'			=> 'All Products',
 			  	'handle' 				=> 'all',
 				'url'    				=> '/collections/all',
-				'visible_product_count' => Shop::get('Shop.visible_product_count'),		 
-				'vendor_count'			=> Shop::get('Shop.vendor_count')
+				'visible_product_count' => $updatedShopSetting['Shop']['visible_product_count'],
+				'vendor_count'			=> $updatedShopSetting['Shop']['vendor_count']
 			));
 
 			$finalCollections[0] = $collectionCalledAll;
