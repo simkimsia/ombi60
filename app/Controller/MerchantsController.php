@@ -90,12 +90,15 @@ class MerchantsController extends AppController {
 
 		// to retrieve the shop id based on the url
 		// set inside the hidden value of the login form
-		$this->set('shop_id', Shop::get('Shop.id'));
+		$shop_id = Shop::get('Shop.id');
+		$this->set('shop_id', $shop_id);
 
 		if ($this->request->is('post')) {
+			
+			$validMerchant = ($this->Merchant->checkMerchantForLogin($shop_id, $this->request->data['User']['email'], $this->request->data['User']['password']));
 
-			if ($this->Auth->login() &&$this->Auth->user()) {
-
+			if ($validMerchant && $this->Auth->login() &&$this->Auth->user()) {
+				
 				// this code is for the remember me when Merchant first logs in and chooses the remember me
 				if (!empty($this->request->data) && $this->request->data['User']['remember_me']) {
 					$cookie = array('email'    => $this->request->data['User']['email'],
@@ -110,6 +113,8 @@ class MerchantsController extends AppController {
 
 				$this->redirect($this->Auth->redirect());
 			}
+			
+			$this->Auth->loginError = 'Email or password wrong!';
 		}
 		
 		if (empty($this->request->data)) {
