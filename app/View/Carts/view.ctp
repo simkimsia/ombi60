@@ -93,6 +93,10 @@
         echo "<div class='clear'></div>";
         echo $this->Form->input('BillingAddress.0.country', array('type' => 'select', 'options' => $countries, 'div' => FALSE, 'style' => "width: 250px;", 'empty' => '-----------'));
         echo "<div class='clear'></div>";
+
+		echo $this->Form->input('BillingAddress.0.phone', array('div' => FALSE));
+        echo "<div class='clear'></div>";
+
         echo $this->Form->input('BillingAddress.0.type', array('type' => 'hidden', 'value' => BILLING, 'div' => FALSE));
         echo "<div class='clear'></div>";
         echo $this->Form->checkbox('DeliveryAddress.same', array('checked'=>true, ));
@@ -141,6 +145,10 @@
         echo "<div class='clear'></div>";
         echo $this->Form->input('DeliveryAddress.0.country', array('type' => 'select', 'options' => $countries, 'div' => FALSE, 'style' => "width: 250px;", 'empty' => '-----------'));
         echo "<div class='clear'></div>";
+
+		echo $this->Form->input('DeliveryAddress.0.phone', array('div' => FALSE));
+        echo "<div class='clear'></div>";
+
         echo $this->Form->input('DeliveryAddress.0.type', array('type'=>'hidden', 'value'=>BILLING));
         ?>
         </div>
@@ -253,6 +261,7 @@ echo $this->element('return_to_store');
 		$(preFieldId+"City").val(addresses[id][model]['city']);
 		$(preFieldId+"Region").val(addresses[id][model]['region']);
 		$(preFieldId+"Country").val(addresses[id][model]['country']);
+		$(preFieldId+"Phone").val(addresses[id][model]['phone']);
 		
 	}
 </script>
