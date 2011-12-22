@@ -1586,16 +1586,17 @@ class Product extends AppModel {
 		}
 		
 
+		// set to limit = 30
 		$getAllVisibleProducts = array(
-			'conditions' => array(
-				'Product.shop_id' => $shop_id
-			), 
 			'limit' => $limit
 		);
 			
 		
 		$productPaginate 		= $this->ProductsInGroup->ProductGroup->prepCommonProductPaginate();
 		$getAllVisibleProducts 	= array_merge($getAllVisibleProducts, $productPaginate);
+		
+		// set the shop_id
+		$getAllVisibleProducts['conditions']['AND']['Product.shop_id'] = $shop_id;
 		
 		$rawProducts 	= $this->find('all', $getAllVisibleProducts);
 		
