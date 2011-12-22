@@ -739,6 +739,11 @@ class OrdersController extends AppController {
 		$this->set(compact('link'));
 		$order = $this->Order->find('first', array('conditions' => array('Order.id' => $order_uuid)));		
 		if ($this->Order->completedCheckout($order_uuid)) {
+			
+			$mailData = array(
+				'action' => 'checkout'
+			);
+			
 			$this->Order->sendNotification('checkout', $order);
 			$this->render('success');
 		} else {

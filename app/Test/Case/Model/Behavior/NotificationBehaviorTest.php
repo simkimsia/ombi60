@@ -36,12 +36,21 @@ class NotificationBehaviorTestCase extends CakeTestCase {
  */
 	public function testSendNotification() {
 		$order = array('Order' => array('order_no' => '00001'));
-		$result = $this->Notification->sendNotification(null, 'checkout', $order, 'test');
+		
+		$mailData = array(
+			'action' => 'checkout'
+		);
+		
+		$result = $this->Notification->sendNotification(null, $mailData, $order, 'test');
 		$this->assertTrue(!empty($result['headers']));
 		$this->assertTrue(!empty($result['message']));
 		
+		$mailData = array(
+			'action' => 'another_notification'
+		);
+		
 		//Testing notification not implemented
-		$result = $this->Notification->sendNotification(null, 'another_notification', $order, 'test');
+		$result = $this->Notification->sendNotification(null, $mailData, $order, 'test');
 		$this->assertFalse($result);
 	}
 	
@@ -52,7 +61,11 @@ class NotificationBehaviorTestCase extends CakeTestCase {
  */
 	public function testSendNotificationConfigError() {
 		$order = array('Order' => array('order_no' => '00001'));
-		$result = $this->Notification->sendNotification(null, 'checkout', $order, 'test_error');
+		$mailData = array(
+			'action' => 'checkout'
+		);
+		
+		$result = $this->Notification->sendNotification(null, $mailData, $order, 'test_error');
 		$this->fail();
 	}
 
@@ -63,7 +76,12 @@ class NotificationBehaviorTestCase extends CakeTestCase {
  */
 	public function testSendNotificationNoConfig() {
 		$order = array('Order' => array('order_no' => '00001'));
-		$result = $this->Notification->sendNotification(null, 'checkout', $order, 'wrong_config');
+		
+		$mailData = array(
+			'action' => 'checkout'
+		);
+		
+		$result = $this->Notification->sendNotification(null, $mailData, $order, 'wrong_config');
 		$this->fail();
 	}
 
