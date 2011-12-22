@@ -89,7 +89,8 @@ class ProductsController extends AppController {
 		    $this->request->action == 'admin_edit'   ||
 		    $this->request->action == 'admin_add_variant' ||
 		    $this->request->action == 'admin_edit_variant' ||
-		    $this->request->action == 'admin_menu_action'  
+		    $this->request->action == 'admin_menu_action'  ||
+		    $this->request->action == 'admin_product_search' 
 		) {
 			$this->Components->disable('Security');
 		}
@@ -692,7 +693,7 @@ class ProductsController extends AppController {
 		$this->set(compact('products', 'product_group_id'));
 		
 		
-		$this->render('admin_product_search', 'ajax',APP . 'View' . DS . 'Elements' . DS.'/admin_product_search.ctp');
+		$this->render('admin_product_search', 'ajax', APP . 'View' . DS . 'Elements' . DS. 'admin_product_search.ctp');
 	       
 	}//end admin_search()
         

@@ -120,17 +120,26 @@ class ProductGroupsController extends AppController {
 		}
 		
 		
-		$product_group = $this->ProductGroup->read(null, $id);
+		$product_group = $this->ProductGroup->find('first', array(
+			'conditions' => array(
+				'ProductGroup.id' => $id,
+			),
+			'contain' => array('ProductsInGroup')
+		));
 		
 		$group_products = array();
+
 		if (isset($product_group['ProductsInGroup']) && !empty($product_group['ProductsInGroup'])) {
 		    foreach($product_group['ProductsInGroup'] as $val) {
 			$product_in_groups[] = $val['product_id'];
 		    }
 		    
+		/*
 		     $group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
-		}
-   
+		
+   */
+	}
+$group_products = $this->ProductGroup->ProductsInGroup->getProductsWithImagesByGroupId($id);
     
 		$this->set('productGroup', $this->ProductGroup->read(null, $id));
 		$conditions = array('Product.shop_id' => Shop::get('Shop.id'));
@@ -180,9 +189,10 @@ class ProductGroupsController extends AppController {
 					$product_in_groups[] = $val['product_id'];
 				}
 			}
-		 
+			$group_products = $this->ProductGroup->ProductsInGroup->getProductsWithImagesByGroupId($group_id);
+/*
 			$group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
-		
+*/		
 			$product_group_id = $group_id;
 			$this->set(compact('product_group_id','group_products'));             	          
 		      
@@ -191,7 +201,7 @@ class ProductGroupsController extends AppController {
 		} 
 		$this->layout = '';
 		$this->autoRender = false;
-		$this->render('admin_product_group_list', 'ajax',APP . 'View' . DS . 'Elements' . DS.'/admin_product_group_list.ctp');
+		$this->render(DS . 'Elements' . DS . 'admin_product_group_list');
 	   
 	}
 	
@@ -215,9 +225,12 @@ class ProductGroupsController extends AppController {
 					$product_in_groups[] = $val['product_id'];
 				}
 		     
+		
+$group_products = $this->ProductGroup->ProductsInGroup->getProductsWithImagesByGroupId($group_id);
+		/*
 				$group_products = $this->ProductGroup->Shop->Product->find('all', array('conditions' => array('Product.visible' => 1,'Product.id' => $product_in_groups), 'contain' => array('ProductImage')));
-			}
-	      
+			*/
+	      }
 	      
 			$product_group_id = $group_id;
 			$this->set(compact('product_group_id','group_products')); 	         	          
@@ -225,8 +238,7 @@ class ProductGroupsController extends AppController {
 	       
 		$this->layout = '';
 		$this->autoRender = false;
-		$this->render('admin_product_group_list',
-			      'ajax',APP . 'View' . DS . 'Elements' . DS.'/admin_product_group_list.ctp');
+		$this->render(DS . 'Elements' . DS . 'admin_product_group_list');
 	   	    	    
 	}
 	
