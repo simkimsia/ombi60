@@ -1,2 +1,0 @@
-1324032462
-a:2:{i:0;b:0;s:3:"app";a:1:{s:7:"plugins";a:25:{i:0;s:10:"ClearCache";i:1;s:9:"CodeCheck";i:2;s:8:"Copyable";i:3;s:11:"Datasources";i:4;s:8:"DebugKit";i:5;s:6:"Filter";i:6;s:9:"Handleize";i:7;s:8:"Linkable";i:8;s:3:"Log";i:9;s:19:"ManyToManyCountable";i:10;s:13:"MeioDuplicate";i:11;s:10:"MeioUpload";i:12;s:10:"Migrations";i:13;s:9:"Paydollar";i:14;s:8:"Payments";i:15;s:6:"Paypal";i:16;s:9:"Recaptcha";i:17;s:4:"Rest";i:18;s:11:"ThemeFolder";i:19;s:8:"TimeZone";i:20;s:7:"TinyMce";i:21;s:8:"TwigView";i:22;s:9:"Uploadify";i:23;s:10:"UtilityLib";i:24;s:7:"Visible";}}}
