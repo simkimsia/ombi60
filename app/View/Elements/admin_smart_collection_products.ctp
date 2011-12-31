@@ -12,11 +12,11 @@
                   <div class="smart-products-desc">
                     <?php
                     $image = "";
-                    if (!empty($product['ProductImage'])) {
+                    if (!empty($product['CoverImage'])) {
                       $image = "";
                       //print(WWW_ROOT.'uploads/products/thumb/icon/'.$product['ProductImage'][0]['filename']);
-                      if (file_exists(WWW_ROOT.'uploads/products/thumb/icon/'.$product['ProductImage'][0]['filename'])) {
-                        $image = '/uploads/products/thumb/icon/'.$product['ProductImage'][0]['filename'];
+                      if (file_exists(WWW_ROOT.'uploads/products/thumb/icon/'.$product['CoverImage']['filename'])) {
+                        $image = '/uploads/products/thumb/icon/'.$product['CoverImage']['filename'];
                       } else {
                         $image = '/uploads/products/thumb/icon/default-0.jpg';
                       }
@@ -32,9 +32,9 @@
                     ?>
                   </div>
                   <div class="smart-products-desc">
-                      <?php echo $this->Html->link($product['Product']['title'],array('controller' => 'products','action' => 'view',$product['Product']['id'],'admin' => true),array('class' => '')); ?>
+                      <?php echo $this->Html->link($product['title'],array('controller' => 'products','action' => 'view',$product['id'],'admin' => true),array('class' => '')); ?>
                       <?php 
-                        if (0 == $product['Product']['visible']) {
+                        if (0 == $product['visible']) {
                             ?><span style="background: #CCCCCC"><?php echo __('Hidden');    ?></span><?php
                             
                         }        

@@ -152,6 +152,7 @@ class ProductsInGroup extends AppModel {
 						'Product.id', 
 						'Product.title',
 						'Product.code',
+						'Product.visible'
 					)
 				)
 			

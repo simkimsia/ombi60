@@ -60,6 +60,9 @@ class ProductGroupsController extends AppController {
 			$this->Session->setFlash(__('Invalid smart collection'));
 			$this->redirect($this->refer());
 		      }
+		
+			
+		
 		$this->__getSmartCollection($id);
 		$this->set('view', true);
 	}
@@ -321,8 +324,10 @@ $group_products = $this->ProductGroup->ProductsInGroup->getProductsWithImagesByG
 		));
 	    
 		//Get list of all the products
-		$products = $this->ProductGroup->getSmartCollectionProducts($smart_collection); 
-		 
+		//$products = $this->ProductGroup->getSmartCollectionProducts($smart_collection); this is by automated logic
+		
+		$products = $this->ProductGroup->ProductsInGroup->getProductsWithImagesByGroupId($id); // this assumes porducts_in_groups does all the matching
+		
 		$this->set(compact('smart_collection', 'products'));
 		
 		return $smart_collection;
