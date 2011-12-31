@@ -27,7 +27,8 @@ class ProductGroupsController extends AppController {
 	 	// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
 		if ($this->request->action == 'admin_toggle' ||  
-			$this->request->action == 'admin_add_smart' ) {
+			$this->request->action == 'admin_add_smart' ||
+			$this->request->action == 'admin_save_condition' ) {
 			$this->Components->disable('Security');
 		}
 	}
@@ -320,9 +321,10 @@ $group_products = $this->ProductGroup->ProductsInGroup->getProductsWithImagesByG
 			'conditions'=>array(
 				'ProductGroup.id'=>$id, 
 				'ProductGroup.type'=>SMART_COLLECTION
-			)
+			),
+			'contain' => array('SmartCollectionCondition')
 		));
-	    
+	
 		//Get list of all the products
 		//$products = $this->ProductGroup->getSmartCollectionProducts($smart_collection); this is by automated logic
 		
