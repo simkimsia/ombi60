@@ -78,9 +78,10 @@ class ProductsController extends AppController {
 		
 		$this->checkoutLink = Router::url('/', true);
 		
-		if (($this->request->action == 'admin_index')
-		    OR ($this->request->action == 'admin_add')
-		    OR ($this->request->action == 'checkout')
+		if (($this->request->action == 'admin_index') ||
+		 	($this->request->action == 'admin_add') ||
+		    ($this->request->action == 'checkout') ||
+		    ($this->request->action == 'admin_product_search') 
 		    ) {
 			$this->Security->validatePost = false;
 		}
@@ -89,7 +90,8 @@ class ProductsController extends AppController {
 		    $this->request->action == 'admin_edit'   ||
 		    $this->request->action == 'admin_add_variant' ||
 		    $this->request->action == 'admin_edit_variant' ||
-		    $this->request->action == 'admin_menu_action'  
+		    $this->request->action == 'admin_menu_action'  ||
+		    $this->request->action == 'admin_product_search' 
 		) {
 			$this->Components->disable('Security');
 		}
@@ -675,24 +677,22 @@ class ProductsController extends AppController {
 	  
 		if (!empty($this->request->data)) {
 			if (isset($this->request->data['Product']['title'])) {
-				$title = addslashes(trim($this->request->data['Product']['title']));
+				
+				
+				$title = $this->request->data['Product']['title'];
 				$product_group_id = (int)$this->request->data['Product']['product_group_id'];
-				$conditions = array(
-					       'Product.title LIKE "%'.$title.'%"',
-					       'Product.shop_id' => Shop::get('Shop.id'),
-					      );
 				
-				
-				$products = $this->Product->find('all', array('conditions' => $conditions, 'contain' => array('ProductsInGroup', 'ProductImage')));
+				$products = $this->Product->getAllWithImagesByTitleShopId($title, Shop::get('Shop.id'));
+
 			}
 		}
+		
 		$this->autoRender = false;
 		$this->layout = '';
 		$this->ext = '.ctp';
 		$this->set(compact('products', 'product_group_id'));
 		
-		
-		$this->render('admin_product_search', 'ajax',APP . 'View' . DS . 'Elements' . DS.'/admin_product_search.ctp');
+		$this->render(DS . 'Elements' . DS . 'admin_product_search');
 	       
 	}//end admin_search()
         

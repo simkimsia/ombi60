@@ -1586,10 +1586,8 @@ class Product extends AppModel {
 		}
 		
 
+		// set to limit = 30
 		$getAllVisibleProducts = array(
-			'conditions' => array(
-				'Product.shop_id' => $shop_id
-			), 
 			'limit' => $limit
 		);
 			
@@ -1597,10 +1595,133 @@ class Product extends AppModel {
 		$productPaginate 		= $this->ProductsInGroup->ProductGroup->prepCommonProductPaginate();
 		$getAllVisibleProducts 	= array_merge($getAllVisibleProducts, $productPaginate);
 		
+		// set the shop_id
+		$getAllVisibleProducts['conditions']['AND']['Product.shop_id'] = $shop_id;
+		
 		$rawProducts 	= $this->find('all', $getAllVisibleProducts);
 		
 		return $rawProducts;
 	}
 	
+	/**
+	* 
+	* Retrieve Product data and CoverImage data.
+	* Format of array is
+	* array(
+	*		'0' => array(
+	*			'id' => '1'
+	*			'title' => 'Dummy Product',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*		'1' => array(
+	*			'id' => '2'
+	*			'title' => 'Some Product',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*	
+	* )
+	*
+	* @param int $group_id ProductGroup id
+	* @return array Returns minimal Product data and CoverImage data
+	**/
+	public function getAllWithImagesByShopId($shop_id) {
+		
+		$conditions = array(
+			'Product.shop_id' => $shop_id
+		);
+		
+		return $this->getAllWithImagesByConditions($conditions);
+		
+	}
+	
+	/**
+	* 
+	* Retrieve Product data and CoverImage data.
+	* Format of array is
+	* array(
+	*		'0' => array(
+	*			'id' => '1'
+	*			'title' => 'Dummy Product',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*		'1' => array(
+	*			'id' => '2'
+	*			'title' => 'Some Product',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*	
+	* )
+	*
+	* @param int $group_id ProductGroup id
+	* @return array Returns minimal Product data and CoverImage data
+	**/
+	public function getAllWithImagesByTitleShopId($title, $shop_id) {
+		
+		$title = addslashes(trim($title));
+		
+		$conditions = array(
+			'Product.title LIKE "%'.$title.'%"',
+			'Product.shop_id' => $shop_id,
+		);
+		
+		return $this->getAllWithImagesByConditions($conditions);
+		
+	}
+	
+	/**
+	* 
+	* Retrieve Product data and CoverImage data.
+	* Format of array is
+	* array(
+	*		'0' => array(
+	*			'id' => '1'
+	*			'title' => 'Dummy Product',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*		'1' => array(
+	*			'id' => '2'
+	*			'title' => 'Some Product',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*	
+	* )
+	*
+	* @param array $conditions
+	* @return array Returns minimal Product data and CoverImage data
+	**/
+	public function getAllWithImagesByConditions($conditions) {
+		
+		$items = $this->find('all', array(
+			'conditions' => $conditions,
+			'contain' => array(
+				'ProductImage' => array(
+					'conditions' => array(
+						'ProductImage.cover' => 1
+					),
+
+				),
+				'ProductsInGroup'
+			),
+
+			
+		));
+
+		$productsWithCover = array();
+		
+		foreach($items as $item) {
+			// extract the cover image data
+			$cover = $item['ProductImage'][0];
+			// remove cover image from the $item
+			unset($item['ProductImage']);
+			// extract the pure Product data
+			$product = $item['Product'];
+			// set the new Product to include the CoverImage data
+			$product['CoverImage'] = $cover;
+			// put the new Product data into the results array
+			$productsWithCover[] = $product;
+		}
+
+		return $productsWithCover;
+	}
 	
 }//end class

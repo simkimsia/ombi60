@@ -111,5 +111,73 @@ class ProductsInGroup extends AppModel {
 		return $exists;
 
 	}//end checkProductInCollection()
+	
+	/**
+	* 
+	* Retrieve Product data and CoverImage data.
+	* Format of array is
+	* array(
+	*		'0' => array(
+	*			'id' => '1'
+	*			'title' => 'Dummy Product',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*		'1' => array(
+	*			'id' => '2'
+	*			'title' => 'Some Product',
+	*			'CoverImage' => array('dir'=>.., 'filename'=>'...')
+	*		),
+	*	
+	* )
+	*
+	* @param int $group_id ProductGroup id
+	* @return array Returns minimal Product data and CoverImage data
+	**/
+	public function getProductsWithImagesByGroupId($group_id) {
+		
+		$items = $this->find('all', array(
+			'conditions' => array(
+				'ProductsInGroup.product_group_id' => $group_id,
+
+			),
+			'contain' => array(
+				'Product' => array(
+					'ProductImage' => array(
+						'conditions' => array(
+							'ProductImage.cover' => 1
+						),
+
+					),
+					'fields' => array(
+						'Product.id', 
+						'Product.title',
+						'Product.code',
+						'Product.visible'
+					)
+				)
+			
+			),
+			
+		));
+
+		$productsWithCover = array();
+		
+		foreach($items as $item) {
+			// extract the cover image data
+			$cover = $item['Product']['ProductImage'][0];
+			// remove cover image from the $item
+			unset($item['Product']['ProductImage']);
+			// extract the pure Product data
+			$product = $item['Product'];
+			// set the new Product to include the CoverImage data
+			$product['CoverImage'] = $cover;
+			// put the new Product data into the results array
+			$productsWithCover[] = $product;
+		}
+
+		return $productsWithCover;
+	}
+
+	
 
 }//end class

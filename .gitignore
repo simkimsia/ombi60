@@ -9,6 +9,7 @@ tags
 ## Tempoarary files
 mainsite/tmp
 app/tmp
+themes/tmp
 
 ## Other files
 app/webroot/coverage/*

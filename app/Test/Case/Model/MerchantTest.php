@@ -47,6 +47,7 @@ class MerchantTestCase extends CakeTestCase {
 		parent::setUp();
 
 		$this->Merchant = ClassRegistry::init('Merchant');
+		$this->Shop 	= ClassRegistry::init('Shop');
 	}
 
 /**
@@ -56,6 +57,8 @@ class MerchantTestCase extends CakeTestCase {
  */
 	public function tearDown() {
 		unset($this->Merchant);
+		unset($this->Shop);
+		
 		ClassRegistry::flush();
 
 		parent::tearDown();
@@ -239,6 +242,57 @@ class MerchantTestCase extends CakeTestCase {
 		// AND we need to clean up by removing the test folder 3Cover
 		$this->Merchant->Shop->FeaturedSavedTheme->deleteFolder('3Cover');
 	}
+	
+/**
+*
+* checks if the checkMerchantForLogin returns the true if correct shop and login credentials
+*
+* @return void
+**/
+	public function testMerchantLoginShouldReturnTrue() {
+		// GIVEN correct shop and login credentials
+		$cachedShopId = Shop::get('Shop.id');
+		
+		if ($cachedShopId != 2) {
+			$testShop = $this->Shop->getById(2);
+			Shop::store($testShop);
+		}
+		
+		$email		= 'owner@shop001.com';
+		$password	= 'password';
+		
+		// WHEN we run the login
+		$result = $this->Merchant->checkMerchantForLogin(2, $email, $password);
+		
+		// THEN it should be true
+		$this->assertTrue($result);
+		
+	}
+	
+	/**
+	*
+	* checks if the checkMerchantForLogin returns the true if correct shop and login credentials
+	*
+	* @return void
+	**/
+		public function testMerchantLoginShouldReturnFalse() {
+			// GIVEN correct shop and login credentials
+			$cachedShopId = Shop::get('Shop.id');
 
+			if ($cachedShopId != 2) {
+				$testShop = $this->Shop->getById(2);
+				Shop::store($testShop);
+			}
+
+			$email		= 'owner@shop002.com';
+			$password	= 'password';
+
+			// WHEN we run the login
+			$result = $this->Merchant->checkMerchantForLogin(2, $email, $password);
+
+			// THEN it should be true
+			$this->assertFalse($result);
+
+		}
 
 }

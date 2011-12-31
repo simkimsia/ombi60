@@ -41,15 +41,6 @@
  *
  */
 class EmailConfig {
-
-	public $default = array(
-		'host' => 'ssl://smtp.gmail.com',
-      	'port' => 465,
-      	'from' => 'no-reply@ombi60.com',
-      	'username' => 'no-reply@ombi60.com',
-      	'password' => 'password4no-reply',
-      	'transport' => 'Smtp'
-    );
 	
 	public $test = array(
 		'from' => 'test@ombi60.com',
@@ -60,5 +51,36 @@ class EmailConfig {
 		'from' => 'WRONG_FROM',
 		'transport' => 'Debug'
 	);
+	
+	// using gmail as smtp
+	public $gmail = array(
+		'host' => 'ssl://smtp.gmail.com',
+      	'port' => 465,
+      	'from' => 'no-reply@ombi60.com',
+      	'username' => 'no-reply@ombi60.com',
+      	'password' => 'password4no-reply',
+      	'transport' => 'Smtp'
+    );
+	
+	// using sendgrid as smtp
+	public $sendgrid = array(
+		'port'=> 465, 
+		'timeout'=>'30',
+		'host' => 'ssl://smtp.sendgrid.net',
+		'from' => 'no-reply@ombi60.com',
+		'username'=>'no-reply@ombi60.com',
+		'password'=>'password4sendgrid',
+		//'client' => 'www.openmybusinessin60seconds.com',
+		'transport' => 'Smtp'
+	);
+	
+	public $default = array(
+		'host' => 'ssl://smtp.gmail.com',
+      	'port' => 465,
+      	'from' => 'no-reply@ombi60.com',
+      	'username' => 'no-reply@ombi60.com',
+      	'password' => 'password4no-reply',
+      	'transport' => 'Smtp'
+    );
 
 }

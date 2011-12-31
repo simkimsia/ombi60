@@ -68,7 +68,7 @@ class Address extends AppModel {
 	*
 	* Get id for given data
 	*
-	* @param array $data Array containing address, city, region, zip_code, country, customer_id, type, full_name
+	* @param array $data Array containing address, city, region, zip_code, country, customer_id, type, full_name, phone
 	* @return integer Id of address
 	**/
 	public function getIdByData($data) {
@@ -81,6 +81,7 @@ class Address extends AppModel {
 			'customer_id' => '0',
 			'type' => '0',
 			'full_name' => '',
+			'phone' => ''
 		);
 		
 		$conditions = array_merge($defaults, $data);
