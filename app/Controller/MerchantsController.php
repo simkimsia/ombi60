@@ -85,13 +85,21 @@ class MerchantsController extends AppController {
 
 	public function admin_login() {
 
+		$test = true;
+//		$test = false;
+		
+		if ($test) {
+			$this->layout = 'admin_terminator_login';
+			$this->render('admin_login_terminator');
+			
+		}
+
 		$this->set('title_for_layout', __('Merchant Login'));
 
 
 		// to retrieve the shop id based on the url
 		// set inside the hidden value of the login form
 		$shop_id = Shop::get('Shop.id');
-		$this->set('shop_id', $shop_id);
 
 		if ($this->request->is('post')) {
 			

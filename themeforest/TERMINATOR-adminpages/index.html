@@ -1,0 +1,1144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="description"  content=""/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="ALL,FOLLOW"/>
+<meta name="Author" content="AIT"/>
+<meta http-equiv="imagetoolbar" content="no"/>
+<title>TERMINATOR: Dashboard</title>
+
+<link rel="stylesheet" href="css/reset.css" type="text/css"/>
+<link rel="stylesheet" href="css/screen.css" type="text/css"/>
+<link rel="stylesheet" href="css/fancybox.css" type="text/css"/>
+<link rel="stylesheet" href="css/jquery.wysiwyg.css" type="text/css"/>
+<link rel="stylesheet" href="css/jquery.ui.css" type="text/css"/>
+<link rel="stylesheet" href="css/visualize.css" type="text/css"/>
+<link rel="stylesheet" href="css/visualize-light.css" type="text/css"/>
+<!--[if IE 7]>
+	<link rel="stylesheet" type="text/css" href="css/ie7.css" />
+<![endif]-->	
+</head>
+
+<body>
+
+<div class="pagetop">
+	<div class="head pagesize"> <!-- *** head layout *** -->
+		<div class="head_top">
+			<div class="topbuts">
+				<ul class="clear">
+				<li><a href="#">View Site</a></li>
+				<li><a href="#">Messages</a></li>
+				<li><a href="#">Settings</a></li>
+				<li><a href="login.html" class="red">Logout</a></li>
+				</ul>
+				
+				<div class="user clear">
+					<img src="images/avatar.jpg" class="avatar" alt="" />
+					<span class="user-detail">
+						<span class="name">Welcome Arnold</span>
+						<span class="text">Logged as admin</span>
+						<span class="text">You have <a href="#">5 messages</a></span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="logo clear">
+			<a href="index.html" title="View dashboard">
+				<img src="images/logo_earth.png" alt="" class="picture" />
+				<span class="textlogo">
+					<span class="title">TERMINATOR</span>
+					<span class="text">admin template</span>
+				</span>
+			</a>
+			</div>
+		</div>
+		
+		<div class="menu">
+			<ul class="clear">
+			<li class="active"><a href="index.html">Dashboard</a></li>
+			<li><a href="articles.html">Articles</a></li>
+			<li>
+				<a href="styles.html">Styles</a>
+				<ul>
+					<li><a href="boxes.html">Content Boxes</a></li>
+					<li><a href="columns.html">Columns</a>
+						<ul>
+							<li><a href="columns1.html">Boxes in Columns</a></li>
+							<li><a href="columns2.html">Columns in Boxes</a></li>
+						</ul>
+					</li>
+					<li><a href="forms.html">Forms</a></li>
+				</ul>				
+			</li>
+			<li><a href="tables.html">Tables</a></li>
+			<li><a href="charts.html">Charts</a></li>
+			<li><a href="gallery.html">Image Gallery</a></li>
+			<li><a href="settings.html">Settings</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="breadcrumb">
+	<div class="bread-links pagesize">
+		<ul class="clear">
+		<li class="first">You are here:</li>
+		<li><a href="#">Dashboard</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="main pagesize"> <!-- *** mainpage layout *** -->
+	<div class="main-wrap">
+		<div class="page clear">
+			
+			<!-- ICONBAR -->
+			<div class="content-box clear">
+			<div class="box-body iconbar">
+				<div class="box-wrap">
+				<div class="main-icons" id="iconbar">
+					<ul class="clear">
+		                        <li><a href="#"><img src="images/ico_folder_64.png" class="icon" alt="" /><span class="text">Create an Article</span></a></li>
+		                        <li><a href="#"><img src="images/ico_page_64.png" class="icon" alt="" /><span class="text">Add Page</span></a></li>
+                		        <li><a href="#"><img src="images/ico_picture_64.png" class="icon" alt="" /><span class="text">Add Picture</span></a></li>
+		                        <li><a href="#"><img src="images/ico_clock_64.png" class="icon" alt="" /><span class="text">Add Event</span></a></li>
+                		        <li><a href="#"><img src="images/ico_users_64.png" class="icon" alt="" /><span class="text">Users</span></a></li>
+		                        <li><a href="#"><img src="images/ico_settings_64.png" class="icon" alt="" /><span class="text">Settings</span></a></li>
+		                        <li><a href="#modal" class="modal-link"><img src="images/ico_chat_64.png" class="icon" alt="" /><span class="text">Open Modal</span></a></li>
+                		        <li><a href="#"><img src="images/ico_folder_64.png" class="icon" alt="" /><span class="text">Create an Article</span></a></li>
+                        		<li class="active"><a href="#"><img src="images/ico_page_64.png" class="icon" alt="" /><span class="text">Active icon</span></a></li>
+		                        <li><a href="#"><img src="images/ico_picture_64.png" class="icon" alt="" /><span class="text">Add Picture</span></a></li>
+                		        <li><a href="#"><img src="images/ico_clock_64.png" class="icon" alt="" /><span class="text">Add Event</span></a></li>
+					</ul>
+				</div>
+				</div>
+			</div>
+			</div>
+			
+			<!-- MODAL WINDOW -->
+			<div id="modal" class="modal-window modal-600">
+				
+				<div class="notification note-info">
+					<a href="#" class="close" title="Close notification"><span>close</span></a>
+					<span class="icon"></span>
+					<p><strong>Information:</strong> The examples of modal windows are set on the LABELS in H1 tags.</p>
+				</div>
+				
+				<h2>Modal Window : size 600</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tristique, lorem id hendrerit sodales, nisl felis sollicitudin lacus, et facilisis felis quam at quam. Nullam vel nunc at sapien sagittis feugiat. Vestibulum est eros, condimentum ac sodales vel, iaculis vitae neque.</p>
+				<h4 class="bt-space10">You can set the 4 types of modal:</h4>
+				<div class="clear">
+					<div class="half fl">
+					<div class="mark bt-space5">
+						<ul class="standard clean-padding bt-space10">
+						<li><span class="fr">class "modal-400"</span> <span><strong>Size 400px</strong></span></li>
+						<li><span class="fr">class "modal-600"</span> <span><strong>Size 600px</strong></span></li>
+						<li><span class="fr">class "modal-800"</span> <span><strong>Size 800px</strong></span></li>
+						<li><span class="fr">no other class</span> <span><strong>Size undefined (auto)</strong></span></li>
+						</ul>
+					</div>
+					</div>
+					<p class="half fr"><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tristique, lorem id hendrerit sodales, nisl felis sollicitudin lacus, et facilisis felis quam at quam.</small></p>
+				</div>
+			</div>
+			
+			<!-- CONTENT BOXES -->
+			
+			<div class="columns clear bt-space20">
+				<!-- DASHBOARD - LEFT COLUMN -->
+				<div class="col2-3">
+						
+					<h1>Dashboard Example <a href="#modal-label" class="label modal-link">INFO</a></h1>
+					<p>Nam posuere, felis sed feugiat viverra, quam felis dapibus eros, vitae pulvinar nisl quam ut eros. Curabitur eget fringilla mi. Vivamus sed justo sit amet elit malesuada bibendum. Pellentesque consectetur blandit nisl, a eleifend arcu adipiscing eu. In et neque nec urna mollis fermentum gravida at turpis. </p>
+
+					<!-- MODAL WINDOW -->
+					<div id="modal-label" class="modal-window modal-400">
+						<div class="notification note-attention">
+							<a href="#" class="close" title="Close notification"><span>close</span></a>
+							<span class="icon"></span>
+							<p><strong>Attention:</strong> More about settings of modal windows is described in Dashboard - Open Modal icon.</p>
+						</div>
+						<h2>Modal Window : size 400</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tristique, lorem id hendrerit sodales, nisl felis sollicitudin lacus, et facilisis felis quam at quam. Nullam vel nunc at sapien sagittis feugiat. Vestibulum est eros, condimentum ac sodales vel, iaculis vitae neque.</p>
+						<p>Nam nisl odio, scelerisque non venenatis quis, venenatis a leo. Cras non vehicula justo. Nam vel arcu sem. Suspendisse quam enim, dictum quis lacinia sed, lobortis eget libero. Suspendisse potenti. Suspendisse et ante vitae turpis vestibulum fermentum nec nec elit. Suspendisse ullamcorper lacus in arcu mollis fringilla porta mi placerat. Ut at elit non diam tristique scelerisque. </p>
+					</div>
+					
+					<div class="columns clear">
+						<div class="col1-2">
+						
+							<!-- OVERVIEW - BASIC TABLE -->
+							<h2>Overview</h2>
+							<table class="basic" cellspacing="0">
+							<tbody>
+							<tr>
+								<td><img src="images/ball_green_16.png" class="block" alt="" /></td>
+								<th class="full">Visits Today</th>
+								<td class="value right">127</td>
+								<td><a href="#">more</a></td>
+							</tr>
+							<tr>
+								<td><img src="images/ball_yellow_16.png" class="block" alt="" /></td>
+								<th>Traffic Today</th>
+								<td class="value right">1.542</td>
+								<td><a href="#">more</a></td>
+							</tr>
+							<tr>
+								<td><img src="images/ball_purple_16.png" class="block" alt="" /></td>
+								<th>Free Space</th>
+								<td class="value right">1.542</td>
+								<td><a href="#">more</a></td>
+							</tr>
+							<tr>
+								<td><img src="images/ball_black_16.png" class="block" alt="" /></td>
+								<th>Total Posts</th>
+								<td class="value right">34</td>
+								<td><a href="#">more</a></td>
+							</tr>
+							<tr>
+								<td><img src="images/ball_blue_16.png" class="block" alt="" /></td>
+								<th>Total Comments</th>
+								<td class="value right">218</td>
+								<td><a href="#">more</a></td>
+							</tr>
+							<tr>
+								<td><img src="images/ball_red_16.png" class="block" alt="" /></td>
+								<th>Aproval: Comments</th>
+								<td class="value right">11</td>
+								<td><a href="#">more</a></td>
+							</tr>
+							</tbody>
+							</table>
+						
+						</div>
+						<div class="col1-2 lastcol">
+						
+							<!-- MESSAGES - BASIC TABLE -->
+							<h2>Last Messages</h2>
+							<table class="basic" cellspacing="0">
+							<tbody>
+							<tr>
+								<th>28/07/10</th>
+								<td class="full"><a href="#">Lorem ipsum dolor sit amet</a></td>
+								<td><img src="images/ball_grey_16.png" class="block cr-help" alt="" title="Offline User"/></td>
+								<td>Peter</td>
+							</tr>
+							<tr>
+								<th>25/07/10</th>
+								<td class="full"><a href="#">Consectetur adipiscing</a></td>
+								<td><img src="images/ball_green_16.png" class="block cr-help" alt="" title="Online User"/></td>
+								<td>Carla</td>
+							</tr>
+							<tr>
+								<th>25/07/10</th>
+								<td class="full"><a href="#">Sed in porta lectus maecenas</a></td>
+								<td><img src="images/ball_grey_16.png" class="block cr-help" alt="" title="Offline User"/></td>
+								<td>Bruce</td>
+							</tr>
+							<tr>
+								<th>19/07/10</th>
+								<td class="full"><a href="#">Dignissim enim</a></td>
+								<td><img src="images/ball_grey_16.png" class="block cr-help" alt="" title="Offline User"/></td>
+								<td>Jane</td>
+							</tr>
+							<tr>
+								<th>18/07/10</th>
+								<td class="full"><a href="#">Maecenas id velit et elit</a></td>
+								<td><img src="images/ball_grey_16.png" class="block cr-help" alt="" title="Offline User"/></td>
+								<td>Killer</td>
+							</tr>
+							<tr>
+								<th>09/07/10</th>
+								<td class="full"><a href="#">Duis nec rutrum lorem</a></td>
+								<td><img src="images/ball_green_16.png" class="block cr-help" alt="" title="Online User"/></td>
+								<td>Asterix</td>
+							</tr>
+							</tbody>
+							</table>
+							
+						</div>
+					</div>
+					
+					<div class="columns clear bt-space15">
+						<div class="col1-2 online-user">
+						
+							<!-- ONLINE USERS BOXES -->
+							<h2>Online Users</h2>
+							<div class="mark clear">
+								<div class="avatar">
+									<img src="images/avatar.jpg" alt="" />
+									<p class="status admin">admin</p>
+								</div>
+								<div class="desc">
+									<ul class="links">
+										<li><a href="#" class="graph" title="view stats">stats </a></li>
+										<li><a href="#" class="cart" title="view shopping cart">shopping cart</a></li>
+										<li><a href="#" class="hist" title="view user history">history</a></li>
+										<li><a href="#" class="mesg" title="send message">send message</a></li>
+										<li><span class="male" title="male">male</span></li>
+									</ul>
+									<h4><strong>Terminator</strong></h4>
+									<p><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus.</small></p>
+									<p class="info"><small>registered: 01/05/2009</small></p>
+								</div>
+							</div>
+							<div class="mark clear">
+								<div class="avatar">
+									<img src="images/avatar.jpg" alt="" />
+									<p class="status">user</p>
+								</div>
+								<div class="desc">
+									<ul class="links">
+										<li><a href="#" class="graph" title="view stats">stats </a></li>
+										<li><a href="#" class="cart" title="view shopping cart">shopping cart</a></li>
+										<li><a href="#" class="hist" title="view user history">history</a></li>
+										<li><a href="#" class="mesg" title="send message">send message</a></li>
+										<li><span class="female" title="female">female</span></li>
+									</ul>
+									<h4><strong>Carla</strong></h4>
+									<p><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus.</small></p>
+									<p class="info"><small>registered: 12/10/2009</small></p>
+								</div>
+							</div>
+							<div class="mark clear">
+								<div class="avatar">
+									<img src="images/avatar.jpg" alt="" />
+									<p class="status">user</p>
+								</div>
+								<div class="desc">
+									<ul class="links">
+										<li><a href="#" class="graph" title="view stats">stats </a></li>
+										<li><a href="#" class="cart" title="view shopping cart">shopping cart</a></li>
+										<li><a href="#" class="hist" title="view user history">history</a></li>
+										<li><a href="#" class="mesg" title="send message">send message</a></li>
+										<li><span class="male" title="male">male</span></li>
+									</ul>
+									<h4><strong>Asterix</strong></h4>
+									<p><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus.</small></p>
+									<p class="info"><small>registered: 24/05/2010</small></p>
+								</div>
+							</div>
+							
+						</div>
+						
+						<div class="col1-2 lastcol">
+						
+							<!-- USEFUL LINKS WITH ICONS -->
+							<h2>Useful Links</h2>
+							<div class="mark icon-links">
+								<ul>
+								<li class="clear">
+									<a href="#"><img src="images/ico_manage-users_48.png" class="icon" alt="" /><span>Manage Users &amp; Rights</span></a>
+									<p><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus.</small></p>
+								</li>
+								<li class="clear">
+									<a href="#"><img src="images/ico_book_48.png" class="icon" alt="" /><span>View Visit Book</span></a>
+									<p><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus.</small></p>
+								</li>
+								<li class="lastlnk clear">
+									<a href="#"><img src="images/ico_administration_48.png" class="icon" alt="" /><span>Administration of Orders</span></a>
+									<p><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus.</small></p>
+								</li>
+								</ul>
+							</div>
+							<p><small><strong>Note:</strong> You can use your own icons because the gradient background is included separately of the icon.</small></p> 
+						
+						</div>
+					</div>
+					
+					<div class="rule2"></div>
+					
+					<!-- BUTTONS -->
+					<p class="clear">
+						<a href="#" class="button green fl-space">Green Button</a>
+						<a href="#" class="button red fl-space">Red Button</a>
+						<a href="#" class="button blue fl-space">Blue Button</a>
+						<a href="#" class="button grey fl-space">Grey Button</a>
+						<a href="#" class="button fr">Black Button on Right Side</a>
+					</p>
+
+					<div class="rule"></div>
+
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+
+				</div>
+				
+				<!-- DASHBOARD - RIGHT COLUMN -->
+				<div class="col1-3 lastcol">
+				
+					<!-- DASHBOARD CHART -->
+					<div class="dashboard_chart">
+						<div class="chart-wrap">
+								<table class="visualize_dashboard">
+									<caption>Dashboard Chart Example</caption>
+									<thead>
+										<tr>
+											<td></td>
+											<th scope="col">March</th>
+											<th scope="col">April</th>
+											<th scope="col">May</th>
+											<th scope="col">June</th>
+											<th scope="col">July</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row">Visits</th>
+											<td>175</td>
+											<td>145</td>
+											<td>212</td>
+											<td>175</td>
+											<td>182</td>
+										</tr>
+										<tr>
+											<th scope="row">Sales</th>
+											<td>94</td>
+											<td>53</td>
+											<td>124</td>
+											<td>92</td>
+											<td>105</td>
+										</tr>
+									</tbody>
+								</table>				
+						</div><!-- /.chart-wrap -->
+					</div><!-- /.dashboard-chart -->
+					
+					<!-- CONTENT BOX - EVENTS-->
+					<div class="content-box bt-space10 events">
+					<div class="box-body">
+						<div class="box-header box-slide-head">
+							<span class="slide-but">open/close</span>
+							<ul class="tabs clear">
+								<li><a href="#event-list">List</a></li>
+								<li><a href="#event-new">New</a></li>
+							</ul>
+							<h2>Events</h2>
+						</div>
+						<div class="box-wrap clear  box-slide-body">
+							
+							<!-- TAB - EVENT LIST -->
+							<div id="event-list" class="event-list">
+								<ul class="clear">
+								<li>
+									<span class="event-list-title clear box-slide-head">
+										<span class="priority-high" title="High priority">High</span>
+										<a href="#" class="event-edit clickable" title="Edit event">edit</a>
+										<span class="event-date">30/07/10</span>
+									 	<a href="#" class="event-link" title="Read more">Lorem ipsum</a> 
+									</span>
+								    	<p class="event-note box-slide-body">Nam posuere, felis sed feugiat viverra, quam felis dapibus eros, vitae pulvinar nisl quam ut eros. Curabitur eget fringilla mi.</p>
+								</li>
+
+								<li>
+									<span class="event-list-title clear box-slide-head">
+										<span class="priority-normal" title="Normal priority">Normal</span>
+										<a href="#" class="event-edit clickable" title="Edit event">edit</a>
+										<span class="event-date">28/07/10</span>
+									 	<a href="#" class="event-link" title="Read more">Porta lectus maecenas</a> 
+									</span>
+								    	<p class="event-note box-slide-body hidden">Nam posuere, felis sed feugiat viverra, quam felis dapibus eros, vitae pulvinar nisl quam ut eros. Curabitur eget fringilla mi.</p>
+								</li>
+								<li>
+									<span class="event-list-title clear box-slide-head">
+										<span class="priority-low" title="Low priority">Low</span>
+										<a href="#" class="event-edit clickable" title="Edit event">edit</a>
+										<span class="event-date">27/07/10</span>
+									 	<a href="#" class="event-link" title="Read more">Excepteur occaecat</a> 
+									</span>
+								    	<p class="event-note box-slide-body hidden">Nam posuere, felis sed feugiat viverra, quam felis dapibus eros, vitae pulvinar nisl quam ut eros. Curabitur eget fringilla mi.</p>
+								</li>
+								<li>
+									<span class="event-list-title clear box-slide-head">
+										<span class="priority-low" title="Low priority">Low</span>
+										<a href="#" class="event-edit clickable" title="Edit event">edit</a>
+										<span class="event-date">27/07/10</span>
+									 	<a href="#" class="event-link" title="Read more">Quis ipsum mattis</a> 
+									</span>
+								    	<p class="event-note box-slide-body hidden">Nam posuere, felis sed feugiat viverra, quam felis dapibus eros, vitae pulvinar nisl quam ut eros. Curabitur eget fringilla mi.</p>
+								</li>
+								<li>
+									<span class="event-list-title clear box-slide-head">
+										<span class="priority-normal" title="Normal priority">Normal</span>
+										<a href="#" class="event-edit clickable" title="Edit event">edit</a>
+										<span class="event-date">22/07/10</span>
+									 	<a href="#" class="event-link" title="Read more">Duis aute irure</a> 
+									</span>
+								    	<p class="event-note box-slide-body hidden">Nam posuere, felis sed feugiat viverra, quam felis dapibus eros, vitae pulvinar nisl quam ut eros. Curabitur eget fringilla mi.</p>
+								</li>
+								</ul>
+								
+								<div class="notification note-attention">
+									<a href="#" class="close" title="Close notification">close</a>
+									<p><small><strong>Tip:</strong> Event Titles are openable.</small>
+									   <small><strong>Tip:</strong> Calendar &amp; form is in the "New" tab.</small>
+									   <small><strong>Tip:</strong> These Content boxes are openable.</small></p>
+								</div>
+							
+							</div>
+						
+							<!-- TAB - CALENDAR -->
+							<div id="event-new" class="event-calendar">
+							<div id="datepicker-id-1" class="datepicker-inline"></div>
+						
+							<form action="" method="post">
+								<div class="add-event clear box-slide-head">
+									<input class="text fl clickable" id="datepicker-target-id-1" name="event-date" size="20" />
+									<a href="#" class="button fr">Add Event</a>
+								</div>
+
+								<div class="event-form hidden box-slide-body">
+								<div class="event-wrap">
+									<div class="form-field clear">
+										<input class="text title onFocusEmpty" id="event-title" name="event-title" size="30" value="Title"/>
+									</div>
+
+									<div class="form-field clear">
+										<textarea class="text event" id="event-text" name="event-text" cols="30" rows="6"></textarea>
+									</div>
+
+									<div class="form-field clear">
+										<input type="radio" class="radio fl" name="event-priority" id="priority-high" value="high" />
+                                        					<label for="priority-high" class="fl-space" title="priority">High</label>
+										
+                                        					<input type="radio" class="radio fl" name="event-priority" id="priority-normal" value="normal" checked="checked" />
+                                        					<label for="priority-normal" class="fl-space" title="priority">Normal</label>
+										
+                                        					<input type="radio" class="radio fl" name="event-priority" id="priority-low" value="low" />
+                                        					<label for="priority-low" class="fl" title="priority">Low</label>
+										
+                                        					<input type="submit" class="button fr" id="event-submit" name="event-submit" value="Submit" />
+									</div>
+								</div>
+								</div>
+							</form>
+							</div>
+						
+						</div> <!-- end of box-wrap -->
+					</div> <!-- end of box-body -->
+					</div> <!-- end of content-box -->
+					
+					<!-- CONTENT BOX - CLOSED -->
+					<div class="content-box bt-space10">
+					<div class="box-body">
+						<div class="box-header box-slide-head">
+							<span class="slide-but">open/close</span>
+							<h2>Closed Box</h2>
+						</div>
+						<div class="box-wrap clear box-slide-body hidden">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem.</p>
+						</div> <!-- end of box-wrap -->
+					</div> <!-- end of box-body -->
+					</div> <!-- end of content-box -->
+					
+					<!-- CONTENT BOX - NEXT CLOSED -->
+					<div class="content-box bt-space10">
+					<div class="box-body">
+						<div class="box-header box-slide-head">
+							<span class="slide-but">open/close</span>
+							<h2>Next Closed Box</h2>
+						</div>
+						<div class="box-wrap clear box-slide-body hidden">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem.</p>
+						</div> <!-- end of box-wrap -->
+					</div> <!-- end of box-body -->
+					</div> <!-- end of content-box -->
+					
+					<!-- CONTENT BOX - LAST CLOSED -->
+					<div class="content-box">
+					<div class="box-body">
+						<div class="box-header box-slide-head">
+							<span class="slide-but">open/close</span>
+							<h2>Last Closed Box</h2>
+						</div>
+						<div class="box-wrap clear box-slide-body hidden">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem.</p>
+						</div> <!-- end of box-wrap -->
+					</div> <!-- end of box-body -->
+					</div> <!-- end of content-box -->
+				</div>
+			</div>
+			
+			
+			<!-- CONTENT BOX - DATATABLE -->
+			<div class="content-box">
+			<div class="box-body">
+				<div class="box-header clear">
+					<ul class="tabs clear">
+						<li><a href="#data-table">JS plugin</a></li>
+						<li><a href="#table">Table only</a></li>
+					</ul>
+					
+					<h2>Content Box</h2>
+				</div>
+				
+				<div class="box-wrap clear">
+					
+					<!-- TABLE -->
+					<div id="data-table">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem.</p> 
+					
+						<form method="post" action="">
+						
+						<table class="style1 datatable">
+						<thead>
+							<tr>
+								<th class="bSortable"><input type="checkbox" class="checkbox select-all" /></th>
+								<th>Column 1</th>
+								<th>Column 2</th>
+								<th>Column 3</th>
+								<th>Column 4</th>
+								<th>Column 5</th>
+								<th>Column 6</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Lorem ipsum dolor</td>
+								<td><a href="#">John</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input1" id="input1" value="235" class="text" size="10" /></td>
+								<td>sed in porta lectus</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+                                                        
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Dignissim enim</td>
+								<td><a href="#">Admin</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input2" id="input2" value="124" class="text" size="10" /></td>
+								<td>duis nec rutrum</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Maecenas velit</td>
+								<td><a href="#">Admin</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input3" id="input3" value="58" class="text" size="10" /></td>
+								<td>porta lectus</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Maecenas velit</td>
+								<td><a href="#">Admin</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input4" id="input4" value="58" class="text" size="10" /></td>
+								<td>porta lectus</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Maecenas velit</td>
+								<td><a href="#">Admin</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input5" id="input5" value="58" class="text" size="10" /></td>
+								<td>porta lectus</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Maecenas velit</td>
+								<td><a href="#">Admin</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input6" id="input6" value="58" class="text" size="10" /></td>
+								<td>porta lectus</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Maecenas velit</td>
+								<td><a href="#">Admin</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input7" id="input7" value="58" class="text" size="10" /></td>
+								<td>porta lectus</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Maecenas velit</td>
+								<td><a href="#">Admin</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input8" id="input8" value="58" class="text" size="10" /></td>
+								<td>porta lectus</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Maecenas velit</td>
+								<td><a href="#">Admin</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input9" id="input9" value="58" class="text" size="10" /></td>
+								<td>porta lectus</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Maecenas velit</td>
+								<td><a href="#">Admin</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input10" id="input10" value="58" class="text" size="10" /></td>
+								<td>porta lectus</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Duis nec rutrum</td>
+								<td><a href="#">John</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input11" id="input11" value="10" class="text" size="10" /></td>
+								<td>enim quis ipsum</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="checkbox" /></td>
+								<td>Elit gravida</td>
+								<td><a href="#">Admin</a></td>
+								<td>5/6/2010</td>
+								<td><input type="text" name="input12" id="input12" value="356" class="text" size="10" /></td>
+								<td>dolor sit amet</td>
+								<td>
+									<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+									<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+									<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+								</td>
+							</tr>
+						</tbody>
+						</table>
+						
+						<div class="tab-footer clear fl">
+							<div class="fl">
+								<select name="dropdown" class="fl-space">
+									<option value="option1">choose action...</option>
+									<option value="option2">Edit</option>
+									<option value="option3">Delete</option>
+								</select>
+								<input type="submit" value="Apply" id="submit1" class="button fl-space" />
+							</div>
+						</div>
+						</form>
+					</div><!-- /#table -->
+					
+					<!-- TABLE -->
+					<div id="table">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem.</p> 
+					
+						<form method="post" action="">
+						<table class="style1">
+							<thead>
+								<tr>
+									<th><input type="checkbox" class="checkbox select-all" /></th>
+									<th>Column 1</th>
+									<th>Column 2</th>
+									<th>Column 3</th>
+									<th>Column 4</th>
+									<th>Column 5</th>
+									<th>Column 6</th>
+								</tr>
+							</thead>
+							
+							<tbody>
+								<tr>
+									<td><input type="checkbox" class="checkbox" /></td>
+									<td>Lorem ipsum dolor</td>
+									<td><a href="#">John</a></td>
+									<td>5/6/2010</td>
+									<td><input type="text" name="input21" id="input21" value="235" class="text" size="10" /></td>
+									<td>sed in porta lectus</td>
+									<td>
+										<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+										<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+										<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+									</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" class="checkbox" /></td>
+									<td>Dignissim enim</td>
+									<td><a href="#">Admin</a></td>
+									<td>5/6/2010</td>
+									<td><input type="text" name="input22" id="input22" value="124" class="text" size="10" /></td>
+									<td>duis nec rutrum</td>
+									<td>
+										<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+										<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+										<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+									</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" class="checkbox" /></td>
+									<td>Maecenas velit</td>
+									<td><a href="#">Admin</a></td>
+									<td>5/6/2010</td>
+									<td><input type="text" name="input23" id="input23" value="58" class="text" size="10" /></td>
+									<td>porta lectus</td>
+									<td>
+										<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+										<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+										<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+									</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" class="checkbox" /></td>
+									<td>Duis nec rutrum</td>
+									<td><a href="#">John</a></td>
+									<td>5/6/2010</td>
+									<td><input type="text" name="input24" id="input24" value="10" class="text" size="10" /></td>
+									<td>enim quis ipsum</td>
+									<td>
+										<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+										<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+										<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+									</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" class="checkbox" /></td>
+									<td>Elit gravida</td>
+									<td><a href="#">Admin</a></td>
+									<td>5/6/2010</td>
+									<td><input type="text" name="input25" id="input25" value="356" class="text" size="10" /></td>
+									<td>dolor sit amet</td>
+									<td>
+										<a href="#"><img src="images/ico_edit_16.png" class="icon16 fl-space2" alt="" title="edit" /></a>
+										<a href="#"><img src="images/ico_delete_16.png" class="icon16 fl-space2" alt="" title="delete" /></a>
+										<a href="#"><img src="images/ico_settings_16.png" class="icon16 fl-space2" alt="" title="settings" /></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<div class="tab-footer clear">
+							<div class="fl">
+								<select name="dropdown" class="fl-space">
+									<option value="option1">choose action...</option>
+									<option value="option2">Edit</option>
+									<option value="option3">Delete</option>
+								</select>
+								<input type="submit" value="Apply" id="submit2" class="button fl-space" />
+							</div>
+							<div class="pager fr">
+								<span class="nav">
+									<a href="#" class="first" title="first page"><span>First</span></a>
+									<a href="#" class="previous" title="previous page"><span>Previous</span></a>
+								</span>
+								<span class="pages">
+									<a href="#" title="page 1"><span>1</span></a>
+									<a href="#" title="page 2" class="active"><span>2</span></a>
+									<a href="#" title="page 3"><span>3</span></a>
+									<a href="#" title="page 4"><span>4</span></a>
+								</span>
+								<span class="nav">
+									<a href="#" class="next" title="next page"><span>Next</span></a>
+									<a href="#" class="last" title="last page"><span>Last</span></a>
+								</span>
+							</div>
+						</div>
+						</form>
+					</div><!-- /#table -->
+					
+				</div><!-- end of box-wrap -->
+			</div> <!-- end of box-body -->
+			</div> <!-- end of content-box -->
+			
+			
+			<!-- CONTENT BOX WITH SIDEBAR -->
+			<div class="content-box">
+			<div class="box-body">
+				<div class="box-header clear">
+					<h2>Content Box with Sidebar </h2>
+				</div>
+				<div class="box-wrap clear">
+					<div class="sidebar1-4 clear">
+						<div class="sidebar">
+							<div class="sidemenu">
+								<ul class="list">
+								<li><a href="#">Lorem Ipsum Dolor</a></li>
+								<li class="active"><a href="#">Consectetur Adipisicing</a></li>
+								<li><a href="#">Tempor Incididunt</a></li>
+								<li><a href="#">Dolore Magna</a></li>
+								</ul>
+							</div>
+							<p><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet.</small></p>
+							<p><small>Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet.</small></p>
+						</div>
+						
+						<div class="col3-4">
+							<div class="notification note-attention">
+								<a href="#" class="close" title="Close notification">close</a>
+								<p><strong>Attention notification:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+							</div>
+						
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+					
+							<table class="style1">
+							<thead>
+							<tr>
+								<th>Thumbs</th>
+								<th>Description</th>
+								<th>Status</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td><a href="#" title="preview"><img src="images/tmp/thumbnail1.jpg" alt="" class="thumb size48" /></a></td>
+								<td><h4>Lorem ipsum dolor</h4><p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p></td>
+								<td class="center vcenter"><img src="images/ico_active_16.png" class="icon16" title="active" alt="" /></td>
+							</tr>
+							<tr>
+								<td><a href="#" title="preview"><img src="images/tmp/thumbnail2.jpg" alt="" class="thumb size48" /></a></td>
+								<td><h4>Sed in porta lectus</h4><p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p></td>
+								<td class="center vcenter"><img src="images/ico_inactive_16.png" class="icon16" title="inactive" alt="" /></td>
+							</tr>
+							<tr>
+								<td><a href="#" title="preview"><img src="images/tmp/thumbnail3.jpg" alt="" class="thumb size48" /></a></td>
+								<td><h4>Quis nostrud</h4><p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p></td>
+								<td class="center vcenter"><img src="images/ico_active_16.png" class="icon16" title="active" alt="" /></td>
+							</tr>
+							</tbody>
+							</table>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+						</div>
+					</div>
+				</div>
+			</div> <!-- end of box-body -->
+			</div> <!-- end of content-box -->
+			
+			
+			<!-- CONTENT BOX - QUICK EDIT -->
+			<div class="content-box">
+			<div class="box-body">
+				<div class="box-header clear">
+					<h2>Content Box - Detail</h2>
+				</div>
+				<div class="box-wrap clear">
+					<form method="post" action="">
+					<table class="style1">
+					<thead>
+					<tr>
+						<th>Item</th>
+						<th class="full">Value</th>
+						<th>Edit</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<th>Name</th>
+						<td class="edit-field edit-textfield long">Lorem ipsum dolor</td>
+						<td><a href="#" class="quick_edit"><img src="images/ico_edit_16.png" alt="" class="icon16 fl" title="quick edit" /></a></td>
+					</tr>
+					<tr>
+						<th>Pictures</th>
+						<td><a href="images/tmp/picture1.jpg" title="preview" rel="group1"><img src="images/tmp/thumbnail1.jpg" alt="" class="thumb size64 fl-space" /></a>
+						    <a href="images/tmp/picture2.jpg" title="preview" rel="group1"><img src="images/tmp/thumbnail2.jpg" alt="" class="thumb size64 fl-space" /></a>
+						    <a href="images/tmp/picture3.jpg" title="preview" rel="group1"><img src="images/tmp/thumbnail3.jpg" alt="" class="thumb size64 fl-space" /></a></td>
+						
+                                                <td></td>
+					</tr>
+					<tr>
+						<th>Short Description</th>
+						<td class="edit-field edit-textfield long"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p></td>
+						<td><a href="#" class="quick_edit"><img src="images/ico_edit_16.png" alt="" class="icon16 fl" title="quick edit" /></a></td>
+					</tr>
+					<tr>
+						<th>Long Description</th>
+						<td class="edit-field edit-textarea"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p></td>
+						<td><a href="#" class="quick_edit"><img src="images/ico_edit_16.png" alt="" class="icon16 fl" title="quick edit" /></a></td>
+					</tr>
+					<tr>
+						<th>Status</th>
+						<td class="edit-field edit-select"><img src="images/ico_inactive_16.png" class="icon16 fl" title="inactive" alt="" /></td>
+						<td><a href="#" class="quick_edit"><img src="images/ico_edit_16.png" alt="" class="icon16 fl" title="quick edit" /></a></td>
+					</tr>
+					<tr>
+						<th>Available From</th>
+						<td class="edit-field edit-date">5/6/2010</td>
+						<td><a href="#" class="quick_edit"><img src="images/ico_edit_16.png" alt="" class="icon16 fl" title="quick edit" /></a></td>
+					</tr>
+					<tr>
+						<th>Available To</th>
+						<td class="edit-field edit-date">30/6/2010</td>
+						<td><a href="#" class="quick_edit"><img src="images/ico_edit_16.png" alt="" class="icon16 fl" title="quick edit" /></a></td>
+					</tr>
+					<tr>
+						<th>Priority</th>
+						<td  class="edit-field edit-textfield">2</td>
+						<td><a href="#" class="quick_edit"><img src="images/ico_edit_16.png" alt="" class="icon16 fl" title="quick edit" /></a></td>
+					</tr>
+					</tbody>
+					</table>
+					
+					<div class="tab-footer clear">
+						<div class="fr">
+							<input type="submit" value="Apply Changes" id="apply" class="button" />
+						</div>
+					</div>
+					</form>
+				</div> <!-- end of box-wrap -->
+			</div> <!-- end of box-body -->
+			</div> <!-- end of content-box -->
+		
+			
+			<!-- CONTENT BOX - TINY MCE -->
+			<div class="content-box">
+			<div class="box-body">
+				<div class="box-header clear">
+					<h2>TinyMCE</h2>
+				</div>
+				<div class="box-wrap clear">
+					<p>This is the full size of this editor. It will expand to 100% of the space you will define by column type or width of superordinate element. The minimal usable size is 2/3 column outside of content box.</p>
+					<textarea rows="" cols="" class="tinymce"></textarea>
+				</div> <!-- end of box-wrap -->
+			</div> <!-- end of box-body -->
+			</div> <!-- end of content-box -->
+
+
+			<!-- CONTENT BOX - jQuery WYSIWYG -->
+			<div class="content-box">
+			<div class="box-body">
+				<div class="box-header clear">
+					<h2>Content Box with Columns Inside</h2>
+				</div>
+				<div class="box-wrap">
+					<div class="columns clear">
+						<div class="col1-3">
+							<h3>jQuery WYSIWYG</h3>
+							<textarea rows="" cols="" class="jwysiwyg"></textarea>
+						</div> 
+
+						<div class="col2-3 lastcol">
+							<div class="columns clear">
+								<div class="col1-2">
+									<h3>Description</h3>
+									<p>This is the minimal width size of this editor. It will expand to 100% of the space you will define by column type or width of superordinate element. The minimal usable size is 1/3 column inside of content box. </p>
+								</div>
+								<div class="col1-2 lastcol">
+									<h3>Last Column</h3>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+								</div>
+							</div>
+							
+							<h3>Fullsize of 2/3 column inside of content box</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+							<p></p>
+							
+							<div class="notification note-info">
+								<a href="#" class="close" title="Close notification">close</a>
+								<p><strong>More about Columns, Content box in Columns, Columns in Content box with or without of sidebars</strong><br /> 
+								   you can find on <a href="columns.html">this page and its subpages.</a></p>
+							</div>
+
+						</div>
+					</div>
+				</div> <!-- end of box-wrap -->
+			</div> <!-- end of box-body -->
+			</div> <!-- end of content-box -->
+			
+			
+			<!-- NOTIFICATIONS -->
+			<div class="notification note-error">
+				<a href="#" class="close" title="Close notification">close</a>
+				<p><strong>Error notification:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			</div>
+			<div class="notification note-success">
+				<a href="#" class="close" title="Close notification">close</a>
+				<p><strong>Success notification:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			</div>
+			<div class="notification note-info">
+				<a href="#" class="close" title="Close notification">close</a>
+				<p><strong>Information notification:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			</div>
+			<div class="notification note-attention">
+				<a href="#" class="close" title="Close notification">close</a>
+				<p><strong>Attention notification:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			</div>
+			
+		</div><!-- end of page -->
+	</div>
+</div>
+
+<div class="footer">
+	<div class="pagesize clear">
+		<p class="bt-space15"><span class="copy"><strong>© 2010 Copyright by <a href="http://www.ait.sk">Affinity Information Technology.</a></strong></span> Powered by <a href="#">TERMINATOR ADMIN.</a></p>
+		<img src="images/logo_earth_bw50.png" alt="" class="block center" />
+	</div>
+</div>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.visualize.js"></script>
+<script type="text/javascript" src="js/jquery.wysiwyg.js"></script>
+<script type="text/javascript" src="js/tiny_mce/jquery.tinymce.js"></script>
+<script type="text/javascript" src="js/jquery.fancybox.js"></script>
+<script type="text/javascript" src="js/jquery.idtabs.js"></script>
+<script type="text/javascript" src="js/jquery.datatables.js"></script>
+<script type="text/javascript" src="js/jquery.jeditable.js"></script>
+<script type="text/javascript" src="js/jquery.ui.js"></script>
+<script type="text/javascript" src="js/jquery.jcarousel.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
+
+<script type="text/javascript" src="js/excanvas.js"></script>
+<script type="text/javascript" src="js/cufon.js"></script>
+<script type="text/javascript" src="js/Zurich_Condensed_Lt_Bd.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12958851-8']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>

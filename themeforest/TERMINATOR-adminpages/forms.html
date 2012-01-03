@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="description"  content=""/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="ALL,FOLLOW"/>
+<meta name="Author" content="AIT"/>
+<meta http-equiv="imagetoolbar" content="no"/>
+<title>TERMINATOR: Forms</title>
+
+<link rel="stylesheet" href="css/reset.css" type="text/css"/>
+<link rel="stylesheet" href="css/screen.css" type="text/css"/>
+<link rel="stylesheet" href="css/fancybox.css" type="text/css"/>
+<link rel="stylesheet" href="css/jquery.wysiwyg.css" type="text/css"/>
+<link rel="stylesheet" href="css/jquery.ui.css" type="text/css"/>
+<link rel="stylesheet" href="css/visualize.css" type="text/css"/>
+<link rel="stylesheet" href="css/visualize-light.css" type="text/css"/>
+<!--[if IE 7]>
+	<link rel="stylesheet" type="text/css" href="css/ie7.css" />
+<![endif]-->	
+</head>
+
+<body>
+
+<div class="pagetop">
+	<div class="head pagesize"> <!-- *** head layout *** -->
+		<div class="head_top">
+			<div class="topbuts">
+				<ul class="clear">
+				<li><a href="#">View Site</a></li>
+				<li><a href="#">Messages</a></li>
+				<li><a href="#">Settings</a></li>
+				<li><a href="login.html" class="red">Logout</a></li>
+				</ul>
+				
+				<div class="user clear">
+					<img src="images/avatar.jpg" class="avatar" alt="" />
+					<span class="user-detail">
+						<span class="name">Welcome Arnold</span>
+						<span class="text">Logged as admin</span>
+						<span class="text">You have <a href="#">5 messages</a></span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="logo clear">
+			<a href="index.html" title="View dashboard">
+				<img src="images/logo_earth.png" alt="" class="picture" />
+				<span class="textlogo">
+					<span class="title">TERMINATOR</span>
+					<span class="text">admin template</span>
+				</span>
+			</a>
+			</div>
+		</div>
+		
+		<div class="menu">
+			<ul class="clear">
+			<li><a href="index.html">Dashboard</a></li>
+			<li><a href="articles.html">Articles</a></li>
+			<li class="active">
+				<a href="styles.html">Styles</a>
+				<ul>
+					<li><a href="boxes.html">Content Boxes</a></li>
+					<li><a href="columns.html">Columns</a>
+						<ul>
+							<li><a href="columns1.html">Boxes in Columns</a></li>
+							<li><a href="columns2.html">Columns in Boxes</a></li>
+						</ul>
+					</li>
+					<li class="active"><a href="forms.html">Forms</a></li>
+				</ul>				
+			</li>
+			<li><a href="tables.html">Tables</a></li>
+			<li><a href="charts.html">Charts</a></li>
+			<li><a href="gallery.html">Image Gallery</a></li>
+			<li><a href="settings.html">Settings</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="breadcrumb">
+	<div class="bread-links pagesize">
+		<ul class="clear">
+		<li class="first">You are here:</li>
+		<li><a href="#">Styles</a><span>&raquo;</span></li>
+		<li><a href="#">Forms</a></li>
+		</ul>
+	</div>
+</div>
+	
+<div class="main pagesize"> <!-- *** mainpage layout *** -->
+	<div class="main-wrap">
+		<div class="page clear">
+			<h1>Forms &amp; Validation</h1>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			
+			<div class="content-box">
+			<div class="box-body">
+				<div class="box-header clear">
+					<h2>Form Settings</h2>
+				</div>
+				
+				<div class="box-wrap clear">
+
+					<form action="" method="post" class="validate-form form bt-space15">
+					
+					<div class="columns clear bt-space15">
+						<div class="col2-3">
+										
+							<div class="form-field clear">
+								<label for="textfield" class="form-label size-120 fl-space2">Text field: <span class="required">*</span></label>
+								<input type="text" id="textfield" class="required text fl-space2" name="form[text-field]" />
+							</div><!-- /.form-field -->
+							
+							<div class="form-field clear">
+								<label for="password" class="form-label size-120 fl-space2">Password: <span class="required">*</span></label>
+								<input type="password" id="password" class="required text fl-space2" name="form[password]" />
+							</div><!-- /.form-field -->							
+
+							<div class="form-field clear">
+								<label for="file" class="form-label size-120 fl-space2">File upload: <span class="required">*</span></label>
+								<input type="file" id="file" class="form-file fl-space2 required" name="form[file]" />
+							</div><!-- /.form-field -->							
+                                                        							
+							<div class="form-field clear">
+								<div class="fl-space2"><label for="textarea" class="form-label size-120">Textarea: <span class="required">*</span></label> <span id="error-textarea"></span></div>
+								<textarea id="textarea" class="form-textarea required display" cols="80" rows="6" name="form[textarea]" rel="textarea"></textarea>
+							</div><!-- /.form-field -->							
+														
+							<div class="form-field clear">
+								<label for="select" class="form-label size-120 fl-space2">Select: <span class="required">*</span></label>
+								<select id="select" class="fl-space2 required" name="form[select]">
+                                   					<option value=""></option>
+									<option value="1">Value 1</option>
+									<optgroup label="Group 1">
+										<option value="2">Value 2</option>
+										<option value="3">Value 3</option>
+										<option value="4">Value 4</option>
+									</optgroup>
+									<optgroup label="Group 2">
+										<option value="5">Value 5</option>
+										<option value="6">Value 6</option>
+										<option value="7">Value 7</option>
+									</optgroup>									
+									<option value="8">Value 8</option>
+									<option value="9">Value 9</option>
+								</select>
+							</div><!-- /.form-field -->		
+						
+						</div>
+						<div class="col1-3 lastcol">
+							<div class="mark_blue bt-space20">
+								<h4>Modifications of error messages:</h4>
+								<p class="clean-padding bt-space10">You can modify a place where the error message will be dysplayed. Just place:</p>
+								<ul class="standard clean-padding bt-space20">
+								<li class="bt-space5">&lt;span id="error-<strong>something</strong>"&gt; into the code</li>
+								<li class="bt-space5"><strong>rel="something"</strong> into the meant input <br />(or each of checkbox/radio input of the group).</li>
+								</ul>
+							</div> 
+							
+							<p class="clean-padding bt-space5"><strong>Focus input without Label</strong> <span class="code">class="onFocusEmpty"</span></p>
+							<input class="text onFocusEmpty" id="focus-input" name="focus-input" size="30" value="Title defined by value"/>
+						</div>
+					</div>
+					
+					<div class="rule"></div>
+						
+					<div class="columns clear bt-space15">
+						<div class="col1-4">
+							<div class="form-field clear">
+								<h4>Checkbox Vertical: <span class="required">*</span></h4>
+                                				<span id="error-checkboxvert"></span>
+
+								<div class="form-checkbox-item clear">
+									<input type="checkbox" rel="checkboxvert" id="checkbox1" name="form[checkbox]" class="checkbox fl-space required" /> <label for="checkbox1" class="fl">Value 1 </label>
+								</div>
+								
+								<div class="form-checkbox-item clear">								
+									<input type="checkbox" rel="checkboxvert" id="checkbox2" name="form[checkbox]" class="checkbox fl-space" /> <label for="checkbox2" class="fl">Value 2</label>
+								</div>								
+								
+								<div class="form-checkbox-item clear">								
+									<input type="checkbox" rel="checkboxvert" id="checkbox3" name="form[checkbox]" class="checkbox fl-space" /> <label for="checkbox3" class="fl">Value 3</label>
+								</div>																	
+							</div><!-- /.form-field-->
+						</div>
+						
+						<div class="col1-4">
+							<div class="form-field clear">
+								<h4>Radiobuttons Vertical: <span class="required">*</span></h4>
+                                				<span id="error-radiogroup1"></span>
+
+								<div class="form-radio-item clear">
+									<input type="radio" rel="radiogroup1" name="form[radio]" id="radio1" class="radio fl-space required" /> <label for="radio1" class="fl">Value 1</label>
+								</div>
+								
+								<div class="form-radio-item clear">
+									<input type="radio" rel="radiogroup1" name="form[radio]" id="radio2" class="radio fl-space" /> <label for="radio2" class="fl">Value 2</label>
+								</div>								
+								
+								<div class="form-radio-item clear">
+									<input type="radio" rel="radiogroup1" name="form[radio]" id="radio3" class="radio fl-space" /> <label for="radio3" class="fl">Value 3</label>
+								</div>																	
+							</div><!-- /.form-field-->
+						</div>
+							
+						<div class="col2-4 lastcol">
+							<div class="form-field bt-space10">
+								<div class="clear">
+								<h4 class="fl-space2 ln-22 size-170">Checkboxes Horizontal: <span class="required">*</span></h4>
+                                
+								<div class="form-checkbox-item clear fl-space2">
+									<input type="checkbox" rel="checkboxhorizont" id="checkbox4" name="form[checkbox2]" class="checkbox fl-space required" /> <label for="checkbox4" class="fl">Value 1</label>
+								</div>
+								
+								<div class="form-checkbox-item clear fl-space2">								
+									<input type="checkbox" rel="checkboxhorizont" id="checkbox5" name="form[checkbox2]" class="checkbox fl-space" /> <label for="checkbox5" class="fl">Value 2</label>
+								</div>								
+								
+								<div class="form-checkbox-item clear fl-space2">								
+									<input type="checkbox" rel="checkboxhorizont" id="checkbox6" name="form[checkbox2]" class="checkbox fl-space" /> <label for="checkbox6" class="fl">Value 3</label>
+								</div>
+								</div>
+								<span id="error-checkboxhorizont"></span>																
+							</div><!-- /.form-field-->
+							
+							<div class="form-field bt-space10">
+								<div class="clear">
+								<h4 class="fl-space2 ln-22 size-170">Radiobuttons Horizontal: <span class="required">*</span></h4>
+                                
+								<div class="form-radio-item clear fl-space2">
+									<input type="radio" rel="radiogroup2" name="form[radio2]" id="radio4" class="radio fl-space required" /> <label for="radio4" class="fl">Value 1</label>
+								</div>
+								
+								<div class="form-radio-item clear fl-space2">
+									<input type="radio" rel="radiogroup2" name="form[radio2]" id="radio5" class="radio fl-space" /> <label for="radio5" class="fl">Value 2</label>
+								</div>								
+								
+								<div class="form-radio-item clear fl-space2">
+									<input type="radio" rel="radiogroup2" name="form[radio2]" id="radio6" class="radio fl-space" /> <label for="radio6" class="fl">Value 3</label>
+								</div>
+								</div>
+								<span id="error-radiogroup2"></span>																	
+							</div><!-- /.form-field-->
+						</div>
+					</div>	
+					
+					<div class="rule2"></div>	
+							
+					<div class="form-field clear">
+						<input type="submit" class="button red fr" value="Validate" />
+						<p class="clean-padding"><strong>Click on the Validate</strong> button to see error messages of empty requirde items</p> 
+					</div><!-- /.form-field -->																								
+					
+					</form>
+					
+					</div><!-- end of box-wrap -->
+			</div> <!-- end of box-body -->
+			</div> <!-- end of content-box -->
+					
+					
+			<div class="content-box">
+			<div class="box-body">
+
+				<div class="box-wrap clear">
+									
+					<h2 class="bt-space20">Sizes and colors of the inputs/buttons</h2> 
+					
+					<table class="basic">
+					<thead>
+						<tr>
+							<th>no class</th>
+							<th>size-80</th>
+							<th>size-120</th>
+							<th>size-150</th>
+							<th>size-170</th>
+							<th>size-200</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="text" id="input-noclass" class="text fl" name="input-noclass" value="no class" size="10"/></td>
+							<td><input type="text" id="input-80" class="text size-80 fl" name="input-80" value="size-80" /></td>
+							<td><input type="text" id="input-120" class="text size-120 fl" name="input-120" value="size-120" /></td>
+							<td><input type="text" id="input-150" class="text size-150 fl" name="input-150" value="size-150" /></td>
+							<td><input type="text" id="input-170" class="text size-170 fl" name="input-170" value="size-170" /></td>
+							<td><input type="text" id="input-200" class="text size-200 fl" name="input-200" value="size-200" /></td>
+						</tr>
+						<tr>
+							
+							<td><input type="submit" class="button fl" value="Button Auto" /></td>
+							<td><input type="submit" class="button red size-80 fl" value="Red But 80" /></td>
+							<td><input type="submit" class="button green size-120 fl" value="Green Button 120" /></td>
+							<td><input type="submit" class="button blue size-150 fl" value="Blue Button size-150" /></td>
+							<td><input type="submit" class="button grey size-170 fl" value="Grey Button size-170" /></td>
+							<td><input type="submit" class="button size-200 fl" value="Black Button size-200" /></td>
+						</tr>
+					</tbody>
+					</table>
+					
+					<div class="notification note-attention">
+						<a href="#" class="close" title="Close notification">close</a>
+						<p><strong>Attention:</strong> The real size of the button may be increased by left/right paddings and borders of the element. Text input and Textareas will be increased about 10px. Select and Buttons will preserve exact size.</p>
+					</div>
+					
+				</div><!-- end of box-wrap -->
+			</div> <!-- end of box-body -->
+			</div> <!-- end of content-box -->
+			
+		</div><!-- end of page -->
+	</div>
+</div>
+
+<div class="footer">
+	<div class="pagesize clear">
+		<p class="bt-space15"><span class="copy"><strong>© 2010 Copyright by <a href="http://www.ait.sk">Affinity Information Technology.</a></strong></span> Powered by <a href="#">TERMINATOR ADMIN.</a></p>
+		<img src="images/logo_earth_bw50.png" alt="" class="block center" />
+	</div>
+</div>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.visualize.js"></script>
+<script type="text/javascript" src="js/jquery.wysiwyg.js"></script>
+<script type="text/javascript" src="js/tiny_mce/jquery.tinymce.js"></script>
+<script type="text/javascript" src="js/jquery.fancybox.js"></script>
+<script type="text/javascript" src="js/jquery.idtabs.js"></script>
+<script type="text/javascript" src="js/jquery.datatables.js"></script>
+<script type="text/javascript" src="js/jquery.jeditable.js"></script>
+<script type="text/javascript" src="js/jquery.ui.js"></script>
+<script type="text/javascript" src="js/jquery.jcarousel.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
+
+<script type="text/javascript" src="js/excanvas.js"></script>
+<script type="text/javascript" src="js/cufon.js"></script>
+<script type="text/javascript" src="js/Zurich_Condensed_Lt_Bd.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12958851-8']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>
