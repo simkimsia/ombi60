@@ -155,6 +155,10 @@
 			</ul>
 		</div>
 	</div>
+	
+	<div class="main pagesize"> <!-- *** mainpage layout *** -->
+		<div class="main-wrap">
+			<div class="page clear">
 
 	<?php echo $content_for_layout; ?>
 	
