@@ -1,0 +1,116 @@
+/*
+ *=ACTION LINKS
+ */
+
+#action-links {
+  padding: 0;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+#action-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 5px;
+}
+
+#action-links li {
+  display: inline;
+}
+
+#action-links li:before {
+  content: " | ";
+  color: #000000; /* previously was #ddd */
+
+}
+
+#action-links li:first-child:before { content: ""; }
+
+#action-links ul li a, #action-links a {
+  padding: 2px 3px 2px 22px;
+  font-size: 90%;
+  color: #3084CA;
+}
+
+#action-links ul li a:hover, #action-links a:hover {
+  color: #000 !important;
+  background-color: #eee;
+}
+
+#action-links ul li.no-pad a {
+  padding-left: 3px;
+}
+
+#action-links .app-link a { color: #64a01e; padding: 0; }
+#app-links { margin-top: 10px; }
+
+/**
+ * END of ACTION LINKS
+**/
+
+/* Sidebar, Action Link icons */
+li#themestore a { background: url(../img/admin/icons/themestore.gif) 3% 50% no-repeat;}
+li#add-prod a { background: url(../img/admin/icons/add-product.gif) 3% 50% no-repeat;}
+li#new-smt-lbl a { background: url(../img/admin/icons/smart-label.gif) 3% 50% no-repeat;}
+li#new-std-lbl a { background: url(../img/admin/icons/custom-label.gif) 3% 50% no-repeat;}
+li#new-article a { background: url(../img/admin/icons/book-edit.png) 3% 50% no-repeat;}
+li#view-tpls a {background: url(../img/admin/icons/layout.gif) 3% 50% no-repeat;}
+li#settings a {background: url(../img/admin/icons/settings.gif) 0% 50% no-repeat;}
+li#payment a {background: url(../img/admin/icons/payment.gif) 0% 50% no-repeat;}
+li#shipping a {background: url(../img/admin/icons/shipping.gif) 0% 50% no-repeat;}
+li#fulfillment a {background: url(../img/admin/icons/fulfillment.gif) 0% 50% no-repeat;}
+li#email a {background: url(../img/admin/icons/email.gif) 0% 50% no-repeat;}
+li#network a {background: url(../img/admin/icons/brick_link.gif) 0% 50% no-repeat;}
+li#regions a {background: url(../img/admin/icons/regions.gif) 0% 50% no-repeat;}
+li#translations a {background: url(../img/admin/icons/translation.png) 0% 50% no-repeat;}
+li#feedback a {background: url(../img/admin/icons/comment.gif) 3% 50% no-repeat;}
+li#preferences a {background: url(../img/admin/icons/edit.gif) 3% 50% no-repeat;}
+li#support a {background: url(../img/admin/icons/user-chat.gif) 3% 50% no-repeat;}
+li#add-region a {background: url(../img/admin/icons/regions.gif) 1% 50% no-repeat;}
+li#email-send a {background: url(../img/admin/icons/email-send.gif) 3% 50% no-repeat;}
+li#note a {background: url(../img/admin/icons/note.gif) 0% 50% no-repeat;}
+li#print a {background: url(../img/admin/icons/print.gif) 0% 50% no-repeat;}
+li#check a {background: url(../img/admin/icons/check.gif) 3% 50% no-repeat;}
+li#create-pg a { background: url(../img/admin/icons/layout.gif) 3% 50% no-repeat;}
+li#create-blog a { background: url(../img/admin/icons/book.png) 3% 50% no-repeat;}
+li#create-article a { background: url(../img/admin/icons/book-edit.png) 3% 50% no-repeat;}
+li#create-page a { background: url(../img/admin/icons/page.gif) 3% 50% no-repeat;}
+li#add-entry a, a.add-entry { background: url(../img/admin/icons/add-entry.gif) 3% 50% no-repeat;}
+li#edit-entry a, a#edit-entry { background: url(../img/admin/icons/edit-entry.gif) 3% 50% no-repeat;}
+li#user a { background: url(../img/admin/icons/user.gif) 3% 50% no-repeat;}
+li#lock a { background: url(../img/admin/icons/lock.gif) 3% 50% no-repeat;}
+li#locko a { background: url(../img/admin/icons/lock-open.gif) 3% 50% no-repeat;}
+li#new-menu a { background: url(../img/admin/icons/tab.gif) 3% 50% no-repeat;}
+li#add-link a { background: url(../img/admin/icons/link-add.gif) 3% 50% no-repeat;}
+li#import-themes a { background: url(../img/admin/icons/import-themes.gif) 3% 50% no-repeat;}
+li#domain-add a { background: url(../img/admin/icons/domain.gif) 3% 50% no-repeat;}
+li#customer a { background: url(../img/admin/icons/add.gif) 3% 50% no-repeat;}
+li#new-asset a { background: url(../img/admin/icons/page-add.gif) 3% 50% no-repeat;}
+li#trash a { background: url(../img/admin/icons/trash.gif) 3% 50% no-repeat;}
+li#asset-gallery a {background: url(../img/admin/icons/import-themes.gif) 3% 50% no-repeat;}
+li#reorder a {background: url(../img/admin/icons/reorder.gif) 3% 50% no-repeat;}
+li#deactive a {background: url(../img/admin/icons/closed.gif) 3% 50% no-repeat;}
+li#cancel a {background: url(../img/admin/icons/cancel.png) 3% 50% no-repeat;}
+li#cancel-order a { background: url(../img/admin/icons/cancel-order.gif) 3% 50% no-repeat; padding-left: 20px !important; }
+
+li.user {background: url(../img/admin/icons/user.gif) 4px 50% no-repeat; padding-left: 25px;} 
+li.phone {background: url(../img/admin/icons/phone.gif) 4px 50% no-repeat; padding-left: 25px;} 
+li.email {background: url(../img/admin/icons/email.gif) 4px 50% no-repeat; padding-left: 25px;} 
+li.product {background: url(../img/admin/icons/product.gif) 4px 50% no-repeat; padding-left: 25px;}
+
+p.marketing {background: url(../img/admin/icons/check2.gif) 0px 50% no-repeat; padding-left: 20px; margin-top: 1px;}
+p.no-marketing {background: url(../img/admin/icons/alert2.png) 0px 50% no-repeat; padding-left: 20px; margin-top: 1px;} 
+
+li.liquid a { background: url(../img/admin/icons/liquid.png) 0% 50% no-repeat; padding-left: 22px;}
+li.liquid { margin: 4px 0;}
+li.asset-src a { background: url(../img/admin/icons/asset-src.gif) 0% 0% no-repeat; padding-left: 22px;}
+li.asset-src { margin: 4px 0;}
+li.csv a { background: url(../img/admin/icons/csv.gif) 0% 50% no-repeat; padding-left: 18px !important; }
+li.vcard a {background: url(../img/admin/icons/vcard.gif) 0% 50% no-repeat; padding-left: 18px !important;}
+
+li.no-icon a { padding-left: 3px !important; }
+li.small-icon a { padding-left: 16px !important; }
+
+li.order-cell-subscription  {background: url(../img/admin/icons/phone.png) 4px 50% no-repeat; padding-left: 25px;} 
+li.webhook                  {background: url(../img/admin/icons/regions.gif) 4px 50% no-repeat; padding-left: 25px;} 
+li.order-user-subscription  {background: url(../img/admin/icons/user.gif) 4px 50% no-repeat; padding-left: 25px;}

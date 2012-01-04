@@ -37,7 +37,8 @@
 		echo $this->Html->css('themeforest/terminator/visualize');
 		echo $this->Html->css('themeforest/terminator/visualize-light');
 		
-		
+		// action links copied from shopify admin
+		echo $this->Html->css('admin.actionlinks');
 		
         echo $this->Html->script('jquery.js'); 
 

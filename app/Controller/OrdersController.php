@@ -127,6 +127,8 @@ class OrdersController extends AppController {
 
 		$this->set('orders', $orders);
 		
+		$this->render('admin_index_term');
+		
 	}
 	
 	private function checkCorrectShop($order_shop_id) {
