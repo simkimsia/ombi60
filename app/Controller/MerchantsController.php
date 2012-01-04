@@ -89,7 +89,7 @@ class MerchantsController extends AppController {
 //		$test = false;
 		
 		if ($test) {
-			$this->layout = 'admin_terminator_login';
+//			$this->layout = 'admin_terminator_login';
 			$this->render('admin_login_terminator');
 			
 		}

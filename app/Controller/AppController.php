@@ -110,7 +110,9 @@ class AppController extends Controller {
 			$this->Auth->logoutRedirect = '/admin/login';
 			// this is to set the default layout for admin pages
 			if ($this->request->is('ajax') == false) {
-				$this->layout = 'admin';
+				
+				//$this->layout = 'admin';
+				$this->layout = 'admin_terminator';
 			}
 		} else {
 			 
