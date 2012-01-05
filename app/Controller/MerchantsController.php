@@ -107,6 +107,9 @@ class MerchantsController extends AppController {
 
 			if ($validMerchant && $this->Auth->login() &&$this->Auth->user()) {
 				
+				// we need to include the Merchant shop_id into the request data
+				$this->request->data['Merchant']['shop_id'] = $shop_id;
+				
 				// this code is for the remember me when Merchant first logs in and chooses the remember me
 				if (!empty($this->request->data) && $this->request->data['User']['remember_me']) {
 					$cookie = array('email'    => $this->request->data['User']['email'],
