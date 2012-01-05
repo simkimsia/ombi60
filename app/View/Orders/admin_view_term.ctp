@@ -95,9 +95,9 @@
 		<div class="content-box bt-space40">
 			<div class="box-body">
 				<div class="box-wrap clear">
-					<div class="columns clear bt-space10">
+					<div class="columns clear bt-space10"><!-- start of Payment Mode -->
 						<div class="col1-3"><strong>Payment Mode</strong></div>
-						<div class="lastcol right">
+						<div class="lastcol right"><!-- start of Payment Status  -->
 							<?php
 		                    $status = $order['Order']['payment_status'];
 		                    if ($status == 2) {
@@ -124,7 +124,41 @@
 					
 					
 					<div class="rule"></div>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.</p>
+
+					<div class="columns clear bt-space10"><!-- start of Shipping Mode -->
+						<div class="col1-3"><strong>Shipping Mode</strong></div>
+						<div class="lastcol right"><!-- start of Shipping Status  -->
+							<?php
+	                        $fullfill_status = $order['Order']['fulfillment_status'];
+	                        if ($fullfill_status == 0) {
+	                            echo "You have fullfilled all line items";
+	                        } else {
+	                        ?>
+                            You need to fullfill <strong><?php echo $order['Order']['order_line_item_count'];?> line item</strong>.
+                        	<?php
+	                        }
+	                        ?>
+						</div><!-- end of Shipping Status -->
+					</div><!-- end of Shipping Mode -->
+
+					<div class="columns clear bt-space10"><!-- start of Shipping Mode value -->
+						<?php if (!empty($order['Shipment'])) { ?>
+							<?php
+							 
+							$shipmentName = '';
+							
+							foreach($order['Shipment'] as $shipment) {
+								$shipmentName = $shipment['name'];
+							}
+							?>
+						<div class="col1-3"><?php echo $shipmentName; ?></div><!-- end of Shipping Mode named -->
+						<?php } ?>
+						
+						<?php if ($fullfill_status != 0) { ?>
+						<div class="lastcol"><?php echo '<a href="#" class="button fr">Fulfill line items</a>'; ?></div><!-- end of Fulfill Line Item button -->
+						<?php } ?>
+					</div><!--  end of Shipping Mode value -->
+
 				</div> <!-- end of box-wrap -->
 			</div> <!-- end of box-body -->
 		</div> <!-- end of content-box -->
