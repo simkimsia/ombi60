@@ -223,6 +223,23 @@ class Order extends AppModel {
 		);
 		
 		$order = $this->find('first', $findConditionsArray);
+		
+		if (!empty($order['BillingAddress']['country']) && !empty($order['DeliveryAddress']['country'])) {
+			$this->BillingAddress->Country->recursive = -1;
+			$billingCountry = $this->BillingAddress->Country->read(null, $order['BillingAddress']['country']);
+			
+			if ($order['BillingAddress']['country'] === $order['DeliveryAddress']['country']) {
+
+				$deliveryCountry = $billingCountry;
+			} else {
+				$this->DeliveryAddress->Country->recursive = -1;
+				$deliveryCountry = $this->DeliveryAddress->Country->read(null, $order['DeliveryAddress']['country']);
+			}
+			
+			$order['BillingAddress'] 	= array_merge($order['BillingAddress'], $billingCountry);
+			$order['DeliveryAddress'] 	= array_merge($order['DeliveryAddress'], $deliveryCountry);			
+			
+		} 
 
 		return $order;
 	}

@@ -13,33 +13,75 @@
 
 </div>
 
-<div class="col1-3 online-user">
-	<div class="mark clear">
-		<div class="avatar">
-		
+<!-- DATA-TABLE JS PLUGIN -->
+<div id="data-table">
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem.</p> 
+
+	<form method="post" action="">
+	
+	<table class="style1 datatable">
+	<thead>
+		<tr>
+			<th class="bSortable"><input type="checkbox" class="checkbox select-all" /></th>
+			<th>Column 1</th>
+			<th>Column 2</th>
+			<th>Column 3</th>
+			<th>Column 4</th>
+			<th>Column 5</th>
+			<th>Column 6</th>
+		</tr>
+	</thead>
+	<tbody>
 		<?php
-		$email = 'kimcity@gmail.com';
-		$email = trim(strtolower($email));
-		$gravatar_id = md5($email);
-		$defaultPic = Router::url('/img/themeforest/terminator/avatar.jpg'); 
-		$gravatarLink = 'https://secure.gravatar.com/avatar.php?gravatar_id=' . $gravatar_id;
-		$gravatarLink .= '&size=50&default='. $defaultPic;
 		
-		echo $this->Html->image($gravatarLink, array('id' => 'gravatar'));
+			foreach ($orders as $order):
+
+		
 		?>
-			<p class="status admin">admin</p>
-		</div>
-		<div class="desc">
-			<ul class="links">
-				<li><a href="#" class="graph" title="view stats">stats </a></li>
-				<li><a href="#" class="cart" title="view shopping cart">shopping cart</a></li>
-				<li><a href="#" class="hist" title="view user history">history</a></li>
-				<li><a href="#" class="mesg" title="send message">send message</a></li>
-				<li><span class="male" title="male">male</span></li>
-			</ul>
-			<h4><strong>Terminator</strong></h4>
-			<p><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus.</small></p>
-			<p class="info"><small>registered: 01/05/2009</small></p>
+	
+		<tr>
+			<td><input type="checkbox" class="checkbox" /></td>
+
+			<td>
+				<?php echo $this->Html->link(__('#' . $order['Order']['order_no']), array('action' => 'view', $order['Order']['id'])); ?>
+
+			</td>
+			<td>
+				<?php echo $this->Time->niceShort($order['Order']['created']); ?>
+			</td>
+			<td>
+				<?php echo $order['User']['full_name']; ?>
+			</td>
+
+			<td>
+				<?php echo $this->Constant->displayPayment($order['Order']['payment_status']);?>
+			</td>
+			<td>
+				<?php echo $this->Constant->displayFulfillment($order['Order']['fulfillment_status']);?>
+			</td>
+
+			<td>
+				<?php echo $this->Number->currency($order['Order']['amount'], '$'); ?>
+			</td>
+
+
+		</tr>
+		
+		<?php endforeach; ?>
+                                    
+
+	</tbody>
+	</table>
+	
+	<div class="tab-footer clear fl">
+		<div class="fl">
+			<select name="dropdown" class="fl-space">
+				<option value="option1">choose action...</option>
+				<option value="option2">Edit</option>
+				<option value="option3">Delete</option>
+			</select>
+			<input type="submit" value="Apply" id="submit1" class="button fl-space" />
 		</div>
 	</div>
-</div>
+	</form>
+</div><!-- /#table -->

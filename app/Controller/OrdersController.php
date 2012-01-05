@@ -10,7 +10,9 @@ class OrdersController extends AppController {
 
 	public $helpers = array('Html', 'Form', 'Session', 'Time', 'Number');
 
-	public $components = array('Permission',
+	public $components = array(
+		
+		'Permission',
 				'Session', 'Paypal.Paypal', 
 				'Payments.Payments',
 				'Filter.Filter' => array(
@@ -146,6 +148,7 @@ class OrdersController extends AppController {
 		}
 		$module_name = "";
 		$order = $this->Order->getDetailed($id);
+
 		if (!empty($order) && isset($order['Payment'][0]['shops_payment_module_id'])) {
 		    $shops_payment_module_id = $order['Payment'][0]['shops_payment_module_id'];
 		    $conditions = array('ShopsPaymentModule.id' => array($shops_payment_module_id));
@@ -163,6 +166,7 @@ class OrdersController extends AppController {
 		}
 		
 		$this->set(compact('order', 'module_name'));
+		$this->render('admin_view_term');
 	}
 	
 	public function view($id = null) {

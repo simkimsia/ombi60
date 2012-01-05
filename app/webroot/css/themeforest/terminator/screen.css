@@ -49,9 +49,9 @@ img.block	{ display: block; }
 a		{ color: #00A5C4; text-decoration: none;}
 a:hover		{ color: #00A5C4; text-decoration: underline;}
 
-.button		{ display: inline-block; line-height: 16px; border-width: 0px; font-size: 11px; font-family: arial; color: #FFFFFF; font-weight: bold; cursor: pointer; background: url('../../../img/themeforest/terminator/button_glas1.png') center center repeat-x #333333; padding: 3px 13px 3px 13px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; border-radius: 3px 3px 3px 3px; text-align: center; }
+.button		{ display: inline-block; line-height: 16px; border-width: 0px; font-size: 11px; font-family: arial; color: #FFFFFF; font-weight: bold; cursor: pointer; background: url('../../../img/themeforest/terminator/button_glas1.png') center center repeat-x #333333; padding: 3px 13px 3px 13px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; border-radius: 3px 3px 3px 3px; text-align: center;}
 input.button	{ display: inline-block; line-height: 13px; /* IE8 hack */ line-height: 16px\0/; border-width: 0px; font-size: 11px; font-family: arial; color: #FFFFFF; font-weight: bold; cursor: pointer; background: url('../../../img/themeforest/terminator/button_glas1.png') center center repeat-x #333333; padding: 3px 10px 3px 10px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; border-radius: 3px 3px 3px 3px;}
-.button:hover	{ color: #FFFFFF; text-decoration: none; }
+.button:hover	{ color: #eee; text-decoration: none; } 
 .button.green	{ background-color: #4DB800; }
 .button.red	{ background-color: #D80017; }
 .button.blue	{ background-color: #00A5C4; }

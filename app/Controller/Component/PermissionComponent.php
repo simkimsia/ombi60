@@ -54,11 +54,12 @@ class PermissionComponent extends Component {
  * if empty array, apply to all actions.
  * */
 
-	public $actionsWithPrimaryKey = array('admin_edit',
-			     'admin_delete',
-			     'admin_view',
-			     'admin_toggle',
-			     );
+	public $actionsWithPrimaryKey = array(
+		'admin_edit',
+		'admin_delete',
+		'admin_view',
+		'admin_toggle'
+	);
 	
 	public $actionsWithShopId = array('admin_add');
 	
