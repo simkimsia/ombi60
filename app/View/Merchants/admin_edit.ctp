@@ -19,8 +19,7 @@
 
 	<div class="columns clear bt-space15">
 		<div class="col3-3">
-					
-					
+
 			<?php
 				echo $this->Form->input('User.full_name');
 				echo $this->Form->input('User.name_to_call');
@@ -33,6 +32,7 @@
 				echo $this->Form->input('User.id', array('type'=>'hidden') );
 				echo $this->Form->input('User.language_id');
 			?>
+			
 		</div>
 	</div>
 	<input type="submit" class="button green fl" value="Submit" />

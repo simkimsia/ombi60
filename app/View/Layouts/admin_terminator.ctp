@@ -85,14 +85,16 @@
 					<li><?php echo $this->Html->link('Logout', '/admin/logout', array('class' => 'red')); ?></li>
 					</ul>
 
+					<!--
 					<div class="user clear">
-						<?php echo $this->Html->image('themeforest/terminator/avatar.jpg', array('class' => 'avatar')); ?>
+						<?php //echo $this->Html->image('themeforest/terminator/avatar.jpg', array('class' => 'avatar')); ?>
 						<span class="user-detail">
 							<span class="name">Welcome Arnold</span>
 							<span class="text">Logged as admin</span>
 							<span class="text">You have <a href="#">5 messages</a></span>
 						</span>
 					</div>
+					-->
 				</div>
 
 				<div class="logo clear">
@@ -138,14 +140,36 @@
 
 			<div class="menu">
 				<ul class="clear">
-				<li <?php echo $homeSelected; ?>><?php echo $this->Html->link('Home', '/admin'); ?></li>
-				<li <?php echo $ordersSelected; ?>><?php echo $this->Html->link('Orders', '/admin/orders'); ?></li>
-				<li <?php echo $productsSelected; ?>><?php echo $this->Html->link('Products', '/admin/products'); ?></li>
-				<li <?php echo $collectionsSelected; ?>><?php echo $this->Html->link('Collections', '/admin/collections'); ?></li>
-				<li <?php echo $blogsPagesSelected; ?>><?php echo $this->Html->link('Blogs & Pages', '/admin/pages'); ?></li>
-				<li <?php echo $navigationSelected; ?>><?php echo $this->Html->link('Navigation', '/admin/links'); ?></li> 
+					<li <?php echo $homeSelected; ?>><?php echo $this->Html->link('Home', '/admin'); ?></li>
+					<li <?php echo $ordersSelected; ?>><?php echo $this->Html->link('Orders', '/admin/orders'); ?></li>
+					<li <?php echo $productsSelected; ?>><?php echo $this->Html->link('Products', '/admin/products'); ?></li>
+					<li <?php echo $collectionsSelected; ?>><?php echo $this->Html->link('Collections', '/admin/collections'); ?></li>
+					<li <?php echo $blogsPagesSelected; ?>><?php echo $this->Html->link('Blogs & Pages', '/admin/pages'); ?></li>
+					<li <?php echo $navigationSelected; ?>><?php echo $this->Html->link('Navigation', '/admin/links'); ?></li> 
+					
+					<li style="float:right;">
+						<a href="#">Preferences</a>
+						<ul>
+							<li><?php echo $this->Html->link('Domains', '/admin/domains'); ?></li>  
+							<li><?php echo $this->Html->link('Payments', '/admin/payments'); ?></li>
+							<li><?php echo $this->Html->link('Shipping', '/admin/shipping'); ?></li>
+							<li><?php echo $this->Html->link('General Settings', '/admin/general_settings'); ?></li>
+						</ul>				
+					</li>
+					
+					<li style="float:right;">
+						<a href="#">Themes</a>
+						<ul>
+							<li><?php echo $this->Html->link('My themes', '/admin/saved_themes/switch'); ?></li>  
+							<li><?php echo $this->Html->link('Theme Settings', '/admin/themes/settings'); ?></li>  
+							
+						</ul>				
+					</li>
+					
+					
 				</ul>
 			</div>
+			
 		</div>
 	</div>
 	<div class="breadcrumb">
