@@ -81,7 +81,7 @@
 					<ul class="clear">
 					<li><a href="#">View Site</a></li>
 					<li><a href="#">Messages</a></li>
-					<li><a href="#">Settings</a></li>
+					<li><?php echo $this->Html->link('Account', '/admin/account'); ?></li>
 					<li><?php echo $this->Html->link('Logout', '/admin/logout', array('class' => 'red')); ?></li>
 					</ul>
 
