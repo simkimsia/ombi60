@@ -166,6 +166,18 @@ class User extends AppModel {
 
 
 		),
+		'new_password' => array(
+			'update_password' => array(
+				'rule' => array('updatePasswordValidation'),
+				'message' => 'Please ensure you have entered your current password and that your new password matches with new password confirm',
+				'on' => 'update'
+			), 
+			'new_password_length' => array(
+				'rule' => array('newPasswordLengthValidation', '8'),
+				'message' => 'Minimum 8 characters long for new password',
+				'on' => 'update'
+			)
+		)
 	);
 
 	/**
@@ -336,6 +348,89 @@ class User extends AppModel {
 			return ($count==0);
 		}
 		return false;
+	}
+	
+	
+	/**
+	* this is for validation for updating passwords
+	* assume current_password, new_password, new_password_confirm are all plaintext
+	* assume current_password may or may not be filled in
+	* to change passwords, all 3 MUST be filled in.
+	* if either new_password, or new_password_confirm is non-empty, intention to change password is assumed.
+	* to successfully change password, 
+	* 1) the current password is correct
+	* 2) the new_password and new_password_confirm are exactly the same
+	* change password by hasing the new password and putting inside request->data[User][password]
+	**/
+	public function updatePasswordValidation($field = array()) {
+		
+		$currentPasswordExists		= !empty($this->data['User']['current_password']);
+		$newPasswordExists			= !empty($this->data['User']['new_password']);
+		$newPasswordConfirmExists	= !empty($this->data['User']['new_password_confirm']);
+		
+		$allPasswordExist 			= $currentPasswordExists && $newPasswordExists && $newPasswordConfirmExists;
+		
+		if (!$newPasswordExists && !$newPasswordConfirmExists) {
+			return true;		
+		}
+		
+		if ($allPasswordExist) {
+			
+			$newPassword 		= $this->data['User']['new_password'];
+			$newPasswordConfirm	= $this->data['User']['new_password_confirm'];
+			
+			// check if the new password matches
+			if ($newPassword !== $newPasswordConfirm) {
+				return false;
+			}
+			
+			$count = $this->find('count', array(
+				'conditions' => array(
+					'User.email' => $this->data['User']['original_email'],
+					'User.password' => AuthComponent::password($this->data['User']['current_password']))
+			));
+			
+			$userExists = ($count > 0);
+			
+			// check if current password is valid
+			if (!$userExists) {
+				return false;
+			} else {
+				$this->data['User']['password'] = 	$this->data['User']['new_password'];
+				return true;
+			}
+			
+			
+		}
+			
+		return false;
+	}
+	
+	/**
+	* this is for validation for new password length
+	* assume current_password, new_password, new_password_confirm are all plaintext
+	* if both new_password and new_password_confirm exist and identical, length must be minimum of 8
+	**/
+	public function newPasswordLengthValidation($field = array(), $minLength) {
+		
+		$newPasswordExists			= !empty($this->data['User']['new_password']);
+		$newPasswordConfirmExists	= !empty($this->data['User']['new_password_confirm']);
+		
+		
+		if (!$newPasswordExists && !$newPasswordConfirmExists) {
+			return true;		
+		}
+		
+			
+		$newPassword 		= $this->data['User']['new_password'];
+		$newPasswordConfirm	= $this->data['User']['new_password_confirm'];
+			
+		// check if the new password matches
+		if (strlen($newPassword) < $minLength) {
+			return false;
+		}
+		return true;
+		
 	}
 	
 	/**
