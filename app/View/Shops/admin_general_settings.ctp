@@ -23,7 +23,7 @@
 						'attributes' => array(
 							'wrap' => 'label', 
 							'class' => 'error', 
-							//'for' wait for Graham reply on this code
+							'for' => true
 						)
 					)
 				)
