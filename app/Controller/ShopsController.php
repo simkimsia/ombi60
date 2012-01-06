@@ -23,23 +23,39 @@ class ShopsController extends AppController {
 	public function admin_general_settings() {
 		
 		if (!empty($this->request->data)) {
-			if ($this->Shop->ShopSetting->save($this->request->data)) {
+
+			if ($this->Shop->saveAll($this->request->data)) {
 				
 				// updating Session and Shop static class
 				$currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
+
 				$this->Session->write('CurrentShop', $currentShop);
 				Shop::store($currentShop);
 				
 				$this->Session->setFlash(__('General Settings have been saved'), 'default', array('class'=>'flash_success'));
+				
 				$this->redirect(array('action' => 'admin_general_settings'));
+				
 			} else {
-				$this->Session->setFlash(__('General Settings could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
+				$this->Session->setFlash(
+					__('General Settings could not be saved. Please, try again.'), 
+					'default', 
+					array('class'=>'flash_failure')
+				);
+				
 			}
 		}
 		
 		if (empty($this->request->data)) {
-			$this->Shop->ShopSetting->recursive = -1;
-			$shopSetting = $this->Shop->ShopSetting->find('first', array('conditions'=>array('ShopSetting.shop_id'=>Shop::get('Shop.id'))));
+			$this->Shop->recursive = -1;
+			$shopSetting = $this->Shop->find('first', array(
+				'conditions'=>array(
+					'Shop.id'=>Shop::get('Shop.id')
+				), 
+				'contain' => array('ShopSetting')
+			));
+			
+			
 			$this->set(compact('shopSetting'));
 		} 
 		
