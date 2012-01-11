@@ -94,6 +94,3 @@
 [submodule "themes/Vendor/phpThumb"]
 	path = themes/Vendor/phpThumb
 	url = git@github.com:simkimsia/phpThumb-for-cakephp-2.0.git
-[submodule "app/Plugin/Gravatar"]
-	path = app/Plugin/Gravatar
-	url = git://github.com/simkimsia/cakephp-gravatar.git
