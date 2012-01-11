@@ -96,4 +96,4 @@
 	url = git@github.com:simkimsia/phpThumb-for-cakephp-2.0.git
 [submodule "app/Plugin/Gravatar"]
 	path = app/Plugin/Gravatar
-	url = https://simkimsia@github.com/simkimsia/cakephp-gravatar.git
+	url = git://github.com/simkimsia/cakephp-gravatar.git
