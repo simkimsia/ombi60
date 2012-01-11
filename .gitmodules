@@ -27,70 +27,70 @@
 	url = git://github.com/sebastianbergmann/phpunit-selenium.git
 [submodule "app/Plugin/TimeZone"]
 	path = app/Plugin/TimeZone
-	url = git@github.com:simkimsia/TimeZone.git
+	url = git://github.com/simkimsia/TimeZone.git
 [submodule "app/Plugin/Handleize"]
 	path = app/Plugin/Handleize
-	url = git@github.com:simkimsia/Handleize.git
+	url = git://github.com/simkimsia/Handleize.git
 [submodule "app/Plugin/Visible"]
 	path = app/Plugin/Visible
-	url = git@github.com:simkimsia/Visible.git
+	url = git://github.com/simkimsia/Visible.git
 [submodule "app/Vendor/phpThumb"]
 	path = app/Vendor/phpThumb
-	url = git@github.com:simkimsia/phpThumb-for-cakephp-2.0.git
+	url = git://github.com/simkimsia/phpThumb-for-cakephp-2.0.git
 [submodule "app/Plugin/MeioDuplicate"]
 	path = app/Plugin/MeioDuplicate
 	url = git@github.com:simkimsia/MeioDuplicate.git
 [submodule "app/Plugin/Copyable"]
 	path = app/Plugin/Copyable
-	url = git@github.com:simkimsia/copyable_behavior.git
+	url = git://github.com/simkimsia/copyable_behavior.git
 [submodule "app/Plugin/AclExtras"]
 	path = app/Plugin/AclExtras
-	url = git@github.com:markstory/acl_extras.git
+	url = git://github.com/markstory/acl_extras.git
 [submodule "app/Plugin/ClearCache"]
 	path = app/Plugin/ClearCache
-	url = git@github.com:simkimsia/ClearCache.git
+	url = git://github.com/simkimsia/ClearCache.git
 [submodule "app/Plugin/UtilityLib"]
 	path = app/Plugin/UtilityLib
-	url = git@github.com:simkimsia/UtilityLib.git
+	url = git://github.com/simkimsia/UtilityLib.git
 [submodule "app/Plugin/Migrations"]
 	path = app/Plugin/Migrations
 	url = https://github.com/CakeDC/migrations.git
 [submodule "app/Vendor/RedBean"]
 	path = app/Vendor/RedBean
-	url = git@github.com:simkimsia/redbean.git
+	url = git://github.com/simkimsia/redbean.git
 [submodule "mainsite/Plugin/DebugKit"]
 	path = mainsite/Plugin/DebugKit
 	url = git://github.com/cakephp/debug_kit.git
 [submodule "mainsite/Plugin/ClearCache"]
 	path = mainsite/Plugin/ClearCache
-	url = git@github.com:simkimsia/ClearCache.git
+	url = git://github.com/simkimsia/ClearCache.git
 [submodule "mainsite/Plugin/Handleize"]
 	path = mainsite/Plugin/Handleize
-	url = git@github.com:simkimsia/Handleize.git
+	url = git://github.com/simkimsia/Handleize.git
 [submodule "mainsite/Plugin/Copyable"]
 	path = mainsite/Plugin/Copyable
-	url = git@github.com:simkimsia/copyable_behavior.git
+	url = git://github.com/simkimsia/copyable_behavior.git
 [submodule "mainsite/Plugin/UtilityLib"]
 	path = mainsite/Plugin/UtilityLib
-	url = git@github.com:simkimsia/UtilityLib.git
+	url = git://github.com/simkimsia/UtilityLib.git
 [submodule "mainsite/Plugin/Visible"]
 	path = mainsite/Plugin/Visible
-	url = git@github.com:simkimsia/Visible.git
+	url = git://github.com/simkimsia/Visible.git
 [submodule "mainsite/Vendor/phpThumb"]
 	path = mainsite/Vendor/phpThumb
-	url = git@github.com:simkimsia/phpThumb-for-cakephp-2.0.git
+	url = git://github.com/simkimsia/phpThumb-for-cakephp-2.0.git
 [submodule "mainsite/Plugin/MeioDuplicate"]
 	path = mainsite/Plugin/MeioDuplicate
-	url = git@github.com:simkimsia/MeioDuplicate.git
+	url = git://github.com/simkimsia/MeioDuplicate.git
 [submodule "app/Plugin/Payments/Vendor/AktiveMerchant"]
 	path = app/Plugin/Payments/Vendor/AktiveMerchant
-	url = git@github.com:simkimsia/Aktive-Merchant.git
+	url = git://github.com/simkimsia/Aktive-Merchant.git
 [submodule "app/Plugin/Log"]
 	path = app/Plugin/Log
-	url = git@github.com:simkimsia/Log.git
+	url = git://github.com/simkimsia/Log.git
 [submodule "app/Plugin/TwigView"]
 	path = app/Plugin/TwigView
-	url = git@github.com:simkimsia/TwigViewTemporary.git
+	url = git://github.com/simkimsia/TwigViewTemporary.git
 [submodule "themes/Vendor/phpThumb"]
 	path = themes/Vendor/phpThumb
-	url = git@github.com:simkimsia/phpThumb-for-cakephp-2.0.git
+	url = git://github.com/simkimsia/phpThumb-for-cakephp-2.0.git
