@@ -58,7 +58,10 @@ class AppController extends Controller {
         'Paginator',
 	);
 
-	public $helpers = array('Html', 'Form' => array('className' => 'OwnForm'), 'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax', 'Number');
+	public $helpers = array('Html', 
+							'Form' => array('className' => 'OwnForm'), 
+							'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax', 'Number',
+							'Gravatar.Gravatar');
 
 	//Allowed controllers with actions
 	public $sslActions = array(

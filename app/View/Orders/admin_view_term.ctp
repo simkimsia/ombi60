@@ -21,13 +21,17 @@
 
 				<?php
 				$email = $order['User']['email'];
-				$email = trim(strtolower($email));
-				$gravatar_id = md5($email);
-				$defaultPic = Router::url('/img/admin/icons/customer.gif', true); 
-				$gravatarLink = 'https://secure.gravatar.com/avatar.php?gravatar_id=' . $gravatar_id;
-				$gravatarLink .= '&size=50&default='. $defaultPic;
 
-				echo $this->Html->image($gravatarLink, array('id' => 'gravatar'));
+				$defaultPic = Router::url('/img/admin/icons/customer.gif', true); 
+
+				
+				echo $this->Gravatar->image($email, array(
+					'size' => 50,
+					'default' => $defaultPic,
+					'ssl' => true,
+					), array(
+						'alt' => 'Gravatar'));
+				
 				?>
 					<p class="status admin">admin</p>
 				</div>
