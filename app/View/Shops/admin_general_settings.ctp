@@ -7,7 +7,7 @@
 		</div>
 	
 		<div class="box-wrap clear">
-		
+
 		<?php
 
 			echo $this->Form->create('Shop', array(
@@ -28,7 +28,10 @@
 					)
 				)
 			));
-			
+		?>
+		
+			<div class="columns clear bt-space15">
+		<?php	
 		echo $this->Form->input('ShopSetting.id', array(
 			'type'=>'hidden', 
 			'value'=>$shopSetting['ShopSetting']['id']
@@ -47,6 +50,7 @@
 			
 		echo $this->Form->input('Shop.name', array(
 			'value' => $shopSetting['Shop']['name'],
+			'class' => 'required text fl-space2'
 		));	
 			
 		echo $this->Form->input('ShopSetting.timezone', array(
@@ -138,8 +142,14 @@
 		));
 		
 		?>
+		</div>
+		<div class="rule2"></div>
+		<div class="form-field clear">
+			<input type="submit" class="button" value="Apply Settings" />
+		</div>
+		
 
-		<input type="submit" class="button" value="Apply Settings" />
+		
 
 		<?php echo $this->Form->end(); ?>
 		
