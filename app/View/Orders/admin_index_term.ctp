@@ -19,7 +19,7 @@
 
 	<form method="post" action="">
 	
-	<table class="style1 datatable">
+	<table id="ordersTable" class="style1">
 	<thead>
 		<tr>
 			<th><input type="checkbox" class="checkbox select-all" /></th>
@@ -51,10 +51,16 @@
 <script type="text/javascript">
 
 	
-	$('.datatable').dataTable( {
+	$('#ordersTable').dataTable( {
 		"bProcessing": true,
 		"bServerSide": true,
-		"sAjaxSource": "<?php echo $this->here; ?>"
+		"sAjaxSource": "<?php echo $this->here; ?>",
+			"bLengthChange": true,
+			"bPaginate": true,
+			"sPaginationType": "full_numbers",
+			"iDisplayLength" : 5,
+			"bInfo" : false,
+
 	} );
 
 </script>
