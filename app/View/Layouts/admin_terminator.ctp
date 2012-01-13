@@ -129,6 +129,9 @@
 					case 'webpages' :
 						$blogsPagesSelected = ' class=active ';
 						break;
+					case 'blogs' :
+						$blogsPagesSelected = ' class=active ';
+						break;
 					case 'links' :
 						$navigationSelected = ' class=active';
 						break;
