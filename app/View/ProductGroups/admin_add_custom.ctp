@@ -1,42 +1,96 @@
-<div class="collections">
-      <div class="text_center">
-        <h2><?php echo __('Add your New Custom Collection');?></h2>
-        <?php echo $this->Html->link(__('Cancel'), array('controller'=>'product_groups','action' => 'index')); ?>
-    </div>
+<h1 class="center"><?php echo __('Add your New Custom Collection');?></h1>
+<div class="rule"></div>
+<!--
+<div id="action-links">
+	<ul>
+	    <li class="no-icon"><?php echo $this->Html->link(__('Cancel'), array('controller'=>'blogs','action' => 'view', $blog_id));?></li>
+	</ul>
+</div>
+-->
 
-<?php echo $this->Form->create('ProductGroup');?>
-	<fieldset>
- 		<legend><?php echo __('New Custom Collection'); ?></legend>
-	<?php
-	
-	$this->TinyMce->editor(array(
-			'theme' => 'advanced',
-			'mode' => 'textareas',
-			'plugins' => ' table',
-			'theme_advanced_buttons1' => 'bold,italic,underline,undo,redo,link,unlink,forecolor,styleselect,removeformat,cleanup,code,table,fontselect,fontsizeselect',
-			'theme_advanced_buttons2' => '',
-			'theme_advanced_toolbar_location' => 'top',
-			'remove_linebreaks' => false,
-			'extended_valid_elements' => 'textarea[cols|rows|disabled|name|readonly|class]'));
-	
-		echo $this->Form->input('shop_id', array('type'=>'hidden', 'value'=>Shop::get('Shop.id')));
-		echo $this->Form->input('title');
-		echo $this->Form->input('description', array('label' => __('Write description of collection')));
-	
-	?>
-	</fieldset>
-	<fieldset>
- 		<legend><?php echo __('Properties'); ?></legend>
- 		<label><?php echo __('Custom Collection Visibility');?></label>
- 		<span class="hint">If you want to hide this collection from your clients, choose hidden.</span> 		
-    <?php 
-	      echo $this->Form->input('visible',array('options' => array('1'=>'Published', '0'=>'Hidden'), 'label' => false)); 
+<div class="content-box">
+	<div class="box-body">
+		<div class="box-wrap clear">
+			<?php
 
-    ?>
-  </fieldset>
-  <div class="submit">
-    <?php echo $this->Form->submit(__('Create Custom Collection'), array('div' => false));?> &nbsp;<?php echo __('or'); ?>&nbsp;
-    <?php echo $this->Html->link(__('Cancel'), array('controller'=>'product_groups','action' => 'index')); ?>
-  </div>
-  <?php echo $this->Form->end(); ?>
+				echo $this->Form->create('ProductGroup', array(
+					'class' => 'validate-form form bt-space15', 
+					'inputDefaults' => array(
+						'label' => array(
+							'class' => 'form-label size-120 fl-space2'
+						),
+						'div'	=> array(
+							'class' => 'form-field clear'
+						),
+						'error' => array(
+							'attributes' => array(
+								'wrap' => 'label', 
+								'class' => 'error', 
+								'for' => true
+							)
+						),
+
+					)
+				));
+			?>
+			<div class="columns clear bt-space15">
+
+			<?php
+			$this->TinyMce->editor(array(
+					'theme' => 'advanced',
+					'mode' => 'textareas',
+					'plugins' => ' table',
+					'theme_advanced_buttons1' => 'bold,italic,underline,undo,redo,link,unlink,forecolor,styleselect,removeformat,cleanup,code,table,fontselect,fontsizeselect',
+					'theme_advanced_buttons2' => '',
+					'remove_linebreaks' => false,
+					'theme_advanced_toolbar_location' => 'top',
+					'extended_valid_elements' => 'textarea[cols|rows|disabled|name|readonly|class]'));
+	
+				
+				echo $this->Form->input('ProductGroup.shop_id', array('type'=>'hidden', 'value'=>Shop::get('Shop.id')));
+		
+				echo $this->Form->input('ProductGroup.title', array(
+					'class' => 'required text fl-space2'
+				));
+		
+				echo $this->Form->input('ProductGroup.description', array(
+					'label' => array(
+						'text' => 'Write your page',
+						'class' => 'form-label size-120 fl-space2',
+					),
+					'class' => 'textarea fl-space2'
+				));
+		
+				?>
+				
+
+				
+				<?php
+				
+				echo $this->Form->input('ProductGroup.visible',array(
+					'options' => array(
+						'1'=>'Published', 
+						'0'=>'Hidden'), 
+					'label' => array(
+						'text' => 'Visibility',
+						'class' => 'form-label size-120 fl-space2',
+					),
+				)); 
+				
+				?>
+				
+					
+
+	
+			</div>
+	
+			<div class="rule2"></div>
+			<div class="form-field clear">
+				<input type="submit" class="button" value="Create Custom Collection" />&nbsp;or&nbsp;
+				<?php echo $this->Html->link(__('Cancel'), array('controller'=>'product_groups','action' => 'index')); ?>
+			</div>
+			<?php echo $this->Form->end(); ?>
+
+		</div>
+	</div>
 </div>
