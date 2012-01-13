@@ -93,7 +93,7 @@ class ShippingRatesController extends AppController {
 				$this->Session->setFlash(__('The shipping rate could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 			
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				
 				$this->layout = 'json';
 				if ($result) {
@@ -133,7 +133,7 @@ class ShippingRatesController extends AppController {
 				$result = false;
 				$this->Session->setFlash(__('The shipping rate could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				
 				$this->layout = 'json';
 				if ($result) {

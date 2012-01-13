@@ -44,7 +44,7 @@ class DomainsController extends AppController {
 			    if (!$this->Domain->save($this->request->data)) {
 			        $result = false;
 			    }
-			    if ($this->request->params['isAjax']) {
+			    if ($this->request->is('ajax')) {
 			
 			        $this->layout = 'json';
 			        if ($result) {

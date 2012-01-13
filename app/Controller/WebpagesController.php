@@ -86,7 +86,7 @@ class WebpagesController extends AppController {
 		
 		$result = $this->Webpage->toggle($id, 'visible');
 		
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 			
 			$this->layout = 'json';
 			if ($result) {

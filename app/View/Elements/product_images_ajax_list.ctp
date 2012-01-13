@@ -4,7 +4,7 @@
 print_r($this->request->params);
 echo "</pre>";*/
 //die;
-/*if ($this->request->params['isAjax']=="") {
+/*if ($this->request->is('ajax')=="") {
   echo $this->Html->script(array('jquery/jquery-1.4.2.min', 'ajaxupload'));
 }*/
 ?>

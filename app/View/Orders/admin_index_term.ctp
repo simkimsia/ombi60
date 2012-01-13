@@ -22,7 +22,7 @@
 	<table class="style1 datatable">
 	<thead>
 		<tr>
-			<th class="bSortable"><input type="checkbox" class="checkbox select-all" /></th>
+			<th><input type="checkbox" class="checkbox select-all" /></th>
 			<th>Column 1</th>
 			<th>Column 2</th>
 			<th>Column 3</th>
@@ -32,44 +32,6 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php
-		
-			foreach ($orders as $order):
-
-		
-		?>
-	
-		<tr>
-			<td><input type="checkbox" class="checkbox" /></td>
-
-			<td>
-				<?php echo $this->Html->link(__('#' . $order['Order']['order_no']), array('action' => 'view', $order['Order']['id'])); ?>
-
-			</td>
-			<td>
-				<?php echo $this->Time->niceShort($order['Order']['created']); ?>
-			</td>
-			<td>
-				<?php echo $order['User']['full_name']; ?>
-			</td>
-
-			<td>
-				<?php echo $this->Constant->displayPayment($order['Order']['payment_status']);?>
-			</td>
-			<td>
-				<?php echo $this->Constant->displayFulfillment($order['Order']['fulfillment_status']);?>
-			</td>
-
-			<td>
-				<?php echo $this->Number->currency($order['Order']['amount'], '$'); ?>
-			</td>
-
-
-		</tr>
-		
-		<?php endforeach; ?>
-                                    
-
 	</tbody>
 	</table>
 	
@@ -85,3 +47,14 @@
 	</div>
 	</form>
 </div><!-- /#table -->
+
+<script type="text/javascript">
+
+	
+	$('.datatable').dataTable( {
+		"bProcessing": true,
+		"bServerSide": true,
+		"sAjaxSource": "<?php echo $this->here; ?>"
+	} );
+
+</script>

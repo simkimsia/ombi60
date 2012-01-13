@@ -203,7 +203,7 @@ class PostsController extends AppController {
 			$this->Post->updatePublishedAt($id);
 		}
 		
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 			
 			$this->layout = 'json';
 			if ($result) {

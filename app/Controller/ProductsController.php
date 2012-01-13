@@ -491,7 +491,7 @@ class ProductsController extends AppController {
 			$this->Product->updateCounterCacheForM2MMain($id, array(), false);	
 		}
 		
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 			
 			$this->layout = 'json';
 			if ($result) {
@@ -704,7 +704,7 @@ class ProductsController extends AppController {
          * @return array of options
          * */
         public function admin_remove_variant_option($id) {
-                if ($this->request->params['isAjax']) {
+                if ($this->request->is('ajax')) {
                         $this->layout = "";
                 }
                 if ($this->Product->Variant->VariantOption->delete($id)) {

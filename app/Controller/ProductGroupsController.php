@@ -290,7 +290,7 @@ $group_products = $this->ProductGroup->ProductsInGroup->getProductsWithImagesByG
 		
 		$result = $this->ProductGroup->toggle($id, 'visible');
 		
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 			
 			$this->layout = 'json';
 			if ($result) {

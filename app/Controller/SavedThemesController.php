@@ -51,7 +51,7 @@ class SavedThemesController extends AppController {
 	
 		$this->set('savedThemes', $this->paginate());
 		
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 			$this->layout = 'ajax';
 			$this->render('themes_ajax_list');
 		} else {
@@ -122,7 +122,7 @@ class SavedThemesController extends AppController {
 		// usually because of the need to upload images using uploadify hence
 		// we need ajax to first create the Saved Theme in order to have a proper folder
 		// for uploadify to upload the pics to
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 			
 			$this->layout = 'json';
 			$successJSON = false;
@@ -283,13 +283,13 @@ class SavedThemesController extends AppController {
 
 	public function admin_delete($id = null) {
 		$contents = array();
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 			$this->layout = 'json';
 			$successJSON = false;
 		}
 		
 		if (!$id) {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				$contents['reason'] = __('Invalid id for saved theme');
 			} else {
 				$this->Session->setFlash(__('Invalid id for saved theme'), 'default', array('class'=>'flash_failure'));
@@ -299,7 +299,7 @@ class SavedThemesController extends AppController {
 		
 		
 		if ($this->SavedTheme->delete($id)) {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				$successJSON = true;
 				$contents['id'] = $id;
 			} else {
@@ -307,7 +307,7 @@ class SavedThemesController extends AppController {
 				$this->redirect(array('action'=>'index'));	
 			}
 		} else {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				$contents['reason'] = __('Saved theme was not deleted');
 			} else {
 				$this->Session->setFlash(__('Saved theme was not deleted'), 'default', array('class'=>'flash_failure'));

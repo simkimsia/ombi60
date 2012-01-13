@@ -209,7 +209,7 @@ class LinksController extends AppController {
 			$result = $this->Link->save($this->request->data);
 		}
 		
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 				
 			$this->layout = 'json';
 			if ($result) {
@@ -264,7 +264,7 @@ class LinksController extends AppController {
 		
 		$result = $this->Link->delete($id);
 		
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 				
 			$this->layout = 'json';
 			if ($result) {

@@ -109,12 +109,12 @@ class ProductImagesController extends AppController {
 		$successJSON = false;
 		$contents = array();
 
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 			$this->layout = 'json';
 		}
 
 		if ($id == null OR $product_id == null) {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				$contents['reason'] = __('Invalid id for image');
 			} else {
 				$this->Session->setFlash(__('Invalid id for image'));
@@ -123,7 +123,7 @@ class ProductImagesController extends AppController {
 		}
 
 		if ($this->ProductImage->delete($id)) {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				$successJSON = true;
 				$contents['id'] = $id;
 
@@ -132,7 +132,7 @@ class ProductImagesController extends AppController {
 				$this->redirectToProductEdit($product_id);
 			}
 		} else {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				$contents['reason'] = __('Image was not deleted');
 			} else {
 				$this->Session->setFlash(__('Image was not deleted'));
@@ -144,11 +144,11 @@ class ProductImagesController extends AppController {
 	}
 
 	public function admin_make_this_cover($id = null, $product_id = null) {
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 			$this->layout = 'ajax';;
 		}
 		if (!$id OR !$product_id) {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				$contents['reason'] = __('Invalid id for image');
 			} else {
 				$this->Session->setFlash(__('Invalid id for image'));
@@ -157,7 +157,7 @@ class ProductImagesController extends AppController {
 		}
 
 		if ($this->ProductImage->chooseAsCoverImage($id, $product_id)) {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				// the images list related code
 				// to make paging easier to test, we set as 1 per page.
 				$this->paginate = array('conditions'=>array('ProductImage.product_id'=>$product_id),
@@ -174,7 +174,7 @@ class ProductImagesController extends AppController {
 			}
 				
 		} else {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				$contents['reason'] = __('Image was not deleted');
 			} else {
 				$this->Session->setFlash(__('Image was not deleted'));
@@ -204,11 +204,11 @@ class ProductImagesController extends AppController {
 	}
 
 	public function admin_delete_me($id = null, $product_id = null) {
-		if ($this->request->params['isAjax']) {
+		if ($this->request->is('ajax')) {
 			$this->layout = false;
 		}
 		if (!$id OR !$product_id) {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				$contents['reason'] = __('Invalid id for image');
 			} else {
 				$this->Session->setFlash(__('Invalid id for image'));
@@ -217,7 +217,7 @@ class ProductImagesController extends AppController {
 		}
 
 		if ($this->ProductImage->delete($id)) {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				// the images list related code
 				// to make paging easier to test, we set as 1 per page.
 				$this->paginate = array('conditions'=>array('ProductImage.product_id'=>$product_id),
@@ -234,7 +234,7 @@ class ProductImagesController extends AppController {
 			}
 
 		} else {
-			if ($this->request->params['isAjax']) {
+			if ($this->request->is('ajax')) {
 				$contents['reason'] = __('Image was not deleted');
 			} else {
 				$this->Session->setFlash(__('Image was not deleted'));

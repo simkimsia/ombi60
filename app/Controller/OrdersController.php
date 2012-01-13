@@ -15,6 +15,7 @@ class OrdersController extends AppController {
 		'Permission',
 				'Session', 'Paypal.Paypal', 
 				'Payments.Payments',
+				/*
 				'Filter.Filter' => array(
 					'actions' => array('index', 'admin_index'),
 					'defaults' => array(),
@@ -40,7 +41,7 @@ class OrdersController extends AppController {
 					'useSession'=>true,
 					'complicatedRelation' => array('Customer'=>'User'),
 					),
-				
+				*/
 				
 				);
 	
@@ -110,27 +111,58 @@ class OrdersController extends AppController {
 		
 		$this->Order->recursive = -1;
 		
+
+		
 		// attach Linkable behavior
 		$this->Order->Behaviors->load('Linkable.Linkable');
 		$this->Order->Customer->Behaviors->load('Linkable.Linkable');
 		$this->Order->Customer->User->Behaviors->load('Linkable.Linkable');
 		
-		$this->paginate = array(
-			      'conditions' => array('Order.shop_id' => $shop_id),
-							
-			      'link'=>array(
-				 'Customer'=>array('User')),
-			      'fields'=>array('User.full_name', 'Order.*'),
-			      );
+		if ($this->request->is('ajax')) {
+			$start	= $this->request->query['iDisplayStart'];
+			$limit	= $this->request->query['iDisplayLength'];
+			$page	= ($start / $limit) + 1;
+		} else {
+			$limit	= 5;
+			$page	= 1;
+		}
 		
-
+		$this->paginate = array(
+			'conditions' => array('Order.shop_id' => $shop_id),
+			'page' => $page,
+			'limit' => $limit,
+			'link'=>array(
+				'Customer'=>array('User')
+			),
+			'fields'=>array('User.full_name', 'Order.*'),
+		);
+		
 		
 		$orders = $this->paginate();
+		
+		
+		if ($this->request->is('ajax')) {
+			
+			$iTotal 		= $this->request->params['paging']['Order']['count'];
+			$iTotalDisplay 	= $this->request->params['paging']['Order']['current'];
+			$sEcho			= $this->request->query['sEcho'];
+			$this->layout = 'json_datatables';
+				
+			// no views rendered
+			$this->autoRender = false;
 
-		$this->set('orders', $orders);
-		
-		$this->render('admin_index_term');
-		
+	        $this->set(compact('orders', 'iTotal', 'iTotalDisplay', 'sEcho'));
+	
+	        $this->render('admin_index_json');
+
+			return;
+		} else if ($this->request->is('get')) {
+
+			$this->set('orders', $orders);
+
+			$this->render('admin_index_term');
+		}
+
 	}
 	
 	private function checkCorrectShop($order_shop_id) {
@@ -506,7 +538,7 @@ class OrdersController extends AppController {
 		    ) {
 			$successJSON = false;
 			$contents['reason'] = __('Invalid parameters');
-		} else if ($this->request->params['isAjax']) {
+		} else if ($this->request->is('ajax')) {
 			// 1st we get Shipping price
 			$price = $this->Order->Shop->ShippedToCountry->ShippingRate->field('price', array('id'=>$this->request->data['shipping_rate_id']));
 			// 2nd we update Order with new shipping fee
