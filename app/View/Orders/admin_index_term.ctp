@@ -13,6 +13,19 @@
 
 </div>
 
+<?php 
+
+	echo $currentUrl = $_SERVER[ 'REQUEST_URI' ]; 
+	$requestParams = $this->request->query;
+	
+?>
+
+<a href="<?php echo $this->Html->addQueryToCurrentUrl(array('f_status'=>PAYMENT_AUTHORIZED)); ?>" >All Authorized</a>
+<a href="<?php echo $this->Html->addQueryToCurrentUrl(array('f_status'=>PAYMENT_ABANDONED)); ?>" >All Abandoned</a>
+
+<a href="<?php echo $this->Html->addQueryToCurrentUrl(array('status'=>ORDER_CREATED)); ?>" >All CREATED</a>
+<a href="<?php echo $this->Html->addQueryToCurrentUrl(array('status'=>ORDER_OPENED)); ?>" >All OPENED</a>
+
 <!-- DATA-TABLE JS PLUGIN -->
 <div id="data-table">
 	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem.</p> 
@@ -54,12 +67,13 @@
 	$('#ordersTable').dataTable( {
 		"bProcessing": true,
 		"bServerSide": true,
-		"sAjaxSource": "<?php echo $this->here; ?>",
+		"sAjaxSource": "<?php echo $currentUrl; ?>",
 		"bLengthChange": true,
 		"bPaginate": true,
 		"sPaginationType": "full_numbers",
 		"iDisplayLength" : 5,
 		"bInfo" : false,
+		"bFilter" : false,
 		'aoColumns': [ 
 			{ "bSortable": false },
 			null,

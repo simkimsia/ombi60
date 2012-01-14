@@ -8,7 +8,7 @@ class OrdersController extends AppController {
 
 	public $name = 'Orders';
 
-	public $helpers = array('Html', 'Form', 'Session', 'Time', 'Number');
+	public $helpers = array('Session', 'Time', 'Number');
 
 	public $components = array(
 		
@@ -107,6 +107,7 @@ class OrdersController extends AppController {
 
 	public function admin_index() {
 		
+		/* for sorting */
 		$columns = array(
 			'0' => 'Order.id',
 			'1' => 'Order.order_no',
@@ -116,6 +117,25 @@ class OrdersController extends AppController {
 			'5' => 'Order.fulfillment_status',
 			'6' => 'Order.amount'
 		);
+		
+		/* for filtering */
+		$filterParams = array('f_status'=>'Order.payment_status', 'status' => 'Order.status');
+		$filterParamNames = array_keys($filterParams);
+		
+		$queryParams = $this->request->query;
+		$queryParamNames = array_keys($queryParams);
+		
+		$validFilterParams = array_intersect($filterParamNames, $queryParamNames);
+		
+		$fieldsToFilter = array();
+		
+		if (!empty($validFilterParams)) {
+			foreach($validFilterParams as $name) {
+				$fieldName 	= $filterParams[$name];
+				$value 		= $queryParams[$name];
+				$fieldsToFilter[$fieldName] = $value;
+			}
+		}
 		
 		$shop_id = Shop::get('Shop.id');
 		
@@ -152,8 +172,11 @@ class OrdersController extends AppController {
 			
 		}
 
+		$defaultFilter = array('Order.shop_id' => $shop_id);
+		$conditions = array_merge($defaultFilter, $fieldsToFilter);
+		
 		$this->paginate = array(
-			'conditions' => array('Order.shop_id' => $shop_id),
+			'conditions' => $conditions,
 			'page' => $page,
 			'limit' => $limit,
 			'link'=>array(

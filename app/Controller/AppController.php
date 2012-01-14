@@ -58,7 +58,7 @@ class AppController extends Controller {
         'Paginator',
 	);
 
-	public $helpers = array('Html', 
+	public $helpers = array('Html' => array('className' => 'OwnHtml'), 
 							'Form' => array('className' => 'OwnForm'), 
 							'Session', 'Constant', 'TimeZone.TimeZone', 'Ajax', 'Number',
 							'Gravatar.Gravatar');
