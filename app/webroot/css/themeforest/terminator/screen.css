@@ -493,6 +493,7 @@ label.error        		{ color: #FF0000; }
 .dataTables_wrapper table					{ width: 100% !important; margin: 0px 0px 20px 0px; }
 .dataTables_wrapper .dataTables_length 				{ float: left; margin: 0px 0px 15px 0px; }
 .dataTables_wrapper .dataTables_filter 				{ float: right; margin: 0px 0px 15px 0px; }
+.dataTables_info	{float: right;margin: 0px 0px 15px 0px;}
 .dataTables_wrapper .dataTables_filter input			{ display: inline; border: 1px solid #B8B8B8; font-size: 12px; font-family: arial; color: #333333; height: 16px; padding: 2px 4px 2px 4px; }
 .datatable 							{ clear: both; }
 .datatable thead th.sorting					{ cursor: pointer; padding-right: 25px; }
