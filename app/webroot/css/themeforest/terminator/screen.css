@@ -515,6 +515,47 @@ label.error        		{ color: #FF0000; }
 .dataTables_wrapper .dataTables_paginate .last:hover		{ background: url('../../../img/themeforest/terminator/arrow_rightend_ovr.png') center center no-repeat !important; text-indent: -9999px; }
 .dataTables_wrapper .dataTables_paginate .next			{ background: url('../../../img/themeforest/terminator/arrow_right_off.png') center center no-repeat !important; margin: 0px 0px 0px 4px; text-indent: -9999px; border-right-width: 0px; -moz-border-radius: 3px 0px 0px 3px; -webkit-border-radius: 3px 0px 0px 3px; border-radius: 3px 0px 0px 3px;}
 .dataTables_wrapper .dataTables_paginate .next:hover		{ background: url('../../../img/themeforest/terminator/arrow_right_ovr.png') center center no-repeat!important ; text-indent: -9999px; }
+.dataTables_processing {
+
+	position: absolute;
+
+	z-index:900;
+	top: 0; right: 0; bottom: 0; left: 0;
+	
+	height: 100%;
+	width: 100%;
+	
+/*	background-color : white;*/
+	
+
+}
+#overlay_modal {
+	position: relative;
+	top: 50%;
+	left: 40%;
+	z-index:990;
+	background-color:#fff;
+
+	width:350px;
+	padding:15px;
+	text-align:left;
+	border:2px solid #333;
+
+
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	-moz-box-shadow: 0 0 50px #ccc;
+	-webkit-box-shadow: 0 0 50px #ccc;
+
+}
+
+#overlay_modal img {
+	position: relative;
+	top: 50%;
+	left: 20%;
+	z-index:999;
+	clear:both;
+}
 
 /* *********************************************************************
  * Modal window

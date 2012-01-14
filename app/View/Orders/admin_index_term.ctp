@@ -48,6 +48,7 @@
 	</tbody>
 	</table>
 	
+	
 	<div class="tab-footer clear fl">
 		<div class="fl">
 			<select name="dropdown" class="fl-space">
@@ -63,30 +64,46 @@
 
 <script type="text/javascript">
 
-	$('#ordersTable').dataTable( {
-		"bProcessing": true,
-		"bServerSide": true,
-		"sAjaxSource": "<?php echo $currentUrl; ?>",
-		"bLengthChange": true,
-		"bPaginate": true,
-		"sPaginationType": "full_numbers",
-		"iDisplayLength" : 5,
-		"bInfo" : false,
-		"bFilter" : false,
-		'aoColumns': [ 
-			{ "bSortable": false },
-			null,
-			null,
-			null,
-			null,
-			null,
-			null
-		],
-		// set the order no. as default sort asc
-		"aaSorting": [[2,'asc']]
+	$(document).ready(function(){
+		
+		oTable = $('#ordersTable').dataTable( {
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": "<?php echo $currentUrl; ?>",
+			"bLengthChange": true,
+			"bPaginate": true,
+			"sPaginationType": "full_numbers",
+			"iDisplayLength" : 5,
+			"bInfo" : false,
+			"bFilter" : false,
+			'aoColumns': [ 
+				{ "bSortable": false },
+				null,
+				null,
+				null,
+				null,
+				null,
+				null
+			],
+			// set the order no. as default sort desc
+			"aaSorting": [[2,'desc']],
+			"oLanguage": {
+				"sProcessing": '<div id="overlay_modal"><?php echo $this->Html->image('ajax-loader.gif', array('alt' => 'Processing...', 'class'=>'bt-space15')); ?><p class="center bt-space0">Processing...</p></div>'
+				//"sProcessing" : 'Processing...'
+			},
+		    "fnDrawCallback": function( oSettings ) {
+				if (oSettings._iRecordsTotal == 0) {
+					// hide the table
+					$('#data-table').hide();
+				}
+
+
+		    }
 
 
 
-	} );
+		} );
+		
+	});
 
 </script>

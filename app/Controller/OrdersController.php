@@ -194,6 +194,10 @@ class OrdersController extends AppController {
 		
 		if ($this->request->is('ajax')) {
 
+
+
+
+
 			$iTotal 		= $this->request->params['paging']['Order']['count'];
 //			$iTotalDisplay 	= $this->request->params['paging']['Order']['current'];
 			$iTotalDisplay 	= $iTotal;
