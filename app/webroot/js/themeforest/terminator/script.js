@@ -181,7 +181,8 @@ function InitNotifications () {
 /* *********************************************************************
  * Data Tables
  * *********************************************************************/
-function InitTables () {
+function InitTables (selector, options) {
+	/*
 	$('.datatable').dataTable({
 		'bLengthChange': true,
 		'bPaginate': true,
@@ -209,6 +210,17 @@ function InitTables () {
 			null
 		]	
 	});
+	
+	if ( !selector ) {
+		selector = '.datatable';
+	}
+
+    if ( options ) {
+        $.extend( true, init, options );
+    }
+
+	$().dataTable(init);
+	*/
 }
 
 /* *********************************************************************

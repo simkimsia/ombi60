@@ -32,16 +32,16 @@
 
 	<form method="post" action="">
 	
-	<table id="ordersTable" class="style1">
+	<table id="ordersTable" class="style1 datatable">
 	<thead>
 		<tr>
-			<th class="bSortable"><input type="checkbox" class="checkbox select-all" /></th>
-			<th>Order #</th>
-			<th>Date Created</th>
-			<th>Customer Full Name</th>
-			<th>Payment</th>
-			<th>Fulfillment</th>
-			<th>Total</th>
+			<th ><input type="checkbox" class="checkbox select-all" /></th>
+			<th >Order #</th>
+			<th >Date Created</th>
+			<th >Customer Full Name</th>
+			<th >Payment</th>
+			<th >Fulfillment</th>
+			<th >Total</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -63,7 +63,6 @@
 
 <script type="text/javascript">
 
-	
 	$('#ordersTable').dataTable( {
 		"bProcessing": true,
 		"bServerSide": true,
@@ -82,7 +81,9 @@
 			null,
 			null,
 			null
-		]	
+		],
+		// set the order no. as default sort asc
+		"aaSorting": [[2,'asc']]
 
 
 
