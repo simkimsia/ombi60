@@ -108,6 +108,7 @@ class OrdersController extends AppController {
 	public function admin_index() {
 		
 		$columns = array(
+			'0' => 'Order.id',
 			'1' => 'Order.order_no',
 			'2' => 'Order.created',
 			'3' => 'User.full_name',
@@ -140,6 +141,7 @@ class OrdersController extends AppController {
 
 			if (isset($this->request->query['iSortCol_0'])) {
 				if (is_numeric($this->request->query['iSortCol_0'])) {
+
 					$fieldToSort = $columns[$this->request->query['iSortCol_0']];
 					$sortDir = 'asc';
 					if (isset($this->request->query['sSortDir_0'])) {
