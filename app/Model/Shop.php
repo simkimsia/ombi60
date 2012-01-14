@@ -368,7 +368,13 @@ class Shop extends AppModel {
 					'conditions' => array(
 						'Domain.primary' => true
 					)
-				)
+				),
+			),
+			'belongsTo' => array(
+				'FeaturedSavedTheme' => array(
+					'className' => 'SavedTheme',
+					'foreignKey' => 'saved_theme_id',
+				),
 			)
 		));
 		
@@ -378,7 +384,9 @@ class Shop extends AppModel {
 				'Shop.*', 
 				'Domain.domain', 
 				'Domain.id', 
-				'ShopSetting.*')
+				'ShopSetting.*',
+				'FeaturedSavedTheme.id',
+				'FeaturedSavedTheme.folder_name')
 		));
 
 		if (!empty($result)) {

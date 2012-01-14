@@ -67,7 +67,7 @@ class AppError extends ErrorHandler {
 		
 		$theme = $this->getTheme();
 		
-		$pathToError = DS . 'themed' . DS . $theme . DS . 'templates' . DS . '404';
+		$pathToError = DS . 'Themed' . DS . $theme . DS . 'templates' . DS . '404';
 		
 		
 		$this->_outputMessage($pathToError);
@@ -87,7 +87,7 @@ class AppError extends ErrorHandler {
 	
 		// check if Cache is empty by checking the theme used
 		if (empty($currentShop) ||
-		    empty($currentShop['FeaturedSavedTheme']['name'])) {
+		    empty($currentShop['FeaturedSavedTheme']['folder_name'])) {
 	
 			// since cache does not have this, we shall go to database to retrieve
 			

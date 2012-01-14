@@ -619,6 +619,93 @@ class AppController extends Controller {
 		}
 	}
 	
+	/**
+	* following Evgeny advice and set up a appError code in order to display different error message
+	*
+	* http://book.cakephp.org/2.0/en/development/exceptions.html?highlight=apperror#using-appcontroller-apperror
+	**/
+	public function appError($error) {
+		
+		//use $this->request object to differentiate the admin and non-admin
+		$adminPage = isset($this->request->params['admin']);
+		$publicPage = !$adminPage;
+		
+		if ($publicPage) {
+			// 		and use view class, viewpath to  your page and ensure you load theme path too
+			// set the view class
+			$this->viewClass = 'TwigView.Twig';
+			
+			// set the view path
+			$this->viewPath = 'templates';
+			
+			// set the layout
+			$this->layout = 'theme';
+			
+			// set the theme
+			$this->theme = $this->getTheme();
+			
+			$this->set(array(
+				'code' => '404',
+				'name' => __('Not Found'),
+				'page_title' => 'Page Not Found',
+				'template' => '404',
+			));
+			
+			
+			$this->render('404');
+			
+			
+			$this->log($this->theme);
+			
+		}
+
+	}
+	
+	private function getTheme() {
+		
+		App::uses('Shop', 'Model');
+		$this->loadModel('Shop');
+		
+		// retrieve the theme name to view pages with
+		$shopId = Shop::get('Shop.id');
+		
+		$shopIdValid = ($shopId > 0);
+		
+		if ($shopIdValid) {
+			
+			$currentShop = Cache::read('Shop'.$shopId);
+			
+		} else {
+			$currentShop = $this->Shop->getByDomain(FULL_BASE_URL);
+			if (!empty($currentShop)) {
+				$shopId = $currentShop['Shop']['id'];
+			}
+		}
+		
+		// check if Cache is empty by checking the theme used
+		if (empty($currentShop) ||
+		    empty($currentShop['FeaturedSavedTheme']['folder_name'])) {
+	
+			// since cache does not have this, we shall go to database to retrieve
+			
+			$this->Shop->recursive = -1;
+			$this->Shop->Behaviors->attach('Containable');
+			
+			$shop = $this->Shop->find('first', array('conditions'=>array('Shop.id'=>$shopId),
+								 'contain'=>array( 'FeaturedSavedTheme')));
+			
+	
+			// now we write to Cache
+			Cache::write('Shop'.$shopId, $shop);
+			// once again we read from Cache.
+			$currentShop = Cache::read('Shop'.$shopId);
+		}
+		
+		$this->theme = !empty($currentShop['FeaturedSavedTheme']['folder_name']) ? $currentShop['FeaturedSavedTheme']['folder_name'] : 'blue-white';
+		
+		return $this->theme;
+	}
+	
 	
 
 /*

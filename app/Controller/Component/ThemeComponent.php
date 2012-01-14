@@ -32,7 +32,7 @@ class ThemeComponent extends Component {
  * @param controller object $controller 
  */     
 	public function startup(Controller $controller) {
-		
+
 		if (in_array($controller->action, $this->actions) || empty($this->actions)) {
 			App::uses('Shop', 'Model');
 			// retrieve the theme name to view pages with
@@ -44,7 +44,7 @@ class ThemeComponent extends Component {
 		
 			// check if Cache is empty by checking the theme used
 			if (empty($currentShop) ||
-			    empty($currentShop['FeaturedSavedTheme']['name'])) {
+			    empty($currentShop['FeaturedSavedTheme']['folder_name'])) {
 		
 				// since cache does not have this, we shall go to database to retrieve
 				
