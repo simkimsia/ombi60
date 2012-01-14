@@ -107,6 +107,15 @@ class OrdersController extends AppController {
 
 	public function admin_index() {
 		
+		$columns = array(
+			'1' => 'Order.order_no',
+			'2' => 'Order.created',
+			'3' => 'User.full_name',
+			'4' => 'Order.payment_status',
+			'5' => 'Order.fulfillment_status',
+			'6' => 'Order.amount'
+		);
+		
 		$shop_id = Shop::get('Shop.id');
 		
 		$this->Order->recursive = -1;
@@ -118,15 +127,29 @@ class OrdersController extends AppController {
 		$this->Order->Customer->Behaviors->load('Linkable.Linkable');
 		$this->Order->Customer->User->Behaviors->load('Linkable.Linkable');
 		
+		$limit	= 5;
+		$page	= 1;
+		$fieldToSort = 'Order.id';
+		$sortDir = 'asc';
+		
+		
 		if ($this->request->is('ajax')) {
 			$start	= $this->request->query['iDisplayStart'];
 			$limit	= $this->request->query['iDisplayLength'];
 			$page	= ($start / $limit) + 1;
-		} else {
-			$limit	= 5;
-			$page	= 1;
+
+			if (isset($this->request->query['iSortCol_0'])) {
+				if (is_numeric($this->request->query['iSortCol_0'])) {
+					$fieldToSort = $columns[$this->request->query['iSortCol_0']];
+					$sortDir = 'asc';
+					if (isset($this->request->query['sSortDir_0'])) {
+						$sortDir = $this->request->query['sSortDir_0'];
+					}
+				}
+			} 
+			
 		}
-		
+
 		$this->paginate = array(
 			'conditions' => array('Order.shop_id' => $shop_id),
 			'page' => $page,
@@ -135,6 +158,9 @@ class OrdersController extends AppController {
 				'Customer'=>array('User')
 			),
 			'fields'=>array('User.full_name', 'Order.*'),
+			'order' => array(
+				$fieldToSort => $sortDir
+			)
 		);
 		
 		

@@ -22,13 +22,13 @@
 	<table id="ordersTable" class="style1">
 	<thead>
 		<tr>
-			<th><input type="checkbox" class="checkbox select-all" /></th>
-			<th>Column 1</th>
-			<th>Column 2</th>
-			<th>Column 3</th>
-			<th>Column 4</th>
-			<th>Column 5</th>
-			<th>Column 6</th>
+			<th class="bSortable"><input type="checkbox" class="checkbox select-all" /></th>
+			<th>Order #</th>
+			<th>Date Created</th>
+			<th>Customer Full Name</th>
+			<th>Payment</th>
+			<th>Fulfillment</th>
+			<th>Total</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -55,11 +55,22 @@
 		"bProcessing": true,
 		"bServerSide": true,
 		"sAjaxSource": "<?php echo $this->here; ?>",
-			"bLengthChange": true,
-			"bPaginate": true,
-			"sPaginationType": "full_numbers",
-			"iDisplayLength" : 5,
-			"bInfo" : false,
+		"bLengthChange": true,
+		"bPaginate": true,
+		"sPaginationType": "full_numbers",
+		"iDisplayLength" : 5,
+		"bInfo" : false,
+		'aoColumns': [ 
+			{ "bSortable": false },
+			null,
+			null,
+			null,
+			null,
+			null,
+			null
+		]	
+
+
 
 	} );
 
