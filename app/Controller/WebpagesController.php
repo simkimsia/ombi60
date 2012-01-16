@@ -12,7 +12,7 @@ class WebpagesController extends AppController {
 	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
 		parent::beforeFilter();
-		$this->Auth->allow('view', 'shopfront', 'frontpage');
+		$this->Auth->allow('view', 'shopfront', 'frontpage', 'error');
 	
 		if ($this->request->action == 'admin_toggle' ||
 		    $this->request->action == 'admin_menu_action') {
@@ -174,6 +174,35 @@ class WebpagesController extends AppController {
 		$this->Session->setFlash(__('Webpage was not deleted'), 'default', array('class'=>'flash_failure'));
 		$this->redirect(array('action' => 'index'));
 	}
+
+    public function error() {
+        // 		and use view class, viewpath to  your page and ensure you load theme path too
+        // set the view class
+        $this->viewClass = 'TwigView.Twig';
+
+        // set the view path
+        $this->viewPath = 'templates';
+
+        // set the layout
+        $this->layout = 'theme';
+
+        // set the theme
+        $this->theme = $this->getTheme();
+
+        $this->set(array(
+            'code' => '404',
+            'name' => __('Not Found'),
+            'page_title' => 'Page Not Found',
+            'template' => '404',
+        ));
+
+
+        $this->render('/templates/404');
+
+
+        $this->log($this->theme);
+    }
+
 
 }
 ?>

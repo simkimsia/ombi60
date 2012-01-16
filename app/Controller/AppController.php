@@ -619,49 +619,9 @@ class AppController extends Controller {
 		}
 	}
 	
-	/**
-	* following Evgeny advice and set up a appError code in order to display different error message
-	*
-	* http://book.cakephp.org/2.0/en/development/exceptions.html?highlight=apperror#using-appcontroller-apperror
-	**/
-	public function appError($error) {
-		
-		//use $this->request object to differentiate the admin and non-admin
-		$adminPage = isset($this->request->params['admin']);
-		$publicPage = !$adminPage;
-		
-		if ($publicPage) {
-			// 		and use view class, viewpath to  your page and ensure you load theme path too
-			// set the view class
-			$this->viewClass = 'TwigView.Twig';
-			
-			// set the view path
-			$this->viewPath = 'templates';
-			
-			// set the layout
-			$this->layout = 'theme';
-			
-			// set the theme
-			$this->theme = $this->getTheme();
-			
-			$this->set(array(
-				'code' => '404',
-				'name' => __('Not Found'),
-				'page_title' => 'Page Not Found',
-				'template' => '404',
-			));
-			
-			
-			$this->render('404');
-			
-			
-			$this->log($this->theme);
-			
-		}
 
-	}
 	
-	private function getTheme() {
+	protected function getTheme() {
 		
 		App::uses('Shop', 'Model');
 		$this->loadModel('Shop');
@@ -708,8 +668,8 @@ class AppController extends Controller {
 	
 	
 
-/*
- @todo implement AppController::cakeError stub
+
+/* @todo implement AppController::cakeError stub
 	function cakeError($method, $messages = array()) {
         if (file_exists(APP . 'AppError.php')) {
 				include_once (APP . 'AppError.php');
@@ -721,4 +681,19 @@ class AppController extends Controller {
 		
 	}
 */
+    /**
+     * following Evgeny advice and set up a appError code in order to display different error message
+     *
+     * http://book.cakephp.org/2.0/en/development/exceptions.html?highlight=apperror#using-appcontroller-apperror
+     **/
+    public function appError($error) {
+        //use $this->request object to differentiate the admin and non-admin
+        $adminPage = isset($this->request->params['admin']);
+        $publicPage = !$adminPage;
+        if ($publicPage) {
+            $this->redirect('/error');
+
+        }
+
+    }
 }
