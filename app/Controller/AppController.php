@@ -582,7 +582,8 @@ class AppController extends Controller {
 		$publicActions = array(
 			'Webpages'	=> array(
 				'view'		=> 'page',
-				'frontpage'	=> 'index'
+				'frontpage'	=> 'index',
+				'error' 	=> '404'
 			),
 			'Posts'		=> array(
 				'view'	=> 'article',

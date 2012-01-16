@@ -175,19 +175,12 @@ class WebpagesController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+	/**
+	*
+	* the default action for all 404 public pages
+	*
+	**/
     public function error() {
-        // 		and use view class, viewpath to  your page and ensure you load theme path too
-        // set the view class
-        $this->viewClass = 'TwigView.Twig';
-
-        // set the view path
-        $this->viewPath = 'templates';
-
-        // set the layout
-        $this->layout = 'theme';
-
-        // set the theme
-        $this->theme = $this->getTheme();
 
         $this->set(array(
             'code' => '404',
@@ -199,8 +192,6 @@ class WebpagesController extends AppController {
 
         $this->render('/templates/404');
 
-
-        $this->log($this->theme);
     }
 
 

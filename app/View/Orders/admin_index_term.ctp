@@ -89,7 +89,6 @@
 			"aaSorting": [[2,'desc']],
 			"oLanguage": {
 				"sProcessing": '<div id="overlay_modal"><?php echo $this->Html->image('ajax-loader.gif', array('alt' => 'Processing...', 'class'=>'bt-space15')); ?><p class="center bt-space0">Processing...</p></div>'
-				//"sProcessing" : 'Processing...'
 			},
 		    "fnDrawCallback": function( oSettings ) {
 				if (oSettings._iRecordsTotal == 0) {
