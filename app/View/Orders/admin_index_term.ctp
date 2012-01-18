@@ -13,52 +13,69 @@
 
 </div>
 
-<?php 
+<?php $currentUrl = $_SERVER['REQUEST_URI']; ?>
 
-	echo $currentUrl = $_SERVER[ 'REQUEST_URI' ]; 
-	$requestParams = $this->request->query;
+	<?php 
 	
-?>
+	$filters = 'Showing ';
 
-<a href="<?php echo $this->Html->addQueryToCurrentUrl(array('f_status'=>PAYMENT_AUTHORIZED)); ?>" >All Authorized</a>
-<a href="<?php echo $this->Html->addQueryToCurrentUrl(array('f_status'=>PAYMENT_ABANDONED)); ?>" >All Abandoned</a>
+	$displayValues = array(
+		'open' => ORDER_OPENED,
+		'closed' => ORDER_CLOSED,
+		'cancelled' => ORDER_CANCELLED
+	); 
+	$fieldName = 'status';
+	$filters .= $this->element('single_filter', compact('modelName', 'displayValues', 'fieldName'));
+	
+	$filters .= ' orders that are ';
+	
+	$displayValues = array(
+		'paid' => PAYMENT_PAID,
+		'pending' => PAYMENT_PENDING,
+		'authorized' => PAYMENT_AUTHORIZED,
+		'abandoned' => PAYMENT_ABANDONED
+	); 
+	$fieldName = 'p_status';
+	$displayNameForAny = 'any payment status';
+	$filters .= $this->element('single_filter', compact('modelName', 'displayValues', 'fieldName', 'displayNameForAny'));
+	
+	$filters .= ' and ';
+	
+	$displayValues = array(
+		'not fulfilled' => FULFILLMENT_NOT_FULFILLED,
+		'partial' => FULFILLMENT_PARTIAL,
+		'fulfilled' => FULFILLMENT_FULFILLED,
+	); 
+	$fieldName = 'f_status';
+	$displayNameForAny = 'any fulfillment status';
+	$filters .= $this->element('single_filter', compact('modelName', 'displayValues', 'fieldName', 'displayNameForAny'));
+	
+	echo $this->element('table_filters', array('modelName' => 'Order', 'showingFilters' => $filters));?>
 
-<a href="<?php echo $this->Html->addQueryToCurrentUrl(array('status'=>ORDER_CREATED)); ?>" >All CREATED</a>
-<a href="<?php echo $this->Html->addQueryToCurrentUrl(array('status'=>ORDER_OPENED)); ?>" >All OPENED</a>
 
 <!-- DATA-TABLE JS PLUGIN -->
 <div id="data-table">
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem.</p> 
+
 
 	<form method="post" action="">
 	
-	<table id="ordersTable" class="style1 datatable">
-	<thead>
-		<tr>
-			<th ><input type="checkbox" class="checkbox select-all" /></th>
-			<th >Order #</th>
-			<th >Date Created</th>
-			<th >Customer Full Name</th>
-			<th >Payment</th>
-			<th >Fulfillment</th>
-			<th >Total</th>
-		</tr>
-	</thead>
-	<tbody>
-	</tbody>
-	</table>
+		<table id="ordersTable" class="style1 datatable">
+			<thead>
+				<tr>
+					<th ><input type="checkbox" class="checkbox select-all" /></th>
+					<th >Order #</th>
+					<th >Date Created</th>
+					<th >Customer Full Name</th>
+					<th >Payment</th>
+					<th >Fulfillment</th>
+					<th >Total</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
 	
 	
-	<div class="tab-footer clear fl">
-		<div class="fl">
-			<select name="dropdown" class="fl-space">
-				<option value="option1">choose action...</option>
-				<option value="option2">Edit</option>
-				<option value="option3">Delete</option>
-			</select>
-			<input type="submit" value="Apply" id="submit1" class="button fl-space" />
-		</div>
-	</div>
 	</form>
 </div><!-- /#table -->
 
@@ -73,7 +90,8 @@
 			"bLengthChange": true,
 			"bPaginate": true,
 			"sPaginationType": "full_numbers",
-			"iDisplayLength" : 5,
+			"iDisplayLength" : "<?php echo $currentPageLength; ?>",
+			"bLengthChange" : false,
 			"bInfo" : false,
 			"bFilter" : false,
 			'aoColumns': [ 

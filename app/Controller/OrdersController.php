@@ -119,7 +119,11 @@ class OrdersController extends AppController {
 		);
 		
 		/* for filtering */
-		$filterParams = array('f_status'=>'Order.payment_status', 'status' => 'Order.status');
+		$filterParams = array(
+			'p_status' =>'Order.payment_status', 
+			'status'   => 'Order.status',
+			'f_status' => 'Order.fulfillment_status'
+		);
 		$filterParamNames = array_keys($filterParams);
 		
 		$queryParams = $this->request->query;
@@ -153,6 +157,11 @@ class OrdersController extends AppController {
 		$fieldToSort = 'Order.id';
 		$sortDir = 'asc';
 		
+		$currentPageLength = $limit;
+
+		if (isset($this->request->query['iDisplayLength'])) {
+			$currentPageLength = $this->request->query['iDisplayLength'];
+		}
 		
 		if ($this->request->is('ajax')) {
 			$start	= $this->request->query['iDisplayStart'];
@@ -213,7 +222,7 @@ class OrdersController extends AppController {
 			return;
 		} else if ($this->request->is('get')) {
 
-			$this->set('orders', $orders);
+			$this->set(compact('orders', 'currentPageLength'));
 
 			$this->render('admin_index_term');
 		}
