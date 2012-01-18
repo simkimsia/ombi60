@@ -190,6 +190,7 @@ class AppController extends Controller {
 		$this->set('shop_setting', $shopSetting);
 
 		if (!isset($this->request->params['admin'])) {
+			
 			$userIdInSession = $this->Session->read('User.id');
 			$this->log('what ever is the session over here' . $this->Session->read('User'));
 			/**
@@ -325,6 +326,9 @@ class AppController extends Controller {
 		// if admin User Auth more important
 		if(isset($this->request->params['admin'])) {
 			
+			/** enforce SSL for admin **/
+			$this->Security->blackHoleCallback = 'forceSSL';
+			$this->Security->requireSecure();
 			
 			$adminUser = false;
 			// this is to allow phpunit tests to work properly without
