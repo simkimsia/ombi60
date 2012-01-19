@@ -1,10 +1,25 @@
 <?php
 		
 	$aaData = array();
-	foreach ($orders as $order) {
+	foreach ($orders as $key=>$order) {
 		$row 		= array();
 		
-		$row[]		= '<input type="checkbox" class="checkbox" />';
+		$status 		= $order['Order']['status'];
+		if ($status == ORDER_OPENED) {
+			$statusClass 	= ' open';
+		} else if ($status == ORDER_CLOSED) {
+			$statusClass 	= ' closed';			
+		} else {
+			$statusClass 	= ' cancelled';			
+		}
+
+
+		$checkbox = $this->Form->checkbox('Order.selected.'.$key, 
+			array('value' => $order['Order']['id'], 'class' => 'checkbox' . $statusClass, 'label' => FALSE, 'div' => FALSE)
+		);
+		
+		$row[]		= $checkbox;
+		
 		$row[] 	= $this->Html->link(__('#' . $order['Order']['order_no']), array('action' => 'view', $order['Order']['id']));
 		$row[]		=  $this->Time->niceShort($order['Order']['created']); 
 		$row[]		= $order['User']['full_name']; 

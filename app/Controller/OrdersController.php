@@ -64,7 +64,8 @@ class OrdersController extends AppController {
 		if ($this->request->action == 'update_prices' ||
 			$this->request->action == 'complete_purchase' ||
 			$this->request->action == 'return_from_payment' ||
-			$this->request->action == 'completed') {
+			$this->request->action == 'completed' || 
+			$this->request->action == 'admin_menu_action') {
 		
 			$this->Components->disable('Security');
 		}
@@ -1488,6 +1489,22 @@ class OrdersController extends AppController {
 		return array();
 	}
 
+
+	/**
+	*
+	* for handling menu actions
+	**/
+	public function admin_menu_action() {
+
+		$resultArray = $this->Order->handleMenuAction($this->request->data);
+		if ($resultArray['success']) {
+			$this->Session->setFlash(__($resultArray['message']), 'default', array('class'=>'flash_success'));	
+		} else {
+			$this->Session->setFlash(__($resultArray['message']), 'default', array('class'=>'flash_failure'));	
+		}
+		$this->redirect(array('action' => 'index'));
+	}
+	
 
 	
 

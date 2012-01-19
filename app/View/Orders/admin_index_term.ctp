@@ -57,12 +57,14 @@
 <div id="data-table">
 
 
-	<form method="post" action="">
+	<?php
+	echo $this->element('action_buttons_orders', array('modelName' => 'Order'));
+	?>
 	
 		<table id="ordersTable" class="style1 datatable">
 			<thead>
 				<tr>
-					<th ><input type="checkbox" class="checkbox select-all" /></th>
+					<th ></th>
 					<th >Order #</th>
 					<th >Date Created</th>
 					<th >Customer Full Name</th>

@@ -779,6 +779,44 @@ class Order extends AppModel {
 			)
 		);
 	}
+	
+	public function handleMenuAction($data) {
+		$resultArray = array('message'=>'No valid actions selected',
+				     'success'=>false);
+		
+		switch($data['Order']['menu_action']) {
+			case 'Open' :
+				$resultArray['success'] = $this->openSelected($data['Order']['selected']);
+				$resultArray['message'] = ($resultArray['success']) ? 'Selected Orders are successfully opened' : 'Error';
+				break;
+				
+			case 'Close' :
+				$resultArray['success'] = $this->closeSelected($data['Order']['selected']);
+				$resultArray['message'] = ($resultArray['success']) ? 'Selected Orders are successfully closed' : 'Error';
+				break;
+							
+		}
+		
+		return $resultArray;
+	}
+	
+	
+	public function openSelected($selected = array()) {
+		$this->recursive = -1;
+		$selected = array_unique($selected);
+		return $this->updateAll(array('Order.status'=>ORDER_OPENED),
+					array('Order.id' => $selected,
+					      'Order.shop_id'=>Shop::get('Shop.id')));
+	}
+	
+	public function closeSelected($selected = array()) {
+		$this->recursive = -1;
+		$selected = array_unique($selected);
+		return $this->updateAll(array('Order.status'=>ORDER_CLOSED),
+					array('Order.id' => $selected,
+					      'Order.shop_id'=>Shop::get('Shop.id')));
+	}
+	
 
 
 }
