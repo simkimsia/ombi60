@@ -1,110 +1,181 @@
-<div class="webpages">
-	<div class="text_center">
-	<h2>
-	<?php echo __('Blogs & Pages'); ?>
-	</h2>
-      <?php 
-        echo $this->Html->link(__('Create new Blog'), array('controller'=>'blogs','action' => 'add'));
-        echo ' | '. $this->Html->link(__('Create new Page'), array('action' => 'add'));
-      ?>
+<h1 class="center">Blogs &amp; Pages</h1>
+<div class="rule"></div>
+<div id="action-links">
+	<ul>
+		<li id="create-page"><?php echo $this->Html->link(__('Create new Page'), array('action' => 'add')); ?></li>
+		<li id="create-blog"><?php echo $this->Html->link(__('Create new Blog'), array('controller'=>'blogs','action' => 'add')); ?></li>
+		<li id="create-article"><?php echo $this->Html->link(__('Create new Page'), array('action' => 'add')); ?></li>
 
-  </div>
-  <div class="list-pages">
-	<h2><?php echo __('Pages');?></h2>
-  <p>A page is a standalone part of your shop informing your customers about your business or products.</p>
-  <p>Examples: "About Us" section, Warranty, Terms of Service</p>
-  
-  <br>
-    
-    <?php
-    if (!empty($webpages)) {
-    ?>
-    <?php
-    
-    echo $this->element('action_buttons', array('modelName' => 'Webpage', 'deleteConfirm' => sprintf(__('Are you sure you want to delete this page?')), 'deleteURL' => ''));?>
-    
-	<table cellpadding="0" cellspacing="0" class="products-table" id="webpages-table">
-	    <tr>
-		        <th>&nbsp;</th>
-			<th><?php echo $this->Paginator->sort('title');?></th>
-			<th class="text_center"><?php echo $this->Paginator->sort('modified');?></th>
-	    </tr>
-	    <?php
-	    $i = 0;
-	    foreach ($webpages as $key=>$webpage):
-		    $class = null;
-		    $hidden = (!$webpage['Webpage']['visible']) ;
-		    $hiddenCheckboxClass = '';
-		    if ($hidden) {
-		      $hiddenCheckboxClass = ' hidden';
-		    }
-		    if ($i++ % 2 == 0) {
-			    $class = ' class="altrow"';
-		    }
-	    ?>
-	    <tr<?php echo $class;?>>
-		    <td width="5%" align="center"><?php echo $this->Form->checkbox('Webpage.selected.'.$key, array('value' => $webpage['Webpage']['id'], 'class' => 'checkbox_check' . $hiddenCheckboxClass, 'label' => FALSE, 'div' => FALSE, 'style' => 'margin: 5px 6px 7px 20px;'));?></td>
-		    <td width="60%">
-          <?php echo $this->Html->link($webpage['Webpage']['title'], array('action' => 'view', $webpage['Webpage']['id'])); 
-            
-	      if ($hidden) {
-	      ?>
-                <span class="hidden_gray">Hidden</span>
-          <?php } ?>
-            </td>
-		    <td width="35%" class="text_center"><?php echo date('D, M dS Y, h:i', strtotime($webpage['Webpage']['modified']));?></td>
-	    </tr>
-    <?php endforeach; ?>
-	    </table>
-	    
-	    <?php 
-        if ($this->Paginator->params['paging']['Webpage']['pageCount'] > 1) {
-        ?>
-            <div class="text_center" style="width: 85%;">
-                <?php echo $this->element('pagination', array('modelName' => 'Webpage'));?> 
-            </div>
-              
-        <?php
-        }
-        ?>
-    <?php
-    }
-    ?>
-   
+	</ul>
 
-<div class="blogs">
-	<h2><?php echo __('Blogs');?></h2>
-	<p>A blogs is a series of articles for content that changes frequently such as news and updates about your shop.</p>
-	<table cellpadding="0" cellspacing="0" class="products-table">
-	<tr>
-	      <th><?php echo __('Title');?></th>
-	      <th class="text_center"><?php echo __('Modified');?></th>
-	      <th class="actions text_center"><?php echo __('Actions');?></th>
-	</tr>
-	<?php
-	$i = 0;
-	foreach ($blogs as $blog):
-		$class = null;
-		if ($i++ % 2 == 0) {
-			$class = ' class="altrow"';
-		}
-	?>
-	<tr<?php echo $class;?>>
-		
-		<td width="33%">
-		<?php echo $this->Html->link(__($blog['Blog']['title']), array('controller'=>'blogs','action' => 'view', $blog['Blog']['id'])); ?>
-		</td>
-
-		<td width="33%" class="text_center"><?php echo date('D, M dS Y, h:i', strtotime($blog['Blog']['modified']));?></td>
-		
-		
-		<td class="actions">
-		    <?php echo $this->Html->link(__('Write a new article'), array('controller' => 'posts', 'action' => 'add', 'blog_id'=>$blog['Blog']['id'])); ?>
-			<?php echo $this->Html->link(__('Delete'), array('controller'=>'blogs','action' => 'delete', $blog['Blog']['id']), null, sprintf(__('Are you sure you want to delete this blog?'))); ?>
-		</td>
-	</tr>
-	
-<?php endforeach; ?>
-	</table>
-    </div>
 </div>
+<?php $currentUrl = $_SERVER['REQUEST_URI']; ?>
+
+	
+
+<!-- PAGES -->
+<h2 >Pages</h1>
+<div class="rule" />
+
+<p>A page is a standalone part of your shop informing your customers about your business or products.</p>
+<p>Examples: "About Us" section, Warranty, Terms of Service</p>
+
+
+<div id="pages-data-table">
+
+		<table id="webpagesTable" class="style1 datatable">
+			<thead>
+				<tr>
+					<th >Title</th>
+					<th >Updated</th>
+					<th ></th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	
+	
+</div><!-- PAGES -->
+
+<!-- Blogs -->
+<h2 >Blogs</h1>
+<div class="rule" />
+
+<div id="blogs">
+	<p>A blog is a series of articles for content that changes frequently such as news and updates about your shop.</p>
+
+	<?php foreach ($blogs as $blog): ?>
+	<?php 
+		$blogTitle	= $blog['Blog']['title'];
+		$blogId		= $blog['Blog']['id'];
+		
+	?>
+	<div>
+	
+		<table id="blogTable<?php echo $blogId; ?>" class="style1 datatable">
+			<thead>
+				<tr>
+					<?php $articlesCol = $blogTitle . ' articles'; ?>
+					<th ><?php echo $articlesCol; ?></th>
+					<th class="quad">Author & Date</th>
+					<th class="tenth center"></th>
+				</tr>
+			</thead>
+			<tbody>
+			
+			
+		<?php if (empty($blog['Post'])) : ?>
+				<tr>
+					<?php 
+				
+
+					$blogHtml = $this->Html->link(__($blogTitle), array(
+						'controller' => 'blogs',
+						'action'	 => 'view',
+						'admin' 	 => true,
+						$blogId));
+
+					$writeFirstArticleHtml = $this->Html->link(__('write the first article'), array(
+						'controller' => 'posts', 
+						'action' => 'add', 
+						'blog_id'=>$blogId
+					)); 
+				
+					$emptyBlogHtml = $blogHtml . ' has no articles, ' . $writeFirstArticleHtml; 
+
+					?>
+					<td class="center" colspan="5"><?php echo $emptyBlogHtml; ?></td>
+				</tr>
+		<?php else : ?>
+		
+			<?php foreach ($blog['Post'] as $post): ?>
+				<tr>
+			
+					<?php
+					$visible 		= $post['visible'];
+
+					$statusClass = '';
+					if (!$visible) {
+						$statusClass 	= '<span class="status-hidden">Hidden</span>';
+					}
+				
+					?>
+				
+					<td><?php echo $post['title'] . $statusClass; ?></td>
+				
+					<?php 
+					// prepare the author and updated datetime
+					$author = isset($post['Author']['full_name']) ? $post['Author']['full_name'] : '';
+					$modified = $this->Time->niceShort($post['modified']);
+					$authorDate = $author . '<br /><span class="note">' . $modified . '</span>';
+					?>
+				
+					<td class="quad"><?php echo $authorDate; ?></td>
+					<td class="tenth center"><?php echo $this->element('trash_delete_icon', array(
+													'controllerName' => 'posts',
+													'id'				=> $post['id'],
+													'singularName' => 'article'
+									));?></td>				
+				</tr>
+			<?php endforeach; ?>
+				<tr>
+					<td colspan="5"><?php echo $this->element('manage_blog_link', $blog['Blog']); ?></td>
+				</tr>
+		
+		
+		<?php endif; ?>
+		
+			</tbody>
+		</table>
+	
+	
+	</div>
+
+	
+	<?php endforeach; ?>
+
+</div><!-- BLOGS -->
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		
+		oTable = $('#webpagesTable').dataTable( {
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": "<?php echo $currentUrl; ?>",
+			"bLengthChange": true,
+			"bPaginate": true,
+			"sPaginationType": "full_numbers",
+			"iDisplayLength" : "<?php echo $currentPageLength; ?>",
+			"bInfo" : false,
+			"bFilter" : false,
+			'aoColumns': [ 
+				null,
+				{ "sClass" : "quad" },
+				{ "bSortable": false,
+				  "sClass" : "tenth center" },
+			],
+			// set the order no. as default sort desc
+			"aaSorting": [[0,'asc']],
+			"oLanguage": {
+				"sProcessing": '<div id="overlay_modal"><?php echo $this->Html->image('ajax-loader.gif', array('alt' => 'Processing...', 'class'=>'bt-space15')); ?><p class="center bt-space0">Processing...</p></div>'
+			},
+		    "fnDrawCallback": function( oSettings ) {
+				if (oSettings._iRecordsTotal == 0) {
+					// hide the table
+					$('#pages-data-table').hide();
+				}
+
+
+		    }
+
+
+
+		} );
+		
+
+	});
+
+</script>
