@@ -225,7 +225,6 @@ class OrdersController extends AppController {
 
 			$this->set(compact('orders', 'currentPageLength'));
 
-			$this->render('admin_index_term');
 		}
 
 	}

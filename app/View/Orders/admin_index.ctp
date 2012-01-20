@@ -1,83 +1,115 @@
-<div>
-<h2 align="center"><?php echo __('Orders');?></h2>
-<div align="center">
-    <?php echo $this->Html->link(__('Export orders'), array('action' => 'export')); ?></li>
-</div>
+<h1 class="center">Orders</h1>
+<div class="rule"></div>
+<?php $currentUrl = $_SERVER['REQUEST_URI']; ?>
 
-<span class='paginator-top'>
-<?php
-echo $this->Paginator->counter(array(
-'format' => __('Showing %current% orders out of %count% total. Page %page% of %pages%.')
-));
-?></span>
-<?php
-if ($this->Paginator->params['paging']['Order']['pageCount'] > 1) {
-?> 
-<span class="top-paging">
-    <?php echo $this->Paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
- |  <?php echo $this->Paginator->numbers();?>
-    <?php echo $this->Paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
-</span>
-<?php 
-} 
-?>
-<br />
-<br />
-<table cellpadding="0" cellspacing="0" class="items-table orders-table">
-	<tr>
-		<th><?php echo $this->Paginator->sort('Order.order_no', 'Order');?></th>
-		<th width="20%"><?php echo $this->Paginator->sort('Order.created', 'Date');?></th>
-		<th><?php echo $this->Paginator->sort('User.full_name', 'Placed by');?></th>
-		<th><?php echo $this->Paginator->sort('Order.payment_status', 'Payment');?></th>
-		<th><?php echo $this->Paginator->sort('Order.fulfillment_status', 'Fulfillment');?></th>
-		<th><?php echo $this->Paginator->sort('Order.amount', 'Amount');?></th>
-		
-	</tr>
-<?php
-$i = 0;
-foreach ($orders as $order):
-	$class = null;
-	if ($i++ % 2 == 0) {
-		$class = ' class="altrow"';
-	}
-?>
-	<tr<?php echo $class;?>>
-		<td>
-			<?php echo $this->Html->link(__('#' . $order['Order']['order_no']), array('action' => 'view', $order['Order']['id'])); ?>
-			
-		</td>
-		<td>
-			<?php echo $this->Time->niceShort($order['Order']['created']); ?>
-		</td>
-		<td>
-			<?php echo $order['User']['full_name']; ?>
-		</td>
-		
-		<td>
-			<?php echo $this->Constant->displayPayment($order['Order']['payment_status']);?>
-		</td>
-		<td>
-			<?php echo $this->Constant->displayFulfillment($order['Order']['fulfillment_status']);?>
-		</td>
-		
-		<td>
-			<?php echo $this->Number->currency($order['Order']['amount'], '$'); ?>
-		</td>
-		
-	</tr>
-<?php endforeach; ?>
-</table>
-<div class="bottom-paging">
-<?php
-if ($this->Paginator->params['paging']['Order']['pageCount'] > 1) {
-?> 
-    <?php echo $this->Paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
- |  <?php echo $this->Paginator->numbers();?>
-    <?php echo $this->Paginator->next(__('next').' >>', array(), null, array('class' => 'disabled'));?>
-</div>
-<?php
-}
-?>
-</div>
-</div>
+	<?php 
+	
+	$filters = 'Showing ';
 
+	$displayValues = array(
+		'open' => ORDER_OPENED,
+		'closed' => ORDER_CLOSED,
+		'cancelled' => ORDER_CANCELLED
+	); 
+	$fieldName = 'status';
+	$filters .= $this->element('single_filter', compact('modelName', 'displayValues', 'fieldName'));
+	
+	$filters .= ' orders that are ';
+	
+	$displayValues = array(
+		'paid' => PAYMENT_PAID,
+		'pending' => PAYMENT_PENDING,
+		'authorized' => PAYMENT_AUTHORIZED,
+		'abandoned' => PAYMENT_ABANDONED
+	); 
+	$fieldName = 'p_status';
+	$displayNameForAny = 'any payment status';
+	$filters .= $this->element('single_filter', compact('modelName', 'displayValues', 'fieldName', 'displayNameForAny'));
+	
+	$filters .= ' and ';
+	
+	$displayValues = array(
+		'not fulfilled' => FULFILLMENT_NOT_FULFILLED,
+		'partial' => FULFILLMENT_PARTIAL,
+		'fulfilled' => FULFILLMENT_FULFILLED,
+	); 
+	$fieldName = 'f_status';
+	$displayNameForAny = 'any fulfillment status';
+	$filters .= $this->element('single_filter', compact('modelName', 'displayValues', 'fieldName', 'displayNameForAny'));
+	
+	echo $this->element('table_filters', array('modelName' => 'Order', 'showingFilters' => $filters));?>
+
+
+<!-- DATA-TABLE JS PLUGIN -->
+<div id="data-table">
+
+
+	<?php
+	echo $this->element('action_buttons_orders', array('modelName' => 'Order'));
+	?>
+	
+		<table id="ordersTable" class="style1 datatable">
+			<thead>
+				<tr>
+					<th ></th>
+					<th >Order #</th>
+					<th >Date Created</th>
+					<th >Customer Full Name</th>
+					<th >Payment</th>
+					<th >Fulfillment</th>
+					<th >Total</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	
+	
+	</form>
+</div><!-- /#table -->
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		
+		oTable = $('#ordersTable').dataTable( {
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": "<?php echo $currentUrl; ?>",
+			"bLengthChange": true,
+			"bPaginate": true,
+			"sPaginationType": "full_numbers",
+			"iDisplayLength" : "<?php echo $currentPageLength; ?>",
+			"bLengthChange" : false,
+			"bInfo" : false,
+			"bFilter" : false,
+			'aoColumns': [ 
+				{ "bSortable": false },
+				null,
+				null,
+				null,
+				null,
+				null,
+				null
+			],
+			// set the order no. as default sort desc
+			"aaSorting": [[2,'desc']],
+			"oLanguage": {
+				"sProcessing": '<div id="overlay_modal"><?php echo $this->Html->image('ajax-loader.gif', array('alt' => 'Processing...', 'class'=>'bt-space15')); ?><p class="center bt-space0">Processing...</p></div>'
+			},
+		    "fnDrawCallback": function( oSettings ) {
+				if (oSettings._iRecordsTotal == 0) {
+					// hide the table
+					$('#data-table').hide();
+				}
+
+
+		    }
+
+
+
+		} );
+		
+	});
+
+</script>
