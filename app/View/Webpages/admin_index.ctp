@@ -14,7 +14,7 @@
 	
 
 <!-- PAGES -->
-<h2 >Pages</h1>
+<h2>Pages</h2>
 <div class="rule" />
 
 <p>A page is a standalone part of your shop informing your customers about your business or products.</p>
@@ -39,7 +39,7 @@
 </div><!-- PAGES -->
 
 <!-- Blogs -->
-<h2 >Blogs</h1>
+<h2>Blogs</h2>
 <div class="rule" />
 
 <div id="blogs">

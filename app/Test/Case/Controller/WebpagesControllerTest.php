@@ -91,7 +91,9 @@ class WebpagesControllerTestCase extends ControllerTestCase {
 			'methods' => array('forceSSL'), 
 			'components' => array('Auth' => array('user'), 'Security')
 		));
-		$this->testAction('/admin/pages/index', array('return' => 'contents'));
+		
+		$_SERVER['REQUEST_URI'] = '/admin/pages/index';
+		$this->testAction('/admin/pages/index', array('return' => 'contents', 'method' => 'GET'));
 		
 		$this->assertRegexp('#<h2>Pages</h2>#', $this->contents);
 		$this->assertRegexp('#<h2>Blogs</h2>#', $this->contents);
