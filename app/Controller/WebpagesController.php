@@ -162,7 +162,6 @@ class WebpagesController extends AppController {
 		
 		$this->set(compact('blogs', 'webpages'));
 		
-		$this->render('admin_index_term');
 	}
 
 	public function admin_view($id = null) {
