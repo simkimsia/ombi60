@@ -69,8 +69,8 @@ class WebpagesController extends AppController {
 		
 		$limit	= 25;
 		$page	= 1;
-		$fieldToSort = 'Webpage.modified';
-		$sortDir = 'desc';
+		$fieldToSort = 'Webpage.title';
+		$sortDir = 'asc';
 
 		$currentPageLength = $limit;
 		
@@ -133,7 +133,7 @@ class WebpagesController extends AppController {
 			return;
 		} else if ($this->request->is('get')) {
 			$this->set(compact('webpages', 'currentPageLength'));
-			$this->render('admin_index_term');
+			
 		}
 		
 		
@@ -142,14 +142,27 @@ class WebpagesController extends AppController {
 		$blogModel = $this->Webpage->Shop->Blog;
 		$blogModel->Behaviors->load('Containable');
 		
-		$blogs = $blogModel->find('all', array('conditions'=>array('Blog.shop_id'=>$shopId),
-						       'contain'=>array('Post'=>array('fields'=>array('Post.id', 'Post.blog_id'),
-										      'limit'=>3,
-										      'order'=>'Post.modified DESC'))));
+		$blogs = $blogModel->find('all', array(
+			'conditions'=>array('Blog.shop_id'=>$shopId),
+			'contain'=>array(
+				'Post'=>array(
+					'Author' => array('fields' => array('Author.full_name')),
+					'fields'=>array(
+						'Post.id', 
+						'Post.blog_id',
+						'Post.title', 
+						'Post.modified',
+						'Post.visible'),
+					'limit'=>5,
+					'order'=>'Post.modified DESC'
+				)
+			),
+			'order' => 'Blog.title ASC'
+		));
 		
 		$this->set(compact('blogs', 'webpages'));
 		
-//		$this->render('admin_index_term');
+		$this->render('admin_index_term');
 	}
 
 	public function admin_view($id = null) {

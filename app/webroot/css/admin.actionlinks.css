@@ -1,5 +1,5 @@
 /*
- * STATUS links
+ * span links
  */
 
 span.status-hidden{
@@ -15,6 +15,12 @@ span.status-hidden{
 	border-image: initial;
 
 
+}
+
+.note, .hint {
+	color: #777;
+	font-size: 12px;
+	font-weight: normal;
 }
 
 /*
