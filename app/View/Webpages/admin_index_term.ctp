@@ -42,63 +42,65 @@
 <h2 >Blogs</h1>
 <div class="rule" />
 
-<p>A blog is a series of articles for content that changes frequently such as news and updates about your shop.</p>
+<div id="blogs">
+	<p>A blog is a series of articles for content that changes frequently such as news and updates about your shop.</p>
 
-<?php foreach ($blogs as $blog): ?>
+	<?php foreach ($blogs as $blog): ?>
 	
-<div>
-	<table id="blogTable<?php echo $blog['Blog']['id']; ?>" class="style1 datatable">
-		<thead>
-			<tr>
-				<?php $articlesCol = $blog['Blog']['title'] . ' articles'; ?>
-				<th ><?php echo $articlesCol; ?></th>
-				<th >Author & Date</th>
-				<th ></th>
-			</tr>
-		</thead>
-		<tbody>
-	<?php foreach ($blog['Post'] as $post): ?>
-			<tr>
+	<div>
+		<table id="blogTable<?php echo $blog['Blog']['id']; ?>" class="style1 datatable">
+			<thead>
+				<tr>
+					<?php $articlesCol = $blog['Blog']['title'] . ' articles'; ?>
+					<th ><?php echo $articlesCol; ?></th>
+					<th >Author & Date</th>
+					<th ></th>
+				</tr>
+			</thead>
+			<tbody>
+		<?php foreach ($blog['Post'] as $post): ?>
+				<tr>
 			
-				<?php
-				$visible 		= $post['visible'];
+					<?php
+					$visible 		= $post['visible'];
 
-				$statusClass = '';
-				if (!$visible) {
-					$statusClass 	= '<span class="status-hidden">Hidden</span>';
-				}
+					$statusClass = '';
+					if (!$visible) {
+						$statusClass 	= '<span class="status-hidden">Hidden</span>';
+					}
 				
-				?>
+					?>
 				
-				<td><?php echo $post['title'] . $statusClass; ?></td>
+					<td><?php echo $post['title'] . $statusClass; ?></td>
 				
-				<?php 
-				// prepare the author and updated datetime
-				$author = isset($post['Author']['full_name']) ? $post['Author']['full_name'] : '';
-				$modified = $this->Time->niceShort($post['modified']);
-				$authorDate = $author . '<br /><span class="note">' . $modified . '</span>';
-				?>
+					<?php 
+					// prepare the author and updated datetime
+					$author = isset($post['Author']['full_name']) ? $post['Author']['full_name'] : '';
+					$modified = $this->Time->niceShort($post['modified']);
+					$authorDate = $author . '<br /><span class="note">' . $modified . '</span>';
+					?>
 				
-				<td class="quad"><?php echo $authorDate; ?></td>
-				<td class="tenth center"><?php echo $this->element('trash_delete_icon', array(
-												'controllerName' => 'posts',
-												'id'				=> $post['id'],
-												'singularName' => 'article'
-								));?></td>				
-			</tr>
+					<td class="quad"><?php echo $authorDate; ?></td>
+					<td class="tenth center"><?php echo $this->element('trash_delete_icon', array(
+													'controllerName' => 'posts',
+													'id'				=> $post['id'],
+													'singularName' => 'article'
+									));?></td>				
+				</tr>
+		<?php endforeach; ?>
+				<tr>
+					<td colspan="5"><?php echo $this->element('manage_blog_link', $blog['Blog']); ?></td>
+				</tr>
+			</tbody>
+		</table>
+	
+	
+	</div>
+
+	
 	<?php endforeach; ?>
-			<tr>
-				<td colspan="5"><?php echo $this->element('manage_blog_link', $blog['Blog']); ?></td>
-			</tr>
-		</tbody>
-	</table>
-	
-	
-</div><!-- PAGES -->
 
-	
-<?php endforeach; ?>
-
+</div><!-- BLOGS -->
 
 <script type="text/javascript">
 
