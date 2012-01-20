@@ -12,6 +12,7 @@ ol.standard.clean-padding	{ padding: 0 0 0 22px !important;}
 
 .hidden     	 	{ display: none; }
 .display     		{ display: block; }
+.tenth			{ width: 8%	 !important; }
 .half			{ width: 48% !important; }
 .trio			{ width: 31% !important; }
 .quad			{ width: 23% !important; }

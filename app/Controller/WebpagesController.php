@@ -7,7 +7,9 @@ class WebpagesController extends AppController {
 	
 	public $helpers = array('Javascript',
 			     'Ajax',
-			     'TinyMce.TinyMce');
+			     'TinyMce.TinyMce',
+				'Number',
+				'Time');
 
 	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
@@ -53,21 +55,101 @@ class WebpagesController extends AppController {
 	}
 	
 	public function admin_index() {
+		
+		/* for sorting */
+		$columns = array(
+			'0' => 'Webpage.title',
+			'1' => 'Webpage.modified'
+		);
+		
+		
 		$this->Webpage->recursive = 0;
 		
-		$shopid = Shop::get('Shop.id');
-		$this->paginate = array('conditions'=>array('Webpage.shop_id'=>$shopid));
+		$shopId = Shop::get('Shop.id');		
+		
+		$limit	= 25;
+		$page	= 1;
+		$fieldToSort = 'Webpage.modified';
+		$sortDir = 'desc';
+
+		$currentPageLength = $limit;
+		
+		$fieldsToFilter = array();
+
+		if (isset($this->request->query['iDisplayLength'])) {
+			$currentPageLength = $this->request->query['iDisplayLength'];
+		}
+
+		if ($this->request->is('ajax')) {
+			$start	= $this->request->query['iDisplayStart'];
+			$limit	= $this->request->query['iDisplayLength'];
+			$page	= ($start / $limit) + 1;
+
+			if (isset($this->request->query['iSortCol_0'])) {
+				if (is_numeric($this->request->query['iSortCol_0'])) {
+
+					$fieldToSort = $columns[$this->request->query['iSortCol_0']];
+					$sortDir = 'asc';
+					if (isset($this->request->query['sSortDir_0'])) {
+						$sortDir = $this->request->query['sSortDir_0'];
+					}
+				}
+			} 
+
+		}
+
+		$defaultFilter = array('Webpage.shop_id' => $shopId);
+		$conditions = array_merge($defaultFilter, $fieldsToFilter);
+
+		$this->paginate = array(
+			'conditions' => $conditions,
+			'page' => $page,
+			'limit' => $limit,
+			'order' => array(
+				$fieldToSort => $sortDir
+			)
+		);
+
+
 		$webpages = $this->paginate();
+		
+		if ($this->request->is('ajax')) {
+
+
+			$iTotal 		= $this->request->params['paging']['Webpage']['count'];
+			$iTotalDisplay 	= $iTotal;
+
+
+			$sEcho			= $this->request->query['sEcho'];
+			$this->layout = 'json_datatables';
+
+			// no views rendered
+			$this->autoRender = false;
+
+	        $this->set(compact('webpages', 'iTotal', 'iTotalDisplay', 'sEcho'));
+
+	        $this->render('admin_index_json');
+
+			return;
+		} else if ($this->request->is('get')) {
+			$this->set(compact('webpages', 'currentPageLength'));
+			$this->render('admin_index_term');
+		}
+		
+		
+		
 		
 		$blogModel = $this->Webpage->Shop->Blog;
 		$blogModel->Behaviors->load('Containable');
 		
-		$blogs = $blogModel->find('all', array('conditions'=>array('Blog.shop_id'=>$shopid),
+		$blogs = $blogModel->find('all', array('conditions'=>array('Blog.shop_id'=>$shopId),
 						       'contain'=>array('Post'=>array('fields'=>array('Post.id', 'Post.blog_id'),
 										      'limit'=>3,
 										      'order'=>'Post.modified DESC'))));
 		
 		$this->set(compact('blogs', 'webpages'));
+		
+//		$this->render('admin_index_term');
 	}
 
 	public function admin_view($id = null) {
