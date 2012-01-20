@@ -46,19 +46,50 @@
 	<p>A blog is a series of articles for content that changes frequently such as news and updates about your shop.</p>
 
 	<?php foreach ($blogs as $blog): ?>
-	
+	<?php 
+		$blogTitle	= $blog['Blog']['title'];
+		$blogId		= $blog['Blog']['id'];
+		
+	?>
 	<div>
-		<table id="blogTable<?php echo $blog['Blog']['id']; ?>" class="style1 datatable">
+	
+		<table id="blogTable<?php echo $blogId; ?>" class="style1 datatable">
 			<thead>
 				<tr>
-					<?php $articlesCol = $blog['Blog']['title'] . ' articles'; ?>
+					<?php $articlesCol = $blogTitle . ' articles'; ?>
 					<th ><?php echo $articlesCol; ?></th>
-					<th >Author & Date</th>
-					<th ></th>
+					<th class="quad">Author & Date</th>
+					<th class="tenth center"></th>
 				</tr>
 			</thead>
 			<tbody>
-		<?php foreach ($blog['Post'] as $post): ?>
+			
+			
+		<?php if (empty($blog['Post'])) : ?>
+				<tr>
+					<?php 
+				
+
+					$blogHtml = $this->Html->link(__($blogTitle), array(
+						'controller' => 'blogs',
+						'action'	 => 'view',
+						'admin' 	 => true,
+						$blogId));
+
+					$writeFirstArticleHtml = $this->Html->link(__('write the first article'), array(
+						'controller' => 'posts', 
+						'action' => 'add', 
+						'blog_id'=>$blogId
+					)); 
+				
+					$emptyBlogHtml = $blogHtml . ' has no articles, ' . $writeFirstArticleHtml; 
+
+					?>
+					<td class="center" colspan="5"><?php echo $emptyBlogHtml; ?></td>
+				</tr>
+		<?php else : ?>
+		
+			<?php foreach ($blog['Post'] as $post): ?>
 				<tr>
 			
 					<?php
@@ -87,10 +118,14 @@
 													'singularName' => 'article'
 									));?></td>				
 				</tr>
-		<?php endforeach; ?>
+			<?php endforeach; ?>
 				<tr>
 					<td colspan="5"><?php echo $this->element('manage_blog_link', $blog['Blog']); ?></td>
 				</tr>
+		
+		
+		<?php endif; ?>
+		
 			</tbody>
 		</table>
 	
@@ -140,44 +175,7 @@
 
 		} );
 		
-		blogTable = $('#blogsTable').dataTable( {
-			"bProcessing": true,
-			"bServerSide": true,
-			"sAjaxSource": "<?php echo $currentUrl; ?>",
-			"bLengthChange": true,
-			"bPaginate": true,
-			"sPaginationType": "full_numbers",
-			"iDisplayLength" : "<?php echo $currentPageLength; ?>",
-			"bLengthChange" : false,
-			"bInfo" : false,
-			"bFilter" : false,
-			'aoColumns': [ 
-				{ "bSortable": false },
-				null,
-				null,
-				null,
-				null,
-				null,
-				null
-			],
-			// set the order no. as default sort desc
-			"aaSorting": [[2,'desc']],
-			"oLanguage": {
-				"sProcessing": '<div id="overlay_modal"><?php echo $this->Html->image('ajax-loader.gif', array('alt' => 'Processing...', 'class'=>'bt-space15')); ?><p class="center bt-space0">Processing...</p></div>'
-			},
-		    "fnDrawCallback": function( oSettings ) {
-				if (oSettings._iRecordsTotal == 0) {
-					// hide the table
-					$('#data-table').hide();
-				}
 
-
-		    }
-
-
-
-		} );
-		
 	});
 
 </script>
