@@ -95,7 +95,7 @@ class ShippingRatesController extends AppController {
 			
 			if ($this->request->is('ajax')) {
 				
-				$this->layout = 'json';
+				$this->layout = 'json_data';
 				if ($result) {
 					$shippingRate = $this->fetchCurrent();
 					$successJSON  = true;
@@ -135,7 +135,7 @@ class ShippingRatesController extends AppController {
 			}
 			if ($this->request->is('ajax')) {
 				
-				$this->layout = 'json';
+				$this->layout = 'json_data';
 				if ($result) {
 					$shippingRate = $this->fetchCurrent();
 					$successJSON  = true;

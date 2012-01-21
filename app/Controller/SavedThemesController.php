@@ -124,7 +124,7 @@ class SavedThemesController extends AppController {
 		// for uploadify to upload the pics to
 		if ($this->request->is('ajax')) {
 			
-			$this->layout = 'json';
+			$this->layout = 'json_data';
 			$successJSON = false;
 			$contents = array();
 			
@@ -284,7 +284,7 @@ class SavedThemesController extends AppController {
 	public function admin_delete($id = null) {
 		$contents = array();
 		if ($this->request->is('ajax')) {
-			$this->layout = 'json';
+			$this->layout = 'json_data';
 			$successJSON = false;
 		}
 		

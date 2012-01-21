@@ -294,7 +294,7 @@ $group_products = $this->ProductGroup->ProductsInGroup->getProductsWithImagesByG
 		
 		if ($this->request->is('ajax')) {
 			
-			$this->layout = 'json';
+			$this->layout = 'json_data';
 			if ($result) {
 				
 				$successJSON  = true;

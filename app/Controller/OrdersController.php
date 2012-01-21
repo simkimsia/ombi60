@@ -65,7 +65,8 @@ class OrdersController extends AppController {
 			$this->request->action == 'complete_purchase' ||
 			$this->request->action == 'return_from_payment' ||
 			$this->request->action == 'completed' || 
-			$this->request->action == 'admin_menu_action') {
+			$this->request->action == 'admin_menu_action' ||
+			$this->request->action == 'admin_contact') {
 		
 			$this->Components->disable('Security');
 		}
@@ -104,6 +105,37 @@ class OrdersController extends AppController {
 	public function index() {
 		$this->Order->recursive = 0;
 		$this->set('orders', $this->paginate());
+	}
+	
+	public function admin_contact($id = false) {
+		$order = $this->Order->find('first', array(
+			'conditions'	=> array('Order.id' => $id),
+			'contain'		=> array(
+				'Customer'	=> array(
+					'User' 	=> array(
+						'fields' => array(
+							'User.email',
+							'User.full_name',
+						)
+					)
+				)
+			),
+			'fields'		=> array(
+				'Order.id',
+				'Order.order_no'
+			)
+		));
+		
+		if ($this->request->is('ajax')) {
+			$this->layout = 'json_data';
+			
+
+	        $successJSON  = true;
+	        $this->set(compact('order', 'successJSON'));
+	
+	        $this->render('json/contact');
+		}
+		
 	}
 
 	public function admin_index() {
@@ -211,7 +243,7 @@ class OrdersController extends AppController {
 
 			
 			$sEcho			= $this->request->query['sEcho'];
-			$this->layout = 'json_datatables';
+			$this->layout = 'json_html';
 				
 			// no views rendered
 			$this->autoRender = false;
@@ -593,7 +625,7 @@ class OrdersController extends AppController {
 		$successJSON = false;
 		$contents = array();
 		
-		$this->layout = 'json';
+		$this->layout = 'json_data';
 		
 		// validate for cart_id, order_id, shipping_rate_id
 		if (!array_key_exists('cart_id', $this->request->data) ||

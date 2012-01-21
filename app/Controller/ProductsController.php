@@ -453,7 +453,7 @@ class ProductsController extends AppController {
 	 **/
 	public function admin_upload($id = null) {
 	
-		$this->layout = 'json';
+		$this->layout = 'json_data';
 		$successJSON = false;
 		$contents = array();
 		
@@ -498,7 +498,7 @@ class ProductsController extends AppController {
 		
 		if ($this->request->is('ajax')) {
 			
-			$this->layout = 'json';
+			$this->layout = 'json_data';
 			if ($result) {
 				
 				$successJSON  = true;

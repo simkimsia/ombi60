@@ -110,7 +110,7 @@ class ProductImagesController extends AppController {
 		$contents = array();
 
 		if ($this->request->is('ajax')) {
-			$this->layout = 'json';
+			$this->layout = 'json_data';
 		}
 
 		if ($id == null OR $product_id == null) {

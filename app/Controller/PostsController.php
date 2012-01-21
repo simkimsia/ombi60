@@ -269,7 +269,7 @@ class PostsController extends AppController {
 		
 		if ($this->request->is('ajax')) {
 			
-			$this->layout = 'json';
+			$this->layout = 'json_data';
 			if ($result) {
 				
 				$successJSON  = true;

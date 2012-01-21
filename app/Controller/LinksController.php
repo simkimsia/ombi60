@@ -70,7 +70,7 @@ class LinksController extends AppController {
 			
 			$result = $this->Link->saveOrder($_POST['displayrow'], $listId);
 			
-			$this->layout = 'json';
+			$this->layout = 'json_data';
 			if ($result) {
 				
 				$successJSON  = true;
@@ -211,7 +211,7 @@ class LinksController extends AppController {
 		
 		if ($this->request->is('ajax')) {
 				
-			$this->layout = 'json';
+			$this->layout = 'json_data';
 			if ($result) {
 				$link 	       = $this->fetchCurrent();
 				$actionResult  = $this->populateActionForNewLink($link);
@@ -266,7 +266,7 @@ class LinksController extends AppController {
 		
 		if ($this->request->is('ajax')) {
 				
-			$this->layout = 'json';
+			$this->layout = 'json_data';
 			if ($result) {
 				
 				$successJSON  = true;

@@ -121,7 +121,7 @@ class WebpagesController extends AppController {
 
 
 			$sEcho			= $this->request->query['sEcho'];
-			$this->layout = 'json_datatables';
+			$this->layout = 'json_html';
 
 			// no views rendered
 			$this->autoRender = false;
@@ -182,7 +182,7 @@ class WebpagesController extends AppController {
 		
 		if ($this->request->is('ajax')) {
 			
-			$this->layout = 'json';
+			$this->layout = 'json_data';
 			if ($result) {
 				
 				$successJSON  = true;
