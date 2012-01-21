@@ -127,7 +127,7 @@ class OrdersController extends AppController {
 		));
 		
 		if ($this->request->is('ajax')) {
-			$this->layout = 'json_data';
+			$this->layout = 'json_html';
 			
 
 	        $successJSON  = true;
