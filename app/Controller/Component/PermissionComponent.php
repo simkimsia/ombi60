@@ -44,7 +44,6 @@
  * models that are beyond the AccountGrandChild models.
  * **/
 
-App::uses('User', 'Model');
 
 class PermissionComponent extends Component {
  
@@ -54,12 +53,11 @@ class PermissionComponent extends Component {
  * if empty array, apply to all actions.
  * */
 
-	public $actionsWithPrimaryKey = array(
-		'admin_edit',
-		'admin_delete',
-		'admin_view',
-		'admin_toggle'
-	);
+	public $actionsWithPrimaryKey = array('admin_edit',
+			     'admin_delete',
+			     'admin_view',
+			     'admin_toggle',
+			     );
 	
 	public $actionsWithShopId = array('admin_add');
 	
@@ -80,6 +78,17 @@ class PermissionComponent extends Component {
 	**/
 	public $prefixActionsWithPrimaryKey = array();
 	
+	/**
+	 *array('ParentModelName'=>array('admin_add_',
+			'admin_index_',
+			));
+	**/
+	public $prefixActionsWithForeignKey = array();	
+	
+	
+	public $dataWithForeignKey = array();
+	
+	
 	public $redirect = array('action'=>'index',
 			      'admin' => true);
 	
@@ -96,11 +105,17 @@ class PermissionComponent extends Component {
  */     
 	public function initialize($controller) {
 		$settings = $this->settings;
+		
 		$this->actionsWithPrimaryKey = (empty($settings['actionsWithPrimaryKey'])) ? $this->actionsWithPrimaryKey : $settings['actionsWithPrimaryKey'];
+		
 		$this->actionsWithShopId = (empty($settings['actionsWithShopId'])) ? $this->actionsWithShopId : $settings['actionsWithShopId'];
 		
 		$this->prefixActionsWithPrimaryForeignKey = (empty($settings['prefixActionsWithPrimaryForeignKey'])) ? $this->prefixActionsWithPrimaryForeignKey : $settings['prefixActionsWithPrimaryForeignKey'];
+		
 		$this->prefixActionsWithPrimaryKey = (empty($settings['prefixActionsWithPrimaryKey'])) ? $this->prefixActionsWithPrimaryKey : $settings['prefixActionsWithPrimaryKey'];
+
+		$this->prefixActionsWithForeignKey = (empty($settings['prefixActionsWithForeignKey'])) ? $this->prefixActionsWithForeignKey : $settings['prefixActionsWithForeignKey'];
+
 		
 		$this->modelName = Inflector::classify($controller->name);
 		
@@ -129,15 +144,15 @@ class PermissionComponent extends Component {
 		
 		$shopIdUserHas = User::get('Merchant.shop_id');
 
-/// @TODO reve this hack
-//$shopIdUserHas =2;
+		/// @TODO reve this hack
+		$shopIdUserHas = 2;
+		
 		// check the admin_edit, admin_view,
 		// admin_delete, admin_toggle for correct primary key
 		// assuming that the url is something like
 		// admin/:controller-name/edit/:id
 		// we use $controller->params['pass'][0] to access the $id
-
-
+		
 		$this->checkForValidPrimaryKeyInAction($controller, $shopIdUserHas);
 		
 		$this->checkForValidShopIdInData($controller, $shopIdUserHas);
@@ -168,12 +183,21 @@ class PermissionComponent extends Component {
 		$grandChildModelActions = $this->in_array_of_arrays($controller->action, $this->prefixActionsWithPrimaryKey);
 		$actionForGrandChildModel = !empty($grandChildModelActions);
 		
+		// e.g. for admin/account_child_a/1/account_child_b/add
+		$parentModelActions = $this->in_array_of_arrays($controller->action, $this->prefixActionsWithForeignKey);
+		$actionForParentModel = !empty($parentModelActions);
 		
-		$validAction = ($actionForChildModel OR $actionForGrandChildModel);
+		
+		$validAction = ($actionForChildModel OR $actionForGrandChildModel OR $actionForParentModel);
 		
 		if ($validAction) {
 			$validParam = isset($controller->params['pass'][0]);
-			$modelName = $this->modelName;
+			$modelName 	= $this->modelName;
+			
+			if ($actionForParentModel) {
+				$parentModels 	= array_keys($parentModelActions);
+				$modelName 		= $parentModels[0];
+			}
 			
 			if ($validParam) {
 				$id = $controller->params['pass'][0];
