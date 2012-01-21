@@ -10,5 +10,7 @@ $map = array(
 		'004_add_custom_column_display_for_to_logs_table' => 'M4ee9e7f070504201a7c156a91507707a'),
 	5 => array(
 		'005_add_phone_to_addresses_table' => 'M4ef1d82e964043c4a92cf2ea1507707a'),
+	6 => array(
+		'006_add_shop_id_to_posts' => 'M4f19fdbe4314437d83b311d21507707a'),
 );
 ?>
