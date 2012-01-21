@@ -143,9 +143,6 @@ class PermissionComponent extends Component {
 	public function startup($controller) {
 		
 		$shopIdUserHas = User::get('Merchant.shop_id');
-
-		/// @TODO reve this hack
-		$shopIdUserHas = 2;
 		
 		// check the admin_edit, admin_view,
 		// admin_delete, admin_toggle for correct primary key
