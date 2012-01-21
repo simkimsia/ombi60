@@ -402,18 +402,26 @@
                               ));
         /// blogs & pages
         
-        Router::connect('/admin/blogs/:blog_id/posts/add',
+		// this is for add articles while stating the blog explicitly
+        Router::connect('/admin/blogs/:blog_id/articles/add',
                         array('controller' => 'posts',
-                              'action' => 'add',
+                              'action' => 'add_to_blog',
                               'admin' => true),
                         
                         array('pass' => array('blog_id'),
                               'blog_id' => '[0-9]+',
                               
                               ));
+
+        // this is for the add without stating the blog
+        Router::connect('/admin/articles/add',
+                        array('controller' => 'posts',
+                              'action' => 'add',
+                              'admin' => true)
+		);
+
         
-        
-        Router::connect('/admin/blogs/:blog_id/posts/edit/:id',
+        Router::connect('/admin/blogs/:blog_id/articles/edit/:id',
                         array('controller' => 'posts',
                               'action' => 'edit',
                               'admin' => true),
@@ -423,7 +431,7 @@
                               'id' => '[0-9]+',
                               ));
         
-        Router::connect('/admin/blogs/:blog_id/posts/delete/:id',
+        Router::connect('/admin/blogs/:blog_id/articles/delete/:id',
                         array('controller' => 'posts',
                               'action' => 'delete',
                               'admin' => true),

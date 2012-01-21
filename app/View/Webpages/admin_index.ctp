@@ -4,7 +4,7 @@
 	<ul>
 		<li id="create-page"><?php echo $this->Html->link(__('Create new Page'), array('action' => 'add')); ?></li>
 		<li id="create-blog"><?php echo $this->Html->link(__('Create new Blog'), array('controller'=>'blogs','action' => 'add')); ?></li>
-		<li id="create-article"><?php echo $this->Html->link(__('Create new Page'), array('action' => 'add')); ?></li>
+		<li id="create-article"><?php echo $this->Html->link(__('Create new Article'), array('controller' => 'posts', 'action' => 'add')); ?></li>
 
 	</ul>
 
@@ -78,7 +78,7 @@
 
 					$writeFirstArticleHtml = $this->Html->link(__('write the first article'), array(
 						'controller' => 'posts', 
-						'action' => 'add', 
+						'action' => 'add_to_blog', 
 						'blog_id'=>$blogId
 					)); 
 				

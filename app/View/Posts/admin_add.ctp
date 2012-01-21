@@ -1,12 +1,6 @@
 <h1 class="center"><?php echo __('Create new Article');?></h1>
 <div class="rule"></div>
-<!--
-<div id="action-links">
-	<ul>
-	    <li class="no-icon"><?php echo $this->Html->link(__('Cancel'), array('controller'=>'blogs','action' => 'view', $blog_id));?></li>
-	</ul>
-</div>
--->
+
 
 <div class="content-box">
 	<div class="box-body">
@@ -22,6 +16,7 @@
 						'div'	=> array(
 							'class' => 'form-field clear'
 						),
+
 						'error' => array(
 							'attributes' => array(
 								'wrap' => 'label', 
@@ -29,11 +24,6 @@
 								'for' => true
 							)
 						),
-						'url'=>array(
-							'controller'=>'posts',
-							'action' => 'add',
-							'blog_id'=>$blog_id
-						)
 					)
 				));
 			?>
@@ -50,8 +40,22 @@
 					'theme_advanced_toolbar_location' => 'top',
 					'extended_valid_elements' => 'textarea[cols|rows|disabled|name|readonly|class]'));
 	
-				echo $this->Form->input('Post.blog_id', array('type'=>'hidden', 'value'=>$blog_id));
-		
+				if (count($blogs) == 1) {
+					$blogIds = array_keys($blogs);
+					echo $this->Form->input('Post.blog_id', array('type'=>'hidden', 'value'=>$blogIds[0]));
+				} else if (count($blogs) > 1) {
+					echo $this->Form->input('Post.blog_id', array(
+						'options' => $blogs,
+						'label' => array(
+							'text' => 'Add article to ',
+							'class' => 'form-label size-120 fl-space2',
+						),
+					));
+				}
+	
+	
+				echo $this->Form->input('Post.shop_id', array('type'=>'hidden', 'value'=>Shop::get('Shop.id')));
+				
 				echo $this->Form->input('Post.title', array(
 					'class' => 'required text fl-space2'
 				));
@@ -85,7 +89,13 @@
 					
 
 				<?php
-		  		echo $this->Form->input('Post.author', array('options' => $authors));
+		  		echo $this->Form->input('Post.author_id', array(
+					'options' => $authors,
+					'label' => array(
+						'text' => 'Author',
+						'class' => 'form-label size-120 fl-space2',
+					),
+				));
       
 	
 			?>
@@ -95,7 +105,7 @@
 			<div class="rule2"></div>
 			<div class="form-field clear">
 				<input type="submit" class="button" value="Create New Article" />&nbsp;or&nbsp;
-				<?php echo $this->Html->link(__('Cancel'), array('controller'=>'blogs','action' => 'view', $blog_id)); ?>
+				<?php echo $this->Html->link(__('Cancel'), $cancelLink); ?>
 			</div>
 			<?php echo $this->Form->end(); ?>
 

@@ -14,9 +14,21 @@ class PostsController extends AppController {
 				'Theme' => array(
 					'actions'=>array(
 						'index',
-						'view',)
+						'view'
+					)
 				),
-				'TimeZone.TimeZone',);
+				'Permission' => array(
+					'redirect' => array(
+						'controller'=>'webpages',
+						'action'    => 'index',
+						'admin'     => true,
+					),
+					'actionsWithForeignKey' => array(
+						'admin_add_to_blog'
+					)
+				),
+				'TimeZone.TimeZone'
+	);
 
 	public function beforeFilter() {
 		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
@@ -123,7 +135,7 @@ class PostsController extends AppController {
 		
 	}
 
-	public function admin_add($blog_id = false) {
+	public function admin_add_to_blog($blog_id = false) {
 		
 		if (!$blog_id) {
 			$this->Session->setFlash(__('Invalid post'), 'default', array('class'=>'flash_failure'));
@@ -131,22 +143,71 @@ class PostsController extends AppController {
 					      'action' => 'index'));
 		}
 		
-		if (!empty($this->request->data)) {
+		$this->admin_create_new($blog_id);
+		
+	}
+	
+	public function admin_add() {
+		
+		$this->admin_create_new();
+		
+	}
+	
+	/*
+	*
+	* private function that is responsible for controller code for creating new article
+	* we use this as there is overlap between the actions admin_add and admin_add_to_blog
+	*/
+	private function admin_create_new($blog_id = null) {
+		if (isset($blog_id)) {
+			$cancelLink = array('controller'=>'blogs','action' => 'view', $blog_id);
+		} else {
+			$cancelLink = array('controller'=>'webpages','action' => 'index');
+		}
+		$this->set('cancelLink', $cancelLink);
+		
+		// get all blogs of this shop
+		$shop_id = Shop::get('Shop.id'); 
+		$blogs = $this->Post->Blog->find('list', array(
+			'conditions' => array(
+				'Blog.shop_id' => $shop_id
+			),
+			'order' => array(
+				'Blog.title'
+			)
+		));
+		
+		$authors = $this->Post->Blog->Shop->getAllMerchantUsersInList($shop_id);
+
+		$this->set(compact('blogs', 'authors'));
+
+		if ($this->request->is('get')) {
+			
+			// set selected value for dropdown
+			if (isset($blog_id)) {
+				$this->request->data['Post']['blog_id'] = $blog_id;
+			}
+		}
+		
+		else if (!empty($this->request->data)) {
 			$this->Post->create();
 			if ($this->Post->save($this->request->data)) {
 				$this->Session->setFlash(__('The post has been saved'), 'default', array('class'=>'flash_success'));
-				$this->redirect(array('controller'=>'blogs',
-						      'action' => 'view',
-						      $blog_id));
+				$blog_id = $this->request->data['Post']['blog_id'];
+				
+				$this->redirect(array(
+					'controller'=>'blogs',
+					'action' => 'view',
+					$blog_id
+				));
+				
 			} else {
 				$this->Session->setFlash(__('The post could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
 			}
 		}
+
+		$this->render('admin_add');
 		
-		$authors = $this->Post->Blog->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
-		$blog_name_info = $this->Post->find('first', array('conditions' => array('Post.blog_id' => $blog_id), 'fields' => array('Blog.title')));
-		$blog_name = $blog_name_info['Blog']['title'];
-		$this->set(compact('blog_id', 'authors', 'blog_name'));
 	}
 
 	public function admin_edit($blog_id = false, $id = false) {
