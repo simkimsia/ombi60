@@ -9,24 +9,29 @@ class ProductsController extends AppController {
 	public $helpers = array('Javascript', 'Ajax',
 			     'TinyMce.TinyMce', 'Text');
 	
-	public $components = array('Permission'=>array(
-					'prefixActionsWithPrimaryForeignKey' => array(
-						'Variant'=>array('admin_edit_variant',
-								 'admin_delete_variant')),
-					'prefixActionsWithPrimaryKey' => array(
-						'Variant'=>array('admin_add_variant',
-								 )),
-					),
-				'Paypal.Paypal',
-				
-				'Theme' => array('actions'=>array(
-								  'view',
-								  'view_by_group',
-								  'view_within_group',
-								)),
-				
-				
-				);
+	public $components = array(
+		'Permission'=>array(
+			'prefixActionsWithPrimaryForeignKey' => array(
+				'Variant'=>array(
+					'admin_edit_variant',
+					'admin_delete_variant'
+				)
+			),
+			'prefixActionsWithPrimaryKey' => array(
+				'Variant'=>array(
+					'admin_add_variant',
+				)
+			),
+		),
+		'Paypal.Paypal',
+		'Theme' => array(
+			'actions'=>array(
+				'view',
+				'view_by_group',
+				'view_within_group',
+			)
+		),
+	);
 	
 	public $view = 'TwigView.Twig';
 	

@@ -7,21 +7,23 @@ class ProductGroupsController extends AppController {
 			     'Ajax',
 			     'TinyMce.TinyMce');
 	
-	public $components = array('Permission' =>
-				array('actionsWithPrimaryKey' =>
-				      array('admin_view_smart',
-					    'admin_edit_smart',
-					    'admin_view_custom',
-					    'admin_edit_custom',
-					    'admin_delete',
-					    'admin_toggle',),
-				      'actionsWithShopId' =>
-				      array('admin_add_smart',
-					    'admin_add_custom',
-					    ),
-				      'errorMessage' => 'You do not have permissions for this Collection',
-					)
-				);
+	public $components = array(
+		'Permission' => array(
+			'actionsWithPrimaryKey' => array(
+				'admin_view_smart',
+				'admin_edit_smart',
+			    'admin_view_custom',
+			    'admin_edit_custom',
+			    'admin_delete',
+				'admin_toggle',
+			),
+			'actionsWithShopId' => array(
+				'admin_add_smart',
+				'admin_add_custom',
+			),
+			'errorMessage' => 'You do not have permissions for this Collection',
+		)
+	);
 	
 	public function beforeFilter() {
 	 	// call the AppController beforeFilter method after all the $this->Auth settings have been changed.

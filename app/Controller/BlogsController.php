@@ -3,13 +3,15 @@ class BlogsController extends AppController {
 
 	public $name = 'Blogs';	
 	
-	public $components = array('Permission' =>
-				array('redirect' =>
-					array('controller'=>'webpages',
-					      'action'    => 'index',
-					      'admin'     => true,
-					))
-				);
+	public $components = array(
+		'Permission' => array(
+			'redirect' => array(
+				'controller'=>'webpages',
+				'action'    => 'index',
+				'admin'     => true,
+			),
+		)
+	);
 	
 	
 	
@@ -21,7 +23,7 @@ class BlogsController extends AppController {
 		}
 		
 	}
-
+	
 	
 	public function admin_index() {
 		$this->Blog->recursive = 0;
