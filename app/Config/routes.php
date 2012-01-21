@@ -404,24 +404,7 @@
         /// blogs & pages
 
 
-		// admin articles
-		Router::connect('/admin/articles/:id', 
-			array(
-				'controller' => 'posts',
-				'admin' => true,
-				'action' => 'view'
-			), 
-			array(
-				'pass' => array('id'),
-                'id' => '[0-9]+',
-			)
-		);
-		
-        Router::connect('/admin/articles/:action/*', array(
-			'controller' => 'posts',
-			'admin' => true,
-			)
-		);
+
 		
 		
         
@@ -436,7 +419,24 @@
                               
                               ));
 
+		// admin articles
+		Router::connect('/admin/articles/:id', 
+			array(
+				'controller' => 'posts',
+				'admin' => true,
+				'action' => 'view'
+			), 
+			array(
+				'pass' => array('id'),
+                'id' => '[0-9]+',
+			)
+		);
 
+        Router::connect('/admin/articles/:action/*', array(
+			'controller' => 'posts',
+			'admin' => true,
+			)
+		);
         
         Router::connect('/pages/:handle',
                         array('controller' => 'webpages',
