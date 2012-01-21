@@ -85,8 +85,9 @@ class DomainsControllerTestCase extends ControllerTestCase {
 			'methods' => array('forceSSL'), 
 			'components' => array('Auth' => array('user'), 'Security')
 		));
-		$this->testAction('/admin/domains/index', array('return' => 'contents'));
-		$this->assertRegexp('#<h2 class="text_center">Domains</h2>#', $this->contents);
+		$this->testAction('/admin/domains', array('return' => 'contents', 'method'=>'GET'));
+		$expected = array('tag' => 'h1', 'content' => 'Domains');
+		$this->assertTag($expected, $this->contents);
 		$this->assertRegexp('#<td>http://localhost&nbsp;</td>#', $this->contents);
 	}
 

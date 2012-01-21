@@ -82,21 +82,6 @@ class BlogsControllerTestCase extends ControllerTestCase {
 	}
 
 	/**
-	 * testIndex method
-	 *
-	 * @return void
-	 */
-	public function testAdminIndex() {
-		$this->controller = $this->generate('Blogs', array(
-			'methods' => array('forceSSL'), 
-			'components' => array('Auth' => array('user'), 'Security')
-		));
-		$this->testAction('/admin/blogs/index', array('return' => 'contents'));
-		
-		$this->assertRegexp('#<h2>Blogs</h2>#', $this->contents);
-	}
-
-	/**
 	 * testView method
 	 *
 	 * @return void

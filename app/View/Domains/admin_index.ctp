@@ -1,6 +1,6 @@
 <?php echo $this->element('admin_scripts'); ?>
 <div>
-	<h2 class="text_center"><?php echo __('Domains');?></h2>
+	<h1 class="center"><?php echo __('Domains');?></h1>
 	<div id="domain_intro_text">
 	    <strong>Domains</strong>
 	    <br>
