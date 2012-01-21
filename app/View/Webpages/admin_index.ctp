@@ -99,10 +99,18 @@
 					if (!$visible) {
 						$statusClass 	= '<span class="status-hidden">Hidden</span>';
 					}
+					
+					$postUrl = Router::url(array(
+						'controller'	=> 'posts',
+						'action'		=> 'view',
+						'admin'			=> true,
+						'id'			=> $post['id']));
+					
+					$postLink = $this->Html->link($post['title'], $postUrl);
 				
 					?>
 				
-					<td><?php echo $post['title'] . $statusClass; ?></td>
+					<td><?php echo $postLink . $statusClass; ?></td>
 				
 					<?php 
 					// prepare the author and updated datetime

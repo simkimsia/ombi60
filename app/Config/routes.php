@@ -42,6 +42,7 @@
         Router::connect('/pages/*', array('controller' => 'webpages', 'action' => 'view'));
 
 
+
         // dynamic css
          Router::connect('/css/:theme_name',
                     array('controller' => 'redirect_files',
@@ -59,14 +60,14 @@
                               ));
 
 	   // build links so that LogHelper can work
-       Router::connect('/admin/products/view/:id',
+       Router::connect('/admin/products/:id',
                        array('controller' => 'products',
 								'admin' => true,
                              'action' => 'view'),
                        array('pass' => array('id'),
-                             'id' => '[a-zA-Z0-9\-_]+'
+                             'id' => '[0-9]+'
                              ));
-      
+    
 		//display 1 product WITHIN collection
 		Router::connect('/collections/:handle/products/:product_handle',
                         array('controller' 	=> 'products',
@@ -401,6 +402,28 @@
                               'product_id' => '[0-9]+',
                               ));
         /// blogs & pages
+
+
+		// admin articles
+		Router::connect('/admin/articles/:id', 
+			array(
+				'controller' => 'posts',
+				'admin' => true,
+				'action' => 'view'
+			), 
+			array(
+				'pass' => array('id'),
+                'id' => '[0-9]+',
+			)
+		);
+		
+        Router::connect('/admin/articles/:action/*', array(
+			'controller' => 'posts',
+			'admin' => true,
+			)
+		);
+		
+		
         
 		// this is for add articles while stating the blog explicitly
         Router::connect('/admin/blogs/:blog_id/articles/add',
@@ -413,33 +436,7 @@
                               
                               ));
 
-        // this is for the add without stating the blog
-        Router::connect('/admin/articles/add',
-                        array('controller' => 'posts',
-                              'action' => 'add',
-                              'admin' => true)
-		);
 
-        
-        Router::connect('/admin/blogs/:blog_id/articles/edit/:id',
-                        array('controller' => 'posts',
-                              'action' => 'edit',
-                              'admin' => true),
-                        
-                        array('pass' => array('blog_id', 'id'),
-                              'blog_id' => '[0-9]+',
-                              'id' => '[0-9]+',
-                              ));
-        
-        Router::connect('/admin/blogs/:blog_id/articles/delete/:id',
-                        array('controller' => 'posts',
-                              'action' => 'delete',
-                              'admin' => true),
-                        
-                        array('pass' => array('blog_id', 'id'),
-                              'blog_id' => '[0-9]+',
-                              'id' => '[0-9]+',
-                              ));
         
         Router::connect('/pages/:handle',
                         array('controller' => 'webpages',
@@ -447,6 +444,7 @@
                         array('pass' => array('handle'),
                               'handle' => '[a-zA-Z0-9\-_]+'
                               ));
+
         
         Router::connect('/blogs/:short_name/:id-:slug',
                         array('controller' => 'posts',
@@ -590,6 +588,19 @@
                               'action' => 'general_settings',
                               'admin'=>true));
 
+						Router::connect(
+							'/admin/:controller/:id',
+							array(
+								'action'	=> 'view',
+								'admin'		=> true
+							),
+							array(
+								'pass' => array('id'),
+								'id' => '[a-zA-Z0-9\-_]+'
+							)
+						);
+		
+	
 
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 

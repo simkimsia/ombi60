@@ -120,15 +120,18 @@ class PostsController extends AppController {
 	
 	
 
-	public function admin_view($blog_id = false, $id = false) {
-		if (!$blog_id || !$id) {
+	public function admin_view($id = false) {
+		if (!$id) {
 			$this->Session->setFlash(__('Invalid post'), 'default', array('class'=>'flash_failure'));
 			$this->redirect(array('controller'=>'webpages',
 					      'action' => 'index'));
 		}
 		
-		$post = $this->Post->find('first', array('conditions'=>array('Post.id'=>$id,
-									     'Post.blog_id'=>$blog_id)));
+		$post = $this->Post->find('first', array(
+			'conditions'=>array(
+				'Post.id'=>$id
+			)
+		));
 		$authors = $this->Post->Blog->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
 		$this->set(compact('post', 'authors'));
 
