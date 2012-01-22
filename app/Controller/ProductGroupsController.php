@@ -61,12 +61,11 @@ class ProductGroupsController extends AppController {
 	public function admin_view_smart($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid smart collection'));
-			$this->redirect($this->refer());
-		      }
-		
-			
-		
-		$this->__getSmartCollection($id);
+			$this->redirect('admin_index');
+		}
+
+		$this->request->data = $this->__getSmartCollection($id);
+		$this->set('title_for_layout', $this->request->data['ProductGroup']['title']);
 		$this->set('view', true);
 	}
 
@@ -116,6 +115,7 @@ class ProductGroupsController extends AppController {
 			}
 		}
 		$this->request->data = $this->__getSmartCollection($id);
+		$this->set('title_for_layout', 		$this->request->data['ProductGroup']['title']);
 		$this->set('view', true);
 	}
 	
@@ -143,12 +143,15 @@ class ProductGroupsController extends AppController {
 		}
 $group_products = $this->ProductGroup->ProductsInGroup->getProductsWithImagesByGroupId($id);
     
-		$this->set('productGroup', $this->ProductGroup->read(null, $id));
+		$productGroup = $this->ProductGroup->read(null, $id);
+		$this->set('productGroup', $productGroup);
 	
 		$products = $this->ProductGroup->ProductsInGroup->Product->getAllWithImagesByShopId(Shop::get('Shop.id'));
 		
 		$product_group_id = $id;
 		$this->set(compact('products','product_group_id','group_products'));
+		
+		$this->set('title_for_layout', $productGroup['ProductGroup']['title']);
 	}
 	
 	public function admin_add_custom() {
@@ -251,6 +254,7 @@ $group_products = $this->ProductGroup->ProductsInGroup->getProductsWithImagesByG
 		}
 		if (empty($this->request->data)) {
 			$this->request->data = $this->ProductGroup->read(null, $id);
+			$this->set('title_for_layout', $this->request->data['ProductGroup']['title']);
 		}
 		
 		$product_group = $this->ProductGroup->read(null, $id);

@@ -101,9 +101,11 @@
                               'action'     => 'index',
                               ));
         
-        Router::connect('/admin/collections/:action/*',
+        Router::connect('/admin/collections/:action/:id',
                         array('controller' => 'product_groups',
-                              'admin'      => true,
+                              'admin'      => true,),
+						array('pass' => array('id'),
+                              'id' => '[0-9]+'
                               ));
         
         // admin add, edit, delete variants via product
