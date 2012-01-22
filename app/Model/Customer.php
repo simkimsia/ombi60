@@ -330,8 +330,7 @@ class Customer extends AppModel {
 		$result = $model->save($addressData);
 		if ($result  == false) { return false; }
 		return $model->id;
-	}
-	
+	}	
 
 }
 ?>

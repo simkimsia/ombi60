@@ -817,7 +817,77 @@ class Order extends AppModel {
 					      'Order.shop_id'=>Shop::get('Shop.id')));
 	}
 	
+	/**
+	*
+	* get customer details 
+	*
+	**/
+	public function getCustomerDetails($id, $fields=array()) {
+		$defaults = array(
+			'Customer.id', 
+			'User.id', 'User.email', 'User.full_name', 
+			'Order.id', 'Order.order_no'
+		);
+		
+		if (empty($fields)) {
+			$fields = $defaults;
+		}
+		
+		$this->unbindModel(array(
+		    'belongsTo' => array_keys($this->belongsTo),
+			'hasOne'	=> array_keys($this->hasOne),
+			'hasMany'	=> array_keys($this->hasMany),
+		));
+		
+		
 
+		$this->bindModel(array(
+		    'hasOne' => array(
+		        'Customer' => array(
+		            'foreignKey' => false,
+		            'conditions' => array('Customer.id = Order.customer_id')
+		        ),
+		        'User' => array(
+		            'foreignKey' => false,
+		            'conditions' => array('User.id = Customer.user_id')
+		        )
+		    )
+		));
+		
+		return $this->find('first', array(
+			'conditions'	=> array(
+				'Order.id'	=> $id,
+			),
+			'fields'		=> $fields
+		));
+	}
+
+	/**
+	*
+	* send out email to customer of Order
+	**/
+	public function contactCustomer($data, $config = 'default') {
+		
+		App::uses('CakeEmail', 'Network/Email');
+		
+		$email = new CakeEmail($config); //gmail configuration in app/Config/email.php (as databases)
+
+		$emailFormat 	= 'text';
+		$subject 		= $data['subject'];
+		$to 			= $data['to'];
+		$from			= $data['from'];
+		
+		$email->subject($subject)
+			->to($to)
+			->from($from)
+			->sender($from)
+			->emailFormat($emailFormat)
+			->send($data['content']);
+		
+	}
+	
+
+	
 
 }
 ?>

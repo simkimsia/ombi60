@@ -108,32 +108,41 @@ class OrdersController extends AppController {
 	}
 	
 	public function admin_contact($id = false) {
-		$order = $this->Order->find('first', array(
-			'conditions'	=> array('Order.id' => $id),
-			'contain'		=> array(
-				'Customer'	=> array(
-					'User' 	=> array(
-						'fields' => array(
-							'User.email',
-							'User.full_name',
-						)
-					)
-				)
-			),
-			'fields'		=> array(
-				'Order.id',
-				'Order.order_no'
-			)
-		));
-		
-		if ($this->request->is('ajax')) {
-			$this->layout = 'json_html';
-			
 
-	        $successJSON  = true;
-	        $this->set(compact('order', 'successJSON'));
+		if ($this->request->is('ajax')) {
+			
+			$order = $this->Order->getCustomerDetails($id);
+
+			$fromEmail = User::get('User.email');
+			$fromName	= User::get('User.full_name');
+			$shopName	= Shop::get('Shop.name');
+			
+			$this->layout = 'json_html';
+
+	        $this->set(compact('order', 'fromEmail', 'fromName', 'shopName'));
 	
 	        $this->render('json/contact');
+	
+		} else if ($this->request->is('post')) {
+			$this->log('post');
+			if (isset($this->request->data['ContactEmail'])) {
+				App::uses('StringLib', 'UtilityLib.Lib');
+				
+				$this->request->data['ContactEmail']['from'] = StringLib::returnEmailArray($this->request->data['ContactEmail']['from']);
+				
+				$this->request->data['ContactEmail']['to'] = StringLib::returnEmailArray($this->request->data['ContactEmail']['to']);
+				
+				$this->log($this->request->data);
+				
+				$this->Order->contactCustomer($this->request->data['ContactEmail']);
+				
+			}
+			
+			$this->redirect(array(
+				'action' => 'view',
+				'id'	 => $id,
+				'admin'	 => true
+			));
 		}
 		
 	}

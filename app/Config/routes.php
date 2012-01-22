@@ -208,6 +208,20 @@
 							)
                         );
 
+
+		// orders links
+		Router::connect('/admin/orders/contact/:id',
+			array(
+				'controller'	=> 'orders',
+				'action'		=> 'contact',
+				'admin'			=> true,
+			),
+			array(
+				'pass'	=> array('id'),
+				'id'	=> '[a-zA-Z0-9\-_]+'
+			)
+		);
+		
 		// checkout process intermediate page to decide to send browser to pay or complete
         Router::connect('/orders/:shop_id/:order_uuid',
                         array(
