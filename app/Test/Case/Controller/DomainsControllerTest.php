@@ -85,9 +85,12 @@ class DomainsControllerTestCase extends ControllerTestCase {
 			'methods' => array('forceSSL'), 
 			'components' => array('Auth' => array('user'), 'Security')
 		));
+		
+		$_SERVER['REQUEST_URI'] = '/admin/domains';
 		$this->testAction('/admin/domains', array('return' => 'contents', 'method'=>'GET'));
 		$expected = array('tag' => 'h1', 'content' => 'Domains');
 		$this->assertTag($expected, $this->contents);
+
 		$this->assertRegexp('#<td>http://localhost&nbsp;</td>#', $this->contents);
 	}
 
@@ -101,6 +104,7 @@ class DomainsControllerTestCase extends ControllerTestCase {
 			'methods' => array('forceSSL'), 
 			'components' => array('Auth' => array('user'), 'Security')
 		));
+		$_SERVER['REQUEST_URI'] = '/admin/domains/view/2';
 		$this->testAction('/admin/domains/view/2', array('return' => 'contents'));
 		$expected = array('tag' => 'h2', 'content' => 'Domain');
 		$this->assertTag($expected, $this->contents);
@@ -128,6 +132,7 @@ class DomainsControllerTestCase extends ControllerTestCase {
 		$this->controller->request->data['Domain']['domain'] = 'http://localhost2';
 		$this->assertFlash($this->controller, 'The domain has been saved');
 		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_SERVER['REQUEST_URI'] = '/admin/domains/add';
 		$this->testAction('/admin/domains/add', array('data' => $this->controller->request->data, 'method' => 'POST'));
 		//debug($this->controller->Domain->getLastInsertId());
 		//die();
@@ -143,6 +148,7 @@ class DomainsControllerTestCase extends ControllerTestCase {
 		$this->controller->request->data['Domain']['domain'] = "Test2";
 		$this->assertFlash($this->controller, 'The domain has been saved');
 		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_SERVER['REQUEST_URI'] = '/admin/domains/edit/2';
 		$this->testAction('/admin/domains/edit/2', array('data' => $this->controller->request->data, 'method' => 'POST'));
 	}
 

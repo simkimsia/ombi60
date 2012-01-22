@@ -91,9 +91,11 @@ class BlogsControllerTestCase extends ControllerTestCase {
 			'methods' => array('forceSSL'), 
 			'components' => array('Auth' => array('user'), 'Security')
 		));
+		
+		$_SERVER['REQUEST_URI'] = '/admin/pages';
 		$this->testAction('/admin/blogs/view/1', array('return' => 'contents'));
 		$expected = '#<h2>news</h2>#';
-
+		
 		$this->assertRegexp($expected, $this->contents);
 	}
 
@@ -107,6 +109,8 @@ class BlogsControllerTestCase extends ControllerTestCase {
 		unset($this->controller->request->data['Blog']['id']);
 		$this->assertFlash($this->controller, 'The blog has been saved');
 		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_SERVER['REQUEST_URI'] = '/admin/blogs/add';
+		
 		$this->testAction('/admin/blogs/add', array('data' => $this->controller->request->data, 'method' => 'POST'));
 	}
 
@@ -120,6 +124,8 @@ class BlogsControllerTestCase extends ControllerTestCase {
 		$this->controller->request->data['Blog']['name'] = "Test2";
 		$this->assertFlash($this->controller, 'The blog has been saved');
 		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_SERVER['REQUEST_URI'] = '/admin/blogs/edit/3';
+		
 		$this->testAction('/admin/blogs/edit/3', array('data' => $this->controller->request->data, 'method' => 'POST'));
 	}
 

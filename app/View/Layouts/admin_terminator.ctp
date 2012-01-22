@@ -178,8 +178,10 @@
 	<div class="breadcrumb">
 		<div class="bread-links pagesize">
 			<ul class="clear">
-			<li class="first">You are here:</li>
-			<li><a href="#">Dashboard</a></li>
+				<li class="first">You are here:</li>
+				<?php 
+					echo $this->element('breadcrumbs'); 
+				?>
 			</ul>
 		</div>
 	</div>

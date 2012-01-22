@@ -92,7 +92,7 @@ class WebpagesControllerTestCase extends ControllerTestCase {
 			'components' => array('Auth' => array('user'), 'Security')
 		));
 		
-		$_SERVER['REQUEST_URI'] = '/admin/pages/index';
+		$_SERVER['REQUEST_URI'] = '/admin/pages';
 		$this->testAction('/admin/pages/index', array('return' => 'contents', 'method' => 'GET'));
 		
 		$this->assertRegexp('#<h2>Pages</h2>#', $this->contents);
@@ -109,6 +109,7 @@ class WebpagesControllerTestCase extends ControllerTestCase {
 			'methods' => array('forceSSL'), 
 			'components' => array('Auth' => array('user'), 'Security')
 		));
+		$_SERVER['REQUEST_URI'] = '/admin/pages/view/2';
 		$this->testAction('/admin/pages/view/2', array('return' => 'contents'));
 		$expected = '#<h2>Welcome</h2>#';
 
