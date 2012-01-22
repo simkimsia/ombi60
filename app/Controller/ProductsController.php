@@ -257,6 +257,8 @@ class ProductsController extends AppController {
 		
 		$this->set(compact('product_id', 'productImages',
 				   'errors', 'uploadifySettings'));
+				
+		$this->set('title_for_layout', $product['Product']['title']);
 
 	}
 
@@ -552,10 +554,9 @@ class ProductsController extends AppController {
 												'ProductGroup.shop_id'=>Shop::get('Shop.id'))));
 		
 	
-   		
-    
-    
 		$this->set(compact('product_id', 'errors', 'collections'));
+		
+		$this->set('title_for_layout', $this->request->data['Product']['title']);
 				
 		$this->render('admin_edit');
 

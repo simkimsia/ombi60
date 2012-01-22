@@ -174,6 +174,7 @@ class WebpagesController extends AppController {
 		$authors = $this->Webpage->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
 
 		$this->set(compact('authors', 'webpage'));
+		$this->set('title_for_layout', $webpage['Webpage']['title']);
 	}
 	
 	public function admin_toggle($id = false) {
@@ -248,12 +249,13 @@ class WebpagesController extends AppController {
 			}
 		}
 		if (empty($this->request->data)) {
-			$this->request->data = $this->Webpage->getDetails($id);
+			$this->request->data = $this->Webpage->getDetails($id, HIDDEN_AND_VISIBLE_ENTITY);
 		}
 
 		$authors = $this->Webpage->Shop->getAllMerchantUsersInList(Shop::get('Shop.id'));
 		
 		$this->set(compact('authors'));
+		$this->set('title_for_layout', $this->request->data['Webpage']['title']);
 	}
 
 	public function admin_delete($id = null) {

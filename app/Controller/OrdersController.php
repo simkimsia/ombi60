@@ -303,6 +303,9 @@ class OrdersController extends AppController {
 		}
 		
 		$this->set(compact('order', 'module_name'));
+		
+		$this->set('title_for_layout', '#' . $order['Order']['order_no']);
+		
 		$this->render('admin_view_term');
 	}
 	
