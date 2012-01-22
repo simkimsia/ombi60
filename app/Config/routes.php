@@ -602,18 +602,25 @@
                               'action' => 'general_settings',
                               'admin'=>true));
 
-						Router::connect(
-							'/admin/:controller/:id',
-							array(
-								'action'	=> 'view',
-								'admin'		=> true
-							),
-							array(
-								'pass' => array('id'),
-								'id' => '[a-zA-Z0-9\-_]+'
-							)
-						);
+		Router::connect(
+			'/admin/:controller/add',
+			array(
+				'action'	=> 'add',
+				'admin'		=> true
+			)
+		);
 		
+		Router::connect(
+			'/admin/:controller/:id',
+			array(
+				'action'	=> 'view',
+				'admin'		=> true
+			),
+			array(
+				'pass' => array('id'),
+				'id' => '[a-zA-Z0-9\-_]+'
+			)
+		);		
 	
 
 /**
