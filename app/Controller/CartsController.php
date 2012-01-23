@@ -59,7 +59,7 @@ class CartsController extends AppController {
 		
 		if(!$id) {
 			$this->Session->setFlash(__('Invalid id for Product'), 'default', array('class'=>'flash_failure'));
-			return $this->redirect($this->referer());
+			return $this->redirect($this->referer(array('action' => 'index')));		
 		}
 		
 		// set $qty as quantities purchased
@@ -78,7 +78,7 @@ class CartsController extends AppController {
 			return $this->redirect(array('action' => 'view_cart'));
 		} else {
 			$this->Session->setFlash(__('The Product could not be added to cart. Please, try again.'), 'default', array('class'=>'flash_failure'));
-			return $this->redirect($this->referer());
+			return $this->redirect($this->referer(array('action' => 'index')));		
 		}
 	}
 	

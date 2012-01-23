@@ -735,7 +735,7 @@ class ProductsController extends AppController {
 			} else {
 				$this->Session->setFlash(__('Adding new Variant failed'), 'default', array('class'=>'flash_failure'));	
 			}
-			$this->redirect($this->referer());	
+			return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));			
 		}
 		
 	}
@@ -756,7 +756,7 @@ class ProductsController extends AppController {
 				$this->Session->setFlash(__('Update Variant failed'), 'default', array('class'=>'flash_failure'));	
 			}
 			
-			$this->redirect($this->referer());	
+			$this->redirect($this->referer(array('action' => 'index', 'admin' => true)));			
 		}
 		
 	}
@@ -774,7 +774,7 @@ class ProductsController extends AppController {
 			$this->Session->setFlash(__('Deleting Variant failed'), 'default', array('class'=>'flash_failure'));
 		}
 		
-		$this->redirect($this->referer());	
+		$this->redirect($this->referer(array('action' => 'index', 'admin' => true)));			
 		
 		
 	}

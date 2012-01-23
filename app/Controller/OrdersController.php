@@ -12,38 +12,20 @@ class OrdersController extends AppController {
 
 	public $components = array(
 		
-		'Permission',
-				'Session', 'Paypal.Paypal', 
-				'Payments.Payments',
-				/*
-				'Filter.Filter' => array(
-					'actions' => array('index', 'admin_index'),
-					'defaults' => array(),
-					'fieldFormatting' => array(
-						'string'	=> "LIKE '%%%s%%'",
-						'text'		=> "LIKE '%%%s%%'",
-						'datetime'	=> "LIKE '%%%s%%'"
-					),
-					'formOptionsDatetime' => array(),
-					'paginatorParams' => array(
-						'page',
-						'sort',
-						'direction',
-						'limit'
-					),
-					'parsed' => false,
-					'redirect' => true,
-					'useTime' => false,
-					'separator' => '/',
-					'rangeSeparator' => '-',
-					'url' => array(),
-					'whitelist' => array(),
-					'useSession'=>true,
-					'complicatedRelation' => array('Customer'=>'User'),
-					),
-				*/
+		'Permission' => array(
+			'actionsWithPrimaryKey' => array(
+				'admin_edit',
+		     	'admin_delete',
+				'admin_view',
+				'admin_close',
+				'admin_open',
+				'admin_cancel'
+			)
+		),
+		'Session', 'Paypal.Paypal', 
+		'Payments.Payments',
 				
-				);
+	);
 	
 	
 	public function beforeFilter() {
@@ -1252,7 +1234,7 @@ class OrdersController extends AppController {
 				$options = array('payments'=>$Payments,
 						//'uuid'=>,
 						'shopId'=>$shop_id,
-						'cancelURL'=>  FULL_BASE_URL . $this->referer(),
+						'cancelURL'=>  FULL_BASE_URL . $this->referer(array('action'=> 'index', 'admin' => true)),
 						// we want to override the shipping address from our side
 						'addroverride'=> 1,
 						);
@@ -1548,7 +1530,68 @@ class OrdersController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
-
+	public function admin_close($id = false) {
+		if (!$id) {
+			$this->Session->setFlash(
+				__('Invalid Order'), 
+				'default', 
+				array(
+					'class'=>'flash_failure'
+				)
+			);
+			$this->redirect(array(
+				'action' => 'index',
+				'admin' => true)
+			);
+		}
+		
+		$this->Order->id = $id;
+		$this->Order->saveField('status', ORDER_CLOSED);
+		
+		return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
+	}
+	
+	public function admin_open($id = false) {
+		if (!$id) {
+			$this->Session->setFlash(
+				__('Invalid Order'), 
+				'default', 
+				array(
+					'class'=>'flash_failure'
+				)
+			);
+			$this->redirect(array(
+				'action' => 'index',
+				'admin' => true)
+			);
+		}
+		
+		$this->Order->id = $id;
+		$this->Order->saveField('status', ORDER_OPENED);
+		
+		return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
+	}
+	
+	public function admin_cancel($id = false) {
+		if (!$id) {
+			$this->Session->setFlash(
+				__('Invalid Order'), 
+				'default', 
+				array(
+					'class'=>'flash_failure'
+				)
+			);
+			$this->redirect(array(
+				'action' => 'index',
+				'admin' => true)
+			);
+		}
+		
+		$this->Order->id = $id;
+		$this->Order->saveField('status', ORDER_CANCELLED);
+		
+		return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
+	}
 	
 
 }

@@ -102,8 +102,8 @@ class ProductGroupsController extends AppController {
 	public function admin_edit_smart($id = null) {
 		
 		if (!$id) {
-		  $this->Session->setFlash(__('Invalid smart collection'));
-		  $this->redirect($this->refer());
+			$this->Session->setFlash(__('Invalid smart collection'));
+			return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));			
 		}
 		if (!empty($this->request->data)) {
 			$this->request->data['ProductGroup']['type'] = SMART_COLLECTION;
@@ -344,7 +344,7 @@ $group_products = $this->ProductGroup->ProductsInGroup->getProductsWithImagesByG
 	public function admin_remove_condition($condition_id = null, $smart_collection_id = null) {
 		if (!$condition_id) {
 			$this->Session->setFlash(__('Invalid smart collection'));
-			$this->redirect($this->refer());
+			return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));			
 		}
 	    
 		if ($this->ProductGroup->SmartCollectionCondition->deleteAll($condition_id)) {
