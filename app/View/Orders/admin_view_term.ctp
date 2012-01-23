@@ -6,8 +6,12 @@
 		<li id="note"><a href="#" onclick="$(&quot;order-note&quot;).hide();$(&quot;note-form&quot;).show();$(&quot;order_note&quot;).focus(); return false;">Attach note</a></li>
 		<li class="csv"><a href="https://donnelly-lockman2285.myshopify.com/admin/orders/54131562.csv">Export</a></li>
 		<li id="print"><a href="#" onclick="window.print();; return false;">Print</a></li>
-		<li id="lock"><a href="https://donnelly-lockman2285.myshopify.com/admin/orders/54131562/close" data-method="post" rel="nofollow">Close this order</a></li>
-
+		<?php if ($order['Order']['status'] == ORDER_OPENED) : ?> 
+		<li id="lock"><?php echo $this->Html->link(__('Close this Order'), array('action'=>'close', 'id' => $order['Order']['id'])); ?></li>
+		<?php endif; ?>
+		<?php if ($order['Order']['status'] == ORDER_CLOSED) : ?> 
+		<li id="locko"><?php echo $this->Html->link(__('Re-Open this Order'), array('action'=>'open', 'id' => $order['Order']['id'])); ?></li>
+		<?php endif; ?>
 
 	</ul>
 

@@ -1530,6 +1530,9 @@ class OrdersController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
+	/**
+	*
+	**/
 	public function admin_close($id = false) {
 		if (!$id) {
 			$this->Session->setFlash(
@@ -1551,6 +1554,10 @@ class OrdersController extends AppController {
 		return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
 	}
 	
+	/**
+	*
+	*
+	***/
 	public function admin_open($id = false) {
 		if (!$id) {
 			$this->Session->setFlash(
@@ -1572,6 +1579,11 @@ class OrdersController extends AppController {
 		return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
 	}
 	
+	/**
+	*
+	* cancel using ajax popup dialog form
+	*
+	**/
 	public function admin_cancel($id = false) {
 		if (!$id) {
 			$this->Session->setFlash(

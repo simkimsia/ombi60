@@ -224,6 +224,41 @@
 			)
 		);
 		
+		Router::connect('/admin/orders/open/:id',
+			array(
+				'controller'	=> 'orders',
+				'action'		=> 'open',
+				'admin'			=> true,
+			),
+			array(
+				'pass'	=> array('id'),
+				'id'	=> '[a-zA-Z0-9\-_]+'
+			)
+		);
+
+		Router::connect('/admin/orders/close/:id',
+			array(
+				'controller'	=> 'orders',
+				'action'		=> 'close',
+				'admin'			=> true,
+			),
+			array(
+				'pass'	=> array('id'),
+				'id'	=> '[a-zA-Z0-9\-_]+'
+			)
+		);
+
+		Router::connect('/admin/orders/cancel/:id',
+			array(
+				'controller'	=> 'orders',
+				'action'		=> 'cancel',
+				'admin'			=> true,
+			),
+			array(
+				'pass'	=> array('id'),
+				'id'	=> '[a-zA-Z0-9\-_]+'
+			)
+		);		
 		// checkout process intermediate page to decide to send browser to pay or complete
         Router::connect('/orders/:shop_id/:order_uuid',
                         array(
