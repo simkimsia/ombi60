@@ -212,6 +212,19 @@
 
 
 		// orders links
+		Router::connect('/admin/orders/edit/:id',
+			array(
+				'controller'	=> 'orders',
+				'action'		=> 'edit',
+				'admin'			=> true,
+			),
+			array(
+				'pass'	=> array('id'),
+				'id'	=> '[a-zA-Z0-9\-_]+'
+			)
+		);
+		
+		
 		Router::connect('/admin/orders/contact/:id',
 			array(
 				'controller'	=> 'orders',

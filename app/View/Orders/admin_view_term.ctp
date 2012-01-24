@@ -3,7 +3,7 @@
 <div id="action-links">
 	<ul>
 	    <li id="email"><?php echo $this->Html->link(__('Contact Customer'), array('action'=>'contact', 'id' => $order['Order']['id']), array('id'=>'contact')); ?></li>
-		<li id="note"><a href="#" onclick="$(&quot;order-note&quot;).hide();$(&quot;note-form&quot;).show();$(&quot;order_note&quot;).focus(); return false;">Attach note</a></li>
+		<li id="note"><a href="#" onclick="$(&quot;#order_note&quot;).hide();$(&quot;#note_form&quot;).show();$(&quot;#OrderNote&quot;).focus(); return false;">Attach note</a></li>
 		<li class="csv"><a href="https://donnelly-lockman2285.myshopify.com/admin/orders/54131562.csv">Export</a></li>
 		<li id="print"><a href="#" onclick="window.print();; return false;">Print</a></li>
 		<?php if ($order['Order']['status'] == ORDER_OPENED) : ?> 
@@ -171,6 +171,67 @@
 			</div> <!-- end of box-body -->
 		</div> <!-- end of content-box -->
 		
+		
+		<?php
+		$newlines = array("\r\n", "\n", "\r");
+		$content = str_replace($newlines, "", $order['Order']['note']);
+		
+		 if (!empty($content)) : 
+		?>
+		<div id="order_note" class="mark_blue">
+			<h2>Order Note</h2>
+			<div id="note_body"><?php echo nl2br($order['Order']['note']); ?></div>
+		</div>
+		<?php endif; ?>	
+		<div id="note_form" class="mark" style="display:none">
+			<?php
+
+				echo $this->Form->create('Order', array(
+					'class' => 'validate-form form bt-space15', 
+					'inputDefaults' => array(
+						'label' => array(
+							'class' => 'form-label size-120 fl-space2'
+						),
+						'div'	=> array(
+							'class' => 'form-field clear'
+						),
+						'error' => array(
+							'attributes' => array(
+								'wrap' => 'label', 
+								'class' => 'error', 
+								'for' => true
+							)
+						)
+					),
+					'url' => array(
+						'controller' => 'orders',
+						'action'	=> 'edit',
+						'admin'	=> true,
+						'id'	=> $order['Order']['id']
+					)
+				));
+			?>
+			<div class="columns clear bt-space15">
+				<?php
+					echo $this->Form->input('Order.note', array(
+						'class' => 'textarea',
+						'type'	=> 'textarea',
+						'value' => $order['Order']['note'],
+					));
+
+				?>		
+			</div>
+			
+			<div class="rule2"></div>
+			<div class="form-field clear">
+				<input type="submit" class="button" value="Save Note" />&nbsp;or&nbsp;
+				<a href="#" onclick="$(&quot;#order_note&quot;).show();$(&quot;#note_form&quot;).hide(); return false;">Cancel</a>
+			</div>
+
+			<?php echo $this->Form->end(); ?>
+		
+		</div>
+	
 		
 		<!-- Items -->
 		

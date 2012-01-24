@@ -48,7 +48,8 @@ class OrdersController extends AppController {
 			$this->request->action == 'return_from_payment' ||
 			$this->request->action == 'completed' || 
 			$this->request->action == 'admin_menu_action' ||
-			$this->request->action == 'admin_contact') {
+			$this->request->action == 'admin_contact' ||
+			$this->request->action == 'admin_edit') {
 		
 			$this->Components->disable('Security');
 		}
@@ -87,6 +88,29 @@ class OrdersController extends AppController {
 	public function index() {
 		$this->Order->recursive = 0;
 		$this->set('orders', $this->paginate());
+	}
+	
+	/**
+	*
+	* mainly for updating the note field
+	**/
+	public function admin_edit($id = false) {
+		if (!$id && empty($this->request->data)) {
+			$this->Session->setFlash(__('Invalid order'), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('controller'=>'orders',
+					      'action' => 'index'));
+		}
+		
+		if (!empty($this->request->data)) {
+			$this->Order->id = $id;
+			if ($this->Order->saveField('note', $this->request->data['Order']['note'])) {
+				$this->Session->setFlash(__('The note has been saved'), 'default', array('class'=>'flash_success'));
+				$this->redirect(array('action' => 'view', $id));
+			} else {
+				$this->Session->setFlash(__('The note could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
+			}
+		}
+		
 	}
 	
 	public function admin_contact($id = false) {
