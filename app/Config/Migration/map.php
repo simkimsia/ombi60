@@ -12,5 +12,7 @@ $map = array(
 		'005_add_phone_to_addresses_table' => 'M4ef1d82e964043c4a92cf2ea1507707a'),
 	6 => array(
 		'006_add_shop_id_to_posts' => 'M4f19fdbe4314437d83b311d21507707a'),
+	7 => array(
+		'007_add_note_field_to_orders' => 'M4f1e68a51ac841dca34b498d1507707a'),
 );
 ?>
