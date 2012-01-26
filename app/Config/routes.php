@@ -670,6 +670,19 @@
 				'pass' => array('id'),
 				'id' => '[a-zA-Z0-9\-_]+'
 			)
+		);
+		
+		Router::connect(
+			'/admin/:controller/:id.csv',
+			array(
+				'action'	=> 'view',
+				'admin'		=> true,
+				'ext'		=> 'csv',
+			),
+			array(
+				'pass' => array('id'),
+				'id' => '[a-zA-Z0-9\-_]+'
+			)
 		);		
 	
 

@@ -8,7 +8,10 @@ class OrdersController extends AppController {
 
 	public $name = 'Orders';
 
-	public $helpers = array('Session', 'Time', 'Number');
+	public $helpers = array(
+		'Session', 'Time', 'Number',
+		'PhpExcel.Csv'
+		);
 
 	public $components = array(
 		
