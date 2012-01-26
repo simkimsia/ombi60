@@ -81,7 +81,11 @@ class OrdersController extends AppController {
 		// for checkout page
 		$this->Security->unlockedFields[] = 'Order.fixed_delivery';
 
-	
+		// set layout for csv extensions
+		if (!empty($this->request->params['ext']) && $this->request->is('get')) {
+
+			$this->layout = 'empty';
+		}
 	}
 	
 	public function paypal() {
@@ -286,6 +290,8 @@ class OrdersController extends AppController {
 	}
 	
 	public function admin_view($id = null) {
+		$this->log($this->request->params);
+					$this->log($this->layout);
 		
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
