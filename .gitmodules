@@ -99,4 +99,4 @@
 	url = git://github.com/simkimsia/cakephp-gravatar.git
 [submodule "app/Plugin/PhpExcel"]
 	path = app/Plugin/PhpExcel
-	url = git://github.com/simkimsia/phpexcel-for-cakephp.gitgit
+	url = git://github.com/simkimsia/phpexcel-for-cakephp.git
