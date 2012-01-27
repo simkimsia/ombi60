@@ -254,6 +254,7 @@
 				'controller'	=> 'orders',
 				'action'		=> 'close',
 				'admin'			=> true,
+				'[method]'		=> 'PUT'
 			),
 			array(
 				'pass'	=> array('id'),
@@ -672,12 +673,12 @@
 			)
 		);
 		
+
 		Router::connect(
-			'/admin/:controller/:id.csv',
+			'/admin/:controller/:id.:ext',
 			array(
 				'action'	=> 'view',
 				'admin'		=> true,
-				'ext'		=> 'csv',
 			),
 			array(
 				'pass' => array('id'),

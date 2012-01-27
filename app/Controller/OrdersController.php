@@ -10,7 +10,7 @@ class OrdersController extends AppController {
 
 	public $helpers = array(
 		'Session', 'Time', 'Number',
-		'PhpExcel.Csv'
+		'PhpExcel.Csv', 'PhpExcel.Excel'
 		);
 
 	public $components = array(
@@ -1567,6 +1567,12 @@ class OrdersController extends AppController {
 	*
 	**/
 	public function admin_close($id = false) {
+		
+		$this->log($this->request->is('get'));
+				$this->log($this->request->is('put'));
+				
+		$this->log($this->request->params);
+		
 		if (!$id) {
 			$this->Session->setFlash(
 				__('Invalid Order'), 
