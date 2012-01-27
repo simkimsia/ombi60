@@ -277,8 +277,8 @@ function InitGraphs () {
 }
 
 /* *********************************************************************
- * Fancybox
- * *********************************************************************/
+ * Fancybox v1.3
+ * ********************************************************************
 function InitFancybox () {
 	$('.modal-link').fancybox({
 		'modal' 				: false,
@@ -292,6 +292,27 @@ function InitFancybox () {
 	$("a[href$='jpg']").fancybox();
 	$("a[href$='png']").fancybox(); 	
 }
+*/
+/* *********************************************************************
+ * Fancybox v2.0.4
+ * *********************************************************************/
+function InitFancybox () {
+	
+	$('.modal-link').fancybox({
+		modal 			: false,
+		closeClick 		: true,  /* if changed to false, clicking on content would not close box */
+		closeBtn 		: true,
+		helpers 		: {
+			overlay 		: {
+				closeClick		: true 	/* if changed to false, clicking on overlay would not close box */
+			}
+		}
+	});
+
+	$("a[href$='gif',a[href$='jpg',a[href$='png']").fancybox();
+	
+}
+
 
 /* *********************************************************************
  * WYSIWYG

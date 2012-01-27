@@ -2,7 +2,7 @@
 <div class="rule"></div>
 <div id="action-links">
 	<ul>
-	    <li id="email"><?php echo $this->Html->link(__('Contact Customer'), array('action'=>'contact', 'id' => $order['Order']['id']), array('id'=>'contact')); ?></li>
+	    <li id="email"><?php echo $this->Html->link(__('Contact Customer'), array('action'=>'contact', 'id' => $order['Order']['id']), array('id'=>'contact', 'class'=>'fancybox.ajax')); ?></li>
 		<li id="note"><a href="#" onclick="$(&quot;#order_note&quot;).hide();$(&quot;#note_form&quot;).show();$(&quot;#OrderNote&quot;).focus(); return false;">Attach note</a></li>
 		<li class="csv"><?php echo $this->Html->link(__('Export'), array('action'=>'view', 'id' => $order['Order']['id'], 'ext' => 'csv')); ?></li>
 		<li id="print"><a href="#" onclick="window.print();; return false;">Print</a></li>

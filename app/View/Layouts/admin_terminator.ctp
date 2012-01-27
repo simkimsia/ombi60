@@ -32,6 +32,7 @@
 		echo $this->Html->css('themeforest/terminator/reset');
 		echo $this->Html->css('themeforest/terminator/screen');
 		echo $this->Html->css('themeforest/terminator/fancybox');
+		echo $this->Html->css('themeforest/terminator/jquery.fancybox.css?v=3');
 		echo $this->Html->css('themeforest/terminator/jquery.wysiwyg');
 		echo $this->Html->css('themeforest/terminator/jquery.ui');
 		echo $this->Html->css('themeforest/terminator/visualize');
@@ -40,12 +41,13 @@
 		// action links copied from shopify admin
 		echo $this->Html->css('admin.actionlinks');
 		
-        echo $this->Html->script('jquery.js'); 
+        echo $this->Html->script('jquery/jquery-1.7.1'); 
 
         echo $this->Html->script('themeforest/terminator/jquery.visualize');
         echo $this->Html->script('themeforest/terminator/jquery.wysiwyg');
         echo $this->Html->script('themeforest/terminator/tiny_mce/jquery.tinymce');
-        echo $this->Html->script('themeforest/terminator/jquery.fancybox');
+        //echo $this->Html->script('themeforest/terminator/jquery.fancybox-1.3');
+		echo $this->Html->script('themeforest/terminator/jquery.fancybox.pack');
         echo $this->Html->script('themeforest/terminator/jquery.idtabs');
         echo $this->Html->script('themeforest/terminator/jquery.datatables');
         echo $this->Html->script('themeforest/terminator/jquery.jeditable');
