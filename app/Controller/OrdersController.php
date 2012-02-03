@@ -307,6 +307,8 @@ class OrdersController extends AppController {
 		}
 
 		fclose($outstream);
+		$this->layoutPath = 'csv';
+		$this->layout = 'empty';
 	}
 
 	public function admin_view($id = null) {
