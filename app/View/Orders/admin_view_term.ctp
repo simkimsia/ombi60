@@ -16,7 +16,12 @@
 		<li id="locko"><?php echo $this->Html->link(__('Cancel this Order'), array('action'=>'open', 'id' => $order['Order']['id'])); ?></li>
 		<?php endif; ?>
 		<?php if ($order['Order']['status'] == ORDER_CLOSED || $order['Order']['status'] == ORDER_CANCELLED) : ?> 
-		<li id="locko"><?php echo $this->Html->link(__('Delete this Order'), array('action'=>'open', 'id' => $order['Order']['id'])); ?></li>
+		<li class="no-icon">
+		<?php 
+			$image = $this->Html->image('admin/icons/trash.gif', array('alt'=>'Delete'));
+			echo $this->Html->link($image, array('action' => 'delete', $order['Order']['id']), array('escape' => false), sprintf(__('Are you sure you want to delete # %s?'), $order['Order']['order_no'])); 
+			?>
+		</li>
 		<?php endif; ?>
 
 

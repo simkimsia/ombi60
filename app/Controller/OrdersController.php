@@ -430,6 +430,9 @@ class OrdersController extends AppController {
                                                                                      'fields' => array('ShopsPaymentModule.display_name'),
                                                                                     ));            
             $module_name = $payment_module_name['ShopsPaymentModule']['display_name'];
+		} else {
+			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('action' => 'index', 'admin' => true));
 		}
 		
 		
@@ -1819,7 +1822,7 @@ class OrdersController extends AppController {
 			
 		}
 		
-		return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
+		return $this->redirect(array('action' => 'index', 'admin' => true));		
 	}
 	
 
