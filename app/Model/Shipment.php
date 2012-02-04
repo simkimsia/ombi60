@@ -125,11 +125,7 @@ class Shipment extends AppModel {
 	**/
 	public function getStatusNameGiven($status) {
 		switch($status) {
-			
-			define('FULFILLMENT_NOT_FULFILLED', 1);
-			define('FULFILLMENT_PARTIAL', 2);
-			define('FULFILLMENT_FULFILLED', 0);
-			
+						
 			case FULFILLMENT_NOT_FULFILLED:
 				return 'No';
 				break;
