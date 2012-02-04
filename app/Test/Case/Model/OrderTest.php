@@ -856,7 +856,22 @@ class OrderTestCase extends CakeTestCase {
 		App::uses('ArrayLib', 'UtilityLib.Lib');
 		$this->assertEquals(ArrayLib::deepKSort($expected), ArrayLib::deepKSort($order));
 	}
-	
+
+	/**
+	*
+	* test getDetailed works for orders that is only above the ORDER_CREATED level for admin
+	*
+	**/
+	public function testGetDetailedShowsAboveCreated() {
+		// GIVEN the ORDER  associated with Customer 1
+		
+		// WHEN we run getDetailed
+		$deleted	= '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; // deleted order
+		$order		= $this->Order->getDetailed($deleted);
+		
+		// THEN we get all the following information
+		$this->assertFalse($order);
+	}
 	
 	/**
 	*
@@ -982,5 +997,6 @@ class OrderTestCase extends CakeTestCase {
 		$this->assertTrue($closedResult);
 		
 	}
+	
 
 }

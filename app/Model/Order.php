@@ -180,9 +180,10 @@ class Order extends AppModel {
 	*
 	* @param string $id Order id
 	* @param boolean $lineItems Default true.
+	* @param boolean $admin Default true. When set to true, we only show orders above the ORDER_CREATED level
 	* @return array Data array
 	**/
-	public function getDetailed($id, $lineItems = true) {
+	public function getDetailed($id, $lineItems = true, $admin=true) {
 		if (!$id) {
 			return false;
 		}
@@ -221,6 +222,10 @@ class Order extends AppModel {
 		$findConditionsArray = array(
 			'conditions'=>array('Order.id'=>$id),
 		);
+		
+		if ($admin) {
+			$findConditionsArray['conditions']['Order.status >']  = ORDER_CREATED;
+		}
 		
 		$order = $this->find('first', $findConditionsArray);
 		
