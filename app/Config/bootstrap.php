@@ -133,6 +133,12 @@ define('FULFILLMENT_FULFILLED', 0);
 
 /**
  * ORDERS PAYment status
+ *
+ * AUTHORIZED can go to VOIDED
+ * PAID can go to REFUNDED
+ * ONLY AUTHORIZED and PAID can lead to CANCELLATION of ORDER
+ * EVERYTHING CAN LEAD TO CLOSED ORDER
+ *
  **/
 define('PAYMENT_AUTHORIZED', 1);
 define('PAYMENT_PENDING', 3);
@@ -144,11 +150,14 @@ define('PAYMENT_VOIDED', 5);
 
 /**
  * ORDERS status
+ * ONLY ClOSED / CANCELLED ORDERS can be DELETED
  **/
 define('ORDER_CREATED', 0); // when order is created, it means that the checkout button is pressed
 define('ORDER_OPENED', 1); // when order is opened, it means that payment is at least initialized
 define('ORDER_CANCELLED', 2); // when order is cancelled by customer
 define('ORDER_CLOSED', 3); // when order automatically closed by system or closed by merchant
+define('ORDER_DELETED', 4); // when order deleted. 
+
 
 
 /**
