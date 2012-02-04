@@ -866,7 +866,7 @@ class OrderTestCase extends CakeTestCase {
 		// GIVEN the ORDER  associated with Customer 1
 		
 		// WHEN we run getDetailed
-		$deleted	= '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; // deleted order
+		$deleted	= '4e8d8ef9-71a4-4a69-8dbf-04b01507707f'; // deleted order
 		$order		= $this->Order->getDetailed($deleted);
 		
 		// THEN we get all the following information
@@ -982,9 +982,9 @@ class OrderTestCase extends CakeTestCase {
 	**/
 	public function testIsValidForDelete() {
 		// GIVEN we are using the following orders
-		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; // OPENED
-		$cancelled = '4e8d8ef9-71a4-4a69-8dbf-04b01507707b'; 
-		$closed = '4e8d8ef9-71a4-4a69-8dbf-04b01507707c'; 
+		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707f'; // OPENED
+		$cancelled = '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; 
+		$closed = '4e8d8ef9-71a4-4a69-8dbf-04b01507707e'; 
 		
 		// WHEN we run the function 
 		$openedResult = $this->Order->isValidForDelete($opened);

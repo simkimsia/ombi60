@@ -892,7 +892,8 @@ class Order extends AppModel {
 	}
 	
 	/**
-	* checks if the Order can be cancelled which means payment_status is either PAID or AUTHORIZED
+	* checks if the Order can be cancelled which means payment_status is either PAID or AUTHORIZED 
+	* AND it is OPENED
 	* @param string $id Order id
 	* @return boolean Returns true if valid for Cancel
 	**/
@@ -906,7 +907,8 @@ class Order extends AppModel {
 				'OR' => array(
 					'Order.payment_status' => array(PAYMENT_PAID, PAYMENT_AUTHORIZED)
 				),
-				'Order.id' => $this->id
+				'Order.id' => $this->id,
+				'Order.status' => ORDER_OPENED
 			)
 		));
 		

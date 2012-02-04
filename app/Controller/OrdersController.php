@@ -422,6 +422,12 @@ class OrdersController extends AppController {
 		$order = $this->Order->getDetailed($id);
 		
 
+		if ($order == false) {
+			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('action' => 'index', 'admin' => true));
+			
+		}
+		
 		if (!empty($order) && isset($order['Payment'][0]['shops_payment_module_id'])) {
 		    $shops_payment_module_id = $order['Payment'][0]['shops_payment_module_id'];
 		    $conditions = array('ShopsPaymentModule.id' => array($shops_payment_module_id));
@@ -430,10 +436,7 @@ class OrdersController extends AppController {
                                                                                      'fields' => array('ShopsPaymentModule.display_name'),
                                                                                     ));            
             $module_name = $payment_module_name['ShopsPaymentModule']['display_name'];
-		} else {
-			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'index', 'admin' => true));
-		}
+		} 
 		
 		
 		$this->set(compact('order', 'module_name'));
