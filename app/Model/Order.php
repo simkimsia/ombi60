@@ -886,7 +886,27 @@ class Order extends AppModel {
 		
 	}
 	
-
+	/**
+	* checks if the Order can be cancelled which means payment_status is either PAID or AUTHORIZED
+	* @param string $id Order id
+	* @return boolean Returns true if valid for Cancel
+	**/
+	public function isValidForCancel($id = null) {
+		if ($id != null) {
+			$this->id = $id;
+		}
+		
+		$count = $this->find('count', array(
+			'conditions' => array(
+				'OR' => array(
+					'Order.payment_status' => array(PAYMENT_PAID, PAYMENT_AUTHORIZED)
+				),
+				'Order.id' => $this->id
+			)
+		));
+		
+		return ($count == 1);
+	}
 	
 
 }

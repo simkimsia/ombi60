@@ -937,4 +937,30 @@ class OrderTestCase extends CakeTestCase {
 		$this->assertEqual($expected, $result);
 		
 	}
+	
+	/**
+	*
+	* test if isValidForCancel works for PAYMENT_PAID, PAYMENT_AUTHORIZED, PAYMENT_PENDING, PAYMENT_ABANDONED,
+	* PAYMENT_REFUNDED, PAYMENT_VOIDED
+	**/
+	public function testIsValidForCancel() {
+		// GIVEN we are using the following orders
+		$abandoned = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a'; // ABANDONED
+		$paid = '4e8d8ef9-71a4-4a69-8dbf-04b01507707b'; 
+		$authorized = '4e8d8ef9-71a4-4a69-8dbf-04b01507707c'; 
+		
+		// WHEN we run the function 
+		$abandonedResult = $this->Order->isValidForCancel($abandoned);
+		$paidResult = $this->Order->isValidForCancel($paid);
+		$authorizedResult = $this->Order->isValidForCancel($authorized);		
+		
+		// THEN we expect teh following
+		$this->assertFalse($abandonedResult);
+		$this->assertTrue($paidResult);
+		$this->assertTrue($authorizedResult);
+		
+	}
+	
+
+
 }
