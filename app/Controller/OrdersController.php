@@ -1771,7 +1771,7 @@ class OrdersController extends AppController {
 			$this->Order->saveField('status', ORDER_CANCELLED);
 		} else {
 			$this->Session->setFlash(
-				__('This Order cannot be cancelled. Only orders with payment as PAID or AUTHORIZED can be cancelled.'), 
+				__('This Order cannot be cancelled. Only OPENED orders with payment as PAID or AUTHORIZED can be cancelled.'), 
 				'default', 
 				array(
 					'class'=>'flash_failure'

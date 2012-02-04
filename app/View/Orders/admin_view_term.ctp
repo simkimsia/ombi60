@@ -12,8 +12,9 @@
 		<?php if ($order['Order']['status'] == ORDER_CLOSED) : ?> 
 		<li id="locko"><?php echo $this->Html->link(__('Re-Open this Order'), array('action'=>'open', 'id' => $order['Order']['id'])); ?></li>
 		<?php endif; ?>
-		<?php if ($order['Order']['payment_status'] == PAYMENT_PAID || $order['Order']['payment_status'] == PAYMENT_AUTHORIZED) : ?> 
-		<li id="locko"><?php echo $this->Html->link(__('Cancel this Order'), array('action'=>'open', 'id' => $order['Order']['id'])); ?></li>
+		<?php if (($order['Order']['payment_status'] == PAYMENT_PAID || $order['Order']['payment_status'] == PAYMENT_AUTHORIZED) &&
+					$order['Order']['status'] == ORDER_OPENED) : ?> 
+		<li id="cancel-order"><?php echo $this->Html->link(__('Cancel this Order'), array('action'=>'open', 'id' => $order['Order']['id'])); ?></li>
 		<?php endif; ?>
 		<?php if ($order['Order']['status'] == ORDER_CLOSED || $order['Order']['status'] == ORDER_CANCELLED) : ?> 
 		<li class="no-icon">
