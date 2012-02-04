@@ -1780,6 +1780,47 @@ class OrdersController extends AppController {
 		
 		return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
 	}
+
+	/**
+	*
+	* delete the order
+	*
+	**/
+	public function admin_delete($id = false) {
+		if (!$id) {
+			$this->Session->setFlash(
+				__('Invalid Order'), 
+				'default', 
+				array(
+					'class'=>'flash_failure'
+				)
+			);
+			$this->redirect(array(
+				'action' => 'index',
+				'admin' => true)
+			);
+		}
+		
+		$this->Order->id = $id;
+		if ($this->Order->isValidForDelete($id)) {
+			$this->Order->saveField('status', ORDER_DELETED);
+		} else {
+			$this->Session->setFlash(
+				__('This Order cannot be deleted. Only CLOSED or CANCELLED orders can be deleted.'), 
+				'default', 
+				array(
+					'class'=>'flash_failure'
+				)
+			);
+			$this->redirect(array(
+				'action' => 'index',
+				'admin' => true)
+			);
+			
+		}
+		
+		return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
+	}
 	
 
 }

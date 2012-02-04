@@ -908,6 +908,26 @@ class Order extends AppModel {
 		return ($count == 1);
 	}
 	
-
+	/**
+	* checks if the Order can be deleted which means status is either CLOSED or CANCELLED
+	* @param string $id Order id
+	* @return boolean Returns true if valid for Delete
+	**/
+	public function isValidForDelete($id = null) {
+		if ($id != null) {
+			$this->id = $id;
+		}
+		
+		$count = $this->find('count', array(
+			'conditions' => array(
+				'OR' => array(
+					'Order.status' => array(ORDER_CLOSED, ORDER_CANCELLED)
+				),
+				'Order.id' => $this->id
+			)
+		));
+		
+		return ($count == 1);
+	}
 }
 ?>
