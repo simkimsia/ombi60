@@ -156,7 +156,7 @@ define('ORDER_CREATED', 0); // when order is created, it means that the checkout
 define('ORDER_OPENED', 1); // when order is opened, it means that payment is at least initialized
 define('ORDER_CANCELLED', 2); // when order is cancelled by customer
 define('ORDER_CLOSED', 3); // when order automatically closed by system or closed by merchant
-define('ORDER_DELETED', 4); // when order deleted. 
+define('ORDER_DELETED', -1); // when order deleted. 
 
 
 

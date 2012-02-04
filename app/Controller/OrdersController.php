@@ -236,7 +236,10 @@ class OrdersController extends AppController {
 			
 		}
 
-		$defaultFilter = array('Order.shop_id' => $shop_id);
+		$defaultFilter = array(
+			'Order.shop_id' => $shop_id,
+			'Order.status >' => ORDER_CREATED
+		);
 		$conditions = array_merge($defaultFilter, $fieldsToFilter);
 		
 		$this->paginate = array(
@@ -1758,7 +1761,22 @@ class OrdersController extends AppController {
 		}
 		
 		$this->Order->id = $id;
-		$this->Order->saveField('status', ORDER_CANCELLED);
+		if ($this->Order->isValidForCancel($id)) {
+			$this->Order->saveField('status', ORDER_CANCELLED);
+		} else {
+			$this->Session->setFlash(
+				__('This Order cannot be cancelled. Only orders with payment as PAID or AUTHORIZED can be cancelled.'), 
+				'default', 
+				array(
+					'class'=>'flash_failure'
+				)
+			);
+			$this->redirect(array(
+				'action' => 'index',
+				'admin' => true)
+			);
+			
+		}
 		
 		return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
 	}
