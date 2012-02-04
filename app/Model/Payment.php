@@ -122,5 +122,34 @@ class Payment extends AppModel {
 		return $options;
 	}
 	
+	/**
+	*
+	* returns human readable status given the database values
+	**/
+	public function getStatusNameGiven($status) {
+		switch($status) {
+			case PAYMENT_AUTHORIZED:
+				return 'Authorized';
+				break;
+			case PAYMENT_PENDING:
+				return 'Pending';
+				break;
+			case PAYMENT_PAID:
+				return 'Paid';
+				break;
+			case PAYMENT_ABANDONED:
+				return 'Abandoned';
+				break;
+			case PAYMENT_REFUNDED:
+				return 'Refunded';
+				break;
+			case PAYMENT_VOIDED:
+				return 'Voided';
+				break;
+				
+		}
+		return '';
+	}
+	
 }
 ?>

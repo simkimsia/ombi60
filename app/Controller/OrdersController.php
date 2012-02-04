@@ -289,16 +289,47 @@ class OrdersController extends AppController {
 		return ($shopId === $order_shop_id);
 	}
 
-	function admin_export($id = null) {
+	public function admin_export($id = null) {
+		
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('action' => 'index',
+					      'admin' => true));
+		}
+		$module_name = "";
+		$order = $this->Order->getDetailed($id);
+		
+		
+		
+		// handle the view in csv file
 		header("Content-type: text/csv");
 		header("Cache-Control: no-store, no-cache");
-		header('Content-Disposition: attachment; filename="filename.csv"');
+		header('Content-Disposition: attachment; filename="order_'.$order['Order']['order_no'].'.csv"');
 
 		$outstream = fopen("php://output",'w');
 
+		$columnHeaders = array(
+			'Order No',
+			'Contact Email',
+			'Payment Status',
+			'Fulfillment Status',
+			'Currency',
+			'Total',
+			'Created at',
+			'Billing Address',
+			'Shipping Address',
+			'Note'
+		);
+		$firstRow = array(
+			$order['Order']['order_no'],
+			$order['Order']['contact_email'],
+			$this->Order->Payment->getStatusNameGiven($order['Order']['payment_status']),
+			$order['Order']['net_amount']
+		);
+		
 		$test_data = array(
-			array( 'Cell 1,A', 'Cell 1,B' ),
-			array( 'Cell 2,A', 'Cell 2,B' )
+			$columnHeaders,
+			$firstRow
 		);
 
 		foreach( $test_data as $row )
@@ -312,8 +343,6 @@ class OrdersController extends AppController {
 	}
 
 	public function admin_view($id = null) {
-		$this->log($this->request->params);
-					$this->log($this->layout);
 		
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
@@ -322,6 +351,8 @@ class OrdersController extends AppController {
 		}
 		$module_name = "";
 		$order = $this->Order->getDetailed($id);
+		
+		$this->log($order);
 
 		if (!empty($order) && isset($order['Payment'][0]['shops_payment_module_id'])) {
 		    $shops_payment_module_id = $order['Payment'][0]['shops_payment_module_id'];
@@ -333,17 +364,19 @@ class OrdersController extends AppController {
             $module_name = $payment_module_name['ShopsPaymentModule']['display_name'];
 		}
 		
-		if (!$this->checkCorrectShop($order['Order']['shop_id'])) {
-			$this->Session->setFlash(__('You do not have the permission to view this order'), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'index',
-					      'admin' => true));
-		}
 		
 		$this->set(compact('order', 'module_name'));
 		
 		$this->set('title_for_layout', '#' . $order['Order']['order_no']);
 		
-		$this->render('admin_view_term');
+
+		
+		if (isset($this->request->params['ext']) && $this->request->params['ext'] == 'csv') {
+			$this->layoutPath = 'csv';
+			$this->layout = 'empty';
+			$this->log('enter here');
+		}
+				$this->render('admin_view_term');
 	}
 	
 	public function view($id = null) {
