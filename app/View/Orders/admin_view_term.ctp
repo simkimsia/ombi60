@@ -15,6 +15,9 @@
 		<?php if ($order['Order']['payment_status'] == PAYMENT_PAID || $order['Order']['payment_status'] == PAYMENT_AUTHORIZED) : ?> 
 		<li id="locko"><?php echo $this->Html->link(__('Cancel this Order'), array('action'=>'open', 'id' => $order['Order']['id'])); ?></li>
 		<?php endif; ?>
+		<?php if ($order['Order']['status'] == ORDER_CLOSED || $order['Order']['status'] == ORDER_CANCELLED) : ?> 
+		<li id="locko"><?php echo $this->Html->link(__('Delete this Order'), array('action'=>'open', 'id' => $order['Order']['id'])); ?></li>
+		<?php endif; ?>
 
 
 	</ul>
