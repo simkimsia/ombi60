@@ -90,7 +90,7 @@ class OrderFixture extends CakeTestFixture {
 			'order_line_item_count' => '2',
 			'delivered_to_country' => '192'
 		),
-		// PAID
+		// PAID and CANCELLED
 		array(
 			'id' => '4e8d8ef9-71a4-4a69-8dbf-04b01507707b',
 			'shop_id' => '2',
@@ -101,7 +101,7 @@ class OrderFixture extends CakeTestFixture {
 			'created' => '2011-10-06 11:20:25',
 			'amount' => '23.0000',
 			'shipping_fee' => '0.0000',
-			'status' => '1',
+			'status' => '2',
 			'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707b',
 			'payment_status' => '2',
 			'fulfillment_status' => '1',
@@ -114,7 +114,7 @@ class OrderFixture extends CakeTestFixture {
 			'order_line_item_count' => '1',
 			'delivered_to_country' => '192'
 		),
-		// AUTHORIZED
+		// AUTHORIZED and CLOSED
 		array(
 			'id' => '4e8d8ef9-71a4-4a69-8dbf-04b01507707c',
 			'shop_id' => '2',
@@ -125,7 +125,7 @@ class OrderFixture extends CakeTestFixture {
 			'created' => '2011-10-06 11:20:25',
 			'amount' => '23.0000',
 			'shipping_fee' => '0.0000',
-			'status' => '1',
+			'status' => '3',
 			'cart_id' => '4e895a91-b374-4a1a-947c-0b701507707c',
 			'payment_status' => '1',
 			'fulfillment_status' => '1',

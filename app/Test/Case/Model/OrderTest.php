@@ -961,6 +961,26 @@ class OrderTestCase extends CakeTestCase {
 		
 	}
 	
-
+	/**
+	*
+	* test if isValidForDelete works for ORDER_CANCELLED, ORDER_CLOSED, ORDER_OPENED
+	**/
+	public function testIsValidForDelete() {
+		// GIVEN we are using the following orders
+		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; // OPENED
+		$cancelled = '4e8d8ef9-71a4-4a69-8dbf-04b01507707b'; 
+		$closed = '4e8d8ef9-71a4-4a69-8dbf-04b01507707c'; 
+		
+		// WHEN we run the function 
+		$openedResult = $this->Order->isValidForDelete($opened);
+		$cancelledResult = $this->Order->isValidForDelete($cancelled);
+		$closedResult = $this->Order->isValidForDelete($closed);		
+		
+		// THEN we expect teh following
+		$this->assertFalse($openedResult);
+		$this->assertTrue($cancelledResult);
+		$this->assertTrue($closedResult);
+		
+	}
 
 }
