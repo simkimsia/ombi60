@@ -52,6 +52,7 @@ class OrdersController extends AppController {
 			$this->request->action == 'completed' || 
 			$this->request->action == 'admin_menu_action' ||
 			$this->request->action == 'admin_contact' ||
+			$this->request->action == 'admin_cancel' ||
 			$this->request->action == 'admin_edit') {
 		
 			$this->Components->disable('Security');
@@ -1766,25 +1767,43 @@ class OrdersController extends AppController {
 			);
 		}
 		
-		$this->Order->id = $id;
-		if ($this->Order->isValidForCancel($id)) {
-			$this->Order->saveField('status', ORDER_CANCELLED);
-		} else {
-			$this->Session->setFlash(
-				__('This Order cannot be cancelled. Only OPENED orders with payment as PAID or AUTHORIZED can be cancelled.'), 
-				'default', 
-				array(
-					'class'=>'flash_failure'
-				)
-			);
-			$this->redirect(array(
-				'action' => 'index',
-				'admin' => true)
-			);
+		if ($this->request->is('ajax')) {
+			
+			$order = $this->Order->getDetailed($id);
+
+			$this->layout = 'json_html';
+
+	        $this->set(compact('order'));
+	
+	        return $this->render('json/cancel');
+	
+		} else if ($this->request->is('post')) {
+			
+			$this->Order->id = $id;
+			
+			if ($this->Order->isValidForCancel($id)) {
+				$this->Order->saveField('status', ORDER_CANCELLED);
+			} else {
+				$this->Session->setFlash(
+					__('This Order cannot be cancelled. Only OPENED orders with payment as PAID or AUTHORIZED can be cancelled.'), 
+					'default', 
+					array(
+						'class'=>'flash_failure'
+					)
+				);
+				
+				return $this->redirect(array(
+					'action' => 'view',
+					'id' => $id,
+					'admin' => true)
+				);
+
+			}
+
+			return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
 			
 		}
 		
-		return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
 	}
 
 	/**

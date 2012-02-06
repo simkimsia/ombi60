@@ -14,7 +14,7 @@
 		<?php endif; ?>
 		<?php if (($order['Order']['payment_status'] == PAYMENT_PAID || $order['Order']['payment_status'] == PAYMENT_AUTHORIZED) &&
 					$order['Order']['status'] == ORDER_OPENED) : ?> 
-		<li id="cancel-order"><?php echo $this->Html->link(__('Cancel this Order'), array('action'=>'open', 'id' => $order['Order']['id'])); ?></li>
+		<li id="cancel-order"><?php echo $this->Html->link(__('Cancel this Order'), array('action'=>'cancel', 'id' => $order['Order']['id']), array('id'=>'cancel-order', 'class'=>'fancybox.ajax')); ?></li>
 		<?php endif; ?>
 		<?php if ($order['Order']['status'] == ORDER_CLOSED || $order['Order']['status'] == ORDER_CANCELLED) : ?> 
 		<li class="no-icon">
@@ -304,6 +304,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("a#contact").fancybox();
+		$("a#cancel-order").fancybox();
 	});
 
 	
