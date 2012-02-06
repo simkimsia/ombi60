@@ -14,5 +14,7 @@ $map = array(
 		'006_add_shop_id_to_posts' => 'M4f19fdbe4314437d83b311d21507707a'),
 	7 => array(
 		'007_add_note_field_to_orders' => 'M4f1e68a51ac841dca34b498d1507707a'),
+	8 => array(
+		'008_add_cancel_reason_to_orders' => 'M4f2f65393d6c4c88a2bee3d71507707a'),
 );
 ?>
