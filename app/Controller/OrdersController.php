@@ -1782,7 +1782,12 @@ class OrdersController extends AppController {
 			$this->Order->id = $id;
 			
 			if ($this->Order->isValidForCancel($id)) {
-				$this->Order->saveField('status', ORDER_CANCELLED);
+				
+				$this->request->data['Order']['status'] = ORDER_CANCELLED;
+				$this->Order->save($this->request->data);
+				
+				//$this->Order->saveField('status', ORDER_CANCELLED);
+				
 			} else {
 				$this->Session->setFlash(
 					__('This Order cannot be cancelled. Only OPENED orders with payment as PAID or AUTHORIZED can be cancelled.'), 

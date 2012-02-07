@@ -51,6 +51,8 @@
 					'Products unavailable',
 					'Other'
 				);
+				
+				$cancelReasons = array_combine($cancelReasons, $cancelReasons);
 			
 				echo $this->Form->input('Order.cancel_reason', array(
 					'type' => 'select',
