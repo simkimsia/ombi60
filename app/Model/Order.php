@@ -892,6 +892,29 @@ class Order extends AppModel {
 	}
 	
 	/**
+	*
+	* send out email to tell customers order is cancelled
+	**/
+	public function informCustomerOrderCancelled($data, $config = 'default') {
+		App::uses('CakeEmail', 'Network/Email');
+		
+		$email = new CakeEmail($config); //gmail configuration in app/Config/email.php (as databases)
+
+		$emailFormat 	= 'text';
+		$subject 		= $data['subject'];
+		$to 			= $data['to'];
+		$from			= $data['from'];
+		
+		$email->subject($subject)
+			->to($to)
+			->from($from)
+			->sender($from)
+			->emailFormat($emailFormat)
+			->send($data['content']);
+		
+	}
+	
+	/**
 	* checks if the Order can be cancelled which means payment_status is either PAID or AUTHORIZED 
 	* AND it is OPENED
 	* @param string $id Order id

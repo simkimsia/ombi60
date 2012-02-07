@@ -1767,9 +1767,9 @@ class OrdersController extends AppController {
 			);
 		}
 		
+		$order = $this->Order->getDetailed($id);
+		
 		if ($this->request->is('ajax')) {
-			
-			$order = $this->Order->getDetailed($id);
 
 			$this->layout = 'json_html';
 
@@ -1783,10 +1783,35 @@ class OrdersController extends AppController {
 			
 			if ($this->Order->isValidForCancel($id)) {
 				
+				/** 
+				* 
+				* cancel order
+				**/
 				$this->request->data['Order']['status'] = ORDER_CANCELLED;
-				$this->Order->save($this->request->data);
+				$result = $this->Order->save($this->request->data);
 				
-				//$this->Order->saveField('status', ORDER_CANCELLED);
+				$shopRequestsToSendEmail 	= ($this->request->data['Order']['actions']['send_email'] == true);
+				$successfulCancellation 	= !empty($result);
+				
+				$sendEmail = ($shopRequestsToSendEmail && $successfulCancellation);
+				
+				if ($sendEmail) {
+					$fromEmail 	= User::get('User.email');
+					$fromName	= User::get('User.full_name');
+					$shopName	= Shop::get('Shop.name');
+					
+					// preparing email data
+					$data = array();
+					
+					$data['from'] 	= $fromEmail;
+					$data['to']		= $toEmail;
+					$data['subject'] = 'Order #' . $order['Order']['order_no'] . ' with ' . $shopName . ' is cancelled';
+					$data['content'] = 'Hi we are going to cancel this order because of reason x.';
+					
+					$this->Order->informCustomerOrderCancelled($data);
+				}
+				
+
 				
 			} else {
 				$this->Session->setFlash(
