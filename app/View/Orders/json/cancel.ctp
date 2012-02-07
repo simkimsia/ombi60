@@ -63,23 +63,46 @@
 				
 				echo '<div class="clear bt-space10">';
 				echo '<div class="fl-space2 trio">';
+				
+				$authorized = ($order['Order']['payment_status'] == PAYMENT_AUTHORIZED);
+				$paid		= ($order['Order']['payment_status'] == PAYMENT_PAID);
 
-				echo $this->Form->input('Order.actions.void_authorization', array(
-					'type' => 'checkbox',
-					'checked' => true,
-					'label' => array(
-						'class' => 'right',
-						'text' => '<strong>Void Authorization</strong>'
-					),
-					'div'	=> array(
-						'class' => 'bt-space10'
-					)
-				));			
+				if ($authorized) {
+					echo $this->Form->input('Order.actions.void_authorization', array(
+						'type' => 'checkbox',
+						'checked' => true,
+						'label' => array(
+							'class' => 'right',
+							'text' => '<strong>Void Authorization</strong>'
+						),
+						'div'	=> array(
+							'class' => 'bt-space10'
+						)
+					));			
+					
+				} else if ($paid) {
+					echo $this->Form->input('Order.actions.refund_payment', array(
+						'type' => 'checkbox',
+						'checked' => true,
+						'label' => array(
+							'class' => 'right',
+							'text' => '<strong>Refund Payment</strong>'
+						),
+						'div'	=> array(
+							'class' => 'bt-space10'
+						)
+					));					
+				}
 
 				echo '</div>';// trio fl-space2
 				
 				echo '<div class="lastcol">';
-				echo '<p>You have not accepted payment yet. OMBI60 will void the authorization, releasing the money back to the customers</p>';
+				if ($authorized) {
+					echo '<p>You have not accepted payment yet. OMBI60 will void the authorization, releasing the money back to the customers</p>';
+				} else if ($paid) {
+					echo '<p>You have accepted payment. OMBI60 will refund the payment, returning the money back to the customers</p>';
+				}
+
 				
 				echo '</div>';// lastcol
 				
