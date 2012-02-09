@@ -52,6 +52,7 @@ class OrdersController extends AppController {
 			$this->request->action == 'completed' || 
 			$this->request->action == 'admin_menu_action' ||
 			$this->request->action == 'admin_contact' ||
+			$this->request->action == 'admin_cancel' ||
 			$this->request->action == 'admin_edit') {
 		
 			$this->Components->disable('Security');
@@ -236,7 +237,10 @@ class OrdersController extends AppController {
 			
 		}
 
-		$defaultFilter = array('Order.shop_id' => $shop_id);
+		$defaultFilter = array(
+			'Order.shop_id' => $shop_id,
+			'Order.status >' => ORDER_CREATED
+		);
 		$conditions = array_merge($defaultFilter, $fieldsToFilter);
 		
 		$this->paginate = array(
@@ -342,11 +346,10 @@ class OrdersController extends AppController {
 		// Add headers to start of data array
 		array_unshift($data,$headers);
 		$this->set(compact('data'));
+
 	}
 
-	public function admin_view($id = null) {
-		$this->log($this->request->params);
-					$this->log($this->layout);
+	public function OLDER_admin_export($id = null) {
 		
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
@@ -355,7 +358,133 @@ class OrdersController extends AppController {
 		}
 		$module_name = "";
 		$order = $this->Order->getDetailed($id);
+		
+		
+		
+		// handle the view in csv file
+		header("Content-type: text/csv");
+		header("Cache-Control: no-store, no-cache");
+		header('Content-Disposition: attachment; filename="order_'.$order['Order']['order_no'].'.csv"');
 
+		$outstream = fopen("php://output",'w');
+
+		$columnHeaders = array(
+			'Order No',
+			'Contact Email',
+			'Payment Status',
+			'Fulfillment Status',
+			'Currency',
+			'Subtotal',
+			'Shipping Fee',
+			'Total',
+			'Shipping Method',
+			'Created at',
+			'Lineitem Name', 'Lineitem Price', 'Lineitem Quantity', 
+			'Billing Name',
+			'Billing Address',
+			'Billing Region',
+			'Billing Zip Code',
+			'Billing Country',
+			'Billing Phone',
+			'Shipping Name',
+			'Shipping Address',
+			'Shipping Region',
+			'Shipping Zip Code',
+			'Shipping Country',
+			'Shipping Phone',
+			'Note'
+		);
+
+		
+		App::uses('CsvLib', 'UtilityLib.Lib');
+		
+		$firstRow = array(
+			$order['Order']['order_no'],
+			$order['Order']['contact_email'],
+			$this->Order->Payment->getStatusNameGiven($order['Order']['payment_status']),
+			$this->Order->Shipment->getStatusNameGiven($order['Order']['fulfillment_status']),
+			$order['Order']['currency'],
+			$order['Order']['amount'],
+			$order['Order']['shipping_fee'],
+			$order['Order']['net_amount'],
+			$order['Shipment'][0]['name'],
+			$order['Order']['created'],
+			
+			$order['OrderLineItem'][0]['variant_title'], $order['OrderLineItem'][0]['product_price'], $order['OrderLineItem'][0]['product_quantity'],
+
+			$order['BillingAddress']['full_name'],
+			$order['BillingAddress']['address'],
+			$order['BillingAddress']['region'],
+			$order['BillingAddress']['zip_code'],
+			$order['BillingAddress']['Country']['printable_name'],
+			$order['DeliveryAddress']['full_name'],			
+			$order['DeliveryAddress']['address'],
+			$order['DeliveryAddress']['region'],
+			$order['DeliveryAddress']['zip_code'],
+			$order['DeliveryAddress']['Country']['printable_name'],
+			CsvLib::escape($order['Order']['note'])
+			
+		);
+		
+		$test_data = array(
+			$columnHeaders,
+			$firstRow
+		);
+		
+		$lengthOfItems = count($order['OrderLineItem']);
+		if ($lengthOfItems > 1) {
+			$lineItemIndex = array_search('Lineitem Name', $columnHeaders);
+			$lineItemPriceIndex = $lineItemIndex + 1;
+			$lineItemQuantityIndex = $lineItemIndex + 2;
+			
+			$counter = 1;
+			while($counter < $lengthOfItems) {
+				$row = array(
+					0=>$order['Order']['order_no'],
+					1=>$order['Order']['contact_email'],
+					
+				);
+				// put empty columns
+				for($start = 2; $start < $lineItemIndex; $start++) {
+					$row[$start] = '';
+				}
+				
+				$row[$lineItemIndex] = $order['OrderLineItem'][$counter]['variant_title'];
+				$row[$lineItemPriceIndex] = $order['OrderLineItem'][$counter]['product_price'];
+				$row[$lineItemQuantityIndex] = $order['OrderLineItem'][$counter]['product_quantity'];
+				// now append to the test_data
+				$test_data[] = $row;
+				$counter++;
+			}
+		}
+
+		foreach( $test_data as $row )
+		{
+			fputcsv($outstream, $row, ',', '"');
+		}
+
+		fclose($outstream);
+		$this->layoutPath = 'csv';
+		$this->layout = 'empty';
+	}
+
+	public function admin_view($id = null) {
+		
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('action' => 'index',
+					      'admin' => true));
+		}
+		$module_name = "";
+		$order = $this->Order->getDetailed($id);
+		
+
+		if ($order == false) {
+			$this->Session->setFlash(__('Invalid Order'), 'default', array('class'=>'flash_failure'));
+			$this->redirect(array('action' => 'index', 'admin' => true));
+			
+		}
+		
 		if (!empty($order) && isset($order['Payment'][0]['shops_payment_module_id'])) {
 		    $shops_payment_module_id = $order['Payment'][0]['shops_payment_module_id'];
 		    $conditions = array('ShopsPaymentModule.id' => array($shops_payment_module_id));
@@ -364,18 +493,19 @@ class OrdersController extends AppController {
                                                                                      'fields' => array('ShopsPaymentModule.display_name'),
                                                                                     ));            
             $module_name = $payment_module_name['ShopsPaymentModule']['display_name'];
-		}
+		} 
 		
-		if (!$this->checkCorrectShop($order['Order']['shop_id'])) {
-			$this->Session->setFlash(__('You do not have the permission to view this order'), 'default', array('class'=>'flash_failure'));
-			$this->redirect(array('action' => 'index',
-					      'admin' => true));
-		}
 		
 		$this->set(compact('order', 'module_name'));
 		
 		$this->set('title_for_layout', '#' . $order['Order']['order_no']);
 		
+
+		
+		if (isset($this->request->params['ext']) && $this->request->params['ext'] == 'csv') {
+			$this->layoutPath = 'csv';
+			$this->layout = 'empty';
+		}
 		$this->render('admin_view_term');
 	}
 	
@@ -1693,10 +1823,113 @@ class OrdersController extends AppController {
 			);
 		}
 		
-		$this->Order->id = $id;
-		$this->Order->saveField('status', ORDER_CANCELLED);
+		$order = $this->Order->getDetailed($id);
 		
-		return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
+		if ($this->request->is('ajax')) {
+
+			$this->layout = 'json_html';
+
+	        $this->set(compact('order'));
+	
+	        return $this->render('json/cancel');
+	
+		} else if ($this->request->is('post')) {
+			
+			$this->Order->id = $id;
+			
+			if ($this->Order->isValidForCancel($id)) {
+				
+				/** 
+				* 
+				* cancel order
+				**/
+				$this->request->data['Order']['status'] = ORDER_CANCELLED;
+				$result = $this->Order->save($this->request->data);
+				
+				$shopRequestsToSendEmail 	= ($this->request->data['Order']['actions']['send_email'] == true);
+				$successfulCancellation 	= !empty($result);
+				
+				$sendEmail = ($shopRequestsToSendEmail && $successfulCancellation);
+				
+				if ($sendEmail) {
+					$fromEmail 	= User::get('User.email');
+					$fromName	= User::get('User.full_name');
+					$shopName	= Shop::get('Shop.name');
+					
+					// preparing email data
+					$data = array();
+					$data['from'] 		= $fromEmail;
+					$data['to']			= $order['Order']['contact_email'];
+					$data['subject'] 	= 'Order #' . $order['Order']['order_no'] . ' with ' . $shopName . ' is cancelled';
+					$data['content'] 	= 'Hi we are going to cancel this order because of reason x.';
+					
+					$this->Order->informCustomerOrderCancelled($data, 'default');
+				}
+				
+
+				
+			} else {
+				$this->Session->setFlash(
+					__('This Order cannot be cancelled. Only OPENED orders with payment as PAID or AUTHORIZED can be cancelled.'), 
+					'default', 
+					array(
+						'class'=>'flash_failure'
+					)
+				);
+				
+				return $this->redirect(array(
+					'action' => 'view',
+					'id' => $id,
+					'admin' => true)
+				);
+
+			}
+
+			return $this->redirect($this->referer(array('action' => 'index', 'admin' => true)));		
+			
+		}
+		
+	}
+
+	/**
+	*
+	* delete the order
+	*
+	**/
+	public function admin_delete($id = false) {
+		if (!$id) {
+			$this->Session->setFlash(
+				__('Invalid Order'), 
+				'default', 
+				array(
+					'class'=>'flash_failure'
+				)
+			);
+			$this->redirect(array(
+				'action' => 'index',
+				'admin' => true)
+			);
+		}
+		
+		$this->Order->id = $id;
+		if ($this->Order->isValidForDelete($id)) {
+			$this->Order->saveField('status', ORDER_DELETED);
+		} else {
+			$this->Session->setFlash(
+				__('This Order cannot be deleted. Only CLOSED or CANCELLED orders can be deleted.'), 
+				'default', 
+				array(
+					'class'=>'flash_failure'
+				)
+			);
+			$this->redirect(array(
+				'action' => 'index',
+				'admin' => true)
+			);
+			
+		}
+		
+		return $this->redirect(array('action' => 'index', 'admin' => true));		
 	}
 	
 

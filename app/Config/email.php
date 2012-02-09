@@ -58,7 +58,7 @@ class EmailConfig {
       	'port' => 465,
       	'from' => 'no-reply@ombi60.com',
       	'username' => 'no-reply@ombi60.com',
-      	'password' => 'password4no-reply',
+      	'password' => 'password4noreply',
       	'transport' => 'Smtp'
     );
 	
@@ -68,7 +68,7 @@ class EmailConfig {
 		'timeout'=>'30',
 		'host' => 'ssl://smtp.sendgrid.net',
 		'from' => 'no-reply@ombi60.com',
-		'username'=>'no-reply@ombi60.com',
+		'username'=>'ombi60',
 		'password'=>'password4sendgrid',
 		//'client' => 'www.openmybusinessin60seconds.com',
 		'transport' => 'Smtp'
@@ -79,7 +79,7 @@ class EmailConfig {
       	'port' => 465,
       	'from' => 'no-reply@ombi60.com',
       	'username' => 'no-reply@ombi60.com',
-      	'password' => 'password4no-reply',
+      	'password' => 'password4noreply',
       	'transport' => 'Smtp'
     );
 

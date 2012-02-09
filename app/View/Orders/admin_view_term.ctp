@@ -12,6 +12,19 @@
 		<?php if ($order['Order']['status'] == ORDER_CLOSED) : ?> 
 		<li id="locko"><?php echo $this->Html->link(__('Re-Open this Order'), array('action'=>'open', 'id' => $order['Order']['id'])); ?></li>
 		<?php endif; ?>
+		<?php if (($order['Order']['payment_status'] == PAYMENT_PAID || $order['Order']['payment_status'] == PAYMENT_AUTHORIZED) &&
+					$order['Order']['status'] == ORDER_OPENED) : ?> 
+		<li id="cancel-order"><?php echo $this->Html->link(__('Cancel this Order'), array('action'=>'cancel', 'id' => $order['Order']['id']), array('id'=>'cancel-order', 'class'=>'fancybox.ajax')); ?></li>
+		<?php endif; ?>
+		<?php if ($order['Order']['status'] == ORDER_CLOSED || $order['Order']['status'] == ORDER_CANCELLED) : ?> 
+		<li class="no-icon">
+		<?php 
+			$image = $this->Html->image('admin/icons/trash.gif', array('alt'=>'Delete'));
+			echo $this->Html->link($image, array('action' => 'delete', $order['Order']['id']), array('escape' => false), sprintf(__('Are you sure you want to delete # %s?'), $order['Order']['order_no'])); 
+			?>
+		</li>
+		<?php endif; ?>
+
 
 	</ul>
 
@@ -291,6 +304,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("a#contact").fancybox();
+		$("a#cancel-order").fancybox();
 	});
 
 	

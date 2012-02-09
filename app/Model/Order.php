@@ -180,9 +180,10 @@ class Order extends AppModel {
 	*
 	* @param string $id Order id
 	* @param boolean $lineItems Default true.
+	* @param boolean $admin Default true. When set to true, we only show orders above the ORDER_CREATED level
 	* @return array Data array
 	**/
-	public function getDetailed($id, $lineItems = true) {
+	public function getDetailed($id, $lineItems = true, $admin=true) {
 		if (!$id) {
 			return false;
 		}
@@ -221,6 +222,10 @@ class Order extends AppModel {
 		$findConditionsArray = array(
 			'conditions'=>array('Order.id'=>$id),
 		);
+		
+		if ($admin) {
+			$findConditionsArray['conditions']['Order.status >']  = ORDER_CREATED;
+		}
 		
 		$order = $this->find('first', $findConditionsArray);
 		
@@ -886,8 +891,119 @@ class Order extends AppModel {
 		
 	}
 	
+	/**
+	*
+	* send out email to tell customers order is cancelled
+	**/
+	public function informCustomerOrderCancelled($data, $config = 'default') {
+		App::uses('CakeEmail', 'Network/Email');
+		
+		$email = new CakeEmail($config); //gmail configuration in app/Config/email.php (as databases)
+
+		$emailFormat 	= 'text';
+		$subject 		= $data['subject'];
+		$to 			= $data['to'];
+		$from			= $data['from'];
+		
+		$email->subject($subject)
+			->to($to)
+			->from($from)
+			->sender($from)
+			->emailFormat($emailFormat)
+			->send($data['content']);
+		
+	}
+	
+	/**
+	* checks if the Order can be cancelled which means payment_status is either PAID or AUTHORIZED 
+	* AND it is OPENED
+	* @param string $id Order id
+	* @return boolean Returns true if valid for Cancel
+	**/
+	public function isValidForCancel($id = null) {
+		if ($id != null) {
+			$this->id = $id;
+		}
+		
+		$count = $this->find('count', array(
+			'conditions' => array(
+				'OR' => array(
+					'Order.payment_status' => array(PAYMENT_PAID, PAYMENT_AUTHORIZED)
+				),
+				'Order.id' => $this->id,
+				'Order.status' => ORDER_OPENED
+			)
+		));
+		
+		return ($count == 1);
+	}
+	
+	/**
+	* checks if the Order can be deleted which means status is either CLOSED or CANCELLED or already DELETED
+	* @param string $id Order id
+	* @return boolean Returns true if valid for Delete
+	**/
+	public function isValidForDelete($id = null) {
+		if ($id != null) {
+			$this->id = $id;
+		}
+		
+		$count = $this->find('count', array(
+			'conditions' => array(
+				'OR' => array(
+					'Order.status' => array(ORDER_CLOSED, ORDER_CANCELLED, ORDER_DELETED)
+				),
+				'Order.id' => $this->id
+			)
+		));
+		
+		return ($count == 1);
+	}
+	
+	/**
+	* checks if the Order can be OPENED which means status is CLOSED or CREATED or already OPENED
+	* @param string $id Order id
+	* @return boolean Returns true if valid for OPen
+	**/
+	public function isValidForOpen($id = null) {
+		if ($id != null) {
+			$this->id = $id;
+		}
+		
+		$count = $this->find('count', array(
+			'conditions' => array(
+				'OR' => array(
+					'Order.status' => array(ORDER_CLOSED, ORDER_CREATED, ORDER_OPENED)
+				),
+				'Order.id' => $this->id
+			)
+		));
+		
+		return ($count == 1);
+	}
+
+	/**
+	* checks if the Order can be CLOSED which means status is OPENED or already CLOSED
+	* @param string $id Order id
+	* @return boolean Returns true if valid for CLose
+	**/
+	public function isValidForClose($id = null) {
+		if ($id != null) {
+			$this->id = $id;
+		}
+		
+		$count = $this->find('count', array(
+			'conditions' => array(
+				'OR' => array(
+					'Order.status' => array(ORDER_OPENED, ORDER_CLOSED)
+				),
+				'Order.id' => $this->id
+			)
+		));
+		
+		return ($count == 1);
+	}
 
 	
-
 }
 ?>

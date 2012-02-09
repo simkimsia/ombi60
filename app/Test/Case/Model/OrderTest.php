@@ -856,7 +856,22 @@ class OrderTestCase extends CakeTestCase {
 		App::uses('ArrayLib', 'UtilityLib.Lib');
 		$this->assertEquals(ArrayLib::deepKSort($expected), ArrayLib::deepKSort($order));
 	}
-	
+
+	/**
+	*
+	* test getDetailed works for orders that is only above the ORDER_CREATED level for admin
+	*
+	**/
+	public function testGetDetailedShowsAboveCreated() {
+		// GIVEN the ORDER  associated with Customer 1
+		
+		// WHEN we run getDetailed
+		$deleted	= '4e8d8ef9-71a4-4a69-8dbf-04b01507707f'; // deleted order
+		$order		= $this->Order->getDetailed($deleted);
+		
+		// THEN we get all the following information
+		$this->assertFalse($order);
+	}
 	
 	/**
 	*
@@ -937,4 +952,94 @@ class OrderTestCase extends CakeTestCase {
 		$this->assertEqual($expected, $result);
 		
 	}
+	
+	/**
+	*
+	* test if isValidForCancel works for PAYMENT_PAID, PAYMENT_AUTHORIZED, PAYMENT_PENDING, PAYMENT_ABANDONED,
+	* PAYMENT_REFUNDED, PAYMENT_VOIDED
+	**/
+	public function testIsValidForCancel() {
+		// GIVEN we are using the following orders
+		$abandoned = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a'; // ABANDONED
+		$paid = '4e8d8ef9-71a4-4a69-8dbf-04b01507707b'; 
+		$authorized = '4e8d8ef9-71a4-4a69-8dbf-04b01507707c'; 
+		
+		// WHEN we run the function 
+		$abandonedResult = $this->Order->isValidForCancel($abandoned);
+		$paidResult = $this->Order->isValidForCancel($paid);
+		$authorizedResult = $this->Order->isValidForCancel($authorized);		
+		
+		// THEN we expect teh following
+		$this->assertFalse($abandonedResult);
+		$this->assertTrue($paidResult);
+		$this->assertTrue($authorizedResult);
+		
+	}
+	
+	/**
+	*
+	* test if isValidForDelete works for ORDER_CANCELLED, ORDER_CLOSED, ORDER_OPENED
+	**/
+	public function testIsValidForDelete() {
+		// GIVEN we are using the following orders
+		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a'; // OPENED
+		$cancelled = '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; 
+		$closed = '4e8d8ef9-71a4-4a69-8dbf-04b01507707e'; 
+		
+		// WHEN we run the function 
+		$openedResult = $this->Order->isValidForDelete($opened);
+		$cancelledResult = $this->Order->isValidForDelete($cancelled);
+		$closedResult = $this->Order->isValidForDelete($closed);		
+		
+		// THEN we expect teh following
+		$this->assertFalse($openedResult);
+		$this->assertTrue($cancelledResult);
+		$this->assertTrue($closedResult);
+		
+	}
+
+	/**
+	*
+	* test if isValidForOpen works for ORDER_CANCELLED, ORDER_CLOSED, ORDER_OPENED
+	**/
+	public function testIsValidForOpen() {
+		// GIVEN we are using the following orders
+		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a'; // OPENED
+		$cancelled = '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; 
+		$closed = '4e8d8ef9-71a4-4a69-8dbf-04b01507707e'; 
+		
+		// WHEN we run the function 
+		$openedResult = $this->Order->isValidForOpen($opened);
+		$cancelledResult = $this->Order->isValidForOpen($cancelled);
+		$closedResult = $this->Order->isValidForOpen($closed);		
+		
+		// THEN we expect teh following
+		$this->assertTrue($openedResult);
+		$this->assertFalse($cancelledResult);
+		$this->assertTrue($closedResult);
+		
+	}	
+	
+	/**
+	*
+	* test if isValidForClose works for ORDER_CANCELLED, ORDER_CLOSED, ORDER_OPENED
+	**/
+	public function testIsValidForClose() {
+		// GIVEN we are using the following orders
+		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a'; // OPENED
+		$cancelled = '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; 
+		$closed = '4e8d8ef9-71a4-4a69-8dbf-04b01507707e'; 
+		
+		// WHEN we run the function 
+		$openedResult = $this->Order->isValidForClose($opened);
+		$cancelledResult = $this->Order->isValidForClose($cancelled);
+		$closedResult = $this->Order->isValidForClose($closed);		
+		
+		// THEN we expect teh following
+		$this->assertTrue($openedResult);
+		$this->assertFalse($cancelledResult);
+		$this->assertTrue($closedResult);
+		
+	}
+
 }

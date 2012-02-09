@@ -115,5 +115,29 @@ class Shipment extends AppModel {
 		}
 		return $lastKnown;
 	}
+	
+	/**
+	*
+	* Get Fulfillment Name from Status value
+	*
+	* @param int $status
+	* @return string Returns name as indicated in bootstrap
+	**/
+	public function getStatusNameGiven($status) {
+		switch($status) {
+						
+			case FULFILLMENT_NOT_FULFILLED:
+				return 'No';
+				break;
+			case FULFILLMENT_FULFILLED:
+				return 'Yes';
+				break;
+			case FULFILLMENT_PARTIAL:
+				return 'Partial';
+				break;				
+		}
+		return '';
+		
+	}
 }
 ?>

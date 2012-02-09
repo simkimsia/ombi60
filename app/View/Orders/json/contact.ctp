@@ -97,7 +97,7 @@
 					</div>
 	
 					<div class="rule2 bt-space20"></div>
-					<div class="form-field clear">
+					<div class="form-field clear fl">
 						<input type="submit" class="button " value="Send Email" />
 					</div>
 			<?php echo $this->Form->end(); ?>
