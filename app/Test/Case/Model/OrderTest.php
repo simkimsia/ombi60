@@ -982,7 +982,7 @@ class OrderTestCase extends CakeTestCase {
 	**/
 	public function testIsValidForDelete() {
 		// GIVEN we are using the following orders
-		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707f'; // OPENED
+		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a'; // OPENED
 		$cancelled = '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; 
 		$closed = '4e8d8ef9-71a4-4a69-8dbf-04b01507707e'; 
 		
@@ -1004,7 +1004,7 @@ class OrderTestCase extends CakeTestCase {
 	**/
 	public function testIsValidForOpen() {
 		// GIVEN we are using the following orders
-		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707f'; // OPENED
+		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a'; // OPENED
 		$cancelled = '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; 
 		$closed = '4e8d8ef9-71a4-4a69-8dbf-04b01507707e'; 
 		
@@ -1026,7 +1026,7 @@ class OrderTestCase extends CakeTestCase {
 	**/
 	public function testIsValidForClose() {
 		// GIVEN we are using the following orders
-		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707f'; // OPENED
+		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707a'; // OPENED
 		$cancelled = '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; 
 		$closed = '4e8d8ef9-71a4-4a69-8dbf-04b01507707e'; 
 		
