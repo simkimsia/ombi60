@@ -290,25 +290,58 @@ class OrdersController extends AppController {
 	}
 
 	function admin_export($id = null) {
-		header("Content-type: text/csv");
-		header("Cache-Control: no-store, no-cache");
-		header('Content-Disposition: attachment; filename="filename.csv"');
-
-		$outstream = fopen("php://output",'w');
-
-		$test_data = array(
-			array( 'Cell 1,A', 'Cell 1,B' ),
-			array( 'Cell 2,A', 'Cell 2,B' )
+		Configure::write('debug',0);
+		$data = array(
+				array(
+					'Order'=> array(
+						'id' => 'Order1',
+						'created' => date('Ymd'),
+						'name' => 'Order-1',
+						'paid' => 'Yes',
+						'total' => '100'
+					)
+				),
+				array(
+					'Order'=> array(
+						'id' => 'Order2',
+						'created' => date('Ymd'),
+						'name' => 'Order-2',
+						'paid' => 'No',
+						'total' => '200'
+					),
+				),
+				array(
+					'Order'=> array(
+						'id' => 'Order3',
+						'created' => date('Ymd'),
+						'name' => 'Order-3',
+						'paid' => 'Yes',
+						'total' => '300'
+					),
+				),
+				array(
+					'Order'=> array(
+						'id' => 'Order4',
+						'created' => date('Ymd'),
+						'name' => 'Order-4',
+						'paid' => 'No',
+						'total' => '400'
+					),
+				)
 		);
-
-		foreach( $test_data as $row )
-		{
-			fputcsv($outstream, $row, ',', '"');
-		}
-
-		fclose($outstream);
-		$this->layoutPath = 'csv';
-		$this->layout = 'empty';
+		// Define column headers for CSV file, in same array format as the data itself
+		$headers = array(
+			'Order'=>array(
+				'id' => 'Order ID',
+				'created' => 'Date',
+				'name' => 'Name',
+				'paid' => 'Paid?',
+				'total' => 'Total'
+			)
+		);
+		// Add headers to start of data array
+		array_unshift($data,$headers);
+		$this->set(compact('data'));
 	}
 
 	public function admin_view($id = null) {
