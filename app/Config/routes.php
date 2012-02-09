@@ -684,8 +684,9 @@
 				'pass' => array('id'),
 				'id' => '[a-zA-Z0-9\-_]+'
 			)
-		);		
-	
+		);
+
+		Router::parseExtensions('csv');
 
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 
