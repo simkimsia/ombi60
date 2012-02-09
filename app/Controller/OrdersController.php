@@ -1802,13 +1802,12 @@ class OrdersController extends AppController {
 					
 					// preparing email data
 					$data = array();
+					$data['from'] 		= $fromEmail;
+					$data['to']			= $order['Order']['contact_email'];
+					$data['subject'] 	= 'Order #' . $order['Order']['order_no'] . ' with ' . $shopName . ' is cancelled';
+					$data['content'] 	= 'Hi we are going to cancel this order because of reason x.';
 					
-					$data['from'] 	= $fromEmail;
-					$data['to']		= $toEmail;
-					$data['subject'] = 'Order #' . $order['Order']['order_no'] . ' with ' . $shopName . ' is cancelled';
-					$data['content'] = 'Hi we are going to cancel this order because of reason x.';
-					
-					$this->Order->informCustomerOrderCancelled($data);
+					$this->Order->informCustomerOrderCancelled($data, 'default');
 				}
 				
 

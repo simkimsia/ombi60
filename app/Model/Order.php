@@ -939,7 +939,7 @@ class Order extends AppModel {
 	}
 	
 	/**
-	* checks if the Order can be deleted which means status is either CLOSED or CANCELLED
+	* checks if the Order can be deleted which means status is either CLOSED or CANCELLED or already DELETED
 	* @param string $id Order id
 	* @return boolean Returns true if valid for Delete
 	**/
@@ -951,7 +951,7 @@ class Order extends AppModel {
 		$count = $this->find('count', array(
 			'conditions' => array(
 				'OR' => array(
-					'Order.status' => array(ORDER_CLOSED, ORDER_CANCELLED)
+					'Order.status' => array(ORDER_CLOSED, ORDER_CANCELLED, ORDER_DELETED)
 				),
 				'Order.id' => $this->id
 			)
@@ -959,5 +959,51 @@ class Order extends AppModel {
 		
 		return ($count == 1);
 	}
+	
+	/**
+	* checks if the Order can be OPENED which means status is CLOSED or CREATED or already OPENED
+	* @param string $id Order id
+	* @return boolean Returns true if valid for OPen
+	**/
+	public function isValidForOpen($id = null) {
+		if ($id != null) {
+			$this->id = $id;
+		}
+		
+		$count = $this->find('count', array(
+			'conditions' => array(
+				'OR' => array(
+					'Order.status' => array(ORDER_CLOSED, ORDER_CREATED, ORDER_OPENED)
+				),
+				'Order.id' => $this->id
+			)
+		));
+		
+		return ($count == 1);
+	}
+
+	/**
+	* checks if the Order can be CLOSED which means status is OPENED or already CLOSED
+	* @param string $id Order id
+	* @return boolean Returns true if valid for CLose
+	**/
+	public function isValidForClose($id = null) {
+		if ($id != null) {
+			$this->id = $id;
+		}
+		
+		$count = $this->find('count', array(
+			'conditions' => array(
+				'OR' => array(
+					'Order.status' => array(ORDER_OPENED, ORDER_CLOSED)
+				),
+				'Order.id' => $this->id
+			)
+		));
+		
+		return ($count == 1);
+	}
+
+	
 }
 ?>

@@ -997,6 +997,49 @@ class OrderTestCase extends CakeTestCase {
 		$this->assertTrue($closedResult);
 		
 	}
+
+	/**
+	*
+	* test if isValidForOpen works for ORDER_CANCELLED, ORDER_CLOSED, ORDER_OPENED
+	**/
+	public function testIsValidForOpen() {
+		// GIVEN we are using the following orders
+		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707f'; // OPENED
+		$cancelled = '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; 
+		$closed = '4e8d8ef9-71a4-4a69-8dbf-04b01507707e'; 
+		
+		// WHEN we run the function 
+		$openedResult = $this->Order->isValidForOpen($opened);
+		$cancelledResult = $this->Order->isValidForOpen($cancelled);
+		$closedResult = $this->Order->isValidForOpen($closed);		
+		
+		// THEN we expect teh following
+		$this->assertTrue($openedResult);
+		$this->assertFalse($cancelledResult);
+		$this->assertTrue($closedResult);
+		
+	}	
 	
+	/**
+	*
+	* test if isValidForClose works for ORDER_CANCELLED, ORDER_CLOSED, ORDER_OPENED
+	**/
+	public function testIsValidForClose() {
+		// GIVEN we are using the following orders
+		$opened = '4e8d8ef9-71a4-4a69-8dbf-04b01507707f'; // OPENED
+		$cancelled = '4e8d8ef9-71a4-4a69-8dbf-04b01507707d'; 
+		$closed = '4e8d8ef9-71a4-4a69-8dbf-04b01507707e'; 
+		
+		// WHEN we run the function 
+		$openedResult = $this->Order->isValidForClose($opened);
+		$cancelledResult = $this->Order->isValidForClose($cancelled);
+		$closedResult = $this->Order->isValidForClose($closed);		
+		
+		// THEN we expect teh following
+		$this->assertTrue($openedResult);
+		$this->assertFalse($cancelledResult);
+		$this->assertTrue($closedResult);
+		
+	}
 
 }
