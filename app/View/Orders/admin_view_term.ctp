@@ -4,7 +4,7 @@
 	<ul>
 	    <li id="email"><?php echo $this->Html->link(__('Contact Customer'), array('action'=>'contact', 'id' => $order['Order']['id']), array('id'=>'contact', 'class'=>'fancybox.ajax')); ?></li>
 		<li id="note"><a href="#" onclick="$(&quot;#order_note&quot;).hide();$(&quot;#note_form&quot;).show();$(&quot;#OrderNote&quot;).focus(); return false;">Attach note</a></li>
-		<li class="csv"><?php echo $this->Html->link(__('Export'), array('action'=>'export', 'id' => $order['Order']['id'], 'ext' => 'csv')); ?></li>
+		<li class="csv"><?php echo $this->Html->link(__('Export'), array('action'=>'view', 'id' => $order['Order']['id'], 'ext' => 'csv')); ?></li>
 		<li id="print"><a href="#" onclick="window.print();; return false;">Print</a></li>
 		<?php if ($order['Order']['status'] == ORDER_OPENED) : ?> 
 		<li id="lock"><?php echo $this->Html->link(__('Close this Order'), array('action'=>'close', 'id' => $order['Order']['id'], '[method]' => 'PUT')); ?></li>

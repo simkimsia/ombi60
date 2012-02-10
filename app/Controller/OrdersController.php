@@ -10,7 +10,7 @@ class OrdersController extends AppController {
 
 	public $helpers = array(
 		'Session', 'Time', 'Number',
-		'PhpExcel.Csv', 'PhpExcel.Excel'
+		'Csv.Csv', 'Constant'
 		);
 
 	public $components = array(
@@ -85,7 +85,7 @@ class OrdersController extends AppController {
 		// set layout for csv extensions
 		if (!empty($this->request->params['ext']) && $this->request->is('get')) {
 
-			$this->layout = 'empty';
+			$this->layout = 'default';
 		}
 	}
 	
@@ -501,11 +501,11 @@ class OrdersController extends AppController {
 		$this->set('title_for_layout', '#' . $order['Order']['order_no']);
 		
 
-		
+		/*
 		if (isset($this->request->params['ext']) && $this->request->params['ext'] == 'csv') {
 			$this->layoutPath = 'csv';
 			$this->layout = 'empty';
-		}
+		}*/
 		$this->render('admin_view_term');
 	}
 	

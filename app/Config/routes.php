@@ -212,18 +212,6 @@
 
 
 		// orders links
-		Router::connect('/admin/orders/view/:id.csv',
-			array(
-				'controller'	=> 'orders',
-				'action'		=> 'export',
-				'admin'			=> true,
-			),
-			array(
-				'pass'	=> array('id'),
-				'id'	=> '[a-zA-Z0-9\-_]+',
-				'ext'	=> 'csv'
-			)
-		);
 		
 		Router::connect('/admin/orders/edit/:id',
 			array(
