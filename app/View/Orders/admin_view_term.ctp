@@ -182,7 +182,7 @@
 					
 					<!-- start of batch-fulfillment-form -->
 					<div id="batch-fulfillment-form" class="columns clear bt-space10" style="display:none">
-						<div class="col2-3"><strong>Fulfill Items</strong><br />Select the line items you have fulfilled</div><div class="lastcol" />
+						<div class="col2-3"><strong>Fulfill Items</strong><br /><br />Select the line items you have fulfilled</div><div class="lastcol" ></div>
 
 						<?php
 
@@ -214,27 +214,31 @@
 								<tbody>
 							<?php
 
-					        foreach ($order['OrderLineItem'] as $lineItem):
+					        foreach ($order['OrderLineItem'] as $key=>$lineItem):
 
 					        ?>
 
 									<tr>
 
-						                <td><?php echo $this->Form->input(__($lineItem['product_title']),
-									                         array('admin'=>true,
-										                       'controller' => 'products',
-										                       'action' => 'view',
-										                       $lineItem['product_id'])); ?>
-						                </td>
-						                <td class="center"><?php echo $this->Number->currency($lineItem['product_price'], '$'); ?></td>
-						                <td class="center"><?php echo $lineItem['product_quantity']; ?></td>
+						                <td><?php 
+						
+											$checkbox = $this->Form->checkbox('Order.fulfilled.'.$key, 
+												array('value' => $lineItem['id'], 'class' => 'checkbox', 'label' => FALSE, 'div' => FALSE)
+											);
+						
+											echo $checkbox;
+										?></td>
+						                <td class="center"><strong><?php echo $lineItem['product_quantity']; ?>x</strong></td>
+						                <td class="center"><?php 
+											echo $this->Html->link($lineItem['variant_title'], array(
+												'controller' => 'products',
+												'action' => 'view',
+												'admin' => true,
+												'id' => $lineItem['product_id']
+											));
+										?></td>
 
 						                <td class="right">
-						                    <?php
-						                 	$options = array(
-						                 		'before' => '$', 'after' => 'c', 'zero' => "Free", 'places' => 2, 'thousands' => ',', 'decimals' => '.');?>
-						                    <?php $this->Number->addFormat($order['Order']['currency'], array('before' => '$'));?>
-						                    <?php echo $this->Number->currency(($lineItem['product_quantity'] * $lineItem['product_price']), $order['Order']['currency'], $options).$order['Order']['currency'];?> 
 						                </td>
 
 
