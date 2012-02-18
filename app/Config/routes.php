@@ -212,6 +212,18 @@
 
 
 		// orders links
+		Router::conneect('/admin/orders/:order_id/fulfillments/set',
+			array(
+				'controller'	=> 'fulfillments',
+				'action'		=> 'set',
+				'admin'			=> true
+			),
+			array(
+				'pass'		=> array('order_id'),
+				'order_id'	=> '[a-zA-Z0-9\-_]+'
+			)
+		);
+		
 		
 		Router::connect('/admin/orders/edit/:id',
 			array(
