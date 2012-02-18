@@ -16,5 +16,7 @@ $map = array(
 		'007_add_note_field_to_orders' => 'M4f1e68a51ac841dca34b498d1507707a'),
 	8 => array(
 		'008_add_cancel_reason_to_orders' => 'M4f2f65393d6c4c88a2bee3d71507707a'),
+	9 => array(
+		'009_add_new_table_called_fulfllments' => 'M4f3f52eacb244842955804e61507707a'),
 );
 ?>
