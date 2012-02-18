@@ -176,18 +176,22 @@
 						<?php } ?>
 						
 						<?php if ($fullfill_status != 0) { ?>
-						<div class="lastcol summary_shipping"><?php echo '<a href="#" id="fulfill-button" class="button fr">Fulfill line items</a>'; ?></div><!-- end of Fulfill Line Item button -->
+						<div class="lastcol summary_shipping"><?php echo '<a href="#fulfill" id="fulfill-button" class="button fr">Fulfill line items</a>'; ?></div><!-- end of Fulfill Line Item button -->
 						<?php } ?>
 					</div><!--  end of Shipping Mode value -->
 					
 					<!-- start of batch-fulfillment-form -->
-					<div id="batch-fulfillment-form" class="columns clear bt-space10" style="display:none">
-						<div class="col2-3"><strong>Fulfill Items</strong><br /><br />Select the line items you have fulfilled</div><div class="lastcol" ></div>
+					<div class="fulfillment-form columns clear bt-space10" style="display:none">
+						<div class="col2-3"><strong>Fulfill Items</strong><br /><br />Select the line items you have fulfilled</div><div class="col1-3 lastcol" ></div>
+					</div>
 
+
+					<div class="fulfillment-form columns clear bt-space10" style="display:none">
+						<div class="col3-3">
 						<?php
 
 							echo $this->Form->create('Order', array(
-								'class' => 'validate-form form bt-space15', 
+								'class' => 'validate-form  bt-space15', 
 								'inputDefaults' => array(
 									'label' => false,
 									'div'	=> false,
@@ -207,6 +211,7 @@
 								)
 							));
 						?>
+
 
 
 							<table class="style1">
@@ -254,6 +259,7 @@
 
 
 						<?php echo $this->Form->end(); ?>
+						</div>
 
 					</div><!-- end of batch-fulfillment-form -->
 					
@@ -389,7 +395,7 @@
 		$("div.summary_shipping").toggle();
 		
 		// display the detailed items
-		$("div#batch-fulfillment-form").toggle();
+		$("div.fulfillment-form").toggle();
 	});
 	
 </script>
