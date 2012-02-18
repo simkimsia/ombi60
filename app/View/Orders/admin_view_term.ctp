@@ -228,7 +228,7 @@
 						                <td><?php 
 						
 											$checkbox = $this->Form->checkbox('Order.fulfilled.'.$key, 
-												array('value' => $lineItem['id'], 'class' => 'checkbox', 'label' => FALSE, 'div' => FALSE)
+												array('value' => $lineItem['id'], 'class' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'checked' => 'checked')
 											);
 						
 											echo $checkbox;
@@ -256,6 +256,21 @@
 
 								</tbody>
 							</table>
+							<div class="rule2"></div>
+							<div class="form-field clear">
+							<?php 
+			
+								$checkbox = $this->Form->checkbox('Order.notification.'.$key, 
+									array('value' => $lineItem['id'], 'class' => 'checkbox', 'checked' => 'checked', 'label' => FALSE, 'div' => FALSE)
+								);
+			
+								echo $checkbox . ' Send notification email to customer';
+							?>
+							</div>
+							<div class="form-field clear">
+								<input type="submit" class="button" value="Fulfill Items" />&nbsp;or&nbsp;
+								<a href="#" onclick="$(&quot;.summary_shipping&quot;).show();$(&quot;.fulfillment-form&quot;).hide(); return false;">Cancel</a>
+							</div>
 
 
 						<?php echo $this->Form->end(); ?>
