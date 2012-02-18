@@ -71,6 +71,14 @@ class Order extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
+		'Fulfillment' => array(
+			'className' => 'Fulfillment',
+			'foreignKey' => 'order_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
 	);
 	
 	public function __construct($id = false, $table = null, $ds = null) {

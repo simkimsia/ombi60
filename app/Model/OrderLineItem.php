@@ -35,6 +35,10 @@ class OrderLineItem extends AppModel {
 			)
 
 		),
+		'Fulfillment' => array(
+			'className' => 'Fulfillment',
+			'foreignKey' => 'order_line_item_id',
+		),
 	);
 	
 	/**
