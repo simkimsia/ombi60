@@ -179,7 +179,80 @@
 						<div class="lastcol summary_shipping"><?php echo '<a href="#" id="fulfill-button" class="button fr">Fulfill line items</a>'; ?></div><!-- end of Fulfill Line Item button -->
 						<?php } ?>
 					</div><!--  end of Shipping Mode value -->
+					
+					<!-- start of batch-fulfillment-form -->
+					<div id="batch-fulfillment-form" class="columns clear bt-space10" style="display:none">
+						<div class="col2-3"><strong>Fulfill Items</strong><br />Select the line items you have fulfilled</div><div class="lastcol" />
 
+						<?php
+
+							echo $this->Form->create('Order', array(
+								'class' => 'validate-form form bt-space15', 
+								'inputDefaults' => array(
+									'label' => false,
+									'div'	=> false,
+									'error' => array(
+										'attributes' => array(
+											'wrap' => 'label', 
+											'class' => 'error', 
+											'for' => true
+										)
+									)
+								),
+								'url' => array(
+									'controller' => 'orders',
+									'action'	=> 'fulfill',
+									'admin'	=> true,
+									'id'	=> $order['Order']['id']
+								)
+							));
+						?>
+
+
+							<table class="style1">
+
+								<tbody>
+							<?php
+
+					        foreach ($order['OrderLineItem'] as $lineItem):
+
+					        ?>
+
+									<tr>
+
+						                <td><?php echo $this->Form->input(__($lineItem['product_title']),
+									                         array('admin'=>true,
+										                       'controller' => 'products',
+										                       'action' => 'view',
+										                       $lineItem['product_id'])); ?>
+						                </td>
+						                <td class="center"><?php echo $this->Number->currency($lineItem['product_price'], '$'); ?></td>
+						                <td class="center"><?php echo $lineItem['product_quantity']; ?></td>
+
+						                <td class="right">
+						                    <?php
+						                 	$options = array(
+						                 		'before' => '$', 'after' => 'c', 'zero' => "Free", 'places' => 2, 'thousands' => ',', 'decimals' => '.');?>
+						                    <?php $this->Number->addFormat($order['Order']['currency'], array('before' => '$'));?>
+						                    <?php echo $this->Number->currency(($lineItem['product_quantity'] * $lineItem['product_price']), $order['Order']['currency'], $options).$order['Order']['currency'];?> 
+						                </td>
+
+
+									</tr>
+
+							<?php
+							endforeach;
+							?>
+
+
+								</tbody>
+							</table>
+
+
+						<?php echo $this->Form->end(); ?>
+
+					</div><!-- end of batch-fulfillment-form -->
+					
 				</div> <!-- end of box-wrap -->
 			</div> <!-- end of box-body -->
 		</div> <!-- end of content-box -->
@@ -312,6 +385,7 @@
 		$("div.summary_shipping").toggle();
 		
 		// display the detailed items
+		$("div#batch-fulfillment-form").toggle();
 	});
 	
 </script>
