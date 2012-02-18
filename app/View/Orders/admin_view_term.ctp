@@ -148,7 +148,7 @@
 
 					<div class="columns clear bt-space10"><!-- start of Shipping Mode -->
 						<div class="col1-3"><strong>Shipping Mode</strong></div>
-						<div class="lastcol right"><!-- start of Shipping Status  -->
+						<div class="lastcol right summary_shipping"><!-- start of Shipping Status  -->
 							<?php
 	                        $fullfill_status = $order['Order']['fulfillment_status'];
 	                        if ($fullfill_status == 0) {
@@ -176,7 +176,7 @@
 						<?php } ?>
 						
 						<?php if ($fullfill_status != 0) { ?>
-						<div class="lastcol"><?php echo '<a href="#" class="button fr">Fulfill line items</a>'; ?></div><!-- end of Fulfill Line Item button -->
+						<div class="lastcol summary_shipping"><?php echo '<a href="#" id="fulfill-button" class="button fr">Fulfill line items</a>'; ?></div><!-- end of Fulfill Line Item button -->
 						<?php } ?>
 					</div><!--  end of Shipping Mode value -->
 
@@ -307,5 +307,11 @@
 		$("a#cancel-order").fancybox();
 	});
 
+	$("a#fulfill-button").click(function() {
+		// hide the fulfill-shipping button and the You need to fulfill x items summary
+		$("div.summary_shipping").toggle();
+		
+		// display the detailed items
+	});
 	
 </script>
