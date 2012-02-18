@@ -20,7 +20,7 @@ class ShopTestCase extends CakeTestCase {
 		'app.user', 'app.group',
 		'app.merchant', 'app.customer', 'app.casual_surfer',
 		'app.cart', 'app.cart_item',
-		'app.order', 'app.order_line_item', 'app.address', 
+		'app.order', 'app.order_line_item', 'app.fulfillment', 'app.address', 
 		'app.product', 'app.product_image', 'app.wishlist', 
 		'app.variant', 'app.variant_option', 'app.products_in_group', 'app.product_group',  
 		'app.product_type', 'app.vendor',

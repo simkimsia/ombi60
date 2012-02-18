@@ -29,13 +29,5 @@ class FulfillmentFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
-		array(
-			'id' => 1,
-			'order_id' => 'Lorem ipsum dolor sit amet',
-			'order_line_item_id' => 1,
-			'created' => '2012-02-18 08:50:52',
-			'modified' => '2012-02-18 08:50:52',
-			'tracking_number' => 'Lorem ipsum dolor sit amet'
-		),
 	);
 }

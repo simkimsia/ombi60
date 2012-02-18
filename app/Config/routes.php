@@ -212,7 +212,7 @@
 
 
 		// orders links
-		Router::conneect('/admin/orders/:order_id/fulfillments/set',
+		Router::connect('/admin/orders/:order_id/fulfillments/set',
 			array(
 				'controller'	=> 'fulfillments',
 				'action'		=> 'set',
