@@ -18,5 +18,7 @@ $map = array(
 		'008_add_cancel_reason_to_orders' => 'M4f2f65393d6c4c88a2bee3d71507707a'),
 	9 => array(
 		'009_add_new_table_called_fulfllments' => 'M4f3f52eacb244842955804e61507707a'),
+	10 => array(
+		'010_remove_order_line_item_id_from_fulfillments' => 'M4f3f70ed0bd44e26a21509881507707a'),
 );
 ?>

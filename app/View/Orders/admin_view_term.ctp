@@ -190,7 +190,7 @@
 						<div class="col3-3">
 						<?php
 
-							echo $this->Form->create('Order', array(
+							echo $this->Form->create('Fulfillment', array(
 								'class' => 'validate-form  bt-space15', 
 								'inputDefaults' => array(
 									'label' => false,
@@ -204,8 +204,8 @@
 									)
 								),
 								'url' => array(
-									'controller' => 'orders',
-									'action'	=> 'fulfill',
+									'controller' => 'fulfillments',
+									'action'	=> 'set',
 									'admin'	=> true,
 									'id'	=> $order['Order']['id']
 								)
@@ -227,7 +227,7 @@
 
 						                <td><?php 
 						
-											$checkbox = $this->Form->checkbox('Order.fulfilled.'.$key, 
+											$checkbox = $this->Form->checkbox('Fulfillment.order_line_item_id.'.$key, 
 												array('value' => $lineItem['id'], 'class' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'checked' => 'checked')
 											);
 						
