@@ -8,6 +8,33 @@ App::uses('AppController', 'Controller');
 class FulfillmentsController extends AppController {
 
 
+	public $name = 'Fulfillments';
+
+	public $helpers = array(
+		'Session', 
+		);
+
+	public $components = array(
+
+		'Session'
+				
+	);
+
+
+	public function beforeFilter() {
+
+		// call the AppController beforeFilter method after all the $this->Auth settings have been changed.
+		parent::beforeFilter();
+		
+		
+		if ($this->request->action == 'admin_set') {
+		
+			$this->Components->disable('Security');
+		}
+		
+	}
+
+
 /**
  * admin_set method
  *
@@ -15,16 +42,42 @@ class FulfillmentsController extends AppController {
  */
 	public function admin_set($order_id = false) {
 		$this->Fulfillment->Order->id = $order_id;
+		
+		//$this->log($order_id);
 		if (!$this->Fulfillment->Order->exists()) {
 			
 			
-			$this->Session->flash('invalid order');
+			$this->Session->setFlash('invalid order', 'default', 
+			array(
+				'class'=>'flash_failure'
+			));
 			$this->redirect(array('controller'=>'orders', 'action'=>'index', 'admin'=>true));
 		}
 		
+		$this->log($this->request->data);
 		
-		$this->Fulfillment->recursive = 0;
-		$this->set('fulfillments', $this->paginate());
+		$this->request->data['Fulfillment']['order_id'] = $order_id;
+		
+		$this->log($this->request->data);
+		
+		$requestData = Set::filter($this->request->data);
+		
+		$result = $this->Fulfillment->fulfillItems($requestData);
+		if ($result) {
+			$this->Session->setFlash('Successfully fulfilled items', 'default', 
+			array(
+				'class'=>'flash_success'
+			));
+
+		} else {
+			$this->Session->setFlash('Not successful in fulfilling items', 'default', 
+			array(
+				'class'=>'flash_failure'
+			));
+			
+		}
+		
+		return $this->redirect($this->referer(array('controller' => 'orders', 'action' => 'view', 'admin' => true, 'id' => $order_id)));
 	}
 
 }

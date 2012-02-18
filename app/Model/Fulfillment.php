@@ -35,4 +35,24 @@ class Fulfillment extends AppModel {
 			'order' => ''
 		)
 	);
+	
+	/**
+	* clean out the non-selected items
+	**/
+	public function fulfillItems($requestData) {
+		
+		// we need to remove all the zeros from the checkboxes
+		$item_ids = Set::extract('/OrderLineItem[id>0]/id', $requestData);
+		
+		if (!empty($item_ids)) {
+			$requestData['OrderLineItem'] = array();
+			foreach($item_ids as $item_id) {
+				$requestData['OrderLineItem'][] = array('id' => $item_id);
+			}
+			return $this->saveAssociated($requestData);
+		}
+		
+		return true;
+
+	}
 }

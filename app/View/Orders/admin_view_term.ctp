@@ -206,8 +206,8 @@
 								'url' => array(
 									'controller' => 'fulfillments',
 									'action'	=> 'set',
-									'admin'	=> true,
-									'id'	=> $order['Order']['id']
+									'admin'		=> true,
+									'order_id'	=> $order['Order']['id']
 								)
 							));
 						?>
@@ -227,7 +227,7 @@
 
 						                <td><?php 
 						
-											$checkbox = $this->Form->checkbox('Fulfillment.order_line_item_id.'.$key, 
+											$checkbox = $this->Form->checkbox('OrderLineItem.'.$key.'.id', 
 												array('value' => $lineItem['id'], 'class' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'checked' => 'checked')
 											);
 						
@@ -260,8 +260,8 @@
 							<div class="form-field clear">
 							<?php 
 			
-								$checkbox = $this->Form->checkbox('Order.notification.'.$key, 
-									array('value' => $lineItem['id'], 'class' => 'checkbox', 'checked' => 'checked', 'label' => FALSE, 'div' => FALSE)
+								$checkbox = $this->Form->checkbox('Fulfillment.notification.'.$key, 
+									array('class' => 'checkbox', 'checked' => 'checked', 'label' => FALSE, 'div' => FALSE)
 								);
 			
 								echo $checkbox . ' Send notification email to customer';
