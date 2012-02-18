@@ -393,7 +393,7 @@ class Order extends AppModel {
 		
 		$fieldsNotImportant = array(
 			'created', 'cart_id', 'order_id',
-			'modified', 'status',
+			'modified', 'status', 'fulfillment_id',
 			'id', );
 			
 		foreach($orderItems as $variant_id=>$item) {

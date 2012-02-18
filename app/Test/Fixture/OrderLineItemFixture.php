@@ -25,6 +25,7 @@ class OrderLineItemFixture extends CakeTestFixture {
 		'shipping_required' => array('type' => 'boolean', 'null' => false, 'default' => '1', 'collate' => NULL, 'comment' => ''),
 		'variant_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 14, 'collate' => NULL, 'comment' => ''),
 		'variant_title' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'fulfillment_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 11, 'collate' => NULL, 'comment' => ''),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -47,7 +48,8 @@ class OrderLineItemFixture extends CakeTestFixture {
 			'currency' => 'SGD',
 			'shipping_required' => true,
 			'variant_id' => '3',
-			'variant_title' => 'Default Title'
+			'variant_title' => 'Default Title',
+			'fulfillment_id' => NULL,
 		),
 		array(
 			'id' => '2',
@@ -61,7 +63,8 @@ class OrderLineItemFixture extends CakeTestFixture {
 			'currency' => 'SGD',
 			'shipping_required' => true,
 			'variant_id' => '2',
-			'variant_title' => 'Default Title'
+			'variant_title' => 'Default Title',
+			'fulfillment_id' => NULL,
 		),
 		array(
 			'id' => '3',
@@ -75,7 +78,8 @@ class OrderLineItemFixture extends CakeTestFixture {
 			'currency' => 'SGD',
 			'shipping_required' => true,
 			'variant_id' => '3',
-			'variant_title' => 'Default Title'
+			'variant_title' => 'Default Title',
+			'fulfillment_id' => NULL,
 		),
 	);
 }

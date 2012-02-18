@@ -132,6 +132,7 @@ class OrderTestCase extends CakeTestCase {
 				$orderLineItem['shipping_required'] = (boolean)$cartItem['shipping_required'];
 				$orderLineItem['variant_id'] 		= $cartItem['variant_id'];
 				$orderLineItem['variant_title'] 	= $cartItem['variant_title'];
+				$orderLineItem['fulfillment_id']	= null;
 
 				$orderLineItems[]['OrderLineItem'] = $orderLineItem;
 				

@@ -29,7 +29,7 @@ class M4f3f70ed0bd44e26a21509881507707a extends CakeMigration {
 			),
 			'create_field' => array(
 				'order_line_items' => array(
-					'fulfillment_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 11, 'collate' => NULL, 'comment' => '', 'after' => 'variant_title'),
+					'fulfillment_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 11, 'collate' => NULL, 'comment' => '', 'after' => 'variant_title'),
 				)
 			)
 		),
@@ -41,7 +41,7 @@ class M4f3f70ed0bd44e26a21509881507707a extends CakeMigration {
 			
 			'create_field' => array(
 				'fulfillments' => array(
-					'order_line_item_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 11, 'collate' => NULL, 'comment' => '', 'after' => 'order_id'),
+					'order_line_item_id' => array('type' => 'integer', 'null' => false, 'default' => 0, 'length' => 11, 'collate' => NULL, 'comment' => '', 'after' => 'order_id'),
 				),
 			),
 			'alter_field' => array(

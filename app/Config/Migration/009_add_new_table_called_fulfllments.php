@@ -21,7 +21,7 @@ class M4f3f52eacb244842955804e61507707a extends CakeMigration {
 				'fulfillments' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 11, 'key' => 'primary', 'collate' => NULL, 'comment' => ''),
 					'order_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
-					'order_line_item_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 11, 'collate' => NULL, 'comment' => ''),
+					'order_line_item_id' => array('type' => 'integer', 'null' => false, 'default' => 0, 'length' => 11, 'collate' => NULL, 'comment' => ''),
 					'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
 					'modified' => array('type' => 'datetime', 'null' => false, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
 					'tracking_number' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),

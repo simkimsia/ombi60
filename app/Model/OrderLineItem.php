@@ -57,7 +57,7 @@ class OrderLineItem extends AppModel {
 	 * */
 	public function updatePricesAndWeights($variant_id, $newPrice, $newCurrency, $newWeight) {
 		
-		// first we get all the affected cart_items
+		// first we get all the affected cart_items		
 		$items = $this->find('all', array(
 			'conditions'=>array(
 				'Order.past_checkout_point'	=>false,
