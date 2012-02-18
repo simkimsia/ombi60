@@ -23,9 +23,13 @@ class Fulfillment extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
+	);
+	
+	public $hasMany = array(
 		'OrderLineItem' => array(
 			'className' => 'OrderLineItem',
-			'foreignKey' => 'order_line_item_id',
+			'foreignKey' => 'fulfillment_id',
+			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
