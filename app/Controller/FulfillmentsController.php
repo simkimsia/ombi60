@@ -43,9 +43,7 @@ class FulfillmentsController extends AppController {
 	public function admin_set($order_id = false) {
 		$this->Fulfillment->Order->id = $order_id;
 		
-		//$this->log($order_id);
 		if (!$this->Fulfillment->Order->exists()) {
-			
 			
 			$this->Session->setFlash('invalid order', 'default', 
 			array(
@@ -54,11 +52,8 @@ class FulfillmentsController extends AppController {
 			$this->redirect(array('controller'=>'orders', 'action'=>'index', 'admin'=>true));
 		}
 		
-		$this->log($this->request->data);
-		
+		// attach the order_id to the fulfillment
 		$this->request->data['Fulfillment']['order_id'] = $order_id;
-		
-		$this->log($this->request->data);
 		
 		$requestData = Set::filter($this->request->data);
 		
