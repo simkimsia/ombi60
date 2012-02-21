@@ -1012,6 +1012,18 @@ class Order extends AppModel {
 		return ($count == 1);
 	}
 
+	/**
+	* compares the order_line_items and fulfillments and updates the fulfillment_status accordingly
+	* @param string $id Order id
+	* @return boolean Returns true if updated the fulfillment_status properly
+	**/
+	public function updateFulfillmentStatus($id = null) {
+		if ($id != null) {
+			$this->id = $id;
+		}
+		
+		
+	}
 	
 }
 ?>

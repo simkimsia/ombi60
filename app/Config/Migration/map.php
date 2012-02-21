@@ -20,5 +20,7 @@ $map = array(
 		'009_add_new_table_called_fulfllments' => 'M4f3f52eacb244842955804e61507707a'),
 	10 => array(
 		'010_remove_order_line_item_id_from_fulfillments' => 'M4f3f70ed0bd44e26a21509881507707a'),
+	11 => array(
+		'011_add_fulfilled_item_count_in_orders' => 'M4f4333fc0e2c4e7e9bb44ca41507707a'),
 );
 ?>

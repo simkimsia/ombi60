@@ -14,7 +14,17 @@ class OrderLineItem extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-
+		'FulfilledOrder' => array(
+			'className' => 'Order',
+			'foreignKey' => 'order_id',
+			'counterCache' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'counterCache' => 'fulfilled_item_count',
+			'counterScope' => array('OrderLineItem.fulfillment_id >' => 0) 
+		),
+		
 		'OrderedVariant' => array(
 			'className' => 'VariantModel',
 			'foreignKey' => 'variant_id',
