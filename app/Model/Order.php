@@ -1018,11 +1018,37 @@ class Order extends AppModel {
 	* @return boolean Returns true if updated the fulfillment_status properly
 	**/
 	public function updateFulfillmentStatus($id = null) {
+		
 		if ($id != null) {
 			$this->id = $id;
 		}
 		
+		$this->recursive = -1;
+		$order = $this->find('first', array(
+			'conditions'	=> array('Order.id' => $this->id),
+			'fields'		=> array('Order.order_line_item_count', 'Order.fulfilled_item_count')
+		));
 		
+		$fulfilledCount = intval($order['Order']['fulfilled_item_count']);
+		$itemCount 		= $order['Order']['order_line_item_count'];
+		
+		$unfulfilledStatus	= ($fulfilledCount == 0);
+		$partiallyFulfilled	= (!$unfulfilledStatus) && ($fulfilledCount < $itemCount);
+		$fulfilled			= (!$unfulfilledStatus) && ($fulfilledCount == $itemCount);
+		 
+		
+		if ($unfulfilledStatus) {
+			return $this->saveField('fulfillment_status', FULFILLMENT_NOT_FULFILLED);
+		}
+			
+		if ($partiallyFulfilled) {
+			return $this->saveField('fulfillment_status', FULFILLMENT_PARTIAL);
+		}
+		
+		if ($fulfilled) {
+			return $this->saveField('fulfillment_status', FULFILLMENT_FULFILLED);
+		}
+		return true;
 	}
 	
 }

@@ -58,6 +58,8 @@ class FulfillmentsController extends AppController {
 		$requestData = Set::filter($this->request->data);
 		
 		$result = $this->Fulfillment->fulfillItems($requestData);
+		
+		
 		if ($result) {
 			$this->Session->setFlash('Successfully fulfilled items', 'default', 
 			array(

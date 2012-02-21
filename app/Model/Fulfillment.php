@@ -49,7 +49,9 @@ class Fulfillment extends AppModel {
 			foreach($item_ids as $item_id) {
 				$requestData['OrderLineItem'][] = array('id' => $item_id);
 			}
-			return $this->saveAssociated($requestData);
+			$result = $this->saveAssociated($requestData);
+			$this->Order->updateFulfillmentStatus($requestData['Fulfillment']['order_id']);
+			return $result;
 		}
 		
 		return true;

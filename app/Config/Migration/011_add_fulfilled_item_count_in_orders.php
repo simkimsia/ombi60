@@ -19,7 +19,7 @@ class M4f4333fc0e2c4e7e9bb44ca41507707a extends CakeMigration {
 		'up' => array(
 			'create_field' => array(
 				'orders' => array(
-					'fulfilled_item_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 5, 'collate' => NULL, 'comment' => '', 'after' => 'order_line_item_count'),
+					'fulfilled_item_count' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 5, 'collate' => NULL, 'comment' => '', 'after' => 'order_line_item_count'),
 				),
 			),
 		
@@ -50,6 +50,21 @@ class M4f4333fc0e2c4e7e9bb44ca41507707a extends CakeMigration {
  * @access public
  */
 	public function after($direction) {
+		if ($direction == 'up') {
+			$this->setAllCurrentOrdersToHaveZeroFulfillmentCount();
+		}
+		
+		
 		return true;
+	}
+	
+	private function setAllCurrentOrdersToHaveZeroFulfillmentCount() {
+		/* update all the Order records to have the fulfilled_item_count */
+		$orderModel = ClassRegistry::init('Order');
+
+		$orderModel->updateAll(
+			array('Order.fulfilled_item_count' => 0)
+		);
+
 	}
 }
