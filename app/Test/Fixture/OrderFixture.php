@@ -73,6 +73,7 @@ class OrderFixture extends CakeTestFixture {
 			'note'					=> '',
 			'cancel_reason'			=> ''
 		),
+		// fulfillment less than
 		array(
 			'id' => '4e91458a-b0f8-452c-ab84-1d351507707a',
 			'shop_id' => '2',
@@ -94,12 +95,12 @@ class OrderFixture extends CakeTestFixture {
 			'past_checkout_point' => 0,
 			'contact_email' => 'guest_customer@ombi60.com',
 			'order_line_item_count' => '2',
-			'fulfilled_item_count' => '0',
+			'fulfilled_item_count' => '1',
 			'delivered_to_country' => '192',
 			'note'					=> '',
 			'cancel_reason'			=> ''
 		),
-		// PAID and CANCELLED
+		// PAID and CANCELLED fullfillment zero
 		array(
 			'id' => '4e8d8ef9-71a4-4a69-8dbf-04b01507707b',
 			'shop_id' => '2',
@@ -126,7 +127,7 @@ class OrderFixture extends CakeTestFixture {
 			'note'					=> '',
 			'cancel_reason'			=> ''
 		),
-		// AUTHORIZED and CLOSED
+		// AUTHORIZED and CLOSED fulfillment equal
 		array(
 			'id' => '4e8d8ef9-71a4-4a69-8dbf-04b01507707c',
 			'shop_id' => '2',
@@ -148,7 +149,7 @@ class OrderFixture extends CakeTestFixture {
 			'past_checkout_point' => FALSE,
 			'contact_email' => 'guest_customer@ombi60.com',
 			'order_line_item_count' => '1',
-			'fulfilled_item_count' => '0',
+			'fulfilled_item_count' => '1',
 			'delivered_to_country' => '192',
 			'note'					=> '',
 			'cancel_reason'			=> ''

@@ -435,7 +435,7 @@ class Order extends AppModel {
 			'previous_price', 'order_no', 'contact_email',
 			'previous_currency', 'payment_status', 'fulfillment_status',
 			'net_amount', 'shipping_fee', 'status',
-			'cart_item_count', 'order_line_item_count');
+			'cart_item_count', 'order_line_item_count', 'fulfilled_item_count', 'note', 'cancel_reason');
 
 
 		foreach($order as $field=>$value) {

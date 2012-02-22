@@ -302,7 +302,7 @@ class OrderTestCase extends CakeTestCase {
 					'status'				=> $expectedOptions['status'],
 					'cart_id'				=> '4e9144d7-55e4-44a6-a2f1-1f721507707a',
 					'payment_status'		=> '0',
-					'fulfillment_status'	=> 1,
+					'fulfillment_status'	=> '1',
 					'net_amount'			=> '34.0000',
 					'shipped_weight'		=> 22000,
 					'shipping_fee'			=> '0.0000',					
@@ -312,8 +312,11 @@ class OrderTestCase extends CakeTestCase {
 					'past_checkout_point'	=> NULL,
 					'contact_email'			=> $expectedOptions['contact_email'],
 					'order_line_item_count'	=> 2,
+					'fulfilled_item_count'	=> 1,
 					'delivered_to_country'	=> '192',
 					'shipping_required'		=> 1,
+					'note'					=> '',
+					'cancel_reason'			=> ''
 				),
 
 
@@ -344,8 +347,11 @@ class OrderTestCase extends CakeTestCase {
 					'past_checkout_point'	=> NULL,
 					'contact_email'			=> $expectedOptions['contact_email'],
 					'order_line_item_count'	=> 1,
+					'fulfilled_item_count'	=> 0,
 					'delivered_to_country'	=> '192',
 					'shipping_required'		=> 1,
+					'note'					=> '',
+					'cancel_reason'			=> ''
 				),
 
 
@@ -1041,6 +1047,32 @@ class OrderTestCase extends CakeTestCase {
 		$this->assertFalse($cancelledResult);
 		$this->assertTrue($closedResult);
 		
+	}
+	
+	/**
+	*
+	* test for update fulfillment status
+	**/
+	public function testUpdateFulfillmentStatus() {
+		// GIVEN we have the fulfilled_item_count for order to be 0, less than and equal
+		// to order_line_item_count
+		$lessThan	= '4e91458a-b0f8-452c-ab84-1d351507707a'; 
+		$zeroed 	= '4e8d8ef9-71a4-4a69-8dbf-04b01507707b'; 
+		$equal		= '4e8d8ef9-71a4-4a69-8dbf-04b01507707c'; 
+		
+		// WHEN we run updateFulfillmentStatus for all 3
+		$this->Order->updateFulfillmentStatus($lessThan);
+		$this->Order->updateFulfillmentStatus($zeroed);
+		$this->Order->updateFulfillmentStatus($equal);		
+		
+		// THEN we expect the following
+		$this->Order->id = $lessThan;
+		$this->assertEquals(FULFILLMENT_PARTIAL, $this->Order->field('fulfillment_status'));
+		$this->Order->id = $zeroed;
+		$this->assertEquals(FULFILLMENT_NOT_FULFILLED, $this->Order->field('fulfillment_status'));
+		$this->Order->id = $equal;
+		$this->assertEquals(FULFILLMENT_FULFILLED, $this->Order->field('fulfillment_status'));
+
 	}
 
 }
