@@ -1,5 +1,5 @@
 <?php 
-/* generated on: 2012-02-20 07:21:14 : 1329722474 */
+/* generated on: 2012-02-22 02:12:13 : 1329876733 */
 class AppSchema extends CakeSchema {
 
 	public function before($event = array()) {
@@ -338,7 +338,8 @@ class AppSchema extends CakeSchema {
 		'total_weight' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 10, 'collate' => NULL, 'comment' => ''),
 		'past_checkout_point' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'collate' => NULL, 'comment' => ''),
 		'contact_email' => array('type' => 'string', 'null' => true, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
-		'order_line_item_count' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 5, 'collate' => NULL, 'comment' => ''),
+		'order_line_item_count' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 5, 'collate' => NULL, 'comment' => ''),
+		'fulfilled_item_count' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 5, 'collate' => NULL, 'comment' => ''),
 		'delivered_to_country' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 10, 'collate' => NULL, 'comment' => ''),
 		'note' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'cancel_reason' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
