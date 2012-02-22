@@ -38,6 +38,9 @@ class Fulfillment extends AppModel {
 	
 	/**
 	* clean out the non-selected items
+	*
+	* @param array $requestData Array containing the following Fulfillment.order_id, OrderLineItem.{n}.id
+	* @return boolean Returns true
 	**/
 	public function fulfillItems($requestData) {
 		
