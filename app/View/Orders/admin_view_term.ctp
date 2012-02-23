@@ -225,13 +225,17 @@
 
 									<tr>
 
-						                <td><?php 
-						
-											$checkbox = $this->Form->checkbox('OrderLineItem.'.$key.'.id', 
-												array('value' => $lineItem['id'], 'class' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'checked' => 'checked')
-											);
-						
-											echo $checkbox;
+						                <td style="width: 24px; vertical-align:middle; text-align:center"><?php 
+											if (intval($lineItem['fulfillment_id']) > 0) {
+												echo $this->Html->image('admin/icons/shipping.gif', array('alt' => 'shipping'));
+											} else {
+												$checkbox = $this->Form->checkbox('OrderLineItem.'.$key.'.id', 
+													array('value' => $lineItem['id'], 'class' => 'checkbox', 'label' => FALSE, 'div' => FALSE, 'checked' => 'checked')
+												);
+
+												echo $checkbox;
+												
+											}
 										?></td>
 						                <td class="center"><strong><?php echo $lineItem['product_quantity']; ?>x</strong></td>
 						                <td class="center"><?php 
@@ -259,7 +263,7 @@
 							<div class="rule2"></div>
 							<div class="form-field clear">
 							<?php 
-			
+								
 								$checkbox = $this->Form->checkbox('Fulfillment.notification.'.$key, 
 									array('class' => 'checkbox', 'checked' => 'checked', 'label' => FALSE, 'div' => FALSE)
 								);
