@@ -157,7 +157,8 @@
 							if ($fulfilledCompletely) {
 								$displayFulfillTitle = '<strong>Order Fulfilled</strong>';								
 							} else {
-								$displayFulfillTitle = 'You need to fullfill <strong>' . $order['Order']['order_line_item_count'] . ' line item</strong>.';
+								$unfulfilledItemCount = $order['Order']['order_line_item_count'] - intval($order['Order']['fulfilled_item_count'] );
+								$displayFulfillTitle = 'You need to fullfill <strong>' . $unfulfilledItemCount  . ' line item</strong>.';
 							}
 							
 							echo $displayFulfillTitle;
@@ -246,20 +247,22 @@
 												
 											}
 										?></td>
-						                <td class="center"><strong><?php echo $lineItem['product_quantity']; ?>x</strong></td>
-						                <td class="center"><?php 
+						                <td class="center" style="width:24px;"><strong><?php echo $lineItem['product_quantity']; ?>x</strong></td>
+						                <td class="center" ><?php 
 											echo $this->Html->link($lineItem['variant_title'], array(
 												'controller' => 'products',
 												'action' => 'view',
 												'admin' => true,
 												'id' => $lineItem['product_id']
 											));
+											
+											
 										?></td>
-
+										<!-- put in the SKU here
 						                <td class="right">
 						                </td>
-
-
+										-->
+										
 									</tr>
 
 							<?php
