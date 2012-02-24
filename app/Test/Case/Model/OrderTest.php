@@ -871,19 +871,20 @@ class OrderTestCase extends CakeTestCase {
 	**/
 	public function testGetDetailedWithFulfilledOrder() {
 		// GIVEN the ORDER 1 associated with Customer 1
-		/*
+		
 		// WHEN we run getDetailed
-		$order_uuid	= '4e8d8ef9-71a4-4a69-8dbf-04b01507707a';
+		$order_uuid	= '4e8d8ef9-71a4-4a69-8dbf-04b01507707c';
 		$order		= $this->Order->getDetailed($order_uuid);
 		
 		// THEN we get all the following information
-		$orderFixture = new OrderFixture();
-		$customerFixture = new CustomerFixture();
-		$addressFixture = new AddressFixture();
-		$userFixture = new UserFixture();
-		$itemFixture = new OrderLineItemFixture();
+		$orderFixture 		= new OrderFixture();
+		$customerFixture 	= new CustomerFixture();
+		$addressFixture 	= new AddressFixture();
+		$userFixture 		= new UserFixture();
+		$itemFixture 		= new OrderLineItemFixture();
+		$fulfillmentFixture = new FulfillmentFixture();
 		
-		$order1 = $orderFixture->records[0];
+		$order1 = $orderFixture->records[3];
 		$order1['shipping_required'] = true;
 		$order1['net_amount'] = $order1['amount'];
 		
@@ -896,11 +897,12 @@ class OrderTestCase extends CakeTestCase {
 			'OrderLineItem' => array($itemFixture->records[0]),
 			'Payment' => array(),
 			'Shipment' => array(),
+			'Fulfillment' => array($fulfillmentFixture->records[0]['id'] => $fulfillmentFixture->records[0])
 		);
 		
 		App::uses('ArrayLib', 'UtilityLib.Lib');
 		$this->assertEquals(ArrayLib::deepKSort($expected), ArrayLib::deepKSort($order));
-		*/
+		
 	}
 
 
