@@ -151,13 +151,17 @@
 						<div class="lastcol right summary_shipping"><!-- start of Shipping Status  -->
 							<?php
 	                        $fullfill_status = $order['Order']['fulfillment_status'];
-	                        if ($fullfill_status == 0) {
-	                            echo "You have fullfilled all line items";
-	                        } else {
-	                        ?>
-                            You need to fullfill <strong><?php echo $order['Order']['order_line_item_count'];?> line item</strong>.
-                        	<?php
-	                        }
+							$fulfilledCompletely = ($fullfill_status == FULFILLMENT_FULFILLED);
+	
+
+							if ($fulfilledCompletely) {
+								$displayFulfillTitle = '<strong>Order Fulfilled</strong>';								
+							} else {
+								$displayFulfillTitle = 'You need to fullfill <strong>' . $order['Order']['order_line_item_count'] . ' line item</strong>.';
+							}
+							
+							echo $displayFulfillTitle;
+							
 	                        ?>
 						</div><!-- end of Shipping Status -->
 					</div><!-- end of Shipping Mode -->
@@ -175,9 +179,14 @@
 						<div class="col1-3"><?php echo $shipmentName; ?></div><!-- end of Shipping Mode named -->
 						<?php } ?>
 						
-						<?php if ($fullfill_status != 0) { ?>
-						<div class="lastcol summary_shipping"><?php echo '<a href="#fulfill" id="fulfill-button" class="button fr">Fulfill line items</a>'; ?></div><!-- end of Fulfill Line Item button -->
-						<?php } ?>
+						
+						<div class="lastcol summary_shipping">
+						<?php if ($fulfilledCompletely) : ?>
+							<?php echo '<div class="fr">You have completely fulfilled this order</div>'; ?>
+						<?php else : ?>
+							<?php echo '<a href="#fulfill" id="fulfill-button" class="button fr">Fulfill line items</a>'; ?>
+						<?php endif; ?>
+						</div><!-- end of Fulfill Line Item button -->
 					</div><!--  end of Shipping Mode value -->
 					
 					<!-- start of batch-fulfillment-form -->
@@ -260,6 +269,21 @@
 
 								</tbody>
 							</table>
+							<div class="mark">
+								<strong>Tracking Number</strong> can be added later<br />
+								<?php 
+								echo $this->Form->input('Fulfillment.tracking_number', array(
+									'label' => array(
+										'class' => 'form-label size-120 fl-space2',
+										'text'  => ''
+									),
+									'div'	=> array(
+										'class' => 'form-field clear'
+									),
+									
+								)); 
+								?>
+							</div>
 							<div class="rule2"></div>
 							<div class="form-field clear">
 							<?php 
