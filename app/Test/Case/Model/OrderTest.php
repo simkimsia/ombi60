@@ -866,6 +866,46 @@ class OrderTestCase extends CakeTestCase {
 
 	/**
 	*
+	* test getDetailed works for orders admin view
+	*
+	**/
+	public function testGetDetailedWithFulfilledOrder() {
+		// GIVEN the ORDER 1 associated with Customer 1
+		/*
+		// WHEN we run getDetailed
+		$order_uuid	= '4e8d8ef9-71a4-4a69-8dbf-04b01507707a';
+		$order		= $this->Order->getDetailed($order_uuid);
+		
+		// THEN we get all the following information
+		$orderFixture = new OrderFixture();
+		$customerFixture = new CustomerFixture();
+		$addressFixture = new AddressFixture();
+		$userFixture = new UserFixture();
+		$itemFixture = new OrderLineItemFixture();
+		
+		$order1 = $orderFixture->records[0];
+		$order1['shipping_required'] = true;
+		$order1['net_amount'] = $order1['amount'];
+		
+		$expected = array(
+			'Order' 	=> $order1,
+			'Customer' 	=> 	$customerFixture->records[0],
+			'BillingAddress' => $addressFixture->records[0],
+			'DeliveryAddress' => $addressFixture->records[1],
+			'User'				=> $userFixture->records[2],
+			'OrderLineItem' => array($itemFixture->records[0]),
+			'Payment' => array(),
+			'Shipment' => array(),
+		);
+		
+		App::uses('ArrayLib', 'UtilityLib.Lib');
+		$this->assertEquals(ArrayLib::deepKSort($expected), ArrayLib::deepKSort($order));
+		*/
+	}
+
+
+	/**
+	*
 	* test getDetailed works for orders that is only above the ORDER_CREATED level for admin
 	*
 	**/

@@ -247,8 +247,8 @@
 												
 											}
 										?></td>
-						                <td class="center" style="width:24px;"><strong><?php echo $lineItem['product_quantity']; ?>x</strong></td>
-						                <td class="center" ><?php 
+						                <td class="center" style="width:24px; vertical-align:middle; "><strong><?php echo $lineItem['product_quantity']; ?>x</strong></td>
+						                <td class="center" style="vertical-align:middle;"><?php 
 											echo $this->Html->link($lineItem['variant_title'], array(
 												'controller' => 'products',
 												'action' => 'view',
@@ -256,6 +256,13 @@
 												'id' => $lineItem['product_id']
 											));
 											
+											$fulfillmentId = intval($lineItem['fulfillment_id']);
+											$fulfilledDate = '<br />';
+											if ($fulfillmentId > 0) {
+												$date = $order['Fulfillment'][$fulfillmentId]['created'];
+												$fulfilledDate .= '<span class="note">Fulfilled on ' . $this->Time->niceShort($date) . '</div>' ;
+												echo $fulfilledDate;
+											}
 											
 										?></td>
 										<!-- put in the SKU here
