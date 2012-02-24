@@ -50,9 +50,27 @@ class FulfillmentsController extends AppController {
 		if ($this->request->is('get')) {
 			$fulfillment = $this->Fulfillment->read(null, $id);
 			$this->set('fulfillment', $fulfillment);
+			$this->request->data = $fulfillment;
 			
 		} else {
-			
+			if (empty($this->request->data)) {
+				$fulfillment = $this->Fulfillment->read(null, $id);
+				$this->set('fulfillment', $fulfillment);
+				
+			} else {
+				if ($this->Fulfillment->save($this->request->data)) {
+					$this->Session->setFlash(__('Tracking number has been saved'), 'default', array('class'=>'flash_success'));
+					$this->redirect(array(
+						'controller'=>'orders',
+						'action' => 'view',
+						'admin' => true,
+						'id' => $this->request->data['Fulfillment']['order_id']
+						));
+				} else {
+					$this->Session->setFlash(__('Tracking number could not be saved. Please, try again.'), 'default', array('class'=>'flash_failure'));
+				}
+				
+			}
 		}
 		
 		
