@@ -184,7 +184,7 @@ class Order extends AppModel {
 	/**
 	*
 	* Get detailed Order model data alongside with Customer, Delivery Address, Billing Address,
-	* Payment, Shipment
+	* Payment, Shipment, Fulfillment
 	*
 	* @param string $id Order id
 	* @param boolean $lineItems Default true.
@@ -253,6 +253,11 @@ class Order extends AppModel {
 			$order['DeliveryAddress'] 	= array_merge($order['DeliveryAddress'], $deliveryCountry);			
 			
 		} 
+
+		/** 
+		* we want to set the fulfillment id as the key in array
+		**/
+		$order['Fulfillment'] = Set::combine($order, 'Fulfillment.{n}.id', 'Fulfillment.{n}');
 
 		return $order;
 	}
