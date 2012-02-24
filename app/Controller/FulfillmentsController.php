@@ -33,6 +33,30 @@ class FulfillmentsController extends AppController {
 		}
 		
 	}
+	
+	
+	public function admin_view($id = false) {
+		$this->Fulfillment->id = $id;
+		
+		if (!$this->Fulfillment->exists()) {
+			$this->Session->setFlash('invalid order', 'default', 
+			array(
+				'class'=>'flash_failure'
+			));
+			$this->redirect($this->referer(array('controller'=>'orders', 'action'=>'index', 'admin'=>true)));
+			
+		}
+		
+		if ($this->request->is('get')) {
+			$fulfillment = $this->Fulfillment->read(null, $id);
+			$this->set('fulfillment', $fulfillment);
+			
+		} else {
+			
+		}
+		
+		
+	}
 
 
 /**
