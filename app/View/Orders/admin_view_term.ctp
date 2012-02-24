@@ -260,9 +260,25 @@
 											
 
 											$fulfilledDate = '<br />';
+											
 											if ($itemFulfilled) {
+												
+												if (empty($order['Fulfillment'][$fulfillmentId]['tracking_number'])) {
+													$fulfillmentLink = $this->Html->link('Add tracking', array(
+														'controller'	=> 'fulfillments',
+														'action'		=> 'view',
+														'admin'			=> true,
+														'id'			=> $fulfillmentId));
+												} else {
+													$fulfillmentLink = $this->Html->link($order['Fulfillment'][$fulfillmentId]['tracking_number'], array(
+														'controller'	=> 'fulfillments',
+														'action'		=> 'view',
+														'admin'			=> true,
+														'id'			=> $fulfillmentId));
+												}
+												
 												$date = $order['Fulfillment'][$fulfillmentId]['created'];
-												$fulfilledDate .= '<span class="note">Fulfilled on ' . $this->Time->niceShort($date) . '</span>' ;
+												$fulfilledDate .= '<span class="note">Fulfilled on ' . $this->Time->niceShort($date) . ', '. $fulfillmentLink .'</span>' ;
 												echo $fulfilledDate;
 											}
 											
@@ -423,9 +439,25 @@
 						); 
 						if ($itemFulfilled) {
 							echo '<br />';
+							if (empty($order['Fulfillment'][$fulfillmentId]['tracking_number'])) {
+								$fulfillmentLink = $this->Html->link('Add tracking', array(
+									'controller'	=> 'fulfillments',
+									'action'		=> 'view',
+									'admin'			=> true,
+									'id'			=> $fulfillmentId));
+							} else {
+								$fulfillmentLink = $this->Html->link($order['Fulfillment'][$fulfillmentId]['tracking_number'], array(
+									'controller'	=> 'fulfillments',
+									'action'		=> 'view',
+									'admin'			=> true,
+									'id'			=> $fulfillmentId));
+							}
+							
 							$date = $order['Fulfillment'][$fulfillmentId]['created'];
-							$fulfilledDate = '<span class="note">Fulfilled on ' . $this->Time->niceShort($date) . '</span>' ;
+							$fulfilledDate = '<span class="note">Fulfilled on ' . $this->Time->niceShort($date) . ', '. $fulfillmentLink .'</span>' ;
+							
 							echo $fulfilledDate;
+							
 						}
 					?></td>
 	                <td class="center"><?php echo $this->Number->currency($lineItem['product_price'], '$'); ?></td>

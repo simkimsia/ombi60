@@ -37,20 +37,54 @@
 			'value'=>$fulfillment['Fulfillment']['id']
 		));
 		
+		
 		echo $this->Form->input('Fulfillment.order_id', array(
 			'type'=>'hidden', 
 			'value'=>$fulfillment['Fulfillment']['order_id']
 		));
-
+	
+		// displayed field
+		echo '		<div class="form-field clear">';
 		echo $this->Form->label(
 			'Fulfillment.order', 
 			'Order', 
 			array('class' => 'form-label size-120 fl-space2'
 		));
+		echo $this->Html->link('#' . $fulfillment['Order']['order_no'], array(
+			'controller'	=> 'orders',
+			'action'		=> 'view',
+			'admin'			=> true,
+			'id'			=> $fulfillment['Order']['id']
+		));
+		echo '		</div>';
+		// end of order 
+		
+		// displayed field order_line_item_count
+		echo '		<div class="form-field clear">';
+		echo $this->Form->label(
+			'Fulfillment.order_line_item_count', 
+			'Total Line Items shipped', 
+			array('class' => 'form-label size-120 fl-space2'
+		));
+		echo $fulfillment['Fulfillment']['order_line_item_count'];
+		echo '		</div>';
+		// end of order_line_item_count
 
-			
-			
 		echo $this->Form->input('Fulfillment.tracking_number');
+		
+		// displayed field created
+		echo '		<div class="form-field clear">';
+		echo $this->Form->label(
+			'Fulfillment.created', 
+			'Created', 
+			array('class' => 'form-label size-120 fl-space2'
+		));
+		echo $fulfillment['Fulfillment']['created'];
+		echo '		</div>';
+		// end of created
+		
+		
+
 
 		
 
