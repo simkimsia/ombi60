@@ -236,7 +236,9 @@
 									<tr>
 
 						                <td style="width: 24px; vertical-align:middle; text-align:center"><?php 
-											if (intval($lineItem['fulfillment_id']) > 0) {
+											$fulfillmentId = intval($lineItem['fulfillment_id']);
+											$itemFulfilled = ($fulfillmentId > 0);
+											if ($itemFulfilled) {
 												echo $this->Html->image('admin/icons/shipping.gif', array('alt' => 'shipping'));
 											} else {
 												$checkbox = $this->Form->checkbox('OrderLineItem.'.$key.'.id', 
@@ -256,11 +258,11 @@
 												'id' => $lineItem['product_id']
 											));
 											
-											$fulfillmentId = intval($lineItem['fulfillment_id']);
+
 											$fulfilledDate = '<br />';
-											if ($fulfillmentId > 0) {
+											if ($itemFulfilled) {
 												$date = $order['Fulfillment'][$fulfillmentId]['created'];
-												$fulfilledDate .= '<span class="note">Fulfilled on ' . $this->Time->niceShort($date) . '</div>' ;
+												$fulfilledDate .= '<span class="note">Fulfilled on ' . $this->Time->niceShort($date) . '</span>' ;
 												echo $fulfilledDate;
 											}
 											
@@ -387,7 +389,8 @@
 		<table class="style1">
 			<thead>
 				<tr>
-					<th>Product</td>
+					<th></th>
+					<th>Product</th>
 					<th class="center">Price</th>
 					<th class="center">Quantity</th>
 					<th class="right">Total</th>
@@ -399,17 +402,32 @@
         $temp = 0;
         foreach ($order['OrderLineItem'] as $lineItem):
             $temp = $temp + $lineItem['product_quantity'] * $lineItem['product_price'];
-
+			$fulfillmentId = intval($lineItem['fulfillment_id']);
+			$itemFulfilled = ($fulfillmentId > 0);
         ?>
         
 				<tr>
-				
-	                <td><?php echo $this->Html->link(__($lineItem['product_title']),
-				                         array('admin'=>true,
-					                       'controller' => 'products',
-					                       'action' => 'view',
-					                       $lineItem['product_id'])); ?>
-	                </td>
+					<td class="center" style="vertical-align:middle"><?php
+					if ($itemFulfilled) {
+						echo $this->Html->image('admin/icons/shipping.gif', array('alt' => 'shipping'));
+					}
+					?></td>
+	                <td style="vertical-align:middle;"><?php 
+						echo $this->Html->link(__($lineItem['product_title']),
+							array(
+								'admin'=>true,
+								'controller' => 'products',
+								'action' => 'view',
+								$lineItem['product_id']
+							)
+						); 
+						if ($itemFulfilled) {
+							echo '<br />';
+							$date = $order['Fulfillment'][$fulfillmentId]['created'];
+							$fulfilledDate = '<span class="note">Fulfilled on ' . $this->Time->niceShort($date) . '</span>' ;
+							echo $fulfilledDate;
+						}
+					?></td>
 	                <td class="center"><?php echo $this->Number->currency($lineItem['product_price'], '$'); ?></td>
 	                <td class="center"><?php echo $lineItem['product_quantity']; ?></td>
 
