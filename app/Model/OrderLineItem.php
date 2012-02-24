@@ -37,7 +37,8 @@ class OrderLineItem extends AppModel {
 			'foreignKey' => 'fulfillment_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => ''
+			'order' => '',
+			'counterCache' => 'order_line_item_count'
 		)
 	);
 	
