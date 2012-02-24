@@ -707,3 +707,9 @@ table.mceLayout { width: 100% !important; }
     font-size: 12px;
     font-weight: normal;
 }
+
+/* form static data */
+.form_static_data {
+	line-height:22px;
+	font-size:13px;
+}

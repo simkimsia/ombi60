@@ -50,12 +50,16 @@
 			'Order', 
 			array('class' => 'form-label size-120 fl-space2'
 		));
-		echo $this->Html->link('#' . $fulfillment['Order']['order_no'], array(
+		
+		$orderLink = $this->Html->link('#' . $fulfillment['Order']['order_no'], array(
 			'controller'	=> 'orders',
 			'action'		=> 'view',
 			'admin'			=> true,
 			'id'			=> $fulfillment['Order']['id']
-		));
+		));		
+		
+		echo $this->Html->div('form_static_data', $orderLink);
+
 		echo '		</div>';
 		// end of order 
 		
@@ -66,7 +70,8 @@
 			'Total Line Items shipped', 
 			array('class' => 'form-label size-120 fl-space2'
 		));
-		echo $fulfillment['Fulfillment']['order_line_item_count'];
+		
+		echo $this->Html->div('form_static_data', $fulfillment['Fulfillment']['order_line_item_count']);
 		echo '		</div>';
 		// end of order_line_item_count
 
@@ -79,7 +84,8 @@
 			'Created', 
 			array('class' => 'form-label size-120 fl-space2'
 		));
-		echo $fulfillment['Fulfillment']['created'];
+		echo $this->Html->div('form_static_data', $fulfillment['Fulfillment']['created']);
+
 		echo '		</div>';
 		// end of created
 		
