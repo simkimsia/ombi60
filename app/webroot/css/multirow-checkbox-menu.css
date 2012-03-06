@@ -87,7 +87,7 @@ div.multiRowCheckboxMenu a.menu {
 	background: url(../img/admin/multirow-checkbox-menu/downarrow.png) no-repeat 3px 4px;
 	outline: none;
 	height: 1%;
-        float: right;
+    float: right;
 }
 
 div.multiRowCheckboxMenu ul {
@@ -100,7 +100,7 @@ div.multiRowCheckboxMenu ul {
 	top:27px;
 	display: none;
 	padding: 0;
-        z-index: 999;
+    z-index: 999;
 }
 
 div.multiRowCheckboxMenu ul.wide {
