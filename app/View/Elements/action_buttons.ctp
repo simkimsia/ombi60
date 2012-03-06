@@ -1,7 +1,7 @@
 <?php
 
 $pluralName = Inflector::pluralize(strtolower($modelName));
-$tableId = $pluralName.'-table';
+$tableId = $pluralName.'Table';
 $menuActionId = $modelName.'MenuAction';
 
 echo $this->Html->script('simpleweb/jquery.multirowcheckboxmenu', array('inline' => FALSE));
