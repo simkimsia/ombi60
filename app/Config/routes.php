@@ -223,7 +223,14 @@
 				'order_id'	=> '[a-zA-Z0-9\-_]+'
 			)
 		);
-		
+
+		Router::connect('/admin/orders/menu_action',
+			array(
+				'controller'	=> 'orders',
+				'action'		=> 'menu_action',
+				'admin'			=> true,
+			)
+		);		
 		
 		Router::connect('/admin/orders/edit/:id',
 			array(
