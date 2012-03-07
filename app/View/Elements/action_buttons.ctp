@@ -15,27 +15,54 @@ echo $this->Html->css('multirow-checkbox-menu');
 		var tableId = '#<?php echo $tableId; ?>';
 		var menuActionId = '#<?php echo $menuActionId; ?>';
 		var pluralName = '<?php echo $pluralName; ?>';
+		var checkboxSelectAll = $('input#selectAll0');
+
+		
+		function updateCheckboxSelectAllViaEachChildCheckbox() {
+			var childCheckboxes = 'input[type=checkbox]';
+			checkboxSelectAll = $('input#selectAll0');
+			
+			$(childCheckboxes).not(checkboxSelectAll).click(function() {
+
+				adjustCheckboxSelectAll();
+			});
+		}
+		
+		function adjustCheckboxSelectAll() {
+			var childCheckboxes = 'input[type=checkbox]';
+			checkboxSelectAll = $('input#selectAll0');
+			
+			if($(childCheckboxes).filter(':checked').not(checkboxSelectAll).length == $(childCheckboxes).not(checkboxSelectAll).length && $(childCheckboxes).filter(':checked').not(checkboxSelectAll).length != 0) {
+				checkboxSelectAll.prop('checked',true);
+            } else {
+				checkboxSelectAll.prop('checked',false);
+			}
+		}
 		
 		$(document).ready(function() {
 			
+			checkboxSelectAll = $('input#selectAll0');
 			$('div.menuSelectAll').checkboxMenu({
 				menuItemClick: function(text, count) { 
 					if (text == 'All') {
 						$('table'+tableId+' input[type=checkbox]').prop('checked', true);
-						$('input#selectAll0').prop('checked', true);
+						checkboxSelectAll.prop('checked', true);
 					}
 					if (text == 'None') {
 						$('table'+tableId+' input[type=checkbox]').prop('checked', false);
-						$('input#selectAll0').prop('checked', false);
+						checkboxSelectAll.prop('checked', false);
 					}
 					if (text == 'Published') {
 						$('table'+tableId+' input[type=checkbox]:not(.published)').prop('checked', false);
-						$('table'+tableId+' input[type=checkbox].published').prop('checked', true);
+						$('table'+tableId+' input[type=checkbox].published').prop('checked', true);				
+						adjustCheckboxSelectAll();
 					}
 					if (text == 'Hidden') {
 						$('table'+tableId+' input[type=checkbox]:not(.published)').prop('checked', true);
 						$('table'+tableId+' input[type=checkbox].published').prop('checked', false);
+						adjustCheckboxSelectAll();
 					}
+
 				}});
  
  
