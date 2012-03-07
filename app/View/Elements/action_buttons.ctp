@@ -21,18 +21,20 @@ echo $this->Html->css('multirow-checkbox-menu');
 			$('div.menuSelectAll').checkboxMenu({
 				menuItemClick: function(text, count) { 
 					if (text == 'All') {
-						$('table'+tableId+' input[type=checkbox]').attr('checked','checked');
+						$('table'+tableId+' input[type=checkbox]').prop('checked', true);
+						$('input#selectAll0').prop('checked', true);
 					}
 					if (text == 'None') {
-						$('table'+tableId+' input[type=checkbox]').removeAttr('checked');
+						$('table'+tableId+' input[type=checkbox]').prop('checked', false);
+						$('input#selectAll0').prop('checked', false);
 					}
 					if (text == 'Published') {
-						$('table'+tableId+' input[type=checkbox].hidden').removeAttr('checked');
-						$('table'+tableId+' input[type=checkbox]:not(.hidden)').attr('checked', 'checked');
+						$('table'+tableId+' input[type=checkbox]:not(.published)').prop('checked', false);
+						$('table'+tableId+' input[type=checkbox].published').prop('checked', true);
 					}
 					if (text == 'Hidden') {
-						$('table'+tableId+' input[type=checkbox]:not(.hidden)').removeAttr('checked');
-						$('table'+tableId+' input[type=checkbox].hidden').attr('checked', 'checked');
+						$('table'+tableId+' input[type=checkbox]:not(.published)').prop('checked', true);
+						$('table'+tableId+' input[type=checkbox].published').prop('checked', false);
 					}
 				}});
  
@@ -41,7 +43,10 @@ echo $this->Html->css('multirow-checkbox-menu');
 				function() {
 					if (confirm('Delete selected '+pluralName+'?')) {
 						$(menuActionId).attr('value', 'Delete');
-						$(this).closest("form").submit();
+						if ($('table'+tableId+' input[type=checkbox]:checked').length > 0) {
+							$(this).closest("form").submit();
+						}
+
 					}
 				});
 			
@@ -58,7 +63,11 @@ echo $this->Html->css('multirow-checkbox-menu');
 					if (hideAction) {
 						$(menuActionId).attr('value', 'Hide');
 					}
-					$(this).closest("form").submit();
+					
+					if ($('table'+tableId+' input[type=checkbox]:checked').length > 0) {
+						$(this).closest("form").submit();
+					}
+
 					
 				}});
 			
