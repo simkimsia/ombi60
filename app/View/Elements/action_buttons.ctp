@@ -118,6 +118,8 @@ echo $this->Html->css('multirow-checkbox-menu');
 			<input id="hideAction" class="actionItem" type="submit" name="action" value="Mark as Hidden" />
 		</div>
 		
-		<?php echo $this->Form->input('menu_action', array('type'=>'hidden')); ?>
+		<?php 
+		// this is needed so that we will use the correct action
+		echo $this->Form->input('menu_action', array('type'=>'hidden')); ?>
 
 <?php //echo $this->element('pagination', array('modelName' => $modelName));?>
