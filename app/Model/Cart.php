@@ -604,13 +604,7 @@ class Cart extends AppModel {
 			
 			// to update existing items with new quantities
 			$result = $this->saveAll($cart);
-			
-			if (!empty($newItems['CartItem'])) {
-			
-				$result = $result && $this->CartItem->saveAll($newItems['CartItem']);
-			
-			}
-			
+						
 			$this->recalculateTotalWeightPrice($cart['Cart']['id']);
 			
 			return $result;
