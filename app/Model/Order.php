@@ -85,73 +85,7 @@ class Order extends AppModel {
 		parent::__construct($id, $table, $ds);
 		$this->virtualFields['shipping_required'] = sprintf('(%s.shipped_weight > 0)', $this->alias, $this->alias);
 		$this->virtualFields['net_amount'] = sprintf('(%s.shipping_fee + %s.amount)', $this->alias, $this->alias);
-	}
-	
-	/**
-	 * this is a very specific operation where it converts the Cart data
-	 * into savable data array
-	 *
-	 * it assumes $productsInCart is in this format
-	 * array([product_id] => quantity_ordered)
-	 *
-	 * $options is in this format
-	 * array([shop_id] => compulsory_value,
-	 * 	 [customer_id] => compulsory_value,
-	 * 	 [billing_address_id] => compulsory_value,
-	 * 	 [delivery_address_id] => compulsory_value,
-	 * 	 [amount] => compulsory_value
-	 * 	 [order_no] => optional_value,)
-	 **/
-	public function convertCart($cartData, $options = array()) {
-		
-		$defaultOptions = array('customer_id' => 0,
-					'billing_address_id' => 0,
-					'delivery_address_id' => 0,
-					'amount' => 0,
-					'order_no' => '',
-					'contact_email' => '');
-		
-		$options = array_merge($defaultOptions, $options);
-		if (!is_array($cartData) OR empty($cartData)) {
-			return false;
-		}
-		
-		// we need to remove the id from the cart items otherwise they will override the legit
-		// order line items
-		$shipping_required = false;
-		foreach($cartData['CartItem'] as $key => $cartItem) {
-			unset($cartData['CartItem'][$key]['id']);
-			$shipping_required = $shipping_required || $cartData['CartItem'][$key]['shipping_required'];
-		}
-		
-		// initial data
-		$data = array('Order' => array( 'shop_id' => $options['shop_id'],
-						'customer_id' => $options['customer_id'],
-						'billing_address_id' => $options['billing_address_id'],
-						'delivery_address_id' => $options['delivery_address_id'],
-						'order_no' => $options['order_no'],
-						'cart_id' => $cartData['Cart']['id'],
-						'contact_email' => $options['contact_email'],
-						),
-			      'OrderLineItem' => $cartData['CartItem']);
-		
-		// put in cart data such as shipping weight, etc
-		$data['Order']['amount'] = $cartData['Cart']['amount'];
-		$data['Order']['total_weight'] = $cartData['Cart']['total_weight'];
-		$data['Order']['shipped_weight'] = $cartData['Cart']['shipped_weight'];
-		$data['Order']['shipped_amount'] = $cartData['Cart']['shipped_amount'];
-		$data['Order']['shipping_required'] = $shipping_required;
-		
-		$data['Order']['currency'] = $cartData['Cart']['currency'];
-		// to count the no. of order_line_item to fulfil
-		$data['Order']['order_line_item_count'] = count($cartData['CartItem']);
-		
-		if ($data['Order']['amount'] >= 0 AND !empty($data['OrderLineItem'])) {
-			return $data;
-		}
-		return false;
-	}
-	
+	}	
 
 	/**
 	*
