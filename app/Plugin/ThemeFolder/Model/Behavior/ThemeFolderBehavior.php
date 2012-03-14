@@ -93,7 +93,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 	 * @param boolean $created Set as true if it is a newly created record
 	 * @access public
 	 * @return boolean
-	**/
+
 	public function afterSave(&$model, $created) {
 		
 		// we need to actually create the folder and then move the files
@@ -109,7 +109,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 			return $success;
 		}
 	}
-	
+		**/
 	/**
 	*
 	* reconstruct folderName 
@@ -118,7 +118,10 @@ class ThemeFolderBehavior extends ModelBehavior {
 		extract($model->data[$model->alias], EXTR_PREFIX_SAME, 'prefix');
 		$folderNameConstruct = $this->settings[$model->alias]['folderNameConstruct'];
 		foreach($model->data[$model->alias] as $key=>$value) {
-			$folderNameConstruct = str_replace('{'.$key.'}', $value, $folderNameConstruct);
+			if (is_string($key) && is_string($value)) {
+				$folderNameConstruct = str_replace('{'.$key.'}', $value, $folderNameConstruct);				
+			}
+
 		}
 
 		$model->data[$model->alias][$this->folderNameField] = $folderNameConstruct;
@@ -164,15 +167,16 @@ class ThemeFolderBehavior extends ModelBehavior {
 			$chmod = $this->settings[$model->alias]['chmod'];
 		}
 		
-		$path = $this->settings[$model->alias]['themePath'];
+
 		$success = false;
 		$dir = new Folder();
 		
-		if ($themeName != '') {
-			$themeName = $model->data[$model->alias][$this->folderNameField];
+		if ($themeName == '') {
+			$path = $this->settings[$model->alias]['themePath'];
+			$themeName = $path . $model->data[$model->alias][$this->folderNameField];
 		}
 		
-		$success = $dir->create($path . $themeName,$chmod);
+		$success = $dir->create($themeName,$chmod);
 		
 		return $success;
 	}

@@ -30,6 +30,7 @@ class SavedTheme extends AppModel {
 						'message' => 'Theme name is already in use',
 						'on' => 'update'
 							),
+					/*		
 					'notEmpty' => array(
 						'rule' => 'notEmpty',
 						'message' => 'Theme name cannot be empty',
@@ -59,7 +60,7 @@ class SavedTheme extends AppModel {
 						'rule' => array('uploadCheckInvalidExt'),
 						'message' => 'Please ensure your file extension is .css',			
 					),
-				
+					*/
 			      )
 			      
 			);
@@ -133,36 +134,6 @@ class SavedTheme extends AppModel {
 		
 	}
 	
-	public function beforeValidate() {
-		
-
-		
-		if (isset($this->data['SavedTheme']['switch'])) {
-
-			return true;
-
-		}
-		
-		if (isset($this->data['SavedTheme']['signup']) && $this->data['SavedTheme']['signup'] === true) {
-
-			return true;
-		}
-
-
-		// now we need to set the values for fields like author, folder_name, shop_id
-		$this->data['SavedTheme']['author'] = User::get('User.full_name');
-
-		$this->data['SavedTheme']['folder_name'] = (!empty($this->data['SavedTheme']['name'])) ? User::get('User.id') . '_' . $this->data['SavedTheme']['name'] : '';
-
-		$this->data['SavedTheme']['shop_id'] = Shop::get('Shop.id');
-
-		if (isset($this->data['SavedTheme']['original_name'])) {
-			$this->data['SavedTheme']['original_folder_name'] = User::get('User.id') . '_' . $this->data['SavedTheme']['original_name'];
-
-		}
-
-		return true;
-	}
 	
 	
 	public function saveThemeAtSignUp($options = array()) {
@@ -222,26 +193,14 @@ class SavedTheme extends AppModel {
 	**/
 	public function afterSave($created) {
 		
-		// we need to actually create the folder and then move the files
+		// we need to actually create the empty folder and then move the files
 		if ($created) {
-			$this->constructNewFolderName();
-			$success = $this->createFolder(null);
-			
-			// move the files from source temporarily just use a default theme inside app/Views/Themed/Default
+			$folderName = 'Shop' . $this->data['SavedTheme']['shop_id'] . 'SavedTheme' . $this->id;
+			$success = $this->createFolder(0755, SAVED_THEMES_DIR . $folderName);
+						
 			if ($success) {
-				$success = $this->copyBaseTheme();
-			}
-			
-			if ($success) {
-				$result = $this->save(array(
-					'SavedTheme' => array(
-						'folder_name'		=> 'Shop' . $this->data['SavedTheme']['shop_id'] . 'SavedTheme' . $this->id,
-						'switch'	=> true,
-						'upload'	=> true,
-						'id'		=> $this->id
-					)
-				), false); 
-
+				
+				$success = $this->saveField('folder_name', $folderName);
 			} else {
 				$this->delete($this->id);
 				// throw some exception
@@ -251,72 +210,6 @@ class SavedTheme extends AppModel {
 		
 	}
 
-	
-	// this is called AFTER the SUCCESS of beforeSave in the ThemeFolder behavior
-	public function beforeSave() {
-		
-		$success = false;
-		
-		if (isset($this->data['SavedTheme']['switch'])) {
-
-			return true;
-
-		}
-		
-		
-		// mainly for update save
-		// in case we need to rename the folder
-		if (isset($this->data['SavedTheme']['original_folder_name']) AND
-		    !empty($this->data['SavedTheme']['original_folder_name']) AND
-		    $this->data['SavedTheme']['original_folder_name'] != $this->data['SavedTheme']['folder_name']) {
-			
-			$chmod = 0775;
-			
-			$success = $this->renameFolder($this->data['SavedTheme']['original_folder_name'],
-							$this->data['SavedTheme']['folder_name'], $chmod);
-							
-
-		}
-		
-		// this is for just admin_edit because we ONLY want to validate for name and description
-		if (isset($this->data[$this->name]['skipCssCheck']) AND $this->data[$this->name]['skipCssCheck']) {
-
-			return true;
-		}
-		
-		// we will now move the css file
-		// since we have validated the css and
-		// the new theme folder is presumably created by ThemeFolder or by the renameFolder method above
-		
-		// path of the style.css
-		$cssFilePath = $this->constructCssPath($this->data['SavedTheme']['folder_name']);
-		
-		$file = new File($cssFilePath, true, 0775);
-		
-		
-		// check which field we are retrieving the css code from: css textarea or css file upload
-		$cssName = $this->data['SavedTheme']['cssName'];
-		
-		// using text from css textarea
-		if ($cssName == 'css') {
-			// create a file called style.css in the right folder
-			// put the text into this style.css
-			
-			if (!empty($this->data['SavedTheme']['css'])) {
-				$success = $file->write($this->data['SavedTheme']['css']);
-					
-			}
-			
-			// get a boolean success
-		} else if ($cssName == 'submittedfile') {
-			// just save this submittedfile as style.css in the right folder
-			$success = $this->copyFileFromTemp($this->data['SavedTheme']['submittedfile']['tmp_name'], $cssFilePath);
-		}
-		
-		
-		
-		return $success;
-	}
 	
 	public function revertFolderNameAfterUnsuccessfulUpdate() {
 		$oldThemeName = $this->data['SavedTheme']['original_name'];
@@ -514,9 +407,10 @@ class SavedTheme extends AppModel {
 			return $data;
 		}
 		
-		$cssFile = new File($this->constructCssPath($data['SavedTheme']['folder_name']));
 		
-		$data['SavedTheme']['css'] = $cssFile->read();
+		//$cssFile = new File($this->constructCssPath($data['SavedTheme']['folder_name']));
+		
+		//$data['SavedTheme']['css'] = $cssFile->read();
 		
 		$data['SavedTheme']['original_name'] = $data['SavedTheme']['name'];
 		
@@ -527,9 +421,13 @@ class SavedTheme extends AppModel {
 		// this is to remove the theme folder BEFORE we delete database entry
 		// we need to first retrieve folder name
 		$this->data = $this->read(null, $this->id);
-		return $this->deleteFolder();
-		
+		$success = $this->deleteFolder();
+		if ($success) {
+			$success = $this->featureNewThemeAfterDelete($this->id);
+		}
+		return $success;
 	}
+	
 	
 	public function featureNewThemeAfterDelete($id = null) {
 		$featuredThemeId = Shop::get('saved_theme_id');
@@ -603,6 +501,21 @@ class SavedTheme extends AppModel {
 		return $result;
 	}
 	
+	/**
+	*
+	* check if path is an empty folder. if not folder, then return false
+	*
+	* @param $path string Path to the folder
+	* @return boolean return true if it is a folder and it has zero bytes
+	**/
+	public function isEmptyFolder($path) {
+		if(is_dir($path)) {
+			$dir = new Folder($path);
+			return ($dir->dirsize() === 0);
+		}
+		return false;
+	}
+	
 	public function folderOrFileExists ($filename, $parent_folder, $sort = true, $exceptions = false, $full_path = false) {		
 		$dir = new Folder();
 		$dir->cd($parent_folder);
@@ -629,7 +542,8 @@ class SavedTheme extends AppModel {
 	**/	
 	public function createByCopyTheme($data) {
 		// step1: does the file exist?
-		if (!isset($data['SavedTheme']['copy']) {
+		if (!isset($data['SavedTheme']['copy'])) {
+			$this->log('error in ' . __FILE__ . ' at line ' . __LINE__);
 			return false;
 		}
 		
@@ -637,28 +551,35 @@ class SavedTheme extends AppModel {
 		$this->create();
 		
 		// step3: build the savedTheme data
-		$savedThemeData 	= $data;
+		// step3a: shopId
+		$shopId			= $data['SavedTheme']['shop_id'];
+		$savedThemeData = $data['SavedTheme'];
 		
 		// step4: save the related data for SavedTheme and create the folder
 		$result = $this->save(array(
 			'SavedTheme' => $savedThemeData
-		), false); // temporarily fix to get around valiation 
-		
+		)); 
+
 		// step5: if successfully created database record for SavedTheme, copy files from source Theme
 		if ($result) {
 			
 			// step6: get the source Theme
 			$theme 			= $data['SavedTheme']['copy'];
 			$sourceFolder 	= $theme['folder_name'];			
-			$sourceFolder = THEMES_DIR . $sourceFolder;
 			
 			$folderName = 'Shop' . $shopId . 'SavedTheme' . $this->id;
+
+			$result = $this->copyFromTheme($sourceFolder, $folderName);		
 			
-			return $this->copyFromTheme($storedFile, $folderName);
+			if (!$result) {
+				$this->log('fail to properly copy from theme in ' . __FILE__ . ' at line ' . __LINE__);
+				$this->delete($this->id);
+			}
+			
+			return $result;
 		}
 		
 		return false;
-		
 		
 	}
 	
@@ -671,8 +592,8 @@ class SavedTheme extends AppModel {
 	* @return boolean Return true if successful
 	**/
 	public function copyFromTheme($themeFolderName, $folderName) {
-		// if folder already exists, we must stop. We don't want to overwrite
-		if ($this->folderOrFileExists($folderName, SAVED_THEMES_DIR)) {
+		// if folder already exists && is NOT empty, we must stop. We don't want to overwrite
+		if (!$this->isEmptyFolder(SAVED_THEMES_DIR . $folderName)) {
 			return false;
 		}
 		
@@ -691,7 +612,11 @@ class SavedTheme extends AppModel {
 			'chmod'	=> $chmod
 		);
 
-		return $dir->copy($options);
+		if (!$dir->copy($options)) {
+			$this->log('error in ' . __FILE__ . ' at line ' . __LINE__);
+			return false;
+		}
+		return true;
 	}
 	
 	
@@ -704,7 +629,7 @@ class SavedTheme extends AppModel {
 	**/	
 	public function createByUploadFile($data) {
 		// step1: does the file exist?
-		if (!isset($data['SavedTheme']['upload']) {
+		if (!isset($data['SavedTheme']['upload'])) {
 			return false;
 		}
 		
@@ -722,7 +647,7 @@ class SavedTheme extends AppModel {
 		$basename 		= $nameParts[0];
 		
 		// step3b: get the user_id
-		$author			= User::get('User.id');
+		$author			= User::get('User.full_name');
 		// step3c: get the description
 		$description	= '';
 		// step3d: get the shop id
@@ -739,7 +664,7 @@ class SavedTheme extends AppModel {
 		// step4: save the related data for SavedTheme and create the folder
 		$result = $this->save(array(
 			'SavedTheme' => $savedThemeData
-		), false); // temporarily fix to get around valiation 
+		)); 
 		
 		// step5: if successfully created database record for SavedTheme, unzip file to the folder itself
 		if ($result) {
@@ -750,7 +675,11 @@ class SavedTheme extends AppModel {
 			
 			$folderName = 'Shop' . $shopId . 'SavedTheme' . $this->id;
 			
-			return $this->copyFromZipFile($storedFile, $folderName);
+			$result = $this->copyFromZipFile($storedFile, $folderName);
+			
+			if (!$result) {
+				$this->delete($this->id);
+			}
 		}
 		
 		return false;
@@ -767,8 +696,8 @@ class SavedTheme extends AppModel {
 	* @return boolean Return true if successful
 	**/
 	protected function copyFromZipFile($zipfilePath, $folderName) {
-		// if folder already exists, we must stop. We don't want to overwrite
-		if ($this->folderOrFileExists($folderName, SAVED_THEMES_DIR)) {
+		// if folder already exists and is NOT empty, we must stop. We don't want to overwrite
+		if (!$this->isEmptyFolder(SAVED_THEMES_DIR . $folderName)) {
 			return false;
 		}
 		

@@ -218,7 +218,7 @@ class MerchantTestCase extends CakeTestCase {
 		);
 		
 		// AND we need to ensure that the 3Cover Themed is removed
-		$this->Merchant->Shop->FeaturedSavedTheme->deleteFolder('3Cover');
+		$this->Merchant->Shop->FeaturedSavedTheme->deleteFolder('Shop3SavedTheme2');
 		
 		// WHEN we run the signupNewAccount method
 		$result = $this->Merchant->signupNewAccount($data);
@@ -240,7 +240,7 @@ class MerchantTestCase extends CakeTestCase {
 		$this->assertEqual(2, $merchant['Merchant']['id']);
 		
 		// AND we need to clean up by removing the test folder 3Cover
-		$this->Merchant->Shop->FeaturedSavedTheme->deleteFolder('3Cover');
+		$this->Merchant->Shop->FeaturedSavedTheme->deleteFolder('Shop3SavedTheme2');
 	}
 	
 /**
