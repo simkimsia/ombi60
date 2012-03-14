@@ -58,6 +58,13 @@ CakePlugin::loadAll();
 Configure::write('debug', 2);
 
 /**
+*
+* Asset timestamping
+*
+**/
+Configure::write('Asset.timestamp', 'force');
+
+/**
  * dependent on database having a groups table and the id for
  *  administrators is 1
  *  editors is 2
