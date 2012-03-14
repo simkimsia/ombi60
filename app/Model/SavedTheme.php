@@ -11,12 +11,12 @@ class SavedTheme extends AppModel {
 	
 	public $successUploadedImages = array();
 	
-	/*
+	
 	public $actsAs = array('ThemeFolder.ThemeFolder' =>
 				array('folderNameField' => 'folder_name',
 				      'validateOn' => true)
 			    );
-	*/
+	
 	
 	public $validate = array(
 			      'folder_name' => array(
@@ -37,7 +37,7 @@ class SavedTheme extends AppModel {
 							),
 		
 						),
-						/*
+						
 			      'submittedfile' => array(
 					'compulsoryCss' => array(
 						'rule' => array('compulsoryCss'),
@@ -61,7 +61,7 @@ class SavedTheme extends AppModel {
 					),
 				
 			      )
-			      */
+			      
 			);
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -216,7 +216,6 @@ class SavedTheme extends AppModel {
 	public function beforeSave() {
 		
 		$success = false;
-		return true;
 		
 		if (isset($this->data['SavedTheme']['switch'])) {
 
@@ -603,18 +602,29 @@ class SavedTheme extends AppModel {
 		
 		$result = $this->save(array(
 			'SavedTheme' => array(
-				'name'=> $basename,
-				'shop_id' => $shopId,
-				'featured' => false				
+				'name'		=> $basename,
+				'shop_id'	=> $shopId,
+				'featured' 	=> false,
+				'switch'	=> true,
+				'upload'	=> true // temporarily fix			
 			)
-		), false);
+		), false); // temporarily fix to get around valiation 
 		
 		// if successfully created database record for SavedTheme, unzip file to the folder itself
 		if ($result) {
 
 			$folderName = 'Shop' . $shopId . 'SavedTheme' . $this->id;
 			// save the folder_name after the database record is created
-			$this->saveField('folder_name', $folderName);
+			// temporarily fix using save instead of afterSave
+			$result = $this->save(array(
+				'SavedTheme' => array(
+					'folder_name'		=> $folderName,
+					'switch'	=> true,
+					'upload'	=> true,
+					'id'		=> $this->id
+				)
+			), false); 
+			//$this->saveField('folder_name', $folderName);
 			
 			return $this->unzipFileToSavedThemeFolder($storedFile, $folderName);
 		}

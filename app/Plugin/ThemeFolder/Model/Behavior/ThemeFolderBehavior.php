@@ -69,6 +69,11 @@ class ThemeFolderBehavior extends ModelBehavior {
 		if ($model->id > 0) {
 			return true;
 		}
+		
+		// we do not wish to create a folder for uploadzip file this is a temporary fix
+		if (isset($model->data[$model->alias]['upload'])) {
+			return true;
+		}
 	
 		$success = $this->createFolder($model, null);
 		
