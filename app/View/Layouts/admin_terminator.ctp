@@ -167,6 +167,7 @@
 						<ul>
 							<li><?php echo $this->Html->link('My themes', '/admin/saved_themes/switch'); ?></li>  
 							<li><?php echo $this->Html->link('Theme Settings', '/admin/themes/settings'); ?></li>  
+							<li><?php echo $this->Html->link('Upload new theme', '/admin/saved_themes/new'); ?></li>  
 							
 						</ul>				
 					</li>
@@ -191,7 +192,13 @@
 	<div class="main pagesize"> <!-- *** mainpage layout *** -->
 		<div class="main-wrap">
 			<div class="page clear">
-
+				<!--
+				<div class="notification note-error">
+					<a href="#" class="close" title="Close notification">close</a>
+						<p><strong>Error notification:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+				</div>
+				-->
+			<?php echo $this->Session->flash(); ?>
 	<?php echo $content_for_layout; ?>
 	
 			</div><!-- end of page -->

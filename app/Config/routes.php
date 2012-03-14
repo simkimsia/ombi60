@@ -431,7 +431,15 @@
                               )); 
       // this is for the removal of images for product. format as above route
         
-        
+
+		// upload new theme through shop
+		Router::connect('/admin/saved_themes/new',
+                      array('controller' => 'saved_themes',
+                            'action' => 'new',
+                            'admin' => true)
+		);        
+
+
         // this is for the ajax edit of images for saved_themes
         
         Router::connect('/admin/saved_themes/:id-:folder_name/edit/:image',

@@ -11,10 +11,12 @@ class SavedTheme extends AppModel {
 	
 	public $successUploadedImages = array();
 	
+	/*
 	public $actsAs = array('ThemeFolder.ThemeFolder' =>
 				array('folderNameField' => 'folder_name',
 				      'validateOn' => true)
 			    );
+	*/
 	
 	public $validate = array(
 			      'folder_name' => array(
@@ -35,6 +37,7 @@ class SavedTheme extends AppModel {
 							),
 		
 						),
+						/*
 			      'submittedfile' => array(
 					'compulsoryCss' => array(
 						'rule' => array('compulsoryCss'),
@@ -57,7 +60,9 @@ class SavedTheme extends AppModel {
 						'message' => 'Please ensure your file extension is .css',			
 					),
 				
-			      ));
+			      )
+			      */
+			);
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -117,6 +122,8 @@ class SavedTheme extends AppModel {
 		return APP . 'View' . DS . 'Themed' . DS . $themeName . DS . 'webroot' . DS . 'img' . DS . $imageName;
 	}
 	
+
+	
 	public function existFolderToRename($check){
 		if (isset($this->data['SavedTheme']['original_folder_name']) AND
 		    $this->data['SavedTheme']['original_folder_name'] !=  $this->data['SavedTheme']['folder_name']) {
@@ -128,15 +135,16 @@ class SavedTheme extends AppModel {
 	
 	public function beforeValidate() {
 		
+
 		
 		if (isset($this->data['SavedTheme']['switch'])) {
-				
+
 			return true;
 
 		}
 		
 		if (isset($this->data['SavedTheme']['signup']) && $this->data['SavedTheme']['signup'] === true) {
-			
+
 			return true;
 		}
 
@@ -152,7 +160,7 @@ class SavedTheme extends AppModel {
 			$this->data['SavedTheme']['original_folder_name'] = User::get('User.id') . '_' . $this->data['SavedTheme']['original_name'];
 
 		}
-		
+
 		return true;
 	}
 	
@@ -187,7 +195,7 @@ class SavedTheme extends AppModel {
 			$this->log('Fail to save Theme in ' . __FILE__ . ' at line ' . __LINE__);
 		}
 
-		$folderOk =  $this->folderOrFileExists($data['SavedTheme']['folder_name'], ROOT . DS . 'app' . DS . 'View' . DS . 'Themed');
+		$folderOk =  $this->folderOrFileExists($data['SavedTheme']['folder_name'], SAVED_THEMES_DIR);
 		
 		if (!$folderOk) {
 			$this->log('Folder is NOT created in ' . __FILE__ . ' at line ' . __LINE__);
@@ -208,6 +216,7 @@ class SavedTheme extends AppModel {
 	public function beforeSave() {
 		
 		$success = false;
+		return true;
 		
 		if (isset($this->data['SavedTheme']['switch'])) {
 
@@ -571,6 +580,140 @@ class SavedTheme extends AppModel {
 		
 		return $flag;
 	}
+	
+	/**
+	*
+	* upload a new zip file for theme 
+	*
+	* @param $file Array uploaded file in $_FILES
+	* @return boolean Return true if successful
+	**/
+	public function uploadToShop($file) {
+		// first get the file name
+		$filename	= $file['name'];
+		$nameParts 	= explode('.', $filename);
+		$storedFile = $file['tmp_name'];
+		$basename 	= $nameParts[0];
+		
+		
+		// create new SavedTheme using the filename as name of SavedTheme
+		$this->create();
+		
+		$shopId = Shop::get('Shop.id');
+		
+		$result = $this->save(array(
+			'SavedTheme' => array(
+				'name'=> $basename,
+				'shop_id' => $shopId,
+				'featured' => false				
+			)
+		), false);
+		
+		// if successfully created database record for SavedTheme, unzip file to the folder itself
+		if ($result) {
+
+			$folderName = 'Shop' . $shopId . 'SavedTheme' . $this->id;
+			// save the folder_name after the database record is created
+			$this->saveField('folder_name', $folderName);
+			
+			return $this->unzipFileToSavedThemeFolder($storedFile, $folderName);
+		}
+		
+		return false;
+	}
+	
+	/**
+	*
+	* unzip file to folder 
+	*
+	* @param $zipfilePath string Path to zip file
+	* @param $folderName string Name of target path
+	* @return boolean Return true if successful
+	**/
+	protected function unzipFileToSavedThemeFolder($zipfilePath, $folderName) {
+		// if folder already exists, we must stop. We don't want to overwrite
+		if ($this->folderOrFileExists($folderName, SAVED_THEMES_DIR)) {
+			return false;
+		}
+		
+		$targetPath = SAVED_THEMES_DIR . $folderName;
+
+		// create the SavedTheme Folder since it does not already exist
+		if (!is_dir($targetPath)) mkdir($targetPath, 0755, true);
+		
+		// create new zip archive
+		$zip = new ZipArchive;
+		// open the zipped file
+		if ($zip->open($zipfilePath) === TRUE) {
+			// loop through each entry in the zip file including folder
+			for($i=0; $i<$zip->numFiles; $i++) {
+			    $name = $zip->getNameIndex($i);
+				// now we check if this entry is valid like Snippets/related.tpl
+				$basename	= $this->validEntry($name); // Snippets/related.tpl for eg
+				$validEntry = ($basename !== false);
+				
+				if ($validEntry) {
+
+					// Determine output filename (removing the $source prefix)
+					$file = $targetPath .'/'. $basename;
+
+					// Create the directories if necessary
+					$dir = dirname($file);
+					if (!is_dir($dir)) mkdir($dir, 0755, true);
+
+				    // Read from Zip and write to disk
+				    $fpr = $zip->getStream($name);
+				    $fpw = fopen($file, 'w');
+				    while ($data = fread($fpr, 1024)) {
+				        fwrite($fpw, $data);
+				    }
+				    fclose($fpr);
+				    fclose($fpw);
+
+				}
+			}
+						
+		    $zip->close();
+		    return true;
+		} else {
+		    return false;
+		}
+		
+	}
+	
+	/**
+	*
+	* may export this to a separate behavior class
+	* this is to match an entry say /xxx/Snippets/related.tpl and return true
+	*
+	* @param $entry String Entry name eg /xxx/Snippets/related.tpl
+	* @return boolean/string Return the matched portion of the entry if matched. Return boolean false if not matched at all
+	**/
+	public function validEntry($entry) {
+		// check against Config
+		// must end with Config/settings.html OR Config/settings_data.json
+		$matches = array();
+		$matchNumber = preg_match('/Config\/(settings\.html|settings_data\.json)$/', $entry, $matches);
+		if ($matchNumber === 1) {
+			return $matches[0];
+		}
+		
+		return false;
+		// check against Layouts
+		// must end with Layouts/*.tpl
+		
+		// check against Snippets
+		// must end with Snippets/*.tpl
+
+		// check against Templates
+		// must end with Templates/*.tpl
+
+		// check against webroot
+		// must end with webroot/*.css.tpl, *.css, *.js, *.png, *.gif, *.jpg OR *.jpeg
+
+		
+	}
+	
 	
 }
 ?>

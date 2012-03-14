@@ -115,6 +115,17 @@ class SavedThemesController extends AppController {
 		
 		$this->set(compact('themes', 'theme_id', 'savedThemeId'));
 	}
+	
+	/**
+	*
+	* upload a zip file for new theme
+	*
+	**/
+	public function admin_new() {
+		if ($this->request->is('post') && isset($this->data['SavedTheme']['upload'])) {
+			$this->SavedTheme->uploadToShop($this->data['SavedTheme']['upload']);
+		}
+	}
 
 	public function admin_add() {
 		
