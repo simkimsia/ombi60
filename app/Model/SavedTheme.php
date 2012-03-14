@@ -170,26 +170,27 @@ class SavedTheme extends AppModel {
 		
 		$themeData = $theme->read(null, $options['theme_id']);
 		
+		// set the 
+		$data['SavedTheme']['copy'] = $themeData['Theme'];
+		
+		// copy attributes from themeData
 		$data['SavedTheme']['name'] = $themeData['Theme']['name'];
 		$data['SavedTheme']['description'] = $themeData['Theme']['description'];
+
+		// copy attributes from options
 		$data['SavedTheme']['author'] = $options['author'];
-		//$data['SavedTheme']['folder_name'] = $options['user_id'] . '_' . $themeData['Theme']['name'];
-		
-		// we are now going to save just 1 theme per shop like Shopify so all are called shop_idCover e.g., 5Cover
-		//		$data['SavedTheme']['folder_name'] = $options['shop_id'] . 'Cover'; comment out this since we are going to use afterSave to use Shop{shop_id}SavedTheme{id}
 		$data['SavedTheme']['shop_id'] = $options['shop_id'];
 		$data['SavedTheme']['theme_id'] = $options['theme_id'];
+		
+		// set as featured 
 		$data['SavedTheme']['featured'] = true;
 		
-		// to prevent the beforesave function from working
+		// to prevent the beforesave function from working temporarily will remove this soon
 		$data['SavedTheme']['skipCssCheck'] = true;
 		$data['SavedTheme']['signup'] = true;
 		
-		
-		// set the sourceFolderName, later we need it for copying over.
-		$this->sourceFolderName = $themeData['Theme']['folder_name'];
-		
-		$result = $this->save($data);
+		// create the actual SavedTheme record and the folder itself
+		$result = $this->createByCopyTheme($data);
 		
 		if (!$result) {
 			$this->log('Fail to save Theme in ' . __FILE__ . ' at line ' . __LINE__);
@@ -621,54 +622,55 @@ class SavedTheme extends AppModel {
 	
 	/**
 	*
-	* upload a new zip file for theme 
+	* copy from a preset Theme
 	*
-	* @param $file Array uploaded file in $_FILES
+	* @param $data Array Expect a ['SavedTheme']['copy'] to have the file data. We also expect the $data['SavedTheme'] to have name, author, description, shop_id, theme_id
 	* @return boolean Return true if successful
-	**/
-	public function uploadToShop($file) {
-		// first get the file name
-		$filename	= $file['name'];
-		$nameParts 	= explode('.', $filename);
-		$storedFile = $file['tmp_name'];
-		$basename 	= $nameParts[0];
+	**/	
+	public function createByCopyTheme($data) {
+		// step1: does the file exist?
+		if (!isset($data['SavedTheme']['copy']) {
+			return false;
+		}
 		
-		
-		// create new SavedTheme using the filename as name of SavedTheme
+		// step2: create new SavedTheme 
 		$this->create();
 		
-		$shopId = Shop::get('Shop.id');
+		// step3: build the savedTheme data
+		$savedThemeData 	= $data;
 		
+		// step4: save the related data for SavedTheme and create the folder
 		$result = $this->save(array(
-			'SavedTheme' => array(
-				'name'		=> $basename,
-				'shop_id'	=> $shopId,
-				'featured' 	=> false,
-				'switch'	=> true,
-				'upload'	=> true // temporarily fix			
-			)
+			'SavedTheme' => $savedThemeData
 		), false); // temporarily fix to get around valiation 
-	
-		// if successfully created database record for SavedTheme, unzip file to the folder itself
+		
+		// step5: if successfully created database record for SavedTheme, copy files from source Theme
 		if ($result) {
+			
+			// step6: get the source Theme
+			$theme 			= $data['SavedTheme']['copy'];
+			$sourceFolder 	= $theme['folder_name'];			
+			$sourceFolder = THEMES_DIR . $sourceFolder;
 			
 			$folderName = 'Shop' . $shopId . 'SavedTheme' . $this->id;
 			
-			return $this->unzipFileToSavedThemeFolder($storedFile, $folderName);
+			return $this->copyFromTheme($storedFile, $folderName);
 		}
 		
 		return false;
+		
+		
 	}
 	
 	/**
 	*
-	* unzip file to folder 
+	* copy all the files from an existing Theme folder into a SavedTheme folder
 	*
-	* @param $zipfilePath string Path to zip file
-	* @param $folderName string Name of target path
+	* @param $themeFolderName string Path to zip file
+	* @param $folderName string Name of SavedTheme folder
 	* @return boolean Return true if successful
 	**/
-	protected function unzipFileToSavedThemeFolder($zipfilePath, $folderName) {
+	public function copyFromTheme($themeFolderName, $folderName) {
 		// if folder already exists, we must stop. We don't want to overwrite
 		if ($this->folderOrFileExists($folderName, SAVED_THEMES_DIR)) {
 			return false;
@@ -676,7 +678,103 @@ class SavedTheme extends AppModel {
 		
 		$targetPath = SAVED_THEMES_DIR . $folderName;
 
-		// create the SavedTheme Folder since it does not already exist
+		// create the SavedTheme Folder if it does not already exist
+		if (!is_dir($targetPath)) mkdir($targetPath, 0755, true);
+		
+		$dir 				= new Folder();
+		$chmod 				= 0755;
+		$sourceThemeFolder 	= SAVED_THEMES_DIR . $themeFolderName; // temporarily using SAVED_THEMES_DIR
+
+		$options = array(
+			'to'	=> $targetPath,
+			'from'	=> $sourceThemeFolder,
+			'chmod'	=> $chmod
+		);
+
+		return $dir->copy($options);
+	}
+	
+	
+	/**
+	*
+	* upload a new zip file for theme 
+	*
+	* @param $data Array Expect a ['SavedTheme']['upload'] to have the file 
+	* @return boolean Return true if successful
+	**/	
+	public function createByUploadFile($data) {
+		// step1: does the file exist?
+		if (!isset($data['SavedTheme']['upload']) {
+			return false;
+		}
+		
+		// step2: create new SavedTheme 
+		$this->create();
+		
+		// step3: build the savedTheme data
+		
+		// step3a: get the name for the SavedTheme
+		/* $file contains the zipped file as if it is from $_FILES */
+		$file 		= $data['SavedTheme']['upload'];
+		$filename	= $file['name'];
+		$nameParts 	= explode('.', $filename);
+		
+		$basename 		= $nameParts[0];
+		
+		// step3b: get the user_id
+		$author			= User::get('User.id');
+		// step3c: get the description
+		$description	= '';
+		// step3d: get the shop id
+		$shopId			= Shop::get('Shop.id');
+		
+		$savedThemeData = array(
+			'name'		=> $basename,
+			'shop_id'	=> $shopId,
+			'description' => $description,
+			'author'	=> $author,
+			'upload'	=> $file
+		);
+				
+		// step4: save the related data for SavedTheme and create the folder
+		$result = $this->save(array(
+			'SavedTheme' => $savedThemeData
+		), false); // temporarily fix to get around valiation 
+		
+		// step5: if successfully created database record for SavedTheme, unzip file to the folder itself
+		if ($result) {
+			
+			// step6: get the actual uploaded zip file
+			$file 		= $data['SavedTheme']['upload'];
+			$storedFile = $file['tmp_name'];
+			
+			$folderName = 'Shop' . $shopId . 'SavedTheme' . $this->id;
+			
+			return $this->copyFromZipFile($storedFile, $folderName);
+		}
+		
+		return false;
+		
+	}
+	
+	
+	/**
+	*
+	* copy all the contents of a zip file into  SavedTheme folder 
+	*
+	* @param $zipfilePath string Path to zip file
+	* @param $folderName string Name of SavedTheme folder
+	* @return boolean Return true if successful
+	**/
+	protected function copyFromZipFile($zipfilePath, $folderName) {
+		// if folder already exists, we must stop. We don't want to overwrite
+		if ($this->folderOrFileExists($folderName, SAVED_THEMES_DIR)) {
+			return false;
+		}
+		
+		$targetPath = SAVED_THEMES_DIR . $folderName;
+
+		// create the SavedTheme Folder if it does not already exist
 		if (!is_dir($targetPath)) mkdir($targetPath, 0755, true);
 		
 		// create new zip archive
@@ -693,7 +791,7 @@ class SavedTheme extends AppModel {
 				if ($validEntry) {
 
 					// Determine output filename (removing the $source prefix)
-					$file = $targetPath .'/'. $basename;
+					$file = $targetPath . DS . $basename;
 
 					// Create the directories if necessary
 					$dir = dirname($file);

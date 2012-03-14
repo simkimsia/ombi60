@@ -123,7 +123,7 @@ class SavedThemesController extends AppController {
 	**/
 	public function admin_new() {
 		if ($this->request->is('post') && isset($this->data['SavedTheme']['upload'])) {
-			$this->SavedTheme->uploadToShop($this->data['SavedTheme']['upload']);
+			$this->SavedTheme->createByUploadFile($this->data);
 		}
 	}
 
