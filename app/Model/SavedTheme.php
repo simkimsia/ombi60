@@ -649,7 +649,7 @@ class SavedTheme extends AppModel {
 			for($i=0; $i<$zip->numFiles; $i++) {
 			    $name = $zip->getNameIndex($i);
 				// now we check if this entry is valid like Snippets/related.tpl
-				$basename	= $this->validEntry($name); // Snippets/related.tpl for eg
+				$basename	= $this->validateEntry($name); // Snippets/related.tpl for eg
 				$validEntry = ($basename !== false);
 				
 				if ($validEntry) {
@@ -689,28 +689,31 @@ class SavedTheme extends AppModel {
 	* @param $entry String Entry name eg /xxx/Snippets/related.tpl
 	* @return boolean/string Return the matched portion of the entry if matched. Return boolean false if not matched at all
 	**/
-	public function validEntry($entry) {
+	public function validateEntry($entry) {
+		$matches = array();
+		
 		// check against Config
 		// must end with Config/settings.html OR Config/settings_data.json
-		$matches = array();
 		$matchNumber = preg_match('/Config\/(settings\.html|settings_data\.json)$/', $entry, $matches);
 		if ($matchNumber === 1) {
 			return $matches[0];
 		}
 		
-		return false;
-		// check against Layouts
-		// must end with Layouts/*.tpl
-		
-		// check against Snippets
-		// must end with Snippets/*.tpl
-
-		// check against Templates
-		// must end with Templates/*.tpl
+		// check against Layouts, Snippets, Templates
+		// must end with Layouts/*.tpl, Snippets/*.tpl, Templates/*.tpl 
+		$matchNumber = preg_match('/(Layouts|Snippets|Templates)\/[a-zA-Z0-9\-_]+\.tpl$/', $entry, $matches);
+		if ($matchNumber === 1) {
+			return $matches[0];
+		}
 
 		// check against webroot
 		// must end with webroot/*.css.tpl, *.css, *.js, *.png, *.gif, *.jpg OR *.jpeg
-
+		$matchNumber = preg_match('/webroot\/[a-zA-Z0-9\-_]+\.(tpl|css|js|png|gif|jpg|jpeg)$/', $entry, $matches);
+		if ($matchNumber === 1) {
+			return $matches[0];
+		}
+				
+		return false;
 		
 	}
 	
