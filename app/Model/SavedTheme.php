@@ -176,7 +176,7 @@ class SavedTheme extends AppModel {
 		//$data['SavedTheme']['folder_name'] = $options['user_id'] . '_' . $themeData['Theme']['name'];
 		
 		// we are now going to save just 1 theme per shop like Shopify so all are called shop_idCover e.g., 5Cover
-		$data['SavedTheme']['folder_name'] = $options['shop_id'] . 'Cover';
+		//		$data['SavedTheme']['folder_name'] = $options['shop_id'] . 'Cover'; comment out this since we are going to use afterSave to use Shop{shop_id}SavedTheme{id}
 		$data['SavedTheme']['shop_id'] = $options['shop_id'];
 		$data['SavedTheme']['theme_id'] = $options['theme_id'];
 		$data['SavedTheme']['featured'] = true;
@@ -195,7 +195,9 @@ class SavedTheme extends AppModel {
 			$this->log('Fail to save Theme in ' . __FILE__ . ' at line ' . __LINE__);
 		}
 
-		$folderOk =  $this->folderOrFileExists($data['SavedTheme']['folder_name'], SAVED_THEMES_DIR);
+		// refactor the foldername for all SavedTheme folders
+		$destinationFolderName = 'Shop' . $options['shop_id'] . 'SavedTheme' . $this->id;
+		$folderOk =  $this->folderOrFileExists($destinationFolderName, SAVED_THEMES_DIR);
 		
 		if (!$folderOk) {
 			$this->log('Folder is NOT created in ' . __FILE__ . ' at line ' . __LINE__);
@@ -209,6 +211,43 @@ class SavedTheme extends AppModel {
 		}
 		
 		return $result;
+	}
+	
+	/**
+	*
+	* afterSave callback
+	*
+	* this is to save a brand new foldername called Shop{shop_id}SavedTheme{id} into database record
+	**/
+	public function afterSave($created) {
+		
+		// we need to actually create the folder and then move the files
+		if ($created) {
+			$this->constructNewFolderName();
+			$success = $this->createFolder(null);
+			
+			// move the files from source temporarily just use a default theme inside app/Views/Themed/Default
+			if ($success) {
+				$success = $this->copyBaseTheme();
+			}
+			
+			if ($success) {
+				$result = $this->save(array(
+					'SavedTheme' => array(
+						'folder_name'		=> 'Shop' . $this->data['SavedTheme']['shop_id'] . 'SavedTheme' . $this->id,
+						'switch'	=> true,
+						'upload'	=> true,
+						'id'		=> $this->id
+					)
+				), false); 
+
+			} else {
+				$this->delete($this->id);
+				// throw some exception
+			}
+			return $success;
+		}
+		
 	}
 
 	
@@ -609,22 +648,11 @@ class SavedTheme extends AppModel {
 				'upload'	=> true // temporarily fix			
 			)
 		), false); // temporarily fix to get around valiation 
-		
+	
 		// if successfully created database record for SavedTheme, unzip file to the folder itself
 		if ($result) {
-
+			
 			$folderName = 'Shop' . $shopId . 'SavedTheme' . $this->id;
-			// save the folder_name after the database record is created
-			// temporarily fix using save instead of afterSave
-			$result = $this->save(array(
-				'SavedTheme' => array(
-					'folder_name'		=> $folderName,
-					'switch'	=> true,
-					'upload'	=> true,
-					'id'		=> $this->id
-				)
-			), false); 
-			//$this->saveField('folder_name', $folderName);
 			
 			return $this->unzipFileToSavedThemeFolder($storedFile, $folderName);
 		}

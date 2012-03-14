@@ -38,8 +38,9 @@ class ThemeFolderBehavior extends ModelBehavior {
 			$this->settings[$Model->alias] = array(
 				'chmod' => 0775,
 				'themePath' => ROOT . DS . 'app' . DS . 'View' . DS . 'Themed' . DS,
-				'folderNameField' => 'name',
-				'defaultFolderName' => 'Default'
+				'folderNameField' => 'folder_name',
+				'defaultFolderName' => 'Default',
+				'folderNameConstruct' => 'Shop{shop_id}SavedTheme{id}'
 			);
 		}
 		
@@ -62,7 +63,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 	 * @param mixed $id String or integer model ID
 	 * @access public
 	 * @return boolean
-	 */
+	 
 	public function beforeSave(&$model) {
 	
 		// we do not wish to create a folder if its update
@@ -83,6 +84,46 @@ class ThemeFolderBehavior extends ModelBehavior {
 		
 		return $success;
 	}
+	* temporarily disable beforeSave
+	**/
+	/**
+	 * afterSave callback method.
+	 *
+	 * @param object $Model model object
+	 * @param boolean $created Set as true if it is a newly created record
+	 * @access public
+	 * @return boolean
+	**/
+	public function afterSave(&$model, $created) {
+		
+		// we need to actually create the folder and then move the files
+		if ($created) {
+			$this->constructNewFolderName($model);
+			$success = $this->createFolder($model, null);
+			
+			// move the files from source temporarily just use a default theme inside app/Views/Themed/Default
+			if ($success) {
+				$success = $this->copyBaseTheme($model);
+			}
+			
+			return $success;
+		}
+	}
+	
+	/**
+	*
+	* reconstruct folderName 
+	**/
+	public function constructNewFolderName(&$model) {
+		extract($model->data[$model->alias], EXTR_PREFIX_SAME, 'prefix');
+		$folderNameConstruct = $this->settings[$model->alias]['folderNameConstruct'];
+		foreach($model->data[$model->alias] as $key=>$value) {
+			$folderNameConstruct = str_replace('{'.$key.'}', $value, $folderNameConstruct);
+		}
+
+		$model->data[$model->alias][$this->folderNameField] = $folderNameConstruct;
+		
+	}
 	
 	public function copyTheme(&$model, $theme_folder_name) {
 		
@@ -101,7 +142,7 @@ class ThemeFolderBehavior extends ModelBehavior {
 		
 	}
 	
-	protected function copyBaseTheme(&$model) {
+	public function copyBaseTheme(&$model) {
 		
 		$dir = new Folder();
 		$newFolderName = $model->data[$model->alias][$this->folderNameField];
