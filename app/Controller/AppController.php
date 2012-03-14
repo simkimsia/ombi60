@@ -615,7 +615,7 @@ class AppController extends Controller {
 				$this->viewClass = 'TwigView.Twig';
 				
 				// set the view path
-				$this->viewPath = 'templates';
+				$this->viewPath = 'Templates';
 				
 				// set the template name variable
 				$templateName = $publicActions[$controller][$action];

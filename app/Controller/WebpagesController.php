@@ -286,7 +286,7 @@ class WebpagesController extends AppController {
         ));
 
 
-        $this->render('/templates/404');
+        $this->render('/Templates/404');
 
     }
 
