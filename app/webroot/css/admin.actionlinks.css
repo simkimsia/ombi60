@@ -141,3 +141,20 @@ li.small-icon a { padding-left: 16px !important; }
 li.order-cell-subscription  {background: url(../img/admin/icons/phone.png) 4px 50% no-repeat; padding-left: 25px;} 
 li.webhook                  {background: url(../img/admin/icons/regions.gif) 4px 50% no-repeat; padding-left: 25px;} 
 li.order-user-subscription  {background: url(../img/admin/icons/user.gif) 4px 50% no-repeat; padding-left: 25px;}
+
+/** theme action links **/
+.theme-actions {padding:3px 8px; clear:both;}
+.theme-actions.extra {padding:5px 8px; margin-top:10px; border-top:1px solid #ccc; background:#f1f1f1; font-size:11px;}
+.theme-actions.extra .publish-theme-dropdown select {margin-top:1px;}
+.theme-actions.extra .publish-theme-dropdown select, .theme > li ul.theme-actions.extra .publish-theme-dropdown input {font-size:11px;}
+.theme-actions.extra a {color:#666; margin:0;}
+.theme-actions.extra a:hover {color:#333;}
+.theme-actions li {display:block; float:left; width:127px;}
+.theme-actions li a {display:block; padding:0 0 0 23px; margin-bottom:15px; font-size:12px;}
+.theme-actions li.theme-settings a {background:url("../img/admin/icons/theme-settings.png") no-repeat scroll left center transparent;}
+.theme-actions li.theme-editor a {background:url("../img/admin/icons/template-editor.png") no-repeat scroll left center transparent; }
+.theme-actions li.publish-main a {background:url("../img/admin/icons/publish-main.png") no-repeat scroll left center transparent;}
+.theme-actions li.publish-mobile a {background:url("../img/admin/icons/publish-mobile.png") no-repeat scroll left center transparent;}
+.theme-actions li.unpublish-mobile a {background:url("../img/admin/icons/unpublish-mobile.png") no-repeat scroll left center transparent;}
+.theme-actions li.duplicate-theme a {background:url("../img/admin/icons/duplicate-theme.png") no-repeat scroll left center transparent;}
+.theme-actions li.download-theme a {background:url("../img/admin/icons/download-theme.png") no-repeat scroll left center transparent;}

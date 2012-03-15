@@ -30,7 +30,12 @@
 						</div>
 					</div>
 					<div class="col2-3 lastcol">
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+						<ul class="theme-actions">
+							<li class="theme-settings"><?php echo $this->Html->link(__('Configure settings'), array('action'=>'new')); ?></li>
+							<li class="download-theme"><?php echo $this->Html->link(__('Export theme'), array('action'=>'new')); ?></li>							
+							<li class="theme-settings"><?php echo $this->Html->link(__('Configure settings'), array('action'=>'new')); ?></li>
+							<li class="download-theme"><?php echo $this->Html->link(__('Export theme'), array('action'=>'new')); ?></li>
+						</ul>
 					</div>
 				</div>
 
