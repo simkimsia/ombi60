@@ -94,3 +94,6 @@
 [submodule "app/Plugin/Gravatar"]
 	path = app/Plugin/Gravatar
 	url = git://github.com/simkimsia/cakephp-gravatar.git
+[submodule "app/Plugin/AclExtras"]
+	path = app/Plugin/AclExtras
+	url = git://github.com/markstory/acl_extras.git
