@@ -100,6 +100,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_index');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_toggle');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_save_condition');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_remove_condition');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_remove_product_from_group');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_add_product_in_group');
 
@@ -115,13 +116,12 @@ class UsersController extends AppController {
 
 		$this->log('product_images');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_add');
-		$this->Acl->allow($group, 'controllers/ProductImages/admin_delete');
-		$this->Acl->allow($group, 'controllers/ProductImages/admin_list_by_product');
-		$this->Acl->allow($group, 'controllers/ProductImages/admin_make_this_cover');
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_add_by_product');
-		$this->Acl->allow($group, 'controllers/ProductImages/admin_list_by_product');
-		$this->Acl->allow($group, 'controllers/ProductImages/admin_uploadify');
-		$this->Acl->allow($group, 'controllers/ProductImages/admin_ajax_product_image_upload');
+		$this->Acl->allow($group, 'controllers/ProductImages/admin_uploadify');				
+		$this->Acl->allow($group, 'controllers/ProductImages/admin_list_by_product');		
+		$this->Acl->allow($group, 'controllers/ProductImages/admin_delete');
+		$this->Acl->allow($group, 'controllers/ProductImages/admin_make_this_cover');
+		$this->Acl->allow($group, 'controllers/ProductImages/admin_ajax_product_image_upload');		
 		$this->Acl->allow($group, 'controllers/ProductImages/admin_delete_me');
 
 		$this->log('merchants');
@@ -131,12 +131,13 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Merchants/admin_login');
 
 		$this->log('domains');
+		$this->Acl->allow($group, 'controllers/Domains/admin_index');
+		$this->Acl->allow($group, 'controllers/Domains/admin_view');				
 		$this->Acl->allow($group, 'controllers/Domains/admin_add');
+		$this->Acl->allow($group, 'controllers/Domains/admin_make_this_primary');		
 		$this->Acl->allow($group, 'controllers/Domains/admin_edit');
 		$this->Acl->allow($group, 'controllers/Domains/admin_delete');
-		$this->Acl->allow($group, 'controllers/Domains/admin_view');
-		$this->Acl->allow($group, 'controllers/Domains/admin_index');
-		$this->Acl->allow($group, 'controllers/Domains/admin_make_this_primary');
+
 
 		$this->log('savedthemes');
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_index');
@@ -148,6 +149,9 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_delete_image');
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_edit_css');
 		$this->Acl->allow($group, 'controllers/SavedThemes/admin_switch');
+		$this->Acl->allow($group, 'controllers/SavedThemes/admin_new');
+		$this->Acl->allow($group, 'controllers/SavedThemes/admin_view');		
+		$this->Acl->allow($group, 'controllers/SavedThemes/admin_upload');		
 
 		$this->log('shops');
 		$this->Acl->allow($group, 'controllers/Shops/admin_account');
