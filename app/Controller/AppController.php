@@ -48,14 +48,19 @@ class AppController extends Controller {
 
 	public $components = array(
 		//'StoreSession',
-        'Auth',
+	    'Auth' => array(
+	        'authorize' => array(
+	            'Actions' => array('actionPath' => 'controllers')
+	        )
+	    ),
         'Acl',
-        'Session',
-        'Security',
+        'Session',        
+		'Security',
         'RequestHandler',
         'Cookie',
         'Theme',
         'Paginator',
+        
 	);
 
 	public $helpers = array('Html' => array('className' => 'OwnHtml'), 
@@ -105,7 +110,6 @@ class AppController extends Controller {
 		$this->Auth->loginRedirect = array('controller' => 'shops', 'action' => 'index');
 		$this->Auth->loginAction = array('controller' => 'customers', 'action' => 'login');
 		$this->Auth->authError = __("Sorry, you can't access the page requested", true);
-		//$this->Auth->authorize = 'actions';
 
 		if (isset($this->request->params['admin'])) {
 			$this->Auth->loginAction = '/admin/login';
@@ -128,13 +132,6 @@ class AppController extends Controller {
 			$this->Auth->allow('*');
 		}
 		
-		/**
-		 *for Acl
-		 **/
-		$this->Auth->actionPath = 'controllers/';
-		/**
-		 * end of Acl
-		 * */
 		
 		// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
 		App::uses('Shop', 'Model');
@@ -527,25 +524,6 @@ class AppController extends Controller {
 			$this->Cookie->delete('Auth.Language');
 		}
 
-	}
-
-	public function admin_change_active_status($id = null, $product_id = null) {
-		if (!$id OR !$product_id) {
-			$this->Session->setFlash(__('Invalid id for ProductImage'));
-			$this->redirect(array('action' => 'index'));
-		}
-
-		if ($this->ProductImage->change_active_status($id)) {
-			$this->Session->setFlash(__('ProductImage status changed'));
-			$this->redirect(array('controller' => 'products',
-					 'action' => 'edit',
-					 'admin' => true,
-			$product_id,
-					 '#' => 'images'
-					 ));
-		}
-		$this->Session->setFlash(__('The status of ProductImage could not be changed. Please, try again.'));
-		$this->redirect(array('action' => 'index'));
 	}
 
 /**
