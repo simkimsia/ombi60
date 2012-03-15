@@ -222,7 +222,7 @@ class SavedTheme extends AppModel {
 			return true;
 		}
 		
-		$success = $this->renameFolder($oldThemeName, $newThemeName, 0775);
+		$success = $this->renameFolder($oldThemeName, $newThemeName, 0755);
 		
 		return $success;
 	}
@@ -388,7 +388,7 @@ class SavedTheme extends AppModel {
 			return false;
 		}
 		$file = new File($tmpName, $saveAs);
-		$temp = new File($saveAs, true, 0775);
+		$temp = new File($saveAs, true, 0755);
 		
 		if (!$temp->write($file->read())) {
 			$results = __d('meio_upload', 'Problems in the copy of the file.');
@@ -457,7 +457,7 @@ class SavedTheme extends AppModel {
 		
 		
 		$this->deleteFolder($data['SavedTheme']['folder_name']);
-		$this->createFolder(0775, $data['SavedTheme']['folder_name']);
+		$this->createFolder(0755, $data['SavedTheme']['folder_name']);
 		
 		$result = $this->copyTheme($this->sourceFolderName);
 		if ($result) {
@@ -514,6 +514,34 @@ class SavedTheme extends AppModel {
 			return ($dir->dirsize() === 0);
 		}
 		return false;
+	}
+	
+	/**
+	*
+	* check against an array of possible entries (can be filenames or foldernames)
+	* inside the parent_folder
+	*
+	* if all exist inside the parent_folder, return true. If even one cannot be accounted for, return false.
+	* 
+	* @param $entries array Array of filenames and foldernames to check
+	* @param $parent_folder String Path of the folder we are checking
+	* @param &$entriesNotFound Array of entries that are NOT in the folder
+	* @return boolean Return true when all entries are indeed inside the folder
+	**/
+	public function entriesExistInFolder($entries, $parent_folder, &$entriesNotFound = array()) {
+		$sort = true; 
+		$exceptions = false;
+		$full_path = false;
+		
+		$dir = new Folder();
+		$dir->cd($parent_folder);
+
+		$twoArraysOneFolderOneFile = $dir->read($sort, $exceptions, $full_path);
+		
+		$entriesNotFound = array_diff($entries, $twoArraysOneFolderOneFile[0], $twoArraysOneFolderOneFile[1]);
+		
+		return (empty($entriesNotFound));
+
 	}
 	
 	public function folderOrFileExists ($filename, $parent_folder, $sort = true, $exceptions = false, $full_path = false) {		
@@ -668,7 +696,7 @@ class SavedTheme extends AppModel {
 		
 		// step5: if successfully created database record for SavedTheme, unzip file to the folder itself
 		if ($result) {
-			
+
 			// step6: get the actual uploaded zip file
 			$file 		= $data['SavedTheme']['upload'];
 			$storedFile = $file['tmp_name'];
@@ -680,6 +708,8 @@ class SavedTheme extends AppModel {
 			if (!$result) {
 				$this->delete($this->id);
 			}
+			
+			return $result;
 		}
 		
 		return false;
