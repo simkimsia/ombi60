@@ -168,7 +168,7 @@ public $fixtures = array(
 			'folder_name' => 'Shop2SavedTheme2',
 			'shop_id' => '2',
 			'theme_id' => '0',
-			'featured' => 0
+			'featured' => false
 
 		);
 		
