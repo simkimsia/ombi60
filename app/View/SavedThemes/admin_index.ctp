@@ -9,7 +9,7 @@
 </div>
 <h2>Published Themes</h2>
 <p>These themes are <strong>live</strong> on your store. Changes you make to these themes will be seen by your customers automatically.</p>
-<div class="columns clear" id="published-themes">
+<div class="columns clear" >
 	<?php foreach($themes as $key=>$theme): ?>
 		<?php 
 		$theme = $theme['SavedTheme'];
@@ -23,8 +23,19 @@
 				<h2><?php echo $theme['name']; ?></h2>
 			</div>
 			<div class="box-wrap clear">
-				<h3>header h3</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+				<div class="columns clear">
+					<div class="col1-3">
+						<div class="mark" style="padding:5px;">
+						<?php echo $this->Html->image('admin/theme-placeholder.png', array('alt' => 'Theme'));?>
+						</div>
+					</div>
+					<div class="col2-3 lastcol">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+					</div>
+				</div>
+
+
+
 			</div> <!-- end of box-wrap -->
 		</div> <!-- end of box-body -->
 		</div> <!-- end of content-box -->

@@ -54,7 +54,7 @@ class SavedThemesController extends AppController {
 			      );
 	
 		$themes = $this->paginate();
-		$this->log($themes);
+
 		$this->set(compact('themes'));
 		
 	}
