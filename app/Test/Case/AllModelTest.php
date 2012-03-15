@@ -61,9 +61,9 @@ class AllModelTest extends PHPUnit_Framework_TestSuite {
 		$suite->addTestFile($path . 'ProductTypeTest.php');
 		$suite->addTestFile($path . 'ProductsInGroupTest.php');
 		$suite->addTestFile($path . 'RecurringPaymentProfile.php');
-		
+		**/		
 		$suite->addTestFile($path . 'SavedThemeTest.php');
-		**/
+
 		$suite->addTestFile($path . 'ShipmentTest.php');
 		/*
 		$suite->addTestFile($path . 'ShippedToCountryTest.php');

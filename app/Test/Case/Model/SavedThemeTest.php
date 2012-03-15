@@ -153,13 +153,10 @@ public $fixtures = array(
 			)
 		);
 		
-		debug($inputData);
 		// WHEN we run createByUploadFile
 		$result = $this->SavedTheme->createByUploadFile($inputData);
 		
 		// THEN we expect the result to be true
-		debug($result);
-
 		$this->assertTrue($result);
 		
 		// AND we expect the corresponding record
