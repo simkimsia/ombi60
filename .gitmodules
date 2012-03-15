@@ -94,3 +94,6 @@
 [submodule "app/Plugin/AclExtras"]
 	path = app/Plugin/AclExtras
 	url = git://github.com/markstory/acl_extras.git
+[submodule "app/Plugin/PaymentGateway/Vendor/AktiveMerchant"]
+	path = app/Plugin/PaymentGateway/Vendor/AktiveMerchant
+	url = git://github.com/simkimsia/Aktive-Merchant.git
