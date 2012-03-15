@@ -208,3 +208,8 @@ return if ($result === true || $result === array()) {
 return false;
 because for some weird reason in phpunit, this returns empty array
 for successful change
+
+Plugins Acl and other related matters
+=====================================
+
+Never ever use the SAME name for Plugin as Controller to avoid AclExtras.AclExtras aco_sync not working
