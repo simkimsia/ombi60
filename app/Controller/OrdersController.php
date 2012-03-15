@@ -1,6 +1,6 @@
 <?php
 App::import('Vendor', 'PayPal', array('file'=>'paypal'.DS.'includes'.DS.'paypal.nvp.class.php'));
-App::uses('PaymentsComponent', 'Payments.Controller/Component');
+App::uses('PaymentGatewayComponent', 'PaymentGateway.Controller/Component');
 /**
  * @property mixed Order
  */
@@ -26,7 +26,7 @@ class OrdersController extends AppController {
 			)
 		),
 		'Session', 'Paypal.Paypal', 
-		'Payments.Payments',
+		'PaymentGateway.PaymentGateway',
 				
 	);
 	
@@ -1000,8 +1000,8 @@ class OrdersController extends AppController {
 			}
 			$ShopsPaymentModule = ClassRegistry::init('ShopsPaymentModule');
 			$shopsPaymentModule = $ShopsPaymentModule->find('first', array('conditions' => array('ShopsPaymentModule.id' => $orderFormData['Payment']['shops_payment_module_id'])));
-			$this->Payments->setupPurchase($shopsPaymentModule['ShopsPaymentModule']['display_name'], $options);
-			$orderFormData['Payment']['token_from_gateway'] = $this->Payments->getFromResponse($shopsPaymentModule['ShopsPaymentModule']['display_name'], 'TOKEN');
+			$this->PaymentGateway->setupPurchase($shopsPaymentModule['ShopsPaymentModule']['display_name'], $options);
+			$orderFormData['Payment']['token_from_gateway'] = $this->PaymentGateway->getFromResponse($shopsPaymentModule['ShopsPaymentModule']['display_name'], 'TOKEN');
 			$payment = array($orderFormData['Payment']);
 			$shipment = array($orderFormData['Shipment']);
 			$orderFormData['Payment'] 	= $payment;
@@ -1009,7 +1009,7 @@ class OrdersController extends AppController {
 			// now we are going to save the Payment and Shipment rates
 			$result = $this->Order->completePurchase($orderFormData);
 			if ($result) {
-				if (!$this->Payments->redirect($shopsPaymentModule['ShopsPaymentModule']['display_name'])) {
+				if (!$this->PaymentGateway->redirect($shopsPaymentModule['ShopsPaymentModule']['display_name'])) {
 					return $this->redirect(array(
 									'action' => 'completed',
 									'shop_id'=> $order['Order']['shop_id'],
@@ -1034,7 +1034,7 @@ class OrdersController extends AppController {
  **/
 	public function return_from_payment() {
 		$payment = $this->Order->Payment->find('first', array('conditions' => array('token_from_gateway' => $this->request->query['token'])));
-		if ($this->Payments->isPaypalExpress($payment['ShopsPaymentModule']['display_name'])) {
+		if ($this->PaymentGateway->isPaypalExpress($payment['ShopsPaymentModule']['display_name'])) {
 			$accountEmail = $this->Order->Shop->getAccountEmailPaypal($payment['Order']['shop_id']);
 			$purchase_opts = array(
 				'subject' => $accountEmail,
@@ -1042,7 +1042,7 @@ class OrdersController extends AppController {
 				'token' => $this->request->query['token'],
 				'PayerID' => $this->request->query['PayerID']
 			);
-			$response = $this->Payments->purchase($payment['ShopsPaymentModule']['display_name'], $purchase_opts);
+			$response = $this->PaymentGateway->purchase($payment['ShopsPaymentModule']['display_name'], $purchase_opts);
 			$result = $response->success();
 			if ($result) {
 				//TODO Check if we need to change order status to Completed
