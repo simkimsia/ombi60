@@ -90,19 +90,22 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Products/admin_menu_action');
 
 		// collections
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_view_smart');		
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_add_smart');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_edit_smart');
-		$this->Acl->allow($group, 'controllers/ProductGroups/admin_view_smart');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_view_custom');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_add_custom');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_edit_custom');
-		$this->Acl->allow($group, 'controllers/ProductGroups/admin_view_custom');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_add_product_in_group');
+		$this->Acl->allow($group, 'controllers/ProductGroups/admin_remove_product_from_group');				
+
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_delete');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_index');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_toggle');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_save_condition');
 		$this->Acl->allow($group, 'controllers/ProductGroups/admin_remove_condition');
-		$this->Acl->allow($group, 'controllers/ProductGroups/admin_remove_product_from_group');
-		$this->Acl->allow($group, 'controllers/ProductGroups/admin_add_product_in_group');
+
+
 
 		// navigation
 		$this->log('navi');
@@ -161,11 +164,12 @@ class UsersController extends AppController {
 		$this->log('payments');
 		$this->Acl->allow($group, 'controllers/Payments/admin_index');
 		$this->Acl->allow($group, 'controllers/Payments/admin_update_settings');
-		$this->Acl->allow($group, 'controllers/Payments/admin_add_custom_payment');
+		$this->Acl->allow($group, 'controllers/Payments/admin_add_paypal_payment');
+		$this->Acl->allow($group, 'controllers/Payments/admin_add_custom_payment');		
+		$this->Acl->allow($group, 'controllers/Payments/admin_edit_paypal_payment');
 		$this->Acl->allow($group, 'controllers/Payments/admin_edit_custom_payment');
 		$this->Acl->allow($group, 'controllers/Payments/admin_delete_custom_payment');
-		$this->Acl->allow($group, 'controllers/Payments/admin_add_paypal_payment');
-		$this->Acl->allow($group, 'controllers/Payments/admin_edit_paypal_payment');
+
 
 		$this->log('shippingrates');
 		$this->Acl->allow($group, 'controllers/ShippingRates/admin_index');
@@ -177,7 +181,15 @@ class UsersController extends AppController {
 		$this->log('orders');
 		$this->Acl->allow($group, 'controllers/Orders/admin_index');
 		$this->Acl->allow($group, 'controllers/Orders/admin_view');
-
+		$this->Acl->allow($group, 'controllers/Orders/admin_contact');
+		$this->Acl->allow($group, 'controllers/Orders/admin_edit');		
+		$this->Acl->allow($group, 'controllers/Orders/admin_export');				
+		$this->Acl->allow($group, 'controllers/Orders/admin_menu_action');				
+		$this->Acl->allow($group, 'controllers/Orders/admin_close');				
+		$this->Acl->allow($group, 'controllers/Orders/admin_cancel');				
+		$this->Acl->allow($group, 'controllers/Orders/admin_open');
+		$this->Acl->allow($group, 'controllers/Orders/admin_delete');		
+		
 		$this->log('themes');
 		$this->Acl->allow($group, 'controllers/Themes/admin_index');
 		$this->Acl->allow($group, 'controllers/Themes/admin_settings');
@@ -200,10 +212,11 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Blogs/admin_index');
 
 		$this->log('posts');
+		$this->Acl->allow($group, 'controllers/Posts/admin_view');
+		$this->Acl->allow($group, 'controllers/Posts/admin_add_to_blog');
 		$this->Acl->allow($group, 'controllers/Posts/admin_add');
 		$this->Acl->allow($group, 'controllers/Posts/admin_edit');
 		$this->Acl->allow($group, 'controllers/Posts/admin_delete');
-		$this->Acl->allow($group, 'controllers/Posts/admin_view');
 		$this->Acl->allow($group, 'controllers/Posts/admin_toggle');
 
 		$this->log('=============end of setting permissions for merchants=============');
@@ -238,29 +251,6 @@ class UsersController extends AppController {
 	public function platform_index() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
-	}
-
-/**
- *
- *
- * After save callback
- * Update the aro for the user.
- *
- * @access public *
- * @return void
- * */
-	public function afterSave($created) {
-		if (!$created) {
-			$parent = $this->parentNode();
-			$parent = $this->node($parent);
-
-			$node = $this->node();
-
-			$aro = $node[0];
-
-			$aro['Aro']['parent_id'] = $parent[0]['Aro']['id'];
-			$this->Aro->save($aro);
-		}
 	}
 
 }
