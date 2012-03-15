@@ -54,8 +54,13 @@ class SavedThemesController extends AppController {
 			      );
 	
 		$themes = $this->paginate();
+		
+		$publishedThemes = Set::extract('/SavedTheme[featured=1]', $themes);
+		
+		$unpublishedThemes = Set::extract('/SavedTheme[featured=0]', $themes);
 
-		$this->set(compact('themes'));
+
+		$this->set(compact('publishedThemes', 'unpublishedThemes'));
 		
 	}
 
