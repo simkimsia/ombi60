@@ -213,3 +213,7 @@ Plugins Acl and other related matters
 =====================================
 
 Never ever use the SAME name for Plugin as Controller to avoid AclExtras.AclExtras aco_sync not working
+
+Acl things to check if things go wrong
+=====================================
+User model Group model AppController and core.php for Configure of database and classname for Acl
