@@ -35,13 +35,17 @@ class SavedThemesController extends AppController {
 		}
 	
 	}
-
-
+	
+	/**
+	*
+	* display all the themes that have been saved into this shop
+	*
+	**/
 	public function admin_index() {
 		$this->SavedTheme->recursive = -1;
 		
-		$limit = 4;
-		$shopId = User::get('Merchant.shop_id');
+		$limit = 25;
+		$shopId = Shop::get('Shop.id');
 		
 		$this->paginate = array(
 			      'conditions' => array('SavedTheme.shop_id' => $shopId),
@@ -49,7 +53,26 @@ class SavedThemesController extends AppController {
 			      'order' => 'SavedTheme.featured desc'
 			      );
 	
-		$this->set('savedThemes', $this->paginate());
+		$themes = $this->paginate();
+		$this->log($themes);
+		$this->set(compact('themes'));
+		
+	}
+
+
+	public function admin_index_rolling() {
+		$this->SavedTheme->recursive = -1;
+		
+		$limit = 25;
+		$shopId = Shop::get('Shop.id');
+		
+		$this->paginate = array(
+			      'conditions' => array('SavedTheme.shop_id' => $shopId),
+			      'limit' => $limit,
+			      'order' => 'SavedTheme.featured desc'
+			      );
+	
+		$this->set('themes', $this->paginate());
 		
 		if ($this->request->is('ajax')) {
 			$this->layout = 'ajax';

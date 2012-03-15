@@ -1,97 +1,34 @@
-
-
-<div class="savedThemes index">
-	
-	<div class="">
-	<ul id="themes-list" class="theme-thumbs">
-	
-	
-	
-	<?php
-	
-	echo $this->element('themes_ajax_list');
-	
-	?>
-	</ul>
-	</div>
-	
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
+<h1 class="center">Saved Themes</h1>
+<div class="rule"></div>
+<div id="action-links">
 	<ul>
-		<li><?php echo $this->Html->link(__('New Saved Theme'), array('action' => 'add')); ?></li>
-		
-		
-		
+	    <li id="customer"><?php echo $this->Html->link(__('Upload new theme'), array('action'=>'new')); ?></li>
+		<li id="themestore"><?php echo $this->Html->link(__('Get more themes'), array('action'=>'new')); ?></li>
 	</ul>
+
 </div>
+<h2>Published Themes</h2>
+<p>These themes are <strong>live</strong> on your store. Changes you make to these themes will be seen by your customers automatically.</p>
+<div class="columns clear" id="published-themes">
+	<?php foreach($themes as $key=>$theme): ?>
+		<?php 
+		$theme = $theme['SavedTheme'];
+		$column = '';
+		if ($key%2==1) {$column = 'lastcol'; }
+		?>
+	<div class="col1-2 <?php echo $column; ?>">	
+		<div class="content-box">
+		<div class="box-body">
+			<div class="box-header clear">
+				<h2><?php echo $theme['name']; ?></h2>
+			</div>
+			<div class="box-wrap clear">
+				<h3>header h3</h3>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+			</div> <!-- end of box-wrap -->
+		</div> <!-- end of box-body -->
+		</div> <!-- end of content-box -->
+	</div><!-- end of col1-2 -->
+	<?php endforeach; ?>
 
-<script>
-	var intervalId = '';
-	
-	var currentUrl = '<?php echo $this->request->here . '/index/page:'; ?>';
-	
-	var newUrl = '';
-
-	function afterDelete(response) {
-		var json_object = $.parseJSON(response);
-	
-		if (json_object.success) {
-			
-			var contents = $.parseJSON(json_object.contents);
-			
-			var id = '#theme-' + contents.id;
-			
-			$(id).remove();
-			
-		} else {
-			
-			var contents = $.parseJSON(json_object.contents);
-			
-			var errors = contents.reason;
-			
-			alert(errors);
-		}	
-	}
-	
-	function fetchNextPage(currentPage) {
-		
-		newUrl = currentUrl + currentPage;
-		
-		$.ajax({
-			url: newUrl ,
-			success: function(data) {
-				// append page 2 themes
-				$('#themes-list').append(data);
-			}
-		});
-	}
-	
-	$(document).ready(function() {
-		
-		var currentPage = 1;
-		var totalThemes = <?php echo $themesTotal;?>;
-		var themePerPage = <?php echo $limit; ?>;
-		
-		var contentHeight = 500;  
-		var pageHeight = $(window).height();
-		var scrollPosition = $(window).scrollTop();
-		
-		intervalID = window.setInterval(function() {
-			
-			scrollPosition = $(window).scrollTop();
-		      
-			//console.log('result' + (contentHeight - pageHeight - scrollPosition));
-			if (totalThemes > (currentPage*themePerPage) && ((contentHeight - pageHeight - scrollPosition) < 300)) {
-				currentPage++;
-				fetchNextPage(currentPage);
-				contentHeight += 400;
-			} else if (totalThemes <= (currentPage*themePerPage)){
-				clearInterval(intervalID);
-			} 
-		}, 2000);
-
-		
-	});
-	
-</script>
+</div><!-- end of columns clear -->
