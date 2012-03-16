@@ -199,8 +199,6 @@ class SavedTheme extends AppModel {
 			$success = $this->createFolder(0755, SAVED_THEMES_DIR . $folderName);
 						
 			if ($success) {
-				$this->log('this means that the createFolder was successful for ' . $folderName);
-				$this->log('we should expect to see it inside ' . SAVED_THEMES_DIR);
 				$success = $this->saveField('folder_name', $folderName);
 			} else {
 				$this->log('this means that the createFolder was NOT successful for ' . $folderName);
