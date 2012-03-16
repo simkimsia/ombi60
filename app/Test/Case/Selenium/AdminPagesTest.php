@@ -13,7 +13,7 @@ class AdminPagesTest extends PHPUnit_Extensions_SeleniumTestCase
 	public $localhost 				= true;
 	public $domains 				= 
 		array(
-			'localhost' => 'http://shop001.ombi60.localhost/',
+			'localhost' => 'https://shop001.ombi60.localhost/',
 			'production'=> 'http://');
 								
 	public $secondsBetweenCommands 	= 1;
