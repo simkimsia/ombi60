@@ -150,7 +150,8 @@ li.order-user-subscription  {background: url(../img/admin/icons/user.gif) 4px 50
 .theme-actions.extra a {color:#666; margin:0;}
 .theme-actions.extra a:hover {color:#333;}
 .theme-actions li {display:block; float:left; width:127px;}
-.theme-actions li a {display:block; padding:0 0 0 23px; margin-bottom:15px; font-size:12px;}
+.theme-actions li.main-theme {display:block; float:left; width:200px;}
+.theme-actions li a {display:block; padding:0 0 0 23px; margin-bottom:15px; font-size:12px; line-height: 20px;}
 .theme-actions li.theme-settings a {background:url("../img/admin/icons/theme-settings.png") no-repeat scroll left center transparent;}
 .theme-actions li.theme-editor a {background:url("../img/admin/icons/template-editor.png") no-repeat scroll left center transparent; }
 .theme-actions li.publish-main a {background:url("../img/admin/icons/publish-main.png") no-repeat scroll left center transparent;}
@@ -158,3 +159,5 @@ li.order-user-subscription  {background: url(../img/admin/icons/user.gif) 4px 50
 .theme-actions li.unpublish-mobile a {background:url("../img/admin/icons/unpublish-mobile.png") no-repeat scroll left center transparent;}
 .theme-actions li.duplicate-theme a {background:url("../img/admin/icons/duplicate-theme.png") no-repeat scroll left center transparent;}
 .theme-actions li.download-theme a {background:url("../img/admin/icons/download-theme.png") no-repeat scroll left center transparent;}
+
+.theme-actions li.main-theme span.main-theme {display:block; padding:0 0 0 23px; margin-bottom:15px; font-size:12px; line-height: 20px;background:url("../img/admin/icons/main-theme.png") no-repeat scroll left center transparent;}

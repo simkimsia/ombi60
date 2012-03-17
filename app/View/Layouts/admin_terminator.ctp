@@ -165,7 +165,7 @@
 					<li style="float:right;">
 						<a href="#">Themes</a>
 						<ul>
-							<li><?php echo $this->Html->link('My themes', '/admin/saved_themes/switch'); ?></li>  
+							<li><?php echo $this->Html->link('My themes', '/admin/saved_themes'); ?></li>  
 							<li><?php echo $this->Html->link('Theme Settings', '/admin/themes/settings'); ?></li>  
 							<li><?php echo $this->Html->link('Upload new theme', '/admin/saved_themes/new'); ?></li>  
 							

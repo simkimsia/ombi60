@@ -33,8 +33,7 @@
 						<ul class="theme-actions">
 							<li class="theme-settings"><?php echo $this->Html->link(__('Configure settings'), array('action'=>'new')); ?></li>
 							<li class="download-theme"><?php echo $this->Html->link(__('Export theme'), array('action'=>'new')); ?></li>							
-							<li class="theme-settings"><?php echo $this->Html->link(__('Configure settings'), array('action'=>'new')); ?></li>
-							<li class="download-theme"><?php echo $this->Html->link(__('Export theme'), array('action'=>'new')); ?></li>
+							<li class="main-theme"><span class="main-theme">Published as main theme</span></li>							
 						</ul>
 					</div>
 				</div>
@@ -75,8 +74,8 @@
 							<ul class="theme-actions">
 								<li class="theme-settings"><?php echo $this->Html->link(__('Configure settings'), array('action'=>'new')); ?></li>
 								<li class="download-theme"><?php echo $this->Html->link(__('Export theme'), array('action'=>'new')); ?></li>							
-								<li class="theme-settings"><?php echo $this->Html->link(__('Configure settings'), array('action'=>'new')); ?></li>
-								<li class="download-theme"><?php echo $this->Html->link(__('Export theme'), array('action'=>'new')); ?></li>
+								<li class="publish-main"><?php echo $this->Html->link(__('Publish theme'), array('action'=>'feature', $theme['id'])); ?></li>
+
 							</ul>
 						</div>
 					</div>
