@@ -68,9 +68,9 @@ Configure::write('Asset.timestamp', 'force');
  *
  * constants.php file to define constants that remain same regardless of environments
  **/
-if (file_exists(dirname(__FILE__) . '/constants.php')) {
+if (file_exists(APP . DS. 'Config' . DS . 'constants.php')) {
 
-    require_once('constants.php');
+    require_once(APP . DS . 'Config' . DS . 'constants.php');
 }
 
 /**
