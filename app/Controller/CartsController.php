@@ -65,10 +65,8 @@ class CartsController extends AppController {
 		// set $qty as quantities purchased
 		$qty 			= 1;
 		$qtyExists 		= !empty($_POST['quantity']);
-		$qtyIsPositive 	= $qtyExists ? (is_numeric($_POST['quantity']) AND ($_POST['quantity'] > 0)) : false;
-		
-		if ($qtyIsPositive) {
-			$qty = 	$_POST['quantity'];
+		if ($qtyExists) {
+			$qty = is_numeric($_POST['quantity']) ? abs(intval($_POST['quantity'])) : 1;
 		}
 		
 		$addToCartSuccessful = $this->Cart->addProductForCustomer(User::get('User.id'), array($id=>$qty));
