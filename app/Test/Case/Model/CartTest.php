@@ -106,8 +106,8 @@ public $fixtures = array(
 	* @return boolean
 	**/
 	private function check1ItemCartResult($resultArray, $expectedQuantity = 1) {
-		App::uses('NumberLib', 'UtilityLib.Lib');
-		$amount = NumberLib::precision(23.0000 * $expectedQuantity, 0);
+		App::uses('CakeNumber', 'Utility');
+		$amount = CakeNumber::precision(23.0000 * $expectedQuantity, 0);
 		
 		$expectedArray = array(
 			'Cart' => array(

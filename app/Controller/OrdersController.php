@@ -859,9 +859,9 @@ class OrdersController extends AppController {
 			$this->Order->Cart->recalculateTotalWeightPrice($this->request->data['cart_id']);
 			
 			$successJSON = true;
-			App::uses('NumberLib', 'UtilityLib.Lib');
-			$contents['totalAmountWithShipping'] 	= NumberLib::currency($data['Order']['amount'] + $price, '$');
-			$contents['shippingFee']				= NumberLib::currency($price, '$');
+			App::uses('CakeNumber', 'Utility');
+			$contents['totalAmountWithShipping'] 	= CakeNumber::currency($data['Order']['amount'] + $price, '$');
+			$contents['shippingFee']				= CakeNumber::currency($price, '$');
 				
 		}
 		

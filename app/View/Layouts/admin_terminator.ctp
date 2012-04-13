@@ -65,7 +65,10 @@
     //echo $this->Html->scriptBlock('var baseUrl = "' . $this->Html->url('/').'";');
     //echo $this->Html->scriptBlock('var js_vars = ' . $this->Js->object($js_vars).';');
 
-		echo $scripts_for_layout;
+		echo $this->fetch('meta');
+		echo $this->fetch('css');
+		echo $this->fetch('script');
+		
 	?>
 </head>
 
@@ -73,7 +76,7 @@
 
 	<?php if ($adminLoginPage) : ?>
 <body class="login">
-		<?php echo $content_for_layout; ?>
+		<?php echo $this->fetch('content'); ?>
 	<?php else: ?>
 <body>
 	<div class="pagetop">
@@ -199,7 +202,7 @@
 				</div>
 				-->
 			<?php echo $this->Session->flash(); ?>
-	<?php echo $content_for_layout; ?>
+	<?php echo $this->fetch('content'); ?>
 	
 			</div><!-- end of page -->
 		</div>

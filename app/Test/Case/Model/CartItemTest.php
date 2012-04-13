@@ -149,8 +149,45 @@ class CartItemTestCase extends CakeTestCase {
 	**/
 	public function testSetVariantIdAsKeyShouldWork() {
 		// GIVEN an array of CartItem data
-		// WHEN we run function
-		// THEN keys have been changed to variant id instead
+		$data = array(
+			'CartItem' => array(
+				0 => array(
+					'id' => 1,
+					'product_title'	=> 'test product with no pic and no collection',
+					'product_id'		=> 3,
+					'variant_id'		=> 3,
+				),
+				1 => array(
+					'id' => 2,
+					'product_title'	=> 'Dummy Product',
+					'product_id'		=> 2,
+					'variant_id'		=> 2,					
+				)
+			)
+		);
+		
+		// WHEN we run the setVariantIdAsKey
+		$result = $this->CartItem->setVariantIdAsKey($data);
+		
+		// THEN we expect
+		$expectedResult = array(
+			'CartItem' => array(
+				3 => array(
+					'id' => 1,
+					'product_title'	=> 'test product with no pic and no collection',
+					'product_id'		=> 3,
+					'variant_id'		=> 3,
+				),
+				2 => array(
+					'id' => 2,
+					'product_title'	=> 'Dummy Product',
+					'product_id'		=> 2,
+					'variant_id'		=> 2,
+				)
+			)
+		);
+		
+		$this->assertEquals($expectedResult, $result);
 	}
 	
 	/**
@@ -160,8 +197,191 @@ class CartItemTestCase extends CakeTestCase {
 	**/
 	public function testAttachProductDataShouldWork() {
 		// GIVEN an array of CartItem data
-		// WHEN we run function
-		// THEN keys have been changed to variant id instead
+		$data = array(
+			'CartItem' => array(
+				0 => array(
+					'product_id'	=> 2,
+					'variant_id'	=> 2
+				),
+				1 => array(
+					'product_id'	=> 3,
+					'variant_id'	=> 3
+				),
+			)
+		);
+		
+		// WHEN attachProductData
+		$result = $this->CartItem->attachProductData($data);
+		
+		// THEN we expect the following
+		$expectedResult = array(
+			'CartItem' => array(
+				(int) 0 => array(
+					'product_id' => (int) 2,
+					'variant_id' => (int) 2,
+					'Product' => array(
+						'id' => '2',
+						'shop_id' => '2',
+						'title' => 'Dummy Product',
+						'code' => '',
+						'description' => '',
+						'price' => '11.0000',
+						'created' => '2011-07-08 11:54:47',
+						'modified' => '2011-07-08 11:54:47',
+						'visible' => true,
+						'weight' => '7000',
+						'currency' => 'SGD',
+						'shipping_required' => true,
+						'vendor_id' => '1',
+						'handle' => 'dummy-product',
+						'product_type_id' => '1',
+						'url' => '/products/dummy-product',
+						'displayed_weight' => '7.0',
+						'selected_collections' => array(
+							(int) 0 => '1',
+							(int) 1 => '2'
+						)
+					),
+					'ProductImage' => array(
+						(int) 0 => array(
+							'filename' => 'default-0.jpg',
+							'product_id' => '2'
+						)
+					),
+					'ProductsInGroup' => array(
+						(int) 0 => array(
+							'id' => '1',
+							'product_id' => '2',
+							'product_group_id' => '1',
+							'ProductGroup' => array(
+								'id' => '1',
+								'title' => 'Frontpage',
+								'handle' => 'frontpage',
+								'description' => null,
+								'visible_product_count' => '1',
+								'vendor_count' => '0',
+								'url' => '/product_groups/frontpage'
+							)
+						),
+						(int) 1 => array(
+							'id' => '2',
+							'product_id' => '2',
+							'product_group_id' => '2',
+							'ProductGroup' => array(
+								'id' => '2',
+								'title' => 'smart collection 1',
+								'handle' => 'smart-collection-1',
+								'description' => '<p>more than 1 dollar</p>',
+								'visible_product_count' => '2',
+								'vendor_count' => '0',
+								'url' => '/product_groups/smart-collection-1'
+							)
+						)
+					),
+					'Variant' => array(
+						(int) 0 => array(
+							'id' => '2',
+							'title' => 'Default Title',
+							'product_id' => '2',
+							'sku_code' => null,
+							'weight' => '7000',
+							'created' => '2011-07-08 11:54:47',
+							'modified' => '2011-07-08 11:54:47',
+							'currency' => 'SGD',
+							'shipping_required' => true,
+							'price' => '11.0000',
+							'order' => '0',
+							'compare_with_price' => null,
+							'VariantOption' => array(
+								(int) 0 => array(
+									'id' => '2',
+									'value' => 'Default Title',
+									'field' => 'title',
+									'variant_id' => '2'
+								)
+							)
+						)
+					),
+					'Vendor' => array(
+						'id' => '1',
+						'title' => 'OMBI60'
+					)
+				),
+				(int) 1 => array(
+					'product_id' => (int) 3,
+					'variant_id' => (int) 3,
+					'Product' => array(
+						'id' => '3',
+						'shop_id' => '2',
+						'title' => 'test product with no pic and no collection',
+						'code' => '',
+						'description' => '<p>test</p>',
+						'price' => '23.0000',
+						'created' => '2011-09-29 02:26:59',
+						'modified' => '2011-09-29 02:26:59',
+						'visible' => true,
+						'weight' => '15000',
+						'currency' => 'SGD',
+						'shipping_required' => true,
+						'vendor_id' => '0',
+						'handle' => 'test-product-with-no-pic-and-no-collection',
+						'product_type_id' => '0',
+						'url' => '/products/test-product-with-no-pic-and-no-collection',
+						'displayed_weight' => '15.0',
+						'selected_collections' => array(
+							(int) 0 => '2'
+						)
+					),
+					'ProductImage' => array(),
+					'ProductsInGroup' => array(
+						(int) 0 => array(
+							'id' => '3',
+							'product_id' => '3',
+							'product_group_id' => '2',
+							'ProductGroup' => array(
+								'id' => '2',
+								'title' => 'smart collection 1',
+								'handle' => 'smart-collection-1',
+								'description' => '<p>more than 1 dollar</p>',
+								'visible_product_count' => '2',
+								'vendor_count' => '0',
+								'url' => '/product_groups/smart-collection-1'
+							)
+						)
+					),
+					'Variant' => array(
+						(int) 0 => array(
+							'id' => '3',
+							'title' => 'Default Title',
+							'product_id' => '3',
+							'sku_code' => '',
+							'weight' => '15000',
+							'created' => '2011-09-29 02:26:59',
+							'modified' => '2011-09-29 02:26:59',
+							'currency' => 'SGD',
+							'shipping_required' => true,
+							'price' => '23.0000',
+							'order' => '0',
+							'compare_with_price' => null,
+							'VariantOption' => array(
+								(int) 0 => array(
+									'id' => '3',
+									'value' => 'Default Title',
+									'field' => 'Title',
+									'variant_id' => '3'
+								)
+							)
+						)
+					),
+					'Vendor' => array(
+						'id' => null,
+						'title' => null
+					)
+				)
+			)
+		);
+		
+		$this->assertEquals($expectedResult, $result);
 	}
 
 }
