@@ -146,6 +146,7 @@ class CartItemTestCase extends CakeTestCase {
 	*
 	* test setVariantIdAsKey should work
 	*
+	*
 	**/
 	public function testSetVariantIdAsKeyShouldWork() {
 		// GIVEN an array of CartItem data
