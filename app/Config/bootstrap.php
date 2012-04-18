@@ -162,13 +162,6 @@ if (file_exists(dirname(__FILE__) . '/bootstrap.local.php')) {
 // debug(APP . 'Plugin' . DS .'TwigView' . DS .'vendors' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php');
 define('TWIG_PLUGIN', APP . 'Plugin' . DS .'TwigView');
 
-// we want to load the original Twig from fabpot
-require_once  TWIG_PLUGIN . DS .'Vendor' . DS .'Twig' . DS .'lib' . DS .'Twig' . DS .'Autoloader.php';
-Twig_Autoloader::register();
-
-// we also want to load the Twig-extensions from fabpot
-require_once  TWIG_PLUGIN . DS .'Vendor' . DS .'Twig-extensions' . DS .'lib' . DS .'Twig' . DS . 'Extensions' . DS . 'Autoloader.php';
-Twig_Extensions_Autoloader::register();
 
 
 
