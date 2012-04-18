@@ -805,7 +805,7 @@ class SavedTheme extends AppModel {
 
 		// check against webroot
 		// must end with webroot/*.css.tpl, *.css, *.js, *.png, *.gif, *.jpg OR *.jpeg
-		$matchNumber = preg_match('/webroot\/[a-zA-Z0-9\-_]+\.(tpl|css|js|png|gif|jpg|jpeg)$/', $entry, $matches);
+		$matchNumber = preg_match('/webroot\/[a-zA-Z0-9\-_]+\.(css\.tpl|tpl|css|js|png|gif|jpg|jpeg)$/', $entry, $matches);
 		if ($matchNumber === 1) {
 			return $matches[0];
 		}
