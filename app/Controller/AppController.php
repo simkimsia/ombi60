@@ -89,7 +89,7 @@ class AppController extends Controller {
 			
 			//$SiteTransfer->delete($uuid);
 		}
-		if (Configure::read('debug')) {
+		if (Configure::read('debug') && php_sapi_name() != 'cli') { //Executing only if executed outside command line
 			$this->Toolbar = $this->Components->load('DebugKit.Toolbar');
 		}
 		/**

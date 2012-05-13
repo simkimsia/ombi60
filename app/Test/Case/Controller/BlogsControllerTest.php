@@ -91,12 +91,11 @@ class BlogsControllerTestCase extends ControllerTestCase {
 			'methods' => array('forceSSL'), 
 			'components' => array('Auth' => array('user'), 'Security')
 		));
-		
 		$_SERVER['REQUEST_URI'] = '/admin/pages';
-		// @TODO $this->testAction('/admin/blogs/view/1', array('return' => 'contents'));
+		$this->testAction('/admin/blogs/view/1', array('return' => 'contents'));
 		$expected = '#<h2>news</h2>#';
 		
-		// @TODO $this->assertRegexp($expected, $this->contents);
+		$this->assertRegexp($expected, $this->contents);
 	}
 
 	public function testAdminAdd() {
