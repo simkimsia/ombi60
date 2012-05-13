@@ -24,6 +24,7 @@ class AllTests extends PHPUnit_Framework_TestSuite {
 
 		// need to run this first because we have issues with the MerchantTest running later than other tests
 		$suite->addTestFile($path . 'AllModelTest.php');
+		// add a comment to test jenkins polling does not affect build trigger
 		// $suite->addTestFile($path . 'AllConsoleTest.php');
 		// $suite->addTestFile($path . 'AllBehaviorsTest.php');
 		// $suite->addTestFile($path . 'AllComponentsTest.php');
