@@ -18,7 +18,7 @@ class RemoveAllIndicesExceptAROACOKEYInArosAcos extends CakeMigration {
 	public $migration = array(
 		'up' => array(
 			'drop_field' => array(
-				'aros_acos' => array('', 'indexes' => array('aro_id', 'to_aco', 'to_aro')),
+				'aros_acos' => array('indexes' => array('aro_id', 'to_aco', 'to_aro')),
 			),
 		),
 		'down' => array(
