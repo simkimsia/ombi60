@@ -94,3 +94,6 @@
 [submodule "app/Plugin/PaymentGateway/Vendor/AktiveMerchant"]
 	path = app/Plugin/PaymentGateway/Vendor/AktiveMerchant
 	url = git://github.com/simkimsia/Aktive-Merchant.git
+[submodule "app/Plugin/Migrations"]
+	path = app/Plugin/Migrations
+	url = git://github.com/simkimsia/migrations.git
