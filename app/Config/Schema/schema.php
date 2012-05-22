@@ -379,7 +379,7 @@ class AppSchema extends CakeSchema {
 		'cardissuingcountry' => array('type' => 'string', 'null' => true, 'length' => 5, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'securehash' => array('type' => 'string', 'null' => true, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	public $payment_modules = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
@@ -425,7 +425,7 @@ class AppSchema extends CakeSchema {
 		'paypal_payer_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'index'),
 		'customer_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'paypal_payer_customer' => array('column' => array('paypal_payer_id', 'customer_id'), 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 	public $paypal_payers_payments = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
