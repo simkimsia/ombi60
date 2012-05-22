@@ -135,10 +135,12 @@ class AppController extends Controller {
 		
 		// worst case scenario is to use env('HTTP_HOST') if FULL_BASE_URL is not good enough
 		App::uses('Shop', 'Model');
+		$this->loadModel('Shop');
+		
 		$currentShop = $this->Session->read('CurrentShop');
 		
 		$isCheckoutProcess = (strpos(FULL_BASE_URL, 'checkout'));
-		$this->loadModel('Shop');		
+		
 		
 		// if we do not have the currentshop from the session and we are now at the checkout domain
 		if (empty($currentShop) AND $isCheckoutProcess) {
