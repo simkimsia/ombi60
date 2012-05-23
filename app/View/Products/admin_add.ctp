@@ -34,9 +34,29 @@
 			?>
 			<div class="columns clear bt-space15">
 				<?php
+					// we need a hidden for Product.shop_id
+				    echo $this->Form->input('Product.shop_id', array('type'=>'hidden', 'value'=>Shop::get('Shop.id')));
+				
+				
 					echo $this->Form->input('Product.title', array(
-						'class' => 'text',
+						'class' => 'text size-400',
 					));
+
+				// prepare the tinymce editor for description
+				$this->TinyMce->editor(array(
+					'theme' => 'advanced',
+					'mode' => 'textareas',
+					'plugins' => ' table',
+					'theme_advanced_buttons1' => 'bold,italic,underline,undo,redo,link,unlink,forecolor,styleselect,removeformat,cleanup,code,table,fontselect,fontsizeselect',
+					'theme_advanced_buttons2' => '',
+					'theme_advanced_toolbar_location' => 'top',
+					'remove_linebreaks' => false,
+					'extended_valid_elements' => 'textarea[cols|rows|disabled|name|readonly|class]'));
+					
+					//
+					echo $this->Form->input('Product.description', array('label' => __('Describe your product')));
+					
+
 
 				?>		
 			</div>
