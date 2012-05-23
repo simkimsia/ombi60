@@ -1,5 +1,12 @@
 <h1 class="center"><?php echo __('Add your New Blog');?></h1>
 <div class="rule"></div>
+<div id="action-links">
+	<ul>
+		<li id="no-icon"><?php echo $this->Html->link(__('Cancel'), array('controller' => 'webpages', 'action' => 'index')); ?></li>
+	</ul>
+
+</div>
+
 
 
 <div class="content-box">
