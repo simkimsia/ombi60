@@ -38,7 +38,8 @@
 								'for' => true
 							)
 						)
-					)
+					),
+					'type' => 'file',
 				));
 			?>
 			<div class="columns clear bt-space15">
