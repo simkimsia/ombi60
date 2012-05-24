@@ -448,6 +448,9 @@ class ProductsController extends AppController {
 		
 		$this->set(compact('errors', 'collections'));
 		
+		if (isset($_GET['bak'])) {
+			$this->render('admin_add.bak');
+		}
 	}
 	
 	/**
