@@ -143,12 +143,39 @@
 						echo $this->Form->input('Variant.0.VariantOption.0.order', array('type'=>'hidden', 'value'=>'0'));
 						?>
 					</div>
+					<h2>Collections</h2>
+					<div class="rule2"></div>
+					<?php 
+					$label = $this->Form->label('Product.selected_collections', __('<h4>Choose the custom collections this product belongs to:</h4>'));
+					
+					echo $label;
+
+					$counter = 1;
+					foreach($collections as $key=>$value) {
+						$class = 'col1-2';
+						if ($counter % 2 == 0) {
+							$class = 'col1-2 lastcol';
+						}
+						echo $this->Form->input('Product.selected_collections', array(
+							'type' => 'checkbox',
+							'label' => $value,
+							'value' => $key,
+							'div' => array(
+								'class' => $class
+							),
+							'id' => 'ProductSelectedCollections' . $key,
+							'hiddenField' => false
+						));
+						$counter ++;
+					}
+
+
+					?>
 					
 				</div>
 				<div class="col1-2 lastcol">
 				</div>
 			</div>
-			
 			<div class="rule2"></div>
 			<div class="form-field clear">
 				<input type="submit" class="button" value="Create Product" />&nbsp;or&nbsp;
@@ -167,12 +194,14 @@
 	$(document).ready(function() {
 		// Your code here
 		$('#ProductOptionsOn').click(function() {
-
 			if ($(this).is(':checked')) {
 				$('#options').show();
 			} else {
 				$('#options').hide();
 			}
+			
 		});
+		
 	});
+	
 </script>
