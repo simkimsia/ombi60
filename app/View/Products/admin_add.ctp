@@ -1,3 +1,12 @@
+<?php
+		
+		
+	//Here we will include all the JQuery files required by multi file functionlity
+	echo $this->Html->script('jquery/multiple_file/jquery.MultiFile.js');
+
+	
+	
+?>
 <h1 class="center"><?php echo __('Add your New Product');?></h1>
 <div class="rule"></div>
 <div id="action-links">
@@ -153,27 +162,30 @@
 					$counter = 1;
 					foreach($collections as $key=>$value) {
 						$class = 'col1-2';
+						
 						if ($counter % 2 == 0) {
 							$class = 'col1-2 lastcol';
 						}
-						echo $this->Form->input('Product.selected_collections', array(
+						
+						echo $this->Form->input('Product.selected_collections.' . $key, array(
 							'type' => 'checkbox',
 							'label' => $value,
 							'value' => $key,
 							'div' => array(
 								'class' => $class
 							),
-							'id' => 'ProductSelectedCollections' . $key,
 							'hiddenField' => false
 						));
 						$counter ++;
 					}
 
-
 					?>
 					
 				</div>
 				<div class="col1-2 lastcol">
+					<h2>Product Images</h2>
+					<div class="rule2"></div>
+					<input type="file" class="multi max-4" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp" />
 				</div>
 			</div>
 			<div class="rule2"></div>
