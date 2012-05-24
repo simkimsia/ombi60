@@ -124,7 +124,26 @@
 						'label' => ''
 					));
 					
+					echo '<h4>Product Options</h4>';
+					echo '<div class="class">How your customers choose variations of your product</div>';
+					
+					echo $this->Form->input('Product.options_on', array(
+						'type'=>'checkbox', 
+						'class' => 'bt-space15',
+						'label'=>'Product has <strong>multiple options</strong> for its variants.'
+					));
+					
 					?>
+					<div id="options" style="display:none;">
+						<?php
+						
+						
+						echo $this->Form->input('Variant.0.VariantOption.0.field', array('label' => __('Option Field'),'value'=>'Title'));
+						echo $this->Form->input('Variant.0.VariantOption.0.value', array('label' => __('Default Value'), 'value'=>'Default Title'));
+						echo $this->Form->input('Variant.0.VariantOption.0.order', array('type'=>'hidden', 'value'=>'0'));
+						?>
+					</div>
+					
 				</div>
 				<div class="col1-2 lastcol">
 				</div>
@@ -138,6 +157,22 @@
 
 		<?php echo $this->Form->end(); ?>
 					
+					
+			
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		// Your code here
+		$('#ProductOptionsOn').click(function() {
+
+			if ($(this).is(':checked')) {
+				$('#options').show();
+			} else {
+				$('#options').hide();
+			}
+		});
+	});
+</script>
