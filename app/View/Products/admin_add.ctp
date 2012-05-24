@@ -87,6 +87,16 @@
 					
 					// default visible is ON
 			    	echo $this->Form->input('Product.visible', array('type'=>'hidden', 'value'=>TRUE));
+			
+					
+				
+					echo $this->Form->input('Product.custom_print_on', array(
+						'type'=>'checkbox', 
+						//'checked'=>'checked', 
+						'value'=>1, 
+						'class' => 'bt-space15',
+						'label'=>'<strong>Custom print product</strong>'
+					));
 
 					echo $this->Form->input('Product.shipping_required', array(
 						'type'=>'checkbox', 
@@ -186,7 +196,10 @@
 				<div class="col1-2 lastcol">
 					<h2>Product Images</h2>
 					<div class="rule2"></div>
-					<input type="file" class="multi max-4" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp" />
+					<input type="file" class="multi max-4" id="product_images" name="product_images[]" accept="gif|jpg|jpeg|png|ico|bmp" />
+					
+					<input type="file" class="custom_print" id="custom_print_image" name="custom_print_image" accept="gif|jpg|jpeg|png|ico|bmp" style="display:none"/>
+					
 				</div>
 			</div>
 			<div class="rule2"></div>
@@ -206,6 +219,8 @@
 
 	$(document).ready(function() {
 		// Your code here
+		
+		// this affects the click function for Product Options
 		$('#ProductOptionsOn').click(function() {
 			if ($(this).is(':checked')) {
 				$('#options').show();
@@ -214,6 +229,19 @@
 			}
 			
 		});
+		
+		// this affects the click function for Custom Print Product
+		$('#ProductCustomPrintOn').click(function() {
+			if ($(this).is(':checked')) {
+				$("#product_images_wrap").hide();
+				$("#custom_print_image").show();
+			} else {
+				$("#product_images_wrap").show();
+				$("#custom_print_image").hide();
+			}
+			
+		});
+		
 		
 	});
 	
