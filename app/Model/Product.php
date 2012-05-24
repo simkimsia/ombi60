@@ -309,7 +309,7 @@ class Product extends AppModel {
 		* we want to juggle between custom_print_image and product_images 
 		* so we flush out the product_images original data and store it with custom_print_image
 		*/
-		if ($data['Product']['custom_print_on']) {
+		if (!empty($data['Product']['custom_print_on'])) {
 			if (!empty($_FILES['custom_print_image']) && !empty($_FILES['product_images'])) {
 				foreach($_FILES['product_images'] as $attr=>$value) {
 					$_FILES['product_images'][$attr] = array();
