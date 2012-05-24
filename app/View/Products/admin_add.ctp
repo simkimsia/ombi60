@@ -94,7 +94,8 @@
 						'type'=>'checkbox', 
 						//'checked'=>'checked', 
 						'value'=>1, 
-						'class' => 'bt-space15',
+						'class' => 'bt-space15 custom_print',
+						
 						'label'=>'<strong>Custom print product</strong>'
 					));
 
