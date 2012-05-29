@@ -173,6 +173,20 @@ class Product extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
+		'CustomPrint' => array(
+			'className' => 'CustomPrint',
+			'foreignKey' => 'product_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+
 
 	);
 	
@@ -314,7 +328,11 @@ class Product extends AppModel {
 				foreach($_FILES['product_images'] as $attr=>$value) {
 					$_FILES['product_images'][$attr] = array();
 					$_FILES['product_images'][$attr][] = $_FILES['custom_print_image'][$attr];
-				}				
+				}		
+				// need to declare the CustomPrint inside the data variable otherwise
+				// CustomPrint data will not be saved.
+				// at the very minimum should declare CustomPrint.0 as empty array	
+				$data['CustomPrint'][0]['options'] = 'options data';
 			}
 			
 		}
