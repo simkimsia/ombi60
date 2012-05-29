@@ -318,6 +318,9 @@ class Product extends AppModel {
 		$this->create();
 		
 		
+		$this->log($data);
+		$this->log($_FILES);
+		
 		/** 
 		* because of ChildLabel.com request, 
 		* we want to juggle between custom_print_image and product_images 
@@ -760,6 +763,7 @@ class Product extends AppModel {
 	public function afterSave($created) {
 		
 		/**
+		 *
 		 * for products admin_edit ONLY
 		 * we need to affect the Variant Options where applicable
 		 * provided that Product.options is not empty AND Product.edit_options is 1 AND

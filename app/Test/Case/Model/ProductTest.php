@@ -476,6 +476,95 @@ class ProductTestCase extends CakeTestCase {
 		$this->assertEquals(4, $result['Product']['id']);
 		$this->assertEquals(4, $result['Variant'][0]['id']);
 	}
+
+	/**
+	*
+	* test createDetails Should work with Product and Variant -> VariantOption
+	**/
+	public function testCreateDetailsWorksWithCustomPrintData() {
+		// GIVEN that we want to create an imageless Product
+		$dataGiven = array(
+			'Product' => array(
+				'shop_id' => 2,
+	            'title' => 'title1',
+	            'description' => '<p>description</p>',
+	            'code' => '',
+	            'visible' => true,
+	            'shipping_required' => true,
+	            'currency' => 'SGD',
+	            'price' => 12,
+	            'displayed_weight' => 2,
+	            'selected_collections' => array(),
+				'custom_print_on' => 1,
+			),
+			'Variant' => array(
+				0 => array(
+					'VariantOption' => array(
+						0 => array(
+							'field' => 'Title',
+							'value' => 'Default Title',
+							'order' => 0
+						)
+					)
+				)
+			)
+		);
+		
+		// AND we use the following file for test
+		$pathToFile = dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'File' . DS . 'test_custom_print.png';
+		
+		// AND we have the expected $_FILES
+		$_FILES = array (
+			'product_images' => array (
+		            'name' => array ('0' => ''),
+		            'type' => array ('0' => ''),
+		            'tmp_name' => array ('0' => ''),
+		            'error' => array ('0' => '4'),				
+					'size'	=> array('0' => '0')
+		     ),
+
+		    'custom_print_image' => array(
+		            'name' => 'test_custom_print.png',
+		            'type' => 'image/png',
+		           	'tmp_name' => $pathToFile,
+		            'error' => 0,
+		            'size' => 150396,
+		        )
+		);
+		 
+		// WHEN we run the createDetails
+		$result = $this->Product->createDetails($dataGiven);
+		
+		// THEN we expect success
+		$this->assertTrue($result);
+		
+		// AND we find a new Product and Variant stored
+		$result = $this->Product->find('first', array(
+			'conditions' => array(
+				'Product.id' => 4
+			),
+			'contain' => array(
+				'Variant' => array(
+					'fields' => array('Variant.id')
+				),
+				'CustomPrint' => array(
+					'fields' => array('CustomPrint.id')
+				),
+				'ProductImage' => array(
+					'fields' => array('ProductImage.id')
+				),
+			),
+			'fields' => array('Product.id')
+		));
+		
+		debug($result);
+		
+		$this->assertEquals(4, $result['Product']['id']);
+		$this->assertEquals(4, $result['Variant'][0]['id']);
+		$this->assertEquals(1, $result['CustomPrint'][0]['id']);
+		$this->assertEquals(4, $result['ProductImage'][0]['id']);
+	}
+
 	
 	/**
 	*

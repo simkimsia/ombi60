@@ -178,7 +178,7 @@ class ProductImage extends AppModel {
 	 * the images is a newly created product. This is so that the first file is automatically set as cover
 	 **/
 	public function saveFILESAsProductImages($product_id, $brandNewProductCreated = true) {
-		
+		$this->log('1');
 		if (!empty($_FILES)) {
 			$tmp = array();		
 			foreach ($_FILES['product_images'] as $key => $valueArray) {
@@ -190,7 +190,9 @@ class ProductImage extends AppModel {
 						$i++;
 					}
 				}
-			}           
+			}    
+					$this->log('2');   
+					$this->log($_FILES);
 			$allowedExtensions 	= array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
 			$i 					= 0;
 			
@@ -206,7 +208,9 @@ class ProductImage extends AppModel {
 								'product_id' => $product_id,));
 
 					$result = $this->save($data);   
-							
+						$this->log('result');
+						$this->log($result);
+						$this->log($this->validationErrors);
 					if ($result != false && $i++ == 0 && $brandNewProductCreated) {
 						$this->chooseAsCoverImage($this->id, $product_id);
 					}    
