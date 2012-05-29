@@ -97,3 +97,6 @@
 [submodule "app/Plugin/Migrations"]
 	path = app/Plugin/Migrations
 	url = git://github.com/simkimsia/migrations.git
+[submodule "app/Plugin/MeioUpload"]
+	path = app/Plugin/MeioUpload
+	url = git://github.com/simkimsia/MeioUpload.git

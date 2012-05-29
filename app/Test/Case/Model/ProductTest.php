@@ -511,7 +511,35 @@ class ProductTestCase extends CakeTestCase {
 		);
 		
 		// AND we use the following file for test
-		$pathToFile = dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'File' . DS . 'test_custom_print.png';
+		$fileName = 'test_custom_print.png';
+		$pathToFile = dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'File' . DS . $fileName;
+		
+		// AND we do not have this test file inside uploads/products/
+		$webrootDir = APP . DS . 'webroot' . DS . 'uploads' . DS . 'products' . DS;		
+		$webrootToFile = $webrootDir . 'test_custom_print.png';
+		
+		$file = new File($webrootToFile);
+		$file->delete();
+		
+		// AND not in the thumb folders
+		$webrootToFileThumbs = array(
+			'thumb', 'icon', 'large', 'small', 'medium'
+		);
+		
+		foreach($webrootToFileThumbs as $foldername) {
+			$webrootToFile = $webrootDir . 'thumb' . DS . $foldername . DS . $fileName;
+			$file = new File($webrootToFile);
+			$file->delete();
+		}
+		
+		
+		// AND we turn the validate to false for checking uploaded_file for MeioUpload since we are using 
+		// unit test, so we will definitely fail the validation for the is_uploaded_file
+		$this->Product->ProductImage->validate['filename'] = array(
+			'HttpPost' => array(
+				'check' => false
+			)
+		);
 		
 		// AND we have the expected $_FILES
 		$_FILES = array (
@@ -562,7 +590,25 @@ class ProductTestCase extends CakeTestCase {
 		$this->assertEquals(4, $result['Product']['id']);
 		$this->assertEquals(4, $result['Variant'][0]['id']);
 		$this->assertEquals(1, $result['CustomPrint'][0]['id']);
-		$this->assertEquals(4, $result['ProductImage'][0]['id']);
+		$this->assertEquals(3, $result['ProductImage'][0]['id']);
+		
+		// AND we need to delete away the test files
+		$webrootToFile = $webrootDir . 'test_custom_print.png';
+		
+		$file = new File($webrootToFile);
+		$file->delete();
+		
+		// AND in the thumb folders
+		$webrootToFileThumbs = array(
+			'thumb', 'icon', 'large', 'small', 'medium'
+		);
+		
+		foreach($webrootToFileThumbs as $foldername) {
+			$webrootToFile = $webrootDir . 'thumb' . DS . $foldername . DS . $fileName;
+			$file = new File($webrootToFile);
+			$file->delete();
+		}
+		
 	}
 
 	
