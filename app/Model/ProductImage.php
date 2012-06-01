@@ -191,8 +191,7 @@ class ProductImage extends AppModel {
 					}
 				}
 			}    
-					$this->log('2');   
-					$this->log($_FILES);
+			
 			$allowedExtensions 	= array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
 			$i 					= 0;
 			
@@ -208,9 +207,7 @@ class ProductImage extends AppModel {
 								'product_id' => $product_id,));
 
 					$result = $this->save($data);   
-						$this->log('result');
-						$this->log($result);
-						$this->log($this->validationErrors);
+					
 					if ($result != false && $i++ == 0 && $brandNewProductCreated) {
 						$this->chooseAsCoverImage($this->id, $product_id);
 					}    
