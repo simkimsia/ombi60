@@ -198,8 +198,7 @@ class Product extends AppModel {
 						'message' => 'Product title cannot be empty',
 					
 							),)
-			     );
-	
+			     );	
 	
 	public function __construct($id=false,$table=null,$ds=null) {
 		parent::__construct($id,$table,$ds);
@@ -317,10 +316,6 @@ class Product extends AppModel {
 	public function createDetails($data = NULL) {
 		$this->create();
 		
-		
-		$this->log($data);
-		$this->log($_FILES);
-		
 		/** 
 		* because of ChildLabel.com request, 
 		* we want to juggle between custom_print_image and product_images 
@@ -335,7 +330,9 @@ class Product extends AppModel {
 				// need to declare the CustomPrint inside the data variable otherwise
 				// CustomPrint data will not be saved.
 				// at the very minimum should declare CustomPrint.0 as empty array	
-				$data['CustomPrint'][0]['options'] = 'options data';
+				$optionsDataJSON = json_encode($this->CustomPrint->optionsData);
+				
+				$data['CustomPrint'][0]['options'] = $optionsDataJSON;
 			}
 			
 		}

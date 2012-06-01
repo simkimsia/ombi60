@@ -576,7 +576,7 @@ class ProductTestCase extends CakeTestCase {
 					'fields' => array('Variant.id')
 				),
 				'CustomPrint' => array(
-					'fields' => array('CustomPrint.id')
+					'fields' => array('CustomPrint.id', 'CustomPrint.options')
 				),
 				'ProductImage' => array(
 					'fields' => array('ProductImage.id')
@@ -588,7 +588,12 @@ class ProductTestCase extends CakeTestCase {
 		$this->assertEquals(4, $result['Product']['id']);
 		$this->assertEquals(4, $result['Variant'][0]['id']);
 		$this->assertEquals(1, $result['CustomPrint'][0]['id']);
+		
+		$expectedOptions = json_encode($this->Product->CustomPrint->optionsData);
+		
+		$this->assertEquals($expectedOptions, $result['CustomPrint'][0]['options']);
 		$this->assertEquals(3, $result['ProductImage'][0]['id']);
+		
 		
 		// AND we need to delete away the test files
 		$webrootToFile = $webrootDir . 'test_custom_print.png';

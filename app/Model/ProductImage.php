@@ -178,7 +178,6 @@ class ProductImage extends AppModel {
 	 * the images is a newly created product. This is so that the first file is automatically set as cover
 	 **/
 	public function saveFILESAsProductImages($product_id, $brandNewProductCreated = true) {
-		$this->log('1');
 		if (!empty($_FILES)) {
 			$tmp = array();		
 			foreach ($_FILES['product_images'] as $key => $valueArray) {

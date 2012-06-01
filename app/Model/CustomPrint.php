@@ -40,4 +40,28 @@ class CustomPrint extends AppModel {
 			'order' => ''
 		)
 	);
+	
+	// default sticker stats for ChildLabel Custom Print function
+	public $optionsData = array(
+		'saved_img' => array(
+			'width' => 260,
+			'height' => 75
+		),
+		'font' => array(
+			'file' => 'AmericanTypewriter.ttc',
+			'size' => 32,
+			'color' => array(
+				'yellow' => '#FEF94B',
+			)
+		),
+		'text' => array(
+			'xpos' => 0,
+			'ypos'	=> 28,
+			'angle' => 0,
+			'line_height' => 36,
+			'max_width_allowed' => 190
+		),
+	);
+	
+	
 }
