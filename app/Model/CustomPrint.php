@@ -63,8 +63,107 @@ class CustomPrint extends AppModel {
 		),
 	);
 	
-	public function updateNewImage($data) {
-		return 'abc.png';
+	/**
+	 * 
+	 * update new image returning the filename
+	 * @param $data Array that contains the options
+	 * @return string Filename of the new images
+	 */
+	public function updateNewImage($data, $originalFileName) {
+		
+		// get the full path to the original imagefile
+		$temp_name = PRODUCT_IMAGES_PATH . $originalFileName;
+		
+		// Create the full path for new file for the image to be written
+		$new_file = TMP_CUSTOM_PRINTS.time().'png';
+
+		// Resizing the uploaded image
+		$resized_photo = new Imagick($temp_name);
+
+		// Write the image to a new file so that we can put the overlay text later
+		$resized_photo->setImageFormat('png');
+		$resized_photo->writeImage($new_file);
+
+		// Now create the overlay text
+		$overlay = new Imagick();
+		$draw = new ImagickDraw();
+		$pixel = new ImagickPixel( 'transparent' );
+
+		// Use the same width as the image or up to you
+		$overlay->newImage(260, 75, $pixel);
+
+		// Set fill color
+		$draw->setFillColor('#FEF94B');
+
+		// Set font. Check your server for available fonts.
+		$draw->setFont('AmericanTypewriter.ttc');
+		$draw->setFontSize( 32 );
+
+		// Create the text
+		$maxWidthAllowedForText = 190;
+		list($lines, $lineHeight) = $this->wordWrapAnnotation($overlay, $draw, $text, $maxWidthAllowedForText);
+
+
+		$xpos = 0; // x and y coordiantes to start printing
+		$ypos = 28;
+		$angle = 0; // angle at which the word is printed
+		for($i = 0; $i < count($lines); $i++)
+		    $overlay->annotateImage($draw,  $xpos, $ypos + $i*36, $angle, $lines[$i]);
+
+		// Write to the disk so that we can finally overlay
+		$finalFilename = time().'png';
+		$overlay_file = TMP_CUSTOM_PRINTS . $finalFilename;
+		$overlay->setImageFormat('png');
+		$overlay->writeImage($overlay_file);
+
+		// overlay
+		shell_exec("composite -gravity center ".$overlay_file." {$new_file} {$new_file}");	
+		
+		return $finalFilename;
 	}
+	
+	/**
+	 * word wrap annotation that will add in the words into the image
+	 *
+	 * @param imagick image object by reference
+	 * @param $draw
+	 * @param $text
+	 * @param #maxWidth
+	 * @return array
+	 * 
+	 **/
+	public function wordWrapAnnotation(&$image, &$draw, $text, $maxWidth) {
+	    $words = explode(" ", $text);
+	    $lines = array();
+	    $i = 0;
+	    $lineHeight = 0;
+	    while($i < count($words) )
+	    {
+	        $currentLine = $words[$i];
+	        if($i+1 >= count($words))
+	        {
+	            $lines[] = $currentLine;
+	            break;
+	        }
+	        //Check to see if we can add another word to this line
+	        $metrics = $image->queryFontMetrics($draw, $currentLine . ' ' . $words[$i+1]);
+	        while($metrics['textWidth'] <= $maxWidth)
+	        {
+	            //If so, do it and keep doing it!
+	            $currentLine .= ' ' . $words[++$i];
+	            if($i+1 >= count($words))
+	                break;
+	            $metrics = $image->queryFontMetrics($draw, $currentLine . ' ' . $words[$i+1]);
+	        }
+	        //We can't add the next word to this line, so loop to the next line
+	        $lines[] = $currentLine;
+	        $i++;
+	        //Finally, update line height
+	        if($metrics['textHeight'] > $lineHeight)
+	            $lineHeight = $metrics['textHeight'];
+	    }
+	    return array($lines, $lineHeight);
+	}
+	
 	
 }

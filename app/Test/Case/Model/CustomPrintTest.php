@@ -107,10 +107,50 @@ class CustomPrintTestCase extends CakeTestCase {
 		// WHEN we run the function
 		$result = $this->CustomPrint->updateNewImage($data);
 		
-		// THEN we expect abc.png
-		$expected = 'abc.png';
+		// THEN we expect the files end with png
+		$expected = 'png';
 		
-		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, substr($result, -3));
+	}
+	
+	/**
+	 * test the word wrap annotation
+	 **/
+	public function testWordWrapAnnotation() {
+		// GIVEN we want to add 2 new options AND 1 is a custom option called stripes
+		$newOptions = array(
+			array(
+				'field' => 'custom',
+				'custom_field' => 'stripes',
+				'value' => 'zebra'
+			),
+			array(
+				'field' => 'Size',
+				'value' => 'Default Size'
+			)
+		);
+		// AND we want to delete the old option
+		$currentOptions = array(
+			'Title' => array(
+				'delete' => true,
+			)
+		);
+		
+		$data = array(
+			'Product' => array(
+				'options' => $currentOptions,
+				'new_options' => $newOptions,
+				'id' => 3
+			)
+		);
+		
+		// WHEN we run the function
+		//$result = $this->CustomPrint->wordWrapAnnotation($data);
+		
+		// THEN we expect the files end with png
+		$expected = 'png';
+		
+		//$this->assertEquals($expected, $result);
 	}
 	
 
