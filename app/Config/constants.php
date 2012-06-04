@@ -137,3 +137,16 @@ define('HIDDEN_AND_VISIBLE_ENTITY', 2);
 * default language 
 **/
 define('DEFAULT_LANGUAGE', 'eng');
+
+
+/**
+ * 
+ * path to the temporary folder inside www_root
+ */
+define('WWW_ROOT_TMP', ROOT . DS . 'app' . DS . WEBROOT_DIR . DS . 'tmp' . DS);
+
+/**
+ * 
+ * path to the custom prints folder inside tmp folder within www_root
+ */
+define('TMP_CUSTOM_PRINTS', WWW_ROOT_TMP . 'custom_prints' . DS);
