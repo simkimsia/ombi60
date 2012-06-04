@@ -781,7 +781,22 @@ class ProductsController extends AppController {
 		
 		
 	}
-  
+	
+	/**
+	 * 
+	 * Ajax update function
+	 * update the custom print so that at the product view page, we will see the updated words annotated
+	 * @param integer $productId Product id of which we will identify the right custom print to update
+	 * @return boolean
+	 *
+	 **/
+	public function custom_print_update($productId = false) {
+		// call some function that will return the image with updated words
+		$newFile = $this->Product->CustomPrint->updateNewImage($this->data);
+		
+		// return json result
+		
+	}
     
 }
 ?>

@@ -63,5 +63,8 @@ class CustomPrint extends AppModel {
 		),
 	);
 	
+	public function updateNewImage($data) {
+		return 'abc.png';
+	}
 	
 }

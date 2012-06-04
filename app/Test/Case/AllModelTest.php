@@ -37,6 +37,9 @@ class AllModelTest extends PHPUnit_Framework_TestSuite {
 		$suite->addTestFile($path . 'CountryTest.php');
 		
 		$suite->addTestFile($path . 'CustomerTest.php');
+		
+		$suite->addTestFile($path . 'CustomPrintTest.php');
+		
 		$suite->addTestFile($path . 'DomainTest.php');
 		$suite->addTestFile($path . 'FulfillmentTest.php');
 		
