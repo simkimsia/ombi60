@@ -791,10 +791,33 @@ class ProductsController extends AppController {
 	 *
 	 **/
 	public function custom_print_update($productId = false) {
-		// call some function that will return the image with updated words
-		$newFile = $this->Product->CustomPrint->updateNewImage($this->data);
+		$validProductId = ($productId > 0);
 		
-		// return json result
+		if (!$validProductId) {
+			// return invalid product id json message
+			return false;
+		}
+		
+		// get the original file name of the product based on productid
+		$originalImage = $this->Product->ProductImage->find('first', array(
+			'conditions' => array(
+				'ProductImage.product_id' => $productId
+			),
+			'fields' => array('ProductImage.filename')
+		));
+		
+		// check if the image file is valid
+		$validImageFile = !empty($originalImage['ProductImage']['filename']);
+		
+		if ($validImageFile) {
+			// call some function that will return the image with updated words
+			$newFile = $this->Product->CustomPrint->updateNewImage($this->data, $validImageFile);
+
+			// return json result
+			
+		}
+		// return invalid product id json message
+		return false;
 		
 	}
     

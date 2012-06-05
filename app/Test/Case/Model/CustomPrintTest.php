@@ -77,7 +77,20 @@ class CustomPrintTestCase extends CakeTestCase {
 	* test for the scenario where we generate a new image for new words and return the filename of the new image
 	**/
 	public function testUpdateNewImage() {
-		// GIVEN we want to add 2 new options AND 1 is a custom option called stripes
+		// GIVEN we have the test_rectangle_eng.jpg 
+		$fileName = 'test_rectangle_eng.jpg';
+		$pathToFile = dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'File' . DS . $fileName;
+
+		// AND we move it to www_root/uploads/products
+		$destinationPath = PRODUCT_IMAGES_PATH . $fileName;
+		
+		$file = new File($pathToFile);
+		$file->copy($destinationPath);
+		
+		$copyfile = new File($destinationPath);
+		$this->assertTrue($copyfile->exists());
+		
+		// AND we prepare the data array
 		$newOptions = array(
 			array(
 				'field' => 'custom',
@@ -105,12 +118,12 @@ class CustomPrintTestCase extends CakeTestCase {
 		);
 		
 		// WHEN we run the function
-		$result = $this->CustomPrint->updateNewImage($data);
+		$result = $this->CustomPrint->updateNewImage($data, $fileName);
 		
 		// THEN we expect the files end with png
-		$expected = 'png';
+		$expected = '.png';
 		
-		$this->assertEquals($expected, substr($result, -3));
+		$this->assertEquals($expected, substr($result, -4));
 	}
 	
 	/**
@@ -148,7 +161,7 @@ class CustomPrintTestCase extends CakeTestCase {
 		//$result = $this->CustomPrint->wordWrapAnnotation($data);
 		
 		// THEN we expect the files end with png
-		$expected = 'png';
+		$expected = '.png';
 		
 		//$this->assertEquals($expected, $result);
 	}

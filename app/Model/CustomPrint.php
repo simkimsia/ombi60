@@ -70,12 +70,15 @@ class CustomPrint extends AppModel {
 	 * @return string Filename of the new images
 	 */
 	public function updateNewImage($data, $originalFileName) {
+		// text on the custom print itself
+		$text = 'Lee Ming Xuan';
 		
 		// get the full path to the original imagefile
 		$temp_name = PRODUCT_IMAGES_PATH . $originalFileName;
 		
 		// Create the full path for new file for the image to be written
-		$new_file = TMP_CUSTOM_PRINTS.time().'png';
+		// this new_file is the one with the print
+		$new_file = TMP_CUSTOM_PRINTS.'final_'.time().'.png';
 
 		// Resizing the uploaded image
 		$resized_photo = new Imagick($temp_name);
@@ -96,7 +99,7 @@ class CustomPrint extends AppModel {
 		$draw->setFillColor('#FEF94B');
 
 		// Set font. Check your server for available fonts.
-		$draw->setFont('AmericanTypewriter.ttc');
+		$draw->setFont(FONTS . 'AmericanTypewriter.ttc');
 		$draw->setFontSize( 32 );
 
 		// Create the text
@@ -111,13 +114,20 @@ class CustomPrint extends AppModel {
 		    $overlay->annotateImage($draw,  $xpos, $ypos + $i*36, $angle, $lines[$i]);
 
 		// Write to the disk so that we can finally overlay
-		$finalFilename = time().'png';
+		// this overlay_file is the one with the text
+		$finalFilename = time().'.png';
 		$overlay_file = TMP_CUSTOM_PRINTS . $finalFilename;
 		$overlay->setImageFormat('png');
 		$overlay->writeImage($overlay_file);
 
 		// overlay
+		// when we run this, overlay the text from overlay_file onto the print in new_file
+		// thus the final product is in new_file
 		shell_exec("composite -gravity center ".$overlay_file." {$new_file} {$new_file}");	
+		
+		// so at the end we remove the overlayFile which contains the text
+		$overlayFile = new File($overlay_file);
+		$overlayFile->delete();
 		
 		return $finalFilename;
 	}
