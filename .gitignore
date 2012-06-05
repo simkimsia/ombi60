@@ -15,3 +15,5 @@ themes/tmp
 app/webroot/coverage/*
 app/views/themed/2_cover/*
 
+## the custom print .png files
+app/webroot/tmp/custom_prints/*.png
