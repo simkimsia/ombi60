@@ -26,6 +26,10 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
+	// for webservices see  https://github.com/josegonzalez/webservice_plugin for details
+	Router::parseExtensions('json'); 
+
     Router::connect('/error', array('controller' => 'webpages', 'action' => 'error'));
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',

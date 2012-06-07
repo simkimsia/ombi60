@@ -31,6 +31,7 @@ class ProductsController extends AppController {
 				'view_within_group',
 			)
 		),
+		'Webservice.Webservice'
 	);
 	
 	public $view = 'TwigView.Twig';
