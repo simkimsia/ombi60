@@ -5,7 +5,8 @@
 	<div id="images">
 		<!-- START IMAGE -->
 		<div id="image" class="clear">
-			<img src="{{ product.images[0] | product_img_url("large") }}" alt="{{ product.title | escape }}" />
+			
+			<img id="mainimg" src="{{ product.images[0] | product_img_url("large") }}" alt="{{ product.title | escape }}" />
 		</div>
 		<!-- END IMAGE -->
 		<!-- START THUMBS -->
@@ -44,9 +45,37 @@
 				</div>
 				<!-- END BUY -->
 			</form>
+			
+		  <form action="/custom_print_update/{{ product.id }}" id="imageUpdateForm">
+		   <input type="text" name="s" placeholder="Your text..." />
+		   <input type="submit" value="Update" />
+		  </form>
+
 		</div>
+		
 		<!-- END OPTIONS -->
 	</div>
 	<!-- END DETAILS -->
 </div>
 <!-- END SUMMARY -->{% include "related" | snippets_url %}
+
+<script>
+  /* attach a submit handler to the form */
+  $("#imageUpdateForm").submit(function(event) {
+
+    /* stop form from submitting normally */
+    event.preventDefault(); 
+        
+    /* get some values from elements on the page: */
+    var $form = $( this ),
+        term = $form.find( 'input[name="s"]' ).val(),
+        url = $form.attr( 'action' );
+
+    /* Send the data using post and put the results in a div */
+    $.post( url, { s: term },
+      function( data ) {
+          $( "#mainimg" ).attr('src', data)
+      }
+    );
+  });
+</script>

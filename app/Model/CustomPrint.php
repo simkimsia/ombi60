@@ -48,20 +48,36 @@ class CustomPrint extends AppModel {
 			'height' => 75
 		),
 		'font' => array(
-			'file' => 'AmericanTypewriter.ttc',
+			'type' => 'AmericanTypeWriter',
 			'size' => 32,
-			'color' => array(
-				'yellow' => '#FEF94B',
-			)
+			'color' => 'yellow'
 		),
 		'text' => array(
 			'xpos' => 0,
 			'ypos'	=> 28,
 			'angle' => 0,
 			'line_height' => 36,
-			'max_width_allowed' => 190
+			'max_width_allowed' => 190,
+			'value' => 'Lee Ming Xuan'
 		),
 	);
+	
+	public $colors = array(
+		'yellow' => '#FEF94B',
+	);
+	
+	public $fontfiles = array(
+		'AmericanTypeWriter' => 'AmericanTypewriter.ttc'
+	);
+	
+	/**
+	 *
+	 * override default options depending on how the given options turn out
+	 *
+	 **/
+	protected function extractConfirmedOptions($givenOptions) {
+		
+	}
 	
 	/**
 	 * 
@@ -70,8 +86,29 @@ class CustomPrint extends AppModel {
 	 * @return string Filename of the new images
 	 */
 	public function updateNewImage($data, $originalFileName) {
-		// text on the custom print itself
-		$text = 'Lee Ming Xuan';
+		
+		if (!empty($data['CustomPrint'])) {
+			// confirmed options data
+			$finalOptions = Set::merge($this->optionsData, $data['CustomPrint']);
+		} else {
+			$finalOptions = $this->optionsData;
+		}
+		
+		// setting all the CHOSEN fields 
+		$text = $finalOptions['text']['value'];
+		
+		$savedImgWidth = $finalOptions['saved_img']['width'];
+		$savedImgHeight = $finalOptions['saved_img']['height'];
+		
+		$fontcolor = $this->colors[$finalOptions['font']['color']];
+		$fonttype  = $this->fontfiles[$finalOptions['font']['type']];
+		$fontsize = $finalOptions['font']['size'];
+		
+		$xpos = $finalOptions['text']['xpos'];
+		$ypos = $finalOptions['text']['ypos'];
+		$angle = $finalOptions['text']['angle'];
+		$heightPerLine = $finalOptions['text']['line_height'];
+		$maxWidthAllowedForText = $finalOptions['text']['max_width_allowed'];
 		
 		// get the full path to the original imagefile
 		$temp_name = PRODUCT_IMAGES_PATH . $originalFileName;
@@ -93,25 +130,21 @@ class CustomPrint extends AppModel {
 		$pixel = new ImagickPixel( 'transparent' );
 
 		// Use the same width as the image or up to you
-		$overlay->newImage(260, 75, $pixel);
+		$overlay->newImage($savedImgWidth, $savedImgHeight, $pixel);
 
 		// Set fill color
-		$draw->setFillColor('#FEF94B');
+		$draw->setFillColor($fontcolor);
 
 		// Set font. Check your server for available fonts.
-		$draw->setFont(FONTS . 'AmericanTypewriter.ttc');
-		$draw->setFontSize( 32 );
+		$draw->setFont(FONTS . $fonttype);
+		$draw->setFontSize( $fontsize );
 
 		// Create the text
-		$maxWidthAllowedForText = 190;
 		list($lines, $lineHeight) = $this->wordWrapAnnotation($overlay, $draw, $text, $maxWidthAllowedForText);
 
-
-		$xpos = 0; // x and y coordiantes to start printing
-		$ypos = 28;
-		$angle = 0; // angle at which the word is printed
-		for($i = 0; $i < count($lines); $i++)
-		    $overlay->annotateImage($draw,  $xpos, $ypos + $i*36, $angle, $lines[$i]);
+		for($i = 0; $i < count($lines); $i++) {
+			$overlay->annotateImage($draw,  $xpos, $ypos + $i*$heightPerLine, $angle, $lines[$i]);
+		}
 
 		// Write to the disk so that we can finally overlay
 		// this overlay_file is the one with the text

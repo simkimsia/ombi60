@@ -814,7 +814,12 @@ class ProductsController extends AppController {
 			$newFile = $this->Product->CustomPrint->updateNewImage($this->data, $validImageFile);
 
 			// return json result
-			
+			$response = array(
+				'result' => $newFile,
+				'error' => null,
+				'id' => null
+			);
+			return $this->set('response', )
 		}
 		// return invalid product id json message
 		return false;

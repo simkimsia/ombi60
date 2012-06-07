@@ -91,29 +91,13 @@ class CustomPrintTestCase extends CakeTestCase {
 		$this->assertTrue($copyfile->exists());
 		
 		// AND we prepare the data array
-		$newOptions = array(
-			array(
-				'field' => 'custom',
-				'custom_field' => 'stripes',
-				'value' => 'zebra'
-			),
-			array(
-				'field' => 'Size',
-				'value' => 'Default Size'
-			)
-		);
-		// AND we want to delete the old option
-		$currentOptions = array(
-			'Title' => array(
-				'delete' => true,
-			)
+		$text = array(
+			'value' => 'Yabba Dabba Doo'
 		);
 		
 		$data = array(
-			'Product' => array(
-				'options' => $currentOptions,
-				'new_options' => $newOptions,
-				'id' => 3
+			'CustomPrint' => array(
+				'text' => $text
 			)
 		);
 		

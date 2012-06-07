@@ -100,3 +100,6 @@
 [submodule "app/Plugin/MeioUpload"]
 	path = app/Plugin/MeioUpload
 	url = git://github.com/simkimsia/MeioUpload.git
+[submodule "app/Plugin/Webservice"]
+	path = app/Plugin/Webservice
+	url = git://github.com/josegonzalez/webservice_plugin.git
