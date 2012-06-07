@@ -28,7 +28,7 @@
  */
 
 	// for webservices see  https://github.com/josegonzalez/webservice_plugin for details
-	Router::parseExtensions('json'); 
+	Router::parseExtensions('json', 'csv'); 
 
     Router::connect('/error', array('controller' => 'webpages', 'action' => 'error'));
 /**
@@ -62,6 +62,18 @@
                         array('pass' => array('handle'),
                               'handle' => '[a-zA-Z0-9\-_]+'
                               ));
+
+        // product links
+        Router::connect('/products/:id.:ext/custom',
+                        array(
+							'controller' => 'products',
+							'action' => 'custom_print_update',
+							),
+                        array(
+							'pass' => array('id'),
+							'id' => '[0-9]+',
+                         ));
+
 
 	   // build links so that LogHelper can work
        Router::connect('/admin/products/:id',
@@ -718,7 +730,6 @@
 			)
 		);
 
-		Router::parseExtensions('csv');
 
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 

@@ -72,12 +72,33 @@ class CustomPrint extends AppModel {
 	
 	/**
 	 *
-	 * override default options depending on how the given options turn out
+	 * extract from the html views and then put them in properly
 	 *
 	 **/
-	protected function extractConfirmedOptions($givenOptions) {
+	protected function extractOptions($givenData) {
+		$data = array(
+			'CustomPrint' => array()
+		);
 		
+		// at the view, for name = custom_text expected the actual text
+		if (!empty($givenData['custom_text'])) {
+			$data['CustomPrint']['text']['value'] = $givenData['custom_text'];
+		}
+
+		// custom_color expected yellow, etc
+		if (!empty($givenData['custom_color'])) {
+			$data['CustomPrint']['font']['color'] = $givenData['custom_color'];
+		}
+		
+		// custom_font expected AmericanTypeWriter, etc
+		if (!empty($givenData['custom_font'])) {
+			$data['CustomPrint']['font']['type'] = $givenData['custom_font'];
+		}
+		
+		return $data;
 	}
+	
+	
 	
 	/**
 	 * 
@@ -86,14 +107,18 @@ class CustomPrint extends AppModel {
 	 * @return string Filename of the new images
 	 */
 	public function updateNewImage($data, $originalFileName) {
-		
+
+		// change custom_text etc to data[CustomPrint][text][value]
+		$data = $this->extractOptions($data);
+
 		if (!empty($data['CustomPrint'])) {
 			// confirmed options data
 			$finalOptions = Set::merge($this->optionsData, $data['CustomPrint']);
 		} else {
 			$finalOptions = $this->optionsData;
 		}
-		
+
+
 		// setting all the CHOSEN fields 
 		$text = $finalOptions['text']['value'];
 		
@@ -115,7 +140,8 @@ class CustomPrint extends AppModel {
 		
 		// Create the full path for new file for the image to be written
 		// this new_file is the one with the print
-		$new_file = TMP_CUSTOM_PRINTS.'final_'.time().'.png';
+		$finalFileName = 'final_'.time().'.png';
+		$new_file = TMP_CUSTOM_PRINTS . $finalFileName;
 
 		// Resizing the uploaded image
 		$resized_photo = new Imagick($temp_name);
@@ -148,8 +174,8 @@ class CustomPrint extends AppModel {
 
 		// Write to the disk so that we can finally overlay
 		// this overlay_file is the one with the text
-		$finalFilename = time().'.png';
-		$overlay_file = TMP_CUSTOM_PRINTS . $finalFilename;
+		$overlay_filename = time().'.png';
+		$overlay_file = TMP_CUSTOM_PRINTS . $overlay_filename;
 		$overlay->setImageFormat('png');
 		$overlay->writeImage($overlay_file);
 
@@ -162,7 +188,7 @@ class CustomPrint extends AppModel {
 		$overlayFile = new File($overlay_file);
 		$overlayFile->delete();
 		
-		return $finalFilename;
+		return $finalFileName;
 	}
 	
 	/**

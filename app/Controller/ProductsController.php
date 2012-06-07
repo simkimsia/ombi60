@@ -34,7 +34,7 @@ class ProductsController extends AppController {
 		'Webservice.Webservice'
 	);
 	
-	public $view = 'TwigView.Twig';
+	public $viewClass = 'Webservice.Webservice';
 	
 	public $cartModel = '';
 	public $cartItemModel = '';
@@ -72,7 +72,8 @@ class ProductsController extends AppController {
 			'view',
 			'view_by_group', 
 			'view_within_group',
-			'checkout'
+			'checkout',
+			'custom_print_update'
 		);
 
 		
@@ -97,7 +98,8 @@ class ProductsController extends AppController {
 		    $this->request->action == 'admin_add_variant' ||
 		    $this->request->action == 'admin_edit_variant' ||
 		    $this->request->action == 'admin_menu_action'  ||
-		    $this->request->action == 'admin_product_search' 
+		    $this->request->action == 'admin_product_search' ||
+		    $this->request->action == 'custom_print_update'
 		) {
 			$this->Components->disable('Security');
 		}
@@ -706,23 +708,23 @@ class ProductsController extends AppController {
 	       
 	}//end admin_search()
         
-        /**
-         * This action is used to manupulate variant option
-         * 
-         * @param Array $product Array of productInfo
-         * 
-         * @return array of options
-         * */
-        public function admin_remove_variant_option($id) {
-                if ($this->request->is('ajax')) {
-                        $this->layout = "";
-                }
-                if ($this->Product->Variant->VariantOption->delete($id)) {
-                        $successJSON  = true;
-                        $this->set(compact('successJSON'));
-                        $this->render('../Json/empty');
-                }
-        }
+    /**
+     * This action is used to manupulate variant option
+     * 
+     * @param Array $product Array of productInfo
+     * 
+     * @return array of options
+     * */
+    public function admin_remove_variant_option($id) {
+	    if ($this->request->is('ajax')) {
+			$this->layout = "";
+	    }
+	    if ($this->Product->Variant->VariantOption->delete($id)) {
+	        $successJSON  = true;
+            $this->set(compact('successJSON'));
+            $this->render('../Json/empty');
+	    }
+    }
 	
 	public function admin_add_variant($productId = false) {
 		if(!($productId)) {
@@ -792,6 +794,7 @@ class ProductsController extends AppController {
 	 *
 	 **/
 	public function custom_print_update($productId = false) {
+		
 		$validProductId = ($productId > 0);
 		
 		if (!$validProductId) {
@@ -811,19 +814,21 @@ class ProductsController extends AppController {
 		$validImageFile = !empty($originalImage['ProductImage']['filename']);
 		
 		if ($validImageFile) {
+			$validImageFile = $originalImage['ProductImage']['filename'];
+
 			// call some function that will return the image with updated words
 			$newFile = $this->Product->CustomPrint->updateNewImage($this->data, $validImageFile);
 
+			$finalUrlToNewFile = '/tmp/custom_prints/' . $newFile;
+
 			// return json result
-			$response = array(
-				'result' => $newFile,
-				'error' => null,
-				'id' => null
-			);
-			return $this->set('response', )
+			$result = $finalUrlToNewFile;
+			$error = null;
+			$id = null;
+			
+			$this->set(compact('result', 'error', 'id'));
+			$this->set('_serialize', array('result', 'error', 'id'));
 		}
-		// return invalid product id json message
-		return false;
 		
 	}
     

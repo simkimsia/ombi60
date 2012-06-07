@@ -46,8 +46,8 @@
 				<!-- END BUY -->
 			</form>
 			
-		  <form action="/custom_print_update/{{ product.id }}" id="imageUpdateForm">
-		   <input type="text" name="s" placeholder="Your text..." />
+		  <form method="post" action="/products/{{ product.id }}.json/custom" id="imageUpdateForm">
+		   <input type="text" name="custom_text" placeholder="Your text..." />
 		   <input type="submit" value="Update" />
 		  </form>
 
@@ -68,14 +68,24 @@
         
     /* get some values from elements on the page: */
     var $form = $( this ),
-        term = $form.find( 'input[name="s"]' ).val(),
-        url = $form.attr( 'action' );
+        term = $form.find( 'input[name="custom_text"]' ).val(),
+		color = 'yellow',
+		font = 'AmericanTypeWriter',
+        url = $form.attr( 'action' ),
+		type = 'json';
 
     /* Send the data using post and put the results in a div */
-    $.post( url, { s: term },
-      function( data ) {
-          $( "#mainimg" ).attr('src', data)
-      }
+    $.post( url, 
+		{ 
+			custom_text: term ,
+			custom_color: color,
+			custom_font: font
+		},
+      	function( data ) {
+          $( "#mainimg" ).attr('src', data.result)
+      	},
+		type
+		
     );
   });
 </script>
