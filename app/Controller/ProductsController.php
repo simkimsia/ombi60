@@ -34,7 +34,6 @@ class ProductsController extends AppController {
 		'Webservice.Webservice'
 	);
 	
-	public $viewClass = 'Webservice.Webservice';
 	
 	public $cartModel = '';
 	public $cartItemModel = '';
