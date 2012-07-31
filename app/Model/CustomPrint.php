@@ -202,13 +202,7 @@ class CustomPrint extends AppModel {
 		 	 'wordCount1' => $wc1,
 		 	 'wordCount2' => $wc2,
 			'id' => $id
-		));
-	$this->log('after math');
-		$this->log($xpos);
-		$this->log($xpos2);
-			$this->log($ypos);
-		$this->log($ypos2);
-		$this->log($fontsize);								
+		));							
 
 		// Set font. Check your server for available fonts.
 		$draw->setFont(FONTS . $fonttype);
@@ -268,9 +262,6 @@ class CustomPrint extends AppModel {
 	 *)
 	 */
 	public function returnCustomSettingsBasedOnPrint($data) {
-		$this->log($data);
-		$this->log('customsettings');
-		
 		$id = $data['id'];
 		$lang = $data['lang'];
 		$wordCount1 = $data['wordCount1'];
@@ -290,17 +281,9 @@ class CustomPrint extends AppModel {
 			)
 		));
 		
-		$this->log('id:' . $id);
-		$this->log('result:' . $result);
-		
 		$options = $result['CustomPrint']['options'];
 		
 		$options = json_decode($options, true);
-		$this->log('fail test');
-		$this->log($options);
-		$this->log($lang);
-		$this->log($lineCount);
-		$this->log($options[$lang.$lineCount]);
 		$xpos = 0;
 		$ypos = 0;
 		$xpos2 = 0;
@@ -317,35 +300,21 @@ class CustomPrint extends AppModel {
 		**/
 		foreach($options[$lang.$lineCount] as $wordCount1Plus2 => $values) {
 			$wordCountArray = explode('+', $wordCount1Plus2);
-			$this->log('enter');
-			$this->log($wordCount1Plus2);
-			$this->log($wordCount1);
-			$this->log($wordCount2);			
-			$this->log($wordCountArray);
-			$this->log($wordCountArray[0]);			
+			
 			if ($wordCount1 >= $wordCountArray[0] && $wordCount2 >= $wordCountArray[1]) {
 				$xpos = $values['xpos'];
 				$ypos = $values['ypos'];				
 				$xpos2 = $values['xpos2'];
 				$ypos2 = $values['ypos2'];				
 				$fontsize = $values['fontsize'];
-				$this->log('if statement');
-				$this->log($xpos);
-				$this->log('ypos: ' . $ypos);
 			} else {
 				break;
 			}
 		}
-		$this->log('just before');
-				$this->log($xpos);	
-					$this->log($xpos2);	
-$this->log($ypos);	
-$this->log($ypos2);						
-$this->log($fontsize);	
+
 		$result = array($xpos, $ypos, $xpos2, $ypos2, $fontsize);
 
 		return $result;
-		
 	}
 	
 	/**
