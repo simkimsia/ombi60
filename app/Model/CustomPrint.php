@@ -107,8 +107,6 @@ class CustomPrint extends AppModel {
 		return $data;
 	}
 	
-	
-	
 	/**
 	 * 
 	 * update new image returning the filename
@@ -191,10 +189,18 @@ class CustomPrint extends AppModel {
 		// Set fill color
 		$draw->setFillColor($fontcolor);
 
+
+		if ($lang == 'zh') {
+			$wc1 = $this->countChineseWords($text1);
+			$wc2 = $this->countChineseWords($text2);
+		} else {
+			$wc1 = strlen($text1);
+			$wc2 = strlen($text2);
+		}
 		list($xpos, $ypos, $xpos2, $ypos2, $fontsize) = $this->returnCustomSettingsBasedOnPrint(array(
 			'lang' => $lang,
-		 	 'wordCount1' => $this->countWords($text1),
-		 	 'wordCount2' => $this->countWords($text2),
+		 	 'wordCount1' => $wc1,
+		 	 'wordCount2' => $wc2,
 			'id' => $id
 		));
 	$this->log('after math');
@@ -209,8 +215,8 @@ class CustomPrint extends AppModel {
 		$draw->setFontSize( $fontsize );	
 		
 		// Create the text
-		list($lines1, $lineHeight, $wordCount1) = $this->wordWrapAnnotation($overlay, $draw, $text1, $maxWidthAllowedForText);
-		list($lines2, $lineHeight, $wordCount2) = $this->wordWrapAnnotation($overlay, $draw, $text2, $maxWidthAllowedForText);
+		list($lines1, $lineHeight) = $this->wordWrapAnnotation($overlay, $draw, $text1, $maxWidthAllowedForText);
+		list($lines2, $lineHeight) = $this->wordWrapAnnotation($overlay, $draw, $text2, $maxWidthAllowedForText);
 		
 		$lines = array_merge($lines1, $lines2);
 		
@@ -284,9 +290,16 @@ class CustomPrint extends AppModel {
 			)
 		));
 		
+		$this->log('id:' . $id);
+		$this->log('result:' . $result);
+		
 		$options = $result['CustomPrint']['options'];
 		
 		$options = json_decode($options, true);
+		$this->log('fail test');
+		$this->log($options);
+		$this->log($lang);
+		$this->log($lineCount);
 		$this->log($options[$lang.$lineCount]);
 		$xpos = 0;
 		$ypos = 0;
@@ -318,29 +331,29 @@ class CustomPrint extends AppModel {
 				$fontsize = $values['fontsize'];
 				$this->log('if statement');
 				$this->log($xpos);
+				$this->log('ypos: ' . $ypos);
 			} else {
 				break;
 			}
 		}
 		$this->log('just before');
-				$this->log($xpos);		
-		return compact('xpos', 'ypos', 'xpos2', 'ypos2', 'fontsize');
+				$this->log($xpos);	
+					$this->log($xpos2);	
+$this->log($ypos);	
+$this->log($ypos2);						
+$this->log($fontsize);	
+		$result = array($xpos, $ypos, $xpos2, $ypos2, $fontsize);
+
+		return $result;
+		
 	}
 	
 	/**
 	 *
 	 * count english or chinese or spaces
 	 **/
-	public function countWords($text) {
-		mb_internal_encoding('utf-8');
-		// separate the text by chinese characters or words or spaces
-		preg_match_all('/([\w]+)|(.)/u', $text, $matches);
-		$words = $matches[0];
-		$this->log('count words');
-		$this->log($words);
-		$this->log($text);
-		
-		return count($words);
+	public function countChineseWords($text) {
+		return (strlen($text) / 3);
 	}
 	
 	/**
@@ -388,7 +401,7 @@ class CustomPrint extends AppModel {
 	        if($metrics['textHeight'] > $lineHeight)
 	            $lineHeight = $metrics['textHeight'];
 	    }
-	    return array($lines, $lineHeight, count($words));	
+	    return array($lines, $lineHeight);	
 	}
 	
 	

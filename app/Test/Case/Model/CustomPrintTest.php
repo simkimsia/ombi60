@@ -99,7 +99,8 @@ class CustomPrintTestCase extends CakeTestCase {
 		
 		$data = array(
 			'custom_text1' => 'Yabba Dabba Doo',
-			'custom_text2' => ''
+			'custom_text2' => '',
+			'id' => '4'
 		);
 		
 		// WHEN we run the function

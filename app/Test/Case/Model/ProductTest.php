@@ -587,7 +587,7 @@ class ProductTestCase extends CakeTestCase {
 		
 		$this->assertEquals(4, $result['Product']['id']);
 		$this->assertEquals(4, $result['Variant'][0]['id']);
-		$this->assertEquals(1, $result['CustomPrint'][0]['id']);
+		$this->assertEquals(5, $result['CustomPrint'][0]['id']);
 		
 		$expectedOptions = json_encode($this->Product->CustomPrint->optionsData);
 		
