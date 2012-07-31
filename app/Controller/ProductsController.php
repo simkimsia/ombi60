@@ -317,11 +317,13 @@ class ProductsController extends AppController {
 															  'description', 'visible_product_count',
 															  'url', 'vendor_count'),
 													)
-												)
+												),
+											'CustomPrint' => array(
+												'fields' => array('id', 'product_id'),
 											)
+										),
+											
 									));	
-
-
 
 		// must be valid shop
 		$invalidShop = !($shop_id > 0);

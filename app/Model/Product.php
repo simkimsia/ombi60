@@ -921,6 +921,12 @@ class Product extends AppModel {
 				$collections = (TWIG_ITERATOR) ? ArrayToIterator::array2Iterator(array()) : array();
 			}
 			
+			/* CustomPrint */
+			$customPrintId = '';
+			if (!empty($product['CustomPrint']) ) {
+				$customPrintId = $product['CustomPrint'][0]['id'];
+			}
+			
 			/* store the original variants. needed for deriving Product Options */
 			$originalVariants = (!empty($product['Variant']))  ? $product['Variant'] : array();
 			
@@ -955,6 +961,12 @@ class Product extends AppModel {
 					// hardcode this available field to test checkout
 					'available' => 1,
 					);
+					
+			$this->log($customPrintId);
+
+			if (!empty($customPrintId)) {
+				$result['custom_print_id'] = $customPrintId;
+			}
 			
 			/*
 			  assign the peripheral data back into Product Template Variable

@@ -83,8 +83,6 @@ class CustomPrint extends AppModel {
 			'CustomPrint' => array()
 		);
 		
-		$this->log($givenData);
-		
 		// at the view, for name = custom_text expected the actual text
 		if (!empty($givenData['custom_text1'])) {
 			$data['CustomPrint']['text1']['value'] = $givenData['custom_text1'];
@@ -101,15 +99,11 @@ class CustomPrint extends AppModel {
 			$data['CustomPrint']['font']['color'] = $givenData['custom_color'];
 		}
 		
-		
-		// custom_font expected AmericanTypeWriter, etc
-		if (!empty($givenData['custom_lang'])) {
-			
-			$data['CustomPrint']['font']['type'] = $givenData['custom_lang'];
-		} else {
-			$data['CustomPrint']['font']['type'] = 'en';
+		// id
+		if (!empty($givenData['id'])) {
+			$data['CustomPrint']['id'] = $givenData['id'];
 		}
-		
+				
 		return $data;
 	}
 	
@@ -139,12 +133,24 @@ class CustomPrint extends AppModel {
 		
 		$twoLines = !empty($text1) && !empty($text2);
 		$oneLine = !$twoLines;
+		
+		$chineseText = $this->isThisChineseText($text1);
+		$englishText = !$chineseText;
+		
+		// decide the font file to use based on language
+		if ($chineseText) {
+			$lang = 'zh';
+			$fonttype  = $this->fontfiles['zh'];
+		} else {
+			$lang = 'en';			
+			$fonttype  = $this->fontfiles['en'];
+		}
 			
 		$savedImgWidth = $finalOptions['saved_img']['width'];
 		$savedImgHeight = $finalOptions['saved_img']['height'];
 		
 		$fontcolor = $this->colors[$finalOptions['font']['color']];
-		$fonttype  = $this->fontfiles[$finalOptions['font']['type']];
+
 		$fontsize = $finalOptions['font']['size'];
 		
 		$xpos = $finalOptions['text']['xpos'];
@@ -156,6 +162,8 @@ class CustomPrint extends AppModel {
 		$angle = $finalOptions['text']['angle'];
 		$heightPerLine = $finalOptions['text']['line_height'];
 		$maxWidthAllowedForText = $finalOptions['text']['max_width_allowed'];
+		
+		$id = $finalOptions['id'];
 		
 		// get the full path to the original imagefile
 		$temp_name = PRODUCT_IMAGES_PATH . $originalFileName;
@@ -183,14 +191,26 @@ class CustomPrint extends AppModel {
 		// Set fill color
 		$draw->setFillColor($fontcolor);
 
+		list($xpos, $ypos, $xpos2, $ypos2, $fontsize) = $this->returnCustomSettingsBasedOnPrint(array(
+			'lang' => $lang,
+		 	 'wordCount1' => $this->countWords($text1),
+		 	 'wordCount2' => $this->countWords($text2),
+			'id' => $id
+		));
+	$this->log('after math');
+		$this->log($xpos);
+		$this->log($xpos2);
+			$this->log($ypos);
+		$this->log($ypos2);
+		$this->log($fontsize);								
+
 		// Set font. Check your server for available fonts.
 		$draw->setFont(FONTS . $fonttype);
-		$draw->setFontSize( $fontsize );
-
+		$draw->setFontSize( $fontsize );	
+		
 		// Create the text
-		// Create the text
-		list($lines1, $lineHeight) = $this->wordWrapAnnotation($overlay, $draw, $text1, $maxWidthAllowedForText);
-		list($lines2, $lineHeight) = $this->wordWrapAnnotation($overlay, $draw, $text2, $maxWidthAllowedForText);
+		list($lines1, $lineHeight, $wordCount1) = $this->wordWrapAnnotation($overlay, $draw, $text1, $maxWidthAllowedForText);
+		list($lines2, $lineHeight, $wordCount2) = $this->wordWrapAnnotation($overlay, $draw, $text2, $maxWidthAllowedForText);
 		
 		$lines = array_merge($lines1, $lines2);
 		
@@ -224,6 +244,104 @@ class CustomPrint extends AppModel {
 		return preg_match("/\p{Han}+/u", $text);
 	}
 	
+	/**
+	 * 
+	 * $data is array containing 
+	 * 'lang' => en or zh
+ 	 * 'wordCount1' => '', numbers starting from 0
+	 * 'wordCount2' => '',
+	 * 'id' =>
+	 *
+	 * expect result array
+	 * $result = array(
+	 *	'xpos' => ,
+	 *  'ypos' => ,
+	 *  'fontsize' =>
+	 *  'xpos2' => ,
+	 *  'ypos2' => ,
+	 *)
+	 */
+	public function returnCustomSettingsBasedOnPrint($data) {
+		$this->log($data);
+		$this->log('customsettings');
+		
+		$id = $data['id'];
+		$lang = $data['lang'];
+		$wordCount1 = $data['wordCount1'];
+		$wordCount2 = $data['wordCount2'];
+		
+		$lineCount = 1;
+		if ($wordCount2 > 0) {
+			$lineCount =2 ;
+		}
+		
+		$result = $this->find('first', array(
+			'conditions' => array(
+				'CustomPrint.id' => $id,
+			),
+			'fields' => array(
+				'CustomPrint.options'
+			)
+		));
+		
+		$options = $result['CustomPrint']['options'];
+		
+		$options = json_decode($options, true);
+		$this->log($options[$lang.$lineCount]);
+		$xpos = 0;
+		$ypos = 0;
+		$xpos2 = 0;
+		$ypos2 = 0;
+		$fontsize = 0;
+		
+		/**
+		*
+		* options is an array of four arrays where keys are en1, zh1, en2, or zh2
+		* where the 1 , 2 represent 1 line or 2 lines
+		*
+		* each sub array is an array where the keys are wordCount1+wordCount2
+		* and  contains keys such as xpos, ypos, xpos2, ypos2, fontsize
+		**/
+		foreach($options[$lang.$lineCount] as $wordCount1Plus2 => $values) {
+			$wordCountArray = explode('+', $wordCount1Plus2);
+			$this->log('enter');
+			$this->log($wordCount1Plus2);
+			$this->log($wordCount1);
+			$this->log($wordCount2);			
+			$this->log($wordCountArray);
+			$this->log($wordCountArray[0]);			
+			if ($wordCount1 >= $wordCountArray[0] && $wordCount2 >= $wordCountArray[1]) {
+				$xpos = $values['xpos'];
+				$ypos = $values['ypos'];				
+				$xpos2 = $values['xpos2'];
+				$ypos2 = $values['ypos2'];				
+				$fontsize = $values['fontsize'];
+				$this->log('if statement');
+				$this->log($xpos);
+			} else {
+				break;
+			}
+		}
+		$this->log('just before');
+				$this->log($xpos);		
+		return compact('xpos', 'ypos', 'xpos2', 'ypos2', 'fontsize');
+	}
+	
+	/**
+	 *
+	 * count english or chinese or spaces
+	 **/
+	public function countWords($text) {
+		mb_internal_encoding('utf-8');
+		// separate the text by chinese characters or words or spaces
+		preg_match_all('/([\w]+)|(.)/u', $text, $matches);
+		$words = $matches[0];
+		$this->log('count words');
+		$this->log($words);
+		$this->log($text);
+		
+		return count($words);
+	}
 	
 	/**
 	 * word wrap annotation that will add in the words into the image
@@ -270,7 +388,7 @@ class CustomPrint extends AppModel {
 	        if($metrics['textHeight'] > $lineHeight)
 	            $lineHeight = $metrics['textHeight'];
 	    }
-	    return array($lines, $lineHeight);	
+	    return array($lines, $lineHeight, count($words));	
 	}
 	
 	
