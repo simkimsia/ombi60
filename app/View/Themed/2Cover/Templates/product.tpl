@@ -47,8 +47,12 @@
 			</form>
 			
 		  <form method="post" action="/products/{{ product.id }}.json/custom" id="imageUpdateForm">
-		   <input type="text" name="custom_text1" placeholder="Name" /><br  />
-			<input type="text" name="custom_text2" placeholder="in case you need another line..." />
+			<select name="lang">
+				<option value="en">English</option>
+				<option value="zh">Chinese</option>
+			</select><br />
+			<input type="text" name="custom_text1" placeholder="Name" /><br  />
+			<input type="text" name="custom_text2" placeholder="Maybe another line..." />
 		   <input type="submit" value="Update" />
 		  </form>
 
@@ -69,18 +73,20 @@
         
     /* get some values from elements on the page: */
     var $form = $( this ),
-        term = $form.find( 'input[name="custom_text"]' ).val(),
+        line1 = $form.find( 'input[name="custom_text1"]' ).val(),
+        line2 = $form.find( 'input[name="custom_text2"]' ).val(),		
+        lang = $form.find( 'select[name="lang"]' ).val(),		
 		color = 'yellow',
-		font = 'AmericanTypeWriter',
         url = $form.attr( 'action' ),
 		type = 'json';
 
     /* Send the data using post and put the results in a div */
     $.post( url, 
 		{ 
-			custom_text: term ,
+			custom_text1: line1 ,
+			custom_text2: line2 ,			
 			custom_color: color,
-			custom_font: font
+			custom_lang: lang,
 		},
       	function( data ) {
           $( "#mainimg" ).attr('src', data.result)

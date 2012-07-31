@@ -105,7 +105,7 @@ class CustomPrint extends AppModel {
 		// custom_font expected AmericanTypeWriter, etc
 		if (!empty($givenData['custom_lang'])) {
 			
-			$data['CustomPrint']['font']['type'] = $fontfiles[$givenData['custom_lang']];
+			$data['CustomPrint']['font']['type'] = $givenData['custom_lang'];
 		} else {
 			$data['CustomPrint']['font']['type'] = 'en';
 		}
