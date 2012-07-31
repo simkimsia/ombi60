@@ -76,7 +76,7 @@ class CustomPrintTestCase extends CakeTestCase {
 	*
 	* test for the scenario where we generate a new image for new words and return the filename of the new image
 	**/
-	public function testUpdateNewImage() {
+	public function testUpdateNewImageForEnglish1Line() {
 		// GIVEN we have the test_rectangle_eng.jpg 
 		$fileName = 'test_rectangle_eng.jpg';
 		$pathToFile = dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'File' . DS . $fileName;
@@ -91,14 +91,15 @@ class CustomPrintTestCase extends CakeTestCase {
 		$this->assertTrue($copyfile->exists());
 		
 		// AND we prepare the data array
+		/*
 		$text = array(
 			'value' => 'Yabba Dabba Doo'
 		);
+		*/
 		
 		$data = array(
-			'CustomPrint' => array(
-				'text' => $text
-			)
+			'custom_text1' => 'Yabba Dabba Doo',
+			'custom_text2' => ''
 		);
 		
 		// WHEN we run the function

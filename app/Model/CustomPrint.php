@@ -55,6 +55,8 @@ class CustomPrint extends AppModel {
 		'text' => array(
 			'xpos' => 0,
 			'ypos'	=> 28,
+			'xpos2' => 0,
+			'ypos2' => 36,
 			'angle' => 0,
 			'line_height' => 36,
 			'max_width_allowed' => 190,
@@ -67,7 +69,8 @@ class CustomPrint extends AppModel {
 	);
 	
 	public $fontfiles = array(
-		'AmericanTypeWriter' => 'AmericanTypewriter.ttc'
+		'en' => 'AmericanTypewriter.ttc',
+		'zh' => 'STHeiTi.ttf'
 	);
 	
 	/**
@@ -80,9 +83,17 @@ class CustomPrint extends AppModel {
 			'CustomPrint' => array()
 		);
 		
+		$this->log($givenData);
+		
 		// at the view, for name = custom_text expected the actual text
-		if (!empty($givenData['custom_text'])) {
-			$data['CustomPrint']['text']['value'] = $givenData['custom_text'];
+		if (!empty($givenData['custom_text1'])) {
+			$data['CustomPrint']['text1']['value'] = $givenData['custom_text1'];
+		}
+		
+		if (!empty($givenData['custom_text2'])) {
+			$data['CustomPrint']['text2']['value'] = $givenData['custom_text2'];
+		} else {
+			$data['CustomPrint']['text2']['value'] = '';
 		}
 
 		// custom_color expected yellow, etc
@@ -90,9 +101,13 @@ class CustomPrint extends AppModel {
 			$data['CustomPrint']['font']['color'] = $givenData['custom_color'];
 		}
 		
+		
 		// custom_font expected AmericanTypeWriter, etc
-		if (!empty($givenData['custom_font'])) {
-			$data['CustomPrint']['font']['type'] = $givenData['custom_font'];
+		if (!empty($givenData['custom_lang'])) {
+			
+			$data['CustomPrint']['font']['type'] = $fontfiles[$givenData['custom_lang']];
+		} else {
+			$data['CustomPrint']['font']['type'] = 'en';
 		}
 		
 		return $data;
@@ -118,10 +133,13 @@ class CustomPrint extends AppModel {
 			$finalOptions = $this->optionsData;
 		}
 
-
 		// setting all the CHOSEN fields 
-		$text = $finalOptions['text']['value'];
+		$text1 = $finalOptions['text1']['value'];
+		$text2 = $finalOptions['text2']['value'];		
 		
+		$twoLines = !empty($text1) && !empty($text2);
+		$oneLine = !$twoLines;
+			
 		$savedImgWidth = $finalOptions['saved_img']['width'];
 		$savedImgHeight = $finalOptions['saved_img']['height'];
 		
@@ -131,6 +149,10 @@ class CustomPrint extends AppModel {
 		
 		$xpos = $finalOptions['text']['xpos'];
 		$ypos = $finalOptions['text']['ypos'];
+		
+		$xpos2 = $finalOptions['text']['xpos2'];
+		$ypos2 = $finalOptions['text']['ypos2'];
+		
 		$angle = $finalOptions['text']['angle'];
 		$heightPerLine = $finalOptions['text']['line_height'];
 		$maxWidthAllowedForText = $finalOptions['text']['max_width_allowed'];
@@ -166,10 +188,16 @@ class CustomPrint extends AppModel {
 		$draw->setFontSize( $fontsize );
 
 		// Create the text
-		list($lines, $lineHeight) = $this->wordWrapAnnotation($overlay, $draw, $text, $maxWidthAllowedForText);
-
-		for($i = 0; $i < count($lines); $i++) {
-			$overlay->annotateImage($draw,  $xpos, $ypos + $i*$heightPerLine, $angle, $lines[$i]);
+		// Create the text
+		list($lines1, $lineHeight) = $this->wordWrapAnnotation($overlay, $draw, $text1, $maxWidthAllowedForText);
+		list($lines2, $lineHeight) = $this->wordWrapAnnotation($overlay, $draw, $text2, $maxWidthAllowedForText);
+		
+		$lines = array_merge($lines1, $lines2);
+		
+		$overlay->annotateImage($draw,  $xpos, $ypos + 0*$heightPerLine, $angle, $lines[0]);
+		
+		if ($twoLines) {
+			$overlay->annotateImage($draw,  $xpos2, $ypos2 + 1*$heightPerLine, $angle, $lines[1]);
 		}
 
 		// Write to the disk so that we can finally overlay
@@ -191,6 +219,12 @@ class CustomPrint extends AppModel {
 		return $finalFileName;
 	}
 	
+	public function isThisChineseText($text) {
+		mb_internal_encoding('utf-8');
+		return preg_match("/\p{Han}+/u", $text);
+	}
+	
+	
 	/**
 	 * word wrap annotation that will add in the words into the image
 	 *
@@ -202,7 +236,12 @@ class CustomPrint extends AppModel {
 	 * 
 	 **/
 	public function wordWrapAnnotation(&$image, &$draw, $text, $maxWidth) {
-	    $words = explode(" ", $text);
+		mb_internal_encoding('utf-8');
+		// separate the text by chinese characters or words or spaces
+		preg_match_all('/([\w]+)|(.)/u', $text, $matches);
+
+		// $words is array of Chinese characters, English Words or spaces
+		$words = $matches[0];
 	    $lines = array();
 	    $i = 0;
 	    $lineHeight = 0;
@@ -215,14 +254,14 @@ class CustomPrint extends AppModel {
 	            break;
 	        }
 	        //Check to see if we can add another word to this line
-	        $metrics = $image->queryFontMetrics($draw, $currentLine . ' ' . $words[$i+1]);
+	        $metrics = $image->queryFontMetrics($draw, $currentLine . $words[$i+1]);
 	        while($metrics['textWidth'] <= $maxWidth)
 	        {
 	            //If so, do it and keep doing it!
-	            $currentLine .= ' ' . $words[++$i];
+	            $currentLine .= $words[++$i];
 	            if($i+1 >= count($words))
 	                break;
-	            $metrics = $image->queryFontMetrics($draw, $currentLine . ' ' . $words[$i+1]);
+	            $metrics = $image->queryFontMetrics($draw, $currentLine . $words[$i+1]);
 	        }
 	        //We can't add the next word to this line, so loop to the next line
 	        $lines[] = $currentLine;
@@ -231,7 +270,7 @@ class CustomPrint extends AppModel {
 	        if($metrics['textHeight'] > $lineHeight)
 	            $lineHeight = $metrics['textHeight'];
 	    }
-	    return array($lines, $lineHeight);
+	    return array($lines, $lineHeight);	
 	}
 	
 	

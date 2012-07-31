@@ -47,7 +47,8 @@
 			</form>
 			
 		  <form method="post" action="/products/{{ product.id }}.json/custom" id="imageUpdateForm">
-		   <input type="text" name="custom_text" placeholder="Your text..." />
+		   <input type="text" name="custom_text1" placeholder="Name" /><br  />
+			<input type="text" name="custom_text2" placeholder="in case you need another line..." />
 		   <input type="submit" value="Update" />
 		  </form>
 
