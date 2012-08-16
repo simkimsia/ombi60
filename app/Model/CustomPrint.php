@@ -142,6 +142,8 @@ class CustomPrint extends AppModel {
 		} else {
 			$lang = 'en';			
 			$fonttype  = $this->fontfiles['en'];
+			$finalOptions['text']['line_height'] = 42;
+			$finalOptions['text']['max_width_allowed'] = 195;
 		}
 			
 		$savedImgWidth = $finalOptions['saved_img']['width'];
@@ -289,7 +291,7 @@ class CustomPrint extends AppModel {
 		$xpos2 = 0;
 		$ypos2 = 0;
 		$fontsize = 0;
-		
+
 		/**
 		*
 		* options is an array of four arrays where keys are en1, zh1, en2, or zh2
