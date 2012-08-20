@@ -285,7 +285,7 @@ class CustomPrint extends AppModel {
 		));
 		
 		$options = $result['CustomPrint']['options'];
-				$this->log($options);
+
 		$options = json_decode($options, true);
 		$xpos = 0;
 		$ypos = 0;
@@ -301,7 +301,6 @@ class CustomPrint extends AppModel {
 		* each sub array is an array where the keys are wordCount1+wordCount2
 		* and  contains keys such as xpos, ypos, xpos2, ypos2, fontsize
 		**/
-		$this->log($options);
 		
 		if ($lang == "en" && $lineCount == 2) {
 			
