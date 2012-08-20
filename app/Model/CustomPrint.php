@@ -142,6 +142,7 @@ class CustomPrint extends AppModel {
 		} else {
 			$lang = 'en';			
 			$fonttype  = $this->fontfiles['en'];
+
 			$finalOptions['text']['line_height'] = 42;
 			$finalOptions['text']['max_width_allowed'] = 195;
 		}
@@ -284,7 +285,7 @@ class CustomPrint extends AppModel {
 		));
 		
 		$options = $result['CustomPrint']['options'];
-		
+				$this->log($options);
 		$options = json_decode($options, true);
 		$xpos = 0;
 		$ypos = 0;
@@ -300,19 +301,38 @@ class CustomPrint extends AppModel {
 		* each sub array is an array where the keys are wordCount1+wordCount2
 		* and  contains keys such as xpos, ypos, xpos2, ypos2, fontsize
 		**/
-		foreach($options[$lang.$lineCount] as $wordCount1Plus2 => $values) {
-			$wordCountArray = explode('+', $wordCount1Plus2);
+		$this->log($options);
+		
+		if ($lang == "en" && $lineCount == 2) {
 			
-			if ($wordCount1 >= $wordCountArray[0] && $wordCount2 >= $wordCountArray[1]) {
-				$xpos = $values['xpos'];
-				$ypos = $values['ypos'];				
-				$xpos2 = $values['xpos2'];
-				$ypos2 = $values['ypos2'];				
-				$fontsize = $values['fontsize'];
+			$xpos = $options["en2"]["line1"][$wordCount1]['xpos'];
+			$ypos = $options["en2"]["line1"][$wordCount1]['ypos'];
+			$xpos2 = $options["en2"]["line2"][$wordCount2]['xpos2'];
+			$ypos2 = $options["en2"]["line2"][$wordCount2]['ypos2'];
+			if ($wordCount2 >= $wordCount1) {
+				$fontsize = $options["en2"]["line2"][$wordCount2]['fontsize'];				
 			} else {
-				break;
+				$fontsize = $options["en2"]["line1"][$wordCount1]['fontsize'];				
 			}
+
+			
+		} else {
+			foreach($options[$lang.$lineCount] as $wordCount1Plus2 => $values) {
+				$wordCountArray = explode('+', $wordCount1Plus2);
+
+				if ($wordCount1 >= $wordCountArray[0] && $wordCount2 >= $wordCountArray[1]) {
+					$xpos = $values['xpos'];
+					$ypos = $values['ypos'];				
+					$xpos2 = $values['xpos2'];
+					$ypos2 = $values['ypos2'];				
+					$fontsize = $values['fontsize'];
+				} else {
+					break;
+				}
+			}
+			
 		}
+		
 
 		$result = array($xpos, $ypos, $xpos2, $ypos2, $fontsize);
 
